@@ -1,0 +1,17 @@
+{
+ "fields": [
+  {
+   "id": "demo",
+   "name": "Bhaktapur demo field",
+   "country": "Nepal",
+   "lat": 27.67,
+   "lon": 85.43,
+   "bbox": [
+    85.42,
+    27.66,
+    85.44,
+    27.68
+   ]
+  }
+ ]
+}

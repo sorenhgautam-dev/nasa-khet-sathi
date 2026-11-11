@@ -1,0 +1,27 @@
+# Raw and cleaned downloads, data cards, audit plots: large or rebuildable (CLAUDE.md rule 4)
+# Leading slash matters: plain "data/" would also hide site/data/, the exports the live site needs.
+/data/
+
+# Secrets: Earthdata login lives in ~/.netrc, keys live in .env (CLAUDE.md rule 2)
+.env
+.env.*
+.netrc
+*.pem
+*.key
+credentials*.json
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated review material (rebuild any time with scripts/make_review_pack.py)
+/review_pack/
+/review_pack.zip
+
+# Team notes about project selection (a different project); kept off GitHub by the owner's choice
+/Space Apps 2026 Jury-Grade Project Selection.docx
+
+# OS
+.DS_Store

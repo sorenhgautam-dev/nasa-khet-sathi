@@ -1,0 +1,12 @@
+# Demo field. Anything unknown is null with a TODO. Do not guess it.
+id: demo
+name: Bhaktapur demo field
+country: Nepal
+lat: 27.67                          # CLAUDE.md output contract
+lon: 85.43
+bbox: [85.42, 27.66, 85.44, 27.68]  # CLAUDE.md index.json example: [min_lon, min_lat, max_lon, max_lat]
+polygon: null                       # TODO(owner): the field's four corners as [lon, lat]
+elevation_m: null                   # TODO: from NASADEM_HGT once the polygon exists (POWER's cell is 1269.39 m, not the field)
+water_source: null                  # TODO(owner): for example rain only, canal or well
+current_rotation: null              # TODO(owner, with the farmer): what is grown now, and when
+validation_station: NP000444540        # NOAA GHCN-Daily KATHMANDU AIRPORT, about 7 km away (validation only)

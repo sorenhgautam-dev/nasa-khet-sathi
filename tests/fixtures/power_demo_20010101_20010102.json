@@ -1,0 +1,82 @@
+{
+ "_note": "Real NASA POWER daily point API response for 27.67 N, 85.43 E, 2001-01-01 to 2001-01-02, fetched 2026-11-11. Keys 'messages' and 'times' omitted; values unchanged.",
+ "type": "Feature",
+ "geometry": {
+  "type": "Point",
+  "coordinates": [
+   85.43,
+   27.67,
+   1269.39
+  ]
+ },
+ "properties": {
+  "parameter": {
+   "T2M_MAX": {
+    "20010101": 19.98,
+    "20010102": 18.67
+   },
+   "T2M_MIN": {
+    "20010101": 8.33,
+    "20010102": 7.96
+   },
+   "RH2M": {
+    "20010101": 66.24,
+    "20010102": 61.72
+   },
+   "WS2M": {
+    "20010101": 1.33,
+    "20010102": 1.2
+   },
+   "ALLSKY_SFC_SW_DWN": {
+    "20010101": 11.35,
+    "20010102": 11.3
+   },
+   "PRECTOTCORR": {
+    "20010101": 0.48,
+    "20010102": 0.01
+   }
+  }
+ },
+ "header": {
+  "title": "NASA/POWER Source Native Resolution Daily Data",
+  "api": {
+   "version": "v2.10.3",
+   "name": "POWER Daily API"
+  },
+  "sources": [
+   "MERRA2",
+   "SYN1DEG",
+   "POWER"
+  ],
+  "fill_value": -999.0,
+  "time_standard": "LST",
+  "start": "20010101",
+  "end": "20010102"
+ },
+ "parameters": {
+  "T2M_MAX": {
+   "units": "C",
+   "longname": "Temperature at 2 Meters Maximum"
+  },
+  "T2M_MIN": {
+   "units": "C",
+   "longname": "Temperature at 2 Meters Minimum"
+  },
+  "RH2M": {
+   "units": "%",
+   "longname": "Relative Humidity at 2 Meters"
+  },
+  "WS2M": {
+   "units": "m/s",
+   "longname": "Wind Speed at 2 Meters"
+  },
+  "ALLSKY_SFC_SW_DWN": {
+   "units": "MJ/m^2/day",
+   "longname": "All Sky Surface Shortwave Downward Irradiance"
+  },
+  "PRECTOTCORR": {
+   "units": "mm/day",
+   "longname": "Precipitation Corrected"
+  }
+ }
+}

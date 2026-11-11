@@ -1,0 +1,18 @@
+# Khet Sathi pipeline. Python 3.12.
+# Exact versions: what step 1 installed and tested on 2026-11-11 (python3.12 -m venv .venv).
+numpy==2.5.4
+pandas==3.1.1
+xarray==2026.9.0
+pyarrow==26.0.1       # parquet tables in data/clean/ (CLAUDE.md "Data sources")
+PyYAML==6.0.3         # config/fields/*.yaml and config/rules.yaml
+jsonschema==4.26.0    # validate exports against pipeline/export/schema.json
+requests==2.34.2      # HTTP fetches with no login (NASA POWER, SoilGrids)
+matplotlib==3.11.2    # audit plots and review pack
+pytest==9.2.0
+
+# Added in later steps, each with the owner's go (named in CLAUDE.md):
+#   pyet            step 3, ET0 reference tests
+#   earthaccess     step 6+, NASA Earthdata downloads (needs ~/.netrc)
+#   pymannkendall   step 6, trends
+#   ruptures        step 6, change-point season detection
+#   flask           step 10, probe bridge

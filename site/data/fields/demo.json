@@ -1,0 +1,1019 @@
+{
+ "field": {
+  "name": "Demo field (MOCK data)",
+  "lat": 27.67,
+  "lon": 85.43,
+  "sections": [
+   {
+    "id": "s1",
+    "polygon": [
+     [
+      85.43,
+      27.67
+     ],
+     [
+      85.4301,
+      27.67
+     ],
+     [
+      85.4301,
+      27.6701
+     ],
+     [
+      85.43,
+      27.6701
+     ]
+    ],
+    "status": "yellow",
+    "wetness": 35,
+    "temp": 18.1,
+    "sure": 0.15
+   },
+   {
+    "id": "s2",
+    "polygon": [
+     [
+      85.4301,
+      27.67
+     ],
+     [
+      85.4302,
+      27.67
+     ],
+     [
+      85.4302,
+      27.6701
+     ],
+     [
+      85.4301,
+      27.6701
+     ]
+    ],
+    "status": "red",
+    "wetness": 40,
+    "temp": 18.2,
+    "sure": 0.2
+   },
+   {
+    "id": "s3",
+    "polygon": [
+     [
+      85.4302,
+      27.67
+     ],
+     [
+      85.4303,
+      27.67
+     ],
+     [
+      85.4303,
+      27.6701
+     ],
+     [
+      85.4302,
+      27.6701
+     ]
+    ],
+    "status": "grey",
+    "wetness": 45,
+    "temp": 18.3,
+    "sure": 0.25
+   },
+   {
+    "id": "s4",
+    "polygon": [
+     [
+      85.4303,
+      27.67
+     ],
+     [
+      85.4304,
+      27.67
+     ],
+     [
+      85.4304,
+      27.6701
+     ],
+     [
+      85.4303,
+      27.6701
+     ]
+    ],
+    "status": "green",
+    "wetness": 50,
+    "temp": 18.4,
+    "sure": 0.3
+   },
+   {
+    "id": "s5",
+    "polygon": [
+     [
+      85.43,
+      27.6701
+     ],
+     [
+      85.4301,
+      27.6701
+     ],
+     [
+      85.4301,
+      27.6702
+     ],
+     [
+      85.43,
+      27.6702
+     ]
+    ],
+    "status": "yellow",
+    "wetness": 55,
+    "temp": 18.5,
+    "sure": 0.35
+   },
+   {
+    "id": "s6",
+    "polygon": [
+     [
+      85.4301,
+      27.6701
+     ],
+     [
+      85.4302,
+      27.6701
+     ],
+     [
+      85.4302,
+      27.6702
+     ],
+     [
+      85.4301,
+      27.6702
+     ]
+    ],
+    "status": "red",
+    "wetness": 60,
+    "temp": 18.6,
+    "sure": 0.4
+   },
+   {
+    "id": "s7",
+    "polygon": [
+     [
+      85.4302,
+      27.6701
+     ],
+     [
+      85.4303,
+      27.6701
+     ],
+     [
+      85.4303,
+      27.6702
+     ],
+     [
+      85.4302,
+      27.6702
+     ]
+    ],
+    "status": "grey",
+    "wetness": 65,
+    "temp": 18.7,
+    "sure": 0.45
+   },
+   {
+    "id": "s8",
+    "polygon": [
+     [
+      85.4303,
+      27.6701
+     ],
+     [
+      85.4304,
+      27.6701
+     ],
+     [
+      85.4304,
+      27.6702
+     ],
+     [
+      85.4303,
+      27.6702
+     ]
+    ],
+    "status": "green",
+    "wetness": 70,
+    "temp": 18.8,
+    "sure": 0.5
+   },
+   {
+    "id": "s9",
+    "polygon": [
+     [
+      85.43,
+      27.6702
+     ],
+     [
+      85.4301,
+      27.6702
+     ],
+     [
+      85.4301,
+      27.6703
+     ],
+     [
+      85.43,
+      27.6703
+     ]
+    ],
+    "status": "yellow",
+    "wetness": 75,
+    "temp": 18.9,
+    "sure": 0.55
+   },
+   {
+    "id": "s10",
+    "polygon": [
+     [
+      85.4301,
+      27.6702
+     ],
+     [
+      85.4302,
+      27.6702
+     ],
+     [
+      85.4302,
+      27.6703
+     ],
+     [
+      85.4301,
+      27.6703
+     ]
+    ],
+    "status": "red",
+    "wetness": 80,
+    "temp": 19.0,
+    "sure": 0.6
+   },
+   {
+    "id": "s11",
+    "polygon": [
+     [
+      85.4302,
+      27.6702
+     ],
+     [
+      85.4303,
+      27.6702
+     ],
+     [
+      85.4303,
+      27.6703
+     ],
+     [
+      85.4302,
+      27.6703
+     ]
+    ],
+    "status": "grey",
+    "wetness": 85,
+    "temp": 19.1,
+    "sure": 0.65
+   },
+   {
+    "id": "s12",
+    "polygon": [
+     [
+      85.4303,
+      27.6702
+     ],
+     [
+      85.4304,
+      27.6702
+     ],
+     [
+      85.4304,
+      27.6703
+     ],
+     [
+      85.4303,
+      27.6703
+     ]
+    ],
+    "status": "green",
+    "wetness": 90,
+    "temp": 19.2,
+    "sure": 0.7
+   }
+  ]
+ },
+ "diary": {
+  "shift_days": 12,
+  "bare_days": 110,
+  "guess": [
+   "rice",
+   "wheat"
+  ],
+  "groundwater": {
+   "trend_cm_per_year": -1.2,
+   "direction": "falling",
+   "confidence": 0.7
+  },
+  "months": [
+   {
+    "m": "Jan",
+    "rain": "low",
+    "soil": "dry",
+    "heat": "none",
+    "frost": "high",
+    "cover": "crop"
+   },
+   {
+    "m": "Feb",
+    "rain": "low",
+    "soil": "dry",
+    "heat": "none",
+    "frost": "risk",
+    "cover": "crop"
+   },
+   {
+    "m": "Mar",
+    "rain": "low",
+    "soil": "dry",
+    "heat": "some",
+    "frost": "none",
+    "cover": "crop"
+   },
+   {
+    "m": "Apr",
+    "rain": "low",
+    "soil": "dry",
+    "heat": "high",
+    "frost": "none",
+    "cover": "partial"
+   },
+   {
+    "m": "May",
+    "rain": "medium",
+    "soil": "medium",
+    "heat": "high",
+    "frost": "none",
+    "cover": "bare"
+   },
+   {
+    "m": "Jun",
+    "rain": "high",
+    "soil": "wet",
+    "heat": "some",
+    "frost": "none",
+    "cover": "bare"
+   },
+   {
+    "m": "Jul",
+    "rain": "high",
+    "soil": "wet",
+    "heat": "none",
+    "frost": "none",
+    "cover": "partial"
+   },
+   {
+    "m": "Aug",
+    "rain": "high",
+    "soil": "wet",
+    "heat": "none",
+    "frost": "none",
+    "cover": "crop"
+   },
+   {
+    "m": "Sep",
+    "rain": "medium",
+    "soil": "wet",
+    "heat": "none",
+    "frost": "none",
+    "cover": "crop"
+   },
+   {
+    "m": "Oct",
+    "rain": "low",
+    "soil": "medium",
+    "heat": "none",
+    "frost": "none",
+    "cover": "crop"
+   },
+   {
+    "m": "Nov",
+    "rain": "low",
+    "soil": "dry",
+    "heat": "none",
+    "frost": "none",
+    "cover": "bare"
+   },
+   {
+    "m": "Dec",
+    "rain": "low",
+    "soil": "dry",
+    "heat": "none",
+    "frost": "risk",
+    "cover": "partial"
+   }
+  ]
+ },
+ "plans": [
+  {
+   "id": "current",
+   "name": "What you do now",
+   "crops": [
+    {
+     "crop": "rice",
+     "start": "06-15",
+     "end": "10-30"
+    },
+    {
+     "crop": "wheat",
+     "start": "11-15",
+     "end": "04-10"
+    }
+   ],
+   "score": {
+    "harvest": 72,
+    "water": 40,
+    "cover": 35,
+    "soil_kept": 60
+   },
+   "tabs": {
+    "why": "MOCK text for the why tab of 'What you do now'. Real text comes from build step 7.",
+    "evidence": "MOCK text for the evidence tab of 'What you do now'. Real text comes from build step 7.",
+    "benefits": "MOCK text for the benefits tab of 'What you do now'. Real text comes from build step 7.",
+    "unknown": "MOCK text for the unknown tab of 'What you do now'. Real text comes from build step 7.",
+    "check": "MOCK text for the check tab of 'What you do now'. Real text comes from build step 7."
+   },
+   "tips": [
+    "MOCK tip for 'What you do now'."
+   ]
+  },
+  {
+   "id": "cover_gap",
+   "name": "Fill the empty months",
+   "crops": [
+    {
+     "crop": "rice",
+     "start": "06-15",
+     "end": "10-30"
+    },
+    {
+     "crop": "lentil",
+     "start": "11-01",
+     "end": "03-15"
+    }
+   ],
+   "score": {
+    "harvest": 70,
+    "water": 62,
+    "cover": 70,
+    "soil_kept": 75
+   },
+   "tabs": {
+    "why": "MOCK text for the why tab of 'Fill the empty months'. Real text comes from build step 7.",
+    "evidence": "MOCK text for the evidence tab of 'Fill the empty months'. Real text comes from build step 7.",
+    "benefits": "MOCK text for the benefits tab of 'Fill the empty months'. Real text comes from build step 7.",
+    "unknown": "MOCK text for the unknown tab of 'Fill the empty months'. Real text comes from build step 7.",
+    "check": "MOCK text for the check tab of 'Fill the empty months'. Real text comes from build step 7."
+   },
+   "tips": [
+    "MOCK tip for 'Fill the empty months'."
+   ]
+  },
+  {
+   "id": "follow_shift",
+   "name": "Plant later, with the rain",
+   "crops": [
+    {
+     "crop": "rice",
+     "start": "07-01",
+     "end": "11-10"
+    },
+    {
+     "crop": "mustard",
+     "start": "11-20",
+     "end": "02-28"
+    }
+   ],
+   "score": {
+    "harvest": 76,
+    "water": 55,
+    "cover": 55,
+    "soil_kept": 66
+   },
+   "tabs": {
+    "why": "MOCK text for the why tab of 'Plant later, with the rain'. Real text comes from build step 7.",
+    "evidence": "MOCK text for the evidence tab of 'Plant later, with the rain'. Real text comes from build step 7.",
+    "benefits": "MOCK text for the benefits tab of 'Plant later, with the rain'. Real text comes from build step 7.",
+    "unknown": "MOCK text for the unknown tab of 'Plant later, with the rain'. Real text comes from build step 7.",
+    "check": "MOCK text for the check tab of 'Plant later, with the rain'. Real text comes from build step 7."
+   },
+   "tips": [
+    "MOCK tip for 'Plant later, with the rain'."
+   ]
+  }
+ ],
+ "replay": {
+  "current": [
+   {
+    "year": 2001,
+    "harvest": 67,
+    "dry_days": 3,
+    "event": "none"
+   },
+   {
+    "year": 2002,
+    "harvest": 74,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2003,
+    "harvest": 81,
+    "dry_days": 9,
+    "event": "none"
+   },
+   {
+    "year": 2004,
+    "harvest": 63,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2005,
+    "harvest": 70,
+    "dry_days": 15,
+    "event": "none"
+   },
+   {
+    "year": 2006,
+    "harvest": 57,
+    "dry_days": 18,
+    "event": "drought"
+   },
+   {
+    "year": 2007,
+    "harvest": 84,
+    "dry_days": 21,
+    "event": "none"
+   },
+   {
+    "year": 2008,
+    "harvest": 66,
+    "dry_days": 24,
+    "event": "none"
+   },
+   {
+    "year": 2009,
+    "harvest": 53,
+    "dry_days": 27,
+    "event": "drought"
+   },
+   {
+    "year": 2010,
+    "harvest": 80,
+    "dry_days": 0,
+    "event": "none"
+   },
+   {
+    "year": 2011,
+    "harvest": 62,
+    "dry_days": 3,
+    "event": "none"
+   },
+   {
+    "year": 2012,
+    "harvest": 69,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2013,
+    "harvest": 56,
+    "dry_days": 9,
+    "event": "frost"
+   },
+   {
+    "year": 2014,
+    "harvest": 83,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2015,
+    "harvest": 65,
+    "dry_days": 15,
+    "event": "none"
+   },
+   {
+    "year": 2016,
+    "harvest": 72,
+    "dry_days": 18,
+    "event": "none"
+   },
+   {
+    "year": 2017,
+    "harvest": 59,
+    "dry_days": 21,
+    "event": "flood"
+   },
+   {
+    "year": 2018,
+    "harvest": 61,
+    "dry_days": 24,
+    "event": "none"
+   },
+   {
+    "year": 2019,
+    "harvest": 68,
+    "dry_days": 27,
+    "event": "none"
+   },
+   {
+    "year": 2020,
+    "harvest": 75,
+    "dry_days": 0,
+    "event": "none"
+   },
+   {
+    "year": 2021,
+    "harvest": 62,
+    "dry_days": 3,
+    "event": "flood"
+   },
+   {
+    "year": 2022,
+    "harvest": 64,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2023,
+    "harvest": 71,
+    "dry_days": 9,
+    "event": "none"
+   },
+   {
+    "year": 2024,
+    "harvest": 78,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2025,
+    "harvest": 60,
+    "dry_days": 15,
+    "event": "none"
+   }
+  ],
+  "cover_gap": [
+   {
+    "year": 2001,
+    "harvest": 65,
+    "dry_days": 3,
+    "event": "none"
+   },
+   {
+    "year": 2002,
+    "harvest": 72,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2003,
+    "harvest": 79,
+    "dry_days": 9,
+    "event": "none"
+   },
+   {
+    "year": 2004,
+    "harvest": 61,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2005,
+    "harvest": 68,
+    "dry_days": 15,
+    "event": "none"
+   },
+   {
+    "year": 2006,
+    "harvest": 55,
+    "dry_days": 18,
+    "event": "drought"
+   },
+   {
+    "year": 2007,
+    "harvest": 82,
+    "dry_days": 21,
+    "event": "none"
+   },
+   {
+    "year": 2008,
+    "harvest": 64,
+    "dry_days": 24,
+    "event": "none"
+   },
+   {
+    "year": 2009,
+    "harvest": 51,
+    "dry_days": 27,
+    "event": "drought"
+   },
+   {
+    "year": 2010,
+    "harvest": 78,
+    "dry_days": 0,
+    "event": "none"
+   },
+   {
+    "year": 2011,
+    "harvest": 60,
+    "dry_days": 3,
+    "event": "none"
+   },
+   {
+    "year": 2012,
+    "harvest": 67,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2013,
+    "harvest": 54,
+    "dry_days": 9,
+    "event": "frost"
+   },
+   {
+    "year": 2014,
+    "harvest": 81,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2015,
+    "harvest": 63,
+    "dry_days": 15,
+    "event": "none"
+   },
+   {
+    "year": 2016,
+    "harvest": 70,
+    "dry_days": 18,
+    "event": "none"
+   },
+   {
+    "year": 2017,
+    "harvest": 57,
+    "dry_days": 21,
+    "event": "flood"
+   },
+   {
+    "year": 2018,
+    "harvest": 59,
+    "dry_days": 24,
+    "event": "none"
+   },
+   {
+    "year": 2019,
+    "harvest": 66,
+    "dry_days": 27,
+    "event": "none"
+   },
+   {
+    "year": 2020,
+    "harvest": 73,
+    "dry_days": 0,
+    "event": "none"
+   },
+   {
+    "year": 2021,
+    "harvest": 60,
+    "dry_days": 3,
+    "event": "flood"
+   },
+   {
+    "year": 2022,
+    "harvest": 62,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2023,
+    "harvest": 69,
+    "dry_days": 9,
+    "event": "none"
+   },
+   {
+    "year": 2024,
+    "harvest": 76,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2025,
+    "harvest": 58,
+    "dry_days": 15,
+    "event": "none"
+   }
+  ],
+  "follow_shift": [
+   {
+    "year": 2001,
+    "harvest": 71,
+    "dry_days": 3,
+    "event": "none"
+   },
+   {
+    "year": 2002,
+    "harvest": 78,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2003,
+    "harvest": 85,
+    "dry_days": 9,
+    "event": "none"
+   },
+   {
+    "year": 2004,
+    "harvest": 67,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2005,
+    "harvest": 74,
+    "dry_days": 15,
+    "event": "none"
+   },
+   {
+    "year": 2006,
+    "harvest": 61,
+    "dry_days": 18,
+    "event": "drought"
+   },
+   {
+    "year": 2007,
+    "harvest": 88,
+    "dry_days": 21,
+    "event": "none"
+   },
+   {
+    "year": 2008,
+    "harvest": 70,
+    "dry_days": 24,
+    "event": "none"
+   },
+   {
+    "year": 2009,
+    "harvest": 57,
+    "dry_days": 27,
+    "event": "drought"
+   },
+   {
+    "year": 2010,
+    "harvest": 84,
+    "dry_days": 0,
+    "event": "none"
+   },
+   {
+    "year": 2011,
+    "harvest": 66,
+    "dry_days": 3,
+    "event": "none"
+   },
+   {
+    "year": 2012,
+    "harvest": 73,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2013,
+    "harvest": 60,
+    "dry_days": 9,
+    "event": "frost"
+   },
+   {
+    "year": 2014,
+    "harvest": 87,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2015,
+    "harvest": 69,
+    "dry_days": 15,
+    "event": "none"
+   },
+   {
+    "year": 2016,
+    "harvest": 76,
+    "dry_days": 18,
+    "event": "none"
+   },
+   {
+    "year": 2017,
+    "harvest": 63,
+    "dry_days": 21,
+    "event": "flood"
+   },
+   {
+    "year": 2018,
+    "harvest": 65,
+    "dry_days": 24,
+    "event": "none"
+   },
+   {
+    "year": 2019,
+    "harvest": 72,
+    "dry_days": 27,
+    "event": "none"
+   },
+   {
+    "year": 2020,
+    "harvest": 79,
+    "dry_days": 0,
+    "event": "none"
+   },
+   {
+    "year": 2021,
+    "harvest": 66,
+    "dry_days": 3,
+    "event": "flood"
+   },
+   {
+    "year": 2022,
+    "harvest": 68,
+    "dry_days": 6,
+    "event": "none"
+   },
+   {
+    "year": 2023,
+    "harvest": 75,
+    "dry_days": 9,
+    "event": "none"
+   },
+   {
+    "year": 2024,
+    "harvest": 82,
+    "dry_days": 12,
+    "event": "none"
+   },
+   {
+    "year": 2025,
+    "harvest": 64,
+    "dry_days": 15,
+    "event": "none"
+   }
+  ]
+ },
+ "future": {
+  "years": [
+   2026,
+   2040
+  ],
+  "nothing_changes": {
+   "harvest": [
+    70,
+    55
+   ],
+   "harvest_low": [
+    62,
+    41
+   ],
+   "harvest_high": [
+    76,
+    66
+   ]
+  },
+  "with_plan": {
+   "harvest": [
+    78,
+    74
+   ],
+   "harvest_low": [
+    72,
+    63
+   ],
+   "harvest_high": [
+    83,
+    81
+   ]
+  }
+ },
+ "sources": [
+  {
+   "name": "MOCK data for building the site",
+   "product": "pipeline/export/mock.py",
+   "resolution": "none (made up)",
+   "years": "none",
+   "type": "model"
+  }
+ ]
+}
