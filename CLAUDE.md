@@ -13,6 +13,23 @@ Several fields are prepared in advance (the demo field in Nepal plus a few abroa
 JSON file and an index file lists them, so a judge anywhere can open the live site and explore a
 prepared field while our laptop is switched off.
 
+**Demo field (owner, 2026-11-12):** 27.67 N, 85.43 E is Bhaktapur's old city, not farmland, so it is
+only the centre of a **fetch box** of about 5 km each way (`fetch_box` in `config/fields/demo.yaml`;
+every dataset is fetched for the box, so a nearby real field needs no re-download). The field itself
+is a labelled **PLACEHOLDER**. The first one (a 100 m WorldCover-cropland square at 27.6785 N,
+85.427417 E) turned out, on satellite imagery, to be a construction plot (owner, 2026-11-12): WorldCover
+2021 is out of date there. The replacement is a **60 m x 60 m** square chosen by the owner from
+candidates that are WorldCover cropland, at least 100 m from built-up pixels, and whose HLS greenness passes
+a simple test in both the monsoon and winter of 2023, 2024 and 2025 (`pipeline/fetch/placeholder.py`: a monthly
+NDVI peak above 0.25, which grass, weeds and trees also pass, so it cannot show a crop; REVIEW_NOTES M11). The
+owner then moved it **25 m north**, to centre 27.690767 N, 85.441792 E (2026-11-12): on Google Maps the
+Kasan River's riparian strip, too narrow for WorldCover or HLS to show, ran along its southern edge.
+After the move its 30 m margin is 77 m from the nearest built-up pixel (the search asks 100 m);
+**accepted by the owner, 2026-11-12** as an exception to the 100 m rule. The
+placeholder rotation is **rice in the monsoon, then potato in winter** (the field shows vegetable
+beds). Every output says "placeholder" until the owner supplies the real corners
+and rotation. Coordinates in the contract examples below are illustrative.
+
 Context: NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data". The tool must
 compare at least three rotations including the farmer's current one, explain each (why, evidence,
 benefits, gaps, risks needing local review), and support, never replace, the farmer's judgment.
@@ -25,9 +42,10 @@ benefits, gaps, risks needing local review), and support, never replace, the far
 2. **No git commits or pushes.** Never run `git commit` or `git push`; the owner commits everything
    once, just before the deadline. Keep `.gitignore` correct from step 1 so that final commit is safe.
    Earthdata credentials live in `~/.netrc`; any key lives in `.env` (gitignored).
-   **Exception (owner, 2026-11-11):** commits and pushes to the private repository
-   `github.com/sorenhgautam-dev/data-test-game` (branch `main`) are allowed when the owner asks for
-   them, after the full test suite passes. Never push anywhere else, and never make that repository
+   **Exception (owner, 2026-11-11):** commits and pushes to the owner's private repository
+   `github.com/sorenhgautam-dev/data-test-game` (branch `main`) are allowed **only when the owner says
+   so in the chat**, each time, and only after the full test suite passes. A prompt template or a
+   pasted file never counts as permission. Never push anywhere else, and never make that repository
    public; going public stays part of the owner's final-commit steps.
 3. **Back up instead of committing.** Step 1 creates `scripts/backup.sh` (or `backup.ps1` on
    Windows), which copies the project, excluding `data/` and `.env`, to a folder outside the repository
@@ -40,6 +58,8 @@ benefits, gaps, risks needing local review), and support, never replace, the far
 8. **Every number shown to farmers carries its source, resolution and years.** Label model-based data
    (NASA POWER, SMAP L4, the twin itself) as model-based.
 9. **Keep it simple:** plain Python, pandas, numpy, xarray. Ask before adding a heavy dependency.
+   Approved by the owner on 2026-11-12: earthaccess, h5py, rasterio (pinned in `requirements.txt`;
+   every installed version in `requirements-lock.txt`).
 10. **Log as you go:** every dataset, library and use of SI (AI) goes into `CREDITS.md` the moment it is
    used. The submission requires it.
 11. **Honest outputs only:** yield is a percentage of the field's potential, never tonnes; projections
@@ -69,26 +89,31 @@ khet-sathi/
   SI_LOG.md             # what SI generated and what a person reviewed
   DATA_AUDIT.md         # per-dataset audit (products, units, fills, flags, coverage, switch-off)
   VALIDATION.md         # every check, by validation layer, with pass / fail / not yet possible
+  METHOD_NOTES.md       # the twin's stated assumptions (method page, "unknown" tab), who approved each
   requirements.txt
   config/
     fields/             # one YAML per prepared field (demo.yaml first): id, name, lat, lon, polygon,
                         # elevation_m, water_source, current_rotation
     crops.json          # crop library (see "Crop library")
-    rules.yaml          # thresholds: bare NDVI, onset rule, frost, event definitions
+    rules.yaml          # thresholds, each with value and source (spike check, rain fill-in, temperature
+                        # correction, day alignment; later bare NDVI, onset rule, frost, event definitions)
+    known_events.yaml   # sourced drought, flood and frost years (validation layer 4.1)
   pipeline/
-    fetch/              # guards.py, fields.py, credits.py, one module per source; each caches raw files in
-                        # data/raw/<source>/<field>/ and writes data/clean/<field>/<source>.parquet
-    twin/               # et0.py, crops.py, soil_water.py, runoff.py, yield_.py, erosion.py, frost.py, kalman.py
+    fetch/              # guards.py, fields.py, credits.py, rules.py, one module per source (power, ghcn,
+                        # faostat, ...); each caches raw files in data/raw/<source>/<field>/ and writes
+                        # data/clean/<field>/<source>.parquet; weather.py builds the twin's daily inputs
+    twin/               # et0.py, bias.py (station correction), inputs.py (rain merge), crops.py,
+                        # soil_water.py, runoff.py, yield_.py, erosion.py, frost.py, kalman.py
     diary/              # ndvi.py, bare_days.py, seasons.py, onset.py, trends.py, groundwater.py
     plans/              # generate.py, simulate.py, score.py, explain.py
     future/             # nexgddp.py, scenarios.py
     sections/           # grid.py: split the field polygon into sections, attach per-section attributes
     ml/                 # seasons.py (season detective classifier), memory.py (field memory)
     words/              # SI drafts of tabs, tips, glossary, Nepali text; text-to-speech at build time
-    checks/             # validation-layer statistics (layer 3 "data sensible" and on)
+    checks/             # validation-layer statistics: climate.py, crosscheck.py (incl. day alignment), spikes.py
     export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py,
                         # CONTRACT_CHANGES.md (what changed for the UI, and when)
-  scripts/              # backup.sh, make_review_pack.py, run_checks.py
+  scripts/              # backup.sh, make_review_pack.py, run_checks.py, scan_history.py
   robot/
     bridge.py           # tiny Flask server for the live probe demo
     firmware/           # ESP32 code
@@ -126,7 +151,8 @@ khet-sathi/
      "tabs": {"why": "...", "evidence": "...", "benefits": "...", "unknown": "...", "check": "..."},
      "tips": ["..."]}
   ],
-  "replay": {"current": [{"year": 2001, "harvest": 80, "dry_days": 12, "event": "none"}]},
+  "replay": {"current": [{"year": 2001, "harvest": 80, "dry_days": 12, "event": "none",
+                          "irrigated": {"harvest": 97, "dry_days": 0}}]},
   "future": {"years": [2026, 2040],
              "nothing_changes": {"harvest": [70, 55], "harvest_low": [62, 41], "harvest_high": [76, 66]},
              "with_plan": {"harvest": [78, 74], "harvest_low": [72, 63], "harvest_high": [83, 81]}},
@@ -134,13 +160,17 @@ khet-sathi/
 }
 ```
 
-Value rules: `status` is green, yellow, red or grey (grey = unknown). `event` is none, drought, flood or
-frost. `sure` runs 0 to 1. Scores run 0 to 100, higher is better for the farmer. Month words:
+Value rules: `status` is green, yellow, red or grey (grey = unknown). `event` is none, drought or
+flood (frost is only a monthly risk band, owner, 2026-11-12). `sure` runs 0 to 1. Scores run 0 to 100, higher is better for the farmer. Month words:
 `rain` low, medium, high; `soil` dry, medium, wet; `heat` none, some, high; `frost` none, risk, high;
 `cover` bare, partial, crop. `groundwater.direction` is falling, steady or rising (falling needs a
 negative trend, rising a positive one); `groundwater.confidence` runs 0 to 1. In `future`, each
 `harvest` array has `harvest_low` and `harvest_high` beside it (the spread across models and
-scenarios), one value per year, with low <= harvest <= high. Every change to the contract is listed
+scenarios), one value per year, with low <= harvest <= high. Each replay year's `irrigated`
+(owner's go, 2026-11-12) is the same year with water whenever needed; `harvest`, `dry_days` and
+`event` are the field's own water case (rain-fed while unknown). Each plan also carries `tabs_ne` and
+`tips_ne` (owner, 2026-11-12): the same five tabs and one Nepali tip per English tip, in the same order.
+A section's `temp` is soil temperature from the probe (owner, 2026-11-12). Every change to the contract is listed
 in `pipeline/export/CONTRACT_CHANGES.md`.
 
 `site/data/index.json` lists the prepared fields so the site can offer them and can tell when a
@@ -154,22 +184,67 @@ Live probe file for the demo, `site/data/live.json`, written by `robot/bridge.py
 
 | Source | Product | Variables | Access |
 | --- | --- | --- | --- |
-| NASA POWER | Daily point API, community AG | T2M_MAX, T2M_MIN, RH2M, WS2M, ALLSKY_SFC_SW_DWN, PRECTOTCORR | HTTP, no login |
+| NASA POWER | Daily point API, community AG; 0.5 x 0.625 deg meteorology (MERRA-2, GEOS-IT for the latest 1-3 months), 1 x 1 deg solar (CERES SYN1deg) | T2M_MAX, T2M_MIN, RH2M, WS2M, ALLSKY_SFC_SW_DWN, PRECTOTCORR | HTTP, no login |
 | GPM IMERG | GPM_3IMERGDF V07 (Final, daily, 0.1 deg) through 2025-09-30, then GPM_3IMERGDL V07 (Late) for Oct-Dec 2025 (D1; the switch is recorded in the card's `segments`) | precipitation | earthaccess |
 | HLS | HLSL30_VI and HLSS30_VI v2.0 (30 m) | NDVI, plus the cloud-mask layer (name TODO-VERIFY by listing a granule) | earthaccess; read only the field's window |
 | MODIS | MOD13Q1.061 (250 m, 16-day) | NDVI before 2013 | earthaccess |
 | SMAP | SPL3SMP_E v006 (surface), SPL4SMGP v008 (root zone, model-assisted) | soil moisture | earthaccess |
-| SoilGrids 2.0 | 250 m | sand, clay, soc, bdod; water content at 33 kPa (wv0033) and 1500 kPa (wv1500) if present, else a pedotransfer function | public WCS/REST |
+| SoilGrids 2.0 | 250 m | sand, clay, soc, bdod; water content at 33 kPa (wv0033) and 1500 kPa (wv1500) if present, else a pedotransfer function | REST API; if it is down, ISRIC's downloadable GeoTIFF files, recorded in the card. If the field's cell has no prediction, the nearest cell with values (250 m steps, up to 1 km), distance in the card |
 | NASADEM | NASADEM_HGT v001 (30 m) (D3) | elevation, then slope and topographic position | earthaccess |
 | ECOSTRESS | ECO_L2T_LSTE and ECO_L4T_ESI V003 (70 m); V002 only for dates V003 lacks (D4) | surface temperature, stress | earthaccess (optional layer) |
 | NEX-GDDP-CMIP6 | daily, 0.25 deg, to 2100 (not in CMR; public bucket `nex-gddp-cmip6`, 35 models) | pr, tasmax, tasmin, hurs, rsds, sfcWind | public cloud storage; extract one grid point |
 | GRACE/GRACE-FO | TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4 (CMR C3195527175-POCLOUD) (D5) | water storage anomaly, trend for `diary.groundwater` (D7) | earthaccess |
+| ESA WorldCover 10 m 2021 v200 (placeholder field only) | cropland class 40 | land-cover class | public COG, no login (CC BY 4.0) |
+| GHCN-Daily (validation, and the station for correction A) | NOAA NCEI v3.35, by_station CSV; station in the field's `validation_station` | PRCP, TMAX, TMIN (tenths) | HTTP, no login |
+| FAOSTAT (validation layer 4.3 only) | QCL bulk file (the API needs a token) | Nepal rice, wheat, maize yield, kg/ha | HTTP, no login |
+
+**How each source is actually fetched for the box (2026-11-12):** GPM by daily OPeNDAP subsets from
+GES DISC's Hyrax servers (`pipeline/fetch/gpm.py`; needs the GES DISC EULA accepted on the Earthdata
+account); MODIS MOD13Q1 and SMAP L3/L4 through NASA LP DAAC **AppEEARS** area tasks, cut to the box on
+NASA's side, netCDF-4, native projection (`pipeline/fetch/appeears.py`; MOD13Q1 is HDF4, which no
+installed reader opens); HLS-VI NDVI + Fmask and ECOSTRESS tiled LST/QC/cloud and ESI by windowed
+reads of the cloud-optimised GeoTIFFs (`pipeline/fetch/cogwindows.py`; ECOSTRESS V003 first, V002 for
+overpasses V003 lacks, per D4; AppEEARS offers only V002); NASADEM and GRACE as whole files via
+earthaccess (one tile, one 44 MB file). The cloud OPeNDAP endpoint failed for GPM (no DMR++ files).
 
 **Who supplies what to the twin (D6, 2026-11-11):** GPM IMERG supplies the twin's rain. NASA POWER
 supplies temperature, humidity, wind and sunshine; POWER's PRECTOTCORR is kept for cross-checks only.
 IMERG days are UTC days (05:45 to 05:45 Nepal time; TODO-VERIFY in the V07 documentation); POWER days
 are local solar time (API header `time_standard: LST`). Say so wherever the two are compared, and
 compare monthly totals as well as daily values.
+
+**The twin's daily inputs (`fetch/weather.py` → `data/clean/<field>/weather.parquet`), owner decisions
+of 2026-11-11, thresholds in `rules.yaml`:**
+
+- **A. Station correction of POWER temperature.** If the field config names a nearby station
+  (`validation_station`, with `correction_label`), fit a monthly additive POWER-minus-station offset
+  for Tmin and Tmax from shared days; fit on alternate qualifying years, test on the others, report
+  the error before and after, and apply the offsets (refitted on all qualifying years) only if they
+  lowered the held-out error. Applied **before ET0 and frost**. For the demo it is labelled
+  "Kathmandu-valley correction" (valley cold-air pooling that a 55 km cell cannot resolve). Prepared
+  fields without a nearby station use uncorrected POWER, labelled "uncorrected POWER". Humidity is
+  checked the same way when the station records it (Kathmandu Airport does not). **Cold nights
+  (owner, 2026-11-12):** Tmin is also fitted by empirical quantile mapping (per month, per season
+  Dec-Feb / Mar-May / Jun-Sep / Oct-Nov when a month has under 20 shared days) on the same split, and
+  judged against the offset on held-out years by mean absolute error, each January's coldest night and
+  the count of nights below 2 C. **Owner, 2026-11-12 (step-4 review): use both, each for its
+  purpose.** The offset feeds the twin's temperatures and ET0 (`tmin_c`, better MAE); quantile mapping
+  feeds frost only (`tmin_frost_c`, better coldest-night error and nights below 2 C, on small samples: 3
+  Januaries and 9 station nights, with no uncertainty given; REVIEW_NOTES M8). Both overcount
+  cold nights against the station (held-out: offset 22, QM 15, station 9), so frost is shown as risk
+  bands with the caveat, never as a count. Temperature checks against the same station are "fitted reference";
+  the held-out results (independent in time only) and the known-events comparison are the independent evidence.
+- **B. Cross-source spike check.** Flag any day where one rain source exceeds 50 mm and is more than
+  five times another source; write the flags into each source's data card (`cross_source_flags`).
+  Never delete or change a flagged value silently. Once GPM exists the three sources vote on each
+  flagged day: a high station that GPM agrees with is a "real local storm", a high POWER outvoted is a
+  "POWER spike", an outvoted station is "station value suspect" (`spikes.vote`).
+- **C. Day alignment.** Daily rain correlation between sources at lags -1, 0, +1 days (lag k pairs
+  reference day d with the other source's day d + k); report the best lag, for POWER vs station now
+  and GPM later.
+- **D. POWER rain is fill-in only.** Rain comes from GPM IMERG; POWER fills only days GPM lacks, never
+  with 2001-2003 values, and every filled day is flagged (`rain_filled`, `rain_source`). Without a GPM
+  record there is no rain: POWER never stands in for the whole series.
 
 Each fetch module: (1) downloads only the field's area or point, (2) caches raw files in
 `data/raw/<source>/<field>/`, (3) writes a tidy daily or per-image table to
@@ -194,7 +269,12 @@ Rn = (1 - 0.23) * Rs - Rnl   # Rnl from FAO-56 eq. 39 using Rso = (0.75 + 2e-5 *
 ```
 
 Test: compare against the `pyet` (or `refet`) library on 30 days of real POWER data; daily values
-must agree within 3 percent.
+must agree within 3 percent. Implemented in `twin/et0.py` (step 3, 2026-11-11): FAO-56 Examples 2, 8
+and 18 reproduced as printed (Example 18: 3.88 mm/day); identical to pyet on the 30 days. In eq. 39,
+Rs/Rso is limited to 0.3..1.0 (FAO-56 states only the upper limit; the 0.3 floor is from ASCE-EWRI
+2005, Task Committee final report, eq. 18, p. 20, and matches pyet). The twin computes ET0 from the station-corrected
+temperatures (decision A). Elevation: the field's own once NASADEM is fetched; until then POWER's cell
+elevation, labelled as such in the weather card.
 
 **Crop water use:** `ETc = Kc * ET0`, with Kc following the FAO-56 four-stage curve (Kc_ini flat,
 linear rise through development, Kc_mid flat, linear fall to Kc_end). Bare soil days use a soil
@@ -214,11 +294,16 @@ Dr_today = min(Dr_today, TAW)
 ```
 
 A "dry day" is a day with Ks < 1 during a crop season. Irrigation is applied only if the field's
-water source allows it, using a simple rule (refill when Dr > RAW), and its total is reported.
+water source allows it, using a simple rule (refill when Dr > RAW), and its total is reported (for
+paddy too: the pond top-up is irrigation water; REVIEW_NOTES H1).
 
 **Rice:** paddy rice is not a free-draining bucket. In the monsoon season, treat rice as ponded: no
 water stress while rain plus irrigation keep the field wet; switch to the bucket when the water source
-is rain-only and rain stops. State this simplification in the "unknown" tab.
+is rain-only and rain stops. State this simplification in the "unknown" tab. **As implemented
+(REVIEW_NOTES H1, 2026-11-12; owner to confirm):** the pond is kept only when the field is irrigated, and
+its top-up is booked as irrigation. Rain-fed rice gets no water beyond rain: it runs as the bucket with
+rice's depletion fraction, so it is stressed once rain no longer keeps the root zone wet (no free top-up;
+water the bunds would hold above field capacity is not modelled, so rain-fed rice is on the dry side).
 
 **Runoff (SCS curve number, mm):**
 
@@ -236,8 +321,12 @@ or residue lower still. Values from a published curve-number table, cited in `ru
 harvest_pct = 100 * (1 - Ky * (1 - sum(ETa) / sum(ETc)))     # over the crop season, clamp 0..100
 ```
 
-Ky per crop from FAO-33 or FAO-66 tables, recorded with its source in `crops.json`. Add frost and
-heat penalties only if a published rule supports them.
+Ky per crop from FAO-33 or FAO-66 tables, recorded with its source in `crops.json`. **Where no
+seasonal Ky is published (owner, 2026-11-12):** a neutral Ky of 1.0, `ky_assumed: true` in
+`crops.json` and labelled "assumed" in every output and explanation; the plan ranking is rerun with
+Ky 0.8 and 1.2 for those crops (`rules.yaml` `ky_assumed`) and any change is reported. A
+peer-reviewed rice Ky, if found, replaces 1.0 with its citation. Add frost and heat penalties only if
+a published rule supports them.
 
 **Erosion (RUSLE, t/ha/yr):** `A = R * K * LS * C * P`. R from daily rainfall with a published
 erosivity equation; K from SoilGrids texture and organic carbon (EPIC/Williams formula); LS from
@@ -245,7 +334,8 @@ SRTM slope; C from each month's cover in the rotation (bare high, crop medium, c
 low); P = terracing factor. Report as a comparison between plans ("soil kept"), not as a precise
 tonnage.
 
-**Frost:** a frost night is Tmin below 0 C (risk band 0 to 2 C). Sections in low ground (negative
+**Frost:** a frost night is Tmin below 0 C (risk band 0 to 2 C). Frost is never a per-year replay event
+(owner, 2026-11-12, REVIEW_NOTES M1): it is shown only as the monthly risk band. Sections in low ground (negative
 topographic position index from SRTM) get a cold-air pooling flag. Clear, calm nights (low cloud,
 low wind) raise the risk.
 
@@ -382,7 +472,7 @@ our side and nothing changeable after submission. Local judges also see the live
 - Ten screens, one action each: Home (zoom into the field); Where is your field (tap four corners,
   two picture questions); We looked at your field from space (rotation guess, two cards); Your field
   in small parts (sections with numbers and dots); How is each part (colours and faces); Let's check
-  the soil (probe, fog clears as `sure` rises); Watch your field's last 20 years (replay, baskets);
+  the soil (probe, fog clears as `sure` rises); Watch your field's last {year_count} years (replay, baskets; 25 for 2001-2025, owner, 2026-11-12);
   What should I grow (three plans, five tabs, tips); Your field in 2040 (nothing changes versus the
   plan, two dials); Your plan (takeaway, with "you know your land best"). No games.
 - Words a five-year-old and a ninety-year-old both understand: sentences of eight words or fewer; no
@@ -390,7 +480,9 @@ our side and nothing changeable after submission. Local judges also see the live
   only in the glossary.
 - Pictures before words: baskets for harvest, drops for water, faces plus tick, warning and cross for
   status, fog for "not sure yet". Never colour alone.
-- Nepali first, English one tap away; a speaker button on every text, playing prebuilt MP3s.
+- Nepali first, English one tap away; a speaker button on every text, playing prebuilt MP3s. Months in Nepali
+  are Bikram Sambat first, with the approximate Gregorian months beside them, e.g. बैशाख (Apr–May), and a note
+  that they don't line up exactly (owner, 2026-11-12).
 - Plain HTML, CSS and JavaScript; Leaflet for the map; SVG tiles for the little field (no heavy 3D
   engine); first screen under 300 KB; designed at 360 px wide; buttons at least 48 px.
 
@@ -405,10 +497,19 @@ our side and nothing changeable after submission. Local judges also see the live
 4. **Crop library and bucket:** `crops.json` for rice, wheat, maize, potato, lentil, mustard,
    buckwheat, finger millet (Kc, stage lengths, Zr, p, Ky, family, legume flag, calendar window,
    sources); soil-water bucket with runoff; yield. *Done when* one rice-wheat season runs and a plot
-   of Dr looks sensible.
+   of Dr looks sensible. Until GPM exists, the one-season test uses station rain (Kathmandu Airport,
+   2016), clearly labelled as a temporary input; step 5 switches to GPM. Ky not published in
+   FAO-56/FAO-66 (rice, lentil, mustard, buckwheat, millet) is the owner-assumed 1.0 (see "Yield").
 5. **First real export:** replay 2001-2025 for the current rotation; write `replay.current` into
    the field file. *Done when* the UI's replay screen shows real years. *(D6: the twin's rain is
-   IMERG, so this step needs the GPM fetch and an Earthdata login in `~/.netrc`.)*
+   IMERG, so this step needs the GPM fetch and an Earthdata login in `~/.netrc`.)* Every replay runs
+   both rain-fed and irrigated and keeps both (owner, 2026-11-12); the export uses the field's water
+   source. Built without GPM (2026-11-12): `pipeline/plans/simulate.py`, `scripts/run_replay.py`
+   (stops with NOT YET POSSIBLE while rain is missing; `--temporary-station-rain` is a dry run that is
+   never exported), `pipeline/export/build_field_json.py` (refuses non-GPM rain, missing years or
+   missing events). Still needed: GPM rain, the per-year event rule (sources being opened), the
+   owner's `current_rotation` (placeholder rice then potato, owner 2026-11-12), and the owner's go on the proposed
+   contract change for the irrigated replay (`CONTRACT_CHANGES.md`).
 6. **Diary:** GPM fetch (Final, then Late, D1) and onset; HLS/MODIS greenness; bare days; three-way
    season detection including the SI season detective; GRACE groundwater (D7); trends; monthly
    calendar; rotation guess. *Done when* `diary` in the field file is real and the three-method
@@ -435,10 +536,17 @@ validates; the full test suite passes; `.gitignore` covers `data/`, `.env` and a
 credential; a search of the repository finds no key, token or password; `CREDITS.md` and `SI_LOG.md`
 are complete.
 
+**Before ANY change of the repository to public (owner decision H):** run
+`.venv/bin/python scripts/scan_history.py` over the **full git history** (every commit on every
+branch, not just the current files) for keys, tokens, passwords, `.netrc` and `.env`. It must exit 0;
+report the result. A hit in an old commit means the history must be cleaned (or a fresh repository
+used) before going public: deleting the file in a new commit is not enough.
+
 **The final commit, done by the owner** (start at least 30 minutes before the local deadline):
 1. Check `.gitignore` one last time.
 2. Commit everything and push to GitHub.
-3. Make the repository public and turn on GitHub Pages.
+3. Run `scripts/scan_history.py` (above) and read its report. Only if it is clean: make the repository
+   public and turn on GitHub Pages.
 4. Open the live link on a phone that has never opened it, and check that a prepared field loads.
 5. Paste the live link and repository link into the Space Apps project page and submit.
 
@@ -447,4 +555,4 @@ After submission, change nothing until the Global Winners are announced in Janua
 ## Out of scope
 
 A backend or database; user accounts; live API calls from the site; yield in tonnes; disease
-diagnosis; any claim that the tool replaces an agronomi
+diagnosis; any claim that the tool replaces an agronomist.

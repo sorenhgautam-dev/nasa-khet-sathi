@@ -33,7 +33,8 @@ def _sure_below_zero(d): d["field"]["sections"][0]["sure"] = -0.1
 def _score_above_100(d): d["plans"][0]["score"]["harvest"] = 101             # scores run 0 to 100
 def _score_below_0(d): d["plans"][0]["score"]["water"] = -1
 def _replay_harvest_above_100(d): d["replay"]["current"][0]["harvest"] = 120  # yield is % of potential
-def _event_storm(d): d["replay"]["current"][0]["event"] = "storm"            # none/drought/flood/frost
+def _event_storm(d): d["replay"]["current"][0]["event"] = "storm"            # none/drought/flood
+def _event_frost(d): d["replay"]["current"][0]["event"] = "frost"            # owner, 2026-11-12 (M1): no frost event
 def _no_current_plan(d): d["plans"][0]["id"] = "old"                         # must include the current rotation
 def _two_plans(d): d["plans"] = d["plans"][:2]                               # at least three strategies
 def _bad_date(d): d["plans"][0]["crops"][0]["start"] = "6-15"                # dates are MM-DD
@@ -81,9 +82,28 @@ def _rising_but_trend_down(d):
     d["diary"]["groundwater"].update(direction="rising", trend_cm_per_year=-0.8)
 
 
+# irrigated replay (owner's go, 2026-11-12): {harvest 0-100, dry_days 0-366} and nothing else
+def _irrigated_harvest_above_100(d): d["replay"]["current"][0]["irrigated"]["harvest"] = 101
+def _irrigated_missing_dry_days(d): del d["replay"]["current"][0]["irrigated"]["dry_days"]
+def _irrigated_negative_dry_days(d): d["replay"]["current"][0]["irrigated"]["dry_days"] = -1
+def _irrigated_extra_key(d): d["replay"]["current"][0]["irrigated"]["water_mm"] = 120
+
+# Nepali tabs and tips (owner, 2026-11-12): every plan carries tabs_ne and tips_ne beside the English
+def _missing_tabs_ne(d): del d["plans"][0]["tabs_ne"]
+def _missing_tips_ne(d): del d["plans"][0]["tips_ne"]
+def _tab_ne_missing_key(d): del d["plans"][0]["tabs_ne"]["check"]
+def _tab_ne_extra_key(d): d["plans"][0]["tabs_ne"]["extra"] = "धान"
+def _tab_ne_empty(d): d["plans"][0]["tabs_ne"]["why"] = ""
+def _tab_ne_in_english(d): d["plans"][0]["tabs_ne"]["why"] = "This is English, not Nepali."
+def _tip_ne_in_english(d): d["plans"][0]["tips_ne"][0] = "Water it in September."
+def _tip_ne_empty(d): d["plans"][0]["tips_ne"][0] = ""
+def _tips_ne_one_more_than_tips(d): d["plans"][0]["tips_ne"].append("धानलाई पानी दिनुहोस्।")
+def _tips_ne_one_fewer_than_tips(d): d["plans"][0]["tips_ne"].pop()
+
+
 FIELD_BREAKS = [
     _status_blue, _sure_above_one, _sure_below_zero, _score_above_100, _score_below_0,
-    _replay_harvest_above_100, _event_storm, _no_current_plan, _two_plans, _bad_date, _month_13_date,
+    _replay_harvest_above_100, _event_storm, _event_frost, _no_current_plan, _two_plans, _bad_date, _month_13_date,
     _unknown_top_key, _missing_sources, _empty_sources, _source_type_guess, _eleven_months,
     _months_out_of_order, _duplicate_section_id, _replay_for_unknown_plan, _future_too_short,
     _empty_tab, _missing_tab, _point_with_three_numbers, _polygon_two_points, _lat_out_of_range,
@@ -92,6 +112,9 @@ FIELD_BREAKS = [
     _low_above_harvest, _high_below_harvest, _low_too_short, _missing_high, _high_above_100,
     _missing_groundwater, _groundwater_direction_word, _groundwater_confidence_above_one,
     _groundwater_extra_key, _falling_but_trend_up, _rising_but_trend_down,
+    _irrigated_harvest_above_100, _irrigated_missing_dry_days, _irrigated_negative_dry_days, _irrigated_extra_key,
+    _missing_tabs_ne, _missing_tips_ne, _tab_ne_missing_key, _tab_ne_extra_key, _tab_ne_empty, _tab_ne_in_english,
+    _tip_ne_in_english, _tip_ne_empty, _tips_ne_one_more_than_tips, _tips_ne_one_fewer_than_tips,
 ]
 
 
@@ -120,3 +143,17 @@ def test_index_contract_rejects(mutate):
     d = build_index()
     mutate(d)
     assert validate_index(d) != []
+
+
+def test_every_mock_replay_year_has_the_irrigated_case():
+    d = build_field()
+    assert all(set(y["irrigated"]) == {"harvest", "dry_days"} for rows in d["replay"].values() for y in rows)
+
+
+def test_a_replay_year_without_the_irrigated_case_still_validates():
+    """The key is optional, so files written before 2026-11-12 stay valid."""
+    d = build_field()
+    for rows in d["replay"].values():
+        for y in rows:
+            del y["irrigated"]
+    assert validate_field(d) == []

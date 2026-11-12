@@ -3,6 +3,72 @@
 `schema.json` is the full truth. `site/data/fields/demo.json` is regenerated after every change and
 still holds **MOCK numbers**; real numbers arrive from build step 5 on.
 
+## 2026-11-12 (late night): Nepali tabs and tips, no frost event, APPLIED (owner's go)
+
+The site is Nepali first, so every plan now carries Nepali text beside the English. Frost is no longer a
+replay event. Now in `schema.json`;
+`demo.json` (still MOCK) carries it.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `plans[].tabs_ne` | did not exist | **required**: the same five keys as `tabs` (`why`, `evidence`, `benefits`, `unknown`, `check`), each a non-empty Nepali string that must contain Devanagari | Show `tabs_ne` first, and `tabs` one tap away |
+| `plans[].tips_ne` | did not exist | **required**: one Nepali tip per English tip, **same order and same count** as `tips` (validate.py checks the count) | Pair `tips_ne[i]` with `tips[i]` |
+| `plans[].tabs`, `plans[].tips` | English | unchanged | Nothing |
+| `replay.<plan>[].event` | `none`, `drought`, `flood` or `frost` | **`none`, `drought` or `flood`**: `frost` is gone (owner, REVIEW_NOTES M1). The frost series overcounts cold nights, so frost is shown only as the monthly risk band `diary.months[].frost`, never as a per-year event | Drop the frost basket icon on the replay screen; keep the frost icon in the twelve-month calendar |
+
+Both are filled at build time (step 7) from `pipeline/words/tabs.json`. The site never fills a template
+itself. The Nepali needs native-speaker review before submission (`pipeline/words/PREVIEW.md`).
+
+**Meaning clarified, no shape change:** `field.sections[].temp` is **soil temperature from the probe**
+(owner, 2026-11-12), not air temperature. The screen text is now "How warm the soil is: {temp} degrees."
+
+**Open question for the owner (not applied):** until the probe has read a section, nothing supplies that
+section's soil temperature. Option: let `temp` be `null` for a section with no reading, and the UI shows
+"not sure yet". Today `temp` must be a number, so the mock's values are made up.
+
+## 2026-11-12 (night): the demo field moved again (values only, no schema change)
+
+The 100 m square below turned out to be a construction plot. The placeholder is now a **60 m square**
+the owner chose from HLS-checked candidates, moved 25 m north to keep a river strip out of it. It is
+still a labelled placeholder, and `demo.json` still holds MOCK numbers.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `field.lat`, `field.lon` | 27.6785, 85.427417 | **27.690767, 85.441792** (about 2.6 km north-east of the old point) | Centre the map here |
+| `field.sections[].polygon` | inside the 100 m square | inside the 60 m square, from its south-west corner (85.441487, 27.690497) (still MOCK) | Nothing |
+| `index.json` `lat`, `lon` | 27.6785, 85.427417 | **27.690767, 85.441792** | Nothing, if the map reads them from the file |
+| `index.json` `bbox`, `name` | unchanged | unchanged | Nothing |
+
+## 2026-11-12 (later): the demo field moved (values only, no schema change)
+
+The owner found that 27.67 N, 85.43 E is Bhaktapur's old city, not farmland. Until the real field is
+known, the demo is a labelled **placeholder**: a 100 m square of cropland (ESA WorldCover 2021) about
+1 km north of that point.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `field.name` | `Demo field (MOCK data)` | `Bhaktapur demo field (PLACEHOLDER location and rotation) (MOCK data)` | Show the word placeholder somewhere visible (for example a small "sample field" tag) |
+| `field.lat`, `field.lon` | 27.67, 85.43 | **27.6785, 85.427417** | Centre the map here |
+| `field.sections[].polygon` | started at the old point | start at the placeholder square's south-west corner (still MOCK) | Nothing |
+| `index.json` `bbox` | `[85.42, 27.66, 85.44, 27.68]` | **`[85.379227, 27.625034, 85.480773, 27.714966]`** (about 5 km each way around the old point: every dataset is fetched for this box) | A field drawn inside this box is "inside a prepared area" |
+| `index.json` `name` | `Bhaktapur demo field` | `Bhaktapur demo field (PLACEHOLDER location and rotation)` | Nothing |
+
+## 2026-11-12 (evening): irrigated replay, APPLIED (owner's go)
+
+The owner asked that every replay run both rain-fed and irrigated, so the site can show what irrigation
+changes. Now in `schema.json`; `demo.json` (still MOCK) carries it.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `replay.<plan>[]` (each year) | `{year, harvest, dry_days, event}` | adds `irrigated: {harvest, dry_days}` (harvest 0 to 100, dry_days 0 to 366, no other keys). `harvest`, `dry_days` and `event` stay the field's own case (rain-fed while its water source is unknown) | Show a second basket "with water" beside each year, or a toggle. The key is optional in the schema, so older files still validate, but every file the pipeline writes has it |
+
+"Irrigated" means water whenever the root zone passes the point where stress starts: an upper bound on
+what irrigation can change (METHOD_NOTES.md item 3). The `event` is about the weather, so it is the same
+in both cases.
+
+Also for the UI teammate: harvest for rice and other crops with no published Ky uses an assumed Ky
+(owner decision); the "unknown" tab will say so.
+
 ## 2026-11-11 (b): owner decisions A13 and D7
 
 | What | Before | Now | What the UI must do |

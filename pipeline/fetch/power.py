@@ -130,7 +130,7 @@ def fetch(field, start="2001-01-01", end="2025-12-31", data_dir=REPO / "data", g
     raw_dir.mkdir(parents=True, exist_ok=True)
     frames, infos = [], []
     for s, e in year_chunks(start, end):
-        cache = raw_dir / f"{s}_{e}.json"
+        cache = raw_dir / f"{float(field['lat']):.6f}_{float(field['lon']):.6f}" / f"{s}_{e}.json"   # per point
         payload = json.loads(cache.read_text()) if cache.exists() else get_json(build_url(field["lat"], field["lon"], s, e))
         df, info = parse(payload)
         want = pd.date_range(pd.Timestamp(s), pd.Timestamp(e), freq="D")
@@ -138,6 +138,7 @@ def fetch(field, start="2001-01-01", end="2025-12-31", data_dir=REPO / "data", g
             raise g.DataGuardError(f"POWER returned dates {df['date'].min().date()} to {df['date'].max().date()} "
                                    f"for a request of {s} to {e}")
         if not cache.exists():
+            cache.parent.mkdir(parents=True, exist_ok=True)
             cache.write_text(json.dumps(payload))                              # cache only what passed
         frames.append(df)
         infos.append(info)
@@ -169,9 +170,12 @@ def fetch(field, start="2001-01-01", end="2025-12-31", data_dir=REPO / "data", g
         time_zone=f"{info['time_standard']} (local solar time; from the API header time_standard)",
         pixel_count=1,
         source=f"NASA POWER, model-based (sources reported by the API: {', '.join(info['sources'])})",
-        resolution="0.5 x 0.625 deg meteorology per CLAUDE.md (TODO-VERIFY); solar from SYN1DEG (resolution TODO-VERIFY)",
+        resolution=("0.5 x 0.625 deg meteorology (MERRA-2; GEOS-IT for the latest 1-3 months); 1 x 1 deg solar "
+                    "(CERES SYN1deg Ed. 4.2 from 2001; FLASHFlux 4A for the latest 3-4 months). Source: POWER methodology docs"),
         raw_attrs=info["raw_attrs"],
         range_warnings=warned,
+        location={"lat": field["lat"], "lon": field["lon"], "elevation_m": info["cell_elevation_m"],
+                  "elevation_source": "POWER grid cell (API geometry)"},
         notes=(f"Point request at {field['lat']}, {field['lon']}; one grid cell, so pixel_count is 1. POWER cell "
                f"elevation {info['cell_elevation_m']} m (not the field's). Every day kept; fill values became "
                "missing values. D6: rain for the twin comes from GPM IMERG; PRECTOTCORR is for cross-checks only."),

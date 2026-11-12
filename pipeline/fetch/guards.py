@@ -39,7 +39,10 @@ CARD_FIELDS = [
     "fill_values_removed", "quality_flags_used", "records_dropped", "date_range", "time_zone",
     "pixel_count", "source", "resolution", "raw_attrs",
 ]
-CARD_OPTIONAL = ["notes", "range_warnings", "segments"]  # segments: product switches over time (D1)
+CARD_OPTIONAL = ["notes", "range_warnings", "segments",   # segments: product switches over time (D1)
+                 "location",                               # {lat, lon, elevation_m, ...} of the cell or station
+                 "corrections",                            # decision A: what was corrected, how, held-out error
+                 "cross_source_flags"]                     # decision B: rain spike flags (never deletions)
 
 
 class DataGuardError(ValueError):
@@ -141,6 +144,17 @@ def make_card(**fields):
     if unknown:
         raise DataGuardError(f"data card has unknown fields: {unknown}")
     return {k: fields[k] for k in CARD_FIELDS + CARD_OPTIONAL if k in fields}
+
+
+def annotate_card(path, key, value):
+    """Add or replace one optional field in an existing card file (e.g. spike flags found later)."""
+    if key not in CARD_OPTIONAL:
+        raise DataGuardError(f"cannot add '{key}' to a card; allowed: {CARD_OPTIONAL}")
+    path = Path(path)
+    card = json.loads(path.read_text())
+    card[key] = value
+    path.write_text(json.dumps(make_card(**card), indent=1, default=str) + "\n")
+    return path
 
 
 def write_card(card, cards_dir):

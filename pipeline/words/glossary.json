@@ -1,0 +1,743 @@
+{
+ "_about": "Science words live only here (CLAUDE.md 'Site rules'). One plain sentence per term. Every term and every alias in aliases_en, every Nepali word in ne_block, and every word in never_on_screens is banned from the screens, tabs, tips and crop explainers (tests/test_words.py). 'basis' says where the meaning comes from. Every Nepali text was drafted by SI (Claude) on 2026-11-12 and needs native-speaker review before export; each node carries ne_review until a reviewer replaces it with their name and date.",
+ "terms": [
+  {
+   "id": "evapotranspiration",
+   "term": {
+    "en": "evapotranspiration",
+    "ne": "वाष्पीकरण र वाष्पोत्सर्जन",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Water that rises into the air from the soil and from plant leaves.",
+    "ne": "माटो र बिरुवाका पातबाट उडेर हावामा जाने पानी।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "evaporation",
+    "transpiration",
+    "ET0",
+    "ETc",
+    "ETa",
+    "crop water use"
+   ],
+   "ne_block": [
+    "वाष्पीकरण",
+    "वाष्पोत्सर्जन"
+   ],
+   "basis": "FAO-56 (Allen et al. 1998) Chapter 1, 'Evapotranspiration process': 'The combination of two separate processes whereby water is lost on the one hand from the soil surface by evaporation and on the other hand from the crop by transpiration is referred to as evapotranspiration (ET).' https://www.fao.org/4/x0490e/x0490e04.htm (opened 2026-11-12)"
+  },
+  {
+   "id": "soil_moisture_anomaly",
+   "term": {
+    "en": "soil moisture anomaly",
+    "ne": "माटोको ओसको असामान्यता",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "How much wetter or drier the soil is than usual for that time of year.",
+    "ne": "वर्षको त्यो समयमा सामान्यभन्दा माटो कति बढी ओसिलो वा सुक्खा छ भन्ने कुरा।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "soil moisture",
+    "moisture",
+    "anomaly",
+    "anomalies"
+   ],
+   "ne_block": [
+    "असामान्यता"
+   ],
+   "basis": "Standard meaning: the difference from the usual (long-term average) value for the same time of year; the diary's soil words are terciles of 2001-2025 (CLAUDE.md 'Monthly calendar')"
+  },
+  {
+   "id": "ndvi",
+   "term": {
+    "en": "NDVI",
+    "ne": "एनडीभीआई (हरियालीको सूचकाङ्क)",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A greenness score from satellite pictures: the higher it is, the more living green leaves.",
+    "ne": "भू-उपग्रहको तस्बिरबाट निकालिएको हरियालीको अङ्क: जति बढी, उति धेरै हरिया पात।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "normalized difference vegetation index",
+    "vegetation index",
+    "vegetation indices",
+    "greenness index"
+   ],
+   "ne_block": [
+    "एनडीभीआई",
+    "सूचकाङ्क"
+   ],
+   "basis": "NASA Earth Observatory, 'Measuring Vegetation (NDVI & EVI)' (Weier & Herring 2000): 'NDVI is calculated from the visible and near-infrared light reflected by vegetation' and 'no green leaves gives a value close to zero'. https://science.nasa.gov/earth/earth-observatory/measuring-vegetation-ndvi-evi/ (opened 2026-11-12). Our NDVI: HLS and MODIS"
+  },
+  {
+   "id": "frost_risk",
+   "term": {
+    "en": "frost risk",
+    "ne": "तुषारोको जोखिम",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "The chance of nights near or below freezing (under 2 °C) that can hurt crops.",
+    "ne": "बालीलाई हानि गर्न सक्ने, २ डिग्रीभन्दा चिसो रात पर्ने सम्भावना।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [],
+   "ne_block": [],
+   "basis": "CLAUDE.md 'Frost': a frost night is Tmin below 0 C, risk band 0 to 2 C. Shown as bands, never as a count (rules.yaml cold_nights.frost_display_note)"
+  },
+  {
+   "id": "water_balance",
+   "term": {
+    "en": "water balance",
+    "ne": "पानीको हिसाब (जल सन्तुलन)",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "The field's water account: rain and watering in; plant use, runoff and drainage out.",
+    "ne": "खेतको पानीको हिसाब: वर्षा र सिँचाइ भित्र; बिरुवाको प्रयोग, बहाव र चुहावट बाहिर।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "water budget",
+    "soil water balance",
+    "depletion"
+   ],
+   "ne_block": [
+    "जल सन्तुलन"
+   ],
+   "basis": "FAO-56 Chapter 8 root-zone water balance (CLAUDE.md 'Soil-water bucket')"
+  },
+  {
+   "id": "monsoon_onset",
+   "term": {
+    "en": "monsoon onset",
+    "ne": "मनसुन सुरुवात",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "The day the monsoon rains truly begin, with no long dry break soon after.",
+    "ne": "मनसुनको पानी साँच्चै सुरु भएको दिन, जसपछि छिट्टै लामो सुक्खा हुँदैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "onset"
+   ],
+   "ne_block": [
+    "सुरुवात"
+   ],
+   "basis": "CLAUDE.md 'Monsoon onset': from 15 May, the first run of at least 2 wet days totalling 10 mm within 5 days, not followed by a 10-day dry spell in the next 20 days"
+  },
+  {
+   "id": "bare_days",
+   "term": {
+    "en": "bare days",
+    "ne": "खाली दिन",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Days in a year when the field has almost no green plants, seen from space.",
+    "ne": "अन्तरिक्षबाट हेर्दा खेतमा हरियो बिरुवा लगभग नभएका वर्षका दिनहरू।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "fallow"
+   ],
+   "ne_block": [],
+   "basis": "CLAUDE.md 'Bare days': interpolated NDVI below the rules.yaml threshold (start 0.25, to be tuned)"
+  },
+  {
+   "id": "crop_rotation",
+   "term": {
+    "en": "crop rotation",
+    "ne": "बाली चक्र",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Growing different crops one after another on the same field, season by season.",
+    "ne": "एउटै खेतमा मौसमअनुसार एकपछि अर्को फरक बाली लगाउने तरिका।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "rotation",
+    "crop sequence"
+   ],
+   "ne_block": [
+    "चक्र"
+   ],
+   "basis": "FAO AGROVOC c_6662: 'Technique of growing alternating species or families of crops in a specific field in a planned pattern or sequence.' (opened 2026-11-12)"
+  },
+  {
+   "id": "cover_crop",
+   "term": {
+    "en": "cover crop",
+    "ne": "ढाक्ने बाली",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A crop grown mainly to keep the soil covered and healthy between main crops.",
+    "ne": "मुख्य बालीहरूको बीचमा माटो ढाकेर स्वस्थ राख्न लगाइने बाली।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "cover cropping"
+   ],
+   "ne_block": [
+    "ढाक्ने बाली"
+   ],
+   "basis": "FAO AGROVOC c_1936 'cover plants': 'Crop grown during fallow periods to protect soil, recycle nutrients and control weeds.' (opened 2026-11-12)"
+  },
+  {
+   "id": "satellite",
+   "term": {
+    "en": "satellite",
+    "ne": "भू-उपग्रह (स्याटेलाइट)",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A machine circling the Earth that sees wide areas at once, but not every detail.",
+    "ne": "पृथ्वी घुम्ने यन्त्र, जसले ठूलो क्षेत्र एकैपटक देख्छ तर हरेक सानो कुरा होइन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "remote sensing"
+   ],
+   "ne_block": [
+    "उपग्रह",
+    "स्याटेलाइट"
+   ],
+   "basis": "NASA challenge consideration: how satellite observations differ from ground-based measurements"
+  },
+  {
+   "id": "ground_measurement",
+   "term": {
+    "en": "ground measurement",
+    "ne": "जमिनमा गरिएको नाप",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A reading taken at one spot on the ground: exact there, but only there.",
+    "ne": "जमिनको एउटै ठाउँमा लिइएको नाप: त्यहाँ ठ्याक्कै, तर त्यहाँ मात्र।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "weather station",
+    "in situ",
+    "ground-based"
+   ],
+   "ne_block": [],
+   "basis": "NASA challenge consideration (as above); our ground readings are the Kathmandu Airport station (GHCN-Daily) and the soil probe"
+  },
+  {
+   "id": "data_fusion",
+   "term": {
+    "en": "data fusion",
+    "ne": "नाप मिलाउने तरिका (डाटा फ्युजन)",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Mixing space, computer and ground readings so each one fixes the others' weak spots.",
+    "ne": "अन्तरिक्ष, कम्प्युटर र जमिनका नाप मिलाएर एउटाको कमजोरी अर्कोले सच्याउने तरिका।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "fusion",
+    "Kalman",
+    "bias correction",
+    "quantile mapping"
+   ],
+   "ne_block": [
+    "फ्युजन"
+   ],
+   "basis": "CLAUDE.md 'Probe fusion' (scalar Kalman update) and decision A (station correction of POWER temperature)"
+  },
+  {
+   "id": "model_based",
+   "term": {
+    "en": "model-based",
+    "ne": "मोडेलमा आधारित",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Worked out by a computer from physics and other readings, not measured directly.",
+    "ne": "सिधै नापिएको होइन, भौतिक नियम र अरू नापबाट कम्प्युटरले निकालेको।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "model",
+    "modelled",
+    "modeled",
+    "simulation",
+    "simulated",
+    "reanalysis"
+   ],
+   "ne_block": [
+    "मोडेल",
+    "सिमुलेसन"
+   ],
+   "basis": "Golden rule 8: NASA POWER, SMAP L4 and the twin are labelled model-based. On screens: 'worked out by computer'"
+  },
+  {
+   "id": "field_twin",
+   "term": {
+    "en": "field twin",
+    "ne": "खेतको कम्प्युटर नमुना",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Our computer copy of your field that replays each season's water and crops.",
+    "ne": "हरेक मौसमको पानी र बाली फेरि चलाउने तपाईंको खेतको कम्प्युटर नमुना।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "twin",
+    "digital twin"
+   ],
+   "ne_block": [
+    "ट्विन"
+   ],
+   "basis": "CLAUDE.md 'What this repo is'"
+  },
+  {
+   "id": "relative_harvest",
+   "term": {
+    "en": "relative yield",
+    "ne": "उब्जनी प्रतिशत",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "This year's harvest compared with the best this field could give, never in tonnes.",
+    "ne": "यो खेतले दिन सक्ने सबैभन्दा राम्रो उब्जनीसँग दाँज्दा यस वर्षको उब्जनी, टनमा होइन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "yield",
+    "potential yield",
+    "yield potential",
+    "Ky",
+    "yield response factor",
+    "tonnes",
+    "tonne",
+    "kg/ha"
+   ],
+   "ne_block": [
+    "प्रतिशत"
+   ],
+   "basis": "CLAUDE.md 'Yield as a percentage of potential' (FAO-33) and golden rule 11"
+  },
+  {
+   "id": "water_stress",
+   "term": {
+    "en": "water stress",
+    "ne": "पानीको कमी",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Days when the soil is too dry for the crop to drink freely.",
+    "ne": "माटो यति सुक्खा हुन्छ कि बालीले सजिलै पानी खान नसक्ने दिनहरू।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "stress",
+    "stressed",
+    "Ks",
+    "readily available water"
+   ],
+   "ne_block": [
+    "तनाव"
+   ],
+   "basis": "CLAUDE.md: a dry day is a day with Ks < 1 during a crop season (FAO-56 eq. 84)"
+  },
+  {
+   "id": "irrigation",
+   "term": {
+    "en": "irrigation",
+    "ne": "सिँचाइ",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Water brought to the field by canal, well or pipe, as well as rain.",
+    "ne": "वर्षाबाहेक कुलो, इनार वा पाइपबाट खेतमा ल्याइएको पानी।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "irrigated",
+    "rain-fed",
+    "rainfed"
+   ],
+   "ne_block": [],
+   "basis": "config/fields water_source; every replay runs rain-fed and irrigated (owner, 2026-11-12)"
+  },
+  {
+   "id": "drought_year",
+   "term": {
+    "en": "drought year",
+    "ne": "खडेरी वर्ष",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A crop season whose rain was among the lowest fifth of all seasons since 2001.",
+    "ne": "सन् २००१ यताका सबैभन्दा सुक्खा पाँचौं भागमा पर्ने बाली मौसम।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "drought",
+    "decile"
+   ],
+   "ne_block": [],
+   "basis": "rules.yaml events.drought_decile_max (rainfall deciles 1-2; TODO-CONFIRM by the owner)"
+  },
+  {
+   "id": "flood_year",
+   "term": {
+    "en": "flood year",
+    "ne": "बाढी वर्ष",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A crop season with at least one day of 100 mm of rain or more.",
+    "ne": "कम्तीमा एक दिन १०० मिलिमिटर वा बढी पानी परेको बाली मौसम।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "very heavy rain"
+   ],
+   "ne_block": [
+    "बाढी"
+   ],
+   "basis": "rules.yaml events.flood_day_mm (DHM 'very heavy' rain; TODO-CONFIRM by the owner)"
+  },
+  {
+   "id": "soil_probe",
+   "term": {
+    "en": "soil probe",
+    "ne": "माटो जाँच्ने यन्त्र (प्रोब)",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A small stick pushed into the soil that measures how wet and warm it is.",
+    "ne": "माटो कति ओसिलो र तातो छ भनेर नाप्न माटोमा गाडिने सानो यन्त्र।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "probe",
+    "sensor",
+    "calibration"
+   ],
+   "ne_block": [
+    "प्रोब",
+    "सेन्सर"
+   ],
+   "basis": "CLAUDE.md 'Probe bridge'"
+  },
+  {
+   "id": "uncertainty",
+   "term": {
+    "en": "uncertainty",
+    "ne": "अनिश्चितता",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "How far a number could be from the truth; on screen, fog shows it.",
+    "ne": "कुनै अङ्क साँचोभन्दा कति फरक हुन सक्छ; स्क्रिनमा कुहिरोले यो देखाउँछ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "uncertain",
+    "confidence",
+    "probability",
+    "variance",
+    "error bar"
+   ],
+   "ne_block": [
+    "अनिश्चित"
+   ],
+   "basis": "CLAUDE.md: 'sure' (0 to 1) from the probe fusion; projections are ranges (golden rule 11)"
+  },
+  {
+   "id": "regional_water_storage",
+   "term": {
+    "en": "regional water storage",
+    "ne": "क्षेत्रीय जल भण्डार",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "All water held across a wide area, seen by satellites; not your own well.",
+    "ne": "भू-उपग्रहले नापेको ठूलो क्षेत्रभरिको सबै पानी; तपाईंको आफ्नै इनार होइन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "groundwater",
+    "ground water",
+    "water storage",
+    "aquifer",
+    "GRACE",
+    "mascon"
+   ],
+   "ne_block": [
+    "भण्डार",
+    "भूमिगत"
+   ],
+   "basis": "rules.yaml groundwater.caveat (owner, 2026-11-12): GRACE/GRACE-FO JPL mascon, about 330 km across"
+  },
+  {
+   "id": "erosion",
+   "term": {
+    "en": "erosion",
+    "ne": "भू-क्षय (माटो कटान)",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Soil carried away from the field by rain water or wind.",
+    "ne": "पानी वा हावाले खेतको माटो बगाएर लैजाने क्रिया।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "soil loss",
+    "RUSLE",
+    "erosivity"
+   ],
+   "ne_block": [
+    "भू-क्षय",
+    "कटान"
+   ],
+   "basis": "CLAUDE.md 'Erosion (RUSLE)'"
+  },
+  {
+   "id": "runoff",
+   "term": {
+    "en": "runoff",
+    "ne": "सतही बहाव",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Rain that flows off the field instead of soaking into the soil.",
+    "ne": "माटोमा नपसी खेतबाट बगेर जाने वर्षाको पानी।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "run-off",
+    "curve number",
+    "infiltration"
+   ],
+   "ne_block": [
+    "सतही बहाव"
+   ],
+   "basis": "CLAUDE.md 'Runoff (SCS curve number)'"
+  },
+  {
+   "id": "nitrogen_fixing_crop",
+   "term": {
+    "en": "nitrogen-fixing crop",
+    "ne": "नाइट्रोजन स्थिर गर्ने बाली (कोसे बाली)",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A crop like lentil whose root bacteria turn nitrogen from air into plant food.",
+    "ne": "मसुरजस्तो बाली, जसको जराका ब्याक्टेरियाले हावाको नाइट्रोजनलाई बिरुवाको खाना बनाउँछन्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "nitrogen-fixing",
+    "nitrogen fixation",
+    "nitrogen",
+    "legume",
+    "pulse crop",
+    "rhizobia",
+    "nodule"
+   ],
+   "ne_block": [
+    "नाइट्रोजन",
+    "ब्याक्टेरिया",
+    "कोसे"
+   ],
+   "basis": "crop_explainers.json nitrogen_fixing (FAO 2016, 'Soils and pulses: symbiosis for life', printed p. 43)"
+  },
+  {
+   "id": "deep_rooting_crop",
+   "term": {
+    "en": "deep-rooting crop",
+    "ne": "गहिरो जरा भएको बाली",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A crop whose roots reach water and food deep in the soil.",
+    "ne": "जरा माटोको गहिराइसम्म पुगेर पानी र खाना लिन सक्ने बाली।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "deep-rooting",
+    "deep-rooted",
+    "rooting depth",
+    "root zone"
+   ],
+   "ne_block": [],
+   "basis": "crop_explainers.json deep_rooting (FAO-56 Table 22; FAO Conservation Agriculture)"
+  },
+  {
+   "id": "drought_tolerant_crop",
+   "term": {
+    "en": "drought-tolerant crop",
+    "ne": "खडेरी सहने बाली",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A crop that still gives some harvest when the rains are short.",
+    "ne": "पानी कम पर्दा पनि केही उब्जनी दिने बाली।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "drought-tolerant",
+    "drought tolerance",
+    "drought-resistant",
+    "drought resistance"
+   ],
+   "ne_block": [],
+   "basis": "crop_explainers.json drought_tolerant (FAO 2023 International Year of Millets; ICRISAT)"
+  },
+  {
+   "id": "pest_cycle",
+   "term": {
+    "en": "pest cycle",
+    "ne": "कीरा र रोगको चक्र",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Pests and diseases that build up when crops of one family follow each other.",
+    "ne": "एउटै परिवारका बाली पालैपालो लगाउँदा बढ्दै जाने कीरा र रोग।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "crop family",
+    "pathogen"
+   ],
+   "ne_block": [],
+   "basis": "CLAUDE.md 'Score': pest-cycle breaks (no same crop family back to back); FAO Conservation Agriculture, 'Species diversification' (crop rotation prevents carry-over of crop-specific pests and diseases)"
+  },
+  {
+   "id": "organic_matter",
+   "term": {
+    "en": "organic matter",
+    "ne": "प्राङ्गारिक पदार्थ",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Rotting roots, leaves and dung in the soil that make it dark and crumbly.",
+    "ne": "माटोलाई कालो र खुकुलो बनाउने कुहिएका जरा, पात र गोबर।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "organic carbon",
+    "SOC",
+    "humus"
+   ],
+   "ne_block": [
+    "प्राङ्गारिक"
+   ],
+   "basis": "FAO Conservation Agriculture, 'Soil organic cover' and 'Benefits of CA'; SoilGrids soc (organic carbon)"
+  },
+  {
+   "id": "heat_stress",
+   "term": {
+    "en": "heat stress",
+    "ne": "तातोको असर",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "Days hotter than nine in ten of this place's usual days.",
+    "ne": "यस ठाउँका सामान्य दस दिनमध्ये नौ दिनभन्दा तातो दिनहरू।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "percentile",
+    "heatwave",
+    "heat wave"
+   ],
+   "ne_block": [],
+   "basis": "CLAUDE.md 'Trends': hot days are above the local 90th percentile of Tmax"
+  },
+  {
+   "id": "resolution",
+   "term": {
+    "en": "resolution",
+    "ne": "रिजोल्युसन",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "The size of the patch of land that one satellite or computer number covers.",
+    "ne": "भू-उपग्रह वा कम्प्युटरको एउटा अङ्कले ढाक्ने जमिनको टुक्राको आकार।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "pixel",
+    "grid cell"
+   ],
+   "ne_block": [
+    "रिजोल्युसन",
+    "पिक्सेल"
+   ],
+   "basis": "Golden rule 8: every number carries its source, resolution and years"
+  },
+  {
+   "id": "climate_projection",
+   "term": {
+    "en": "climate projection",
+    "ne": "जलवायु प्रक्षेपण",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A computer picture of possible future weather, given as a range, not a forecast.",
+    "ne": "भविष्यको सम्भावित मौसमको कम्प्युटर अनुमान, दायराका रूपमा, पक्का भविष्यवाणी होइन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [
+    "climate",
+    "projection",
+    "scenario",
+    "SSP",
+    "CMIP6",
+    "NEX-GDDP"
+   ],
+   "ne_block": [
+    "प्रक्षेपण",
+    "जलवायु"
+   ],
+   "basis": "CLAUDE.md 'Future': NEX-GDDP-CMIP6 delta change, SSP2-4.5 and SSP5-8.5, reported as a range"
+  }
+ ],
+ "never_on_screens": {
+  "_about": "Jargon with no glossary entry of its own: never shown to farmers at all.",
+  "en": [
+   "data",
+   "dataset",
+   "algorithm",
+   "AI",
+   "SI",
+   "machine learning",
+   "random forest",
+   "statistics",
+   "statistical",
+   "regression",
+   "coefficient",
+   "Kc",
+   "hectare",
+   "tercile",
+   "climatology",
+   "potential",
+   "parameter",
+   "index"
+  ],
+  "ne": [
+   "डाटा",
+   "तथ्याङ्क",
+   "एल्गोरिदम",
+   "कृत्रिम बुद्धि",
+   "हेक्टर",
+   "गुणाङ्क"
+  ]
+ }
+}

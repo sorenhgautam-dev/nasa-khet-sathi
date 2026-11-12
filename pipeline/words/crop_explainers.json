@@ -1,0 +1,363 @@
+{
+ "_about": "Short explainers on four kinds of crops (NASA consideration: 'how nitrogen-fixing crops, cover crops, deep-rooting crops, or drought-tolerant crops contribute to long-term soil health'). Plain words, eight words or fewer per sentence; the science word is the linked glossary term. Every claim carries a source from FAO, CGIAR or NARC that a research sub-agent opened on 2026-11-12, with the quote copied from the page. Examples are crop ids from config/crops.json. Every Nepali text was drafted by SI (Claude) on 2026-11-12 and needs native-speaker review before export; each node carries ne_review until a reviewer replaces it with their name and date.",
+ "explainers": {
+  "nitrogen_fixing": {
+   "glossary_term": "nitrogen_fixing_crop",
+   "title": {
+    "en": "Crops that feed the soil",
+    "ne": "माटोलाई मल दिने बाली",
+    "ne_review": "needs native-speaker review"
+   },
+   "examples": [
+    "lentil"
+   ],
+   "claims": [
+    {
+     "en": "Tiny helpers live in lentil roots.",
+     "ne": "मसुरको जरामा साना उपयोगी जीव बस्छन्।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Soils and pulses: symbiosis for life",
+      "year": 2016,
+      "url": "https://www.fao.org/4/i6437e/i6437e.pdf",
+      "where": "printed p. 43 (PDF p. 52), section 2.1 'The role of pulses in nutrient (re)cycling'",
+      "quote": "These plants, in symbiosis with certain types of bacteria are able to convert atmospheric nitrogen (N2) into nitrogen compounds (ammonium) that can be used by plants, while also improving soil fertility (FAO, 2016a). The symbiosis occurs in nodules formed on the plant roots, where the nitrogen-fixing bacteria are hosted",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "They turn air into natural fertilizer.",
+     "ne": "तिनले हावालाई प्राकृतिक मलमा बदल्छन्।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 2024,
+      "title": "World Pulses Day 2024: Shining the spotlight on the vital role of pulses in promoting soil health and nourishing people",
+      "url": "https://www.fao.org/newsroom/detail/world-pulses-day-2024--shining-the-spotlight-on-the-vital-role-of-pulses-in-promoting-soil-health-and-nourishing-people/en",
+      "where": "body text, paragraph after the Director-General's quote",
+      "quote": "Pulses improve soil health by hosting helpful bacteria, called rhizobia, in their roots. These bacteria convert nitrogen from the air into fertilizers in the soil.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "The next crop can use that fertilizer.",
+     "ne": "अर्को बालीले त्यो मल प्रयोग गर्न सक्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Soils and pulses: symbiosis for life",
+      "year": 2016,
+      "url": "https://www.fao.org/4/i6437e/i6437e.pdf",
+      "where": "printed p. 45, section 2.1",
+      "quote": "Provision of nitrogen derived from BNF to the subsequent crops ('nitrogen effect') increases yields especially where subsequent crops receive low or moderate levels of fertiliser.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "So you may need less bought fertilizer.",
+     "ne": "त्यसैले किनेको मल कम चाहिन सक्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Soils and pulses: symbiosis for life",
+      "year": 2016,
+      "url": "https://www.fao.org/4/i6437e/i6437e.pdf",
+      "where": "Executive summary, printed p. IX",
+      "quote": "By fixing atmospheric nitrogen and solubilizing phosphates, pulses contribute to reducing the need for synthetic fertilizers",
+      "accessed": "2026-11-12",
+      "note": "FAO gives no figure for how much less fertilizer the next crop needs, so the text says 'may'."
+     }
+    },
+    {
+     "en": "In Nepal, lentil often follows rice.",
+     "ne": "नेपालमा प्रायः धानपछि मसुर लगाइन्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "CIMMYT",
+      "year": 2020,
+      "title": "Paudel, Devkota, Keil and McDonald, 'Climate and landscape mediate patterns of low lentil productivity in Nepal', PLoS ONE 15(4): e0231377",
+      "url": "https://csisa.org/wp-content/uploads/sites/2/2020/04/Paudel_at_al-2020-Climate-and-landscape-mediate-patterns-of-low-lentil-productivity-in-Nepal.pdf",
+      "where": "p. 14 of 19, Discussion",
+      "quote": "the majority of lentil in Nepal is grown in rice-based cropping system [35,36] and most of the rice varieties grown are medium to long-duration.",
+      "accessed": "2026-11-12",
+      "note": "All authors are CIMMYT (a CGIAR centre). The study is about the Terai; no source opened describes rice then lentil in the Kathmandu valley itself."
+     }
+    },
+    {
+     "en": "Here, lentil is sown mid-October to mid-November.",
+     "ne": "यहाँ मसुर अक्टोबरको मध्यदेखि नोभेम्बरको मध्यसम्म छरिन्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 2021,
+      "title": "FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (lastUpdated 26/02/2021)",
+      "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002",
+      "where": "Lentil (Winter) row",
+      "quote": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March, 120-145 days",
+      "accessed": "2026-11-12",
+      "note": "Data row as recorded in config/crops.json (lentil calendar), not prose from the page."
+     }
+    }
+   ]
+  },
+  "cover": {
+   "glossary_term": "cover_crop",
+   "title": {
+    "en": "Crops that cover bare soil",
+    "ne": "खाली माटोलाई ढाकेर राख्ने बाली",
+    "ne_review": "needs native-speaker review"
+   },
+   "examples": [
+    "lentil",
+    "mustard"
+   ],
+   "claims": [
+    {
+     "en": "Rain does not hit covered soil hard.",
+     "ne": "ढाकिएको माटोमा पानीका थोपाले चोट गर्दैनन्।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Conservation Agriculture: Soil organic cover",
+      "year": "n.d.",
+      "url": "https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/",
+      "where": "page text",
+      "quote": "Vegetative cover is important in CA for the protection of the soil against the impacts of raindrops; to keep the soil shaded; and maintain the highest possible moisture content.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "More rain soaks in; less soil washes away.",
+     "ne": "धेरै पानी माटोमा पस्छ, कम माटो बग्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Benefits of Conservation Agriculture (CA)",
+      "year": "n.d.",
+      "url": "https://www.fao.org/conservation-agriculture/impact/benefits-of-ca/en/",
+      "where": "'Environmental benefits that protect the soil'",
+      "quote": "Residues on the soil surface reduce the splash-effect of the raindrops, and once the energy of the raindrops has dissipated the drops proceed to the soil without any harmful effect. This results in higher infiltration and reduced runoff, leading to less erosion.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "Their leftovers make the soil richer.",
+     "ne": "तिनका बाँकी भागले माटो मलिलो बनाउँछ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Conservation Agriculture: Soil organic cover",
+      "year": "n.d.",
+      "url": "https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/",
+      "where": "list of cover-crop effects",
+      "quote": "Providing an additional source of organic matter to improve soil structure.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "They can help keep weeds and pests down.",
+     "ne": "तिनले झार र कीरा कम गर्न सघाउँछन्।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Conservation Agriculture: Soil organic cover",
+      "year": "n.d.",
+      "url": "https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/",
+      "where": "list of cover-crop effects",
+      "quote": "Can be used to control weeds and pests.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "Lentil and mustard grow here in winter.",
+     "ne": "मसुर र तोरी यहाँ जाडोमा हुर्कन्छन्।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 2021,
+      "title": "FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (lastUpdated 26/02/2021)",
+      "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002",
+      "where": "Lentil (Winter) and Colza (rapeseed) rows",
+      "quote": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March; Colza (rapeseed): sowing 15 October to 15 November, harvest 15 March",
+      "accessed": "2026-11-12",
+      "note": "Data rows as recorded in config/crops.json. The Hill zone lists rapeseed, which crops.json calls mustard."
+     }
+    }
+   ]
+  },
+  "deep_rooting": {
+   "glossary_term": "deep_rooting_crop",
+   "title": {
+    "en": "Crops with deep roots",
+    "ne": "गहिरो जरा भएका बाली",
+    "ne_review": "needs native-speaker review"
+   },
+   "examples": [
+    "finger_millet",
+    "maize",
+    "wheat"
+   ],
+   "claims": [
+    {
+     "en": "Deep roots find water lower down.",
+     "ne": "गहिरो जराले तलको पानी भेट्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 1998,
+      "title": "Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8",
+      "url": "https://www.fao.org/4/x0490e/x0490e0e.htm",
+      "where": "section 'Total available water (TAW)'",
+      "quote": "TAW is the amount of water that a crop can extract from its root zone, and its magnitude depends on the type of soil and the rooting depth.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "They bring back food washed deep down.",
+     "ne": "तल बगेर गएको खाना तिनले फेरि माथि ल्याउँछन्।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Conservation Agriculture: Species diversification",
+      "year": "n.d.",
+      "url": "https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/",
+      "where": "section 'Crop rotation'",
+      "quote": "as they root at different soil depths, they are capable of exploring different soil layers for nutrients. Nutrients that have been leached to deeper layers and that are no longer available for the commercial crop, can be 'recycled' by the crops in rotation. This way the rotation crops function as biological pumps.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "Roots leave channels that let rain in.",
+     "ne": "जराले बनाएका प्वालबाट पानी माटोमा पस्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "title": "Conservation Agriculture: Species diversification",
+      "year": "n.d.",
+      "url": "https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/",
+      "where": "'The effects of crop rotation:'",
+      "quote": "Greater distribution of channels or biopores created by diverse roots (various forms, sizes and depths).",
+      "accessed": "2026-11-12",
+      "note": "Partly supported: FAO says diverse roots make channels and (on the 'Soil organic cover' page) that some roots raise percolation; it does not tie this to deep roots alone."
+     }
+    },
+    {
+     "en": "Millet roots can reach two metres down.",
+     "ne": "कोदोको जरा दुई मिटरसम्म पुग्न सक्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 1998,
+      "title": "Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8",
+      "url": "https://www.fao.org/4/x0490e/x0490e0e.htm",
+      "where": "Table 22, row 'Millet'",
+      "quote": "TABLE 22. Ranges of maximum effective rooting depth (Zr), and soil water depletion fraction for no stress (p), for common crops ... Millet 1.0-2.0 [m]",
+      "accessed": "2026-11-12",
+      "note": "FAO-56 gives 'Millet' as one row; finger millet is assumed to fit it (crops.json)."
+     }
+    },
+    {
+     "en": "Maize roots go much deeper than potato roots.",
+     "ne": "मकैको जरा आलुको भन्दा धेरै गहिरो जान्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 1998,
+      "title": "Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8",
+      "url": "https://www.fao.org/4/x0490e/x0490e0e.htm",
+      "where": "Table 22, rows 'Maize, Field (grain)' and 'Potato'",
+      "quote": "Maize, Field (grain) (field corn) 1.0-1.7 [m] ... Potato 0.4-0.6 [m]",
+      "accessed": "2026-11-12"
+     }
+    }
+   ]
+  },
+  "drought_tolerant": {
+   "glossary_term": "drought_tolerant_crop",
+   "title": {
+    "en": "Crops that cope with dry spells",
+    "ne": "सुक्खा सहन सक्ने बाली",
+    "ne_review": "needs native-speaker review"
+   },
+   "examples": [
+    "finger_millet"
+   ],
+   "claims": [
+    {
+     "en": "Millets cope with poor soil and hard weather.",
+     "ne": "कोदोजस्ता बाली कमजोर माटो र कडा मौसम सहन्छन्।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 2023,
+      "title": "International Year of Millets 2023: About",
+      "url": "https://www.fao.org/millets-2023/about/en",
+      "where": "page text ('They' = millets; the page lists finger millet and names Nepal as a grower)",
+      "quote": "They can thrive on poor soils, resist or tolerate many crop diseases and pests, and are resilient to adverse climatic conditions.",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "Finger millet is known as a hardy crop.",
+     "ne": "कोदो बलियो, कडा बाली मानिन्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "ICRISAT",
+      "year": "n.d.",
+      "title": "Finger millet: overview",
+      "url": "https://icrisat.org/crops/finger-millet/overview",
+      "where": "page text",
+      "quote": "The resilient nature of finger millet makes it particularly well-suited for cultivation in harsh agro-climatic conditions.",
+      "accessed": "2026-11-12",
+      "note": "Sources call finger millet resilient and hardy, not the most drought-tolerant millet; the next claim says so."
+     }
+    },
+    {
+     "en": "But other millets need a little less water.",
+     "ne": "तर चिनो, कागुनोलाई यसभन्दा अलि कम पानी चाहिन्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 1996,
+      "title": "The World Sorghum and Millet Economies: Facts, Trends and Outlook (FAO and ICRISAT), Annex I",
+      "url": "https://www.fao.org/4/w1808e/w1808e0k.htm",
+      "where": "Annex I",
+      "quote": "has a slightly higher water requirement than most other millets and is found in cooler, elevated regions up to 2000 metres above sea level.",
+      "accessed": "2026-11-12",
+      "note": "Honesty caveat kept on purpose. Nepali names two other millets (proso, foxtail): reviewer to check."
+     }
+    },
+    {
+     "en": "Hill farmers often plant millet among their maize.",
+     "ne": "पहाडमा किसानहरू प्रायः मकैबारीमा कोदो रोप्छन्।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "NARC",
+      "year": 2020,
+      "title": "Annual Report 2076/77 (2019/2020), National Seed Science Technology Research Centre, NARC, Khumaltar",
+      "url": "https://nsstrc.narc.gov.np/sites/default/files/2021-05/Press%202020%20Annual%20report,%202076-77(1)%20final.pdf",
+      "where": "printed p. 24 (PDF p. 38), section 3.2.3, Introduction",
+      "quote": "It is the fourth most important food crop in mid hills and high hills of Nepal and plays a vital role in the livelihood in these areas. ... It is pre-dominantly grown under maize/millet relay system in mid-hills of western, central and eastern regions",
+      "accessed": "2026-11-12"
+     }
+    },
+    {
+     "en": "Several different crops make total loss less likely.",
+     "ne": "धेरै किसिमका बाली लगाउँदा सबै गुम्ने डर घट्छ।",
+     "ne_review": "needs native-speaker review",
+     "source": {
+      "publisher": "FAO",
+      "year": 1998,
+      "title": "FAO's Emergency Activities: Technical Handbook Series, Phase One: Prevention",
+      "url": "https://www.fao.org/4/X6869E/x6869e01.htm",
+      "where": "section 2.1.1 'Crop Diversification'",
+      "quote": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
+      "accessed": "2026-11-12",
+      "note": "FAO frames this as diversification across crops, not rotation specifically."
+     }
+    }
+   ]
+  }
+ }
+}

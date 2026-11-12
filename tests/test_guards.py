@@ -222,6 +222,26 @@ def test_make_card_refuses_unknown_fields():
         g.make_card(**_card(colour="blue"))
 
 
+def test_make_card_accepts_location_and_corrections():
+    card = g.make_card(**_card(location={"lat": 27.67, "lon": 85.43, "elevation_m": 1269.39},
+                               corrections={"tmin_c": "Kathmandu-valley correction"}))
+    assert card["location"]["elevation_m"] == 1269.39
+
+
+def test_annotate_card_adds_an_optional_field_and_keeps_the_rest(tmp_path):
+    path = g.write_card(g.make_card(**_card()), tmp_path)
+    flags = [{"date": "2025-03-01", "high_source": "power", "high_mm": 233.66}]
+    g.annotate_card(path, "cross_source_flags", flags)
+    card = json.loads(path.read_text())
+    assert card["cross_source_flags"] == flags and card["variable"] == "PRECTOTCORR"
+
+
+def test_annotate_card_refuses_a_field_that_is_not_allowed(tmp_path):
+    path = g.write_card(g.make_card(**_card()), tmp_path)
+    with pytest.raises(g.DataGuardError, match="colour"):
+        g.annotate_card(path, "colour", "blue")
+
+
 def test_write_card_writes_json_named_after_the_dataset(tmp_path):
     card = g.make_card(**_card())
     path = g.write_card(card, tmp_path)

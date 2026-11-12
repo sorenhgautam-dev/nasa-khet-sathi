@@ -1,549 +1,612 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://khet-sathi/schema/field.json",
-  "title": "Khet Sathi field file: site/data/fields/<id>.json",
-  "description": "Output contract between the pipeline and the site, from CLAUDE.md 'The output contract'. Never rename or remove a key without updating this file and noting it in the step summary. Checks JSON Schema cannot express (ordering, uniqueness, cross-references, array lengths) live in pipeline/export/validate.py.",
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "field",
-    "diary",
-    "plans",
-    "replay",
-    "future",
-    "sources"
-  ],
-  "properties": {
-    "field": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name",
-        "lat",
-        "lon",
-        "sections"
-      ],
-      "properties": {
-        "name": {
-          "type": "string",
-          "minLength": 1
-        },
-        "lat": {
-          "type": "number",
-          "minimum": -90,
-          "maximum": 90
-        },
-        "lon": {
-          "type": "number",
-          "minimum": -180,
-          "maximum": 180
-        },
-        "sections": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "$ref": "#/$defs/section"
-          }
-        }
-      }
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://khet-sathi/schema/field.json",
+ "title": "Khet Sathi field file: site/data/fields/<id>.json",
+ "description": "Output contract between the pipeline and the site, from CLAUDE.md 'The output contract'. Never rename or remove a key without updating this file and noting it in the step summary. Checks JSON Schema cannot express (ordering, uniqueness, cross-references, array lengths) live in pipeline/export/validate.py.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "field",
+  "diary",
+  "plans",
+  "replay",
+  "future",
+  "sources"
+ ],
+ "properties": {
+  "field": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "name",
+    "lat",
+    "lon",
+    "sections"
+   ],
+   "properties": {
+    "name": {
+     "type": "string",
+     "minLength": 1
     },
-    "diary": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "shift_days",
-        "bare_days",
-        "guess",
-        "groundwater",
-        "months"
-      ],
-      "properties": {
-        "shift_days": {
-          "type": "number",
-          "description": "Monsoon-onset trend over the record, days (Sen's slope x record length). Negative = earlier."
-        },
-        "bare_days": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 366,
-          "description": "Typical bare days per year."
-        },
-        "guess": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "string",
-            "minLength": 1
-          },
-          "description": "Rotation guess in season order, crop ids or 'bare'."
-        },
-        "groundwater": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "trend_cm_per_year",
-            "direction",
-            "confidence"
-          ],
-          "description": "Regional water-storage trend from GRACE/GRACE-FO (JPL mascon CRI RL06.3). Used in plans' water score.",
-          "properties": {
-            "trend_cm_per_year": {
-              "type": "number",
-              "description": "Equivalent water thickness trend, cm per year."
-            },
-            "direction": {
-              "enum": [
-                "falling",
-                "steady",
-                "rising"
-              ]
-            },
-            "confidence": {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1,
-              "description": "0 to 1, like sure."
-            }
-          }
-        },
-        "months": {
-          "type": "array",
-          "minItems": 12,
-          "maxItems": 12,
-          "items": {
-            "$ref": "#/$defs/month"
-          }
-        }
-      }
+    "lat": {
+     "type": "number",
+     "minimum": -90,
+     "maximum": 90
     },
-    "plans": {
-      "type": "array",
-      "minItems": 3,
-      "description": "At least three strategies, one of them the current rotation (NASA challenge objective).",
-      "items": {
-        "$ref": "#/$defs/plan"
-      },
-      "contains": {
-        "type": "object",
-        "required": [
-          "id"
-        ],
-        "properties": {
-          "id": {
-            "const": "current"
-          }
-        }
-      }
+    "lon": {
+     "type": "number",
+     "minimum": -180,
+     "maximum": 180
     },
-    "replay": {
-      "type": "object",
-      "required": [
-        "current"
-      ],
-      "description": "Keys are plan ids.",
-      "additionalProperties": {
-        "type": "array",
-        "minItems": 1,
-        "items": {
-          "$ref": "#/$defs/replay_year"
-        }
-      }
-    },
-    "future": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "years",
-        "nothing_changes",
-        "with_plan"
-      ],
-      "properties": {
-        "years": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "integer",
-            "minimum": 2026,
-            "maximum": 2100
-          }
-        },
-        "nothing_changes": {
-          "$ref": "#/$defs/future_series"
-        },
-        "with_plan": {
-          "$ref": "#/$defs/future_series"
-        }
-      }
-    },
-    "sources": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "$ref": "#/$defs/source"
-      }
+    "sections": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "$ref": "#/$defs/section"
+     }
     }
+   }
   },
-  "$defs": {
-    "pct": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 100
+  "diary": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "shift_days",
+    "bare_days",
+    "guess",
+    "groundwater",
+    "months"
+   ],
+   "properties": {
+    "shift_days": {
+     "type": "number",
+     "description": "Monsoon-onset trend over the record, days (Sen's slope x record length). Negative = earlier."
     },
-    "mmdd": {
+    "bare_days": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 366,
+     "description": "Typical bare days per year."
+    },
+    "guess": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
       "type": "string",
-      "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+      "minLength": 1
+     },
+     "description": "Rotation guess in season order, crop ids or 'bare'."
     },
-    "lonlat": {
-      "type": "array",
-      "description": "[lon, lat] in degrees. Note the order: Leaflet wants [lat, lon].",
-      "prefixItems": [
-        {
-          "type": "number",
-          "minimum": -180,
-          "maximum": 180
-        },
-        {
-          "type": "number",
-          "minimum": -90,
-          "maximum": 90
-        }
-      ],
-      "minItems": 2,
-      "maxItems": 2
-    },
-    "section": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "polygon",
-        "status",
-        "wetness",
-        "temp",
-        "sure"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "pattern": "^s[0-9]+$"
-        },
-        "polygon": {
-          "type": "array",
-          "minItems": 3,
-          "items": {
-            "$ref": "#/$defs/lonlat"
-          },
-          "description": "Corner points, ring not closed (as in the CLAUDE.md example)."
-        },
-        "status": {
-          "enum": [
-            "green",
-            "yellow",
-            "red",
-            "grey"
-          ],
-          "description": "grey = unknown"
-        },
-        "wetness": {
-          "$ref": "#/$defs/pct"
-        },
-        "temp": {
-          "type": "number",
-          "minimum": -30,
-          "maximum": 50,
-          "description": "deg C; bounds from CLAUDE.md golden rule 12"
-        },
-        "sure": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-        }
+    "groundwater": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "trend_cm_per_year",
+      "direction",
+      "confidence"
+     ],
+     "description": "Regional water-storage trend from GRACE/GRACE-FO (JPL mascon CRI RL06.3). Used in plans' water score.",
+     "properties": {
+      "trend_cm_per_year": {
+       "type": "number",
+       "description": "Equivalent water thickness trend, cm per year."
+      },
+      "direction": {
+       "enum": [
+        "falling",
+        "steady",
+        "rising"
+       ]
+      },
+      "confidence": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1,
+       "description": "0 to 1, like sure."
       }
+     }
     },
-    "month": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "m",
-        "rain",
-        "soil",
-        "heat",
-        "frost",
-        "cover"
-      ],
-      "properties": {
-        "m": {
-          "enum": [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec"
-          ]
-        },
-        "rain": {
-          "enum": [
-            "low",
-            "medium",
-            "high"
-          ],
-          "description": "Tercile of 2001-2025 climatology."
-        },
-        "soil": {
-          "enum": [
-            "dry",
-            "medium",
-            "wet"
-          ],
-          "description": "Tercile of soil wetness."
-        },
-        "heat": {
-          "enum": [
-            "none",
-            "some",
-            "high"
-          ],
-          "description": "Hot days above the local 90th percentile of Tmax."
-        },
-        "frost": {
-          "enum": [
-            "none",
-            "risk",
-            "high"
-          ],
-          "description": "risk = nights 0 to 2 C; high = nights below 0 C (CLAUDE.md 'Frost')."
-        },
-        "cover": {
-          "enum": [
-            "bare",
-            "partial",
-            "crop"
-          ],
-          "description": "Typical ground cover that month."
-        }
-      }
-    },
-    "plan": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "name",
-        "crops",
-        "score",
-        "tabs",
-        "tips"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "pattern": "^[a-z0-9_]+$"
-        },
-        "name": {
-          "type": "string",
-          "minLength": 1
-        },
-        "crops": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "crop",
-              "start",
-              "end"
-            ],
-            "properties": {
-              "crop": {
-                "type": "string",
-                "minLength": 1
-              },
-              "start": {
-                "$ref": "#/$defs/mmdd"
-              },
-              "end": {
-                "$ref": "#/$defs/mmdd"
-              }
-            }
-          }
-        },
-        "score": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "harvest",
-            "water",
-            "cover",
-            "soil_kept"
-          ],
-          "properties": {
-            "harvest": {
-              "$ref": "#/$defs/pct"
-            },
-            "water": {
-              "$ref": "#/$defs/pct"
-            },
-            "cover": {
-              "$ref": "#/$defs/pct"
-            },
-            "soil_kept": {
-              "$ref": "#/$defs/pct"
-            }
-          }
-        },
-        "tabs": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "why",
-            "evidence",
-            "benefits",
-            "unknown",
-            "check"
-          ],
-          "properties": {
-            "why": {
-              "type": "string",
-              "minLength": 1
-            },
-            "evidence": {
-              "type": "string",
-              "minLength": 1
-            },
-            "benefits": {
-              "type": "string",
-              "minLength": 1
-            },
-            "unknown": {
-              "type": "string",
-              "minLength": 1
-            },
-            "check": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        },
-        "tips": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      }
-    },
-    "replay_year": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "year",
-        "harvest",
-        "dry_days",
-        "event"
-      ],
-      "properties": {
-        "year": {
-          "type": "integer",
-          "minimum": 2001,
-          "maximum": 2025
-        },
-        "harvest": {
-          "$ref": "#/$defs/pct"
-        },
-        "dry_days": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 366
-        },
-        "event": {
-          "enum": [
-            "none",
-            "drought",
-            "flood",
-            "frost"
-          ]
-        }
-      }
-    },
-    "future_series": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "harvest",
-        "harvest_low",
-        "harvest_high"
-      ],
-      "description": "One value per entry in future.years. harvest_low/high = spread across models and scenarios.",
-      "properties": {
-        "harvest": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "$ref": "#/$defs/pct"
-          }
-        },
-        "harvest_low": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "$ref": "#/$defs/pct"
-          }
-        },
-        "harvest_high": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "$ref": "#/$defs/pct"
-          }
-        }
-      }
-    },
-    "source": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name",
-        "product",
-        "resolution",
-        "years",
-        "type"
-      ],
-      "properties": {
-        "name": {
-          "type": "string",
-          "minLength": 1
-        },
-        "product": {
-          "type": "string",
-          "minLength": 1
-        },
-        "resolution": {
-          "type": "string",
-          "minLength": 1
-        },
-        "years": {
-          "type": "string",
-          "minLength": 1
-        },
-        "type": {
-          "enum": [
-            "satellite",
-            "model",
-            "station",
-            "probe"
-          ],
-          "description": "Golden rule 8: model-based data must be labelled model."
-        }
-      }
+    "months": {
+     "type": "array",
+     "minItems": 12,
+     "maxItems": 12,
+     "items": {
+      "$ref": "#/$defs/month"
+     }
     }
+   }
+  },
+  "plans": {
+   "type": "array",
+   "minItems": 3,
+   "description": "At least three strategies, one of them the current rotation (NASA challenge objective).",
+   "items": {
+    "$ref": "#/$defs/plan"
+   },
+   "contains": {
+    "type": "object",
+    "required": [
+     "id"
+    ],
+    "properties": {
+     "id": {
+      "const": "current"
+     }
+    }
+   }
+  },
+  "replay": {
+   "type": "object",
+   "required": [
+    "current"
+   ],
+   "description": "Keys are plan ids.",
+   "additionalProperties": {
+    "type": "array",
+    "minItems": 1,
+    "items": {
+     "$ref": "#/$defs/replay_year"
+    }
+   }
+  },
+  "future": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "years",
+    "nothing_changes",
+    "with_plan"
+   ],
+   "properties": {
+    "years": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "integer",
+      "minimum": 2026,
+      "maximum": 2100
+     }
+    },
+    "nothing_changes": {
+     "$ref": "#/$defs/future_series"
+    },
+    "with_plan": {
+     "$ref": "#/$defs/future_series"
+    }
+   }
+  },
+  "sources": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "$ref": "#/$defs/source"
+   }
   }
+ },
+ "$defs": {
+  "pct": {
+   "type": "number",
+   "minimum": 0,
+   "maximum": 100
+  },
+  "mmdd": {
+   "type": "string",
+   "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+  },
+  "lonlat": {
+   "type": "array",
+   "description": "[lon, lat] in degrees. Note the order: Leaflet wants [lat, lon].",
+   "prefixItems": [
+    {
+     "type": "number",
+     "minimum": -180,
+     "maximum": 180
+    },
+    {
+     "type": "number",
+     "minimum": -90,
+     "maximum": 90
+    }
+   ],
+   "minItems": 2,
+   "maxItems": 2
+  },
+  "section": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "id",
+    "polygon",
+    "status",
+    "wetness",
+    "temp",
+    "sure"
+   ],
+   "properties": {
+    "id": {
+     "type": "string",
+     "pattern": "^s[0-9]+$"
+    },
+    "polygon": {
+     "type": "array",
+     "minItems": 3,
+     "items": {
+      "$ref": "#/$defs/lonlat"
+     },
+     "description": "Corner points, ring not closed (as in the CLAUDE.md example)."
+    },
+    "status": {
+     "enum": [
+      "green",
+      "yellow",
+      "red",
+      "grey"
+     ],
+     "description": "grey = unknown"
+    },
+    "wetness": {
+     "$ref": "#/$defs/pct"
+    },
+    "temp": {
+     "type": "number",
+     "minimum": -30,
+     "maximum": 50,
+     "description": "Soil temperature in deg C, from the soil probe (owner, 2026-11-12: not air temperature); bounds from CLAUDE.md golden rule 12"
+    },
+    "sure": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    }
+   }
+  },
+  "month": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "m",
+    "rain",
+    "soil",
+    "heat",
+    "frost",
+    "cover"
+   ],
+   "properties": {
+    "m": {
+     "enum": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+     ]
+    },
+    "rain": {
+     "enum": [
+      "low",
+      "medium",
+      "high"
+     ],
+     "description": "Tercile of 2001-2025 climatology."
+    },
+    "soil": {
+     "enum": [
+      "dry",
+      "medium",
+      "wet"
+     ],
+     "description": "Tercile of soil wetness."
+    },
+    "heat": {
+     "enum": [
+      "none",
+      "some",
+      "high"
+     ],
+     "description": "Hot days above the local 90th percentile of Tmax."
+    },
+    "frost": {
+     "enum": [
+      "none",
+      "risk",
+      "high"
+     ],
+     "description": "risk = nights 0 to 2 C; high = nights below 0 C (CLAUDE.md 'Frost')."
+    },
+    "cover": {
+     "enum": [
+      "bare",
+      "partial",
+      "crop"
+     ],
+     "description": "Typical ground cover that month."
+    }
+   }
+  },
+  "plan": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "id",
+    "name",
+    "crops",
+    "score",
+    "tabs",
+    "tips",
+    "tabs_ne",
+    "tips_ne"
+   ],
+   "properties": {
+    "id": {
+     "type": "string",
+     "pattern": "^[a-z0-9_]+$"
+    },
+    "name": {
+     "type": "string",
+     "minLength": 1
+    },
+    "crops": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "crop",
+       "start",
+       "end"
+      ],
+      "properties": {
+       "crop": {
+        "type": "string",
+        "minLength": 1
+       },
+       "start": {
+        "$ref": "#/$defs/mmdd"
+       },
+       "end": {
+        "$ref": "#/$defs/mmdd"
+       }
+      }
+     }
+    },
+    "score": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "harvest",
+      "water",
+      "cover",
+      "soil_kept"
+     ],
+     "properties": {
+      "harvest": {
+       "$ref": "#/$defs/pct"
+      },
+      "water": {
+       "$ref": "#/$defs/pct"
+      },
+      "cover": {
+       "$ref": "#/$defs/pct"
+      },
+      "soil_kept": {
+       "$ref": "#/$defs/pct"
+      }
+     }
+    },
+    "tabs": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "why",
+      "evidence",
+      "benefits",
+      "unknown",
+      "check"
+     ],
+     "properties": {
+      "why": {
+       "type": "string",
+       "minLength": 1
+      },
+      "evidence": {
+       "type": "string",
+       "minLength": 1
+      },
+      "benefits": {
+       "type": "string",
+       "minLength": 1
+      },
+      "unknown": {
+       "type": "string",
+       "minLength": 1
+      },
+      "check": {
+       "type": "string",
+       "minLength": 1
+      }
+     }
+    },
+    "tips": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "minLength": 1
+     }
+    },
+    "tabs_ne": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "why",
+      "evidence",
+      "benefits",
+      "unknown",
+      "check"
+     ],
+     "properties": {
+      "why": {
+       "$ref": "#/$defs/ne_text"
+      },
+      "evidence": {
+       "$ref": "#/$defs/ne_text"
+      },
+      "benefits": {
+       "$ref": "#/$defs/ne_text"
+      },
+      "unknown": {
+       "$ref": "#/$defs/ne_text"
+      },
+      "check": {
+       "$ref": "#/$defs/ne_text"
+      }
+     },
+     "description": "Nepali version of tabs, the same five tabs (owner, 2026-11-12). Nepali is shown first on the site."
+    },
+    "tips_ne": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/ne_text"
+     },
+     "description": "Nepali version of tips: one per English tip, in the same order (validate.py checks the count)."
+    }
+   }
+  },
+  "replay_year": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "year",
+    "harvest",
+    "dry_days",
+    "event"
+   ],
+   "properties": {
+    "year": {
+     "type": "integer",
+     "minimum": 2001,
+     "maximum": 2025
+    },
+    "harvest": {
+     "$ref": "#/$defs/pct"
+    },
+    "dry_days": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 366
+    },
+    "event": {
+     "enum": [
+      "none",
+      "drought",
+      "flood"
+     ],
+     "description": "The year's weather event for the crop seasons. No 'frost' (owner, 2026-11-12, REVIEW_NOTES M1): frost is shown only as a risk band in diary.months[].frost."
+    },
+    "irrigated": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "harvest",
+      "dry_days"
+     ],
+     "description": "The same year with irrigation whenever the root zone passes the stress point (owner's go, 2026-11-12). harvest and dry_days above are the field's own water case.",
+     "properties": {
+      "harvest": {
+       "$ref": "#/$defs/pct"
+      },
+      "dry_days": {
+       "type": "integer",
+       "minimum": 0,
+       "maximum": 366
+      }
+     }
+    }
+   }
+  },
+  "future_series": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "harvest",
+    "harvest_low",
+    "harvest_high"
+   ],
+   "description": "One value per entry in future.years. harvest_low/high = spread across models and scenarios.",
+   "properties": {
+    "harvest": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "$ref": "#/$defs/pct"
+     }
+    },
+    "harvest_low": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "$ref": "#/$defs/pct"
+     }
+    },
+    "harvest_high": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "$ref": "#/$defs/pct"
+     }
+    }
+   }
+  },
+  "source": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "name",
+    "product",
+    "resolution",
+    "years",
+    "type"
+   ],
+   "properties": {
+    "name": {
+     "type": "string",
+     "minLength": 1
+    },
+    "product": {
+     "type": "string",
+     "minLength": 1
+    },
+    "resolution": {
+     "type": "string",
+     "minLength": 1
+    },
+    "years": {
+     "type": "string",
+     "minLength": 1
+    },
+    "type": {
+     "enum": [
+      "satellite",
+      "model",
+      "station",
+      "probe"
+     ],
+     "description": "Golden rule 8: model-based data must be labelled model."
+    }
+   }
+  },
+  "ne_text": {
+   "type": "string",
+   "minLength": 1,
+   "pattern": "[\\u0900-\\u097F]",
+   "description": "Nepali text: must contain Devanagari (owner, 2026-11-12)."
+  }
+ }
 }

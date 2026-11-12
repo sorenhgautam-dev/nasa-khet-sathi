@@ -125,10 +125,24 @@ def test_fetch_keeps_each_field_in_its_own_folder(tmp_path, payload):
                       data_dir=tmp_path, get_json=lambda url: copy.deepcopy(payload))
     assert Path(out["table"]) == tmp_path / "clean" / "kenya" / "power.parquet"
     assert Path(out["card"]) == tmp_path / "cards" / "kenya" / "power.json"
-    assert list((tmp_path / "raw" / "power" / "kenya").glob("*.json"))
+    assert list((tmp_path / "raw" / "power" / "kenya").glob("*/*.json"))
 
 
 def test_fetch_refuses_a_response_for_the_wrong_dates(tmp_path, payload):
     with pytest.raises(DataGuardError, match="dates"):
         power.fetch(FIELD, "2002-01-01", "2002-01-02", data_dir=tmp_path,
                     get_json=lambda url: copy.deepcopy(payload))
+
+
+def test_a_moved_field_point_does_not_reuse_the_old_points_cache(tmp_path, payload):
+    """Owner, 2026-11-12: the demo field moved to a placeholder point; its POWER cache must not be reused."""
+    calls = []
+
+    def fake_get(url):
+        calls.append(url)
+        return copy.deepcopy(payload)
+
+    power.fetch(FIELD, "2001-01-01", "2001-01-02", data_dir=tmp_path, get_json=fake_get)
+    power.fetch({**FIELD, "lat": 27.6785, "lon": 85.427417}, "2001-01-01", "2001-01-02", data_dir=tmp_path,
+                get_json=fake_get)
+    assert len(calls) == 2 and "27.6785" in calls[1]

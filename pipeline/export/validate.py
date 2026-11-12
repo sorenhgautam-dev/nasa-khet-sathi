@@ -47,6 +47,10 @@ def validate_field(doc):
     plan_ids = [p["id"] for p in doc["plans"]]
     if d := _dupes(plan_ids):
         errors.append(f"plans: duplicate ids {d}")
+    for p in doc["plans"]:
+        if len(p["tips_ne"]) != len(p["tips"]):
+            errors.append(f"plans/{p['id']}: tips_ne needs one Nepali tip per English tip "
+                          f"({len(p['tips_ne'])} vs {len(p['tips'])})")
     for key, years in doc["replay"].items():
         if key not in plan_ids:
             errors.append(f"replay/{key}: no plan with this id")

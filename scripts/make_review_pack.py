@@ -26,6 +26,7 @@ EXPECTED_DIRS = {  # pack folder -> (source folder, glob, what it is); per-field
     "cards": ("data/cards", "**/*.json", "data cards (golden rule 12d)"),
     "checks": ("data/checks", "**/*.json", "validation checks and cross-checks (see VALIDATION.md for what is still missing)"),
     "field_pixel_plots": ("data/plots/pixels", "**/*.png", "field outline over each gridded dataset's pixels"),
+    "plots": ("data/plots", "*/*.png", "model plots (e.g. the season root-zone depletion plot)"),
     "switch_off": ("data/switch_off", "**/*.json", "switch-off test results"),
 }
 SECRET_WORDS = ["password", "token", "key"]

@@ -4,16 +4,21 @@
 
 Every value in the field file is made up. It is labelled MOCK (field name, sources, every tab) so it can
 never pass for real data, and validate.py warns while any MOCK file remains. Only the demo point and
-bbox come from CLAUDE.md. Real exports replace this file from build step 5 onward.
+bbox come from config/fields/demo.yaml: since 2026-11-12 that is a labelled PLACEHOLDER field (the old
+CLAUDE.md point is Bhaktapur's old city), and the index bbox is the field's fetch box. Real exports
+replace the mock parts from build step 5 onward.
 """
 import json
 import sys
 from pathlib import Path
 
 from pipeline.export.validate import REPO, validate_field, validate_index
+from pipeline.fetch.fields import load_field
 
-LAT, LON = 27.67, 85.43                      # demo point, CLAUDE.md output contract
-BBOX = [85.42, 27.66, 85.44, 27.68]          # demo bbox, CLAUDE.md index.json example
+_CFG = load_field("demo")
+LAT, LON = _CFG["lat"], _CFG["lon"]          # PLACEHOLDER field centre (config/fields/demo.yaml)
+BBOX = list(_CFG["bbox"])                    # prepared area = the fetch box
+SW = [min(p[0] for p in _CFG["polygon"]), min(p[1] for p in _CFG["polygon"])]   # mock sections start here
 CELL_DEG = 0.0001                            # about 11 m north-south, 10 m east-west at 27.7 N
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -24,7 +29,7 @@ def _sections(rows=3, cols=4):
     for r in range(rows):
         for c in range(cols):
             k = r * cols + c + 1
-            x0, y0 = LON + c * CELL_DEG, LAT + r * CELL_DEG
+            x0, y0 = SW[0] + c * CELL_DEG, SW[1] + r * CELL_DEG
             x1, y1 = x0 + CELL_DEG, y0 + CELL_DEG
             corners = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]]
             out.append({
@@ -48,9 +53,17 @@ def _months():
             for m, a, b, c, d, e in zip(MONTHS, rain, soil, heat, frost, cover)]
 
 
+TAB_KEYS = ("why", "evidence", "benefits", "unknown", "check")
+
+
 def _tabs(plan_name):
     return {k: f"MOCK text for the {k} tab of '{plan_name}'. Real text comes from build step 7."
-            for k in ("why", "evidence", "benefits", "unknown", "check")}
+            for k in TAB_KEYS}
+
+
+def _tabs_ne(plan_name):
+    return {k: f"MOCK '{plan_name}' योजनाको {k} ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।"
+            for k in TAB_KEYS}
 
 
 def _plans():
@@ -63,20 +76,23 @@ def _plans():
          {"harvest": 76, "water": 55, "cover": 55, "soil_kept": 66}),
     ]
     return [{"id": i, "name": n, "crops": [{"crop": c, "start": s, "end": e} for c, s, e in crops],
-             "score": score, "tabs": _tabs(n), "tips": [f"MOCK tip for '{n}'."]}
+             "score": score, "tabs": _tabs(n), "tips": [f"MOCK tip for '{n}'."],
+             "tabs_ne": _tabs_ne(n), "tips_ne": [f"MOCK '{n}' को नमुना सुझाव।"]}
             for i, n, crops, score in specs]
 
 
 def _replay(offset):
-    events = {2006: "drought", 2009: "drought", 2013: "frost", 2017: "flood", 2021: "flood"}
+    events = {2006: "drought", 2009: "drought", 2017: "flood", 2021: "flood"}
     return [{"year": y, "harvest": max(0, min(100, 60 + offset + (y * 7) % 25 - (20 if y in events else 0))),
-             "dry_days": (y * 3) % 30, "event": events.get(y, "none")} for y in range(2001, 2026)]
+             "dry_days": (y * 3) % 30, "event": events.get(y, "none"),
+             "irrigated": {"harvest": max(0, min(100, 85 + offset + (y * 7) % 10)), "dry_days": (y * 3) % 5}}
+            for y in range(2001, 2026)]
 
 
 def build_field():
     plans = _plans()
     return {
-        "field": {"name": "Demo field (MOCK data)", "lat": LAT, "lon": LON, "sections": _sections()},
+        "field": {"name": f"{_CFG['name']} (MOCK data)", "lat": LAT, "lon": LON, "sections": _sections()},
         "diary": {"shift_days": 12, "bare_days": 110, "guess": ["rice", "wheat"],
                   "groundwater": {"trend_cm_per_year": -1.2, "direction": "falling", "confidence": 0.7},
                   "months": _months()},
@@ -91,7 +107,7 @@ def build_field():
 
 
 def build_index():
-    return {"fields": [{"id": "demo", "name": "Bhaktapur demo field", "country": "Nepal",
+    return {"fields": [{"id": "demo", "name": _CFG["name"], "country": _CFG["country"],
                         "lat": LAT, "lon": LON, "bbox": list(BBOX)}]}
 
 

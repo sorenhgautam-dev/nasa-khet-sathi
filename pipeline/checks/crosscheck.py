@@ -24,6 +24,24 @@ def compare(ref, other):
             "mae": float((b - a).abs().mean())}
 
 
+def lag_correlation(ref, other, col, lags):
+    """Owner decision C: correlation of daily values at each lag. Lag k pairs ref day d with other day
+    d + k, so a source that books each day's rain one day late fits best at k = +1."""
+    out = {}
+    for k in lags:
+        shifted = other[["date", col]].assign(date=other["date"] - pd.to_timedelta(k, unit="D"))
+        j = ref[["date", col]].merge(shifted, on="date", suffixes=("_ref", "_other")).dropna()
+        a, b = j[f"{col}_ref"], j[f"{col}_other"]
+        out[k] = {"n": int(len(j)),
+                  "pearson": float(a.corr(b)) if len(j) > 2 else None,
+                  "spearman": float(a.rank().corr(b.rank())) if len(j) > 2 else None}  # ranks: no scipy needed
+    return out
+
+
+def best_lag(result, key="pearson"):
+    return max((k for k in result if result[k][key] is not None), key=lambda k: result[k][key])
+
+
 def paired_difference(ref, other, col):
     """Mean of (other - ref) on days both have a value."""
     j = ref[["date", col]].merge(other[["date", col]], on="date", suffixes=("_ref", "_other")).dropna()

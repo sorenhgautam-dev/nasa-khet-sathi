@@ -1,0 +1,479 @@
+{
+ "_about": "Crop library for the twin (CLAUDE.md step 4). Values from FAO Irrigation and Drainage Paper 56 (Allen et al. 1998) Tables 11, 12, 14, 22 and 24, read on fao.org on 2026-11-12 (Chapter 6: https://www.fao.org/4/x0490e/x0490e0b.htm; Chapter 8: https://www.fao.org/4/x0490e/x0490e0e.htm), and FAO-66 (Steduto et al. 2012) Table 1 (https://www.fao.org/4/i2800e/i2800e02.pdf). FAO-56 has no Nepal rows: stage lengths are the closest listed analog and need local checking. Where FAO gives a range, the value used and why are in the source text. null = not published in any source opened: TODO-VERIFY. Rules for choosing within ranges: Zr uses the larger value ('for modeling soil water stress or for rainfed conditions', Table 22 footnote 1); a blank Kc ini takes its crop group's value ('representative of the whole group', Table 12 text). Calendars: FAO Crop Calendar for Nepal's Hill agro-ecological zone (incl. Kathmandu, Lalitpur, Bhaktapur). Stage lengths of rice, wheat, maize, lentil and finger millet are scaled in proportion to the local growing period (the midpoint of the default calendar window's days; largest-remainder rounding, pipeline/twin/crops.py scale_stages; REVIEW_NOTES H4, 2026-11-12); FAO-56's own rows are kept in stages_fao56. Potato's FAO-56 length (115 d) already lies in its window (100-120 d) and is not scaled. Mustard and buckwheat have no FAO-56 stage lengths: they carry simulate false, with the reason in sources.simulate, and the twin runs only crops with complete parameters (pipeline/twin/crops.py simulatable_crops). Ky: crops with no published seasonal Ky carry an owner-assumed neutral 1.0 (ky_assumed true; owner decision 2026-11-12).",
+ "crops": {
+  "rice": {
+   "name": "Rice (monsoon paddy)",
+   "family": "Poaceae",
+   "legume": false,
+   "paddy": true,
+   "stages_days": {
+    "ini": 22,
+    "dev": 22,
+    "mid": 44,
+    "late": 22
+   },
+   "kc": {
+    "ini": 1.05,
+    "mid": 1.2,
+    "end": 0.75
+   },
+   "zr_m": 1.0,
+   "p": 0.2,
+   "ky": 1.0,
+   "ky_assumed": true,
+   "calendar": {
+    "windows": [
+     {
+      "sow": "05-15",
+      "sow_end": "06-15",
+      "harvest": "09-15",
+      "harvest_end": "10-15",
+      "days": [
+       100,
+       120
+      ],
+      "note": "Seed should be sown one month before"
+     },
+     {
+      "sow": "06-01",
+      "sow_end": "07-15",
+      "harvest": "10-15",
+      "harvest_end": "11-15",
+      "days": [
+       100,
+       120
+      ],
+      "note": ""
+     },
+     {
+      "sow": "07-15",
+      "sow_end": "08-15",
+      "harvest": "11-15",
+      "harvest_end": "12-15",
+      "days": [
+       120,
+       140
+      ],
+      "note": ""
+     }
+    ],
+    "default": 1
+   },
+   "sources": {
+    "family": "botanical classification",
+    "legume": "botanical classification",
+    "stages_days": "FAO-56 Table 11, Rice 30/30/60/30 = 150 d ('Tropics; Mediterranean'), scaled in proportion to the local growing period 110 d (midpoint of 100-120 d, FAO Crop Calendar Hill zone) = 22/22/44/22. FAO-56 Table 11 note: lengths are 'indicative' and 'The user is strongly encouraged to obtain appropriate local information'. Scaling rule: Claude's choice, owner-approved 2026-11-12, step-4 review item 5",
+    "kc": "FAO-56 Table 12, Rice: Kc ini 1.05 (Table 14: sub-humid to humid, light wind = 1.05), Kc mid 1.20, Kc end '0.90-0.60'; 0.75 is the midpoint (Claude's choice, owner-approved 2026-11-12, step-4 review item 5)",
+    "zr_m": "FAO-56 Table 22, Rice 0.5-1.0 m; larger value (footnote 1)",
+    "p": "FAO-56 Table 22, Rice 0.20, footnote 4 'of saturation'. Our bucket applies it to TAW between field capacity and wilting point: a simplification",
+    "ky": "ASSUMED, not published: owner decision 2026-11-12 (step-4 review item 4) - neutral Ky 1.0 assumed (harvest falls in step with water shortage), labelled 'assumed' wherever it is used. Sensitivity runs use Ky 0.8 and 1.2 (config/rules.yaml ky_assumed). Why assumed: no seasonal Ky for rice in FAO-56 Table 24, FAO-66 Tables 1-2 or the FAO crop-information pages; FAO-33 itself could not be opened. A peer-reviewed seasonal rice Ky replaces it, with its citation, if one is found. Search for a published value continues: TODO-VERIFY",
+    "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Rice (Summer Season). Default window 2 (sow 1 Jun-15 Jul): Claude's choice, owner-approved 2026-11-12, step-4 review item 5"
+   },
+   "stages_fao56": {
+    "ini": 30,
+    "dev": 30,
+    "mid": 60,
+    "late": 30
+   }
+  },
+  "wheat": {
+   "name": "Wheat (sown in winter, no frozen soil)",
+   "family": "Poaceae",
+   "legume": false,
+   "stages_days": {
+    "ini": 18,
+    "dev": 29,
+    "mid": 58,
+    "late": 35
+   },
+   "kc": {
+    "ini": 0.3,
+    "mid": 1.15,
+    "end": 0.4
+   },
+   "zr_m": 1.5,
+   "p": 0.55,
+   "ky": 1.15,
+   "ky_assumed": false,
+   "calendar": {
+    "windows": [
+     {
+      "sow": "10-15",
+      "sow_end": "11-15",
+      "harvest": "03-15",
+      "harvest_end": "04-15",
+      "days": [
+       135,
+       145
+      ],
+      "note": "Irrigated Condition"
+     },
+     {
+      "sow": "08-15",
+      "sow_end": "09-15",
+      "harvest": "02-15",
+      "harvest_end": "03-15",
+      "days": [
+       180
+      ],
+      "note": ""
+     }
+    ],
+    "default": 0
+   },
+   "sources": {
+    "family": "botanical classification",
+    "legume": "botanical classification",
+    "stages_days": "FAO-56 Table 11, Barley/Oats/Wheat, November, Central India 15/25/50/30 = 120 d, scaled in proportion to the local growing period 140 d (midpoint of 135-145 d, FAO Crop Calendar Hill zone) = 18/29/58/35 (largest-remainder rounding). Scaling rule: Claude's choice, owner-approved 2026-11-12, step-4 review item 5",
+    "kc": "FAO-56 Table 12, Spring Wheat: Kc mid 1.15, Kc end '0.25-0.4' with 0.4 because 'The higher value is for hand-harvested crops' (footnote 10); Kc ini blank, so the Cereals group value 0.3. Treating Nepal's winter-sown wheat as spring-habit wheat is Claude's choice, owner-approved 2026-11-12, step-4 review item 5 (Winter Wheat with non-frozen soils would give Kc ini 0.7)",
+    "zr_m": "FAO-56 Table 22, Spring Wheat 1.0-1.5 m; larger value (footnote 1)",
+    "p": "FAO-56 Table 22, Spring Wheat 0.55",
+    "ky": "FAO-56 Table 24 and FAO-66 Table 1 (from FAO-33): Spring wheat 1.15",
+    "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Wheat, bread"
+   },
+   "stages_fao56": {
+    "ini": 15,
+    "dev": 25,
+    "mid": 50,
+    "late": 30
+   }
+  },
+  "maize": {
+   "name": "Maize (grain)",
+   "family": "Poaceae",
+   "legume": false,
+   "stages_days": {
+    "ini": 22,
+    "dev": 36,
+    "mid": 43,
+    "late": 29
+   },
+   "kc": {
+    "ini": 0.3,
+    "mid": 1.2,
+    "end": 0.35
+   },
+   "zr_m": 1.7,
+   "p": 0.55,
+   "ky": 1.25,
+   "ky_assumed": false,
+   "calendar": {
+    "windows": [
+     {
+      "sow": "02-15",
+      "sow_end": "03-15",
+      "harvest": "08-01",
+      "harvest_end": "09-01",
+      "days": [
+       150,
+       180
+      ],
+      "note": "Irrigated / Rainfed Upolands"
+     },
+     {
+      "sow": "03-15",
+      "sow_end": "04-15",
+      "harvest": "07-15",
+      "harvest_end": "08-15",
+      "days": [
+       120,
+       140
+      ],
+      "note": ""
+     }
+    ],
+    "default": 1
+   },
+   "sources": {
+    "family": "botanical classification",
+    "legume": "botanical classification",
+    "stages_days": "FAO-56 Table 11, Maize (grain), planting April, 'East Africa (alt.)': 30/50/60/40 = 180 d (a highland analog; Claude's choice, owner-approved 2026-11-12, step-4 review item 5), scaled in proportion to the local growing period 130 d (midpoint of 120-140 d, FAO Crop Calendar Hill zone, default window) = 22/36/43/29 (largest-remainder rounding). FAO-56 Table 11 note: lengths are 'indicative' and 'The user is strongly encouraged to obtain appropriate local information'. Scaling: the rule used for rice and wheat, applied by owner decision 2026-11-12 (REVIEW_NOTES H4)",
+    "kc": "FAO-56 Table 12, Maize, Field (grain): Kc mid 1.20, Kc end '0.60-0.35' with 0.35 'for harvest after complete field drying' (footnote 11; Claude's choice, owner-approved 2026-11-12, step-4 review item 5); Kc ini blank, so the Cereals group value 0.3",
+    "zr_m": "FAO-56 Table 22, Maize 1.0-1.7 m; larger value (footnote 1)",
+    "p": "FAO-56 Table 22, Maize 0.55",
+    "ky": "FAO-56 Table 24 and FAO-66 Table 1: Maize 1.25",
+    "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), listed as 'Corn, sweet' (id 0113 = Maize in FAO's Nepal list). Khumaltar trial sowed maize 8-9 May (Chaulagain et al. 2025, doi:10.3126/ajn.v9i1.91446). Default window: Claude's choice, owner-approved 2026-11-12, step-4 review item 5"
+   },
+   "stages_fao56": {
+    "ini": 30,
+    "dev": 50,
+    "mid": 60,
+    "late": 40
+   }
+  },
+  "potato": {
+   "name": "Potato",
+   "family": "Solanaceae",
+   "legume": false,
+   "stages_days": {
+    "ini": 25,
+    "dev": 30,
+    "mid": 30,
+    "late": 30
+   },
+   "kc": {
+    "ini": 0.5,
+    "mid": 1.15,
+    "end": 0.75
+   },
+   "zr_m": 0.6,
+   "p": 0.35,
+   "ky": 1.1,
+   "ky_assumed": false,
+   "calendar": {
+    "windows": [
+     {
+      "sow": "10-15",
+      "sow_end": "11-15",
+      "harvest": "02-15",
+      "harvest_end": "03-15",
+      "days": [
+       100,
+       120
+      ],
+      "note": ""
+     },
+     {
+      "sow": "11-15",
+      "sow_end": "12-15",
+      "harvest": "03-15",
+      "harvest_end": "04-15",
+      "days": [
+       100,
+       120
+      ],
+      "note": ""
+     },
+     {
+      "sow": "02-15",
+      "sow_end": "03-15",
+      "harvest": "06-15",
+      "harvest_end": "07-15",
+      "days": [
+       100,
+       120
+      ],
+      "note": ""
+     }
+    ],
+    "default": 0
+   },
+   "sources": {
+    "family": "botanical classification",
+    "legume": "botanical classification",
+    "stages_days": "FAO-56 Table 11, Potato, planting Jan/Nov, '(Semi) Arid Climate': 25/30/30/30 = 115 days (Lmid '30/45'; the shorter used; Claude's choice, owner-approved 2026-11-12, step-4 review item 5). 115 d lies inside the default window's 100-120 d, so it is not scaled (REVIEW_NOTES H4 check, 2026-11-12)",
+    "kc": "FAO-56 Table 12, Potato: Kc mid 1.15, Kc end 0.75; Kc ini blank, so the Roots and Tubers group value 0.5",
+    "zr_m": "FAO-56 Table 22, Potato 0.4-0.6 m; larger value (footnote 1)",
+    "p": "FAO-56 Table 22, Potato 0.35",
+    "ky": "FAO-56 Table 24 and FAO-66 Table 1: Potato 1.1 (the FAO crop-information page table says 0.85 but its own figure says 1.1)",
+    "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Potato. Default window: Claude's choice, owner-approved 2026-11-12, step-4 review item 5"
+   }
+  },
+  "lentil": {
+   "name": "Lentil",
+   "family": "Fabaceae",
+   "legume": true,
+   "stages_days": {
+    "ini": 20,
+    "dev": 27,
+    "mid": 55,
+    "late": 31
+   },
+   "kc": {
+    "ini": 0.4,
+    "mid": 1.1,
+    "end": 0.3
+   },
+   "zr_m": 0.8,
+   "p": 0.5,
+   "ky": 1.0,
+   "ky_assumed": true,
+   "calendar": {
+    "windows": [
+     {
+      "sow": "10-15",
+      "sow_end": "11-15",
+      "harvest": "02-15",
+      "harvest_end": "03-15",
+      "days": [
+       120,
+       145
+      ],
+      "note": ""
+     }
+    ],
+    "default": 0
+   },
+   "sources": {
+    "family": "botanical classification",
+    "legume": "botanical classification (nitrogen-fixing legume)",
+    "stages_days": "FAO-56 Table 11, Lentil, planting Oct/Nov, 'Arid Region': 25/35/70/40 = 170 d (closest planting date; local check needed), scaled in proportion to the local growing period 133 d (midpoint 132.5 of 120-145 d, FAO Crop Calendar Hill zone, rounded up to a whole day: Claude's choice) = 20/27/55/31 (largest-remainder rounding). Sown at the window's middle (30 Oct), the season ends about 11 March, before the calendar's 15 March harvest limit. FAO-56 Table 11 note: lengths are 'indicative' and 'The user is strongly encouraged to obtain appropriate local information'. Scaling: the rule used for rice and wheat, applied by owner decision 2026-11-12 (REVIEW_NOTES H4)",
+    "kc": "FAO-56 Table 12, Lentil: Kc mid 1.10, Kc end 0.30; Kc ini blank, so the Legumes group value 0.4",
+    "zr_m": "FAO-56 Table 22, Lentil 0.6-0.8 m; larger value (footnote 1)",
+    "p": "FAO-56 Table 22, Lentil 0.50",
+    "ky": "ASSUMED, not published: owner decision 2026-11-12 (step-4 review item 4) - neutral Ky 1.0 assumed (harvest falls in step with water shortage), labelled 'assumed' wherever it is used. Sensitivity runs use Ky 0.8 and 1.2 (config/rules.yaml ky_assumed). Why assumed: no seasonal Ky for lentil in FAO-56 Table 24, FAO-66 or the FAO crop-information pages. Search for a published value continues: TODO-VERIFY",
+    "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Lentil (Winter)"
+   },
+   "stages_fao56": {
+    "ini": 25,
+    "dev": 35,
+    "mid": 70,
+    "late": 40
+   }
+  },
+  "mustard": {
+   "name": "Mustard (FAO-56 rapeseed/canola values)",
+   "family": "Brassicaceae",
+   "legume": false,
+   "stages_days": null,
+   "kc": {
+    "ini": 0.35,
+    "mid": 1.0,
+    "end": 0.35
+   },
+   "zr_m": 1.5,
+   "p": 0.6,
+   "ky": 1.0,
+   "ky_assumed": true,
+   "simulate": false,
+   "calendar": {
+    "windows": [
+     {
+      "sow": "09-15",
+      "sow_end": "10-15",
+      "harvest": "03-15",
+      "harvest_end": "03-15",
+      "days": [
+       151,
+       181
+      ],
+      "note": "days recomputed from this window's own dates (REVIEW_NOTES H4, 2026-11-12): 15 Oct to 15 Mar = 151 d, 15 Sep to 15 Mar = 181 d (non-leap February); the FAO entry lists 100-150"
+     },
+     {
+      "sow": "10-15",
+      "sow_end": "11-15",
+      "harvest": "03-15",
+      "harvest_end": "03-15",
+      "days": [
+       120,
+       151
+      ],
+      "note": "days recomputed from this window's own dates (REVIEW_NOTES H4, 2026-11-12): 15 Nov to 15 Mar = 120 d, 15 Oct to 15 Mar = 151 d (non-leap February); the FAO entry lists 100-120"
+     }
+    ],
+    "default": 1
+   },
+   "sources": {
+    "family": "botanical classification",
+    "legume": "botanical classification",
+    "stages_days": "TODO-VERIFY: FAO-56 Table 11 has no rapeseed, canola or mustard row",
+    "kc": "FAO-56 Table 12, Rapeseed, Canola: Kc mid '1.0-1.15' with 1.0 because 'The lower values are for rainfed crops' (footnote 9), Kc end 0.35; Kc ini blank, so the Oil Crops group value 0.35. Using rapeseed values for mustard is Claude's choice, owner-approved 2026-11-12, step-4 review item 5",
+    "zr_m": "FAO-56 Table 22, Rapeseed, Canola 1.0-1.5 m; larger value (footnote 1)",
+    "p": "FAO-56 Table 22, Rapeseed, Canola 0.60",
+    "ky": "ASSUMED, not published: owner decision 2026-11-12 (step-4 review item 4) - neutral Ky 1.0 assumed (harvest falls in step with water shortage), labelled 'assumed' wherever it is used. Sensitivity runs use Ky 0.8 and 1.2 (config/rules.yaml ky_assumed). Why assumed: no seasonal Ky for rapeseed or mustard in FAO-56, FAO-66 or the FAO crop-information pages. Search for a published value continues: TODO-VERIFY",
+    "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), listed as 'Colza (rapeseed)' (id 0109); the Hill zone has no 'Mustard' entry (the Terai zone, aez=001, has Mustard sown 1-30 Oct, harvested 15 Feb-15 Mar, 135-150 days). The FAO entry's day counts (100-150 and 100-120) contradict its own sow and harvest dates, so days are recomputed from the dates (REVIEW_NOTES H4, 2026-11-12)",
+    "simulate": "Not simulated: no published stage lengths (stages_days null; FAO-56 Table 11 has no rapeseed, canola or mustard row), so the twin has no season length or Kc curve for it. TODO-VERIFY: a published mustard or rapeseed stage-length source would let it run (owner question, REVIEW_NOTES H4, 2026-11-12)"
+   }
+  },
+  "buckwheat": {
+   "name": "Buckwheat",
+   "family": "Polygonaceae",
+   "legume": false,
+   "stages_days": null,
+   "kc": null,
+   "zr_m": null,
+   "p": null,
+   "ky": 1.0,
+   "ky_assumed": true,
+   "simulate": false,
+   "calendar": {
+    "windows": [
+     {
+      "sow": "06-15",
+      "sow_end": "07-15",
+      "harvest": "11-15",
+      "harvest_end": "12-15",
+      "days": [
+       150
+      ],
+      "note": ""
+     },
+     {
+      "sow": "07-15",
+      "sow_end": "08-15",
+      "harvest": "12-15",
+      "harvest_end": "01-15",
+      "days": [
+       150
+      ],
+      "note": ""
+     }
+    ],
+    "default": 0
+   },
+   "sources": {
+    "family": "botanical classification",
+    "legume": "botanical classification",
+    "stages_days": "TODO-VERIFY: not in FAO-56 Table 11",
+    "kc": "TODO-VERIFY: not in FAO-56 Table 12",
+    "zr_m": "TODO-VERIFY: not in FAO-56 Table 22",
+    "p": "TODO-VERIFY: not in FAO-56 Table 22",
+    "ky": "ASSUMED, not published: owner decision 2026-11-12 (step-4 review item 4) - neutral Ky 1.0 assumed (harvest falls in step with water shortage), labelled 'assumed' wherever it is used. Sensitivity runs use Ky 0.8 and 1.2 (config/rules.yaml ky_assumed). Why assumed: not in FAO-56 Table 24 or FAO-66. Search for a published value continues: TODO-VERIFY",
+    "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Buckwheat (Sweet)",
+    "simulate": "Not simulated: stages_days, kc, zr_m and p are not published in FAO-56 (null, TODO-VERIFY), so the twin cannot run it; build step 7 draws plans only from pipeline/twin/crops.py simulatable_crops, which leaves it out. Kept in the library for its calendar (CLAUDE.md crop list; REVIEW_NOTES H4, 2026-11-12)"
+   }
+  },
+  "finger_millet": {
+   "name": "Finger millet (FAO-56 'Millet' values)",
+   "family": "Poaceae",
+   "legume": false,
+   "stages_days": {
+    "ini": 17,
+    "dev": 28,
+    "mid": 44,
+    "late": 28
+   },
+   "kc": {
+    "ini": 0.3,
+    "mid": 1.0,
+    "end": 0.3
+   },
+   "zr_m": 2.0,
+   "p": 0.55,
+   "ky": 1.0,
+   "ky_assumed": true,
+   "calendar": {
+    "windows": [
+     {
+      "sow": "07-20",
+      "sow_end": "08-12",
+      "harvest": "11-11",
+      "harvest_end": "12-10",
+      "days": [
+       114,
+       120
+      ],
+      "note": "nursery sown 15 Jun 2023 / 15 Jul 2024, transplanted 20 Jul 2023 / 12 Aug 2024 under standing maize, harvested 11 Nov 2023 / 10 Dec 2024. days count from transplanting, like sow: 114 / 120 days, recomputed from the source's own dates (REVIEW_NOTES H4, 2026-11-12); counted from nursery sowing they were 149 / 148, and the nursery took 35 / 28 days"
+     }
+    ],
+    "default": 0
+   },
+   "sources": {
+    "family": "botanical classification",
+    "legume": "botanical classification",
+    "stages_days": "FAO-56 Table 11, Millet, planting June, Pakistan: 15/25/40/25 = 105 d (a direct-sown crop), scaled in proportion to the local field period 117 d (midpoint of 114-120 d, transplanting to harvest in the calendar source) = 17/28/44/28 (largest-remainder rounding). The season starts at transplanting, like sow; the nursery is not simulated (as for rice). TODO-VERIFY: FAO-56 has no stage lengths for transplanted finger millet, so a direct-sown row is stretched to the transplanted field period (owner question, REVIEW_NOTES H4). FAO-56 lists 'Millet', not finger millet: using it is Claude's choice, owner-approved 2026-11-12, step-4 review item 5. Scaling: the rule used for rice and wheat, applied by owner decision 2026-11-12 (REVIEW_NOTES H4)",
+    "kc": "FAO-56 Table 12, Millet: Kc mid 1.00, Kc end 0.30; Kc ini blank, so the Cereals group value 0.3",
+    "zr_m": "FAO-56 Table 22, Millet 1.0-2.0 m; larger value (footnote 1)",
+    "p": "FAO-56 Table 22, Millet 0.55",
+    "ky": "ASSUMED, not published: owner decision 2026-11-12 (step-4 review item 4) - neutral Ky 1.0 assumed (harvest falls in step with water shortage), labelled 'assumed' wherever it is used. Sensitivity runs use Ky 0.8 and 1.2 (config/rules.yaml ky_assumed). Why assumed: no seasonal Ky for millet in FAO-56 Table 24 or FAO-66 (only sorghum 0.9 is listed). Search for a published value continues: TODO-VERIFY",
+    "calendar": "Chaulagain, B., Bhattarai, R. K., Timalsina, H. P., Neupane, R., Kaduwal, S. (2025). Agronomy Journal of Nepal 9, 172-179, doi:10.3126/ajn.v9i1.91446 (NARC Khumaltar, Lalitpur, 1360 m). The FAO Hill-zone finger-millet entry (sow Oct-Dec) contradicts this and FAO GIEWS, so it is not used"
+   },
+   "stages_fao56": {
+    "ini": 15,
+    "dev": 25,
+    "mid": 40,
+    "late": 25
+   }
+  }
+ }
+}

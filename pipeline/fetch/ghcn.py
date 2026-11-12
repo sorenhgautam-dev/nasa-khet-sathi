@@ -1,4 +1,5 @@
-"""NOAA NCEI GHCN-Daily station record, for validation only (never a model input).
+"""NOAA NCEI GHCN-Daily station record: validation, and (decision A) the reference for correcting
+POWER temperature. Its rain is never a model input.
 
     .venv/bin/python -m pipeline.fetch.ghcn --field demo
 
@@ -103,11 +104,12 @@ def fetch(field, station, data_dir=REPO / "data", get_bytes=_http_get_bytes, cre
         raw_attrs={"units": "tenths (readme v3.35)", "scale_factor": TENTHS, "add_offset": "ABSENT",
                    "_FillValue": MISSING, "valid_range": "ABSENT"},
         range_warnings=warned,
-        notes=f"Validation only. Records per year (PRCP): {records_per_year(df, 'rain_mm')}",
+        notes=(f"Validation; also the reference for decision A (POWER temperature correction). Its rain is never a "
+               f"model input. Records per year (PRCP): {records_per_year(df, 'rain_mm')}"),
     )
     card_path = g.write_card(card, data_dir / "cards" / fid)
     if credits_path:
-        ensure_credit(credits_path, f"- NOAA NCEI GHCN-Daily v3.35, station {station} (validation only), "
+        ensure_credit(credits_path, f"- NOAA NCEI GHCN-Daily v3.35, station {station} (validation; temperature correction A), "
                                     f"field `{fid}`, {card['date_range'][0]} to {card['date_range'][1]}, fetched {dt.date.today()}")
     return {"table": out, "card": card_path, "card_data": card}
 

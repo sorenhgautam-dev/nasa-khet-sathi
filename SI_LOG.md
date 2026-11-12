@@ -82,8 +82,184 @@ What SI (AI) generated, and what a person must review before it is frozen.
 7. CLAUDE.md on disk was **not** the complete version you mentioned; my edits went into the file that
    was there, which still ends mid-word.
 
+## 2026-11-11 (evening): owner review answers, decisions A to H, build step 3 (Claude Opus 5.5 via Claude Code)
+
+### Generated
+
+- CLAUDE.md: last word completed ("agronomist."); rule 2 now allows pushes only when the owner says so
+  in the chat; sections for decisions A to D; FAOSTAT and GHCN rows; ET0 note; history scan (H) before
+  any change to public, also added to the final-commit steps; layout.
+- Tolerances: owner's approvals applied; January nights band now 0 to 5 C.
+- A: `pipeline/twin/bias.py` + `pipeline/fetch/weather.py` (monthly station correction, held-out test,
+  applied before ET0); B: `pipeline/checks/spikes.py`; C: `crosscheck.lag_correlation`; D:
+  `pipeline/twin/inputs.py`; F: `pipeline/fetch/faostat.py`; H: `scripts/scan_history.py`;
+  `config/rules.yaml` + `pipeline/fetch/rules.py` (every threshold with its source).
+- E: `config/known_events.yaml`, 20 events + 2 negative controls + 7 unconfirmed, compiled by a research
+  sub-agent that opened each cited page.
+- G: CREDITS.md citations (POWER reference and data reference, Earthdata guidance as CMR has none,
+  SoilGrids, FAO-56), found by a second research sub-agent on the official pages.
+- Step 3: `pipeline/twin/et0.py` with FAO-56 Examples 2, 8 and 18 and the pyet comparison; `pyet==1.5.0`
+  added to requirements.
+- Tests: 282 (73 more than step 2). DATA_AUDIT.md and VALIDATION.md updated.
+
+### Please review
+
+1. **Cold-night overcorrection (VALIDATION 4.1b):** one offset per month makes Jan 2013's coldest night
+   -4.2 C where Kathmandu reported -1.1 C. For frost at step 8, choose: (a) a correction that depends on
+   the temperature itself (for example quantile mapping, needs your go), (b) keep the monthly offset and
+   state the caveat, or (c) use uncorrected POWER for frost counts only.
+2. **TODO-CONFIRM in rules.yaml:** at least 200 shared days per year (your 330 rule leaves no Tmin years),
+   at least 20 per month, alternating split, apply only if the held-out error drops.
+3. **GHCN is no longer validation only:** under A it corrects the twin's temperatures, so temperature
+   checks against the same station are partly circular; the held-out test is the independent part.
+4. **Rs/Rso floor of 0.3 in ET0:** added to FAO-56 eq. 39 (ASCE-EWRI 2005, as pyet does).
+5. **Known-events list:** spot-check a few sources; 8 events hit the valley itself.
+6. **Spike flags at the station:** 4 of the 9 flags are the station far above POWER (local storms a
+   55 km cell average misses?); flagged, not removed.
+
+## 2026-11-12: step-3 review answers, build step 4 (Claude Opus 5.5 via Claude Code, two research sub-agents)
+
+### Generated
+
+- Cold nights: `pipeline/twin/qmap.py` (empirical quantile mapping per month, per season if under 20
+  days), compared with the offset on held-out years; wired into `fetch/weather.py`. Result: offset kept.
+- Rain vote: `spikes.vote` (three sources vote once GPM exists), wired into `fetch/weather.py`.
+- SoilGrids: `pipeline/fetch/soilgrids.py` (REST, factors from the API, nearest cell with values).
+- Step 4: `config/crops.json` + `pipeline/fetch/cropslib.py`; `pipeline/twin/crops.py`, `soil_water.py`,
+  `runoff.py`, `yield_.py`, `season.py`; `scripts/run_season.py` (plot `data/plots/demo/season_2016_dr.png`).
+- `config/rules.yaml`: approvals, ASCE-EWRI and quantile-mapping citations, curve numbers, soil group,
+  paddy, bare soil, unknown water source, crop-calendar rule.
+- CLAUDE.md: cold-nights and vote rules, SoilGrids access rule, step-4 note. VALIDATION.md rewritten with
+  "fitted reference" and "independent" labels; DATA_AUDIT.md, CREDITS.md updated.
+- Tests: 386 (104 more than step 3). Process notes: the crops.json tests were written first but not run
+  before the file existed; the ponded-balance test passed on its first run (it guards existing code).
+- Sub-agents opened FAO-56 Chapters 6 and 8, FAO-66, TR-55, NEH 630 Chapters 7, 9 and 10, the FAO Crop
+  Calendar API, a NARC Khumaltar paper, the ASCE-EWRI final report, and the HESS and Wiley pages.
+
+### Please review
+
+1. **Cold nights:** quantile mapping beat the offset on the two frost numbers but not on MAE (1.34 vs
+   1.22 C). My reading "beats = all three" keeps the offset. If "beats" should mean the frost numbers,
+   say so and quantile mapping goes in.
+2. **The demo point has no SoilGrids prediction**; the soil comes from the cell 750 m west. Real field
+   corners would settle this.
+3. **Wheat was rain-fed in the test** (water_source unknown) and got 60% of potential in the 2015/16
+   drought winter; the FAO Hill-zone calendar marks this wheat window "Irrigated Condition". Please set
+   `water_source` in `config/fields/demo.yaml`.
+4. **No Ky for rice** (nor lentil, mustard, buckwheat, finger millet) in any opened source: rice gets no
+   harvest number. Options: find a peer-reviewed rice Ky, or report rice as water use only.
+5. **Choices marked TODO-CONFIRM** (10 in rules.yaml, several in crops.json): scaling FAO-56 stage
+   lengths to the local growing period; wheat treated as spring-habit (Kc ini 0.3, Ky 1.15); rice Kc end
+   0.75 (midpoint of 0.90-0.60); default calendar windows; straight-row "good" curve numbers for a flat
+   field; rice on the small-grain curve number; paddy ponded until a 10-day dry spell; nearest SoilGrids
+   cell within 1 km; 99 quantiles; the vote's "station suspect" half.
+6. **Bucket hand-over:** when the crop changes, depletion carries over as a fraction of TAW (the jump on
+   18 March 2016 in the plot is this, not weather).
+
 ### Backup runs
 
 (appended by each step)
 - 2026-11-11 19:23: `scripts/backup.sh` -> `/Users/paritoshbhattarai/khet-sathi-backups/khet-sathi_2026-11-11_192320` (data/, .env*, .netrc, .venv excluded; checked)
 - 2026-11-11 19:53: `scripts/backup.sh` -> `/Users/paritoshbhattarai/khet-sathi-backups/khet-sathi_2026-11-11_195346` (data/, .env*, .netrc, .venv excluded; checked)
+- 2026-11-11 20:23: owner-approved commit `d4d3e49` (53 files) pushed to private `github.com/sorenhgautam-dev/data-test-game`, branch `main` (CLAUDE.md rule 2 exception). Jury .docx excluded via .gitignore.
+- 2026-11-11 22:19: `scripts/backup.sh` -> `/Users/paritoshbhattarai/khet-sathi-backups/khet-sathi_2026-11-11_221921` (data/, .env*, .netrc, .venv excluded; checked)
+- 2026-11-12 00:28: `scripts/backup.sh` -> `/Users/paritoshbhattarai/khet-sathi-backups/khet-sathi_2026-11-12_002813` (data/, .env*, .netrc, .venv excluded; checked)
+
+## 2026-11-12 (later): step-4 review answers, step 5 without GPM, placeholder field, box fetches (Claude Opus 5.5 via Claude Code, one research sub-agent, one review sub-agent)
+
+### Generated
+- **Step-4 review answers:** cold nights by role (offset for twin and ET0 as `tmin_c`; quantile mapping for frost only as `tmin_frost_c`; frost as risk bands, never a count); Ky 1.0 assumed for rice, lentil, mustard, buckwheat and finger millet (`ky_assumed`), with a sensitivity of 0.8 and 1.2; all TODO-CONFIRM choices marked approved (curve numbers to be revisited with the slope); `METHOD_NOTES.md` (new, 15 stated assumptions).
+- **Bug found and fixed:** `season.simulate` never irrigated non-paddy crops. Irrigation is now wired, with the refill at the start of the day.
+- **Step 5 without GPM:** `pipeline/plans/simulate.py` (rotation plan, replay, yearly rows, Ky sensitivity), `pipeline/plans/events.py`, `scripts/run_replay.py` (rain-fed and irrigated; a station-rain dry run, never exported), `pipeline/export/build_field_json.py` (refuses non-GPM rain, missing years or events, and an unlabelled placeholder).
+- **ECC kit review:** the kit's silent-failure-hunter agent prompt was used, read-only, on the new code. Real findings fixed test-first: a NaN ET0 that turned every later year into 0 %, date gaps that shifted seasons, POWER fill outside the GPM record exported as GPM, an unknown water-source spelling treated as irrigated, null events crashing the export, an empty held-out split, and a soil that holds no water. The kit's skills and agents were not installed (blocked as a self-modification).
+- **Placeholder field (owner, 2026-11-12):** `pipeline/fetch/worldcover.py` picks the nearest 100 m square of WorldCover cropland with a 30 m margin. Result 27.6785 N, 85.427417 E (0.98 km N of the old point); `demo.yaml` is relabelled and the mock export and index follow it.
+- **Fetchers:** WorldCover, NASADEM (elevation and slope), GRACE, AppEEARS (MODIS, SMAP L3 and L4), COG windows (HLS-VI, ECOSTRESS V003 then V002), GPM (GES DISC OPeNDAP, with a host fallback); the POWER cache is now keyed by point. Dependencies earthaccess, h5py and rasterio (owner's go) are pinned, plus `requirements-lock.txt`.
+- **Research sub-agent:** opened the sources for the event rule (NDMC deciles, WMO SPI guide, McKee 1993, DHM rain scale, Zheng et al. 2015, Frederiks et al. 2015). No seasonal rice Ky was found.
+
+### Please review
+1. **Placeholder field:** check 27.6785 N, 85.427417 E on Google Maps (corners in `config/fields/demo.yaml`; plot `data/plots/demo/placeholder_field.png`).
+2. **Event rule (TODO-CONFIRM):**
+   - drought = a season's rain in deciles 1-2 of that crop's 25 seasons (a short record);
+   - flood = a day of 100 mm or more (DHM "very heavy"; or 200 mm, "extremely heavy"?);
+   - frost = wheat only, below 0 C in the FAO mid-season stage;
+   - precedence drought, flood, frost.
+3. **Replay year rule (TODO-CONFIRM):** a season belongs to its harvest year; the year's harvest is the mean of its crops; 2001 has rice only.
+4. **Contract proposal:** add `irrigated: {harvest, dry_days}` to each replay year (`CONTRACT_CHANGES.md`). It waits for your go.
+5. **Dry-run findings** (TEMPORARY station rain, not evidence):
+   - the 2015/16 winter drought matched;
+   - 2016/17 wheat is just as low with no known event;
+   - the 2015 monsoon drought is invisible to ponded rice.
+6. **Slope 2.2 deg** over the placeholder: revisit the curve numbers (straight row vs contoured or terraced).
+7. **GES DISC EULA:** needed before GPM, and so before the real replay.
+
+### Backup runs
+- See the step summary for the backup folder name.
+
+## 2026-11-12 (night): the demo field moved 25 m north (REVIEW_NOTES H3)
+
+**What the owner decided:** move candidate 1 (centre 27.690542 N) 25 m north to **27.690767 N, 85.441792 E**, still a
+60 m square. On Google Maps, the Kasan River's riparian strip ran along the square's southern edge.
+
+### What SI (Claude) did
+- **Polygon** from `worldcover.square_polygon`: `[[85.441487, 27.690497], [85.442097, 27.690497],
+  [85.442097, 27.691037], [85.441487, 27.691037]]`.
+- **Tree-line and candidate-rule check** for the moved square, rerun after the HLS composites were rebuilt. Results are
+  in REVIEW_NOTES.md H3; the scripts and map are in a session scratchpad.
+  - No tree cell or evergreen-like pixel touches the square; the trees are 117-142 m north.
+  - The covering pixels stop about 6 m north of the river line as described.
+  - The season test passes.
+  - Its 30 m margin is 77 m from the nearest built-up pixel, against the search's 100 m.
+- **H3 applied everywhere:**
+  - `config/fields/demo.yaml`, with `earlier_placeholders`.
+  - NASADEM rerun: 1,325.0 m and 1.6 deg over 4 pixels.
+  - `weather.parquet` rebuilt: mean ET0 3.5071 → 3.5076 mm/day.
+  - Mock `demo.json` and `index.json` regenerated, then validated.
+  - `placeholder.py` now labels the configured field "chosen" and takes the earlier squares from the config. It used
+    to call whatever `demo.yaml` held "rejected". The script was rerun: same three candidates.
+  - `weather.py` now stops if GPM rain was fetched for a 0.1 deg cell other than the field's. The moved field is in the
+    same cell, (2654, 1176).
+  - Tests were written first; the docs were updated: CLAUDE.md, METHOD_NOTES 13, VALIDATION 1.4, DATA_AUDIT,
+    CONTRACT_CHANGES.
+
+### Please review
+1. **The built-up margin.** The moved square is 107 m from the nearest built-up pixel, but its 30 m margin is 77 m from
+   it, so it misses the search's rule.
+2. **The south-east corner on imagery.** A faint line of slightly greener pixels runs south-west to north-east just
+   south-east of the square. If that is the river, its strip comes closest at that corner.
+3. **Slope.** The mean slope is now 1.6 deg (it was 2.2 over the first placeholder). This feeds the curve-number
+   question.
+
+## 2026-11-12: plain words, SI component 3, text only (parallel session; copied from notes/parallel_session.md)
+
+- 2026-11-12, Claude (Opus 5.5), parallel session. Drafted all English and Nepali texts in `pipeline/words/*.json`:
+  glossary, crop explainers, five-tab templates, tips, and screen texts.
+- A research sub-agent (Claude) opened FAO, CGIAR (CIMMYT, ICRISAT) and NARC pages and PDFs and copied quotes
+  verbatim. Its scratch downloads are in the session scratchpad, not the repo.
+- Person to review: a native Nepali speaker reviews every Nepali text; the owner reviews the English and the choices
+  listed in notes/parallel_session.md. Not reviewed yet *(at the time of the parallel session; see the entries below
+  for the owner's review and decisions)*.
+
+## 2026-11-12 (night): owner's review of the Nepali words (screens and glossary)
+
+**What the owner decided:** after reading the Nepali for the screens and the glossary in `pipeline/words/PREVIEW.md`,
+spell frost तुषारो, not तुसारो, everywhere. Mark the screens and the glossary as reviewed, including the fixed lines.
+The tabs, tips and crop explainers keep "needs native-speaker review": the owner has not read them yet.
+
+### What SI (Claude) did
+- **तुसारो → तुषारो in 7 texts.** Five are in `screens.json`, one in `glossary.json` ("frost risk") and one in `tabs.json`
+  (the "unknown" tab's frost line). The 7th was missed in the first count of 6. The tabs line keeps
+  "needs native-speaker review".
+- **Review mark.** `texts.is_review_mark` accepts "needs native-speaker review" or "reviewed by <name>, <YYYY-MM-DD>".
+  The name may not be blank or a [template placeholder], and the date must be real. `tests/test_words.py` uses it in
+  place of the old "every text needs review" check. Tests were written first: 37 words tests, 534 in the full suite,
+  all pass.
+- **PREVIEW.md** now lists each word file's review status at the top and puts a status line above each of its
+  22 tables. Together the tables cover all 304 texts. The page was regenerated.
+- **Not done yet: the "reviewed by" mark.** Both replies carried the template's "[your full name]" and no name, and
+  SI will not guess a reviewer's name. All 304 texts still say "needs native-speaker review". When the owner gives the
+  name, the 169 screen texts and the 64 glossary texts get "reviewed by <name>, 2026-11-12".
+
+### Please review
+1. **The reviewer's name** for the mark.
+2. **Other Nepali fixes.** The second fix in the reply was still the template line "[any other fix ...]", so only the
+   frost spelling was changed.

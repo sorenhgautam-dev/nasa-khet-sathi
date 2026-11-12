@@ -45,6 +45,15 @@ def test_month_mean():
     assert c.month_mean(df, "tmax_c", [5, 6]) == pytest.approx((31 * 25 + 30 * 26) / 61)  # daily mean, May has 31 days
 
 
+def test_bands_are_the_owner_approved_ones():
+    # Owner, 2026-11-11: January nights band changed to a mean minimum of 0 to 5 C; others approved.
+    assert c.EXPECT["jan_tmin_c"]["band"] == (0.0, 5.0)
+    assert c.EXPECT["annual_rain_mm"]["band"] == (1260.0, 1650.0)
+    assert c.EXPECT["monsoon_share"]["band"] == (0.5, 1.0)
+    assert c.EXPECT["early_summer_tmax_c"]["band"] == (27.0, 33.0)
+    assert all("TODO-CONFIRM" not in e["tolerance"] for e in c.EXPECT.values())
+
+
 @pytest.mark.parametrize("value,band,expected", [(1450, (1260, 1650), "PASS"), (1260, (1260, 1650), "PASS"),
                                                  (1200, (1260, 1650), "FAIL"), (1700, (1260, 1650), "FAIL")])
 def test_judge(value, band, expected):

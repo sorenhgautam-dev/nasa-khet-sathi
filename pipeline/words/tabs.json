@@ -1,0 +1,453 @@
+{
+ "_about": "Five-tab templates (CLAUDE.md 'Plans' step 5: why, evidence, benefits, unknown, check). For each plan the pipeline keeps every line whose 'when' conditions all hold ('always' always holds), fills the {placeholders}, and joins them; if none holds, the 'fallback' line is used, so no tab is empty. A line with 'repeat': 'sources' is written once per entry of sources[]. 'basis' points at the cited claim behind a line. Tips (CLAUDE.md 'Plans' step 6) are one string each. Every Nepali text was drafted by SI (Claude) on 2026-11-12 and needs native-speaker review before export; each node carries ne_review until a reviewer replaces it with their name and date.",
+ "tabs": {
+  "why": [
+   {
+    "id": "why_current",
+    "when": [
+     "plan_is_current"
+    ],
+    "en": "This is what you grow now.",
+    "ne": "यो तपाईंले अहिले लगाउने बाली हो।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_current_compare",
+    "when": [
+     "plan_is_current"
+    ],
+    "en": "We compare every other choice with it.",
+    "ne": "हामी अरू हरेक विकल्पलाई यसैसँग दाँज्छौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_gap",
+    "when": [
+     "plan_is_cover_gap"
+    ],
+    "en": "Your field is empty {bare_days} days a year.",
+    "ne": "तपाईंको खेत वर्षमा {bare_days} दिन खाली हुन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_gap_fill",
+    "when": [
+     "plan_is_cover_gap",
+     "new_crop"
+    ],
+    "en": "{new_crop} can grow in that empty time.",
+    "ne": "त्यो खाली समयमा {new_crop} लगाउन सकिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_shift_earlier",
+    "when": [
+     "plan_is_follow_shift",
+     "onset_earlier"
+    ],
+    "en": "Rains now start about {shift_days_abs} days earlier.",
+    "ne": "वर्षा अहिले करिब {shift_days_abs} दिन चाँडै आउँछ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_shift_later",
+    "when": [
+     "plan_is_follow_shift",
+     "onset_later"
+    ],
+    "en": "Rains now start about {shift_days_abs} days later.",
+    "ne": "वर्षा अहिले करिब {shift_days_abs} दिन ढिलो आउँछ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_shift_plant",
+    "when": [
+     "plan_is_follow_shift"
+    ],
+    "en": "This plan plants to match the rains.",
+    "ne": "यो योजनामा वर्षा हेरेर रोपिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_legume",
+    "when": [
+     "has_legume"
+    ],
+    "en": "{legume_crop} feeds the soil for the next crop.",
+    "ne": "{legume_crop}ले अर्को बालीका लागि माटोमा मल थप्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "crop_explainers.nitrogen_fixing claims 2-3"
+   },
+   {
+    "id": "why_water_falling",
+    "when": [
+     "groundwater_falling",
+     "water_better"
+    ],
+    "en": "Stored water in this area is falling.",
+    "ne": "यस क्षेत्रमा जम्मा पानी घट्दै छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_less_water",
+    "when": [
+     "groundwater_falling",
+     "water_better"
+    ],
+    "en": "This plan needs less water.",
+    "ne": "यो योजनालाई कम पानी चाहिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "why_fallback",
+    "when": [
+     "fallback"
+    ],
+    "en": "It did well when we replayed your field.",
+    "ne": "तपाईंको खेत फेरि चलाएर हेर्दा यो राम्रो देखियो।",
+    "ne_review": "needs native-speaker review"
+   }
+  ],
+  "evidence": [
+   {
+    "id": "ev_replay",
+    "when": [
+     "always"
+    ],
+    "en": "We replayed the weather from {year_first} to {year_last}.",
+    "ne": "{year_first} देखि {year_last} सम्मको मौसम फेरि चलायौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ev_harvest",
+    "when": [
+     "always"
+    ],
+    "en": "Harvest was {harvest} out of 100 on average.",
+    "ne": "औसत उब्जनी १०० मा {harvest} थियो।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ev_dry_years",
+    "when": [
+     "always"
+    ],
+    "en": "Very dry years: {drought_years} of {year_count}.",
+    "ne": "खडेरी परेका वर्ष: {year_count} मध्ये {drought_years}।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ev_computer",
+    "when": [
+     "always"
+    ],
+    "en": "Harvest numbers are computer estimates.",
+    "ne": "उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ev_source",
+    "when": [
+     "always"
+    ],
+    "en": "{source_name}: {source_kind}, {source_resolution}, {source_years}.",
+    "ne": "{source_name}: {source_kind}, {source_resolution}, {source_years}।",
+    "ne_review": "needs native-speaker review",
+    "repeat": "sources"
+   }
+  ],
+  "benefits": [
+   {
+    "id": "ben_current",
+    "when": [
+     "plan_is_current"
+    ],
+    "en": "You already know how to grow these.",
+    "ne": "यी बाली लगाउन तपाईंलाई पहिले नै आउँछ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ben_harvest",
+    "when": [
+     "harvest_better"
+    ],
+    "en": "Harvest: about {harvest_gain} more, out of 100.",
+    "ne": "उब्जनी: १०० मा करिब {harvest_gain} बढी।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ben_water",
+    "when": [
+     "water_better"
+    ],
+    "en": "Needs less water than now.",
+    "ne": "अहिलेभन्दा कम पानी चाहिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ben_cover",
+    "when": [
+     "cover_better"
+    ],
+    "en": "Ground stays covered more of the year.",
+    "ne": "वर्षको धेरै समय जमिन ढाकिएको रहन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ben_soil",
+    "when": [
+     "soil_better"
+    ],
+    "en": "Less soil washes away in heavy rain.",
+    "ne": "ठूलो पानी पर्दा कम माटो बग्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "crop_explainers.cover claims 1-2"
+   },
+   {
+    "id": "ben_legume",
+    "when": [
+     "has_legume"
+    ],
+    "en": "{legume_crop} adds natural fertilizer to the soil.",
+    "ne": "{legume_crop}ले माटोमा प्राकृतिक मल थप्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "crop_explainers.nitrogen_fixing claims 1-4"
+   },
+   {
+    "id": "ben_pests",
+    "when": [
+     "breaks_family"
+    ],
+    "en": "Changing crops can keep pests and diseases down.",
+    "ne": "बाली फेर्दा कीरा र रोग घट्न सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "FAO Conservation Agriculture, 'Species diversification': crop rotation 'prevents the carry-over of crop-specific pests and diseases from one crop to the next' (https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/, accessed 2026-11-12)"
+   },
+   {
+    "id": "ben_deep",
+    "when": [
+     "has_deeper_roots"
+    ],
+    "en": "{deep_root_crop} roots reach water deeper down.",
+    "ne": "{deep_root_crop}को जरा अझ गहिरो पानीसम्म पुग्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "crop_explainers.deep_rooting claims 1 and 4-5"
+   },
+   {
+    "id": "ben_fallback",
+    "when": [
+     "fallback"
+    ],
+    "en": "No clear gain over what you do now.",
+    "ne": "अहिलेको तरिकाभन्दा स्पष्ट फाइदा देखिएन।",
+    "ne_review": "needs native-speaker review"
+   }
+  ],
+  "unknown": [
+   {
+    "id": "unk_placeholder",
+    "when": [
+     "field_is_placeholder"
+    ],
+    "en": "This is a sample field, not yours.",
+    "ne": "यो नमुना खेत हो, तपाईंको होइन।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "unk_soil",
+    "when": [
+     "always"
+    ],
+    "en": "Nearby parts share one soil map.",
+    "ne": "नजिकका भागहरूको माटोको नक्सा एउटै छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "CLAUDE.md 'Sections': most sections share one 250 m SoilGrids cell"
+   },
+   {
+    "id": "unk_dates",
+    "when": [
+     "always"
+    ],
+    "en": "Planting dates are typical ones, not yours.",
+    "ne": "रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्।",
+    "ne_review": "needs native-speaker review",
+    "basis": "METHOD_NOTES.md item 9"
+   },
+   {
+    "id": "unk_ky",
+    "when": [
+     "has_assumed_ky"
+    ],
+    "en": "We guessed how thirst hurts {assumed_crop}.",
+    "ne": "{assumed_crop}मा तिर्खाको असर हाम्रो अनुमान हो।",
+    "ne_review": "needs native-speaker review",
+    "basis": "METHOD_NOTES.md item 5; crops.json ky_assumed"
+   },
+   {
+    "id": "unk_rice",
+    "when": [
+     "has_rice"
+    ],
+    "en": "We assumed rice stands in water.",
+    "ne": "धान पानीमा डुबेको मानेका छौं।",
+    "ne_review": "needs native-speaker review",
+    "basis": "METHOD_NOTES.md item 2"
+   },
+   {
+    "id": "unk_rice_dry",
+    "when": [
+     "has_rice"
+    ],
+    "en": "Without extra water, ten dry days end that.",
+    "ne": "थप पानी नभए, दस सुक्खा दिनमा त्यो सकिन्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml paddy_rice.dry_run_days"
+   },
+   {
+    "id": "unk_water",
+    "when": [
+     "water_source_unknown"
+    ],
+    "en": "We don't know your water, so rain only.",
+    "ne": "पानीको स्रोत थाहा नभएकाले वर्षा मात्र हेरेका छौं।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml water_source_unknown"
+   },
+   {
+    "id": "unk_area_water",
+    "when": [
+     "always"
+    ],
+    "en": "Stored water is measured for a wide area.",
+    "ne": "जम्मा पानी ठूलो क्षेत्रको नापिएको हो।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml groundwater.caveat (owner: say it in every explanation)"
+   },
+   {
+    "id": "unk_not_well",
+    "when": [
+     "always"
+    ],
+    "en": "It is not your own well.",
+    "ne": "यो तपाईंको आफ्नै इनार होइन।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml groundwater.caveat"
+   },
+   {
+    "id": "unk_frost",
+    "when": [
+     "has_frost_risk"
+    ],
+    "en": "We may count too many freezing nights.",
+    "ne": "हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml cold_nights.frost_display_note"
+   },
+   {
+    "id": "unk_market",
+    "when": [
+     "always"
+    ],
+    "en": "Prices and markets are not included.",
+    "ne": "बजार र मूल्य यसमा समावेश छैनन्।",
+    "ne_review": "needs native-speaker review"
+   }
+  ],
+  "check": [
+   {
+    "id": "chk_advisor",
+    "when": [
+     "always"
+    ],
+    "en": "Ask your local farm advisor first.",
+    "ne": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "chk_seed",
+    "when": [
+     "new_crop"
+    ],
+    "en": "Ask if {new_crop} seed is sold nearby.",
+    "ne": "नजिकै {new_crop}को बीउ पाइन्छ कि सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "chk_neighbours",
+    "when": [
+     "new_crop"
+    ],
+    "en": "Ask neighbours when they plant {new_crop}.",
+    "ne": "छिमेकीलाई {new_crop} कहिले रोप्छन् भनी सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "chk_legume",
+    "when": [
+     "has_legume"
+    ],
+    "en": "Ask if {legume_crop} grows well here.",
+    "ne": "यहाँ {legume_crop} राम्रो हुन्छ कि सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "chk_water",
+    "when": [
+     "water_source_unknown"
+    ],
+    "en": "Check how much water you really have.",
+    "ne": "तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "chk_small",
+    "when": [
+     "always"
+    ],
+    "en": "Try it on one small part first.",
+    "ne": "पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "chk_you",
+    "when": [
+     "always"
+    ],
+    "en": "You know your land best.",
+    "ne": "आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।",
+    "ne_review": "needs native-speaker review"
+   }
+  ]
+ },
+ "tips": [
+  {
+   "id": "tip_thirsty",
+   "when": [
+    "thirsty_month"
+   ],
+   "en": "{crop} gets most thirsty in {month}. Water it then if you can.",
+   "ne": "{crop}लाई {month}मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+   "ne_review": "needs native-speaker review"
+  },
+  {
+   "id": "tip_straw",
+   "when": [
+    "bare_month"
+   ],
+   "en": "Cover bare soil with straw in {month}.",
+   "ne": "{month}मा खाली माटोलाई परालले ढाक्नुहोस्।",
+   "ne_review": "needs native-speaker review",
+   "basis": "crop_explainers.cover claims 1-2 (FAO: residues on the surface reduce splash and runoff)"
+  },
+  {
+   "id": "tip_across",
+   "when": [
+    "steep_part"
+   ],
+   "en": "On part {section}, plant across the slope.",
+   "ne": "भाग {section}मा भिरालोको तेर्सो लाइनमा रोप्नुहोस्।",
+   "ne_review": "needs native-speaker review",
+   "basis": "CLAUDE.md 'Tips' (contour planting); a sourced slope threshold is still needed (step 8)"
+  }
+ ]
+}

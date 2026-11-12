@@ -1,0 +1,157 @@
+# Thresholds and rules. Every entry has a value AND a source (CLAUDE.md: never invent numbers).
+# Entries marked TODO-CONFIRM are Claude's choices waiting for the owner (none open after the step-4 review, 2026-11-12); TODO-VERIFY = source detail to check. Load with
+# pipeline/fetch/rules.py; tests/test_rules.py fails if any entry lacks a source.
+
+rain_spike:                       # owner decision B, 2026-11-11
+  min_mm:
+    value: 50
+    source: "Owner decision B, 2026-11-11: flag a day where one rain source exceeds 50 mm"
+  ratio:
+    value: 5
+    source: "Owner decision B, 2026-11-11: ... and is more than five times another source"
+
+power_rain:                       # owner decisions D6 and D, 2026-11-11
+  never_fill_years:
+    value: [2001, 2002, 2003]
+    source: "Owner decision D, 2026-11-11: POWER rain 2001-2003 is about half of later years (VALIDATION.md 3.1); never use it to fill GPM gaps"
+  max_filled_fraction_per_year:
+    value: 0.05
+    source: "Claude's proposal, TODO-CONFIRM (REVIEW_NOTES M2, 2026-11-12): the weather table fails loudly if POWER fills more than 5% of any year's days (about 18 days), so a partly failed GPM download cannot turn into POWER rain unnoticed. Every filled day stays flagged (rain_filled, rain_source)"
+
+temperature_correction:           # owner decision A, 2026-11-11
+  columns:
+    value: [tmin_c, tmax_c]
+    source: "Owner decision A, 2026-11-11: correct Tmin, check Tmax (and RH) the same way"
+  min_shared_days_per_year:
+    value: 200
+    source: "Owner-approved 2026-11-12 (proposed by Claude: the 330-record rule leaves no Tmin years at Kathmandu Airport; 200 keeps 2015, 2016, 2017, 2019, 2021, 2022, 2023)"
+  min_shared_days_per_month:
+    value: 20
+    source: "Owner-approved 2026-11-12: a month needs at least 20 shared days across the fit years"
+  split:
+    value: alternate
+    source: "Owner decision A; alternating sorted years owner-approved 2026-11-12"
+  apply_only_if_held_out_error_drops:
+    value: true
+    source: "Owner-approved 2026-11-12: keep a correction only if it lowers the held-out error"
+
+day_alignment:                    # owner decision C, 2026-11-11
+  lags_days:
+    value: [-1, 0, 1]
+    source: "Owner decision C, 2026-11-11: daily rain correlation at lags -1, 0, +1"
+
+cold_nights:                      # owner decision on step-3 review item 1, 2026-11-12
+  method:
+    value: empirical quantile mapping of Tmin, per month; per season when a month has too few shared days
+    source: "Owner go, 2026-11-12. Method: empirical quantile mapping as in Gudmundsson et al. 2012, HESS 16, 3383-3390, doi:10.5194/hess-16-3383-2012 (empirical percentiles, linear interpolation) and Themessl, Gobiet & Leuprecht 2011, IJC 31, 1530-1544, doi:10.1002/joc.2168"
+  seasons:
+    value: {DJF: [12, 1, 2], MAM: [3, 4, 5], JJAS: [6, 7, 8, 9], ON: [10, 11]}
+    source: "Owner, 2026-11-12: fit by season (Dec-Feb, Mar-May, Jun-Sep, Oct-Nov) if single months have too few days"
+  min_shared_days_per_month:
+    value: 20
+    source: "Reuses the owner-approved 20 days per month (temperature_correction)"
+  quantiles:
+    value: 99
+    source: "Claude's choice, owner-approved 2026-11-12 (step-4 review item 5): map at the 1st to 99th percentiles. Beyond the ends keep the end-quantile difference: Gudmundsson et al. 2012 state this for values above the training range; applying it below as well is Claude's choice"
+  frost_night_c:
+    value: 2.0
+    source: "Owner, 2026-11-12: count of nights below 2 C (CLAUDE.md frost risk band is 0 to 2 C)"
+  roles:
+    value: {temperature_and_et0: monthly offset, frost: quantile mapping}
+    source: "Owner, step-4 review item 1, 2026-11-12: use both, each for its purpose. The monthly offset stays for the twin's temperatures and ET0 (better MAE on held-out years); quantile mapping is used only for frost (better coldest-night error and nights below 2 C). Those two advantages rest on small samples: 3 held-out Januaries for the coldest night and 9 station nights below 2 C, with no uncertainty given (REVIEW_NOTES M8, 2026-11-12)"
+  frost_display_note:
+    value: "Held-out years 2016, 2019, 2022: nights below 2 C were 22 with the offset and 15 with quantile mapping, against 9 at the station."
+    source: "Owner, step-4 review item 1, 2026-11-12: both overcount cold nights against the station (offset 22, QM 15, station 9), so frost is shown as risk bands with the caveat, never as a count. Numbers: VALIDATION.md 3.14"
+
+rain_vote:                        # owner decision on step-3 review item 6, 2026-11-12
+  rule:
+    value: when GPM exists, a flagged day where GPM agrees with the station (their pair passes the spike rule) is marked a real local storm; where GPM agrees with POWER instead, the station value is marked suspect
+    source: "Owner, 2026-11-12: let the three sources vote; if GPM agrees with the station, mark the day a real local storm. The 'suspect station' half is Claude's reading, owner-approved 2026-11-12 (step-4 review item 5). Caveat (REVIEW_NOTES H2, 2026-11-12): every Kathmandu Airport record is GHCN S-flag 'S', derived from synoptic reports, which the GHCN readme says to use with caution, especially for rain; a 'station value suspect' or 'real local storm' label rests on that series"
+
+et0:
+  rs_rso_limits:
+    value: [0.3, 1.0]
+    source: "FAO-56 eq. 39 limits Rs/Rso to <= 1.0; the 0.3 floor: ASCE-EWRI Task Committee final report (Jan 2005), eq. 18, p. 20: 'Rs/Rso = relative solar radiation (limited to 0.3 <= Rs/Rso <= 1.0)'; published as Allen et al. (eds.) 2005, The ASCE Standardized Reference Evapotranspiration Equation, ASCE, doi:10.1061/9780784408056. Owner-approved 2026-11-12"
+
+soilgrids:
+  nearest_cell_step_m:
+    value: 250
+    source: "SoilGrids 2.0 resolution is 250 m (Poggio et al. 2021)"
+  nearest_cell_max_m:
+    value: 3000
+    source: "Owner, 2026-11-12 (REVIEW_NOTES M5): if the field's own SoilGrids cell has no prediction, try FAO HWSD v2 (licence and access checked first; any new dependency needs the owner's go); otherwise use the nearest SoilGrids cell within 3 km, with a caveat that the soil is not the field's own. Was 1 km (owner-approved 2026-11-12, step-4 review items 2 and 5). The distance is recorded in the data card"
+
+curve_numbers:                    # SCS-CN for the bucket's runoff (twin/runoff.py)
+  hydrologic_soil_group:
+    value: C
+    source: "NEH Part 630 Ch. 7 (2009) texture guidance: 'Group C soils typically have between 20 percent and 40 percent clay and less than 50 percent sand'. SoilGrids at the cell used (750 m W of the demo point): clay 24-38%, sand 18-24% at 0-200 cm. Ksat unknown, so texture guidance only"
+  by_cover:
+    value: {bare: 91, small_grain: 83, row_crop: 85, close_seeded_legume: 81}
+    source: "TR-55 (1986) Table 2-2b = NEH 630 Ch. 9 Table 9-1, hydrologic soil group C: Fallow bare soil 91; Small grain, straight row, good 83; Row crops, straight row, good 85; Close-seeded or broadcast legumes, straight row, good 81. Straight row and 'good' condition are Claude's choices for a flat valley-floor field, owner-approved for now 2026-11-12 (step-4 review item 5). REVISIT once NASADEM gives the field's slope: terraced fields need the terraced or contoured (C&T) rows"
+  crop_cover:
+    value: {rice: small_grain, wheat: small_grain, maize: row_crop, potato: row_crop, lentil: close_seeded_legume, mustard: small_grain, buckwheat: small_grain, finger_millet: small_grain}
+    source: "Claude's mapping of each crop to a TR-55 cover row, owner-approved for now 2026-11-12 (step-4 review item 5; TR-55 has no paddy row; rice uses small grain). Revisit with the slope, as above"
+
+paddy_rice:
+  ponding:
+    value: "irrigated paddy only: refilled to field capacity at the start of every season day, booked as irrigation (pond_supply_mm is the paddy part); rain-fed paddy is the ordinary bucket with rice's Zr and p, no outside water"
+    source: "Owner, 2026-11-12 (REVIEW_NOTES H1, L1; owner to confirm): FAO-56 has no paddy balance. Replaces the rain-fed rule 'ponded until the first 10-day dry spell under 1 mm' (owner-approved at the step-4 review), which supplied 120-203 mm a season of unsourced water. Documentation only: no code reads this key"
+
+bare_soil:
+  kc:
+    value: 0.3
+    source: "CLAUDE.md 'Crop water use': bare soil days use a soil evaporation coefficient, 'start with 0.3, tune, document' (not yet tuned)"
+
+water_source_unknown:
+  treat_as:
+    value: rain-only
+    source: "Claude's choice, owner-approved 2026-11-12 (step-4 review item 5): used only while config/fields/demo.yaml water_source is null (the owner will set it); rain-only means no irrigation and rain-fed paddy. Every replay also runs both rain-fed and irrigated (owner, step-4 review item 3)"
+
+crop_calendar:
+  rule:
+    value: sow at the middle of the crop's default sowing window; season length from crops.json stages_days
+    source: "Claude's choice, owner-approved 2026-11-12 (step-4 review item 5); windows from the FAO Crop Calendar, Nepal Hill zone (crops.json calendar sources)"
+
+ky_assumed:                       # owner, step-4 review item 4, 2026-11-12
+  neutral:
+    value: 1.0
+    source: "Owner, step-4 review item 4, 2026-11-12: for crops with no published seasonal Ky, use a neutral Ky of 1.0 (yield falls in step with water shortage), labelled 'assumed' in crops.json and in the explanations"
+  sensitivity:
+    value: [0.8, 1.2]
+    source: "Owner, step-4 review item 4, 2026-11-12: rerun the plan ranking with Ky 0.8 and 1.2 for those crops and report whether the ranking changes"
+
+replay:                           # build step 5 (pipeline/plans/simulate.py, scripts/run_replay.py)
+  year_of_season:
+    value: the year the season is harvested (its last day)
+    source: "Claude's choice, TODO-CONFIRM: the contract has one row per year 2001-2025; wheat sown in Oct-Nov belongs to the year of its March harvest"
+  combine_crops:
+    value: a year's harvest is the mean of its crops' harvest percentages; its dry days are their sum
+    source: "Claude's choice, TODO-CONFIRM: the contract (replay_year) has one harvest and one dry-day count per year"
+  rotation_unknown:
+    value: [rice, potato]
+    source: "Placeholder while config/fields/<field>.yaml current_rotation is null: the owner's placeholder rotation for the demo field, rice in the monsoon then potato in winter (owner, 2026-11-12; was wheat then rice from CLAUDE.md build step 4). The owner sets the real rotation with the farmer; every output says it is a placeholder. TODO-CONFIRM"
+  water_cases:
+    value: [rain-fed, irrigated]
+    source: "Owner, step-4 review item 3, 2026-11-12: run every replay both rain-fed and irrigated and keep both results, so the site can show what irrigation changes. Irrigated = refill whenever Dr passes RAW (CLAUDE.md), water assumed always available"
+  dry_run_min_station_coverage:
+    value: 0.9
+    source: "Claude's choice, TODO-CONFIRM, for the TEMPORARY station-rain dry run only (never exported): a year is used only if the station has rain on at least 90% of its days; missing days are filled from POWER and flagged"
+
+events:                           # replay.<plan>[].event (build step 5); sources opened 2026-11-12 by a research sub-agent
+  drought_decile_max:
+    value: 2
+    source: "Rainfall deciles (Gibbs & Maher 1967, Bureau of Meteorology Bulletin No. 48; cited by WMO & GWP 2016, Handbook of Drought Indicators and Indices, WMO-No. 1173, pp. 11-12). Classes from Hayes, 'Drought Indices', National Drought Mitigation Center (archived 2009-05-10, https://webarchive.library.unt.edu/eot2008/20090510055327id_/http://www.drought.unl.edu/whatis/indices.htm): 'deciles 1-2: lowest 20% much below normal'. Applied to each crop's season rain over the replay record, decile = ceil(10 x rank / n) with average ranks for ties. The method wants a long record (Australia uses 100 years); 25 seasons is short. Calling 'much below normal' a drought: Claude's choice, TODO-CONFIRM"
+  flood_day_mm:
+    value: 100
+    source: "Government of Nepal, DHM Meteorological Forecasting Division, 'Terms used in Weather Forecasting in Nepal' (https://dhm.gov.np/mfd/api/image/forecast-terminology/): rain in 24 h, heavy 50 to under 100 mm, very heavy 100 to under 200 mm, extremely heavy 200 mm or more. A season day of 'very heavy' rain counts as a flood: Claude's choice, TODO-CONFIRM (the alternative is 'extremely heavy', 200 mm). GPM days are UTC days on a 0.1 deg grid, so station peaks are smoothed"
+  precedence:
+    value: [drought, flood]
+    source: "Claude's choice, TODO-CONFIRM: the contract allows one event per year; drought before flood, in the contract's enum order. Frost is no longer a replay event (owner, 2026-11-12, REVIEW_NOTES M1): the frost Tmin is known to overcount cold nights, so frost is shown only as a risk band in the monthly calendar (diary.months[].frost), never per year. The removed per-year rule (wheat 0 C mid-season, potato -2 C whole season, with its sources) is kept in METHOD_NOTES.md for the record"
+
+groundwater:                      # diary.groundwater from GRACE (D5, D7)
+  scale_factor:
+    value: apply the file's gridded CRI scale factor for the trend's size; keep the unscaled value in the card
+    source: "Owner, 2026-11-12: JPL provides the CRI scale factor for land hydrology; apply it for the trend's size. File attribute (scale_factor.description): 'Gridded scale factors to be used with mascon solution that has the CRI filter applied; based on CLM data from 2002-2009'. A positive factor cannot change the trend's direction (the reader refuses a non-positive one)"
+  caveat:
+    value: "Regional water storage, not the field's own aquifer: GRACE measures the total water stored over an area hundreds of km across (one 3-degree mascon, about 330 km), including glaciers and snow in the mountains and the groundwater of the plains. It is not the field's own well or aquifer."
+    source: "Owner, 2026-11-12: say this in diary.groundwater and every explanation. 3-degree equal-area mascons: the file's geospatial_lat_resolution attribute"

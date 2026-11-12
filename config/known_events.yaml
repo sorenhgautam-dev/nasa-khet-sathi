@@ -1,0 +1,242 @@
+# Documented bad-weather years for the Kathmandu valley and central Nepal, 2001-2025.
+# Owner decision E (2026-11-11), for validation layer 4.1: the twin's worst replay years should match these.
+# Compiled by a research sub-agent that opened every cited page on 2026-11-11 (owner: spot-check a few).
+# kathmandu_valley: yes = a source shows the valley was hit; partly / indirect = hit but centred
+# elsewhere; no = elsewhere; not_stated = the source does not say. Layer 4.1 should weight "yes" events.
+# Note: DHM stations "Bhaktapur" (27.68 N, 85.42 E, 1315 m) and "Changu Narayan" (27.72 N, 85.43 E) sit
+# almost on the demo field; DHM seasonal summary PDFs list them in their annex tables.
+
+events:
+  - id: kathmandu_flood_2002_07
+    years: [2002]
+    months: "22-23 Jul"
+    category: flood
+    kathmandu_valley: "yes"
+    area: "Kathmandu valley, Makwanpur, Kavre"
+    summary: "169.5 mm in 24 h in Kathmandu, a 30-year high; 16 killed in the valley; Hanumante Khola in Bhaktapur overflowed and rains swept standing crops. DHM (2024 report) lists 23 Jul 2002 as the earlier 24-h record at Nangkhel, Bhaktapur (191.5 mm) and Kathmandu Airport (177.0 mm)."
+    sources:
+      - {title: "Heavy Rain in Nepal (counterpart report)", publisher: "Ministry of Home Affairs, Nepal (L.N. Pokharel), via ADRC", date: "2002-07", url: "https://www.adrc.asia/counterpart_report/nepal_020723.pdf"}
+      - {title: "Situational Report on Extreme Precipitation and Flooding Event of 27-29 September 2024", publisher: "DHM Nepal", date: "2024-10-08", url: "https://www.dhm.gov.np/uploads/dhm/downloads/Situational_Report_on_Extreme_Precipitation_and_Flooding_Event_of_27-29_September_2024.pdf"}
+
+  - id: monsoon_drought_2004_2005
+    years: [2004, 2005]
+    months: "Jun-Sep"
+    category: drought
+    kathmandu_valley: not_stated
+    area: "Central Nepal, Gandaki basin (the study excludes the Bagmati basin, so not the valley)"
+    summary: "More than 30% of stations in monsoon drought in 2004, 2005, 2006 and 2009; 2005 covered the largest area."
+    sources:
+      - {title: "Drought risk assessment in central Nepal: temporal and spatial analysis (Natural Hazards 80:1913-1932)", publisher: "Dahal et al.", date: "2016", url: "https://doi.org/10.1007/s11069-015-2055-5"}
+
+  - id: drought_2005_06_and_monsoon_2006
+    years: [2006]
+    months: "Dec 2005-Feb 2006; Jul-Aug 2006"
+    category: drought
+    kathmandu_valley: not_stated
+    area: "Eastern and Central regions incl. the central hills next to the valley (Kavre -22% paddy)"
+    summary: "July 2006 rain 40% below normal in the Eastern, Central and Western regions; national paddy -13%; 42 of 75 districts food-deficit. Drought at more than 90% of central stations in Dec 2005-Feb 2006 (Dahal 2016)."
+    sources:
+      - {title: "Special Report: FAO/WFP Food Security Assessment Mission to Nepal", publisher: "FAO/WFP", date: "2007-07-25", url: "https://www.fao.org/4/ah869e/ah869e00.htm"}
+      - {title: "Drought risk assessment in central Nepal", publisher: "Dahal et al., Natural Hazards", date: "2016", url: "https://doi.org/10.1007/s11069-015-2055-5"}
+
+  - id: winter_drought_2008_09
+    years: [2009]
+    months: "Nov 2008-Feb 2009"
+    category: drought
+    kathmandu_valley: not_stated
+    area: "National; worst in Far- and Mid-West hills; mid-Nepal districts below 50% of Nov-Feb rain"
+    summary: "Wheat -14.5% and barley -17.3% nationally; about 700,000 more people food-insecure. Drought at more than 90% of central stations in Dec 2008-Feb 2009 (Dahal 2016). Valley rainfall itself is not in any opened source (see unconfirmed)."
+    sources:
+      - {title: "GIEWS Country Brief Nepal, 7 Oct 2009 (archive PDF)", publisher: "FAO GIEWS", date: "2009-10-07", url: "https://www.fao.org/giews/countrybrief/country/NPL/pdf_archive/NPL_Archive.pdf"}
+      - {title: "Steep drop in crop yield due to lack of rainfall", publisher: "The Himalayan Times", date: "2009-05-28", url: "https://thehimalayantimes.com/business/steep-drop-in-crop-yield-due-to-lack-of-rainfall"}
+      - {title: "Wang et al., J. Climate 26:8241", publisher: "PNNL record", date: "2013", url: "https://data.pnnl.gov/group/nodes/publication/19336"}
+
+  - id: monsoon_drought_2009
+    years: [2009]
+    months: "Jun-Sep"
+    category: drought
+    kathmandu_valley: not_stated
+    area: "National and central Nepal"
+    summary: "Late monsoon cut paddy planting; 2009 paddy about 4 Mt, significantly below 2008. Among the worst central-Nepal summer droughts (Dahal 2016)."
+    sources:
+      - {title: "GIEWS Country Briefs Nepal, 7 Oct 2009 and 2 Mar 2010 (archive PDF)", publisher: "FAO GIEWS", date: "2009-10-07", url: "https://www.fao.org/giews/countrybrief/country/NPL/pdf_archive/NPL_Archive.pdf"}
+
+  - id: early_season_drought_2012
+    years: [2012]
+    months: "Apr-Jul"
+    category: drought
+    kathmandu_valley: not_stated
+    area: "National"
+    summary: "Dry April-June cut maize 8%; dry start plus local floods cut paddy 11% from the 2011 record."
+    sources:
+      - {title: "GIEWS Country Brief Nepal, 22 Jan 2013 (archive PDF)", publisher: "FAO GIEWS", date: "2013-01-22", url: "https://www.fao.org/giews/countrybrief/country/NPL/pdf_archive/NPL_Archive.pdf"}
+
+  - id: cold_wave_2013_01
+    years: [2013]
+    months: "early Jan"
+    category: frost
+    kathmandu_valley: "yes"
+    area: "Terai deaths; frost damage in hills near Kathmandu"
+    summary: "Kathmandu reached -1.1 C on 8 Jan 2013; a farmer about 50 km from Kathmandu said an early-January frost destroyed all his potatoes."
+    sources:
+      - {title: "49 dead in Nepal cold wave", publisher: "Gulf Times (agencies)", date: "2013-01-09", url: "https://www.gulf-times.com/story/338044/49-dead-in-nepal-cold-wave/amp"}
+      - {title: "Weather changes frustrate Nepal's farmers", publisher: "Climate News Network via Eco-Business", date: "2013-02-19", url: "https://www.eco-business.com/ms/news/weather-changes-frustrate-nepals-farmers/"}
+
+  - id: monsoon_drought_2014
+    years: [2014]
+    months: "Jun-Sep"
+    category: drought
+    kathmandu_valley: not_stated
+    area: "National"
+    summary: "Rice -9% and planted area -6% after a late, below-average monsoon."
+    sources:
+      - {title: "GIEWS Country Brief Nepal, 22 Dec 2014 (archive PDF)", publisher: "FAO GIEWS", date: "2014-12-22", url: "https://www.fao.org/giews/countrybrief/country/NPL/pdf_archive/NPL_Archive.pdf"}
+
+  - id: monsoon_drought_2015
+    years: [2015]
+    months: "Jun-Sep"
+    category: drought
+    kathmandu_valley: "no"
+    area: "Central and eastern Terai"
+    summary: "Rice 4% below the reduced 2014 crop after below-average rain over the central and eastern Terai."
+    sources:
+      - {title: "GIEWS Country Brief Nepal, 19 Nov 2015 (archive PDF)", publisher: "FAO GIEWS", date: "2015-11-19", url: "https://www.fao.org/giews/countrybrief/country/NPL/pdf_archive/NPL_Archive.pdf"}
+
+  - id: winter_drought_2015_16
+    years: [2016]
+    months: "Nov 2015-Apr 2016"
+    category: drought
+    kathmandu_valley: not_stated
+    area: "National"
+    summary: "2016 wheat 1.4 Mt, 11% below 2015, from poor rains; seed, fertiliser and fuel shortages (border-trade disruption) also contributed, so not all of the loss is weather."
+    sources:
+      - {title: "GIEWS Country Briefs Nepal, 29 Jul 2016 and 7 Jun 2017 (archive PDF)", publisher: "FAO GIEWS", date: "2016-07-29", url: "https://www.fao.org/giews/countrybrief/country/NPL/pdf_archive/NPL_Archive.pdf"}
+
+  - id: terai_floods_2017_08
+    years: [2017]
+    months: "11-13 Aug"
+    category: flood
+    kathmandu_valley: "no"
+    area: "Southern Terai; Hetauda, Makwanpur (Bagmati province)"
+    summary: "38 of 75 districts flooded, about 460,000 displaced, paddy -8%; Hetauda 516.2 mm on 13 Aug 2017, the national daily record until 2024."
+    sources:
+      - {title: "GIEWS Country Brief Nepal, 7 Mar 2018 (archive PDF)", publisher: "FAO GIEWS", date: "2018-03-07", url: "https://www.fao.org/giews/countrybrief/country/NPL/pdf_archive/NPL_Archive.pdf"}
+      - {title: "State of the Climate of Nepal 2024", publisher: "DHM Nepal", date: "2024", url: "https://dhm.gov.np/uploads/dhm/climateService/1766473731_86708e798463fe298b78.pdf"}
+
+  - id: cold_wave_2018_01
+    years: [2018]
+    months: "Jan"
+    category: frost
+    kathmandu_valley: "yes"
+    area: "Kathmandu at freezing; Terai winter crops damaged"
+    summary: "DHM recorded Kathmandu's minimum at the freezing point, the lowest since Jan 2010; heavy winter-crop damage in Rautahat and Sarlahi."
+    sources:
+      - {title: "Kathmandu temperature plummets to freezing point, lowest ever in eight years", publisher: "OnlineKhabar", date: "2018-01-07", url: "https://english.onlinekhabar.com/katmandu-temperature-plummets-to-freezing-point-lowest-ever-in-eight-years.html"}
+      - {title: "Vegetable prices spike as cold wave grips Tarai belt", publisher: "The Kathmandu Post", date: "2018-02-08", url: "https://kathmandupost.com/money/2018/02/08/vegetable-prices-spike-as-cold-wave-grips-tarai-belt"}
+
+  - id: winter_drought_2020_21
+    years: [2021]
+    months: "Oct 2020-Feb 2021"
+    category: drought
+    kathmandu_valley: "yes"
+    area: "National"
+    summary: "Dec-Feb rain 15.4 mm against a 60.4 mm normal (75% short, DHM); called the driest season since 1950; winter crops affected."
+    sources:
+      - {title: "Country received only 25 percent of normal rainfall this winter", publisher: "The Kathmandu Post", date: "2021-03-05", url: "https://kathmandupost.com/climate-environment/2021/03/05/country-received-only-25-percent-of-normal-rainfall-this-winter"}
+      - {title: "Nepal under severe drought condition: Winter crops affected", publisher: "The Himalayan Times", date: "2021-03-30", url: "https://thehimalayantimes.com/ampArticle/1001640"}
+
+  - id: melamchi_flood_2021_06
+    years: [2021]
+    months: "15 Jun"
+    category: flood
+    kathmandu_valley: indirect
+    area: "Melamchi, Sindhupalchok (Bagmati province); the valley's water-supply intake was damaged"
+    summary: "Cascading flash flood after intense upstream rain plus glacial and landslide-dam processes; 5 dead, 20 missing, 337 houses destroyed (initial counts)."
+    sources:
+      - {title: "The Melamchi flood disaster: Cascading hazard and the need for multihazard risk management", publisher: "ICIMOD", date: "2021-08-04", url: "https://www.icimod.org/?p=34677"}
+
+  - id: unseasonal_rain_2021_10
+    years: [2021]
+    months: "17-19 Oct"
+    category: flood
+    kathmandu_valley: "no"
+    area: "All 7 provinces, worst in Lumbini and Sudurpaschim; in Bagmati only Chitwan and Nuwakot"
+    summary: "325,258 t of paddy (Rs 8.26 bn) destroyed on 85,580 ha at harvest; 2021 national paddy -9%."
+    sources:
+      - {title: "Paddy damage by freak rains estimated at Rs8.26 billion", publisher: "The Kathmandu Post", date: "2021-10-24", url: "https://kathmandupost.com/money/2021/10/24/october-rains-damage-record-rs8-26-billion-of-paddy-crop"}
+
+  - id: winter_drought_2022_23
+    years: [2023]
+    months: "Oct 2022-Feb 2023"
+    category: drought
+    kathmandu_valley: "yes"
+    area: "National"
+    summary: "Dec-Feb mean over 20 stations 12.9 mm, 21.5% of normal (DHM); rain-fed wheat and mustard badly affected."
+    sources:
+      - {title: "Winter (Dec 2022-Feb 2023) Precipitation Monitoring", publisher: "DHM Nepal", date: "2023-02-28", url: "https://www.dhm.gov.np/uploads/dhm/climateService/Winter__Precipitation_monitoring_28th_February_20231.pdf"}
+      - {title: "When is the next rain?", publisher: "The Kathmandu Post (M. Upadhya)", date: "2023-02-12", url: "https://kathmandupost.com/columns/2023/02/12/when-is-the-next-rain"}
+
+  - id: winter_drought_2023_24
+    years: [2024]
+    months: "Dec 2023-Feb 2024"
+    category: drought
+    kathmandu_valley: "yes"
+    area: "National"
+    summary: "Nepal 19.8% of normal; Kathmandu Airport 8.3 mm (17.9%), Bhaktapur 13.8 mm (28.9%), Nagarkot 2.5 mm (5.1%)."
+    sources:
+      - {title: "Preliminary Precipitation and Temperature Summary, Winter Season (Dec 2023-Feb 2024)", publisher: "DHM Nepal", date: "2024-04-05", url: "https://www.dhm.gov.np/uploads/dhm/climateService/DJF_2023_24-Preliminary_precipitation_and_temperature_summary.pdf"}
+
+  - id: kathmandu_floods_2024_09
+    years: [2024]
+    months: "26-28 Sep"
+    category: flood
+    kathmandu_valley: "yes"
+    area: "Bagmati, Koshi and Narayani basins; the valley was the epicentre"
+    summary: "25 stations set new 24-h records on 28 Sep, 11 in the valley: Kathmandu Airport 239.7 mm, Nangkhel (Bhaktapur) 194.5 mm, Godavari 311.6 mm; Bagmati at Khokana 6.16 m; more than 200 dead nationally; first estimate Rs 3.5 bn of paddy damaged on 58,476 ha."
+    sources:
+      - {title: "Situational Report on Extreme Precipitation and Flooding Event of 27-29 September 2024", publisher: "DHM Nepal", date: "2024-10-08", url: "https://www.dhm.gov.np/uploads/dhm/downloads/Situational_Report_on_Extreme_Precipitation_and_Flooding_Event_of_27-29_September_2024.pdf"}
+      - {title: "Death toll climbs as torrential rains pound Nepal", publisher: "ICIMOD", date: "2024-09-28", url: "https://www.icimod.org/death-toll-climbs-as-torrential-rains-pound-nepal"}
+      - {title: "Paddy damage by floods, landslides estimated at Rs 3.5 billion", publisher: "HimalPress", date: "2024-10-01", url: "https://en.himalpress.com/paddy-damage-by-floods-landslides-estimated-at-rs-3-5-billion/"}
+
+  - id: winter_drought_2024_25
+    years: [2025]
+    months: "Dec 2024-Feb 2025"
+    category: drought
+    kathmandu_valley: "yes"
+    area: "National; extreme drought in Bagmati"
+    summary: "Nepal 20.6% of normal, 49 of 126 stations with no rain; Bhaktapur, Changu Narayan, Kathmandu Airport, Khumaltar and Nagarkot all 0.0 mm (Bhaktapur normal 47.8 mm). FAO: national (mostly irrigated Terai) wheat average in 2025."
+    sources:
+      - {title: "Preliminary Precipitation and Temperature Summary, Winter Season (Dec 2024-Feb 2025)", publisher: "DHM Nepal", date: "2025-03-11", url: "https://www.dhm.gov.np/uploads/dhm/climateService/DJF2425-Preliminary_precipitation_and_temperature_summary.pdf"}
+      - {title: "State of the Nepal Climate 2025", publisher: "DHM Nepal", date: "2025", url: "https://dhm.gov.np/uploads/dhm/climateService/1777360855_cde386661a4216e39437.pdf"}
+
+  - id: harvest_rain_2025_10
+    years: [2025]
+    months: "3-5 Oct (and Cyclone Montha, late Oct)"
+    category: flood
+    kathmandu_valley: partly
+    area: "Heaviest in the central-eastern Terai and eastern hills"
+    summary: "Birganj 348.7 mm over the event; 41 deaths; Bhaktapur Oct-Nov rain 246.9 mm, 487% of normal; about Rs 3.5 bn crop damage from the early-October rain (Koshi, Madhesh, Bagmati hardest hit)."
+    sources:
+      - {title: "State of the Nepal Climate 2025", publisher: "DHM Nepal", date: "2025", url: "https://dhm.gov.np/uploads/dhm/climateService/1777360855_cde386661a4216e39437.pdf"}
+      - {title: "Drought at planting, deluge at harvest leave farmers reeling", publisher: "The Kathmandu Post", date: "2025-11-05", url: "https://kathmandupost.com/money/2025/11/05/drought-at-planting-and-deluge-at-harvest-push-farmers-to-despair"}
+
+negative_controls:   # years when the valley was NOT in deficit, so the twin should not call them bad
+  - id: monsoon_2023_valley_normal
+    years: [2023]
+    summary: "National monsoon 89.9% of normal, but Kathmandu Airport 109.1%, Bhaktapur 106.9%, Changu Narayan 108.0% (Godavari 74.7%)."
+    sources:
+      - {title: "JJAS 2023 Preliminary precipitation and temperature summary", publisher: "DHM Nepal", date: "2023-10-31", url: "http://dhm.gov.np/uploads/dhm/climateService/JJAS_2023-Preliminary_precipitation_and_temperature_summary.pdf"}
+  - id: monsoon_2025_bhaktapur_wet
+    years: [2025]
+    summary: "June-July deficits in Madhesh, but Bhaktapur's monsoon was 116.8% of normal."
+    sources:
+      - {title: "State of the Nepal Climate 2025", publisher: "DHM Nepal", date: "2025", url: "https://dhm.gov.np/uploads/dhm/climateService/1777360855_cde386661a4216e39437.pdf"}
+
+unconfirmed:
+  - {item: "Kathmandu valley rainfall in the 2008/09 winter ('totally dry', Kunwar 2009 thesis)", status: TODO-VERIFY, reason: "seen only in a search snippet; the PDF returned 404; MoAC/WFP/FAO May 2009 assessment and NeKSAP pages unreachable"}
+  - {item: "Jure landslide, Sindhupalchok, 2 Aug 2014", status: TODO-VERIFY, reason: "landslide confirmed (ISPRS Archives XL-8, 2014) but no opened source says heavy rain triggered it"}
+  - {item: "Kavre (Lamdihi) frost on Poush 24 (8 Jan) destroying a potato crop", status: TODO-VERIFY, reason: "Republica article gives no year; may be the January 2013 event"}
+  - {item: "Kathmandu -0.2 C on 12 Jan 2010", status: TODO-VERIFY, reason: "value seen only in a search snippet"}
+  - {item: "Kathmandu hailstorm, late March 2009, damaging crops", status: TODO-VERIFY, reason: "NeKSAP alert seen only as a snippet; site unreachable"}
+  - {item: "ReliefWeb / OCHA and WFP reports (e.g. Sep 2024 sitreps, WFP alert Apr 2009)", status: TODO-VERIFY, reason: "every ReliefWeb and WFP URL returned HTTP 403, so none are cited"}
+  - {item: "Pre-monsoon dry spells in the valley (e.g. April to mid-June 2024) and frost damage in Bhaktapur or Lalitpur", status: TODO-VERIFY, reason: "not researched / no opened source found"}

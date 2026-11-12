@@ -68,3 +68,11 @@ def test_zip_contains_the_pack(tmp_path):
     z = rp.zip_pack(pack)
     with zipfile.ZipFile(z) as f:
         assert "review_pack/cards/demo/power.json" in f.namelist()
+
+
+def test_pack_includes_model_plots(tmp_path):
+    repo = _fake_repo(tmp_path)
+    (repo / "data" / "plots" / "demo").mkdir(parents=True)
+    (repo / "data" / "plots" / "demo" / "season_2016_dr.png").write_bytes(b"png")
+    pack = rp.build(repo, run_tests=False)
+    assert (pack / "plots" / "demo" / "season_2016_dr.png").is_file()

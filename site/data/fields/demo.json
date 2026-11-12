@@ -1,27 +1,27 @@
 {
  "field": {
-  "name": "Demo field (MOCK data)",
-  "lat": 27.67,
-  "lon": 85.43,
+  "name": "Bhaktapur demo field (PLACEHOLDER location and rotation) (MOCK data)",
+  "lat": 27.690767,
+  "lon": 85.441792,
   "sections": [
    {
     "id": "s1",
     "polygon": [
      [
-      85.43,
-      27.67
+      85.441487,
+      27.690497
      ],
      [
-      85.4301,
-      27.67
+      85.441587,
+      27.690497
      ],
      [
-      85.4301,
-      27.6701
+      85.441587,
+      27.690597
      ],
      [
-      85.43,
-      27.6701
+      85.441487,
+      27.690597
      ]
     ],
     "status": "yellow",
@@ -33,20 +33,20 @@
     "id": "s2",
     "polygon": [
      [
-      85.4301,
-      27.67
+      85.441587,
+      27.690497
      ],
      [
-      85.4302,
-      27.67
+      85.441687,
+      27.690497
      ],
      [
-      85.4302,
-      27.6701
+      85.441687,
+      27.690597
      ],
      [
-      85.4301,
-      27.6701
+      85.441587,
+      27.690597
      ]
     ],
     "status": "red",
@@ -58,20 +58,20 @@
     "id": "s3",
     "polygon": [
      [
-      85.4302,
-      27.67
+      85.441687,
+      27.690497
      ],
      [
-      85.4303,
-      27.67
+      85.441787,
+      27.690497
      ],
      [
-      85.4303,
-      27.6701
+      85.441787,
+      27.690597
      ],
      [
-      85.4302,
-      27.6701
+      85.441687,
+      27.690597
      ]
     ],
     "status": "grey",
@@ -83,20 +83,20 @@
     "id": "s4",
     "polygon": [
      [
-      85.4303,
-      27.67
+      85.441787,
+      27.690497
      ],
      [
-      85.4304,
-      27.67
+      85.441887,
+      27.690497
      ],
      [
-      85.4304,
-      27.6701
+      85.441887,
+      27.690597
      ],
      [
-      85.4303,
-      27.6701
+      85.441787,
+      27.690597
      ]
     ],
     "status": "green",
@@ -108,20 +108,20 @@
     "id": "s5",
     "polygon": [
      [
-      85.43,
-      27.6701
+      85.441487,
+      27.690597
      ],
      [
-      85.4301,
-      27.6701
+      85.441587,
+      27.690597
      ],
      [
-      85.4301,
-      27.6702
+      85.441587,
+      27.690697
      ],
      [
-      85.43,
-      27.6702
+      85.441487,
+      27.690697
      ]
     ],
     "status": "yellow",
@@ -133,20 +133,20 @@
     "id": "s6",
     "polygon": [
      [
-      85.4301,
-      27.6701
+      85.441587,
+      27.690597
      ],
      [
-      85.4302,
-      27.6701
+      85.441687,
+      27.690597
      ],
      [
-      85.4302,
-      27.6702
+      85.441687,
+      27.690697
      ],
      [
-      85.4301,
-      27.6702
+      85.441587,
+      27.690697
      ]
     ],
     "status": "red",
@@ -158,20 +158,20 @@
     "id": "s7",
     "polygon": [
      [
-      85.4302,
-      27.6701
+      85.441687,
+      27.690597
      ],
      [
-      85.4303,
-      27.6701
+      85.441787,
+      27.690597
      ],
      [
-      85.4303,
-      27.6702
+      85.441787,
+      27.690697
      ],
      [
-      85.4302,
-      27.6702
+      85.441687,
+      27.690697
      ]
     ],
     "status": "grey",
@@ -183,20 +183,20 @@
     "id": "s8",
     "polygon": [
      [
-      85.4303,
-      27.6701
+      85.441787,
+      27.690597
      ],
      [
-      85.4304,
-      27.6701
+      85.441887,
+      27.690597
      ],
      [
-      85.4304,
-      27.6702
+      85.441887,
+      27.690697
      ],
      [
-      85.4303,
-      27.6702
+      85.441787,
+      27.690697
      ]
     ],
     "status": "green",
@@ -208,20 +208,20 @@
     "id": "s9",
     "polygon": [
      [
-      85.43,
-      27.6702
+      85.441487,
+      27.690697
      ],
      [
-      85.4301,
-      27.6702
+      85.441587,
+      27.690697
      ],
      [
-      85.4301,
-      27.6703
+      85.441587,
+      27.690797
      ],
      [
-      85.43,
-      27.6703
+      85.441487,
+      27.690797
      ]
     ],
     "status": "yellow",
@@ -233,20 +233,20 @@
     "id": "s10",
     "polygon": [
      [
-      85.4301,
-      27.6702
+      85.441587,
+      27.690697
      ],
      [
-      85.4302,
-      27.6702
+      85.441687,
+      27.690697
      ],
      [
-      85.4302,
-      27.6703
+      85.441687,
+      27.690797
      ],
      [
-      85.4301,
-      27.6703
+      85.441587,
+      27.690797
      ]
     ],
     "status": "red",
@@ -258,20 +258,20 @@
     "id": "s11",
     "polygon": [
      [
-      85.4302,
-      27.6702
+      85.441687,
+      27.690697
      ],
      [
-      85.4303,
-      27.6702
+      85.441787,
+      27.690697
      ],
      [
-      85.4303,
-      27.6703
+      85.441787,
+      27.690797
      ],
      [
-      85.4302,
-      27.6703
+      85.441687,
+      27.690797
      ]
     ],
     "status": "grey",
@@ -283,20 +283,20 @@
     "id": "s12",
     "polygon": [
      [
-      85.4303,
-      27.6702
+      85.441787,
+      27.690697
      ],
      [
-      85.4304,
-      27.6702
+      85.441887,
+      27.690697
      ],
      [
-      85.4304,
-      27.6703
+      85.441887,
+      27.690797
      ],
      [
-      85.4303,
-      27.6703
+      85.441787,
+      27.690797
      ]
     ],
     "status": "green",
@@ -448,6 +448,16 @@
    },
    "tips": [
     "MOCK tip for 'What you do now'."
+   ],
+   "tabs_ne": {
+    "why": "MOCK 'What you do now' योजनाको why ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "evidence": "MOCK 'What you do now' योजनाको evidence ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "benefits": "MOCK 'What you do now' योजनाको benefits ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "unknown": "MOCK 'What you do now' योजनाको unknown ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "check": "MOCK 'What you do now' योजनाको check ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।"
+   },
+   "tips_ne": [
+    "MOCK 'What you do now' को नमुना सुझाव।"
    ]
   },
   {
@@ -480,6 +490,16 @@
    },
    "tips": [
     "MOCK tip for 'Fill the empty months'."
+   ],
+   "tabs_ne": {
+    "why": "MOCK 'Fill the empty months' योजनाको why ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "evidence": "MOCK 'Fill the empty months' योजनाको evidence ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "benefits": "MOCK 'Fill the empty months' योजनाको benefits ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "unknown": "MOCK 'Fill the empty months' योजनाको unknown ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "check": "MOCK 'Fill the empty months' योजनाको check ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।"
+   },
+   "tips_ne": [
+    "MOCK 'Fill the empty months' को नमुना सुझाव।"
    ]
   },
   {
@@ -512,6 +532,16 @@
    },
    "tips": [
     "MOCK tip for 'Plant later, with the rain'."
+   ],
+   "tabs_ne": {
+    "why": "MOCK 'Plant later, with the rain' योजनाको why ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "evidence": "MOCK 'Plant later, with the rain' योजनाको evidence ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "benefits": "MOCK 'Plant later, with the rain' योजनाको benefits ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "unknown": "MOCK 'Plant later, with the rain' योजनाको unknown ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
+    "check": "MOCK 'Plant later, with the rain' योजनाको check ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।"
+   },
+   "tips_ne": [
+    "MOCK 'Plant later, with the rain' को नमुना सुझाव।"
    ]
   }
  ],
@@ -521,151 +551,251 @@
     "year": 2001,
     "harvest": 67,
     "dry_days": 3,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 92,
+     "dry_days": 3
+    }
    },
    {
     "year": 2002,
     "harvest": 74,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 89,
+     "dry_days": 1
+    }
    },
    {
     "year": 2003,
     "harvest": 81,
     "dry_days": 9,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 86,
+     "dry_days": 4
+    }
    },
    {
     "year": 2004,
     "harvest": 63,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 93,
+     "dry_days": 2
+    }
    },
    {
     "year": 2005,
     "harvest": 70,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 0
+    }
    },
    {
     "year": 2006,
     "harvest": 57,
     "dry_days": 18,
-    "event": "drought"
+    "event": "drought",
+    "irrigated": {
+     "harvest": 87,
+     "dry_days": 3
+    }
    },
    {
     "year": 2007,
     "harvest": 84,
     "dry_days": 21,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 94,
+     "dry_days": 1
+    }
    },
    {
     "year": 2008,
     "harvest": 66,
     "dry_days": 24,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 91,
+     "dry_days": 4
+    }
    },
    {
     "year": 2009,
     "harvest": 53,
     "dry_days": 27,
-    "event": "drought"
+    "event": "drought",
+    "irrigated": {
+     "harvest": 88,
+     "dry_days": 2
+    }
    },
    {
     "year": 2010,
     "harvest": 80,
     "dry_days": 0,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 85,
+     "dry_days": 0
+    }
    },
    {
     "year": 2011,
     "harvest": 62,
     "dry_days": 3,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 92,
+     "dry_days": 3
+    }
    },
    {
     "year": 2012,
     "harvest": 69,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 89,
+     "dry_days": 1
+    }
    },
    {
     "year": 2013,
-    "harvest": 56,
+    "harvest": 76,
     "dry_days": 9,
-    "event": "frost"
+    "event": "none",
+    "irrigated": {
+     "harvest": 86,
+     "dry_days": 4
+    }
    },
    {
     "year": 2014,
     "harvest": 83,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 93,
+     "dry_days": 2
+    }
    },
    {
     "year": 2015,
     "harvest": 65,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 0
+    }
    },
    {
     "year": 2016,
     "harvest": 72,
     "dry_days": 18,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 87,
+     "dry_days": 3
+    }
    },
    {
     "year": 2017,
     "harvest": 59,
     "dry_days": 21,
-    "event": "flood"
+    "event": "flood",
+    "irrigated": {
+     "harvest": 94,
+     "dry_days": 1
+    }
    },
    {
     "year": 2018,
     "harvest": 61,
     "dry_days": 24,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 91,
+     "dry_days": 4
+    }
    },
    {
     "year": 2019,
     "harvest": 68,
     "dry_days": 27,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 88,
+     "dry_days": 2
+    }
    },
    {
     "year": 2020,
     "harvest": 75,
     "dry_days": 0,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 85,
+     "dry_days": 0
+    }
    },
    {
     "year": 2021,
     "harvest": 62,
     "dry_days": 3,
-    "event": "flood"
+    "event": "flood",
+    "irrigated": {
+     "harvest": 92,
+     "dry_days": 3
+    }
    },
    {
     "year": 2022,
     "harvest": 64,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 89,
+     "dry_days": 1
+    }
    },
    {
     "year": 2023,
     "harvest": 71,
     "dry_days": 9,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 86,
+     "dry_days": 4
+    }
    },
    {
     "year": 2024,
     "harvest": 78,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 93,
+     "dry_days": 2
+    }
    },
    {
     "year": 2025,
     "harvest": 60,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 0
+    }
    }
   ],
   "cover_gap": [
@@ -673,151 +803,251 @@
     "year": 2001,
     "harvest": 65,
     "dry_days": 3,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 3
+    }
    },
    {
     "year": 2002,
     "harvest": 72,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 87,
+     "dry_days": 1
+    }
    },
    {
     "year": 2003,
     "harvest": 79,
     "dry_days": 9,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 84,
+     "dry_days": 4
+    }
    },
    {
     "year": 2004,
     "harvest": 61,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 91,
+     "dry_days": 2
+    }
    },
    {
     "year": 2005,
     "harvest": 68,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 88,
+     "dry_days": 0
+    }
    },
    {
     "year": 2006,
     "harvest": 55,
     "dry_days": 18,
-    "event": "drought"
+    "event": "drought",
+    "irrigated": {
+     "harvest": 85,
+     "dry_days": 3
+    }
    },
    {
     "year": 2007,
     "harvest": 82,
     "dry_days": 21,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 92,
+     "dry_days": 1
+    }
    },
    {
     "year": 2008,
     "harvest": 64,
     "dry_days": 24,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 89,
+     "dry_days": 4
+    }
    },
    {
     "year": 2009,
     "harvest": 51,
     "dry_days": 27,
-    "event": "drought"
+    "event": "drought",
+    "irrigated": {
+     "harvest": 86,
+     "dry_days": 2
+    }
    },
    {
     "year": 2010,
     "harvest": 78,
     "dry_days": 0,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 83,
+     "dry_days": 0
+    }
    },
    {
     "year": 2011,
     "harvest": 60,
     "dry_days": 3,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 3
+    }
    },
    {
     "year": 2012,
     "harvest": 67,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 87,
+     "dry_days": 1
+    }
    },
    {
     "year": 2013,
-    "harvest": 54,
+    "harvest": 74,
     "dry_days": 9,
-    "event": "frost"
+    "event": "none",
+    "irrigated": {
+     "harvest": 84,
+     "dry_days": 4
+    }
    },
    {
     "year": 2014,
     "harvest": 81,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 91,
+     "dry_days": 2
+    }
    },
    {
     "year": 2015,
     "harvest": 63,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 88,
+     "dry_days": 0
+    }
    },
    {
     "year": 2016,
     "harvest": 70,
     "dry_days": 18,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 85,
+     "dry_days": 3
+    }
    },
    {
     "year": 2017,
     "harvest": 57,
     "dry_days": 21,
-    "event": "flood"
+    "event": "flood",
+    "irrigated": {
+     "harvest": 92,
+     "dry_days": 1
+    }
    },
    {
     "year": 2018,
     "harvest": 59,
     "dry_days": 24,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 89,
+     "dry_days": 4
+    }
    },
    {
     "year": 2019,
     "harvest": 66,
     "dry_days": 27,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 86,
+     "dry_days": 2
+    }
    },
    {
     "year": 2020,
     "harvest": 73,
     "dry_days": 0,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 83,
+     "dry_days": 0
+    }
    },
    {
     "year": 2021,
     "harvest": 60,
     "dry_days": 3,
-    "event": "flood"
+    "event": "flood",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 3
+    }
    },
    {
     "year": 2022,
     "harvest": 62,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 87,
+     "dry_days": 1
+    }
    },
    {
     "year": 2023,
     "harvest": 69,
     "dry_days": 9,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 84,
+     "dry_days": 4
+    }
    },
    {
     "year": 2024,
     "harvest": 76,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 91,
+     "dry_days": 2
+    }
    },
    {
     "year": 2025,
     "harvest": 58,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 88,
+     "dry_days": 0
+    }
    }
   ],
   "follow_shift": [
@@ -825,151 +1055,251 @@
     "year": 2001,
     "harvest": 71,
     "dry_days": 3,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 96,
+     "dry_days": 3
+    }
    },
    {
     "year": 2002,
     "harvest": 78,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 93,
+     "dry_days": 1
+    }
    },
    {
     "year": 2003,
     "harvest": 85,
     "dry_days": 9,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 4
+    }
    },
    {
     "year": 2004,
     "harvest": 67,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 97,
+     "dry_days": 2
+    }
    },
    {
     "year": 2005,
     "harvest": 74,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 94,
+     "dry_days": 0
+    }
    },
    {
     "year": 2006,
     "harvest": 61,
     "dry_days": 18,
-    "event": "drought"
+    "event": "drought",
+    "irrigated": {
+     "harvest": 91,
+     "dry_days": 3
+    }
    },
    {
     "year": 2007,
     "harvest": 88,
     "dry_days": 21,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 98,
+     "dry_days": 1
+    }
    },
    {
     "year": 2008,
     "harvest": 70,
     "dry_days": 24,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 95,
+     "dry_days": 4
+    }
    },
    {
     "year": 2009,
     "harvest": 57,
     "dry_days": 27,
-    "event": "drought"
+    "event": "drought",
+    "irrigated": {
+     "harvest": 92,
+     "dry_days": 2
+    }
    },
    {
     "year": 2010,
     "harvest": 84,
     "dry_days": 0,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 89,
+     "dry_days": 0
+    }
    },
    {
     "year": 2011,
     "harvest": 66,
     "dry_days": 3,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 96,
+     "dry_days": 3
+    }
    },
    {
     "year": 2012,
     "harvest": 73,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 93,
+     "dry_days": 1
+    }
    },
    {
     "year": 2013,
-    "harvest": 60,
+    "harvest": 80,
     "dry_days": 9,
-    "event": "frost"
+    "event": "none",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 4
+    }
    },
    {
     "year": 2014,
     "harvest": 87,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 97,
+     "dry_days": 2
+    }
    },
    {
     "year": 2015,
     "harvest": 69,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 94,
+     "dry_days": 0
+    }
    },
    {
     "year": 2016,
     "harvest": 76,
     "dry_days": 18,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 91,
+     "dry_days": 3
+    }
    },
    {
     "year": 2017,
     "harvest": 63,
     "dry_days": 21,
-    "event": "flood"
+    "event": "flood",
+    "irrigated": {
+     "harvest": 98,
+     "dry_days": 1
+    }
    },
    {
     "year": 2018,
     "harvest": 65,
     "dry_days": 24,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 95,
+     "dry_days": 4
+    }
    },
    {
     "year": 2019,
     "harvest": 72,
     "dry_days": 27,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 92,
+     "dry_days": 2
+    }
    },
    {
     "year": 2020,
     "harvest": 79,
     "dry_days": 0,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 89,
+     "dry_days": 0
+    }
    },
    {
     "year": 2021,
     "harvest": 66,
     "dry_days": 3,
-    "event": "flood"
+    "event": "flood",
+    "irrigated": {
+     "harvest": 96,
+     "dry_days": 3
+    }
    },
    {
     "year": 2022,
     "harvest": 68,
     "dry_days": 6,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 93,
+     "dry_days": 1
+    }
    },
    {
     "year": 2023,
     "harvest": 75,
     "dry_days": 9,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 90,
+     "dry_days": 4
+    }
    },
    {
     "year": 2024,
     "harvest": 82,
     "dry_days": 12,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 97,
+     "dry_days": 2
+    }
    },
    {
     "year": 2025,
     "harvest": 64,
     "dry_days": 15,
-    "event": "none"
+    "event": "none",
+    "irrigated": {
+     "harvest": 94,
+     "dry_days": 0
+    }
    }
   ]
  },

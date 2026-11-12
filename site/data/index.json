@@ -2,15 +2,15 @@
  "fields": [
   {
    "id": "demo",
-   "name": "Bhaktapur demo field",
+   "name": "Bhaktapur demo field (PLACEHOLDER location and rotation)",
    "country": "Nepal",
-   "lat": 27.67,
-   "lon": 85.43,
+   "lat": 27.690767,
+   "lon": 85.441792,
    "bbox": [
-    85.42,
-    27.66,
-    85.44,
-    27.68
+    85.379227,
+    27.625034,
+    85.480773,
+    27.714966
    ]
   }
  ]

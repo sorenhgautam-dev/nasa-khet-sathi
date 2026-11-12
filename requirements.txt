@@ -9,10 +9,14 @@ jsonschema==4.26.0    # validate exports against pipeline/export/schema.json
 requests==2.34.2      # HTTP fetches with no login (NASA POWER, SoilGrids)
 matplotlib==3.11.2    # audit plots and review pack
 pytest==9.2.0
+pyet==1.5.0           # step 3: reference check for ET0 (MIT licence)
+earthaccess==0.19.0   # step 5, owner's go 2026-11-12: NASA Earthdata search and downloads (login in ~/.netrc)
+python-dateutil==2.9.0.post0  # pinned: installing earthaccess downgraded it from 4.0.0 (owner, 2026-11-12); full suite passes
+h5py==3.16.0          # step 5, owner's go 2026-11-12: HDF5 / netCDF-4 files (GPM, SMAP, GRACE, NASADEM, ECOSTRESS)
+rasterio==1.5.2       # step 5, owner's go 2026-11-12: GeoTIFF / COG windows (HLS, WorldCover, AppEEARS output); bundles GDAL 3.12.2, no HDF4
+# requirements-lock.txt: every installed package with its exact version (pip freeze, 2026-11-12)
 
 # Added in later steps, each with the owner's go (named in CLAUDE.md):
-#   pyet            step 3, ET0 reference tests
-#   earthaccess     step 6+, NASA Earthdata downloads (needs ~/.netrc)
 #   pymannkendall   step 6, trends
 #   ruptures        step 6, change-point season detection
 #   flask           step 10, probe bridge

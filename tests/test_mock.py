@@ -1,8 +1,10 @@
 """mock.py writes a valid demo field and index so the UI teammate can build against the contract."""
 import json
+import re
 
 from pipeline.export import mock
 from pipeline.export.validate import main as validate_main
+from pipeline.export.validate import validate_field, validate_index
 
 
 def test_write_all_creates_field_and_index(tmp_path):
@@ -38,12 +40,24 @@ def test_mock_is_labelled_so_it_cannot_pass_for_real_data():
     assert "MOCK" in d["field"]["name"]
     assert all("MOCK" in s["name"] for s in d["sources"])
     assert all(t.startswith("MOCK") for p in d["plans"] for t in p["tabs"].values())
+    assert all(t.startswith("MOCK") for p in d["plans"] for t in p["tabs_ne"].values())
+    assert all(t.startswith("MOCK") for p in d["plans"] for t in p["tips"] + p["tips_ne"])
 
 
-def test_index_uses_the_demo_bbox_from_claude_md():
+def test_mock_plans_carry_nepali_beside_every_english_tab_and_tip():
+    """Owner, 2026-11-12: tabs_ne and tips_ne, the same five tabs and one Nepali tip per English tip."""
+    for p in mock.build_field()["plans"]:
+        assert set(p["tabs_ne"]) == set(p["tabs"])
+        assert len(p["tips_ne"]) == len(p["tips"])
+        assert all(re.search("[\u0900-\u097F]", t) for t in [*p["tabs_ne"].values(), *p["tips_ne"]])
+
+
+def test_index_bbox_is_the_fetch_box_around_the_old_demo_point():
+    """Owner, 2026-11-12: the prepared area is the ~5 km box around 27.67 N, 85.43 E (was the CLAUDE.md
+    example bbox [85.42, 27.66, 85.44, 27.68])."""
     (entry,) = mock.build_index()["fields"]
     assert entry["id"] == "demo"
-    assert entry["bbox"] == [85.42, 27.66, 85.44, 27.68]
+    assert entry["bbox"] == [85.379227, 27.625034, 85.480773, 27.714966]
 
 
 def test_mock_has_current_plus_two_plans_with_full_replay():
@@ -68,3 +82,15 @@ def test_mock_has_groundwater():
 
 def test_mock_sections_aim_for_ten_to_forty():
     assert 10 <= len(mock.build_field()["field"]["sections"]) <= 40
+
+
+def test_mock_field_and_index_use_the_labelled_placeholder_from_the_field_config():
+    """Owner, 2026-11-12: the old point is Bhaktapur's old city; the export carries the placeholder."""
+    from pipeline.fetch.fields import load_field
+    cfg = load_field("demo")
+    d, idx = mock.build_field(), mock.build_index()
+    assert (d["field"]["lat"], d["field"]["lon"]) == (cfg["lat"], cfg["lon"])
+    assert "placeholder" in d["field"]["name"].lower() and "MOCK" in d["field"]["name"]
+    e = idx["fields"][0]
+    assert e["bbox"] == cfg["bbox"] and "placeholder" in e["name"].lower()
+    assert validate_field(d) == [] and validate_index(idx) == []

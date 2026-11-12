@@ -1,4 +1,5 @@
 """Cross-checks between sources (validation layer 3), on made-up series with known answers."""
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -35,6 +36,32 @@ def test_compare_uses_only_shared_periods():
     ref = pd.Series([10.0, 20.0], index=pd.period_range("2015-01", periods=2, freq="M"))
     other = pd.Series([10.0, 99.0], index=pd.period_range("2014-12", periods=2, freq="M"))
     assert x.compare(ref, other)["n"] == 1
+
+
+# --- owner decision C: day alignment. Convention: lag k pairs ref day d with other day d + k ---
+
+def _rain(n=400, seed=1):
+    rng = np.random.default_rng(seed)
+    vals = rng.gamma(0.6, 8.0, n) * (rng.random(n) < 0.4)
+    return pd.DataFrame({"date": pd.date_range("2016-01-01", periods=n), "rain_mm": vals})
+
+
+def test_lag_correlation_finds_a_one_day_delay():
+    ref = _rain()
+    other = ref.assign(date=ref["date"] + pd.to_timedelta(1, unit="D"))     # other records each day one day later
+    r = x.lag_correlation(ref, other, "rain_mm", [-1, 0, 1])
+    assert x.best_lag(r) == 1 and r[1]["pearson"] == pytest.approx(1.0)
+
+
+def test_lag_correlation_is_zero_lag_for_aligned_sources():
+    ref = _rain()
+    assert x.best_lag(x.lag_correlation(ref, ref.copy(), "rain_mm", [-1, 0, 1])) == 0
+
+
+def test_lag_correlation_reports_count_and_both_correlations():
+    ref = _rain()
+    r = x.lag_correlation(ref, ref.copy(), "rain_mm", [-1, 0, 1])
+    assert r[0]["n"] == 400 and r[1]["n"] == 399 and {"pearson", "spearman", "n"} <= set(r[0])
 
 
 def test_paired_difference_on_shared_days():
