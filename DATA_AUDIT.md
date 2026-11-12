@@ -21,10 +21,10 @@ identical values).
 | NASADEM | **Yes**: box, elevation and slope; field 1,325.0 m, slope 1.6 deg (4 pixels) | `data/cards/demo/nasadem.json` |
 | GRACE/GRACE-FO mascon CRI | **Yes**: 261 months, 2002-04 to 2026-09, the 0.5 deg cell holding the field (one 3 deg mascon) | `data/cards/demo/grace.json` |
 | GPM IMERG | **Downloading** (EULA accepted by the owner, 2026-11-12): daily box subsets; the run was cut off at 2009-03-03 (2,980 of 9,131 days) when VS Code closed and resumed from the cache at 13:02 with 0 failures so far. `gpm.parquet` is built when it finishes | after download (`data/cards/demo/gpm.json`) |
-| MODIS MOD13Q1, SMAP L3 and L4 | **MODIS downloaded** (one netCDF-4 for the box, 2001-2025). **SMAP requested**: 13 AppEEARS tasks (2 L3, 11 L4 by year) still processing on NASA's side at 13:05; a poller downloads each when it is ready | MODIS: card from the cached file (L7); SMAP after download |
-| HLS-VI (L30, S30) | **Yes**: all 1,471 granules (L30 336, S30 1,135), box windows of NDVI + Fmask, tile T45RUL; the retry finished with 0 failures (2026-11-12, 12:39). Monthly clear-sky composites built (`hls_monthly_ndvi.npz`) | `data/cards/demo/hls.json` once the field is chosen |
-| ECOSTRESS LSTE, ESI | **Yes (raw windows)**: LSTE 769 (V003 27, V002 742), ESI 310 (V003 3, V002 307); the retry finished with 0 failures (2026-11-12, 12:41). Cleaning is step 8 | after cleaning (step 8) |
-| ISRIC SoilGrids 2.0 | **Box downloaded through the WCS** (36 maps: 6 properties x 6 depths, 45 x 38 cells of about 250 m; the REST point service was down). **Only 947 of 1,710 box cells have a prediction: SoilGrids leaves most of the Kathmandu valley floor empty**; values sit in the surrounding hills. The twin's soil table is still the cell 750 m W of the old point (REST and WCS agree there: wv0033 0.326). No cell with values lies within the approved 1 km of the rejected placeholder (nearest 1.07 km) | `data/cards/demo/soilgrids.json` (old point) |
+| MODIS MOD13Q1, SMAP L3 and L4 | **MODIS downloaded** (one netCDF-4 for the box, 2001-2025). **SMAP requested**: 13 AppEEARS tasks (2 L3, 11 L4 by year) still processing on NASA's side at 13:05; a poller downloads each when it is ready | `data/cards/demo/modis.json` (576 composites, 2000-12-18 to 2025-12-19; the field touches 2 MODIS cells but holds no cell centre); SMAP after download |
+| HLS-VI (L30, S30) | **Yes**: all 1,471 granules (L30 336, S30 1,135), box windows of NDVI + Fmask, tile T45RUL; the retry finished with 0 failures (2026-11-12, 12:39). Monthly clear-sky composites built (`hls_monthly_ndvi.npz`) | `data/cards/demo/hls_l30.json`, `hls_s30.json` (from the cache, REVIEW_NOTES L7: 4 pixel centres in the field, 9 touching; no NDVI outside -1..1; 0 windows outside their granule, L6) |
+| ECOSTRESS LSTE, ESI | **Yes (raw windows)**: LSTE 769 (V003 27, V002 742), ESI 310 (V003 3, V002 307); the retry finished with 0 failures (2026-11-12, 12:41). Cleaning is step 8 | `data/cards/demo/eco_lste.json`, `eco_esi.json` (raw, from the cache, L7); cleaned cards at step 8 |
+| ISRIC SoilGrids 2.0 | **Box downloaded through the WCS** (36 maps: 6 properties x 6 depths, 45 x 38 cells of about 250 m; the REST point service was down). **Only 947 of 1,710 box cells have a prediction** (763 are 0 in all 36 maps, none in only some): SoilGrids leaves most of the Kathmandu valley floor empty; values sit in the surrounding hills. **The twin's soil table is now the nearest cell where all 36 maps are valid: 859 m south-east of the field** (27.6854 N, 85.4481 E), within the owner's 3 km (REVIEW_NOTES M5); rebuilt offline 2026-11-12. The REST module now writes `soilgrids_rest.*` only | `data/cards/demo/soilgrids.json` |
 | NEX-GDDP-CMIP6 | No: not its build step yet (no login needed) | — |
 
 Metadata items (names, versions, documented units, fills, scale factors, valid ranges) were checked
@@ -87,8 +87,8 @@ G official citations (CREDITS.md) · H full-history secret scan before going pub
 | Products (D1) | `GPM_3IMERGDF` V07 (`C2723754864-GES_DISC`) through **2025-09-30** (its last granule), then `GPM_3IMERGDL` V07 (Late) for 2025-10-01 to 2025-12-31, recorded in the card's `segments` | VERIFIED: CMR; DECIDED |
 | Variable | `precipitation`, float32, mm/day, no scale factor, fill -9999.9 (float32; the guard matches both spellings) | VERIFIED: UMM-Var `V3156651215-GES_DISC` |
 | Quality flags | candidates `precipitation_cnt`, `precipitation_cnt_cond` | TODO-VERIFY meaning in V07 docs |
-| Time zone | daily files cover the **UTC day** (05:45 to 05:45 Nepal time) | TODO-VERIFY in the V07 documentation (owner's note) |
-| Fills found, records dropped, pixels, plot | — | NOT YET POSSIBLE: waiting for the download to finish (the card now counts fills, failed days and days without a granule separately: REVIEW_NOTES M2) |
+| Time zone | UTC days (00:00-24:00 UTC = 05:45-05:45 Nepal time); each file's BeginTime 00:00:00.000Z and EndTime 23:59:59.999Z support it | TODO-VERIFY in the V07 documentation (owner's note) |
+| Fills found, records dropped, pixels, plot | — | NOT YET POSSIBLE: waiting for the download to finish, then `python -m pipeline.fetch.gpm --field demo --from-cache`. The card now counts real fills in the field's cell, failed days, days without a granule and days not cached separately per segment, records the dropped days and the date range actually covered, prints the raw attributes (units mm/day; scale_factor, add_offset, valid_range ABSENT; _FillValue -9999.9), and the run exits non-zero if any day is missing (REVIEW_NOTES M2) |
 
 ### 1.3 HLS Vegetation Indices: DOWNLOADED (box windows; 1,404 of 1,471 granules, tile T45RUL)
 
@@ -119,14 +119,14 @@ G official citations (CREDITS.md) · H full-history secret scan before going pub
 
 | Item | Value | Status |
 | --- | --- | --- |
-| Access | REST API (rest.isric.org, beta). It answered on 2026-11-12, so the owner's GeoTIFF fallback was not needed; the card records "REST API" | FOUND |
-| The field's own cell | **no prediction**: every property and depth returned null at 27.67 N, 85.43 E. Points 3-90 km away do return values, so this is the cell, not the API | FOUND; reason (e.g. a land-cover mask) TODO-VERIFY |
-| Cell used | nearest cell with values, searching outward in 250 m steps: **750 m west** (27.670 N, 85.4224 E). Distance in the card's `location` | FOUND; rule TODO-CONFIRM (rules.yaml soilgrids) |
-| Units and factors | from each response's `unit_measure`, checked every time: wv0033, wv1500 mapped "(10-2 cm³/cm³)*10", d_factor 10, so /10 → volume %, /100 → m3/m3; sand, clay g/kg /10 → %; soc dg/kg /10 → g/kg; bdod cg/cm³ /100 → kg/dm³ | **VERIFIED** (API response) |
-| Values used | 0-5 / 5-15 / 15-30 / 30-60 / 60-100 / 100-200 cm. Field capacity (33 kPa) 0.326 / 0.324 / 0.324 / 0.326 / 0.330 / 0.333; wilting point (1500 kPa) 0.144 / 0.147 / 0.154 / 0.196 / 0.206 / 0.226 m3/m3; clay 23.7 to 37.9%; sand 24.3 to 17.7% | FOUND |
+| Access | WCS box maps (maps.isric.org; the REST service was down for the box). `soilgrids_wcs.py` writes the twin's table; the REST module (`soilgrids.py`) writes `soilgrids_rest.*` only, and a partly null REST answer no longer counts as a prediction (REVIEW_NOTES M5) | FOUND |
+| The field's own cell | **no prediction** (row 10, col 27: 0 in all 36 maps). The maps declare no nodata, so a cell counts only where all 36 maps are valid; 0 is never read as a real 0% (M5). A point outside the maps raises. Reason for the valley gap (e.g. a land-cover mask) TODO-VERIFY | FOUND |
+| Cell used | nearest cell where all 36 maps are valid: **859 m south-east** of the field (27.6854 N, 85.4481 E), within 3,000 m (owner, 2026-11-12, M5; was 1 km). Distance and the caveat "soil from the nearest SoilGrids cell with a prediction, not the field's own" in the card | FOUND; DECIDED |
+| Units and factors | the maps carry no unit tags or nodata; the conversion table (wv0033, wv1500 /1000 → m3/m3 via 10^-3 cm3/cm3; sand, clay g/kg /10 → %; soc dg/kg /10 → g/kg; bdod cg/cm3 /100 → kg/dm3) is checked on real data: the REST answers' `unit_measure` blocks match it, and the WCS values equal the cached REST values in 36 of 36 cases at the same point. ISRIC's FAQ table itself not opened | **VERIFIED** (REST unit blocks and 36/36 match); FAQ TODO-VERIFY |
+| Values used | 0-5 / 5-15 / 15-30 / 30-60 / 60-100 / 100-200 cm. Sand 33.6 / 33.0 / 31.0 / 28.8 / 26.6 / 26.2%; clay 20.6 / 21.4 / 25.2 / 29.8 / 33.0 / 35.5%; SOC 25.0 / 14.8 / 12.7 / 6.8 / 5.3 / 5.0 g/kg; bulk density 1.23 / 1.25 / 1.29 / 1.31 / 1.33 / 1.33 kg/dm3; field capacity 0.333 / 0.331 / 0.326 / 0.322 / 0.322 / 0.331; wilting point 0.148 / 0.152 / 0.159 / 0.173 / 0.191 / 0.202 m3/m3 | FOUND |
 | Guards | field capacity above wilting point at every depth; sand and clay 0 to 100%, their sum under 100%; soil moisture within rule 12; 0 warnings | FOUND |
-| Hydrologic soil group | **C**, from NEH 630 Ch. 7 texture guidance (20 to 40% clay, under 50% sand); Ksat unknown | sourced (rules.yaml) |
-| TAW in the step-4 test | wheat (Zr 1.5 m) 194.4 mm; rice (Zr 1.0 m) 140.9 mm | FOUND |
+| Hydrologic soil group | **C**, from NEH 630 Ch. 7 texture guidance (20 to 40% clay, under 50% sand): clay 20.6-35.5%, sand 26.2-33.6% at the new cell; the top layer's 20.6% clay is close to the 20% edge; Ksat unknown | sourced (rules.yaml) |
+| TAW | 96.9 mm (Zr 0.6 m), 149.3 mm (1.0 m), 213.8 mm (1.5 m) at the new cell; the old REST cell near the old-city point gave 91.3, 140.9 and 194.4 mm (the step-4 and dry-run numbers before 2026-11-12 used those) | FOUND |
 
 ### 1.7 NASADEM_HGT v001 (D3): DOWNLOADED (box)
 
@@ -145,7 +145,12 @@ G official citations (CREDITS.md) · H full-history secret scan before going pub
 `C4057232495-LPCLOUD` (V002 `C2076104650-LPCLOUD`). Tile 45RUL. Over the box V003 has only **27 LSTE and
 3 ESI** granules, so V002 fills the other overpasses (D4; ESI V002: 307). Assets read: `LST`, `QC`, `cloud`
 (LSTE) and `ESI`, `cloud` (ESI); units and fills from the AppEEARS product API: LST Kelvin, NaN fill;
-cloud 1 = cloud, fill 255. QC bit meanings and the time stamps (UTC): **TODO-VERIFY** in the user guide.
+cloud 1 = cloud, fill 255 (V003 only: V002 QC and cloud declare no nodata and read 0 where LST or ESI is missing, on
+5.6 million QC pixels and 6.1 / 2.8 million LSTE / ESI cloud pixels, so **the diary must mask by LST or ESI, never by QC or
+cloud == 0**). Cards `eco_lste.json` (742 V002 + 27 V003 granules) and `eco_esi.json` (310) from the cache (L7): 16 LSTE
+granules (31,066 pixels) hold LST outside -30..50 C before QC is applied. Boundless fill (L6): 0 windows outside their
+granule by geometry (the windows sit 33-50 km inside tile T45RUL's north and west edges; tile size 1568 px TODO-VERIFY).
+QC bit meanings (65,535 appears in 25 V002 granules) and the time stamps (UTC): **TODO-VERIFY** in the user guide.
 
 ### 1.9 NEX-GDDP-CMIP6: NOT YET (step 9)
 
@@ -158,10 +163,10 @@ calendars and wind height: **TODO-VERIFY**.
 | --- | --- | --- |
 | File | `GRCTellus.JPL.200204_202609.GLO.RL06.3M.MSCNv04CRI.nc` (44.2 MB, one global file) | FOUND |
 | Variables | `lwe_thickness` cm, fill -99999, valid -2305.0 to 1273.7 (the hard limit, D2); `uncertainty` cm, 1-sigma per 3-degree mascon | VERIFIED: file attributes |
-| Cell | lat 27.5-28.0, lon 85.0-85.5, mascon 1213, land mask 1; CRI scale factor 1.49 recorded, **not applied** | FOUND; whether to apply it is a step-6 choice |
+| Cell | lat 27.5-28.0, lon 85.0-85.5, mascon 1213, land mask 1 | FOUND |
 | Series | 261 monthly solutions, 2002-04 to 2026-09; lwe -73.3 to +37.4 cm; GRACE/GRACE-FO gap months are absent, not filled | FOUND |
 | Resolution | 0.5 deg grid of 3-degree equal-area mascons: regional context only (file attribute) | VERIFIED |
-| CRI scale factor (owner, 2026-11-12) | **applied** for the trend's size: `lwe_thickness_scaled_cm` = unscaled x 1.4945 (file attribute: 'Gridded scale factors to be used with mascon solution that has the CRI filter applied; based on CLM data from 2002-2009'); the unscaled `lwe_thickness_cm` is kept. A positive factor cannot change the trend's direction (the reader refuses a non-positive one) | DECIDED |
+| CRI scale factor (owner, 2026-11-12, REVIEW_NOTES M4) | 1.4945 at the cell, recorded in the card, **not applied**: it is CLM-based (land hydrology; file attribute 'based on CLM data from 2002-2009'), the mascon includes glaciers and snow, and no source was found for applying it here. **Unscaled OLS trend -2.56 cm/yr** (261 months, 2002-04 to 2026-09; 2002-2025 only: -2.561); scaled it would be -3.82 cm/yr. `grace.parquet` has no scaled column any more | DECIDED |
 | Caveat (owner) | regional water storage over one 3-degree mascon (about 330 km), including glaciers and the plains, **not the field's own aquifer**; carried in the card and in `rules.yaml` `groundwater.caveat` for every explanation | DECIDED |
 
 ### 1.11 NOAA GHCN-Daily, Kathmandu Airport (validation; reference for correction A): DOWNLOADED
@@ -173,7 +178,7 @@ calendars and wind height: **TODO-VERIFY**.
 | Units in → out | PRCP **tenths of mm** → `rain_mm`; TMAX, TMIN **tenths of degrees C** → `tmax_c`, `tmin_c` (scale 0.1) | **VERIFIED**: readme lines 149 to 153 (owner's note confirmed) |
 | Fill | -9999 = missing; **found: 0** (missing days are simply absent rows) | FOUND |
 | Quality flags | any non-blank Q-FLAG dropped: **PRCP 0, TMAX 1, TMIN 0** | FOUND |
-| **Source flag (S-FLAG)** | **Every record 2001-2025 has S-flag `S`** (PRCP 5,036 of 5,036, TMAX 4,707 of 4,707, TMIN 2,404 of 2,404; REVIEW_NOTES H2; now counted in the card's `source_flags`). The readme on `S`: "derived from hourly synoptic reports exchanged on the GTS. Daily values derived in this fashion may differ significantly from 'true' daily data, particularly for precipitation (i.e., use with caution)." So the station is **synoptic-derived: use with caution**, above all for rain. Everything that treats it as the reference inherits this: decision A's fit and held-out results, the POWER-vs-station rain checks (VALIDATION 3.7), the spike flags and the rain-vote labels, and the 2016 wheat check | VERIFIED: raw file column 7; readme |
+| **Source flag (S-FLAG)** | **Every record 2001-2025 has S-flag `S`** (PRCP 5,036 of 5,036, TMAX 4,707 of 4,707, TMIN 2,404 of 2,404; REVIEW_NOTES H2; now kept per row in `sflag_*` columns and counted in the card's `quality_flags_used.source_flags`). The readme on `S`: "derived from hourly synoptic reports exchanged on the GTS. Daily values derived in this fashion may differ significantly from 'true' daily data, particularly for precipitation (i.e., use with caution)." So the station is **synoptic-derived: use with caution**, above all for rain. Everything that treats it as the reference inherits this: decision A's fit and held-out results, the POWER-vs-station rain checks (VALIDATION 3.7), the spike flags and the rain-vote labels, and the 2016 wheat check | VERIFIED: raw file column 7; readme |
 | Date range | **2001-01-01 to 2025-08-24** (the record stops there) | FOUND |
 | Time zone | station observation day. **0 of 12,147 records give an observation time.** Day-alignment test (C): daily rain vs POWER correlates best at **lag 0** (Pearson 0.634, Spearman 0.746, n 5,036; lag -1: 0.387 / 0.658; lag +1: 0.264 / 0.586), so no whole-day shift between the station and POWER's local solar days does better than none. This does **not** establish a common day boundary (REVIEW_NOTES M10): the station's observation time is unknown (day boundary TODO-VERIFY). | FOUND (test C); day boundary TODO-VERIFY |
 | Disagreement with DHM | 2024-09-28: GHCN 194.1 mm (and 97.0 mm on 09-27), but DHM's situational report gives Kathmandu Airport **239.7 mm** in 24 h. Different 24-h windows or record versions; the airport's GHCN values are synoptic-derived (S-flag `S`, above), which the readme says may differ significantly from true daily rain | TODO-VERIFY |
@@ -276,8 +281,10 @@ What each dataset must change once the pipeline exists (the pass criteria):
 
 ## 5. Data cards
 
-Written: `power.json`, `ghcn_NP000444540.json`, `faostat_yields.json`, `weather.json` (all in
-`data/cards/demo/`). Each has every rule-12 field plus `range_warnings`; power and station cards carry
+Written (all in `data/cards/demo/`): `power.json`, `ghcn_NP000444540.json`, `faostat_yields.json`, `weather.json`,
+`worldcover.json`, `nasadem.json`, `grace.json`, `soilgrids.json` (WCS) and `soilgrids_rest.json`, and from the cache
+(REVIEW_NOTES L7, 2026-11-12) `hls_l30.json`, `hls_s30.json`, `eco_lste.json`, `eco_esi.json`, `modis.json`; `gpm.json`
+after the download (`--from-cache`), SMAP cards after their bundles arrive. Each has every rule-12 field plus `range_warnings`; power and station cards carry
 `cross_source_flags` (B); the weather card carries `corrections` (A) and the ET0 elevation used.
 
 ## 6. TODO-VERIFY (open)

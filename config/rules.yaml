@@ -84,7 +84,7 @@ soilgrids:
 curve_numbers:                    # SCS-CN for the bucket's runoff (twin/runoff.py)
   hydrologic_soil_group:
     value: C
-    source: "NEH Part 630 Ch. 7 (2009) texture guidance: 'Group C soils typically have between 20 percent and 40 percent clay and less than 50 percent sand'. SoilGrids at the cell used (750 m W of the demo point): clay 24-38%, sand 18-24% at 0-200 cm. Ksat unknown, so texture guidance only"
+    source: "NEH Part 630 Ch. 7 (2009) texture guidance: 'Group C soils typically have between 20 percent and 40 percent clay and less than 50 percent sand'. SoilGrids at the cell used (859 m SE of the field, WCS, 2026-11-12): clay 21-36%, sand 26-34% at 0-200 cm (top layer 20.6% clay, close to the 20% edge). Ksat unknown, so texture guidance only"
   by_cover:
     value: {bare: 91, small_grain: 83, row_crop: 85, close_seeded_legume: 81}
     source: "TR-55 (1986) Table 2-2b = NEH 630 Ch. 9 Table 9-1, hydrologic soil group C: Fallow bare soil 91; Small grain, straight row, good 83; Row crops, straight row, good 85; Close-seeded or broadcast legumes, straight row, good 81. Straight row and 'good' condition are Claude's choices for a flat valley-floor field, owner-approved for now 2026-11-12 (step-4 review item 5). REVISIT once NASADEM gives the field's slope: terraced fields need the terraced or contoured (C&T) rows"
@@ -150,8 +150,8 @@ events:                           # replay.<plan>[].event (build step 5); source
 
 groundwater:                      # diary.groundwater from GRACE (D5, D7)
   scale_factor:
-    value: apply the file's gridded CRI scale factor for the trend's size; keep the unscaled value in the card
-    source: "Owner, 2026-11-12: JPL provides the CRI scale factor for land hydrology; apply it for the trend's size. File attribute (scale_factor.description): 'Gridded scale factors to be used with mascon solution that has the CRI filter applied; based on CLM data from 2002-2009'. A positive factor cannot change the trend's direction (the reader refuses a non-positive one)"
+    value: "not applied: the unscaled trend is the main number; the factor's value at the cell is recorded in the card"
+    source: "Owner, 2026-11-12 (REVIEW_NOTES M4): the CRI scale factor is CLM-based (land hydrology) and the mascon includes glaciers and snow; no source was found for applying it here, so it is not applied (earlier the same day: applied). File attribute (scale_factor.description): 'Gridded scale factors to be used with mascon solution that has the CRI filter applied; based on CLM data from 2002-2009'. A positive factor cannot change the trend's direction (the reader refuses a non-positive one)"
   caveat:
     value: "Regional water storage, not the field's own aquifer: GRACE measures the total water stored over an area hundreds of km across (one 3-degree mascon, about 330 km), including glaciers and snow in the mountains and the groundwater of the plains. It is not the field's own well or aquifer."
     source: "Owner, 2026-11-12: say this in diary.groundwater and every explanation. 3-degree equal-area mascons: the file's geospatial_lat_resolution attribute"

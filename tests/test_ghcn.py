@@ -83,3 +83,29 @@ def test_fetch_writes_table_and_card_from_the_cache(tmp_path):
     assert set(CARD_FIELDS) <= set(card)
     ghcn.fetch({"id": "demo"}, ST, data_dir=tmp_path, get_bytes=fake_get)
     assert len(calls) == 1
+
+
+# --- H2, M10b, L4f (REVIEW_NOTES): the S-FLAG is kept and counted; honest day and distance wording ----------
+CAVEAT = ("derived from hourly synoptic reports exchanged on the GTS. Daily values derived in this fashion may differ "
+          "significantly from 'true' daily data, particularly for precipitation (i.e., use with caution).")
+
+
+def test_the_source_flag_is_kept_per_element():
+    df, _ = ghcn.parse(SAMPLE.replace(f"{ST},20150101,TMIN,-12,,,S,", f"{ST},20150101,TMIN,-12,,,G,"), ST)
+    row = df.set_index("date").loc[pd.Timestamp("2015-01-01")]
+    assert row["sflag_rain_mm"] == "S" and row["sflag_tmax_c"] == "S" and row["sflag_tmin_c"] == "G"
+    assert pd.isna(df.set_index("date").loc[pd.Timestamp("2015-01-02"), "sflag_tmax_c"])   # value dropped: no flag
+
+
+def test_records_are_counted_by_source_flag_per_element():
+    _, info = ghcn.parse(SAMPLE.replace(f"{ST},20150102,PRCP,0,,,S,", f"{ST},20150102,PRCP,0,,,,"), ST)
+    assert info["source_flags"] == {"PRCP": {"S": 2, "blank": 1}, "TMAX": {"S": 2}, "TMIN": {"S": 1}}   # 2001-2025 rows
+
+
+def test_the_card_counts_source_flags_and_quotes_the_readme_caveat(tmp_path):
+    out = ghcn.fetch({"id": "demo"}, ST, data_dir=tmp_path, get_bytes=lambda url: gzip.compress(SAMPLE.encode()))
+    card = json.loads(Path(out["card"]).read_text())
+    assert card["quality_flags_used"]["source_flags"] == {"PRCP": {"S": 3}, "TMAX": {"S": 2}, "TMIN": {"S": 1}}
+    assert CAVEAT in card["notes"]
+    assert "TODO-VERIFY" in card["pixel_count"] and "7 km" not in card["pixel_count"]
+    assert "TODO-VERIFY" in card["time_zone"] and "not that the day boundaries match" in card["time_zone"]

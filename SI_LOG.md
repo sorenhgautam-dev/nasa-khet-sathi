@@ -164,6 +164,7 @@ What SI (AI) generated, and what a person must review before it is frozen.
 - 2026-11-11 20:23: owner-approved commit `d4d3e49` (53 files) pushed to private `github.com/sorenhgautam-dev/data-test-game`, branch `main` (CLAUDE.md rule 2 exception). Jury .docx excluded via .gitignore.
 - 2026-11-11 22:19: `scripts/backup.sh` -> `/Users/paritoshbhattarai/khet-sathi-backups/khet-sathi_2026-11-11_221921` (data/, .env*, .netrc, .venv excluded; checked)
 - 2026-11-12 00:28: `scripts/backup.sh` -> `/Users/paritoshbhattarai/khet-sathi-backups/khet-sathi_2026-11-12_002813` (data/, .env*, .netrc, .venv excluded; checked)
+- 2026-11-12 ~13:35: owner-approved commit `68de7c3` (106 files, 649 tests passed on the snapshot, history scan clean) pushed to private `github.com/sorenhgautam-dev/data-test-game`, branch `main` (CLAUDE.md rule 2 exception). Made by the second session (nasa-space-apps-e4) on the owner's word in that session's chat, as it reported. The snapshot is mid-work: it holds the review fixes as they stood at 13:34, while the fetch-module fixes were still in progress.
 
 ## 2026-11-12 (later): step-4 review answers, step 5 without GPM, placeholder field, box fetches (Claude Opus 5.5 via Claude Code, one research sub-agent, one review sub-agent)
 
@@ -263,3 +264,43 @@ The tabs, tips and crop explainers keep "needs native-speaker review": the owner
 1. **The reviewer's name** for the mark.
 2. **Other Nepali fixes.** The second fix in the reply was still the template line "[any other fix ...]", so only the
    frost spelling was changed.
+
+## 2026-11-12 (late night): REVIEW_NOTES fixes, words decisions, Nepali tabs contract (Claude Opus 5.5 via Claude Code; one audit, three fix and one research sub-agent)
+
+After VS Code closed, the owner made this the only build session (a second session that had received the same list
+stayed read-only; it later committed and pushed `68de7c3` on the owner's word in its own chat, logged under "Backup runs").
+
+### What SI did
+- **State check.** Full suite 534 passed. HLS and ECOSTRESS retries had finished (all granules, 0 failures). GPM had
+  stopped at 2009-03-03 (2,980 of 9,131 days) and was restarted from the cache; an AppEEARS poller waits for the 13 SMAP
+  tasks still processing at NASA. A read-only audit sub-agent checked every REVIEW_NOTES item: only H3 was done.
+- **Words (owner's decisions 1-10).** Bikram Sambat months first in Nepali with the Gregorian months beside them
+  (e.g. बैशाख (Apr–May)) and a "don't line up exactly" note on the three screens that name months; section `temp`
+  worded as soil temperature from the probe; approvals recorded in notes/parallel_session.md; PREVIEW.md regenerated.
+  The new Nepali lines need the owner's review.
+- **Contract.** `plans[].tabs_ne` and `tips_ne` (required, Devanagari, same count as the English tips); `event` loses
+  `frost` (M1). Schema, validator, mock, CONTRACT_CHANGES.md and CLAUDE.md updated; tests first.
+- **REVIEW_NOTES fixes.** Every item; status table in REVIEW_NOTES.md. Three sub-agents fixed code in separate files,
+  tests first (twin and crops; fetch modules; weather and greenness); this session made the modelling decisions, edited
+  every shared document and rules.yaml, checked the key code (ponded day, ea cap) and reran the dry run, the 2016 season
+  test and the field-pixel check on the final soil table. A research sub-agent opened FAO, IIASA and ISRIC pages on
+  HWSD v2 (licence and access only; nothing downloaded).
+- **Recorded:** the 77 m built-up margin, accepted by the owner (CLAUDE.md, demo.yaml, METHOD_NOTES 13, VALIDATION 1.4).
+- Tests: 534 → 654, all pass with deprecation warnings as errors. The export validates (still MOCK).
+
+### Please review (owner)
+1. **Rain-fed paddy (H1)** now gets no outside water; this changes approved METHOD_NOTES item 2. Rain-fed rice is 100%
+   in 4 of 6 dry-run seasons (all 6 before); the 2015 monsoon drought is still a miss.
+2. **The ea cap (M6)** binds on 55% of days and raises ET0 3.4% (1,325 vs 1,281 mm/yr), mostly July-October.
+3. **POWER rain fill cap**: 5% of a year's days (TODO-CONFIRM).
+4. **HWSD v2**: readable without new packages via ISRIC's SQLite copy, but CC BY-NC-SA and least reliable in South Asia.
+   Not used; soil is the SoilGrids cell 859 m SE.
+5. **Section `temp` before any probe reading**: allow `null`?
+6. **Step 7**: maize→rice and maize→finger millet are refused because the FAO windows overlap (relay crops?);
+   finger-millet stages stretched to 117 d (TODO-VERIFY); lentil 133 d; mustard stays calendar-only; rice p 0.20.
+7. **water_source** is still null, so the export would show rain-fed potato at 31-68% in dry winters.
+8. **Months**: Latin "(Apr–May)" as in the owner's example, or Devanagari "(अप्रिल–मे)"? BS start days TODO-VERIFY.
+9. **ECOSTRESS V002** QC and cloud read 0 where data is missing: the diary must mask by LST/ESI.
+
+### Backup runs
+- 2026-11-12 13:41: `scripts/backup.sh` -> `/Users/paritoshbhattarai/khet-sathi-backups/khet-sathi_2026-11-12_134141` (6.0 MB; data/, .env*, .netrc, .venv excluded; checked). 654 tests passed just before.

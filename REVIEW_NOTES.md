@@ -40,6 +40,33 @@ changes only REVIEW_NOTES.md. Decisions given with the acceptance:
 - **M6:** hold the actual vapour pressure `ea` from POWER, capped at es of the corrected Tmin. Report ET0
   under both choices.
 
+### Fix status (build session, 2026-11-12, after VS Code closed; tests first throughout)
+
+| Item | Status | Where |
+| --- | --- | --- |
+| H1 paddy water | **Fixed.** Ponded only when irrigated; the daily refill is irrigation (`pond_supply_mm` is its paddy part); rain-fed paddy is the plain bucket, no outside water. Owner to confirm (it changes METHOD_NOTES item 2) | `soil_water.run_bucket`, `season.simulate`; METHOD_NOTES 2; VALIDATION 2.2, 4.1, 4.4b; CLAUDE.md "Rice"; rules.yaml `paddy_rice` |
+| H2 station S-flag | **Fixed.** S-flag kept per row and counted in the card; every record is `S`; "synoptic-derived, use with caution" wherever the station is used as truth | `ghcn.py`; DATA_AUDIT 1.11, section 3; VALIDATION header, 3.7, 3.9, 3.11, 3.14; rules.yaml `rain_vote` |
+| H3 field | Done earlier (field move); built-up exception recorded | above |
+| H4 stage lengths | **Fixed.** Maize 180→130 d, lentil 170→133 d, finger millet 105→117 d from transplanting (TODO-VERIFY); mustard `days` recomputed; mustard and buckwheat `simulate: false`; `simulatable_crops` helper | `crops.json`, `twin/crops.py`; METHOD_NOTES 9 |
+| M1 frost | **Fixed.** No per-year frost event; contract enum is none/drought/flood; screen-7 frost label removed | `events.py`, `rules.yaml`, `schema.json`, mock, words; CONTRACT_CHANGES |
+| M2 GPM card | **Fixed** (code). Fills, failed and missing days counted apart; raw attributes printed; `--from-cache`; exit non-zero on missing days; POWER fill capped at 5% a year (TODO-CONFIRM). Card rebuilt after the download | `gpm.py`, `inputs.py`, `weather.py` |
+| M3 audit consistency | **Fixed** | DATA_AUDIT, VALIDATION |
+| M4 GRACE | **Fixed.** Unscaled trend -2.56 cm/yr is the main number; factor 1.4945 recorded, not applied | `grace.py`; DATA_AUDIT 1.10; rules.yaml |
+| M5 SoilGrids | **Fixed.** WCS reader masks by all 36 maps, bounds-checked; soil now from the cell 859 m SE (3 km rule). HWSD v2 checked: CC BY-NC-SA, needs the owner's go | `soilgrids_wcs.py`, `soilgrids.py`; DATA_AUDIT 1.6, B5; METHOD_NOTES 7 |
+| M6 humidity | **Fixed.** ea held from POWER, capped at e0(corrected Tmin); ET0 1,325 vs 1,281 mm/yr with RH held; the cap binds on 55% of days (owner to confirm) | `inputs.py`, `weather.py`; METHOD_NOTES 20; DATA_AUDIT 1.13 |
+| M7 Kc and bare soil | **Declared** (no code change) | METHOD_NOTES 16-18 |
+| M8 cold-night evidence | **Fixed.** Small-sample wording and numbers; "independent in time only"; qmap docstring; months without an offset reported loudly (none on the demo) | CLAUDE.md, rules.yaml, METHOD_NOTES 6, VALIDATION; `qmap.py`, `bias.py`, `weather.py` |
+| M9 weather checks | **Fixed.** Tmin > Tmax fails loudly (0 days); `tmin_frost_c` range-checked; per-column sources in the card | `weather.py`; DATA_AUDIT 1.13 |
+| M10 day alignment | **Fixed** (wording) | DATA_AUDIT 1.11, VALIDATION 3.13 |
+| M11 placeholder test | **Fixed.** Wording; limit from rules.yaml; None guarded; the chosen field is labelled with its 77 m exception; stale `placeholder_field.json` renamed | `placeholder.py`, `worldcover.py`; CLAUDE.md, METHOD_NOTES 13, VALIDATION 1.4 |
+| M12 HLS water bit | **Checked, kept.** 0 of 2,916 June-August observations over the field are water-flagged | `ndvi.py` docstring; DATA_AUDIT 1.3 |
+| M13 numbers | **Fixed.** Wheat 2016 gap explained (starting depletion); test count and totals updated; rice→potato everywhere | VALIDATION 1.1, 2.4, totals; CLAUDE.md; rules.yaml |
+| L1-L3 | **Fixed** | `soil_water.py`, `season.py`, `yield_.py`; METHOD_NOTES 19 |
+| L4 | **Fixed**, except EGM96 (still TODO-VERIFY in the NASADEM user guide) | DATA_AUDIT, `et0.py`, demo.yaml |
+| L5 WorldCover tiles | **Fixed** (not run against the network) | `worldcover.py` |
+| L6 boundless fill | **Fixed.** 0 cached windows reach outside their granule. New finding: ECOSTRESS V002 QC and cloud read 0 where data is missing, so mask by LST/ESI | `cogwindows.py`; DATA_AUDIT 1.8 |
+| L7 cards | **Fixed.** Cards for HLS L30/S30, ECOSTRESS LSTE/ESI and MODIS from the cache | `cogwindows.py`, `appeears.py`; DATA_AUDIT 5 |
+
 ### Tree-line check for candidate 1 (2026-11-12)
 
 The check used cached data only. The scripts are outside the repository, in this session's scratchpad.
