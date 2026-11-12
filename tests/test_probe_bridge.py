@@ -160,3 +160,41 @@ def test_end_to_end_through_a_pseudo_terminal_like_a_usb_port(tmp_path):
     assert stats["good"] >= 3
     live = json.loads(out.read_text())
     assert live["section"] == "s2" and 0 <= live["wetness"] <= 100
+
+
+# ---------- the real sketch (robot/firmware/original_probe, sent by the owner 2026-11-12) ----------
+import re
+from pathlib import Path
+
+SKETCH = Path(__file__).resolve().parents[1] / "robot" / "firmware" / "original_probe" / "original_probe.ino"
+
+
+def _sketch_line(temp_c, moisture_pct):
+    """What the sketch's print statements produce (Serial.print(temperature, 1) gives one decimal)."""
+    head = "Check wiring" if temp_c is None else f"{temp_c:.1f}" + " °C"
+    return "Temperature: " + head + "  |  Moisture: " + str(moisture_pct) + "%"
+
+
+def test_the_sketch_prints_the_pieces_the_parser_expects():
+    src = SKETCH.read_text(encoding="utf-8")
+    for piece in ('Serial.print("Temperature: ")', 'Serial.print("Check wiring")', 'Serial.print(" °C")',
+                  'Serial.print("  |  Moisture: ")', 'Serial.println("%")', "Serial.print(temperature, 1)",
+                  "constrain(moisturePercent, 0, 100)", "delay(2000)"):
+        assert piece in src, piece
+
+
+def test_the_bridge_baud_rate_is_the_sketchs():
+    baud = int(re.search(r"Serial\.begin\((\d+)\)", SKETCH.read_text(encoding="utf-8")).group(1))
+    assert baud == bridge.DEFAULT_BAUD == 115200
+
+
+@pytest.mark.parametrize("temp,moist", [(23.1, 45), (-2.5, 0), (49.9, 100), (None, 47)])
+def test_every_line_the_sketch_can_print_in_range_parses(temp, moist):
+    r = probe.parse_line(_sketch_line(temp, moist))
+    assert r["temp_c"] == temp and r["moisture_pct"] == float(moist)
+
+
+def test_the_ds18b20_power_on_value_is_refused_not_passed_on():
+    """A DS18B20 read before its first conversion reports 85.0 C; outside -30..50, so the bridge skips it."""
+    with pytest.raises(probe.ProbeLineError, match="range"):
+        probe.parse_line(_sketch_line(85.0, 45))

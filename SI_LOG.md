@@ -387,3 +387,28 @@ were already in the working tree (7a992fe8) and were not re-applied.
    (about one year in five), like the drought rule.
 2. **The baud rate** (115200 assumed): the probe's `Serial.begin` rate, from the robot teammate.
 3. **"About a third less"** is 29% over 2015-2022's complete months (34% from 2016 in the 7a992fe8 check).
+
+## 2026-11-12 (late evening): online probe (option B) decided, not built (Claude Opus 5.5 via Claude Code, session 2f8edafe; one web-fetch sub-agent)
+
+- **Owner's decision:** option B with Firebase Realtime Database on the free Spark plan, built only after the
+  must-have steps (CLAUDE.md build step 10b). CLAUDE.md's out-of-scope rule now allows this one database for live
+  probe readings only; "no backend" and judge requirement 1 say the live probe is an extra.
+- **Checked on Firebase's own pages (web-fetch sub-agent, 2026-11-12):** Spark Realtime Database: 100 simultaneous
+  connections, 1 GB stored, 10 GB/month downloaded, one (default) database; a quota overage shuts that product off
+  for the rest of the month; "No payment method needed"; **no statement found** that a Spark project or database is
+  paused, suspended, archived or deleted when idle (pricing, database limits, pricing plans, full FAQ, terms, API
+  keys, locations and auth limits pages searched); asia-southeast1 (Singapore) offered, location fixed once chosen;
+  web API keys restricted to Firebase services are "OK to include in code"; the terms acceptance says use is "for
+  purposes related to my trade, business, craft, or profession". Not found: an age clause in the Firebase terms;
+  whether anonymous-account clean-up is off by default.
+- **Not done:** firmware (the owner's probe code was not in the message: the template line "[paste your probe code
+  here]" came through instead); rules, live view and tests wait for the must-have steps.
+- **Probe sketch received (owner, 2026-11-12, late evening):** kept unchanged in `robot/firmware/original_probe/`
+  (also the USB-only fallback firmware). It settles the baud rate (115200; `bridge.DEFAULT_BAUD`, was TODO-VERIFY)
+  and confirms the line format the bridge parses; new tests check the parser against the sketch's own print
+  statements (740 tests pass). Notes for step 10b, not acted on: GPIO34 is an ADC1 pin, so it still reads with
+  Wi-Fi on, but Wi-Fi can add ADC noise, so the bench test of repeat spread (VALIDATION 5.2) should run with
+  Wi-Fi on; the sketch limits moisture to 0-100 (`constrain`), so a 0 or 100 may be a limited value; a DS18B20
+  power-on 85.0 C is refused by the bridge's range check.
+- **Owner, 2026-11-12:** step 10b sends the raw moisture reading too (before mapping and limiting), beside the
+  percentage, so a limited 0 or 100 % is visible; the USB line is unchanged. Recorded in CLAUDE.md step 10b; not built.

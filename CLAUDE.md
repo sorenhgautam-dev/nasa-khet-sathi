@@ -8,7 +8,9 @@ the **pipeline**: it downloads public data for a field, runs a small physics "tw
 water and crops through every season from 2001 to 2025 and through projected futures, scores crop
 rotations, and exports **static JSON** that the website in `site/` reads.
 
-There is **no backend**. Everything heavy is precomputed here; the site only reads small files.
+There is **no backend**. Everything heavy is precomputed here; the site only reads small files. The one
+exception (owner, 2026-11-12) is the live probe: one Firebase Realtime Database carries live probe
+readings and nothing else (see "Out of scope" and build step 10b).
 Several fields are prepared in advance (the demo field in Nepal plus a few abroad). Each gets its own
 JSON file and an index file lists them, so a judge anywhere can open the live site and explore a
 prepared field while our laptop is switched off.
@@ -471,8 +473,8 @@ refused and logged); `robot/bridge.py --port <serial port> --section s1` reads t
 `robot/fake_probe.py` prints the same lines (to stdout, or a pseudo-terminal the bridge opens like a USB
 port) for tests and rehearsal. Step 10 adds the Kalman update against the twin state
 (`data/clean/twin_state.json`) for `sure`. After the demo, the logged readings become
-`site/data/probe_log.json` so the public site can replay them. The baud rate is the probe's
-`Serial.begin` rate (115200 assumed; TODO-VERIFY with the robot teammate).
+`site/data/probe_log.json` so the public site can replay them. The probe's own sketch is kept unchanged in
+`robot/firmware/original_probe/` (115200 baud; moisture on GPIO34, an ADC1 pin; DS18B20 on GPIO4).
 
 ## How judges will see it (requirements this creates)
 
@@ -480,7 +482,8 @@ Global judges only ever see the project page, the 30-second video, the public re
 **live site**, opened on their own device between submission and January, with nothing running on
 our side and nothing changeable after submission. Local judges also see the live probe demo.
 
-1. The site must work fully from static files, on a phone, on mobile data, with no keys.
+1. The site must work fully from static files, on a phone, on mobile data, with no keys. The live
+   probe (step 10b) is an extra: if Firebase is unreachable, every screen still works.
 2. **Prepared fields:** export at least the Nepal demo field plus two or three abroad (for example
    Guatemala, Kenya, USA) through the same pipeline with no code changes. That is the proof the
    method is global.
@@ -548,6 +551,19 @@ our side and nothing changeable after submission. Local judges also see the live
 8. **Sections, erosion, frost, ECOSTRESS:** per-section status and zones.
 9. **Future:** NEX-GDDP deltas, scenario grid, `harvest_low` / `harvest_high` from the spread.
 10. **Probe bridge and Kalman.**
+10b. **Online probe (option B; owner, 2026-11-12), only after the must-have steps:** the probe joins the
+    farmer's phone hotspot (setup page on the probe; iPhone "Maximize Compatibility" for 2.4 GHz) and
+    writes its readings to Firebase Realtime Database (Spark plan, no card); the website shows them
+    live in iPhone Safari and Android Chrome. Security rules: each probe has its own ID, only that probe
+    writes its readings, nobody can read another probe's data, and every value in the website is safe to
+    be public. If Firebase is unreachable the site works fully. Firmware: Wi-Fi and Firebase added
+    around the owner's reading code (its reading and calibration unchanged, USB output kept), in
+    `robot/firmware/khet_probe/`, with no secrets. Each online reading also carries the raw moisture
+    reading (`analogRead`, before mapping and limiting), so a limited 0 or 100 % can be told apart; the
+    USB line stays exactly as the sketch prints it (owner, 2026-11-12). The live view is one small piece
+    for the UI teammate.
+    *Waiting for:* the Firebase project (owner's hand steps); the probe code is in
+    `robot/firmware/original_probe/`.
 11. **More fields and the judge path:** run the whole pipeline for two or three fields abroad; write
     `index.json`; record `probe_log.json`; write `README.md`. *Done when* each prepared field opens on
     the live site from a phone on mobile data.
@@ -581,5 +597,7 @@ After submission, change nothing until the Global Winners are announced in Janua
 
 ## Out of scope
 
-A backend or database; user accounts; live API calls from the site; yield in tonnes; disease
+A backend or database, **except one Firebase Realtime Database (free Spark plan) for live probe readings
+only** (owner, 2026-11-12; build step 10b): nothing else is stored there, and nothing else on the site
+depends on it. User accounts; any other live API call from the site; yield in tonnes; disease
 diagnosis; any claim that the tool replaces an agronomist.

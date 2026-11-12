@@ -18,8 +18,8 @@ the bridge writes live.json atomically:
 A bad line (cut short when the port opens, the ESP32's boot text, a value out of range) is skipped with a
 warning and never reaches live.json. Every line, good or bad, is appended to a log (data/probe/<field>/
 readings_<date>.jsonl, gitignored) from which site/data/probe_log.json is made after the demo.
-The baud rate is the probe's Serial.begin rate: 115200 is the ESP32 default (TODO-VERIFY with the robot
-teammate).
+The baud rate is the probe sketch's Serial.begin(115200) (robot/firmware/original_probe, sent by the owner
+2026-11-12).
 """
 import argparse
 import json
@@ -33,6 +33,7 @@ from robot import probe
 
 REPO = Path(__file__).resolve().parents[1]
 SECTION = re.compile(r"^s[0-9]+$")       # the contract's section ids (schema.json)
+DEFAULT_BAUD = 115200                     # the probe sketch's Serial.begin rate
 
 
 def _now():
@@ -80,7 +81,7 @@ def run(raw_lines, section, out_path, log_path, clock=None):
     return stats
 
 
-def serial_lines(port, baud=115200, max_lines=None, timeout_s=5.0):
+def serial_lines(port, baud=DEFAULT_BAUD, max_lines=None, timeout_s=5.0):
     """Lines (bytes) from a serial port. A silent port prints a warning every `timeout_s`; with max_lines
     set, a silent port ends the reading instead (used by tests)."""
     import serial
@@ -103,7 +104,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--port", required=True, help="serial port, e.g. /dev/cu.usbserial-0001 or COM3; '-' = stdin")
     ap.add_argument("--section", required=True, help="the section the probe is in, e.g. s1")
-    ap.add_argument("--baud", type=int, default=115200)
+    ap.add_argument("--baud", type=int, default=DEFAULT_BAUD)
     ap.add_argument("--field", default="demo")
     ap.add_argument("--out", default=str(REPO / "site" / "data" / "live.json"))
     a = ap.parse_args(argv)
