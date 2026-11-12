@@ -21,7 +21,8 @@
     "name",
     "lat",
     "lon",
-    "sections"
+    "sections",
+    "water_source"
    ],
    "properties": {
     "name": {
@@ -44,6 +45,16 @@
      "items": {
       "$ref": "#/$defs/section"
      }
+    },
+    "water_source": {
+     "enum": [
+      "unknown",
+      "rain-only",
+      "canal",
+      "well",
+      "irrigated"
+     ],
+     "description": "The field's water source (config/fields/<id>.yaml; 'unknown' while it is not known). replay.<plan>[].harvest, dry_days and event are the field's own case: rain-fed for 'unknown' and 'rain-only'. While it is 'unknown', show the two cases side by side: 'if you can't water' (harvest, dry_days) and 'if you can water' (irrigated). Owner, 2026-11-12."
     }
    }
   },
@@ -248,10 +259,13 @@
      "$ref": "#/$defs/pct"
     },
     "temp": {
-     "type": "number",
+     "type": [
+      "number",
+      "null"
+     ],
      "minimum": -30,
      "maximum": 50,
-     "description": "Soil temperature in deg C, from the soil probe (owner, 2026-11-12: not air temperature); bounds from CLAUDE.md golden rule 12"
+     "description": "Soil temperature from the probe, deg C (owner, 2026-11-12); null until the probe has read this section (show 'not sure yet'). Bounds from CLAUDE.md golden rule 12"
     },
     "sure": {
      "type": "number",

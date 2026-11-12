@@ -11,7 +11,9 @@ A value with any Q-FLAG (failed a quality check) is dropped and counted.
 S-FLAG (REVIEW_NOTES H2): kept per value (columns sflag_rain_mm, sflag_tmax_c, sflag_tmin_c) and counted per
 element in the card. For Kathmandu Airport every 2001-2025 record is "S" (Global Summary of the Day), which
 the readme describes as SFLAG_S_CAVEAT below: label station rain "synoptic-derived, use with caution"
-wherever it is used as truth. Day boundary: not documented for these values (TODO-VERIFY).
+wherever it is used as truth. Day boundary: S values are GSOD summaries "based on Greenwich Mean Time (GMT,
+0000Z - 2359Z)" (GSOD readme, NCEI 10/28/2020), i.e. 05:45-05:45 Nepal time; PRCP "may include latter part of
+previous day".
 """
 import argparse
 import csv
@@ -120,8 +122,9 @@ def fetch(field, station, data_dir=REPO / "data", get_bytes=_http_get_bytes, cre
         records_dropped=info["qc_dropped"],
         date_range=[str(df["date"].min().date()), str(df["date"].max().date())],
         time_zone=(f"station observation day; OBS-TIME given on {info['obs_time_present']} of "
-                   f"{sum(info['raw_records'].values())} records used. Day boundary TODO-VERIFY: the readme does not give "
-                   "it for S-flag (synoptic-derived) values. A best day-alignment lag of 0 against POWER shows only that "
+                   f"{sum(info['raw_records'].values())} records used. Day boundary: S-flag values are GSOD summaries on "
+                   "the GMT day (0000Z - 2359Z), i.e. 05:45-05:45 Nepal time, and GSOD PRCP 'may include latter part of "
+                   "previous day' (GSOD readme, NCEI 10/28/2020). A best day-alignment lag of 0 against POWER shows only that "
                    "no whole-day shift does better, not that the day boundaries match"),
         pixel_count=("n/a: one station point; distance to the field TODO-VERIFY (the station's coordinates are in "
                      "ghcnd-stations.txt, which is not cached)"),

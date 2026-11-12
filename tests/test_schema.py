@@ -157,3 +157,40 @@ def test_a_replay_year_without_the_irrigated_case_still_validates():
         for y in rows:
             del y["irrigated"]
     assert validate_field(d) == []
+
+
+# --- owner's batch decisions, 2026-11-12 ---
+
+def test_section_temp_may_be_null_before_the_probe_reads_it():
+    """Item 23: temp is soil temperature from the probe; a section the probe has not read has none (no invented
+    numbers, rule 11). It stays required, so the UI always finds the key."""
+    d = build_field()
+    d["field"]["sections"][0]["temp"] = None
+    assert validate_field(d) == []
+    del d["field"]["sections"][0]["temp"]
+    assert validate_field(d) != []
+
+
+def test_the_mock_has_sections_with_and_without_a_probe_reading():
+    temps = [s["temp"] for s in build_field()["field"]["sections"]]
+    assert None in temps and any(t is not None for t in temps)
+
+
+@pytest.mark.parametrize("value", ["unknown", "rain-only", "canal", "well", "irrigated"])
+def test_field_water_source_takes_the_config_values(value):
+    """Item 8: the site labels the two replay cases from this ('if you can water' / 'if you can't')."""
+    d = build_field()
+    d["field"]["water_source"] = value
+    assert validate_field(d) == []
+
+
+def test_field_water_source_is_required_and_closed():
+    d = build_field()
+    d["field"]["water_source"] = "rain only"
+    assert validate_field(d) != []
+    del d["field"]["water_source"]
+    assert validate_field(d) != []
+
+
+def test_the_mock_demo_field_water_source_is_unknown():
+    assert build_field()["field"]["water_source"] == "unknown"

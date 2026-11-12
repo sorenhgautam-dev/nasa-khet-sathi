@@ -15,8 +15,8 @@ A cell has a prediction only where EVERY map used here (sand, clay, soc, bdod, w
 depths) is valid.
 
 Units: the GeoTIFFs carry no unit tags. SoilGrids stores mapped units; the conversion uses the d_factor
-table in DOCUMENTED_UNITS (ISRIC's REST `unit_measure` blocks, copied 2026-11-12; ISRIC's SoilGrids FAQ
-conversion table, TODO-VERIFY: not opened here). When REST answers for this field are cached in
+table in DOCUMENTED_UNITS (ISRIC's REST `unit_measure` blocks, copied 2026-11-12; the same factors as ISRIC's
+"SoilGrids layers" table, https://docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html, verified 2026-11-12). When REST answers for this field are cached in
 data/raw/soilgrids/<field>/*.json, their unit blocks are checked against the table and their values against
 the maps at the same points (fail loudly on a unit change).
 
@@ -46,7 +46,7 @@ DOCUMENTED_UNITS = {"wv0033": ("(10-2 cm³/cm³)*10", 10), "wv1500": ("(10-2 cm�
                     "clay": ("g/kg", 10), "soc": ("dg/kg", 10), "bdod": ("cg/cm³", 100)}
 D_FACTOR = {p: f for p, (_, f) in DOCUMENTED_UNITS.items()}
 UNITS_SOURCE = ("ISRIC REST unit_measure blocks (d_factor, mapped and target units), copied 2026-11-12; ISRIC "
-                "SoilGrids FAQ conversion table TODO-VERIFY (not opened)")
+                "'SoilGrids layers' table (docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html), same factors, verified 2026-11-12")
 
 
 def convert(prop, mapped):

@@ -18,7 +18,9 @@ OPTS = dict(bare_kc=0.3)
 def _weather(start="2001-01-01", end="2025-12-31", monsoon_only=True):
     d = pd.date_range(start, end)
     rain = np.where(d.month.isin([6, 7, 8, 9]), 12.0, 0.0) if monsoon_only else np.full(len(d), 3.0)
-    return pd.DataFrame({"date": d, "et0_mm": 3.5, "rain_mm": rain, "tmin_frost_c": 5.0})
+    # wind and humidity columns as in the real weather table (fetch/weather.py), for the Kc climate adjustment
+    return pd.DataFrame({"date": d, "et0_mm": 3.5, "rain_mm": rain, "tmin_frost_c": 5.0,
+                         "ws2m_ms": 2.0, "ea_kpa": 1.5, "tmax_c": 25.0})
 
 
 def test_rotation_plan_keeps_only_seasons_inside_the_record():
@@ -223,3 +225,35 @@ def test_a_season_without_a_harvest_number_stops_the_year_sum():
                 "pond_supply_mm": 0.0, "start": "2025-06-23", "harvest_note": "no harvest number: season cut short"}]
     with pytest.raises(ValueError, match="cut short"):
         sim.yearly(seasons)
+
+
+def test_an_unknown_water_source_exports_the_rain_fed_case_with_the_irrigated_beside_it():
+    """Owner's batch decisions item 8: keep it unknown; harvest/dry_days/event are 'if you can't water',
+    the irrigated object is 'if you can water'."""
+    assert sim.export_case("unknown") == "rain-fed"
+    assert sim.export_case(None) == "rain-fed"
+
+
+def _rules_with_fallback():
+    return {"replay": {"rotation_unknown": ["rice", "potato"], "rotation_unknown_fields": ["demo"]}}
+
+
+def test_a_set_rotation_is_used_as_it_is():
+    rot, label = sim.rotation_for({"id": "kenya", "current_rotation": ["maize", "lentil"]}, _rules_with_fallback())
+    assert rot == ["maize", "lentil"] and "PLACEHOLDER" not in label
+
+
+def test_the_demo_field_falls_back_to_the_placeholder_rotation_labelled():
+    rot, label = sim.rotation_for({"id": "demo", "current_rotation": None}, _rules_with_fallback())
+    assert rot == ["rice", "potato"] and "PLACEHOLDER" in label
+
+
+def test_any_other_field_without_a_rotation_stops():
+    """Item 16: rice then potato means nothing for a field abroad; fail loudly (rule 12c)."""
+    with pytest.raises(ValueError, match="current_rotation"):
+        sim.rotation_for({"id": "kenya", "current_rotation": None}, _rules_with_fallback())
+
+
+def test_the_rules_name_the_demo_as_the_only_fallback_field():
+    from pipeline.fetch.rules import load_rules
+    assert load_rules()["replay"]["rotation_unknown_fields"] == ["demo"]

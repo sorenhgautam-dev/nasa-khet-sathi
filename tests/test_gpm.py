@@ -123,7 +123,8 @@ def test_from_cache_builds_the_table_and_an_honest_card_without_any_network(tmp_
     assert card["fill_values_removed"] == {"-9999.9 (_FillValue) in the field's cell": 1}
     assert card["records_dropped"] == 3
     assert card["date_range"] == ["2025-09-29", "2025-10-02"]                  # first and last day with a value
-    assert "TODO-VERIFY" in card["time_zone"] and "05:45" in card["time_zone"]
+    assert "TODO-VERIFY" not in card["time_zone"] and "05:45" in card["time_zone"]    # verified 2026-11-12
+    assert "IMERG V07 Technical Documentation" in card["time_zone"] and "Universal Coordinated Time" in card["time_zone"]
     assert card["raw_attrs"]["precipitation"]["units"] == "mm/day"
     assert card["raw_attrs"]["precipitation"]["scale_factor"] == "ABSENT"
     seg = {s["product"]: s for s in card["segments"]}

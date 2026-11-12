@@ -212,3 +212,22 @@ def test_irrigation_refills_at_the_start_of_the_day_so_the_crop_is_not_stressed(
     first = out.index[out["irrigation_mm"] > 0][0]
     assert out.loc[first, "irrigation_mm"] == pytest.approx(out.loc[first - 1, "dr_mm"])
     assert out.loc[first - 1, "dr_mm"] > out.loc[first - 1, "raw_mm"]
+
+
+# --- step 7 may sow at the window's start, middle or end (owner's batch decisions item 10, 2026-11-12) ---
+def test_sow_date_at_the_start_and_end_of_the_window():
+    cal = {"windows": [{"sow": "10-15", "sow_end": "11-15"}], "default": 0}
+    assert crops.sow_date(cal, 2015, position="start") == pd.Timestamp("2015-10-15")
+    assert crops.sow_date(cal, 2015, position="middle") == pd.Timestamp("2015-10-30")
+    assert crops.sow_date(cal, 2015, position="end") == pd.Timestamp("2015-11-15")
+
+
+def test_sow_date_end_crosses_the_new_year():
+    cal = {"windows": [{"sow": "12-20", "sow_end": "01-09"}], "default": 0}
+    assert crops.sow_date(cal, 2015, position="end") == pd.Timestamp("2016-01-09")
+
+
+def test_sow_date_refuses_an_unknown_position():
+    cal = {"windows": [{"sow": "10-15", "sow_end": "11-15"}], "default": 0}
+    with pytest.raises(ValueError, match="position"):
+        crops.sow_date(cal, 2015, position="early")

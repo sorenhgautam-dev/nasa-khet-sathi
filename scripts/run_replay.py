@@ -40,7 +40,8 @@ def _case(res):
 def run(weather, rotation, lib, soil, cn, rules):
     out = {}
     for case, irrigated in (("rain-fed", False), ("irrigated", True)):
-        res = sim.replay(weather, rotation, lib, soil, cn, bare_kc=rules["bare_soil"]["kc"], irrigated=irrigated)
+        res = sim.replay(weather, rotation, lib, soil, cn, bare_kc=rules["bare_soil"]["kc"], irrigated=irrigated,
+                         kc_climate=rules["kc_climate"]["apply"])
         out[case] = _case(res)
         sens = {}
         for v in [rules["ky_assumed"]["neutral"], *rules["ky_assumed"]["sensitivity"]]:
@@ -59,24 +60,32 @@ def main(argv=None):
     clean = data / "clean" / field["id"]
     w = pd.read_parquet(clean / "weather.parquet")
     soil = pd.read_parquet(clean / "soilgrids.parquet")
-    rotation = field.get("current_rotation") or rules["replay"]["rotation_unknown"]
-    rot_label = (field.get("current_rotation_source", "field config") if field.get("current_rotation")
-                 else "PLACEHOLDER (current_rotation is null): rules.yaml replay.rotation_unknown")
+    try:
+        rotation, rot_label = sim.rotation_for(field, rules)
+    except ValueError as e:
+        print(f"STOPPED: {e}")
+        return 1
     cover, by_cover = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by_cover["bare"], **{c: by_cover[cover[c]] for c in rotation}}
-    water = field.get("water_source") or rules["water_source_unknown"]["treat_as"]
+    water = field.get("water_source") or "unknown"
     export_case = sim.export_case(water)
     labels = {"field": field["name"], "field_lat_lon": [field["lat"], field["lon"]],
               "placeholder_field": bool(field.get("placeholder")),
               "rotation": rotation, "rotation_source": rot_label,
-              "water_source": f"{field.get('water_source') or 'unknown'}; the export uses the {export_case} case",
+              "water_source": water,
+              "water_cases": (f"harvest, dry_days and event are the {export_case} case; 'irrigated' is the watered case"
+                              + (" (water source unknown: the site shows both side by side, 'if you can't water' and "
+                                 "'if you can water'; owner 2026-11-12)" if water == "unknown" else "")),
               "et0": "FAO-56 Penman-Monteith from the twin's weather table (station-corrected temperatures)",
               "frost": "not a replay event (owner 2026-11-12, REVIEW_NOTES M1): shown only as a risk band in the "
                        "monthly calendar, never per year or as a count",
               "paddy": "rain-fed rice gets no outside water (plain bucket, rice's Zr and p); irrigated rice is ponded and "
                        "its pond water is irrigation: irrigation_mm includes it, pond_supply_mm is that part "
                        "(REVIEW_NOTES H1, 2026-11-12)",
-              "soil": "SoilGrids 2.0 cell 750 m from the field point (see data card)",
+              "soil": "SoilGrids 2.0, the nearest cell with values (distance in data/cards/<field>/soilgrids.json)",
+              "kc": ("FAO-56 Table 12 Kc mid and Kc end adjusted per season for the season's own wind and minimum "
+                     "humidity (eqs. 62 and 65; rules.yaml kc_climate)" if rules["kc_climate"]["apply"]
+                     else "FAO-56 Table 12 Kc, not adjusted for climate"),
               "year_rule": rules["replay"]["year_of_season"] + "; " + rules["replay"]["combine_crops"],
               "ky": "crops with no published Ky use the owner-assumed 1.0; ky_sensitivity re-scores them at "
                     f"{rules['ky_assumed']['sensitivity']}"}

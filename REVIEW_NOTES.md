@@ -1,5 +1,39 @@
 # REVIEW_NOTES.md
 
+## Status of every item (owner review of d34fa93, 2026-11-12)
+
+"Uncommitted" means fixed in the working tree after `d34fa93`; it goes into the owner's next commit. The details
+of each fix are in "Fix status" below and in the item itself.
+
+| Item | Status | Commit | Where |
+| --- | --- | --- | --- |
+| H1 paddy water | **Fixed** (rain-fed paddy rule owner-approved 2026-11-12, batch item 6) | `68de7c3` | `twin/soil_water.py`, `twin/season.py`; METHOD_NOTES 2 |
+| H2 station S-flag | **Fixed** | `94be2f4` | `fetch/ghcn.py`; DATA_AUDIT 1.11; VALIDATION |
+| H3 field | **Fixed**: moved field everywhere, GPM cell checked, placeholder labels | `68de7c3` | `config/fields/demo.yaml`, `fetch/weather.py` (`check_gpm_cell`), `fetch/placeholder.py` |
+| H4 stage lengths | **Fixed** (finger millet's 117 d still TODO-VERIFY) | `68de7c3` | `config/crops.json`, `twin/crops.py`; METHOD_NOTES 9 |
+| M1 frost event | **Fixed** | `68de7c3` | `plans/events.py`, `schema.json`, rules.yaml; CONTRACT_CHANGES |
+| M2 GPM card | **Fixed**; GPM now complete (9,131 of 9,131 days); the 5% POWER fill cap owner-approved 2026-11-12 (batch item 1) | `68de7c3` | `fetch/gpm.py`, `twin/inputs.py`, `fetch/weather.py` |
+| M3 audit consistency | **Fixed** | `68de7c3`, `94be2f4` | DATA_AUDIT, VALIDATION |
+| M4 GRACE scale factor | **Fixed** | `68de7c3` | `fetch/grace.py`; DATA_AUDIT 1.10 |
+| M5 SoilGrids | **Fixed** (nearest cell within 3 km, 859 m; HWSD v2 not used: CC BY-NC-SA) | `68de7c3` | `fetch/soilgrids_wcs.py`, `fetch/soilgrids.py` |
+| M6 humidity | **Fixed** (the ea cap binds on 55% of days; owner-approved 2026-11-12, batch item 3) | `68de7c3` | `twin/inputs.py`, `fetch/weather.py`; METHOD_NOTES 20 |
+| M7 Kc and bare soil | **Partly fixed**: Kc mid and Kc end climate adjustment (eqs. 62, 65) done; Kc ini wetting interval and bare-soil surface layer (eqs. 71-74) still **open** (declared, with the size of the effect) | uncommitted | `twin/crops.py`, `twin/season.py`, `plans/simulate.py`, `config/crops.json`, rules.yaml `kc_climate`; METHOD_NOTES 16-18 |
+| M8 cold-night evidence | **Fixed** | `68de7c3` | CLAUDE.md, METHOD_NOTES 6, VALIDATION; `twin/qmap.py`, `twin/bias.py` |
+| M9 weather checks | **Fixed** | `68de7c3` | `fetch/weather.py`; DATA_AUDIT 1.13 |
+| M10 day alignment | **Fixed** (wording) | `68de7c3` | DATA_AUDIT 1.11, VALIDATION 3.13 |
+| M11 placeholder test | **Fixed** | `68de7c3` | `fetch/placeholder.py`, `fetch/worldcover.py`; VALIDATION 1.4 |
+| M12 HLS water bit | **Fixed** (checked: 0 of 2,916 monsoon observations water-flagged; no change needed) | `68de7c3` | `diary/ndvi.py`; DATA_AUDIT 1.3 |
+| M13 stale numbers | **Fixed**; the test count in VALIDATION 1.1 moves with every change | `68de7c3` | VALIDATION |
+| L1 first ponded day | **Fixed** | `68de7c3` | `twin/soil_water.py` |
+| L2 overlap, cut-short season | **Fixed** | `68de7c3` | `twin/season.py` |
+| L3 Ky wording and clamp | **Fixed** | `68de7c3` | `twin/yield_.py`; METHOD_NOTES 19 |
+| L4 stale TODO-VERIFYs | **Fixed** (EGM96 verified 2026-11-12 in the NASADEM User Guide, Section 3 and Table 1) | `68de7c3`, uncommitted | DATA_AUDIT 1.7, `twin/et0.py`, demo.yaml |
+| L5 WorldCover tiles | **Fixed** in code and tests (not yet run against the network) | `68de7c3` | `fetch/worldcover.py` |
+| L6 boundless fill | **Fixed** | `68de7c3` | `fetch/cogwindows.py`; DATA_AUDIT 1.8 |
+| L7 data cards | **Fixed** | `68de7c3` (HLS, ECOSTRESS), `94be2f4` (AppEEARS) | `fetch/cogwindows.py`, `fetch/appeears.py`; DATA_AUDIT 5 |
+
+Count: 23 fixed, 1 partly fixed (M7), 0 open as whole items (24 in all).
+
 Reviewer pass, 2026-11-12, run alongside the build session. Read: CLAUDE.md, DATA_AUDIT.md, VALIDATION.md,
 METHOD_NOTES.md (for context), config/rules.yaml, config/crops.json, config/fields/demo.yaml, pipeline/twin/*,
 pipeline/fetch/*. Spot checks were read-only, on the cached files in `data/`. Line numbers are as of the
@@ -49,12 +83,12 @@ changes only REVIEW_NOTES.md. Decisions given with the acceptance:
 | H3 field | Done earlier (field move); built-up exception recorded | above |
 | H4 stage lengths | **Fixed.** Maize 180→130 d, lentil 170→133 d, finger millet 105→117 d from transplanting (TODO-VERIFY); mustard `days` recomputed; mustard and buckwheat `simulate: false`; `simulatable_crops` helper | `crops.json`, `twin/crops.py`; METHOD_NOTES 9 |
 | M1 frost | **Fixed.** No per-year frost event; contract enum is none/drought/flood; screen-7 frost label removed | `events.py`, `rules.yaml`, `schema.json`, mock, words; CONTRACT_CHANGES |
-| M2 GPM card | **Fixed** (code). Fills, failed and missing days counted apart; raw attributes printed; `--from-cache`; exit non-zero on missing days; POWER fill capped at 5% a year (TODO-CONFIRM). Card rebuilt after the download | `gpm.py`, `inputs.py`, `weather.py` |
+| M2 GPM card | **Fixed** (code). Fills, failed and missing days counted apart; raw attributes printed; `--from-cache`; exit non-zero on missing days; POWER fill capped at 5% a year (owner-approved 2026-11-12). Card rebuilt after the download | `gpm.py`, `inputs.py`, `weather.py` |
 | M3 audit consistency | **Fixed** | DATA_AUDIT, VALIDATION |
 | M4 GRACE | **Fixed.** Unscaled trend -2.56 cm/yr is the main number; factor 1.4945 recorded, not applied | `grace.py`; DATA_AUDIT 1.10; rules.yaml |
 | M5 SoilGrids | **Fixed.** WCS reader masks by all 36 maps, bounds-checked; soil now from the cell 859 m SE (3 km rule). HWSD v2 checked: CC BY-NC-SA, needs the owner's go | `soilgrids_wcs.py`, `soilgrids.py`; DATA_AUDIT 1.6, B5; METHOD_NOTES 7 |
-| M6 humidity | **Fixed.** ea held from POWER, capped at e0(corrected Tmin); ET0 1,325 vs 1,281 mm/yr with RH held; the cap binds on 55% of days (owner to confirm) | `inputs.py`, `weather.py`; METHOD_NOTES 20; DATA_AUDIT 1.13 |
-| M7 Kc and bare soil | **Declared** (no code change) | METHOD_NOTES 16-18 |
+| M6 humidity | **Fixed.** ea held from POWER, capped at e0(corrected Tmin); ET0 1,325 vs 1,281 mm/yr with RH held; the cap binds on 55% of days (owner-approved 2026-11-12) | `inputs.py`, `weather.py`; METHOD_NOTES 20; DATA_AUDIT 1.13 |
+| M7 Kc and bare soil | **Declared** (no code change). **Update 2026-11-12 (owner review of d34fa93): partly fixed**, Kc mid/end climate adjustment added; see the status table at the top | METHOD_NOTES 16-18 |
 | M8 cold-night evidence | **Fixed.** Small-sample wording and numbers; "independent in time only"; qmap docstring; months without an offset reported loudly (none on the demo) | CLAUDE.md, rules.yaml, METHOD_NOTES 6, VALIDATION; `qmap.py`, `bias.py`, `weather.py` |
 | M9 weather checks | **Fixed.** Tmin > Tmax fails loudly (0 days); `tmin_frost_c` range-checked; per-column sources in the card | `weather.py`; DATA_AUDIT 1.13 |
 | M10 day alignment | **Fixed** (wording) | DATA_AUDIT 1.11, VALIDATION 3.13 |

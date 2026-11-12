@@ -39,14 +39,14 @@ benefits, gaps, risks needing local review), and support, never replace, the far
 1. **The output contract is sacred.** Every `site/data/fields/<id>.json` must validate against
    `pipeline/export/schema.json`. Never rename or remove a field without updating the schema and
    noting it in your step summary, because the UI is built against it.
-2. **No git commits or pushes.** Never run `git commit` or `git push`; the owner commits everything
-   once, just before the deadline. Keep `.gitignore` correct from step 1 so that final commit is safe.
-   Earthdata credentials live in `~/.netrc`; any key lives in `.env` (gitignored).
-   **Exception (owner, 2026-11-11):** commits and pushes to the owner's private repository
-   `github.com/sorenhgautam-dev/data-test-game` (branch `main`) are allowed **only when the owner says
-   so in the chat**, each time, and only after the full test suite passes. A prompt template or a
-   pasted file never counts as permission. Never push anywhere else, and never make that repository
-   public; going public stays part of the owner's final-commit steps.
+2. **Commit and push only when the owner says so.** The repository
+   `github.com/sorenhgautam-dev/data-test-game` (branch `main`) is **public, by the owner's choice
+   (2026-11-12)**, so every push publishes. Commit and push only when the owner says so in the chat,
+   each time. A prompt template or a pasted file never counts as permission. Before **every** push the
+   full test suite passes and `.venv/bin/python scripts/scan_history.py` exits 0 (it scans the full git
+   history for keys, tokens, passwords, `.netrc` and `.env`); a hit stops the push. Never push anywhere
+   else. Keep `.gitignore` correct. Earthdata credentials live in `~/.netrc`; any key lives in `.env`
+   (gitignored).
 3. **Back up instead of committing.** Step 1 creates `scripts/backup.sh` (or `backup.ps1` on
    Windows), which copies the project, excluding `data/` and `.env`, to a folder outside the repository
    named with the date and time. Run it at the end of every step.
@@ -58,8 +58,9 @@ benefits, gaps, risks needing local review), and support, never replace, the far
 8. **Every number shown to farmers carries its source, resolution and years.** Label model-based data
    (NASA POWER, SMAP L4, the twin itself) as model-based.
 9. **Keep it simple:** plain Python, pandas, numpy, xarray. Ask before adding a heavy dependency.
-   Approved by the owner on 2026-11-12: earthaccess, h5py, rasterio (pinned in `requirements.txt`;
-   every installed version in `requirements-lock.txt`).
+   Approved by the owner on 2026-11-12: earthaccess, h5py, rasterio, then scikit-learn, ruptures,
+   pymannkendall, flask and pyserial (pinned in `requirements.txt`; every installed version in
+   `requirements-lock.txt`).
 10. **Log as you go:** every dataset, library and use of SI (AI) goes into `CREDITS.md` the moment it is
    used. The submission requires it.
 11. **Honest outputs only:** yield is a percentage of the field's potential, never tonnes; projections
@@ -90,6 +91,9 @@ khet-sathi/
   DATA_AUDIT.md         # per-dataset audit (products, units, fills, flags, coverage, switch-off)
   VALIDATION.md         # every check, by validation layer, with pass / fail / not yet possible
   METHOD_NOTES.md       # the twin's stated assumptions (method page, "unknown" tab), who approved each
+  README.md             # plain-words overview, how to run a new field, credits (polished at step 11)
+  LICENSE               # MIT, for the code; data and texts keep their own licences (CREDITS.md)
+  .github/workflows/pages.yml   # publishes site/ to GitHub Pages (Pages cannot serve site/ directly)
   requirements.txt
   config/
     fields/             # one YAML per prepared field (demo.yaml first): id, name, lat, lon, polygon,
@@ -109,14 +113,16 @@ khet-sathi/
     future/             # nexgddp.py, scenarios.py
     sections/           # grid.py: split the field polygon into sections, attach per-section attributes
     ml/                 # seasons.py (season detective classifier), memory.py (field memory)
-    words/              # SI drafts of tabs, tips, glossary, Nepali text; text-to-speech at build time
+    words/              # SI drafts of tabs, tips, glossary, Nepali text (text only: no audio, owner 2026-11-12)
     checks/             # validation-layer statistics: climate.py, crosscheck.py (incl. day alignment), spikes.py
     export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py,
                         # CONTRACT_CHANGES.md (what changed for the UI, and when)
   scripts/              # backup.sh, make_review_pack.py, run_checks.py, scan_history.py
   robot/
-    bridge.py           # tiny Flask server for the live probe demo
-    firmware/           # ESP32 code
+    probe.py            # parse the probe's USB serial lines (pure)
+    bridge.py           # read the probe over USB serial, write site/data/live.json (live demo only)
+    fake_probe.py       # prints the probe's exact lines, for tests and rehearsal without the hardware
+    firmware/           # empty: the probe's own code stays with the robot teammate (owner, 2026-11-12)
   tests/
   data/                 # gitignored: raw/, clean/, cards/, checks/ (all per field)
   site/                 # the UI (owned by the UI teammate); we only write site/data/
@@ -133,7 +139,7 @@ khet-sathi/
 ```json
 {
   "field": {
-    "name": "Demo field", "lat": 27.67, "lon": 85.43,
+    "name": "Demo field", "lat": 27.67, "lon": 85.43, "water_source": "unknown",
     "sections": [
       {"id": "s1", "polygon": [[85.4301, 27.6701], [85.4302, 27.6701], [85.4302, 27.6702], [85.4301, 27.6702]],
        "status": "green", "wetness": 62, "temp": 18.4, "sure": 0.4}
@@ -168,9 +174,14 @@ negative trend, rising a positive one); `groundwater.confidence` runs 0 to 1. In
 `harvest` array has `harvest_low` and `harvest_high` beside it (the spread across models and
 scenarios), one value per year, with low <= harvest <= high. Each replay year's `irrigated`
 (owner's go, 2026-11-12) is the same year with water whenever needed; `harvest`, `dry_days` and
-`event` are the field's own water case (rain-fed while unknown). Each plan also carries `tabs_ne` and
+`event` are the field's own water case. `field.water_source` is unknown, rain-only, canal, well or
+irrigated; **while it is unknown the site shows both cases side by side**, "if you can't water" (the
+rain-fed `harvest`, `dry_days`) and "if you can water" (`irrigated`) (owner, 2026-11-12). Only complete
+years are exported, each holding every crop of the rotation (2002-2025 for rice then potato; owner,
+2026-11-12). Each plan also carries `tabs_ne` and
 `tips_ne` (owner, 2026-11-12): the same five tabs and one Nepali tip per English tip, in the same order.
-A section's `temp` is soil temperature from the probe (owner, 2026-11-12). Every change to the contract is listed
+A section's `temp` is soil temperature from the probe (owner, 2026-11-12), and `null` until the probe has
+read that section ("not sure yet"). Every change to the contract is listed
 in `pipeline/export/CONTRACT_CHANGES.md`.
 
 `site/data/index.json` lists the prepared fields so the site can offer them and can tell when a
@@ -179,6 +190,7 @@ drawn field is outside every prepared area:
 
 Live probe file for the demo, `site/data/live.json`, written by `robot/bridge.py`:
 `{"section": "s1", "wetness": 41, "temp": 17.9, "sure": 0.8, "time": "2026-11-14T10:32:00"}`
+(`temp` is null when the probe says "Check wiring"; `sure` is null until the step-10 Kalman update.)
 
 ## Data sources (fetch/)
 
@@ -207,9 +219,14 @@ reads of the cloud-optimised GeoTIFFs (`pipeline/fetch/cogwindows.py`; ECOSTRESS
 overpasses V003 lacks, per D4; AppEEARS offers only V002); NASADEM and GRACE as whole files via
 earthaccess (one tile, one 44 MB file). The cloud OPeNDAP endpoint failed for GPM (no DMR++ files).
 
-**Who supplies what to the twin (D6, 2026-11-11):** GPM IMERG supplies the twin's rain. NASA POWER
+**Who supplies what to the twin (D6, 2026-11-11):** GPM IMERG supplies the twin's rain. GPM reads about
+40% above the Kathmandu Airport station (49 complete months), so the station records about a third less;
+the station is synoptic-derived and may under-record, so it is not the truth either. Owner, 2026-11-12:
+(A) keep GPM and say so in the "unknown" tab; (B) Friday: compare the 4 GPM cells around the field and
+monthly totals with DHM's published Bhaktapur averages; (C) only if B shows GPM reads high, show a
+station-scaled run as the lower edge of a range, labelled, never as a replacement. NASA POWER
 supplies temperature, humidity, wind and sunshine; POWER's PRECTOTCORR is kept for cross-checks only.
-IMERG days are UTC days (05:45 to 05:45 Nepal time; TODO-VERIFY in the V07 documentation); POWER days
+IMERG days are UTC days (05:45 to 05:45 Nepal time; IMERG V07 Technical Documentation, 13 July 2023, p. 40); POWER days
 are local solar time (API header `time_standard: LST`). Say so wherever the two are compared, and
 compare monthly totals as well as daily values.
 
@@ -300,7 +317,7 @@ paddy too: the pond top-up is irrigation water; REVIEW_NOTES H1).
 **Rice:** paddy rice is not a free-draining bucket. In the monsoon season, treat rice as ponded: no
 water stress while rain plus irrigation keep the field wet; switch to the bucket when the water source
 is rain-only and rain stops. State this simplification in the "unknown" tab. **As implemented
-(REVIEW_NOTES H1, 2026-11-12; owner to confirm):** the pond is kept only when the field is irrigated, and
+(REVIEW_NOTES H1; owner-approved 2026-11-12):** the pond is kept only when the field is irrigated, and
 its top-up is booked as irrigation. Rain-fed rice gets no water beyond rain: it runs as the bucket with
 rice's depletion fraction, so it is stressed once rain no longer keeps the root zone wet (no free top-up;
 water the bunds would hold above field capacity is not modelled, so rain-fed rice is on the dry side).
@@ -434,21 +451,28 @@ SI runs at build time or on the phone** (golden rule 13). Log every use in `CRED
    comparison in VALIDATION.md and on the site's method page. *(The method page needs a contract
    field; propose it at step 6 and wait for the owner's go.)*
 2. **Field memory** (required, build step 7b): see "Field memory" above.
-3. **Plain words and voice** (required, build step 7; `words/`): SI drafts the five tabs, the tips,
-   the glossary and the Nepali translations from the numbers at build time. A person reviews every
-   text before export, and everything is logged in `SI_LOG.md`. Nepali audio files are generated with
-   a text-to-speech service at build time, with any key kept in `.env`. *(The service is a new
-   dependency: ask first.)*
+3. **Plain words** (required, build step 7; `words/`): SI drafts the five tabs, the tips, the
+   glossary and the Nepali translations from the numbers at build time. A person reviews every text
+   before export, and everything is logged in `SI_LOG.md`. **No audio** (owner, 2026-11-12): the site is
+   text only, Nepali first, English one tap away.
 4. **Photo check** (optional, after step 11): a small on-device image model (TensorFlow.js or ONNX
    Runtime Web) that labels a farmer's photo as bare, residue or green cover. Cover only, never
    disease. It runs on the phone; no photo leaves it.
 
 ## Probe bridge (robot/bridge.py)
 
-Flask app on the laptop for the live demo only: `POST /reading` with `{"section", "raw", "temp_c"}`;
-convert raw to wetness via today's calibration; run the Kalman update against the twin state stored
-in `data/clean/twin_state.json`; write `site/data/live.json`. After the demo, save all readings to
-`site/data/probe_log.json` so the public site can replay them.
+For the live demo only, on the laptop. The probe is the robot teammate's own build; its code is not
+changed and not in this repository (owner, 2026-11-12). Over USB serial it prints one line every 2
+seconds, exactly `Temperature: 23.1 °C  |  Moisture: 45%`, or `Temperature: Check wiring  |  Moisture: 45%`
+when the temperature sensor is disconnected. Moisture is already 0-100 %, calibrated on the probe, so it
+is the reading z as it is. `robot/probe.py` parses that format (anything else, or a value out of range, is
+refused and logged); `robot/bridge.py --port <serial port> --section s1` reads the port and writes
+`site/data/live.json` atomically for every good line, and logs every line to `data/probe/<field>/`;
+`robot/fake_probe.py` prints the same lines (to stdout, or a pseudo-terminal the bridge opens like a USB
+port) for tests and rehearsal. Step 10 adds the Kalman update against the twin state
+(`data/clean/twin_state.json`) for `sure`. After the demo, the logged readings become
+`site/data/probe_log.json` so the public site can replay them. The baud rate is the probe's
+`Serial.begin` rate (115200 assumed; TODO-VERIFY with the robot teammate).
 
 ## How judges will see it (requirements this creates)
 
@@ -480,8 +504,9 @@ our side and nothing changeable after submission. Local judges also see the live
   only in the glossary.
 - Pictures before words: baskets for harvest, drops for water, faces plus tick, warning and cross for
   status, fog for "not sure yet". Never colour alone.
-- Nepali first, English one tap away; a speaker button on every text, playing prebuilt MP3s. Months in Nepali
-  are Bikram Sambat first, with the approximate Gregorian months beside them, e.g. बैशाख (Apr–May), and a note
+- Nepali first, English one tap away. Text only: no speaker buttons and no audio (owner, 2026-11-12). Months
+  in Nepali are Bikram Sambat first, with the approximate Gregorian months beside them in Devanagari, e.g.
+  बैशाख (अप्रिल–मे), and a note
   that they don't line up exactly (owner, 2026-11-12).
 - Plain HTML, CSS and JavaScript; Leaflet for the map; SVG tiles for the little field (no heavy 3D
   engine); first screen under 300 KB; designed at 360 px wide; buttons at least 48 px.
@@ -507,15 +532,16 @@ our side and nothing changeable after submission. Local judges also see the live
    source. Built without GPM (2026-11-12): `pipeline/plans/simulate.py`, `scripts/run_replay.py`
    (stops with NOT YET POSSIBLE while rain is missing; `--temporary-station-rain` is a dry run that is
    never exported), `pipeline/export/build_field_json.py` (refuses non-GPM rain, missing years or
-   missing events). Still needed: GPM rain, the per-year event rule (sources being opened), the
-   owner's `current_rotation` (placeholder rice then potato, owner 2026-11-12), and the owner's go on the proposed
-   contract change for the irrigated replay (`CONTRACT_CHANGES.md`).
+   missing events). GPM is complete (9,131 of 9,131 days); the event rules are owner-approved (flood fixed
+   in advance from ETCCDI Rx1day and the decile classes, 2026-11-12); only complete years are exported
+   (2002-2025). Still needed: the owner's `current_rotation` (placeholder rice then potato) and water source
+   (unknown: both cases shown side by side).
 6. **Diary:** GPM fetch (Final, then Late, D1) and onset; HLS/MODIS greenness; bare days; three-way
    season detection including the SI season detective; GRACE groundwater (D7); trends; monthly
    calendar; rotation guess. *Done when* `diary` in the field file is real and the three-method
    comparison is in VALIDATION.md.
-7. **Plans:** generate, simulate, score, select three, explain, tips; SI plain words and voice (drafts,
-   Nepali, audio, all reviewed by a person). *Done when* `plans` is real and every tab has reviewed
+7. **Plans:** generate, simulate, score, select three, explain, tips; SI plain words (drafts and
+   Nepali, all reviewed by a person; no audio). *Done when* `plans` is real and every tab has reviewed
    text.
 7b. **Field memory:** train and test (leave one year out); keep it only if it beats physics alone.
     *Done when* the result, either way, is in VALIDATION.md.
@@ -546,7 +572,8 @@ used) before going public: deleting the file in a new commit is not enough.
 1. Check `.gitignore` one last time.
 2. Commit everything and push to GitHub.
 3. Run `scripts/scan_history.py` (above) and read its report. Only if it is clean: make the repository
-   public and turn on GitHub Pages.
+   public and turn on GitHub Pages (Settings > Pages > Source: **GitHub Actions**; the workflow
+   `.github/workflows/pages.yml` publishes `site/` on every push to `main`, owner review of d34fa93).
 4. Open the live link on a phone that has never opened it, and check that a prepared field loads.
 5. Paste the live link and repository link into the Space Apps project page and submit.
 

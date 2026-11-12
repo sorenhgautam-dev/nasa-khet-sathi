@@ -170,3 +170,27 @@ def test_flag_zeros_on_pixels_without_a_main_value_are_counted(tmp_path):
     card = json.loads(cw.write_set_card(FIELD, "eco_lste", data_dir=tmp_path).read_text())
     assert card["raw_attrs"]["flag_zero_where_main_missing"] == {"QC": 36, "cloud": 36}
     assert "never by QC or cloud == 0" in card["notes"]
+
+
+# --- owner's batch decisions item 25 (rules.yaml ecostress.qc_needs_valid_value) ---
+def test_qc_and_cloud_count_only_where_the_measured_value_is_valid():
+    import numpy as np
+    lst = np.array([[300.0, np.nan], [250.0, 0.0]])
+    qc = np.array([[0, 0], [0, 0]], dtype="uint16")              # 0 = best quality
+    cloud = np.array([[0, 0], [1, 0]], dtype="uint8")            # 0 = clear
+    out_qc, out_cloud = cw.layers_where_valid(lst, qc, cloud, valid_range=(200.0, 400.0))
+    assert out_qc.dtype.kind == "f" and np.isnan(out_qc[0, 1]) and np.isnan(out_qc[1, 1])
+    assert out_qc[0, 0] == 0 and out_cloud[1, 0] == 1 and np.isnan(out_cloud[1, 1])
+
+
+def test_a_missing_value_never_reads_as_best_quality_on_a_cached_v002_window():
+    """A real V002 window whose LST is missing on every pixel: no QC or cloud value survives."""
+    import numpy as np
+    path = cw.REPO / "data/raw/eco_lste/demo/ECOv002_L2T_LSTE_00367_002_45RUL_20180730T100513_0712_01.tif"
+    if not path.exists():
+        pytest.skip("cached ECOSTRESS window not present")
+    import rasterio
+    with rasterio.open(path) as s:
+        lst, qc, cloud = s.read(1), s.read(2), s.read(3)
+    out_qc, out_cloud = cw.layers_where_valid(lst, qc, cloud, valid_range=(150.0, 400.0))
+    assert np.isnan(out_qc).all() and np.isnan(out_cloud).all()

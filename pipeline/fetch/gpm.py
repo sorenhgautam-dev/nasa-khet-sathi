@@ -8,8 +8,9 @@ D1: GPM_3IMERGDF (Final) through its last day in CMR (2025-09-30 on 2026-11-12),
 OPeNDAP subset (the box's 0.1-degree cells) from GES DISC's Hyrax server, cached as netCDF-4 in
 data/raw/gpm/<field>/<product>/ and read with h5py, so reruns resume. Login: ~/.netrc via Earthdata
 Login redirects; the account must have accepted the GES DISC EULA (earthaccess reports
-EulaNotAccepted otherwise). Days: UTC days (00:00-24:00 UTC = 05:45-05:45 Nepal time; TODO-VERIFY in
-the IMERG V07 documentation; each cached file's BeginTime/EndTime attributes are kept in the card).
+EulaNotAccepted otherwise). Days: UTC days (00:00-24:00 UTC = 05:45-05:45 Nepal time;
+IMERG V07 Technical Documentation, 13 July 2023, p. 40: "The time zone for these data sets is Universal
+Coordinated Time"; each cached file's BeginTime/EndTime attributes are kept in the card).
 `precipitation` is a daily mean rate in mm/day, so one day's value is that day's rain in mm.
 Writes data/clean/<field>/gpm.parquet (date, rain_mm in the field's cell, rain_box_mean_mm, product) and
 the card.
@@ -35,7 +36,7 @@ OPENDAP_HOSTS = ["https://gpm1.gesdisc.eosdis.nasa.gov/opendap/",   # GES DISC H
                  "https://gpm2.gesdisc.eosdis.nasa.gov/opendap/"]   # 2026-11-12 while gpm2 served the same paths
 RAIN_RANGE = (0.0, 500.0)      # golden rule 12b (IMERG documents no valid range of its own)
 PRODUCTS = ("final", "late")   # cache folders, in priority order (D1)
-TIME_ZONE = ("UTC days (00:00-24:00 UTC = 05:45-05:45 Nepal time; TODO-VERIFY in the IMERG V07 documentation; "
+TIME_ZONE = ("UTC days (00:00-24:00 UTC = 05:45-05:45 Nepal time; IMERG V07 Technical Documentation (Huffman et al., 13 July 2023) p. 40: 'The time zone for these data sets is Universal Coordinated Time'; verified 2026-11-12; "
              "the files' own BeginTime/EndTime attributes are in raw_attrs.file)")
 
 

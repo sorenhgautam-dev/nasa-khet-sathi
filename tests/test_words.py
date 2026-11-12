@@ -390,9 +390,11 @@ def test_nepali_months_are_bikram_sambat_first_with_the_gregorian_months_beside(
     months = load("screens")["shared"]["months"]
     keys = list(BS_BEGINNING_IN)
     assert list(months) == keys
+    greg = {"Jan": "जनवरी", "Feb": "फेब्रुअरी", "Mar": "मार्च", "Apr": "अप्रिल", "May": "मे", "Jun": "जुन",
+            "Jul": "जुलाई", "Aug": "अगस्ट", "Sep": "सेप्टेम्बर", "Oct": "अक्टोबर", "Nov": "नोभेम्बर", "Dec": "डिसेम्बर"}
     for i, key in enumerate(keys):
-        assert months[key]["ne"] == f"{BS_BEGINNING_IN[key]} ({key}–{keys[(i + 1) % 12]})"
-    assert months["Apr"]["ne"] == "बैशाख (Apr–May)"          # the owner's own example
+        assert months[key]["ne"] == f"{BS_BEGINNING_IN[key]} ({greg[key]}–{greg[keys[(i + 1) % 12]]})"
+    assert months["Apr"]["ne"] == "बैशाख (अप्रिल–मे)"        # owner's batch decisions item 22 (Devanagari)
     assert months["Apr"]["en"] == "April"                     # English stays Gregorian
 
 
@@ -423,3 +425,44 @@ def test_section_temperature_is_worded_as_soil_temperature_from_the_probe():
     node = next(t for t in _screen("each_part")["texts"] if t["id"] == "how_warm")
     assert "soil" in node["en"].lower() and "माटो" in node["ne"]
     assert "probe" in load("fill_registry")["placeholders"]["temp"]["how"]
+
+
+# ---------- owner's decisions, 2026-11-12 ----------
+
+def test_the_site_is_text_only():
+    """Owner, 2026-11-12: no audio. No speaker or listen button, and no text mentions sound files."""
+    for where, node in all_nodes():
+        assert node.get("id") not in ("listen", "speaker", "play_audio"), f"{where}: audio button"
+        assert not re.search(r"\b(listen|mp3|audio|speaker)\b", node["en"], re.I), f"{where}: {node['en']!r}"
+
+
+def test_bs_months_show_gregorian_months_in_devanagari():
+    """Owner's batch decisions item 22: 'बैशाख (अप्रिल–मे)' style, no Latin letters in the Nepali."""
+    months = load("screens")["shared"]["months"]
+    assert months["Apr"]["ne"] == "बैशाख (अप्रिल–मे)"
+    for k, n in months.items():
+        assert not re.search(r"[A-Za-z]", n["ne"]), f"{k}: Latin letters in {n['ne']!r}"
+
+
+def test_both_water_cases_are_labelled_side_by_side():
+    """Owner's batch decisions item 8: 'if you can water' and 'if you can't'."""
+    sc = next(s for s in load("screens")["screens"] if s["id"] == "last_years")
+    items = sc["labels"]["water_case"]["items"]
+    assert items["rain_fed"]["en"] == "If you can't water" and items["irrigated"]["en"] == "If you can water"
+    assert "field.water_source" in sc["labels"]["water_case"]["maps_to"]
+
+
+def test_the_flood_glossary_entry_follows_the_decile_rule():
+    term = next(t for t in load("glossary")["terms"] if t["id"] == "flood_year")
+    assert "100 mm" not in term["say"]["en"] and "fifth" in term["say"]["en"]
+    assert "flood_decile_min" in term["basis"]
+
+
+def test_the_rain_caveat_names_the_airport_and_does_not_call_it_the_truth():
+    """Owner, 2026-11-12, rain plan A: keep GPM; say the airport records about a third less; the station is
+    synoptic-derived and may under-record, so it is not the truth either."""
+    lines = {l["id"]: l for l in load("tabs")["tabs"]["unknown"]}
+    assert "a third less" in lines["unk_rain_airport"]["en"]
+    assert "miss" in lines["unk_rain_airport_miss"]["en"]
+    assert all(lines[i]["when"] == ["station_rain_lower"] for i in
+               ("unk_rain_space", "unk_rain_airport", "unk_rain_airport_miss", "unk_rain_which"))

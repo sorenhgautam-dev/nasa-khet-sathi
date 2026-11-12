@@ -3,6 +3,7 @@
   "name": "Bhaktapur demo field (PLACEHOLDER location and rotation) (MOCK data)",
   "lat": 27.690767,
   "lon": 85.441792,
+  "water_source": "unknown",
   "sections": [
    {
     "id": "s1",
@@ -51,7 +52,7 @@
     ],
     "status": "red",
     "wetness": 40,
-    "temp": 18.2,
+    "temp": null,
     "sure": 0.2
    },
    {
@@ -76,7 +77,7 @@
     ],
     "status": "grey",
     "wetness": 45,
-    "temp": 18.3,
+    "temp": null,
     "sure": 0.25
    },
    {
@@ -126,7 +127,7 @@
     ],
     "status": "yellow",
     "wetness": 55,
-    "temp": 18.5,
+    "temp": null,
     "sure": 0.35
    },
    {
@@ -151,7 +152,7 @@
     ],
     "status": "red",
     "wetness": 60,
-    "temp": 18.6,
+    "temp": null,
     "sure": 0.4
    },
    {
@@ -201,7 +202,7 @@
     ],
     "status": "green",
     "wetness": 70,
-    "temp": 18.8,
+    "temp": null,
     "sure": 0.5
    },
    {
@@ -226,7 +227,7 @@
     ],
     "status": "yellow",
     "wetness": 75,
-    "temp": 18.9,
+    "temp": null,
     "sure": 0.55
    },
    {
@@ -276,7 +277,7 @@
     ],
     "status": "grey",
     "wetness": 85,
-    "temp": 19.1,
+    "temp": null,
     "sure": 0.65
    },
    {
@@ -301,7 +302,7 @@
     ],
     "status": "green",
     "wetness": 90,
-    "temp": 19.2,
+    "temp": null,
     "sure": 0.7
    }
   ]

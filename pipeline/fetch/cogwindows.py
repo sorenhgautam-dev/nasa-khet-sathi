@@ -90,6 +90,17 @@ def boundless_fill(nodata):
     return float("nan") if nodata is None or not np.isfinite(nodata) else float(nodata)
 
 
+def layers_where_valid(value, *layers, valid_range):
+    """Each quality layer as float, NaN wherever `value` (ECOSTRESS LST or ESI) is not a valid measurement:
+    NaN, or outside the product's valid_range. A V002 QC or cloud layer reads 0 ('best quality', 'clear') where
+    the value is missing, so it is trusted only beside a valid value (rules.yaml ecostress.qc_needs_valid_value;
+    owner's batch decisions item 25, 2026-11-12; golden rule 12c). Pure."""
+    v = np.asarray(value, dtype="float64")
+    lo, hi = valid_range
+    ok = np.isfinite(v) & (v >= lo) & (v <= hi)
+    return tuple(np.where(ok, np.asarray(layer, dtype="float64"), np.nan) for layer in layers)
+
+
 def read_window(src, window):
     """Boundless read of band 1 as float64; pixels outside the source get boundless_fill(src.nodata), never a
     value that could be read as data. Returns (array, number of outside pixels)."""
@@ -199,10 +210,10 @@ def fetch_set(field, set_name, workers=6, cookie=None, limit=None):
 DOC_UNITS = {
     "NDVI": "unitless NDVI (stored x 10000: scale_factor tag 0.0001)",
     "Fmask": "bit flags (the granule's Fmask description tag)",
-    "LST": "K (ECOSTRESS L2T LSTE; not in the cached tags: TODO-VERIFY in the product user guide)",
-    "QC": "bit flags (not in the cached tags: TODO-VERIFY in the product user guide)",
-    "cloud": "cloud mask flag (not in the cached tags: TODO-VERIFY in the product user guide)",
-    "ESI": "unitless ratio (not in the cached tags: TODO-VERIFY in the product user guide)",
+    "LST": "K (float32, NaN fill; ECOSTRESS Gridded and Tiled User Guide V2 (2023) Table 5; ECOL2 User Guide V3)",
+    "QC": "bit flags (uint16; bits 1&0: 00 produced, 01 produced but degraded, 11 not produced: ECOL2 User Guide V3 Table 6)",
+    "cloud": "cloud mask (uint8; 1 = cloud, 0 = absence; fill 255 in V003: Tiled User Guide V2 sec. 1.3; JET User Guide Table 5)",
+    "ESI": "unitless ratio 0 to 1 (float32, NaN fill: Tiled User Guide V2 Table 11; JET User Guide Table 5)",
 }
 RESOLUTION = {"hls_l30": "30 m", "hls_s30": "30 m", "eco_lste": "70 m", "eco_esi": "70 m"}
 # Golden rule 12b ranges checked on the raw cache (counted as warnings here: QC is not applied yet, so the

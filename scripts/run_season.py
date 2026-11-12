@@ -21,6 +21,7 @@ sys.path.insert(0, str(REPO))
 from pipeline.fetch.cropslib import load_crops  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
+from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.twin import season  # noqa: E402
 from pipeline.twin.crops import sow_date  # noqa: E402
 
@@ -104,7 +105,7 @@ def main(argv=None):
             ("rice", str(sow_date(lib["rice"]["calendar"], a.year).date()))]
     cover, by_cover = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by_cover["bare"], **{c: by_cover[cover[c]] for c, _ in plan}}
-    irrigated = (field.get("water_source") or rules["water_source_unknown"]["treat_as"]) != "rain-only"
+    irrigated = sim.export_case(field.get("water_source")) == "irrigated"   # unknown -> rain-fed (owner, 2026-11-12)
     daily, summary = season.simulate(inputs[["date", "et0_mm", "rain_mm"]], plan, lib, soil, cn,
                                      rules["bare_soil"]["kc"], irrigated)
     n_filled = int(inputs["rain_filled"].sum())

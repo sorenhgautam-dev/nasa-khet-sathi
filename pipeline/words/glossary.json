@@ -389,7 +389,7 @@
     "decile"
    ],
    "ne_block": [],
-   "basis": "rules.yaml events.drought_decile_max (rainfall deciles 1-2; TODO-CONFIRM by the owner)"
+   "basis": "rules.yaml events.drought_decile_max (rainfall deciles 1-2; owner-approved 2026-11-12, owner's batch decisions item 17)"
   },
   {
    "id": "flood_year",
@@ -399,17 +399,18 @@
     "ne_review": "needs native-speaker review"
    },
    "say": {
-    "en": "A crop season with at least one day of 100 mm of rain or more.",
-    "ne": "कम्तीमा एक दिन १०० मिलिमिटर वा बढी पानी परेको बाली मौसम।",
+    "en": "A year whose heaviest rain day was among the heaviest fifth of all years.",
+    "ne": "पाँच वर्षमा एक पटक जति आउने, सबैभन्दा भारी पानी परेको दिन भएको वर्ष।",
     "ne_review": "needs native-speaker review"
    },
    "aliases_en": [
-    "very heavy rain"
+    "very wet day",
+    "Rx1day"
    ],
    "ne_block": [
     "बाढी"
    ],
-   "basis": "rules.yaml events.flood_day_mm (DHM 'very heavy' rain; TODO-CONFIRM by the owner)"
+   "basis": "rules.yaml events.flood_decile_min (owner's batch decisions item 18, 2026-11-12): the year's wettest crop-season day (ETCCDI Rx1day) in deciles 9-10 of the record's years ('much above normal', Gibbs & Maher 1967 classes). Fixed in advance; never tuned on the known floods"
   },
   {
    "id": "soil_probe",

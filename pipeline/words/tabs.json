@@ -308,10 +308,50 @@
     "when": [
      "water_source_unknown"
     ],
-    "en": "We don't know your water, so rain only.",
-    "ne": "पानीको स्रोत थाहा नभएकाले वर्षा मात्र हेरेका छौं।",
+    "en": "Your water is unknown, so we show both.",
+    "ne": "पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं।",
     "ne_review": "needs native-speaker review",
-    "basis": "rules.yaml water_source_unknown"
+    "basis": "rules.yaml water_source_unknown (owner's batch decisions item 8, 2026-11-12: show both cases side by side)"
+   },
+   {
+    "id": "unk_rain_space",
+    "when": [
+     "station_rain_lower"
+    ],
+    "en": "Our rain numbers come from space.",
+    "ne": "हाम्रो वर्षाको नाप अन्तरिक्षबाट आउँछ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "Owner, 2026-11-12, rain plan A: GPM stays the twin's rain; say that the airport station records about a third less, and do not treat the station as the truth (GHCN S-flag 'S', synoptic-derived, may under-record; REVIEW_NOTES H2). data/checks/demo/crosscheck_gpm_ghcn_NP000444540.json: GPM +41.2% against the station over 49 complete months (2015-2022), so the station is 29% lower; the 7a992fe8 scaling check gave x0.66 (34% lower) from 2016. Plan B (Friday): the 4 GPM cells and DHM's published Bhaktapur averages"
+   },
+   {
+    "id": "unk_rain_airport",
+    "when": [
+     "station_rain_lower"
+    ],
+    "en": "The airport measures about a third less rain.",
+    "ne": "विमानस्थलले करिब एक तिहाइ कम वर्षा नाप्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "Owner, 2026-11-12, rain plan A: GPM stays the twin's rain; say that the airport station records about a third less, and do not treat the station as the truth (GHCN S-flag 'S', synoptic-derived, may under-record; REVIEW_NOTES H2). data/checks/demo/crosscheck_gpm_ghcn_NP000444540.json: GPM +41.2% against the station over 49 complete months (2015-2022), so the station is 29% lower; the 7a992fe8 scaling check gave x0.66 (34% lower) from 2016. Plan B (Friday): the 4 GPM cells and DHM's published Bhaktapur averages"
+   },
+   {
+    "id": "unk_rain_airport_miss",
+    "when": [
+     "station_rain_lower"
+    ],
+    "en": "Its record may miss some rain.",
+    "ne": "त्यहाँको नापले केही वर्षा छुटाउन सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "Owner, 2026-11-12, rain plan A: GPM stays the twin's rain; say that the airport station records about a third less, and do not treat the station as the truth (GHCN S-flag 'S', synoptic-derived, may under-record; REVIEW_NOTES H2). data/checks/demo/crosscheck_gpm_ghcn_NP000444540.json: GPM +41.2% against the station over 49 complete months (2015-2022), so the station is 29% lower; the 7a992fe8 scaling check gave x0.66 (34% lower) from 2016. Plan B (Friday): the 4 GPM cells and DHM's published Bhaktapur averages"
+   },
+   {
+    "id": "unk_rain_which",
+    "when": [
+     "station_rain_lower"
+    ],
+    "en": "We don't know which matches your field.",
+    "ne": "कुन तपाईंको खेतसँग मिल्छ, थाहा छैन।",
+    "ne_review": "needs native-speaker review",
+    "basis": "Owner, 2026-11-12, rain plan A: GPM stays the twin's rain; say that the airport station records about a third less, and do not treat the station as the truth (GHCN S-flag 'S', synoptic-derived, may under-record; REVIEW_NOTES H2). data/checks/demo/crosscheck_gpm_ghcn_NP000444540.json: GPM +41.2% against the station over 49 complete months (2015-2022), so the station is 29% lower; the 7a992fe8 scaling check gave x0.66 (34% lower) from 2016. Plan B (Friday): the 4 GPM cells and DHM's published Bhaktapur averages"
    },
    {
     "id": "unk_area_water",

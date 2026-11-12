@@ -1,5 +1,5 @@
 {
- "_about": "Screen texts for the ten screens in CLAUDE.md 'Site rules'. Sentences of eight words or fewer, no science words (those live in glossary.json). {placeholders} are filled by the pipeline (fill_registry.json); 'when' names a condition in fill_registry.json. Every Nepali text was drafted by SI (Claude) on 2026-11-12 and needs native-speaker review before export; each node carries ne_review until a reviewer replaces it with their name and date. Months (owner, 2026-11-12, choice 7): in Nepali each month key is named by the Bikram Sambat month that begins in it, about the middle of the Gregorian month, with the approximate Gregorian months beside it, e.g. 'Apr' = बैशाख (Apr–May). They do not line up exactly (each BS month starts on a slightly different day each year; TODO-VERIFY the start days against a published Nepali calendar), so every screen that names a month carries 'months_note'. English stays Gregorian.",
+ "_about": "Screen texts for the ten screens in CLAUDE.md 'Site rules'. Sentences of eight words or fewer, no science words (those live in glossary.json). {placeholders} are filled by the pipeline (fill_registry.json); 'when' names a condition in fill_registry.json. The site is text only: no audio (owner, 2026-11-12). Every Nepali text was drafted by SI (Claude) on 2026-11-12 and needs native-speaker review before export; each node carries ne_review until a reviewer replaces it with their name and date. Months (owner, 2026-11-12, choice 7): in Nepali each month key is named by the Bikram Sambat month that begins in it, about the middle of the Gregorian month, with the approximate Gregorian months beside it, e.g. 'Apr' = बैशाख (अप्रिल–मे), Gregorian names in Devanagari (owner's batch decisions item 22). They do not line up exactly (each BS month starts on a slightly different day each year; TODO-VERIFY the start days against a published Nepali calendar), so every screen that names a month carries 'months_note'. English stays Gregorian.",
  "screens": [
   {
    "id": "home",
@@ -653,12 +653,12 @@
      "ne_review": "needs native-speaker review"
     },
     {
-     "id": "rain_only_shown",
+     "id": "both_shown",
      "when": [
       "water_source_unknown"
      ],
-     "en": "So we show rain only.",
-     "ne": "त्यसैले वर्षा मात्र देखाएका छौं।",
+     "en": "So we show both, side by side.",
+     "ne": "त्यसैले दुवै छेउछेउमा देखाएका छौं।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -697,17 +697,17 @@
      }
     },
     "water_case": {
-     "about": "The two baskets for each year",
-     "maps_to": "replay.<plan>[].harvest (the field's own water) and replay.<plan>[].irrigated.harvest",
+     "about": "The two baskets for each year, side by side (owner, 2026-11-12)",
+     "maps_to": "rain_fed = replay.<plan>[].harvest and dry_days while field.water_source is 'unknown' or 'rain-only'; irrigated = replay.<plan>[].irrigated. While field.water_source is 'unknown', show both side by side, each with its label (owner's batch decisions item 8, 2026-11-12)",
      "items": {
-      "own": {
-       "en": "Rain only",
-       "ne": "वर्षा मात्र",
+      "rain_fed": {
+       "en": "If you can't water",
+       "ne": "पानी लगाउन नसके",
        "ne_review": "needs native-speaker review"
       },
       "irrigated": {
-       "en": "With extra water",
-       "ne": "थप पानीसहित",
+       "en": "If you can water",
+       "ne": "पानी लगाउन सके",
        "ne_review": "needs native-speaker review"
       }
      }
@@ -1041,12 +1041,6 @@
     "ne_review": "needs native-speaker review"
    },
    {
-    "id": "listen",
-    "en": "Listen",
-    "ne": "सुन्नुहोस्",
-    "ne_review": "needs native-speaker review"
-   },
-   {
     "id": "word_help",
     "en": "What does this word mean?",
     "ne": "यो शब्दको अर्थ के हो?",
@@ -1109,62 +1103,62 @@
   "months": {
    "Jan": {
     "en": "January",
-    "ne": "माघ (Jan–Feb)",
+    "ne": "माघ (जनवरी–फेब्रुअरी)",
     "ne_review": "needs native-speaker review"
    },
    "Feb": {
     "en": "February",
-    "ne": "फागुन (Feb–Mar)",
+    "ne": "फागुन (फेब्रुअरी–मार्च)",
     "ne_review": "needs native-speaker review"
    },
    "Mar": {
     "en": "March",
-    "ne": "चैत (Mar–Apr)",
+    "ne": "चैत (मार्च–अप्रिल)",
     "ne_review": "needs native-speaker review"
    },
    "Apr": {
     "en": "April",
-    "ne": "बैशाख (Apr–May)",
+    "ne": "बैशाख (अप्रिल–मे)",
     "ne_review": "needs native-speaker review"
    },
    "May": {
     "en": "May",
-    "ne": "जेठ (May–Jun)",
+    "ne": "जेठ (मे–जुन)",
     "ne_review": "needs native-speaker review"
    },
    "Jun": {
     "en": "June",
-    "ne": "असार (Jun–Jul)",
+    "ne": "असार (जुन–जुलाई)",
     "ne_review": "needs native-speaker review"
    },
    "Jul": {
     "en": "July",
-    "ne": "साउन (Jul–Aug)",
+    "ne": "साउन (जुलाई–अगस्ट)",
     "ne_review": "needs native-speaker review"
    },
    "Aug": {
     "en": "August",
-    "ne": "भदौ (Aug–Sep)",
+    "ne": "भदौ (अगस्ट–सेप्टेम्बर)",
     "ne_review": "needs native-speaker review"
    },
    "Sep": {
     "en": "September",
-    "ne": "असोज (Sep–Oct)",
+    "ne": "असोज (सेप्टेम्बर–अक्टोबर)",
     "ne_review": "needs native-speaker review"
    },
    "Oct": {
     "en": "October",
-    "ne": "कात्तिक (Oct–Nov)",
+    "ne": "कात्तिक (अक्टोबर–नोभेम्बर)",
     "ne_review": "needs native-speaker review"
    },
    "Nov": {
     "en": "November",
-    "ne": "मंसिर (Nov–Dec)",
+    "ne": "मंसिर (नोभेम्बर–डिसेम्बर)",
     "ne_review": "needs native-speaker review"
    },
    "Dec": {
     "en": "December",
-    "ne": "पुस (Dec–Jan)",
+    "ne": "पुस (डिसेम्बर–जनवरी)",
     "ne_review": "needs native-speaker review"
    }
   },

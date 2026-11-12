@@ -126,6 +126,12 @@ TODO-VERIFY on the FAOSTAT site.
   Bulletin No. 48; decile classes as given by Hayes, M. J., "Drought Indices", National Drought
   Mitigation Center (archived 2009-05-10).
 - WMO and GWP (2016). Handbook of Drought Indicators and Indices, WMO-No. 1173, pp. 11-13.
+- ETCCDI (Expert Team on Climate Change Detection and Indices), "Climate Change Indices: Definitions of the
+  27 core indices", http://etccdi.pacificclimate.org/list_27_indices.shtml (read 2026-11-12 by a web-fetch
+  sub-agent): Rx1day, "Monthly maximum 1-day precipitation", for the flood rule (owner, 2026-11-12); Karl, T. R.,
+  Nicholls, N., Ghazi, A. (1999). CLIVAR/GCOS/WMO workshop on indices and indicators for climate extremes:
+  workshop summary. Climatic Change 42, 3-7. The decile classes (deciles 9-10, "much above normal") are
+  Hayes' table above.
 - WMO (2012). Standardized Precipitation Index User Guide, WMO-No. 1090; McKee, T. B., Doesken, N. J.,
   Kleist, J. (1993). 8th Conference on Applied Climatology (not used: SPI needs a gamma fit; kept as
   the alternative).
@@ -175,7 +181,7 @@ Licences are read from each package's installed metadata.
 | Library | Version | Licence | Used for |
 | --- | --- | --- | --- |
 | numpy | 2.5.4 | BSD-3-Clause (and bundled MIT, 0BSD, Zlib, CC0-1.0) | data guards, ET0 |
-| pandas | 3.1.1 | BSD-3-Clause | tables, review pack |
+| pandas | 2.3.3 | BSD-3-Clause | tables, review pack (pyet 1.5.0 needs pandas<3) |
 | xarray | 2026.9.0 | Apache-2.0 | (from step 6) gridded data |
 | pyarrow | 26.0.1 | Apache-2.0 | parquet |
 | PyYAML | 6.0.3 | MIT | config files |
@@ -189,6 +195,11 @@ Licences are read from each package's installed metadata.
 | rasterio | 1.5.2 (bundles GDAL 3.12.2) | BSD-3-Clause | GeoTIFF / COG windows: WorldCover, NASADEM, HLS, ECOSTRESS (owner's go 2026-11-12) |
 | python-dateutil | 2.9.0.post0 | BSD / Apache-2.0 (dual) | dependency; pinned after earthaccess downgraded it |
 | affine, click | 3.0.1, 8.5.1 | BSD-3-Clause | rasterio dependencies |
+| scikit-learn | 1.9.1 (with scipy 1.18.1, joblib 1.6.0, threadpoolctl 3.8.0) | BSD-3-Clause | step 6 season detective, step 7b field memory (owner's go 2026-11-12) |
+| ruptures | 1.1.10 | BSD-2-Clause | step 6 change-point season detection (owner's go 2026-11-12) |
+| pymannkendall | 1.4.3 | MIT | step 6 trends: Mann-Kendall with Sen's slope (owner's go 2026-11-12) |
+| flask | 3.1.3 (with Werkzeug, Jinja2, itsdangerous, blinker, MarkupSafe) | BSD-3-Clause | step 10, local demo only; not used yet (owner's go 2026-11-12) |
+| pyserial | 3.5 | BSD-3-Clause | step 10: the probe bridge reads the probe's USB serial lines (owner's go 2026-11-12) |
 
 ## SI (AI) use
 
@@ -201,6 +212,8 @@ Licences are read from each package's installed metadata.
 | Claude Opus 5.5 (Anthropic), via Claude Code, with one research sub-agent and one review sub-agent | 2026-11-12 (later) | Step-4 review answers (cold-night roles, assumed Ky, irrigation bug fix, approvals), step 5 without GPM (replay, events, export guard, METHOD_NOTES.md), placeholder field (WorldCover), fetchers for WorldCover, NASADEM, GRACE, AppEEARS, HLS/ECOSTRESS windows and GPM. The research sub-agent opened the event-rule and Ky sources above. The review sub-agent ran the **"silent-failure-hunter" agent prompt from the ECC selection in the team's claude-code-kit** (ECC, MIT licence) over the new code; its 10 findings were verified and the real ones fixed test-first. Details in SI_LOG.md | Owner: to fill in after review |
 | Claude Opus 5.5 (Anthropic), via Claude Code (parallel words session), with one research sub-agent | 2026-11-12 | Build-time drafting of plain-language texts and Nepali translations (`pipeline/words/`: glossary, crop explainers, five-tab templates, tips, screen texts), and a source search for the crop explainers (FAO, CGIAR centres, NARC; sources listed above). Nothing calls an AI service from the site. Details in SI_LOG.md | Owner: English and the listed choices (decided 2026-11-12); Nepali: native-speaker review pending |
 | Claude Opus 5.5 (Anthropic), via Claude Code, with one audit, three fix and one research sub-agent | 2026-11-12 (late night) | REVIEW_NOTES fixes (H1-H4, M1-M13, L1-L7: code, tests, rules.yaml and docs), the owner's words decisions (Bikram Sambat months, soil temperature), the Nepali tabs/tips contract change, reruns of the dry run, season test, pixel check and cleaned tables from cache. The research sub-agent opened FAO/IIASA/ISRIC pages on HWSD v2 (licence and access; not used). Details in SI_LOG.md | Owner: to fill in after review |
+| Claude Opus 5.5 (Anthropic), via Claude Code (session 7a992fe8), with one web-fetch and two research sub-agents | 2026-11-12 (evening) | Owner review of d34fa93: pandas pin and fresh-install check, README.md, LICENSE (MIT), GitHub Pages workflow, FAO-56 Kc climate adjustment (eqs. 62, 63, 65) with tests from Example 27 and Box 15, REVIEW_NOTES status table, TODO-CONFIRM batch and TODO-VERIFY triage, rain sensitivity, event plan. The web-fetch sub-agent read FAO-56 Chapters 6 and 7 on fao.org; the research sub-agents read the repository and opened primary sources for the TODO-VERIFY items. Details in SI_LOG.md | Owner: to fill in after review |
+| Claude Opus 5.5 (Anthropic), via Claude Code (session 2f8edafe), with one web-fetch sub-agent | 2026-11-12 (Thursday evening) | The owner's batch decisions: flood rule fixed in advance (ETCCDI Rx1day, deciles 9-10), approvals in rules.yaml and the docs, complete-years export, rotation stop, both water cases, nullable soil temperature, sowing position, ECOSTRESS QC mask, five libraries pinned, rule 2 and audio removal in CLAUDE.md, word changes (months, labels, rain caveat, flood entry), probe bridge and fake probe; tests first. Earlier the same day: Nepali frost spelling, review-mark check, PREVIEW status lines. Details in SI_LOG.md | Owner review pending; Nepali needs native-speaker review |
 | Claude Code kit (team-prepared zip, 2026-11-07): superpowers plugin (MIT, already installed: its test-driven-development skill guided the work) and an ECC selection (MIT) | 2026-11-12 | Workflow guidance and one review prompt (above). The ECC skills and agents were **not installed** into `~/.claude` (blocked as a self-modification; the owner can copy them) | Owner |
 
 ## Data fetched by the pipeline

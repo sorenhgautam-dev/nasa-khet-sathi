@@ -37,7 +37,7 @@ def _sections(rows=3, cols=4):
                 "polygon": [[round(x, 6), round(y, 6)] for x, y in corners],
                 "status": statuses[k % 4],
                 "wetness": 30 + 5 * k,
-                "temp": round(18.0 + 0.1 * k, 1),
+                "temp": round(18.0 + 0.1 * k, 1) if k % 3 == 1 else None,   # null: the probe has not read it
                 "sure": round(0.1 + 0.05 * k, 2),
             })
     return out
@@ -92,7 +92,8 @@ def _replay(offset):
 def build_field():
     plans = _plans()
     return {
-        "field": {"name": f"{_CFG['name']} (MOCK data)", "lat": LAT, "lon": LON, "sections": _sections()},
+        "field": {"name": f"{_CFG['name']} (MOCK data)", "lat": LAT, "lon": LON,
+                  "water_source": _CFG.get("water_source") or "unknown", "sections": _sections()},
         "diary": {"shift_days": 12, "bare_days": 110, "guess": ["rice", "wheat"],
                   "groundwater": {"trend_cm_per_year": -1.2, "direction": "falling", "confidence": 0.7},
                   "months": _months()},

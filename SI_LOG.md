@@ -307,3 +307,83 @@ stayed read-only; it later committed and pushed `68de7c3` on the owner's word in
 - 2026-11-12 14:04: commit `94be2f4` (11 files: `ghcn.py`, `appeears.py` and their tests, plus this session's doc and rules.yaml edits) pushed to private `github.com/sorenhgautam-dev/data-test-game`, branch `main`, by the fetch-module sub-agent, which reported that the owner asked it mid-run (654 tests passed, pending diff searched for secrets; `scan_history.py` not run). **Not authorised through this session's chat; the owner to confirm.**
 - 2026-11-12 ~16:05: owner-approved commit `a6b7160` (2 files: DATA_AUDIT GPM outage note, SI_LOG) pushed to private `github.com/sorenhgautam-dev/data-test-game`, branch `main` (CLAUDE.md rule 2 exception; the owner said "commit and push" in this session's chat). 654 tests passed; `scan_history.py` clean (8 commits, 0 hits).
 - 2026-11-12 ~16:10: commit (SI_LOG only: the `a6b7160` line above and this one) pushed to `github.com/sorenhgautam-dev/data-test-game`, branch `main`; the owner said "commit and push" in session 7a992fe8's chat. 654 tests passed; `scan_history.py` clean (9 commits on all refs, 0 hits). **The repository is public, not private:** GitHub records it as public since it was created (2026-11-11 13:27 UTC, a `PublicEvent` at creation; Pages off), so every push so far (`d4d3e49` to `a6b7160`) was public, and the entries above that say "private" are wrong. Asked, the owner chose to keep it public and push (2026-11-12). CLAUDE.md rule 2 still says "private repository": the owner to update it.
+
+## 2026-11-12 (evening): owner review of d34fa93, items 1-11 (Claude Opus 5.5 via Claude Code, session 7a992fe8; one web-fetch and two research sub-agents)
+
+### What SI did
+- **1.** `requirements.txt` pinned pandas 3.1.1, which pyet 1.5.0 forbids (its metadata: `pandas<3.0,>=2.1`); pinned 2.3.3. New test: every pin equals the lock file. A fresh Python 3.12 venv installed from `requirements.txt` alone matched `requirements-lock.txt` exactly (pip freeze diff empty) and passed the suite (659 at that moment).
+- **2.** Deleted the stray root file `tmax` (it held only "--- tmin check.", a shell redirect).
+- **3-4.** `README.md` (plain words; a test checks that every command it names exists) and `LICENSE` (MIT, "The Khet Sathi team"; the owner may want names). The README says data and texts keep their own licences.
+- **5.** GitHub Actions workflow `.github/workflows/pages.yml` publishes `site/` (simpler than moving it to `docs/`); action versions checked against each action's latest GitHub release (checkout v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5). CLAUDE.md layout and final-commit step updated.
+- **6.** FAO-56 Kc climate adjustment (eqs. 62, 63, 65) per season, test-first from FAO-56 Example 27 (maize: Taipei 1.07, Mocha 1.30) and Box 15 (dry bean 1.19; Kc end 0.35 not adjusted); crop heights from Table 12 (`crops.json` `height_m`); `rules.yaml` `kc_climate`. The equation is an image on fao.org; its form was confirmed by the text of Chapter 7's analogues, and the three published results are reproduced. First real replay on GPM rain: rain-fed yearly harvest 74.4 → 74.2%, rice Kc mid 1.20 → about 1.15, potato about 1.16, irrigation 269 → 265 mm/yr, no event changed. Bare-soil surface layer (eqs. 71-74) **not done**; its upper bound is +5 points on potato.
+- **7.** Status table for H1-L7 at the top of REVIEW_NOTES.md: 23 fixed, 1 partly fixed (M7).
+- **8.** TODO-CONFIRM batch: 25 decisions with recommendations (given to the owner in the chat). The flood claim (item 18) was re-checked against the replay: at 200 mm only 2002 and 2024 stay flood years.
+- **9.** TODO-VERIFY triage: 92 lines; 46 change a shown number (a), 18 documentation only (b), 28 not markers. Closed with opened sources: IMERG UTC day, GHCN/GSOD GMT day (was wrongly "not documented"), SMAP L3 quality bit, SoilGrids factors, NASADEM EGM96, ECOSTRESS units/QC/cloud/ESI, NEX-GDDP units and wind height. Still open: crop Ky and buckwheat/mustard values (no published source found), POWER flags, IMERG `precipitation_cnt_cond`, ECOSTRESS time stamps, NEX-GDDP calendars, several known events.
+- **10.** GPM is complete (9,131 of 9,131 days). Sensitivity, not applied: GPM rain scaled to the station mean (x0.66) gives flood years 10 → 3 and potato 46.3 → 37.9% (VALIDATION 3.9).
+
+### Please review (owner)
+- The TODO-CONFIRM batch, especially water_source (item 8), flood 100 → 200 mm (item 18) and exporting only complete years 2002-2025 (item 14).
+- The LICENSE holder line, and the README's wording.
+- RHmin from ea capped at e°(Tmin) reads about 56% in the monsoon mid-season, which may be low; if so, the Kc mid reduction for rice is too small (METHOD_NOTES 16).
+- Two verified known events wait for your decision before they enter validation 4.1: the Jure landslide of 2 Aug 2014 (rain-triggered, but outside the valley) and Kathmandu -0.2 C on 12 Jan 2010.
+
+### Backup runs
+- 2026-11-12 17:57 and after this entry: `scripts/backup.sh` (675 tests passed just before). No commit, no push (owner: "Do not push unless I say so").
+
+## 2026-11-12 (Thursday evening): the owner's decisions on the 17:58 report (Claude Opus 5.5 via Claude Code, session 2f8edafe; one web-fetch sub-agent)
+
+The owner's decisions were given in this session's chat (session 7a992fe8, which wrote the report, was told and
+stayed read-only). Batch file used: 7a992fe8's `todo_confirm_batch.md`. Item 4 (Kc) and the TODO-VERIFY closures
+were already in the working tree (7a992fe8) and were not re-applied.
+
+### What SI did
+- **Approved as recommended** (owner: every item except 8, 18 and 22): items 1-3, 5-7, 9-17, 19-21, 23-25. Source texts
+  in `rules.yaml`, METHOD_NOTES, REVIEW_NOTES, DATA_AUDIT and VALIDATION now say "owner's batch decisions, item N";
+  no TODO-CONFIRM is left open in `rules.yaml`, METHOD_NOTES, VALIDATION or DATA_AUDIT.
+- **Code, tests first:**
+  - item 14: `build_field_json.complete_years` exports only years holding every crop of the rotation (2002-2025);
+  - item 16: `simulate.rotation_for`: the placeholder rotation only for fields listed in `rules.yaml`
+    `replay.rotation_unknown_fields` (the demo); any other field without a rotation stops;
+  - item 10: `crops.sow_date(position=start|middle|end)` for step 7's generator;
+  - item 23: section `temp` may be null (schema, mock, tests);
+  - item 25: `cogwindows.layers_where_valid` keeps ECOSTRESS QC and cloud only beside a valid LST or ESI,
+    tested on a cached V002 window;
+  - item 24: `rules.yaml` `probe.repeat_spread_max_pct` = 3.
+- **Item 8 (owner's alternative):** water source stays unknown and both cases are shown side by side.
+  New required contract field `field.water_source` ("unknown" for the demo), set by the export from the replay;
+  `simulate.WATER_CASES["unknown"]` = rain-fed; screen labels "If you can't water" / "If you can water".
+- **Item 18 (owner's alternative):** flood rule fixed in advance from sources, never tuned on the known floods:
+  the year's wettest crop-season day (ETCCDI Rx1day) in deciles 9-10 of the record's years (NDMC classes,
+  Gibbs & Maher 1967). Both sources opened by a web-fetch sub-agent and quoted in `rules.yaml`. Result
+  (VALIDATION 4.1, independent): 2 of 2 valley floods (2002, 2024); 2025 flood-class but shown as drought;
+  2006 and 2020 flagged with no listed flood. The drought half of 4.1 is marked not fully independent (deciles
+  1-2 were preferred partly because they matched more known droughts).
+- **Item 22:** Nepali months "बैशाख (अप्रिल–मे)" (Gregorian names in Devanagari); registry examples and the
+  earlier Latin-style test updated.
+- **Rain plan A:** four "unknown"-tab lines (condition `station_rain_lower`): our rain comes from space; the
+  airport measures about a third less; its record may miss some rain; we do not know which matches the field.
+  `scripts/run_checks.py` rerun: GPM +41.2% against the station over 49 complete months (station 29% lower).
+  B is planned for Friday; C only if B shows GPM reads high.
+- **Audio removed:** the "Listen" button from the word files; CLAUDE.md site rules, SI component 3, layout and
+  build step 7 now say text only. A test fails if an audio button or sound-file text comes back.
+- **CLAUDE.md rule 2:** the repository is public by the owner's choice (2026-11-12); push only when the owner says
+  so; `scripts/scan_history.py` before every push. Also: approved libraries (rule 9), contract text, probe bridge,
+  rain plan, step 5 status.
+- **Libraries:** scikit-learn 1.9.1, ruptures 1.1.10, pymannkendall 1.4.3, flask 3.1.3, pyserial 3.5, installed
+  with every existing version held (constraint: the old lock file), pinned, lock file refreshed, CREDITS updated.
+- **Probe:** `robot/probe.py` parses exactly the owner's line format ("Check wiring" gives temp null; out-of-range
+  values and partial or boot lines refused), `robot/bridge.py` reads the serial port (or stdin) and writes
+  `site/data/live.json` atomically with `sure` null until step 10, logging every line; `robot/fake_probe.py` prints
+  the same lines to stdout or a pseudo-terminal. 27 tests, including an end-to-end run through a pseudo-terminal.
+- **Replay rerun** with the new rules (`data/checks/demo/replay.json`); mock `demo.json` regenerated for the
+  schema change; `CONTRACT_CHANGES.md` entry for the UI teammate.
+
+### Owner decisions recorded
+- The `94be2f4` push by the fetch sub-agent: **confirmed by the owner** (2026-11-12).
+- The Nepali reviewer's name comes when the review is done; every text keeps "needs native-speaker review" until then.
+
+### Please review (owner)
+1. **Flood years 2006 and 2020** have no listed flood; 2006 is a listed national drought year. The rule is relative
+   (about one year in five), like the drought rule.
+2. **The baud rate** (115200 assumed): the probe's `Serial.begin` rate, from the robot teammate.
+3. **"About a third less"** is 29% over 2015-2022's complete months (34% from 2016 in the 7a992fe8 check).

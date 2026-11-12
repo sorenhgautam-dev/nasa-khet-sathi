@@ -11,17 +11,23 @@ Simulate). Pure functions; file I/O lives in scripts/run_replay.py.
   (twin/season.py, REVIEW_NOTES H1). irrigation_mm includes the paddy's pond water; pond_supply_mm is that part.
 - Ky sensitivity (owner, step-4 review item 4): crops whose Ky is assumed are re-scored with other Ky
   values from the same seasonal ETa and ETc; nothing else changes, so no rerun is needed.
+- Kc climate adjustment (REVIEW_NOTES M7): with kc_climate=True, u2 is the weather table's ws2m_ms (POWER
+  WS2M, wind at 2 m) and RHmin is FAO-56 eq. 63 from ea_kpa and tmax_c (crops.rhmin_pct); twin/season.py adjusts
+  each season's Kc mid and Kc end (FAO-56 eqs. 62 and 65).
 - Event indicator per season (wettest day) is reported for the event rule. Frost is not a replay event
   (owner, 2026-11-12, REVIEW_NOTES M1), so no frost indicator is carried.
 """
 import pandas as pd
 
 from pipeline.twin import season
-from pipeline.twin.crops import require_simulatable, season_length, sow_date
+from pipeline.twin.crops import require_simulatable, rhmin_pct, season_length, sow_date
 from pipeline.twin.yield_ import harvest_pct
 
 
-WATER_CASES = {"rain-only": "rain-fed", "canal": "irrigated", "well": "irrigated", "irrigated": "irrigated"}
+WATER_CASES = {"unknown": "rain-fed", "rain-only": "rain-fed", "canal": "irrigated", "well": "irrigated",
+               "irrigated": "irrigated"}
+# "unknown" (owner's batch decisions item 8, 2026-11-12): the export's own case is rain-fed ("if you can't
+# water") and the irrigated case sits beside it ("if you can water"); both are always written.
 
 
 class NoSeasonError(ValueError):
@@ -29,10 +35,25 @@ class NoSeasonError(ValueError):
 
 
 def export_case(water_source):
-    """The field's water source (config/fields/<id>.yaml) -> the replay case it exports."""
+    """The field's water source (config/fields/<id>.yaml; null = "unknown") -> the replay case it exports."""
+    water_source = "unknown" if water_source is None else water_source
     if water_source not in WATER_CASES:
         raise ValueError(f"water_source '{water_source}' is not one of {sorted(WATER_CASES)}")
     return WATER_CASES[water_source]
+
+
+def rotation_for(field, rules):
+    """(rotation, label). A field's own current_rotation, or, for the fields rules.yaml names
+    (replay.rotation_unknown_fields: the demo only), the labelled placeholder rotation. Any other field with no
+    rotation stops (owner's batch decisions item 16, 2026-11-12; golden rule 12c)."""
+    rot = field.get("current_rotation")
+    if rot:
+        return list(rot), field.get("current_rotation_source", "field config")
+    if field["id"] in rules["replay"]["rotation_unknown_fields"]:
+        return (list(rules["replay"]["rotation_unknown"]),
+                "PLACEHOLDER (current_rotation is null): rules.yaml replay.rotation_unknown")
+    raise ValueError(f"field '{field['id']}' has no current_rotation: set it in config/fields/{field['id']}.yaml "
+                     "(the placeholder rotation is for the demo field only)")
 
 
 def rain_record_problems(weather):
@@ -116,11 +137,19 @@ def ky_sensitivity(seasons, lib, values):
     return res
 
 
-def replay(weather, rotation, lib, soil, cn, bare_kc, irrigated):
-    """weather: date, et0_mm, rain_mm, one row per day, no gaps (other columns are ignored)."""
+def replay(weather, rotation, lib, soil, cn, bare_kc, irrigated, kc_climate=False):
+    """weather: date, et0_mm, rain_mm, one row per day, no gaps; with kc_climate also ws2m_ms, ea_kpa and
+    tmax_c (other columns are ignored)."""
     w = weather.reset_index(drop=True)
     plan = rotation_plan(rotation, lib, w["date"].min(), w["date"].max())
-    daily, summary = season.simulate(w[["date", "et0_mm", "rain_mm"]], plan, lib, soil, cn, bare_kc, irrigated)
+    cols = ["date", "et0_mm", "rain_mm"]
+    if kc_climate:
+        lacking = [c for c in ("ws2m_ms", "ea_kpa", "tmax_c") if c not in w]
+        if lacking:
+            raise ValueError(f"kc_climate needs the weather table's ws2m_ms, ea_kpa and tmax_c; missing: {lacking}")
+        w = w.assign(u2_ms=w["ws2m_ms"], rhmin_pct=rhmin_pct(w["ea_kpa"], w["tmax_c"]))
+        cols += ["u2_ms", "rhmin_pct"]
+    daily, summary = season.simulate(w[cols], plan, lib, soil, cn, bare_kc, irrigated, kc_climate=kc_climate)
     idx = w.set_index("date")
     seasons = []
     for s in summary["seasons"]:
@@ -128,5 +157,5 @@ def replay(weather, rotation, lib, soil, cn, bare_kc, irrigated):
         seasons.append({**s, "year": pd.Timestamp(s["end"]).year, "rain_max_day_mm": float(win["rain_mm"].max())})
     years = yearly(seasons)
     partial = {str(y["year"]): y["crops"] for y in years if sorted(y["crops"]) != sorted(rotation)}
-    return {"plan": plan, "irrigated": bool(irrigated), "seasons": seasons, "years": years,
+    return {"plan": plan, "irrigated": bool(irrigated), "kc_climate": bool(kc_climate), "seasons": seasons, "years": years,
             "partial_years": partial, "segments": summary["segments"], "daily": daily}

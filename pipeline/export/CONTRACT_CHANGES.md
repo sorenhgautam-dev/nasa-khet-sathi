@@ -3,6 +3,22 @@
 `schema.json` is the full truth. `site/data/fields/demo.json` is regenerated after every change and
 still holds **MOCK numbers**; real numbers arrive from build step 5 on.
 
+## 2026-11-12 (Thursday evening): water source, soil temperature may be null, complete years, APPLIED (owner's batch decisions)
+
+`demo.json` (still MOCK) carries the new keys. All values are owner decisions of 2026-11-12.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `field.water_source` | did not exist | **required**: `unknown`, `rain-only`, `canal`, `well` or `irrigated` (the demo: `unknown`) | While it is `unknown`, show the two baskets **side by side**, labelled **"If you can't water"** (`harvest`, `dry_days`) and **"If you can water"** (`irrigated.harvest`, `irrigated.dry_days`). Labels: `pipeline/words/screens.json`, screen `last_years`, `labels.water_case` (`rain_fed`, `irrigated`), in Nepali and English |
+| `field.sections[].temp` | a number | a number **or `null`** (still required): soil temperature from the probe, `null` until the probe has read that section | Show "not sure yet" (fog) for `null`; never show 0 |
+| `replay.<plan>[]` years | 2001-2025 | **complete years only**: years holding every crop of the rotation. For rice then potato that is **2002-2025** (24 years); 2001 had rice only and would look like the best year | Read the years from the file (`{year_count}` on screen 7); do not assume 25 |
+| `replay.<plan>[].event` | flood = a day of 100 mm or more (10 of 25 years) | same values (`none`, `drought`, `flood`); flood now = the year's wettest crop-season day in the heaviest fifth of the record's years, a rule fixed in advance (about one year in five) | Nothing |
+| `site/data/live.json` (not in the schema) | `sure` a number | `wetness` = the probe's own 0-100 % moisture; `temp` = soil temperature, `null` when the probe says "Check wiring"; `sure` is `null` until the step-10 Kalman update | Show fog while `sure` is `null`; show "check the probe" when `temp` is `null` |
+
+The site is **text only**: the shared "Listen" button is gone from the word files, and no MP3s will be
+made (owner, 2026-11-12). Nepali month names now carry the Gregorian months in Devanagari, e.g.
+बैशाख (अप्रिल–मे).
+
 ## 2026-11-12 (late night): Nepali tabs and tips, no frost event, APPLIED (owner's go)
 
 The site is Nepali first, so every plan now carries Nepali text beside the English. Frost is no longer a
@@ -22,9 +38,8 @@ itself. The Nepali needs native-speaker review before submission (`pipeline/word
 **Meaning clarified, no shape change:** `field.sections[].temp` is **soil temperature from the probe**
 (owner, 2026-11-12), not air temperature. The screen text is now "How warm the soil is: {temp} degrees."
 
-**Open question for the owner (not applied):** until the probe has read a section, nothing supplies that
-section's soil temperature. Option: let `temp` be `null` for a section with no reading, and the UI shows
-"not sure yet". Today `temp` must be a number, so the mock's values are made up.
+**Answered 2026-11-12 (owner's batch decisions item 23):** `temp` may be `null` for a section the probe has not
+read; see the Thursday-evening entry above.
 
 ## 2026-11-12 (night): the demo field moved again (values only, no schema change)
 

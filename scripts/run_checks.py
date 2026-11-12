@@ -115,7 +115,8 @@ def crosscheck_station(field, power, st, name, other="power"):
         "rain_full_years": full_years,
         "jan_tmin_c_same_days": jan, "may_jun_tmax_c_same_days": summer,
         "day_boundaries": ("POWER = local solar day" if other == "power" else "GPM = UTC day (05:45 to 05:45 Nepal time)")
-                          + "; station = observation day (TODO-VERIFY); compare monthly to soften this",
+                          + "; station = GSOD GMT day (05:45 to 05:45 Nepal time; rain may include part of the previous day); "
+                          "compare monthly to soften this",
     }
     out = REPO / "data" / "checks" / field / f"crosscheck_{other}_{name}.json"
     out.write_text(json.dumps(res, indent=1, default=str) + "\n")

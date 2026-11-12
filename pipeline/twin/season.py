@@ -13,6 +13,11 @@ it). A RAIN-FED paddy gets no water from outside: it is not ponded and runs as t
 rice's Zr and p, so a weak or broken monsoon shows as stress. Each segment's balance counts irrigation_mm
 once (pond_supply_mm is inside it).
 
+Kc climate adjustment (REVIEW_NOTES M7, owner review of d34fa93): with kc_climate=True each crop season's
+Kc mid and Kc end are adjusted for that season's own climate (FAO-56 eqs. 62 and 65, crops.season_kc), from the
+weather columns u2_ms and rhmin_pct averaged over the mid-season and late-season days; the season record keeps
+the Kc values used and the stage means. Bare soil keeps bare_kc.
+
 Irrigated fields: other crops are refilled whenever Dr passes RAW (soil_water.run_bucket); bare soil is
 never irrigated. Crops with no published seasonal Ky use the owner-assumed 1.0, labelled "assumed".
 
@@ -25,7 +30,7 @@ import numpy as np
 import pandas as pd
 
 from pipeline.twin import soil_water as sw
-from pipeline.twin.crops import kc_curve, require_simulatable, season_length
+from pipeline.twin.crops import kc_curve, require_simulatable, season_kc, season_length
 from pipeline.twin.yield_ import harvest_pct
 
 
@@ -39,6 +44,16 @@ def check_daily_inputs(weather):
         if bad.any():
             raise ValueError(f"{col} is missing or not finite on {int(bad.sum())} day(s), "
                              f"first {d[bad.argmax()].date()}")
+
+
+def check_climate_inputs(weather):
+    """Kc climate adjustment needs daily u2_ms and rhmin_pct on every day; fail loudly otherwise."""
+    for col in ("u2_ms", "rhmin_pct"):
+        if col not in weather:
+            raise ValueError(f"kc_climate needs a daily {col} column in the weather table")
+        bad = ~np.isfinite(weather[col].to_numpy(dtype=float))
+        if bad.any():
+            raise ValueError(f"{col} is missing or not finite on {int(bad.sum())} day(s)")
 
 
 def carry_over(dr_mm, taw_from, taw_to):
@@ -64,10 +79,13 @@ def _segments(dates, plan, lib):
     return segs
 
 
-def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated):
-    """weather: date, et0_mm, rain_mm (one row per day). plan: [(crop, 'YYYY-MM-DD'), ...] in date order."""
+def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False):
+    """weather: date, et0_mm, rain_mm (one row per day), plus u2_ms and rhmin_pct when kc_climate is True.
+    plan: [(crop, 'YYYY-MM-DD'), ...] in date order."""
     weather = weather.reset_index(drop=True)
     check_daily_inputs(weather)
+    if kc_climate:
+        check_climate_inputs(weather)
     require_simulatable(lib, [c for c, _ in plan])
     segs = _segments(weather["date"], plan, lib)
     crops_in_plan = [c for c, _ in plan]
@@ -81,7 +99,16 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated):
         if taw_prev is not None:
             dr = carry_over(dr, taw_prev, taw)
         seg = weather.iloc[a:b].copy()
-        seg["kc"] = kc_curve(lib[crop]["stages_days"], lib[crop]["kc"])[: b - a] if crop else bare_kc
+        kc_used = None
+        if crop:
+            st = lib[crop]["stages_days"]
+            kc_used = (season_kc(lib[crop]["kc"], st, lib[crop]["height_m"], seg["u2_ms"].to_numpy(),
+                                 seg["rhmin_pct"].to_numpy()) if kc_climate
+                       else {**lib[crop]["kc"], "u2_mid_ms": None, "rhmin_mid_pct": None,
+                             "u2_late_ms": None, "rhmin_late_pct": None})
+            seg["kc"] = kc_curve(st, kc_used)[: b - a]
+        else:
+            seg["kc"] = bare_kc
         paddy = bool(crop and lib[crop].get("paddy"))
         ponded = np.ones(b - a, dtype=bool) if (paddy and irrigated) else None   # rain-fed paddy: plain bucket
         irrigate = bool(irrigated and crop)                                      # bare soil: never
@@ -117,7 +144,9 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated):
                 "deep_percolation_mm": float(out["dp_mm"].sum()), "pond_supply_mm": float(out["pond_supply_mm"].sum()),
                 "irrigation_mm": float(out["irrigation_mm"].sum()), "taw_mm": round(taw, 1), "zr_m": zr,
                 "complete": complete, "harvest_pct": harvest_pct(eta, etc, ky) if complete else None,
-                "ky": ky, "ky_assumed": bool(lib[crop].get("ky_assumed")), "harvest_note": note})
+                "ky": ky, "ky_assumed": bool(lib[crop].get("ky_assumed")), "harvest_note": note,
+                "kc_climate_adjusted": bool(kc_climate), "kc_mid_used": kc_used["mid"], "kc_end_used": kc_used["end"],
+                **{k: kc_used[k] for k in ("u2_mid_ms", "rhmin_mid_pct", "u2_late_ms", "rhmin_late_pct")}})
             if crops_in_plan.count(crop) == 1:
                 summary[crop] = seasons[-1]
         dr, taw_prev = out["dr_mm"].iloc[-1], taw

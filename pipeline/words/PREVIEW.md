@@ -2,8 +2,8 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 171 texts): needs native-speaker review.
-- The five tabs and the tips (screen 8) (tabs.json, 46 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 170 texts): needs native-speaker review.
+- The five tabs and the tips (screen 8) (tabs.json, 50 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
 
@@ -157,16 +157,16 @@ This page is made from the word files in this folder; change those, not this pag
 | The crop was thirsty on {dry_days} days. | {dry_days} दिन बाली तिर्खायो। |
 | With water when needed, it looks like this. | चाहिएको बेला पानी दिँदा यस्तो हुन्थ्यो। |
 | We don't know your water yet. *(if we do not know the field's water)* | हामीलाई तपाईंको पानीको स्रोत थाहा छैन। |
-| So we show rain only. *(if we do not know the field's water)* | त्यसैले वर्षा मात्र देखाएका छौं। |
+| So we show both, side by side. *(if we do not know the field's water)* | त्यसैले दुवै छेउछेउमा देखाएका छौं। |
 | Play | चलाउनुहोस् |
 | Pause | रोक्नुहोस् |
 | *What happened that year* | |
 | A normal year | सामान्य वर्ष |
 | A very dry year | खडेरी परेको वर्ष |
 | Too much rain in one day | एकै दिन धेरै ठूलो पानी |
-| *The two baskets for each year* | |
-| Rain only | वर्षा मात्र |
-| With extra water | थप पानीसहित |
+| *The two baskets for each year, side by side (owner, 2026-11-12)* | |
+| If you can't water | पानी लगाउन नसके |
+| If you can water | पानी लगाउन सके |
 
 ### 8. What should I grow? / म के लगाऊँ?
 
@@ -260,7 +260,11 @@ This page is made from the word files in this folder; change those, not this pag
 | We guessed how thirst hurts {assumed_crop}. *(if a crop's harvest loss from thirst is our assumption)* | {assumed_crop}मा तिर्खाको असर हाम्रो अनुमान हो। |
 | We assumed rice stands in water. *(if the plan has paddy rice)* | धान पानीमा डुबेको मानेका छौं। |
 | Without extra water, ten dry days end that. *(if the plan has paddy rice)* | थप पानी नभए, दस सुक्खा दिनमा त्यो सकिन्छ। |
-| We don't know your water, so rain only. *(if we do not know the field's water)* | पानीको स्रोत थाहा नभएकाले वर्षा मात्र हेरेका छौं। |
+| Your water is unknown, so we show both. *(if we do not know the field's water)* | पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। |
+| Our rain numbers come from space. *(if the nearby station records about a third less rain than the satellite)* | हाम्रो वर्षाको नाप अन्तरिक्षबाट आउँछ। |
+| The airport measures about a third less rain. *(if the nearby station records about a third less rain than the satellite)* | विमानस्थलले करिब एक तिहाइ कम वर्षा नाप्छ। |
+| Its record may miss some rain. *(if the nearby station records about a third less rain than the satellite)* | त्यहाँको नापले केही वर्षा छुटाउन सक्छ। |
+| We don't know which matches your field. *(if the nearby station records about a third less rain than the satellite)* | कुन तपाईंको खेतसँग मिल्छ, थाहा छैन। |
 | Stored water is measured for a wide area. | जम्मा पानी ठूलो क्षेत्रको नापिएको हो। |
 | It is not your own well. | यो तपाईंको आफ्नै इनार होइन। |
 | We may count too many freezing nights. *(if some months have freezing nights)* | हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। |
@@ -334,7 +338,6 @@ This page is made from the word files in this folder; change those, not this pag
 | *Buttons* | |
 | Next | अगाडि |
 | Back | पछाडि |
-| Listen | सुन्नुहोस् |
 | What does this word mean? | यो शब्दको अर्थ के हो? |
 | Not sure yet | अझै पक्का छैन |
 | *Crop names* | |
@@ -348,18 +351,18 @@ This page is made from the word files in this folder; change those, not this pag
 | finger millet | कोदो |
 | no crop | खाली खेत |
 | *Months* | |
-| January | माघ (Jan–Feb) |
-| February | फागुन (Feb–Mar) |
-| March | चैत (Mar–Apr) |
-| April | बैशाख (Apr–May) |
-| May | जेठ (May–Jun) |
-| June | असार (Jun–Jul) |
-| July | साउन (Jul–Aug) |
-| August | भदौ (Aug–Sep) |
-| September | असोज (Sep–Oct) |
-| October | कात्तिक (Oct–Nov) |
-| November | मंसिर (Nov–Dec) |
-| December | पुस (Dec–Jan) |
+| January | माघ (जनवरी–फेब्रुअरी) |
+| February | फागुन (फेब्रुअरी–मार्च) |
+| March | चैत (मार्च–अप्रिल) |
+| April | बैशाख (अप्रिल–मे) |
+| May | जेठ (मे–जुन) |
+| June | असार (जुन–जुलाई) |
+| July | साउन (जुलाई–अगस्ट) |
+| August | भदौ (अगस्ट–सेप्टेम्बर) |
+| September | असोज (सेप्टेम्बर–अक्टोबर) |
+| October | कात्तिक (अक्टोबर–नोभेम्बर) |
+| November | मंसिर (नोभेम्बर–डिसेम्बर) |
+| December | पुस (डिसेम्बर–जनवरी) |
 | *Where a number comes from* | |
 | seen from space | अन्तरिक्षबाट देखिएको |
 | worked out by computer | कम्प्युटरले निकालेको |
@@ -395,7 +398,7 @@ Science words appear only here, never on the screens.
 | **water stress**: Days when the soil is too dry for the crop to drink freely. | **पानीको कमी**: माटो यति सुक्खा हुन्छ कि बालीले सजिलै पानी खान नसक्ने दिनहरू। |
 | **irrigation**: Water brought to the field by canal, well or pipe, as well as rain. | **सिँचाइ**: वर्षाबाहेक कुलो, इनार वा पाइपबाट खेतमा ल्याइएको पानी। |
 | **drought year**: A crop season whose rain was among the lowest fifth of all seasons since 2001. | **खडेरी वर्ष**: सन् २००१ यताका सबैभन्दा सुक्खा पाँचौं भागमा पर्ने बाली मौसम। |
-| **flood year**: A crop season with at least one day of 100 mm of rain or more. | **बाढी वर्ष**: कम्तीमा एक दिन १०० मिलिमिटर वा बढी पानी परेको बाली मौसम। |
+| **flood year**: A year whose heaviest rain day was among the heaviest fifth of all years. | **बाढी वर्ष**: पाँच वर्षमा एक पटक जति आउने, सबैभन्दा भारी पानी परेको दिन भएको वर्ष। |
 | **soil probe**: A small stick pushed into the soil that measures how wet and warm it is. | **माटो जाँच्ने यन्त्र (प्रोब)**: माटो कति ओसिलो र तातो छ भनेर नाप्न माटोमा गाडिने सानो यन्त्र। |
 | **uncertainty**: How far a number could be from the truth; on screen, fog shows it. | **अनिश्चितता**: कुनै अङ्क साँचोभन्दा कति फरक हुन सक्छ; स्क्रिनमा कुहिरोले यो देखाउँछ। |
 | **regional water storage**: All water held across a wide area, seen by satellites; not your own well. | **क्षेत्रीय जल भण्डार**: भू-उपग्रहले नापेको ठूलो क्षेत्रभरिको सबै पानी; तपाईंको आफ्नै इनार होइन। |

@@ -108,4 +108,6 @@ def test_the_card_counts_source_flags_and_quotes_the_readme_caveat(tmp_path):
     assert card["quality_flags_used"]["source_flags"] == {"PRCP": {"S": 3}, "TMAX": {"S": 2}, "TMIN": {"S": 1}}
     assert CAVEAT in card["notes"]
     assert "TODO-VERIFY" in card["pixel_count"] and "7 km" not in card["pixel_count"]
-    assert "TODO-VERIFY" in card["time_zone"] and "not that the day boundaries match" in card["time_zone"]
+    assert "not that the day boundaries match" in card["time_zone"]
+    assert "TODO-VERIFY" not in card["time_zone"] and "0000Z - 2359Z" in card["time_zone"]   # GSOD readme, verified 2026-11-12
+    assert "may include latter part of previous day" in card["time_zone"]
