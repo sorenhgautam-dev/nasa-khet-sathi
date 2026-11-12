@@ -549,252 +549,242 @@
  "replay": {
   "current": [
    {
-    "year": 2001,
-    "harvest": 67,
-    "dry_days": 3,
-    "event": "none",
-    "irrigated": {
-     "harvest": 92,
-     "dry_days": 3
-    }
-   },
-   {
     "year": 2002,
-    "harvest": 74,
-    "dry_days": 6,
-    "event": "none",
+    "harvest": 75,
+    "dry_days": 89,
+    "event": "flood",
     "irrigated": {
-     "harvest": 89,
-     "dry_days": 1
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2003,
-    "harvest": 81,
-    "dry_days": 9,
+    "harvest": 72,
+    "dry_days": 90,
     "event": "none",
     "irrigated": {
-     "harvest": 86,
-     "dry_days": 4
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2004,
-    "harvest": 63,
-    "dry_days": 12,
+    "harvest": 75,
+    "dry_days": 85,
     "event": "none",
     "irrigated": {
-     "harvest": 93,
-     "dry_days": 2
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2005,
-    "harvest": 70,
-    "dry_days": 15,
-    "event": "none",
+    "harvest": 82,
+    "dry_days": 72,
+    "event": "drought",
     "irrigated": {
-     "harvest": 90,
+     "harvest": 100,
      "dry_days": 0
     }
    },
    {
     "year": 2006,
-    "harvest": 57,
-    "dry_days": 18,
-    "event": "drought",
+    "harvest": 71,
+    "dry_days": 72,
+    "event": "flood",
     "irrigated": {
-     "harvest": 87,
-     "dry_days": 3
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2007,
-    "harvest": 84,
-    "dry_days": 21,
+    "harvest": 78,
+    "dry_days": 71,
     "event": "none",
     "irrigated": {
-     "harvest": 94,
-     "dry_days": 1
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2008,
-    "harvest": 66,
-    "dry_days": 24,
+    "harvest": 73,
+    "dry_days": 73,
     "event": "none",
     "irrigated": {
-     "harvest": 91,
-     "dry_days": 4
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2009,
-    "harvest": 53,
-    "dry_days": 27,
+    "harvest": 69,
+    "dry_days": 82,
     "event": "drought",
     "irrigated": {
-     "harvest": 88,
-     "dry_days": 2
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2010,
-    "harvest": 80,
-    "dry_days": 0,
-    "event": "none",
+    "harvest": 66,
+    "dry_days": 91,
+    "event": "drought",
     "irrigated": {
-     "harvest": 85,
+     "harvest": 100,
      "dry_days": 0
     }
    },
    {
     "year": 2011,
-    "harvest": 62,
-    "dry_days": 3,
+    "harvest": 72,
+    "dry_days": 75,
     "event": "none",
     "irrigated": {
-     "harvest": 92,
-     "dry_days": 3
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2012,
-    "harvest": 69,
-    "dry_days": 6,
+    "harvest": 74,
+    "dry_days": 85,
     "event": "none",
     "irrigated": {
-     "harvest": 89,
-     "dry_days": 1
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2013,
-    "harvest": 76,
-    "dry_days": 9,
-    "event": "none",
+    "harvest": 63,
+    "dry_days": 115,
+    "event": "drought",
     "irrigated": {
-     "harvest": 86,
-     "dry_days": 4
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2014,
-    "harvest": 83,
-    "dry_days": 12,
+    "harvest": 70,
+    "dry_days": 82,
     "event": "none",
     "irrigated": {
-     "harvest": 93,
-     "dry_days": 2
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2015,
-    "harvest": 65,
-    "dry_days": 15,
-    "event": "none",
+    "harvest": 75,
+    "dry_days": 92,
+    "event": "drought",
     "irrigated": {
-     "harvest": 90,
+     "harvest": 100,
      "dry_days": 0
     }
    },
    {
     "year": 2016,
-    "harvest": 72,
-    "dry_days": 18,
-    "event": "none",
+    "harvest": 66,
+    "dry_days": 93,
+    "event": "drought",
     "irrigated": {
-     "harvest": 87,
-     "dry_days": 3
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2017,
-    "harvest": 59,
-    "dry_days": 21,
-    "event": "flood",
+    "harvest": 75,
+    "dry_days": 84,
+    "event": "none",
     "irrigated": {
-     "harvest": 94,
-     "dry_days": 1
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2018,
-    "harvest": 61,
-    "dry_days": 24,
+    "harvest": 73,
+    "dry_days": 77,
     "event": "none",
     "irrigated": {
-     "harvest": 91,
-     "dry_days": 4
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2019,
-    "harvest": 68,
-    "dry_days": 27,
+    "harvest": 70,
+    "dry_days": 105,
     "event": "none",
     "irrigated": {
-     "harvest": 88,
-     "dry_days": 2
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2020,
-    "harvest": 75,
-    "dry_days": 0,
-    "event": "none",
+    "harvest": 90,
+    "dry_days": 63,
+    "event": "flood",
     "irrigated": {
-     "harvest": 85,
+     "harvest": 100,
      "dry_days": 0
     }
    },
    {
     "year": 2021,
-    "harvest": 62,
-    "dry_days": 3,
-    "event": "flood",
+    "harvest": 68,
+    "dry_days": 95,
+    "event": "none",
     "irrigated": {
-     "harvest": 92,
-     "dry_days": 3
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2022,
-    "harvest": 64,
-    "dry_days": 6,
+    "harvest": 87,
+    "dry_days": 75,
     "event": "none",
     "irrigated": {
-     "harvest": 89,
-     "dry_days": 1
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2023,
-    "harvest": 71,
-    "dry_days": 9,
-    "event": "none",
+    "harvest": 66,
+    "dry_days": 87,
+    "event": "drought",
     "irrigated": {
-     "harvest": 86,
-     "dry_days": 4
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2024,
-    "harvest": 78,
-    "dry_days": 12,
-    "event": "none",
+    "harvest": 77,
+    "dry_days": 79,
+    "event": "flood",
     "irrigated": {
-     "harvest": 93,
-     "dry_days": 2
+     "harvest": 100,
+     "dry_days": 0
     }
    },
    {
     "year": 2025,
-    "harvest": 60,
-    "dry_days": 15,
-    "event": "none",
+    "harvest": 70,
+    "dry_days": 79,
+    "event": "drought",
     "irrigated": {
-     "harvest": 90,
+     "harvest": 100,
      "dry_days": 0
     }
    }
