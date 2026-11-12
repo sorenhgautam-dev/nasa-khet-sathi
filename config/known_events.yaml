@@ -123,6 +123,20 @@ events:
       - {title: "GIEWS Country Brief Nepal, 7 Mar 2018 (archive PDF)", publisher: "FAO GIEWS", date: "2018-03-07", url: "https://www.fao.org/giews/countrybrief/country/NPL/pdf_archive/NPL_Archive.pdf"}
       - {title: "State of the Climate of Nepal 2024", publisher: "DHM Nepal", date: "2024", url: "https://dhm.gov.np/uploads/dhm/climateService/1766473731_86708e798463fe298b78.pdf"}
 
+  - id: cold_night_2010_01
+    years: [2010]
+    months: "12 Jan"
+    category: frost
+    kathmandu_valley: "yes"
+    area: "Kathmandu valley"
+    summary: "Kathmandu's minimum fell to -0.2 C on 12 Jan 2010 (Meteorological Forecasting Division, as quoted in news); the valley's last sub-zero night until 2018."
+    check: frost_risk_band          # owner, 2026-11-12: a check for the monthly frost risk band, not a replay event
+    expect: {month: "2010-01", frost: "high"}
+    replay_event: false
+    note: "No DHM record opened; the GHCN station (Kathmandu Airport) has no Tmin for 5-18 Jan 2010. The twin's frost Tmin (quantile-mapped POWER) gives January 2010 4 nights below 2 C and 1 below 0 C (1 Jan, -0.6 C), fewer than most Januaries (2013: 21), so a band ranked against other Januaries may not call it high (checked 2026-11-12, before the band rule exists)."
+    sources:
+      - {title: "Mercury hits zero in Kathmandu", publisher: "Republica", date: "Jan 15 (year not printed; refers back to 2010)", url: "https://myrepublica.nagariknetwork.com/news/mercury-hits-zero-in-kathmandu", quote: "On January 12 that year, the minimum temperature was recorded at -0.2 degree Celsius."}
+
   - id: cold_wave_2018_01
     years: [2018]
     months: "Jan"
@@ -234,9 +248,10 @@ negative_controls:   # years when the valley was NOT in deficit, so the twin sho
 
 unconfirmed:
   - {item: "Kathmandu valley rainfall in the 2008/09 winter ('totally dry', Kunwar 2009 thesis)", status: TODO-VERIFY, reason: "seen only in a search snippet; the PDF returned 404; MoAC/WFP/FAO May 2009 assessment and NeKSAP pages unreachable"}
-  - {item: "Jure landslide, Sindhupalchok, 2 Aug 2014", status: TODO-VERIFY, reason: "landslide confirmed (ISPRS Archives XL-8, 2014) but no opened source says heavy rain triggered it"}
   - {item: "Kavre (Lamdihi) frost on Poush 24 (8 Jan) destroying a potato crop", status: TODO-VERIFY, reason: "Republica article gives no year; may be the January 2013 event"}
-  - {item: "Kathmandu -0.2 C on 12 Jan 2010", status: TODO-VERIFY, reason: "value seen only in a search snippet"}
   - {item: "Kathmandu hailstorm, late March 2009, damaging crops", status: TODO-VERIFY, reason: "NeKSAP alert seen only as a snippet; site unreachable"}
   - {item: "ReliefWeb / OCHA and WFP reports (e.g. Sep 2024 sitreps, WFP alert Apr 2009)", status: TODO-VERIFY, reason: "every ReliefWeb and WFP URL returned HTTP 403, so none are cited"}
   - {item: "Pre-monsoon dry spells in the valley (e.g. April to mid-June 2024) and frost damage in Bhaktapur or Lalitpur", status: TODO-VERIFY, reason: "not researched / no opened source found"}
+
+excluded:   # checked and left out on purpose
+  - {item: "Jure landslide, Sindhupalchok, 2 Aug 2014", reason: "Owner, 2026-11-12: outside the valley, and a landslide, not a flood at the field. Rain-triggered per a later source; landslide confirmed (ISPRS Archives XL-8, 2014)"}

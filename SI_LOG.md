@@ -412,3 +412,38 @@ were already in the working tree (7a992fe8) and were not re-applied.
   power-on 85.0 C is refused by the bridge's range check.
 - **Owner, 2026-11-12:** step 10b sends the raw moisture reading too (before mapping and limiting), beside the
   percentage, so a limited 0 or 100 % is visible; the USB line is unchanged. Recorded in CLAUDE.md step 10b; not built.
+
+## 2026-11-12 (night): build step 6a, onset, greenness, bare days (Claude Opus 5.5 via Claude Code, session 2f8edafe)
+
+### Owner decisions recorded first
+- Commit `c1778e5` pushed on the owner's word (740 tests on the snapshot; history scan clean). The step 5 export had
+  already been committed and pushed by session 7a992fe8 as `efc1bb2` (22:25).
+- **Rain check B (Friday) gains a break test**: change points in yearly GPM totals and the yearly GPM/POWER ratio
+  (2001-2025) and the 4 neighbouring cells. Until settled, every rain or monsoon-shift trend carries
+  `rules.yaml` gpm_series.trend_caveat (CLAUDE.md, METHOD_NOTES 21, VALIDATION 3.9b).
+- **Known events**: Jure landslide excluded (owner's reason recorded); Kathmandu -0.2 C on 12 Jan 2010 added as a
+  frost-band check, not a replay event (VALIDATION 4.1c). Early look: the twin's frost Tmin gives January 2010 only
+  4 nights below 2 C, so the check may fail once the band rule exists.
+
+### What SI did (tests first)
+- `pipeline/diary/onset.py` (13 tests) and rules.yaml `monsoon_onset` from CLAUDE.md, with Claude's readings marked
+  TODO-CONFIRM (wet day >= 1 mm; wet days need not be consecutive; look-ahead = the 20 days after the onset day;
+  search ends 30 Sep).
+- `pipeline/diary/greenness.py` (16 tests) and rules.yaml `greenness`, `bare_days`; `scripts/run_diary.py` writes
+  `data/checks/demo/diary_onset.json`, `diary_bare_days.json`, `data/clean/demo/greenness_field.parquet` and the
+  card `greenness_field.json`.
+
+### Findings
+- **Onset rule fails its sanity check** (VALIDATION 4.1d): median 16 May; 21 of 25 years on 15-17 May; POWER rain
+  gives the same, so it is not GPM. Late May already brings 60-80 mm on 5-11 wet days.
+- **Bare days**: HLS years about 62 a year; MODIS years about 32, not comparable (VALIDATION 3.10).
+
+### Please review (owner)
+1. **The onset rule.** Options (sources to be opened before use):
+   (a) the anomalous-accumulation method (Liebmann & Marengo 2001 style): onset = the day after the cumulative
+       rain anomaly (daily rain minus the record's mean daily rain) reaches its lowest point; no thresholds to tune;
+   (b) stronger thresholds from a published South Asian point definition (needs a source);
+   (c) keep CLAUDE.md's rule but search from 1 June (a choice without a source).
+   Recommendation: (a), checked against "about 10 June" and the GPM-break caveat.
+2. TODO-CONFIRM choices: 75% clear pixels, MODIS reliability 0 only, uncertain when observations are more than
+   30 days apart, onset readings.

@@ -192,3 +192,65 @@ ecostress:                        # optional layer (steps 6 and 8)
   qc_needs_valid_value:
     value: true
     source: "Owner-approved 2026-11-12 (owner's batch decisions, item 25): V002 QC and cloud layers read 0 ('best quality', 'clear') where a window has no data, so a pixel's QC and cloud values are used only where its LST or ESI value is valid (not the file's nodata and inside the product's valid range). Golden rule 12c: missing data must never pass as perfect"
+
+gpm_series:                       # rain check B (Friday): is the 2017 jump real or a break in the data?
+  break_suspected_from:
+    value: 2017
+    source: "Owner, 2026-11-12: from 2017 GPM's yearly totals jump well above both the Kathmandu Airport station and POWER (GPM/station about 1.0-1.2 in 2015-2016, then 1.5-2.3). Rain check B runs a change-point test on yearly GPM totals and on the yearly GPM/POWER ratio over 2001-2025, and checks the 4 neighbouring GPM cells (hills nearby?), then says whether the jump is real or a data break"
+  trend_caveat:
+    value: "From 2017 GPM's rain jumps well above both the station and POWER. Until rain check B shows whether that is real or a break in the data, this trend may come from the break."
+    source: "Owner, 2026-11-12: until the break is settled, no rain trend or monsoon-shift trend is reported without saying the break may explain it (onset, shift_days, dry spells, heavy-rain days, rain terciles)"
+
+monsoon_onset:                    # diary, build step 6a (pipeline/diary/onset.py); rain = the twin's GPM rain
+  search_from:
+    value: "05-15"
+    source: "CLAUDE.md 'Field diary' (owner): search from 15 May"
+  search_until:
+    value: "09-30"
+    source: "Claude's choice, TODO-CONFIRM: stop the search at 30 September, so a year with no qualifying start before the monsoon ends has no onset (reported as none, never guessed)"
+  wet_day_mm:
+    value: 1.0
+    source: "Claude's reading of CLAUDE.md, TODO-CONFIRM: a wet day has at least 1 mm, the complement of the rule's own dry day 'under 1 mm per day' (and ETCCDI's wet day, RR >= 1 mm)"
+  wet_days_min:
+    value: 2
+    source: "CLAUDE.md (owner): 'the first run of at least 2 wet days'. Claude's reading, TODO-CONFIRM: the onset day d is itself wet, and the wet days need not be consecutive"
+  window_days:
+    value: 5
+    source: "CLAUDE.md (owner): 'totalling 10 mm within 5 days'; the window is the 5 days starting on the onset day"
+  total_mm:
+    value: 10.0
+    source: "CLAUDE.md (owner): 'totalling 10 mm within 5 days'"
+  dry_spell_days:
+    value: 10
+    source: "CLAUDE.md (owner): 'not followed by a 10-day dry spell (under 1 mm per day)'"
+  lookahead_days:
+    value: 20
+    source: "CLAUDE.md (owner): 'in the next 20 days'. Claude's reading, TODO-CONFIRM: the 20 days after the onset day; a start whose look-ahead runs past the record is not confirmed"
+  robustness_dry_spell_days:
+    value: [15, 20]
+    source: "CLAUDE.md (owner): 're-run with 15- and 20-day dry spells to show robustness'"
+  climatology_check:
+    value: "about 10 June"
+    source: "CLAUDE.md (owner): 'Nepal's climatological onset is about 10 June' (a national date: the monsoon enters eastern Nepal first; the source for the date and for Kathmandu's own normal onset is TODO-VERIFY)"
+
+greenness:                        # diary, build step 6a (pipeline/diary/greenness.py)
+  min_clear_fraction:
+    value: 0.75
+    source: "Claude's choice, TODO-CONFIRM (CLAUDE.md: 'require a minimum clear-pixel fraction per image'): an HLS image counts for the field only when at least 75% of the field's pixels are clear (Fmask bits 0-5 zero) and hold NDVI; for the 60 m demo field (4 HLS pixels) that is 3 of 4"
+  modis_reliability_ok:
+    value: [0]
+    source: "Claude's choice, TODO-CONFIRM: MOD13Q1 pixel reliability 0 ('good data') only; 1 (marginal), 2 (snow/ice) and 3 (cloudy) are dropped. Rank keys from the file's own Legend attribute"
+  hls_from:
+    value: "2013-04-11"
+    source: "CLAUDE.md 'Field diary': HLS from 2013, MODIS from 2000. The daily series uses HLS from its first clear field observation (HLSL30 starts with Landsat 8 in April 2013) and MODIS before it"
+  pair_max_days:
+    value: 8
+    source: "Claude's choice, TODO-CONFIRM: an HLS observation and a MODIS composite are compared when their dates are at most 8 days apart (half of MODIS's 16-day composite)"
+
+bare_days:                        # diary, build step 6a
+  ndvi_max:
+    value: 0.25
+    source: "CLAUDE.md 'Field diary' (owner): a day is bare when interpolated NDVI is below the threshold, 'start at 0.25, tune with known bare dates' (not yet tuned)"
+  uncertain_gap_days:
+    value: 30
+    source: "Claude's choice, TODO-CONFIRM (CLAUDE.md: 'widen uncertainty in cloudy months, days since last clear image'): a day is uncertain when the clear observations either side of it are more than 30 days apart"

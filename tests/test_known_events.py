@@ -43,3 +43,20 @@ def test_unconfirmed_items_are_marked_todo_verify_with_a_reason():
 def test_negative_controls_are_sourced():
     for n in _load()["negative_controls"]:
         assert n["sources"] and all(s["url"].startswith("http") for s in n["sources"])
+
+
+def test_the_2010_cold_night_checks_the_frost_band_not_the_replay():
+    """Owner, 2026-11-12: Kathmandu -0.2 C on 12 Jan 2010 is a check for the frost risk band (January 2010
+    should show high frost risk), not a replay event."""
+    e = {x["id"]: x for x in _load()["events"]}["cold_night_2010_01"]
+    assert e["category"] == "frost" and e["years"] == [2010]
+    assert e["check"] == "frost_risk_band" and e["expect"] == {"month": "2010-01", "frost": "high"}
+    assert e["replay_event"] is False
+
+
+def test_excluded_items_carry_the_owners_reason():
+    ex = {x["item"]: x for x in _load()["excluded"]}
+    jure = next(v for k, v in ex.items() if "Jure" in k)
+    assert "owner" in jure["reason"].lower() and "landslide" in jure["reason"]
+    assert not any("Jure" in u["item"] for u in _load()["unconfirmed"])
+    assert not any("-0.2 C on 12 Jan 2010" in u["item"] for u in _load()["unconfirmed"])

@@ -225,7 +225,12 @@ earthaccess (one tile, one 44 MB file). The cloud OPeNDAP endpoint failed for GP
 40% above the Kathmandu Airport station (49 complete months), so the station records about a third less;
 the station is synoptic-derived and may under-record, so it is not the truth either. Owner, 2026-11-12:
 (A) keep GPM and say so in the "unknown" tab; (B) Friday: compare the 4 GPM cells around the field and
-monthly totals with DHM's published Bhaktapur averages; (C) only if B shows GPM reads high, show a
+monthly totals with DHM's published Bhaktapur averages, **and test for a break in the GPM series**: from
+2017 GPM's yearly totals jump well above both the station and POWER (GPM/station about 1.0-1.2 in
+2015-2016, then 1.5-2.3), so run a change-point test on yearly GPM totals and on the yearly GPM/POWER
+ratio over 2001-2025, check the 4 neighbouring cells (hills nearby?), and say whether the jump is real or a
+data break. **Until that is settled, no rain trend or monsoon-shift trend is reported without saying the
+break may explain it** (`rules.yaml` gpm_series.trend_caveat; owner, 2026-11-12); (C) only if B shows GPM reads high, show a
 station-scaled run as the lower edge of a range, labelled, never as a replacement. NASA POWER
 supplies temperature, humidity, wind and sunshine; POWER's PRECTOTCORR is kept for cross-checks only.
 IMERG days are UTC days (05:45 to 05:45 Nepal time; IMERG V07 Technical Documentation, 13 July 2023, p. 40); POWER days
@@ -393,6 +398,8 @@ from comparing SMAP with the twin; document the values.
 - **Trends:** Mann-Kendall test with Sen's slope (`pymannkendall`) on onset dates, hot days (above
   the local 90th percentile of Tmax), longest dry spell (consecutive days under 1 mm), and heavy-rain
   days (20 mm or more). `shift_days` is the onset trend over the record, with its confidence range.
+  Every rain-based trend (onset, `shift_days`, dry spells, heavy-rain days) carries the GPM-break caveat
+  until rain check B settles it (owner, 2026-11-12).
 - **Monthly calendar:** classify each month as low, medium or high (terciles of the 2001 to 2025
   climatology) for rain, soil, heat and frost, and record typical cover.
 
