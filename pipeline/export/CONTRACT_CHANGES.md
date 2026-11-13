@@ -4,6 +4,21 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-13 (Friday, 17:30): the farmer confirms the winter crop: `current_options` (owner's answer 6)
+
+From space the winter crop of the demo field could be potato or wheat: the timing cannot tell them apart. So screen 3 asks
+the farmer, and the file holds the current plan's results for both answers. Nothing is simulated in the browser.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `current_options` (new, top level, optional) | did not exist | `{"default": "rice_potato", "options": [{...}, {...}]}`. Each option: `id` (`rice_potato`, `rice_wheat`), `crops`, `score`, `score_uncorrected_rain` (where it differs), `tabs`, `tips`, `tabs_ne`, `tips_ne` (the current plan's own texts), `replay` (24 years in the shape of `replay.current`: both water cases, the `uncorrected_rain` ranges), and `compared`: for each suggested plan id, its `tabs` and `tabs_ne` when it is compared with this current plan. Absent when the rotation is known | Screen 3: ask "We think you grow rice first. Then potato or wheat. Which one do you grow?" (words.json screen 3: `guess_first`, `guess_options`, `guess_which`, `guess_cannot_tell`; crop names from `shared.crop_names`). On the answer, show that option as the current plan (its crops, score, tabs, tips, replay) and, for `cover_gap` and `safest`, the tabs from the option's `compared` (their gains differ). Their scores, crops, tips and replays do not change. Before an answer, show the `default` option, which is exactly what `plans[0]` and `replay.current` hold |
+| `plans[].tabs.unknown` | | one more line while the winter crop is not confirmed: "Your winter crop dates may differ from ours." | Nothing |
+
+The wheat option sows wheat on 15 November (the latest date in FAO's Hill-zone window); the satellite's winter season is
+still about 78 days from it (later start, later end), which is what the new "unknown" line is about. When the farmer picks
+wheat, "Fill the empty months" is also rice then wheat, sown a month earlier: the two plans then differ in their dates
+only (flagged for the owner).
+
 ## 2026-11-13 (Friday, 17:15): one weather event per year; "Feed your soil"; the gain as a range; new tips (owner's answers 3, 4, 5, 7, 8, 9)
 
 | What | Before | Now | What the UI must do |

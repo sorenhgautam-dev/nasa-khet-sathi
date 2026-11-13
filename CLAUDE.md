@@ -196,7 +196,9 @@ read that section ("not sure yet"). **No made-up number is ever exported (owner,
 computed yet is named in the top-level `mock` list (`field.sections`, `future`) and holds no numbers (sections grey with
 null `wetness` and `temp` and `sure` 0; `future` null), and the site says "not ready yet". Each replay year's `irrigated`
 is required. The file also has a required `method` block (the method page: `season_detection`, `rain_correction`,
-`choices`). `site/data/words.json` holds every screen word, the glossary and the crop explainers. Every change to the
+`choices`). Where the satellite cannot tell two rotations apart, `current_options` holds the current plan for each
+(demo: rice then potato, the default, and rice then wheat; owner, 2026-11-13), and the site switches on the farmer's answer.
+`site/data/words.json` holds every screen word, the glossary and the crop explainers. Every change to the
 contract is listed in `pipeline/export/CONTRACT_CHANGES.md`.
 
 `site/data/index.json` lists the prepared fields so the site can offer them and can tell when a

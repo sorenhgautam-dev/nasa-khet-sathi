@@ -304,12 +304,47 @@ def apply_plans(doc, plans, plans_unc, lib, words, ctx):
                    "thirsty": e["replay"].get("thirsty", {}), "gain_range": e.get("gain_range"),
                    "cover_days": round(e["score"]["cover"] / 100.0 * 365)}
         contract.append(p)
-    c = {**ctx, "diary": out["diary"], "replay": replay,
+    options = plans.get("current_options") or []
+    c = {**ctx, "diary": out["diary"], "replay": replay, "winter_crop_unconfirmed": len(options) > 1,
          "plan_sources": [s for s in out["sources"] if s["name"] in PLAN_SOURCES]}
     for p in contract:
         w = ex.render(info[p["id"]], info["current"], c, lib, words)
         p.update(tabs=w["tabs"], tips=w["tips"], tabs_ne=w["tabs_ne"], tips_ne=w["tips_ne"])
     out["plans"], out["replay"] = contract, replay
+    # owner's answer 6 to REVIEW_2 (2026-11-13): the current plan once for each rotation the farmer may confirm
+    if len(options) > 1:
+        unc_by_id = {o["id"]: o for o in (plans_unc.get("current_options") or [])} if plans_unc is not None else {}
+        blocks = []
+        for k, o in enumerate(options):
+            if k == 0:                                   # the default is what plans[0] and replay.current hold
+                cur_p, cur_info, rows = contract[0], info["current"], replay["current"]
+            else:
+                rows = replay_rows(o["replay"], out)
+                cur_p = {"id": "current", "name": contract[0]["name"], "crops": [dict(s) for s in o["spans"]],
+                         "score": score_block(o["score"])}
+                if o["id"] in unc_by_id:
+                    rows = with_uncorrected(rows, replay_rows(unc_by_id[o["id"]]["replay"], out))
+                    u = score_block(unc_by_id[o["id"]]["score"])
+                    if u != cur_p["score"]:
+                        cur_p["score_uncorrected_rain"] = u
+                cur_info = {**cur_p, "stability": o["stability"], "pest_break": o["pest_break"],
+                            "needs_water_window": o["needs_water_window"], "windows": _window_notes(o["plan"], lib),
+                            "thirsty": o["replay"].get("thirsty", {}), "gain_range": None,
+                            "cover_days": round(o["score"]["cover"] / 100.0 * 365)}
+            ck = {**c, "replay": {**replay, "current": rows}}
+            block = {"id": o["id"], "crops": cur_p["crops"], "score": cur_p["score"]}
+            if "score_uncorrected_rain" in cur_p:
+                block["score_uncorrected_rain"] = cur_p["score_uncorrected_rain"]
+            w = ex.render(cur_info, cur_info, ck, lib, words) if k else contract[0]
+            block.update(tabs=w["tabs"], tips=w["tips"], tabs_ne=w["tabs_ne"], tips_ne=w["tips_ne"], replay=rows, compared={})
+            for r in roles[1:]:
+                other = {**info[r], "gain_range": o["gain_range"][r]}
+                wr = ex.render(other, cur_info, ck, lib, words)
+                block["compared"][r] = {"tabs": wr["tabs"], "tabs_ne": wr["tabs_ne"]}
+            blocks.append(block)
+        out["current_options"] = {"default": options[0]["id"], "options": blocks}
+    else:
+        out.pop("current_options", None)
     errs = validate_field(out)
     if errs:
         raise ValueError(f"field file would break the contract: {errs}")

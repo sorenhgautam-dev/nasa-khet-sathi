@@ -278,3 +278,20 @@ def test_the_uncorrected_run_keeps_its_own_event_season():
     row = next(x for x in rows if x["year"] == y0)
     assert row["event"] == "none" and row["uncorrected_rain"]["event"] == "drought"
     assert row["uncorrected_rain"]["event_season"] == "monsoon"
+
+
+def test_the_exported_demo_file_holds_the_current_plan_for_both_winter_crops():
+    """Owner's answer 6 to REVIEW_2 (2026-11-13): the site switches between saved results when the farmer answers."""
+    import json
+    from pathlib import Path
+    d = json.loads((Path(__file__).resolve().parents[1] / "site" / "data" / "fields" / "demo.json").read_text())
+    if "current_options" not in d:
+        pytest.skip("demo.json not yet exported with the current-plan options")
+    co = d["current_options"]
+    assert co["default"] == "rice_potato" and [o["id"] for o in co["options"]] == ["rice_potato", "rice_wheat"]
+    wheat = co["options"][1]
+    assert [c["crop"] for c in wheat["crops"]] == ["rice", "wheat"] and len(wheat["replay"]) == len(d["replay"]["current"])
+    assert all("irrigated" in y for y in wheat["replay"]) and any("uncorrected_rain" in y for y in wheat["replay"])
+    assert set(wheat["compared"]) == {"cover_gap", "safest"}
+    assert "Your winter crop dates may differ from ours." in d["plans"][0]["tabs"]["unknown"]
+    assert "sample field" in d["plans"][0]["tabs"]["unknown"]

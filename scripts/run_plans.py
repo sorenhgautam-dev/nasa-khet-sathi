@@ -22,7 +22,9 @@ from pipeline.fetch.cropslib import load_crops  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import events as ev  # noqa: E402
+from pipeline.diary import guess as gu  # noqa: E402
 from pipeline.plans import generate as ge  # noqa: E402
+from pipeline.plans import options as po  # noqa: E402
 from pipeline.plans import score as sc  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.twin.crops import season_length, simulatable_crops  # noqa: E402
@@ -187,11 +189,42 @@ def main(argv=None):
                          "replay": plan_export(r["specs"], w, lib, soil, cn, rules, lab)}
         if role != "current":
             exports[role]["gain_range"] = gain_range(r["specs"], by_id[shown["current"]]["specs"], w, lib, soil, cn, rules)
+    # owner's answer 6 to REVIEW_2 (2026-11-13; rules.yaml plans.current_options): the current plan once for each
+    # rotation the farmer may confirm, each compared with the suggested plans (which stay as chosen)
+    current_options = []
+    rot_options = [list(r) for r in (field.get("current_rotation_options") or [])]
+    if rot_options:
+        if rot_options[0] != list(rotation):
+            raise ValueError("config: the first entry of current_rotation_options must be the field's current_rotation")
+        sj = json.loads((out_dir / "diary_seasons.json").read_text())
+        by_slot = {k: [] for k in gu.SLOTS}
+        for rows_y in sj["chosen"]["seasons_by_year"].values():
+            for s in rows_y:
+                if s["source"] == "hls":
+                    t = {k: pd.Timestamp(s[k]) for k in ("start", "peak", "end")}
+                    by_slot[gu.slot_of(t)].append(t)
+        for i, rot in enumerate(rot_options):
+            specs, why = (current_specs, {}) if i == 0 else po.option_specs(rot, current_specs, by_slot, lib, tuple(P["sow_positions"]))
+            r = by_id.get(ge.plan_id(specs)) or evaluate(specs, w, lib, soil, cn, rules, strict, erosion)
+            lab = {"field": field["name"], "rain_source": "gpm", "rain_version": a.rain, "water_source": water,
+                   "rotation_source": f"current-plan option {'_'.join(rot)} (owner's answer 6, 2026-11-13: the farmer confirms the "
+                                      "winter crop); " + ("PLACEHOLDER field" if field.get("placeholder") else "")}
+            current_options.append({
+                "id": "_".join(rot), "plan": r["id"], "rotation": rot, "spans": r["spans"],
+                "score": {k: r[k] for k in ("harvest", "water", "cover", "soil_kept")}, "stability": r["stability"],
+                "pest_break": r["pest_break"], "nitrogen": r["nitrogen"], "needs_water_window": r["needs_water_window"],
+                "ky_assumed": r["ky_assumed"], "date_fit": why,
+                "replay": plan_export(r["specs"], w, lib, soil, cn, rules, lab),
+                "gain_range": {role: gain_range(by_id[shown[role]]["specs"], r["specs"], w, lib, soil, cn, rules)
+                               for role in ("cover_gap", "safest")}})
+            print(f"current option {current_options[-1]['id']:14s} {r['id']:36s} harvest {r['harvest']:5.1f} stability {r['stability']:5.1f} "
+                  f"gains {[(k, v['low'], v['high']) for k, v in current_options[-1]['gain_range'].items()]} fit {why}")
     out = {"labels": {"field": field["name"], "current": f"{rotation} ({rot_label})", "water_case": "rain-fed (water source unknown)",
                       "water_strict": strict, "soil_kept": "computed" if erosion else "NOT YET: rules.yaml erosion (C factors) pending",
                       "rain_version": a.rain, "rain_caveat": rules["gpm_series"]["trend_caveat"],
                       "pareto_keys": keys},
-           "picks": picks, "shown": shown, "export": exports, "robustness": checks, "n_plans": len(rows), "plans": rows,
+           "picks": picks, "shown": shown, "export": exports, "current_options": current_options, "robustness": checks,
+           "n_plans": len(rows), "plans": rows,
            "plans_2002_2016": rows_pre}
     path = out_dir / ("rain_uncorrected" if a.rain == "uncorrected" else "") / "plans.json"
     path.parent.mkdir(parents=True, exist_ok=True)

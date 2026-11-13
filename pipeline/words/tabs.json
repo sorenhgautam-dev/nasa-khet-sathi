@@ -331,6 +331,15 @@
     "basis": "METHOD_NOTES.md item 9"
    },
    {
+    "id": "unk_winter_dates",
+    "when": [
+     "winter_crop_unconfirmed"
+    ],
+    "en": "Your winter crop dates may differ from ours.",
+    "ne": "तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
     "id": "unk_roots",
     "when": [
      "has_gain_range"

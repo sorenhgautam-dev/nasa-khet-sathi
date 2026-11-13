@@ -1050,7 +1050,7 @@
     "why": "This is what you grow now. We compare every other choice with it.",
     "evidence": "We replayed the weather from 2002 to 2025. Harvest was 72 out of 100 on average. Without our rain fix, it was 73. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
     "benefits": "You already know how to grow these. Changing crops can keep pests and diseases down.",
-    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
     "check": "Ask your local farm advisor first. Check how much water you really have. Try it on one small part first. You know your land best."
    },
    "tips": [
@@ -1061,7 +1061,7 @@
     "why": "यो तपाईंले अहिले लगाउने बाली हो। हामी अरू हरेक विकल्पलाई यसैसँग दाँज्छौं।",
     "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ७२ थियो। हाम्रो वर्षा सुधारबिना यो ७३ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
     "benefits": "यी बाली लगाउन तपाईंलाई पहिले नै आउँछ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
-    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
     "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
@@ -1100,7 +1100,7 @@
     "why": "The ground is bare about 62 days yearly. This plan grows crops 25 more days. Stored water in this area is falling. This plan needs less water.",
     "evidence": "We replayed the weather from 2002 to 2025. Harvest was 90 out of 100 on average. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
     "benefits": "Harvest: about 8 to 22 more. Needs less water than now. Ground stays covered more of the year. Less soil washes away in heavy rain. Wheat roots reach water deeper down.",
-    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
     "check": "Ask your local farm advisor first. Ask if wheat seed is sold nearby. Ask neighbours when they plant wheat. Lentil after rice is another choice. It feeds the soil. Changing crop kinds keeps pests down. Check how much water you really have. Wheat here usually needs watering. Check you can water it. Try it on one small part first. You know your land best."
    },
    "tips": [
@@ -1110,7 +1110,7 @@
     "why": "वर्षमा करिब ६२ दिन जमिन खाली रहन्छ। यो योजनामा २५ दिन बढी बाली हुन्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
     "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ९० थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
     "benefits": "उब्जनी: करिब ८ देखि २२ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। ठूलो पानी पर्दा कम माटो बग्छ। गहुँको जरा अझ गहिरो पानीसम्म पुग्छ।",
-    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
     "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै गहुँको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई गहुँ कहिले रोप्छन् भनी सोध्नुहोस्। धानपछि मसुर लगाउनु अर्को उपाय हो। यसले माटोलाई मल दिन्छ। फरक किसिमको बाली लगाउँदा कीरा घट्छन्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। यहाँ गहुँलाई प्रायः पानी लगाउनुपर्छ। पानी लगाउन सक्नुहुन्छ कि जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
@@ -1148,7 +1148,7 @@
     "why": "This plan is here to feed your soil. Lentil feeds the soil for the next crop. Bad years hurt it less than now. Stored water in this area is falling. This plan needs less water.",
     "evidence": "We replayed the weather from 2002 to 2025. Harvest was 81 out of 100 on average. Without our rain fix, it was 82. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
     "benefits": "Harvest: about 4 to 14 more. Needs less water than now. Ground stays covered more of the year. Less soil washes away in heavy rain. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
-    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
     "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Check how much water you really have. Try it on one small part first. You know your land best."
    },
    "tips": [
@@ -1158,7 +1158,7 @@
     "why": "यो योजना माटोलाई मलिलो बनाउन हो। मसुरले अर्को बालीका लागि माटोमा मल थप्छ। खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
     "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ८१ थियो। हाम्रो वर्षा सुधारबिना यो ८२ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
     "benefits": "उब्जनी: करिब ४ देखि १४ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। ठूलो पानी पर्दा कम माटो बग्छ। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
-    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
     "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
@@ -2801,5 +2801,908 @@
  "mock": [
   "field.sections",
   "future"
- ]
+ ],
+ "current_options": {
+  "default": "rice_potato",
+  "options": [
+   {
+    "id": "rice_potato",
+    "crops": [
+     {
+      "crop": "rice",
+      "start": "06-23",
+      "end": "10-10"
+     },
+     {
+      "crop": "potato",
+      "start": "10-30",
+      "end": "02-21"
+     }
+    ],
+    "score": {
+     "harvest": 72,
+     "water": 38,
+     "cover": 62,
+     "soil_kept": 74
+    },
+    "score_uncorrected_rain": {
+     "harvest": 73,
+     "water": 40,
+     "cover": 62,
+     "soil_kept": 71
+    },
+    "tabs": {
+     "why": "This is what you grow now. We compare every other choice with it.",
+     "evidence": "We replayed the weather from 2002 to 2025. Harvest was 72 out of 100 on average. Without our rain fix, it was 73. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+     "benefits": "You already know how to grow these. Changing crops can keep pests and diseases down.",
+     "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+     "check": "Ask your local farm advisor first. Check how much water you really have. Try it on one small part first. You know your land best."
+    },
+    "tips": [
+     "Potato gets most thirsty in January. Water it then if you can.",
+     "Cover bare soil with straw in November."
+    ],
+    "tabs_ne": {
+     "why": "यो तपाईंले अहिले लगाउने बाली हो। हामी अरू हरेक विकल्पलाई यसैसँग दाँज्छौं।",
+     "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ७२ थियो। हाम्रो वर्षा सुधारबिना यो ७३ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+     "benefits": "यी बाली लगाउन तपाईंलाई पहिले नै आउँछ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
+     "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+     "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+    },
+    "tips_ne": [
+     "आलुलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+     "मंसिर (नोभेम्बर–डिसेम्बर)मा खाली माटोलाई परालले ढाक्नुहोस्।"
+    ],
+    "replay": [
+     {
+      "year": 2002,
+      "harvest": 75,
+      "dry_days": 89,
+      "event": "flood",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2003,
+      "harvest": 72,
+      "dry_days": 90,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2004,
+      "harvest": 75,
+      "dry_days": 85,
+      "event": "flood",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 75,
+       "dry_days": 85,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2005,
+      "harvest": 82,
+      "dry_days": 72,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 82,
+       "dry_days": 72,
+       "event": "drought",
+       "event_season": "monsoon",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2006,
+      "harvest": 71,
+      "dry_days": 72,
+      "event": "drought",
+      "event_season": "winter",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2007,
+      "harvest": 78,
+      "dry_days": 71,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2008,
+      "harvest": 73,
+      "dry_days": 73,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 73,
+       "dry_days": 73,
+       "event": "drought",
+       "event_season": "winter",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2009,
+      "harvest": 69,
+      "dry_days": 82,
+      "event": "drought",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2010,
+      "harvest": 66,
+      "dry_days": 91,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 66,
+       "dry_days": 91,
+       "event": "drought",
+       "event_season": "monsoon",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2011,
+      "harvest": 72,
+      "dry_days": 75,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2012,
+      "harvest": 74,
+      "dry_days": 85,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2013,
+      "harvest": 63,
+      "dry_days": 115,
+      "event": "drought",
+      "event_season": "monsoon",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2014,
+      "harvest": 70,
+      "dry_days": 82,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2015,
+      "harvest": 75,
+      "dry_days": 92,
+      "event": "drought",
+      "event_season": "monsoon",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2016,
+      "harvest": 66,
+      "dry_days": 93,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2017,
+      "harvest": 73,
+      "dry_days": 84,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 75,
+       "dry_days": 84,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2018,
+      "harvest": 73,
+      "dry_days": 76,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 73,
+       "dry_days": 77,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2019,
+      "harvest": 68,
+      "dry_days": 111,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 70,
+       "dry_days": 105,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2020,
+      "harvest": 84,
+      "dry_days": 86,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 90,
+       "dry_days": 63,
+       "event": "flood",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2021,
+      "harvest": 66,
+      "dry_days": 100,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 68,
+       "dry_days": 95,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2022,
+      "harvest": 83,
+      "dry_days": 75,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 87,
+       "dry_days": 75,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2023,
+      "harvest": 65,
+      "dry_days": 87,
+      "event": "drought",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 66,
+       "dry_days": 87,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2024,
+      "harvest": 75,
+      "dry_days": 80,
+      "event": "flood",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 77,
+       "dry_days": 79,
+       "event": "flood",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2025,
+      "harvest": 69,
+      "dry_days": 78,
+      "event": "drought",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 70,
+       "dry_days": 79,
+       "event": "drought",
+       "event_season": "winter",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     }
+    ],
+    "compared": {
+     "cover_gap": {
+      "tabs": {
+       "why": "The ground is bare about 62 days yearly. This plan grows crops 25 more days. Stored water in this area is falling. This plan needs less water.",
+       "evidence": "We replayed the weather from 2002 to 2025. Harvest was 90 out of 100 on average. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+       "benefits": "Harvest: about 8 to 22 more. Needs less water than now. Ground stays covered more of the year. Less soil washes away in heavy rain. Wheat roots reach water deeper down.",
+       "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+       "check": "Ask your local farm advisor first. Ask if wheat seed is sold nearby. Ask neighbours when they plant wheat. Lentil after rice is another choice. It feeds the soil. Changing crop kinds keeps pests down. Check how much water you really have. Wheat here usually needs watering. Check you can water it. Try it on one small part first. You know your land best."
+      },
+      "tabs_ne": {
+       "why": "वर्षमा करिब ६२ दिन जमिन खाली रहन्छ। यो योजनामा २५ दिन बढी बाली हुन्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
+       "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ९० थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+       "benefits": "उब्जनी: करिब ८ देखि २२ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। ठूलो पानी पर्दा कम माटो बग्छ। गहुँको जरा अझ गहिरो पानीसम्म पुग्छ।",
+       "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+       "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै गहुँको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई गहुँ कहिले रोप्छन् भनी सोध्नुहोस्। धानपछि मसुर लगाउनु अर्को उपाय हो। यसले माटोलाई मल दिन्छ। फरक किसिमको बाली लगाउँदा कीरा घट्छन्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। यहाँ गहुँलाई प्रायः पानी लगाउनुपर्छ। पानी लगाउन सक्नुहुन्छ कि जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+      }
+     },
+     "safest": {
+      "tabs": {
+       "why": "This plan is here to feed your soil. Lentil feeds the soil for the next crop. Bad years hurt it less than now. Stored water in this area is falling. This plan needs less water.",
+       "evidence": "We replayed the weather from 2002 to 2025. Harvest was 81 out of 100 on average. Without our rain fix, it was 82. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+       "benefits": "Harvest: about 4 to 14 more. Needs less water than now. Ground stays covered more of the year. Less soil washes away in heavy rain. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
+       "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+       "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Check how much water you really have. Try it on one small part first. You know your land best."
+      },
+      "tabs_ne": {
+       "why": "यो योजना माटोलाई मलिलो बनाउन हो। मसुरले अर्को बालीका लागि माटोमा मल थप्छ। खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
+       "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ८१ थियो। हाम्रो वर्षा सुधारबिना यो ८२ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+       "benefits": "उब्जनी: करिब ४ देखि १४ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। ठूलो पानी पर्दा कम माटो बग्छ। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
+       "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+       "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+      }
+     }
+    }
+   },
+   {
+    "id": "rice_wheat",
+    "crops": [
+     {
+      "crop": "rice",
+      "start": "06-23",
+      "end": "10-10"
+     },
+     {
+      "crop": "wheat",
+      "start": "11-15",
+      "end": "04-03"
+     }
+    ],
+    "score": {
+     "harvest": 82,
+     "water": 39,
+     "cover": 68,
+     "soil_kept": 74
+    },
+    "score_uncorrected_rain": {
+     "harvest": 83,
+     "water": 43,
+     "cover": 68,
+     "soil_kept": 71
+    },
+    "tabs": {
+     "why": "This is what you grow now. We compare every other choice with it.",
+     "evidence": "We replayed the weather from 2002 to 2025. Harvest was 82 out of 100 on average. Without our rain fix, it was 83. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+     "benefits": "You already know how to grow these.",
+     "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+     "check": "Ask your local farm advisor first. Check how much water you really have. Wheat here usually needs watering. Check you can water it. Try it on one small part first. You know your land best."
+    },
+    "tips": [
+     "Wheat gets most thirsty in March. Water it then if you can.",
+     "Cover bare soil with straw in November."
+    ],
+    "tabs_ne": {
+     "why": "यो तपाईंले अहिले लगाउने बाली हो। हामी अरू हरेक विकल्पलाई यसैसँग दाँज्छौं।",
+     "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ८२ थियो। हाम्रो वर्षा सुधारबिना यो ८३ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+     "benefits": "यी बाली लगाउन तपाईंलाई पहिले नै आउँछ।",
+     "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+     "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। यहाँ गहुँलाई प्रायः पानी लगाउनुपर्छ। पानी लगाउन सक्नुहुन्छ कि जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+    },
+    "tips_ne": [
+     "गहुँलाई चैत (मार्च–अप्रिल)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+     "मंसिर (नोभेम्बर–डिसेम्बर)मा खाली माटोलाई परालले ढाक्नुहोस्।"
+    ],
+    "replay": [
+     {
+      "year": 2002,
+      "harvest": 82,
+      "dry_days": 61,
+      "event": "flood",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2003,
+      "harvest": 89,
+      "dry_days": 67,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2004,
+      "harvest": 80,
+      "dry_days": 56,
+      "event": "flood",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 80,
+       "dry_days": 56,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2005,
+      "harvest": 91,
+      "dry_days": 44,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 91,
+       "dry_days": 44,
+       "event": "drought",
+       "event_season": "monsoon",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2006,
+      "harvest": 80,
+      "dry_days": 65,
+      "event": "drought",
+      "event_season": "winter",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2007,
+      "harvest": 97,
+      "dry_days": 33,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2008,
+      "harvest": 82,
+      "dry_days": 59,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 82,
+       "dry_days": 59,
+       "event": "drought",
+       "event_season": "winter",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2009,
+      "harvest": 74,
+      "dry_days": 72,
+      "event": "drought",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2010,
+      "harvest": 74,
+      "dry_days": 74,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 74,
+       "dry_days": 74,
+       "event": "drought",
+       "event_season": "monsoon",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2011,
+      "harvest": 81,
+      "dry_days": 65,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2012,
+      "harvest": 79,
+      "dry_days": 75,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2013,
+      "harvest": 70,
+      "dry_days": 100,
+      "event": "drought",
+      "event_season": "monsoon",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2014,
+      "harvest": 82,
+      "dry_days": 64,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2015,
+      "harvest": 87,
+      "dry_days": 66,
+      "event": "drought",
+      "event_season": "monsoon",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2016,
+      "harvest": 69,
+      "dry_days": 90,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      }
+     },
+     {
+      "year": 2017,
+      "harvest": 85,
+      "dry_days": 58,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 88,
+       "dry_days": 55,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2018,
+      "harvest": 78,
+      "dry_days": 61,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 81,
+       "dry_days": 59,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2019,
+      "harvest": 81,
+      "dry_days": 92,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 86,
+       "dry_days": 87,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2020,
+      "harvest": 97,
+      "dry_days": 37,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 100,
+       "dry_days": 0,
+       "event": "flood",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2021,
+      "harvest": 72,
+      "dry_days": 79,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 75,
+       "dry_days": 76,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2022,
+      "harvest": 91,
+      "dry_days": 35,
+      "event": "none",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 95,
+       "dry_days": 28,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2023,
+      "harvest": 79,
+      "dry_days": 71,
+      "event": "drought",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 82,
+       "dry_days": 62,
+       "event": "none",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2024,
+      "harvest": 85,
+      "dry_days": 57,
+      "event": "flood",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 90,
+       "dry_days": 44,
+       "event": "flood",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     },
+     {
+      "year": 2025,
+      "harvest": 78,
+      "dry_days": 64,
+      "event": "drought",
+      "irrigated": {
+       "harvest": 100,
+       "dry_days": 0
+      },
+      "uncorrected_rain": {
+       "harvest": 80,
+       "dry_days": 63,
+       "event": "drought",
+       "event_season": "winter",
+       "irrigated": {
+        "harvest": 100,
+        "dry_days": 0
+       }
+      }
+     }
+    ],
+    "compared": {
+     "cover_gap": {
+      "tabs": {
+       "why": "The ground is bare about 62 days yearly. Stored water in this area is falling. This plan needs less water.",
+       "evidence": "We replayed the weather from 2002 to 2025. Harvest was 90 out of 100 on average. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+       "benefits": "Harvest: about 6 to 9 more. Needs less water than now. Less soil washes away in heavy rain.",
+       "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+       "check": "Ask your local farm advisor first. Lentil after rice is another choice. It feeds the soil. Changing crop kinds keeps pests down. Check how much water you really have. Wheat here usually needs watering. Check you can water it. Try it on one small part first. You know your land best."
+      },
+      "tabs_ne": {
+       "why": "वर्षमा करिब ६२ दिन जमिन खाली रहन्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
+       "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ९० थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+       "benefits": "उब्जनी: करिब ६ देखि ९ बढी। अहिलेभन्दा कम पानी चाहिन्छ। ठूलो पानी पर्दा कम माटो बग्छ।",
+       "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+       "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। धानपछि मसुर लगाउनु अर्को उपाय हो। यसले माटोलाई मल दिन्छ। फरक किसिमको बाली लगाउँदा कीरा घट्छन्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। यहाँ गहुँलाई प्रायः पानी लगाउनुपर्छ। पानी लगाउन सक्नुहुन्छ कि जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+      }
+     },
+     "safest": {
+      "tabs": {
+       "why": "This plan is here to feed your soil. Lentil feeds the soil for the next crop. Bad years hurt it less than now. Stored water in this area is falling. This plan needs less water.",
+       "evidence": "We replayed the weather from 2002 to 2025. Harvest was 81 out of 100 on average. Without our rain fix, it was 82. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+       "benefits": "Harvest: up to 8 more, maybe none. Needs less water than now. Less soil washes away in heavy rain. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
+       "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+       "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Check how much water you really have. Try it on one small part first. You know your land best."
+      },
+      "tabs_ne": {
+       "why": "यो योजना माटोलाई मलिलो बनाउन हो। मसुरले अर्को बालीका लागि माटोमा मल थप्छ। खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
+       "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ८१ थियो। हाम्रो वर्षा सुधारबिना यो ८२ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+       "benefits": "उब्जनी: ८ सम्म बढी, वा उस्तै। अहिलेभन्दा कम पानी चाहिन्छ। ठूलो पानी पर्दा कम माटो बग्छ। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
+       "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+       "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+      }
+     }
+    }
+   }
+  ]
+ }
 }

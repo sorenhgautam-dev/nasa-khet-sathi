@@ -202,6 +202,42 @@
      "ne_review": "needs native-speaker review"
     },
     {
+     "id": "guess_first",
+     "when": [
+      "winter_crop_unconfirmed"
+     ],
+     "en": "We think you grow {first_crop} first.",
+     "ne": "हाम्रो विचारमा तपाईं पहिले {first_crop} लगाउनुहुन्छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "guess_options",
+     "when": [
+      "winter_crop_unconfirmed"
+     ],
+     "en": "Then {option_a} or {option_b}.",
+     "ne": "त्यसपछि {option_a} वा {option_b}।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "guess_which",
+     "when": [
+      "winter_crop_unconfirmed"
+     ],
+     "en": "Which one do you grow?",
+     "ne": "तपाईं कुन लगाउनुहुन्छ?",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "guess_cannot_tell",
+     "when": [
+      "winter_crop_unconfirmed"
+     ],
+     "en": "From space, both look the same.",
+     "ne": "अन्तरिक्षबाट हेर्दा दुवै उस्तै देखिन्छन्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
      "id": "yes",
      "en": "Yes",
      "ne": "हो",

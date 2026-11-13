@@ -339,3 +339,51 @@ def test_the_same_year_has_the_same_event_on_every_plan():
     y = d["replay"]["current"][2]
     y["event"] = "flood" if y["event"] != "flood" else "none"
     assert any("same event" in e for e in validate_field(d))
+
+
+# --- owner's answer 6 to REVIEW_2 (2026-11-13): the current plan for each winter crop the farmer may confirm ---
+
+def _with_options():
+    import copy
+    d = build_field()
+    cur = d["plans"][0]
+    def option(oid, winter):
+        o = {"id": oid, "crops": copy.deepcopy(cur["crops"]), "score": dict(cur["score"]),
+             "tabs": dict(cur["tabs"]), "tips": list(cur["tips"]), "tabs_ne": dict(cur["tabs_ne"]), "tips_ne": list(cur["tips_ne"]),
+             "replay": copy.deepcopy(d["replay"]["current"]),
+             "compared": {p["id"]: {"tabs": dict(p["tabs"]), "tabs_ne": dict(p["tabs_ne"])} for p in d["plans"][1:]}}
+        o["crops"][1]["crop"] = winter
+        return o
+    first = option("rice_" + cur["crops"][1]["crop"], cur["crops"][1]["crop"])
+    other = option("rice_potato" if cur["crops"][1]["crop"] != "potato" else "rice_maize",
+                   "potato" if cur["crops"][1]["crop"] != "potato" else "maize")
+    d["current_options"] = {"default": first["id"], "options": [first, other]}
+    return d
+
+
+def test_current_options_validate_and_the_default_is_the_current_plan():
+    d = _with_options()
+    assert validate_field(d) == []
+    d["current_options"]["default"] = "rice_nothing"
+    assert any("default" in e for e in validate_field(d))
+
+
+def test_the_default_option_must_be_what_plans_and_replay_show():
+    d = _with_options()
+    d["current_options"]["options"][0]["score"]["harvest"] = 1
+    assert any("default option" in e for e in validate_field(d))
+    d = _with_options()
+    d["current_options"]["options"][0]["replay"][0]["harvest"] = 1
+    assert any("default option" in e for e in validate_field(d))
+
+
+def test_every_option_covers_the_same_years_and_compares_every_suggested_plan():
+    d = _with_options()
+    d["current_options"]["options"][1]["replay"].pop()
+    assert any("same years" in e for e in validate_field(d))
+    d = _with_options()
+    del d["current_options"]["options"][1]["compared"]["safest"]
+    assert any("compared" in e for e in validate_field(d))
+    d = _with_options()
+    d["current_options"]["options"][1]["crops"] = d["current_options"]["options"][0]["crops"]
+    assert any("same crops" in e for e in validate_field(d))

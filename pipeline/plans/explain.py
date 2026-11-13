@@ -114,6 +114,8 @@ def conditions(plan, current, ctx, lib):
         held.add("rain_reads_high")                           # owner's answer 8
     if ctx.get("soil_distance_m"):
         held.add("soil_cell_far")                             # owner's answer 10
+    if ctx.get("winter_crop_unconfirmed"):
+        held.add("winter_crop_unconfirmed")                   # owner's answer 6: the farmer has not confirmed the winter crop
     return held
 
 

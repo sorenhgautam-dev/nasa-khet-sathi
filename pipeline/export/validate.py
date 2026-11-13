@@ -146,8 +146,46 @@ def validate_field(doc, final=False):
         errors.append("diary/groundwater: 'falling' needs a negative trend")
     if gw["direction"] == "rising" and gw["trend_cm_per_year"] <= 0:
         errors.append("diary/groundwater: 'rising' needs a positive trend")
+    errors += _current_options_errors(doc)
     if final:
         errors += _final_errors(doc)
+    return errors
+
+
+def _current_options_errors(doc):
+    """Owner's answer 6 to REVIEW_2 (2026-11-13): the current plan once for each rotation the farmer may confirm."""
+    co = doc.get("current_options")
+    if not co:
+        return []
+    errors = []
+    opts = {o["id"]: o for o in co["options"]}
+    if len(opts) != len(co["options"]):
+        errors.append("current_options: duplicate option ids")
+    if co["default"] not in opts:
+        return errors + [f"current_options: default '{co['default']}' is not one of the options {sorted(opts)}"]
+    cur = next((p for p in doc["plans"] if p["id"] == "current"), None)
+    d = opts[co["default"]]
+    if cur is None or any(d[k] != cur[k] for k in ("crops", "score", "tabs", "tips", "tabs_ne", "tips_ne")) \
+            or d.get("score_uncorrected_rain") != cur.get("score_uncorrected_rain") or d["replay"] != doc["replay"].get("current"):
+        errors.append("current_options: the default option must be what plans (id current) and replay.current show")
+    years = [y["year"] for y in doc["replay"].get("current", [])]
+    suggested = sorted(p["id"] for p in doc["plans"] if p["id"] != "current")
+    crops_seen = {}
+    for o in co["options"]:
+        if [y["year"] for y in o["replay"]] != years:
+            errors.append(f"current_options/{o['id']}: its replay must cover the same years as replay.current")
+        if sorted(o["compared"]) != suggested:
+            errors.append(f"current_options/{o['id']}: compared must hold exactly the suggested plans {suggested}")
+        if len(o["tips_ne"]) != len(o["tips"]):
+            errors.append(f"current_options/{o['id']}: tips_ne needs one Nepali tip per English tip")
+        key = tuple(c["crop"] for c in o["crops"])
+        if key in crops_seen:
+            errors.append(f"current_options: {o['id']} and {crops_seen[key]} grow the same crops")
+        crops_seen[key] = o["id"]
+        ev = {y["year"]: (y["event"], y.get("event_season")) for y in o["replay"]}
+        ref = {y["year"]: (y["event"], y.get("event_season")) for y in doc["replay"].get("current", [])}
+        if ev != ref and [y["year"] for y in o["replay"]] == years:
+            errors.append(f"current_options/{o['id']}: a year must carry the same event as on every plan")
     return errors
 
 

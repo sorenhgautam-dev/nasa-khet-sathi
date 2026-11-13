@@ -2,8 +2,8 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 175 texts): needs native-speaker review.
-- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 83 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 179 texts): needs native-speaker review.
+- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 84 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
 
@@ -62,6 +62,10 @@ This page is made from the word files in this folder; change those, not this pag
 | **We looked at your field from space** | **हामीले अन्तरिक्षबाट तपाईंको खेत हेरेका छौं** |
 | We think you grow {guess_list}. | हाम्रो विचारमा तपाईं {guess_list} लगाउनुहुन्छ। |
 | Is this right? | के यो ठीक हो? |
+| We think you grow {first_crop} first. *(while the farmer has not said which winter crop is grown)* | हाम्रो विचारमा तपाईं पहिले {first_crop} लगाउनुहुन्छ। |
+| Then {option_a} or {option_b}. *(while the farmer has not said which winter crop is grown)* | त्यसपछि {option_a} वा {option_b}। |
+| Which one do you grow? *(while the farmer has not said which winter crop is grown)* | तपाईं कुन लगाउनुहुन्छ? |
+| From space, both look the same. *(while the farmer has not said which winter crop is grown)* | अन्तरिक्षबाट हेर्दा दुवै उस्तै देखिन्छन्। |
 | Yes | हो |
 | No, let me fix it | होइन, म मिलाउँछु |
 | The ground is bare about {bare_days} days yearly. | वर्षमा करिब {bare_days} दिन जमिन खाली रहन्छ। |
@@ -269,6 +273,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Nearby parts share one soil map. | नजिकका भागहरूको माटोको नक्सा एउटै छ। |
 | The soil numbers come from {soil_distance} m away. *(if the soil numbers are not from the field's own spot)* | माटोको नाप {soil_distance} मिटर परको हो। |
 | Planting dates are typical ones, not yours. | रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। |
+| Your winter crop dates may differ from ours. *(while the farmer has not said which winter crop is grown)* | तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। |
 | We don't know how deep roots reach here. *(for a suggested plan, to say why the gain is a range)* | यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। |
 | So the harvest gain is a range. *(for a suggested plan, to say why the gain is a range)* | त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। |
 | We guessed how thirst hurts {assumed_crop}. *(if a crop's harvest loss from thirst is our assumption)* | {assumed_crop}मा तिर्खाको असर हाम्रो अनुमान हो। |

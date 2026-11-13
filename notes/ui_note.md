@@ -65,13 +65,23 @@ site/
   `event_season` (`"winter"` or `"monsoon"`): say "A dry winter" / "A dry rainy season" (words.json, screen 7).
 - A plan can have one tip only. Do not lay the screen out for exactly three.
 
-## 5. Changes still coming (each will be in CONTRACT_CHANGES.md as it lands)
+## 5. Landed on 13 November, 17:30: the farmer confirms the winter crop
 
-- The farmer confirms the winter crop on screen 3 ("rice, then potato or wheat"). The file will hold the current
-  plan's results for both answers, so the site only switches between saved results.
+`current_options` holds the current plan for both answers: `rice_potato` (the default) and `rice_wheat`.
+
+- Screen 3 asks: "We think you grow rice first." "Then potato or wheat." "Which one do you grow?" (words.json,
+  screen 3, `guess_first`, `guess_options`, `guess_which`, `guess_cannot_tell`).
+- Before an answer, show the default option. It is exactly what `plans[0]` and `replay.current` hold, so a site that
+  ignores `current_options` still works.
+- On the answer, take from that option: `crops`, `score`, `score_uncorrected_rain`, `tabs`, `tips` (and `_ne`) and
+  `replay` for the current plan; and for the two other plans the `tabs` / `tabs_ne` in the option's `compared`
+  (their "about N more" lines depend on what they are compared with). Everything else stays.
+
+## 6. Changes still coming (each will be in CONTRACT_CHANGES.md as it lands)
+
 - A "less sure" signal for the months where our two ways of reading the satellite disagree.
 
-## 6. Site rules we promised the judges (from CLAUDE.md)
+## 7. Site rules we promised the judges (from CLAUDE.md)
 
 Ten screens, one action each. Sentences of eight words or fewer. Pictures before words; never colour alone.
 Buttons at least 48 px. Designed at 360 px wide. First screen under 300 KB. Plain HTML, CSS and JavaScript;
