@@ -7,9 +7,9 @@ Made for NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA 
 
 > **Work in progress (13 November 2026).** The demo field is a labelled **placeholder** near Bhaktapur, Nepal,
 > until we know the real field and what is grown on it. In `site/data/fields/demo.json` the replay, the three
-> plans, the diary and the method page are real. Two parts are still **MOCK**: the field's small parts
-> (`field.sections`) and the 2040 outlook (`future`). They are named as mock in the field's name and in the
-> sources list. We would rather say "not known yet" than show a made-up number. The website screens are not
+> plans, the diary and the method page are real. Two parts are **not ready yet**: the field's small parts
+> (`field.sections`) and the 2040 outlook (`future`). They hold no numbers and are named in the file's `mock`
+> list, so the site says "not ready yet". We would rather say that than show a made-up number. The website screens are not
 > in this repository yet. An independent review of the whole project is in [REVIEW_2.md](REVIEW_2.md).
 
 ## What it does
@@ -107,7 +107,8 @@ python3.12 -m venv .venv
    ```sh
    .venv/bin/python -m pipeline.export.build_field_json --field <id>
    .venv/bin/python -m pipeline.export.validate
-   .venv/bin/python -m pipeline.export.validate --final    # before freezing: fails while anything is MOCK
+   .venv/bin/python -m pipeline.export.build_words         # the site's words: site/data/words.json
+   .venv/bin/python -m pipeline.export.validate --final    # before freezing: fails on any made-up number
    ```
 
 Every download writes a "data card" in `data/cards/<id>/`: the product, version, units, fill values removed

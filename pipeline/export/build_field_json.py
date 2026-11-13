@@ -197,9 +197,25 @@ def sources_block(soil_distance_m=None):
         {"name": "NASADEM", "product": "v001 elevation", "resolution": "30 m", "years": "2000", "type": "satellite"},
         {"name": "Khet Sathi field twin", "product": "FAO-56 soil water, FAO-33 harvest, from the data above",
          "resolution": "the field", "years": "2001-2025", "type": "model"},
-        {"name": "MOCK data for building the site", "product": "pipeline/export/mock.py: the field's parts (sections) and "
-         "the 2040 future only, until build steps 8 and 9", "resolution": "none (made up)", "years": "none", "type": "model"},
     ]
+
+
+NOT_READY = ("field.sections", "future")     # build steps 8 and 9
+
+
+def not_ready_blocks(doc, field):
+    """Owner's answer 2 to REVIEW_2 (2026-11-13): no made-up number is exported. Until build steps 8 and 9 exist the
+    field's sections tile the real polygon and say nothing (grey, null wetness and temp, sure 0), the 2040 outlook
+    is null, and both blocks are named in `mock` so the site can say 'not ready yet'. The field's name, lat and lon
+    come from its config (no '(MOCK data)')."""
+    from pipeline.sections.grid import grid_sections
+    out = copy.deepcopy(doc)
+    out["field"]["name"], out["field"]["lat"], out["field"]["lon"] = field["name"], field["lat"], field["lon"]
+    out["field"]["sections"] = [{"id": s["id"], "polygon": s["polygon"], "status": "grey", "wetness": None, "temp": None,
+                                 "sure": 0} for s in grid_sections(field["polygon"])]
+    out["future"] = None
+    out["mock"] = list(NOT_READY)
+    return out
 
 
 PLAN_SOURCES = ("GPM IMERG", "NASA POWER", "ISRIC SoilGrids", "GRACE and GRACE-FO")
@@ -327,7 +343,7 @@ def export_step7(doc, field_id, plans):
     plans_unc = json.loads(unc_path.read_text()) if unc_path.exists() else None
     if plans["labels"].get("rain_version") != "corrected" or (plans_unc and plans_unc["labels"].get("rain_version") != "uncorrected"):
         raise ValueError("plans.json must be the corrected-rain run and rain_uncorrected/plans.json the uncorrected one")
-    out = copy.deepcopy(doc)
+    out = not_ready_blocks(doc, field)
     soil_card_path = REPO / "data" / "cards" / field_id / "soilgrids.json"
     soil_loc = json.loads(soil_card_path.read_text()).get("location", {}) if soil_card_path.exists() else {}
     out["sources"] = sources_block(soil_distance_m=soil_loc.get("distance_m") if isinstance(soil_loc, dict) else None)

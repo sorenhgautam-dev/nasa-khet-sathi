@@ -96,7 +96,9 @@ Nothing found suggests a threshold was tuned to pass a check and then hidden.
   exporter; neutral sections (grey, `temp` null, `sure` 0) that tile the real square until step 8; the name loses
   "(MOCK data)" once only listed blocks are mock; `validate --final` fails while anything is mock.
 - **Effort.** 1 h pipeline, plus a little UI work.
-- **Status.** OWNER (question 2; contract change). Until then `validate --final` fails on it (M13).
+- **Status.** FIXED 2026-11-13 (owner's answer 2), tests first: a `mock` list names the blocks that are not computed; the
+  export holds 36 real sections (10 m squares, `pipeline/sections/grid.py`) with no numbers and `future: null`; the name
+  and the sources no longer say MOCK; the validator checks that a named block holds no numbers.
 
 #### H2. "Safest in bad years" is not the safest plan shown; the plan order is not robust (M)
 - **Evidence.** `data/checks/demo/plans.json`:
@@ -442,7 +444,8 @@ Nothing found suggests a threshold was tuned to pass a check and then hidden.
 - **Fix.** Owner: export `site/data/words.json` (a new site file) or agree a copy with a test. A Nepali lookup for
   the resolution strings (text needing review).
 - **Effort.** 1-2 h.
-- **Status.** OWNER (question 16).
+- **Status.** `site/data/words.json` FIXED 2026-11-13 (owner's answer 16; `pipeline/export/build_words.py`, a test fails when it is
+  out of date). The Nepali lookup for the resolution strings: OPEN.
 
 #### M15. "If you can water" is 100% and 0 dry days in all 72 plan-years, by construction
 - **Evidence.** `pipeline/twin/soil_water.py:75-80` refills whenever stress would start. Flood years carry no loss.

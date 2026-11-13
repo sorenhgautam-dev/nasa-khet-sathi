@@ -161,8 +161,15 @@ def _schema():
 
 
 def _deref(node, schema):
-    while isinstance(node, dict) and "$ref" in node:
-        node = schema["$defs"][node["$ref"].split("/")[-1]]
+    """Follow $ref, and in "X or null" (anyOf with a null branch: a value that may be missing) take X."""
+    while isinstance(node, dict) and ("$ref" in node or "anyOf" in node):
+        if "$ref" in node:
+            node = schema["$defs"][node["$ref"].split("/")[-1]]
+        else:
+            alts = [a for a in node["anyOf"] if a.get("type") != "null"]
+            if len(alts) != 1:
+                return node
+            node = alts[0]
     return node
 
 

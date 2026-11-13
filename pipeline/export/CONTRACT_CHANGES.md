@@ -1,8 +1,24 @@
 # Contract changes (for the UI teammate)
 
-`schema.json` is the full truth. `site/data/fields/demo.json` is regenerated after every change. Since 2026-11-13 it is
-real except for **`field.sections` (step 8) and `future` (step 9), which are still MOCK**; the field name still ends
-"(MOCK data)" and nothing a program can read marks the two mock blocks (REVIEW_2 H1, with the owner).
+`schema.json` is the full truth. `site/data/fields/demo.json` is regenerated after every change. Since 2026-11-13 it holds
+no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
+holds no numbers.
+
+## 2026-11-13 (Friday, 16:00): no made-up numbers any more; `mock` list; `irrigated` required; `words.json` (owner's answers 2, 16, 17)
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `mock` (new, top level, optional) | did not exist | a list of the blocks that are **not computed yet**: today `["field.sections", "future"]`. Absent or empty when everything is real | Show "not ready yet" for every block named here. Never show a number from it |
+| `field.sections[]` | 12 made-up sections with made-up wetness and probe temperatures | **36 real sections** (10 m squares that tile the 60 m field, `s1` at the south-west corner, row by row), each `status: "grey"`, `wetness: null`, `temp: null`, `sure: 0` until build step 8 | Draw the outlines; show every part as "not ready yet" (fog). `wetness` can be `null` now |
+| `future` | a made-up 2040 outlook | **`null`** until build step 9 | Show "not ready yet" on the 2040 screen. Check for `null` before reading it |
+| `field.name` | ended "(MOCK data)" | "Bhaktapur demo field (PLACEHOLDER location and rotation)", from the field's config | Still say it is a sample field |
+| `sources[]` | a last row "MOCK data for building the site" | that row is gone (9 rows) | Nothing |
+| `replay.<plan>[].irrigated` | optional | **required** on every year (it was always written) | Nothing |
+| `site/data/words.json` (new file) | did not exist; texts sat in `pipeline/words/` | `{about, screens[10], shared, glossary[], crop_explainers}`: every word on the ten screens, the shared words (buttons, crop names, months, source kinds), the glossary and the crop explainers, English and Nepali | Read the screen texts from it; fill `{placeholders}` from the field file; do not retype texts. Each Nepali text carries `ne_review` until a person has reviewed it: do not show that key |
+
+`python -m pipeline.export.validate` now checks that a block named in `mock` holds no numbers, and that an empty block is
+named there. `--final` (the freeze check) accepts "not ready yet" blocks and still refuses anything with made-up (MOCK)
+numbers. The validator also reads `words.json`.
 
 ## 2026-11-13 (Friday, afternoon): REVIEW_2, an independent review. No key added, removed or renamed
 

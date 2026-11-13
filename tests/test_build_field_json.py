@@ -207,12 +207,26 @@ def test_the_real_rules_list_the_third_plan_rule_and_no_approved_choice_as_unapp
             assert not re.search(r"(?i)owner-approved \d{4}-\d{2}-\d{2}", c["choice"]), c["id"]
 
 
-def test_the_sources_label_model_based_data_and_keep_the_mock_parts_labelled():
+def test_the_sources_label_model_based_data_and_hold_no_mock_row():
     from pipeline.export.build_field_json import sources_block
     s = {x["name"]: x for x in sources_block()}
     assert s["NASA POWER"]["type"] == "model" and s["ISRIC SoilGrids"]["type"] == "model"
     assert s["GPM IMERG"]["type"] == "satellite" and "2017" in s["GPM IMERG"]["product"]
-    assert any("MOCK" in x["name"] for x in s.values())
+    assert not any("MOCK" in x["name"] for x in s.values())       # owner's answer 2: the `mock` list names such blocks
+
+
+def test_blocks_that_are_not_computed_yet_are_named_and_emptied():
+    """Owner's answer 2 to REVIEW_2 (2026-11-13): a `mock` list, neutral sections that tile the real field, no 2040
+    numbers; the field's name comes from its config, without '(MOCK data)'."""
+    field = {"name": "Sample field (PLACEHOLDER)", "lat": 27.690767, "lon": 85.441792,
+             "polygon": [[85.441487, 27.690497], [85.442097, 27.690497], [85.442097, 27.691037], [85.441487, 27.691037]]}
+    out = b.not_ready_blocks(build_field(), field)
+    assert out["mock"] == ["field.sections", "future"] and out["future"] is None
+    assert out["field"]["name"] == "Sample field (PLACEHOLDER)" and "MOCK" not in out["field"]["name"]
+    assert len(out["field"]["sections"]) == 36
+    assert all(sec["status"] == "grey" and sec["wetness"] is None and sec["temp"] is None and sec["sure"] == 0
+               for sec in out["field"]["sections"])
+    assert validate_field(out) == []
 
 
 def test_the_sources_say_what_each_dataset_is_really_used_for():

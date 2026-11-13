@@ -117,7 +117,7 @@ khet-sathi/
     ml/                 # seasons.py (season detective classifier), memory.py (field memory)
     words/              # SI drafts of tabs, tips, glossary, Nepali text (text only: no audio, owner 2026-11-12)
     checks/             # validation-layer statistics: climate.py, crosscheck.py (incl. day alignment), spikes.py
-    export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py,
+    export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py, build_words.py,
                         # CONTRACT_CHANGES.md (what changed for the UI, and when)
   scripts/              # backup.sh, make_review_pack.py, scan_history.py; the runners run_checks.py, run_replay.py,
                         # run_diary.py, run_plans.py, run_rain_check.py; checks run_smap_check.py, run_dhm_bulletin_check.py
@@ -131,6 +131,7 @@ khet-sathi/
   site/                 # the UI (owned by the UI teammate); we only write site/data/
     data/index.json     # list of prepared fields
     data/fields/<id>.json
+    data/words.json     # every screen word, the glossary and the crop explainers (pipeline/export/build_words.py)
     data/probe_log.json # recorded probe readings, replayed on the public site
     data/live.json      # live probe reading during the in-person demo only
 ```
@@ -190,8 +191,12 @@ years are exported, each holding every crop of the rotation (2002-2025 for rice 
 2026-11-12). Each plan also carries `tabs_ne` and
 `tips_ne` (owner, 2026-11-12): the same five tabs and one Nepali tip per English tip, in the same order.
 A section's `temp` is soil temperature from the probe (owner, 2026-11-12), and `null` until the probe has
-read that section ("not sure yet"). Every change to the contract is listed
-in `pipeline/export/CONTRACT_CHANGES.md`.
+read that section ("not sure yet"). **No made-up number is ever exported (owner, 2026-11-13):** a block that is not
+computed yet is named in the top-level `mock` list (`field.sections`, `future`) and holds no numbers (sections grey with
+null `wetness` and `temp` and `sure` 0; `future` null), and the site says "not ready yet". Each replay year's `irrigated`
+is required. The file also has a required `method` block (the method page: `season_detection`, `rain_correction`,
+`choices`). `site/data/words.json` holds every screen word, the glossary and the crop explainers. Every change to the
+contract is listed in `pipeline/export/CONTRACT_CHANGES.md`.
 
 `site/data/index.json` lists the prepared fields so the site can offer them and can tell when a
 drawn field is outside every prepared area:

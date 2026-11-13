@@ -165,30 +165,38 @@
    }
   },
   "future": {
-   "type": "object",
-   "additionalProperties": false,
-   "required": [
-    "years",
-    "nothing_changes",
-    "with_plan"
-   ],
-   "properties": {
-    "years": {
-     "type": "array",
-     "minItems": 1,
-     "items": {
-      "type": "integer",
-      "minimum": 2026,
-      "maximum": 2100
+   "anyOf": [
+    {
+     "type": "null"
+    },
+    {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "years",
+      "nothing_changes",
+      "with_plan"
+     ],
+     "properties": {
+      "years": {
+       "type": "array",
+       "minItems": 1,
+       "items": {
+        "type": "integer",
+        "minimum": 2026,
+        "maximum": 2100
+       }
+      },
+      "nothing_changes": {
+       "$ref": "#/$defs/future_series"
+      },
+      "with_plan": {
+       "$ref": "#/$defs/future_series"
+      }
      }
-    },
-    "nothing_changes": {
-     "$ref": "#/$defs/future_series"
-    },
-    "with_plan": {
-     "$ref": "#/$defs/future_series"
     }
-   }
+   ],
+   "description": "The 2040 outlook; null while it is not computed yet (build step 9; the block is then named in `mock`): show 'not ready yet', never a number."
   },
   "sources": {
    "type": "array",
@@ -580,6 +588,17 @@
      }
     }
    }
+  },
+  "mock": {
+   "type": "array",
+   "uniqueItems": true,
+   "items": {
+    "enum": [
+     "field.sections",
+     "future"
+    ]
+   },
+   "description": "Blocks that are NOT computed yet (owner, 2026-11-13). They hold no numbers: sections are grey with null wetness and temp and sure 0; future is null. The site shows 'not ready yet' for each block named here. Absent or empty when everything is real."
   }
  },
  "$defs": {
@@ -644,7 +663,15 @@
      "description": "grey = unknown"
     },
     "wetness": {
-     "$ref": "#/$defs/pct"
+     "anyOf": [
+      {
+       "$ref": "#/$defs/pct"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "description": "Soil wetness 0 to 100; null while the sections are not computed yet (the block is then named in `mock`): show 'not ready yet'."
     },
     "temp": {
      "type": [
@@ -913,7 +940,8 @@
     "year",
     "harvest",
     "dry_days",
-    "event"
+    "event",
+    "irrigated"
    ],
    "properties": {
     "year": {

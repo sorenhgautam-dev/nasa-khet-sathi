@@ -162,13 +162,50 @@ def test_every_mock_replay_year_has_the_irrigated_case():
     assert all(set(y["irrigated"]) == {"harvest", "dry_days"} for rows in d["replay"].values() for y in rows)
 
 
-def test_a_replay_year_without_the_irrigated_case_still_validates():
-    """The key is optional, so files written before 2026-11-12 stay valid."""
+def test_a_replay_year_without_the_irrigated_case_is_refused():
+    """Owner's answer 17 to REVIEW_2 (2026-11-13): both water cases on every replay year (was optional)."""
     d = build_field()
-    for rows in d["replay"].values():
-        for y in rows:
-            del y["irrigated"]
-    assert validate_field(d) == []
+    del d["replay"]["current"][0]["irrigated"]
+    assert validate_field(d) != []
+
+
+# --- owner's answer 2 to REVIEW_2 (2026-11-13): blocks that are not ready are named and hold no made-up numbers ---
+
+def _not_ready():
+    d = build_field()
+    d["mock"] = ["field.sections", "future"]
+    d["future"] = None
+    for sec in d["field"]["sections"]:
+        sec.update(status="grey", wetness=None, temp=None, sure=0)
+    return d
+
+
+def test_blocks_named_as_not_ready_validate_when_they_hold_no_numbers():
+    assert validate_field(_not_ready()) == []
+
+
+def test_a_block_named_as_not_ready_must_not_carry_numbers():
+    d = _not_ready()
+    d["field"]["sections"][0]["wetness"] = 55
+    assert any("field.sections" in e for e in validate_field(d))
+    d = _not_ready()
+    d["future"] = build_field()["future"]
+    assert any("future" in e for e in validate_field(d))
+
+
+def test_an_empty_block_must_be_named_in_the_list():
+    d = _not_ready()
+    d["mock"] = ["field.sections"]
+    assert any("future" in e for e in validate_field(d))
+    d = _not_ready()
+    del d["mock"]
+    assert validate_field(d) != []
+
+
+def test_only_known_blocks_can_be_named():
+    d = _not_ready()
+    d["mock"] = ["plans"]
+    assert validate_field(d) != []
 
 
 # --- owner's batch decisions, 2026-11-12 ---
@@ -270,8 +307,12 @@ def test_the_final_check_refuses_a_score_that_is_not_the_replays_mean():
     assert any("score.harvest" in e for e in validate_field(d, final=True))
 
 
-def test_the_final_check_wants_both_water_cases_on_every_year():
+def test_a_file_with_blocks_not_ready_passes_the_final_check_if_nothing_is_made_up():
+    """Owner's answer 2: if steps 8 and 9 slip, the file freezes with honest 'not ready yet' blocks."""
+    import json
     d = _final_ready()
-    del d["replay"]["current"][0]["irrigated"]
-    assert validate_field(d) == []                                  # still optional in the schema (owner's call)
-    assert any("irrigated" in e for e in validate_field(d, final=True))
+    d["mock"] = ["field.sections", "future"]
+    d["future"] = None
+    for sec in d["field"]["sections"]:
+        sec.update(status="grey", wetness=None, temp=None, sure=0)
+    assert "MOCK" not in json.dumps(d) and validate_field(d, final=True) == []

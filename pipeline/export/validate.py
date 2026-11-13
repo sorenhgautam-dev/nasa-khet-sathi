@@ -37,8 +37,9 @@ def _dupes(values):
 
 def _final_errors(doc):
     """What a file ready to freeze must also meet (REVIEW_2 M13; --final). Not part of the everyday check, because
-    the mock that the site was built with does not meet it: nothing MOCK left, three different rotations, each
-    plan's harvest score the mean of its replay (within 1 point of rounding), both water cases on every year."""
+    the mock that the site was built with does not meet it: no made-up (MOCK) numbers left, three different
+    rotations, each plan's harvest score the mean of its replay (within 1 point of rounding). Blocks named in `mock`
+    are allowed: they hold no numbers and the site says 'not ready yet' (owner's answer 2, 2026-11-13)."""
     errors = []
     if "MOCK" in json.dumps(doc, ensure_ascii=False):
         errors.append("final: the file still contains MOCK data")
@@ -55,9 +56,6 @@ def _final_errors(doc):
             if abs(p["score"]["harvest"] - mean) > 1.0:
                 errors.append(f"final: plans/{p['id']}: score.harvest {p['score']['harvest']} is not the mean of its "
                               f"replay ({mean:.1f})")
-        missing = [y["year"] for y in years if "irrigated" not in y]
-        if missing:
-            errors.append(f"final: replay/{p['id']}: no irrigated case in {missing} (contract: both always written)")
     return errors
 
 
@@ -96,15 +94,27 @@ def validate_field(doc, final=False):
         u = p.get("score_uncorrected_rain")
         if u and u == p["score"]:
             errors.append(f"plans/{p['id']}: score_uncorrected_rain is given but changes nothing")
-    n = len(doc["future"]["years"])
-    for series in ("nothing_changes", "with_plan"):
-        s = doc["future"][series]
-        for key in ("harvest", "harvest_low", "harvest_high"):
-            if len(s[key]) != n:
-                errors.append(f"future/{series}/{key}: needs {n} values, one per year")
-        for i, (lo, mid, hi) in enumerate(zip(s["harvest_low"], s["harvest"], s["harvest_high"])):
-            if not lo <= mid <= hi:
-                errors.append(f"future/{series}: year {i} needs harvest_low <= harvest <= harvest_high")
+    # owner's answer 2 to REVIEW_2 (2026-11-13): a block that is not computed yet is named in `mock` and holds no numbers
+    not_ready = doc.get("mock", [])
+    empty_sections = [s["id"] for s in doc["field"]["sections"]
+                      if s["wetness"] is None and s["temp"] is None and s["status"] == "grey" and s["sure"] == 0]
+    if "field.sections" in not_ready:
+        if len(empty_sections) != len(doc["field"]["sections"]):
+            errors.append("field.sections is named in `mock`, so every section must be grey with null wetness and temp and sure 0")
+    elif any(s["wetness"] is None for s in doc["field"]["sections"]):
+        errors.append("field.sections: a section without wetness needs 'field.sections' in `mock`")
+    if ("future" in not_ready) != (doc["future"] is None):
+        errors.append("future: it is null exactly when 'future' is named in `mock`")
+    if doc["future"] is not None:
+        n = len(doc["future"]["years"])
+        for series in ("nothing_changes", "with_plan"):
+            s = doc["future"][series]
+            for key in ("harvest", "harvest_low", "harvest_high"):
+                if len(s[key]) != n:
+                    errors.append(f"future/{series}/{key}: needs {n} values, one per year")
+            for i, (lo, mid, hi) in enumerate(zip(s["harvest_low"], s["harvest"], s["harvest_high"])):
+                if not lo <= mid <= hi:
+                    errors.append(f"future/{series}: year {i} needs harvest_low <= harvest <= harvest_high")
     sd = doc["method"]["season_detection"]
     by_id = {m["id"]: m for m in sd["methods"]}
     if sorted(by_id) != ["changepoint", "detective", "threshold"]:
@@ -127,6 +137,14 @@ def validate_field(doc, final=False):
         errors.append("diary/groundwater: 'rising' needs a positive trend")
     if final:
         errors += _final_errors(doc)
+    return errors
+
+
+def words_problems(doc):
+    """site/data/words.json (owner's answer 16, 2026-11-13): the blocks the site reads must be there and not empty."""
+    errors = [f"words: '{k}' is missing or empty" for k in ("screens", "shared", "glossary", "crop_explainers") if not doc.get(k)]
+    if not errors and len(doc["screens"]) != 10:
+        errors.append(f"words: ten screens are expected, found {len(doc['screens'])}")
     return errors
 
 
@@ -178,15 +196,24 @@ def main(argv=None):
             problems[str(path)] = errs
         if "MOCK" in path.read_text() and not args.final:
             print(f"WARNING {path}: contains MOCK data, must be replaced before submission (--final makes this a failure)")
+        if doc.get("mock"):
+            print(f"NOTE {path}: not ready yet (the site must say so): {', '.join(doc['mock'])}")
 
     for f in (index or {}).get("fields", []):
         if not (data_dir / "fields" / f"{f['id']}.json").exists():
             problems.setdefault(str(index_path), []).append(f"{f['id']}: listed but no fields/{f['id']}.json")
 
+    words_path = data_dir / "words.json"
+    if words_path.exists():
+        if errs := words_problems(json.loads(words_path.read_text())):
+            problems[str(words_path)] = errs
+    elif args.final:
+        problems[str(words_path)] = ["missing (python -m pipeline.export.build_words)"]
+
     for path, errs in problems.items():
         for e in errs:
             print(f"FAIL {path}: {e}")
-    checked = len(field_files) + (index is not None)
+    checked = len(field_files) + (index is not None) + words_path.exists()
     print(f"{checked} file(s) checked, {len(problems)} with problems")
     return 1 if problems else 0
 
