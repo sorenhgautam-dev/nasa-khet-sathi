@@ -328,3 +328,42 @@ def test_the_soil_source_shows_the_neighbourhood_range():
     around = {"radius_m": 2000, "depth_m": 1.0, "cells": 56, "used_mm": 149.3, "min_mm": 149.3, "median_mm": 171.5, "max_mm": 186.8}
     soil = {x["name"]: x for x in sources_block(soil_distance_m=859.3, soil_around=around)}["ISRIC SoilGrids"]["product"]
     assert "859 m from the field" in soil and "149 mm" in soil and "56 cells within 2 km" in soil and "149 to 187 mm" in soil
+
+
+# --- owner's group 2a (2026-11-14): four real parts, each with its own greenness, status from the twin ---
+
+_FIELD = {"name": "Sample field (PLACEHOLDER)", "lat": 27.690767, "lon": 85.441792,
+          "polygon": [[85.441487, 27.690497], [85.442097, 27.690497], [85.442097, 27.691037], [85.441487, 27.691037]]}
+
+
+def _sections_check():
+    words = ["same", "less green", "greener", "can't tell"]
+    secs = []
+    for i in range(4):
+        secs.append({"id": f"s{i + 1}", "polygon": [[85.4415, 27.6905], [85.4418, 27.6905], [85.4418, 27.6908]],
+                     "status": "green", "wetness_pct": 95.67, "low_ground": None,
+                     "greenness": {"usually": words[i]}})
+    return {"sections": secs}
+
+
+_STATE = {"date": "2026-11-03", "wetness_pct": 95.67, "ks": 1.0, "sure_prior": 0.217}
+
+
+def test_real_sections_carry_wetness_status_and_their_own_words():
+    out = b.not_ready_blocks(build_field(), _FIELD, sections=_sections_check(), twin_state=_STATE)
+    secs = out["field"]["sections"]
+    assert [s["id"] for s in secs] == ["s1", "s2", "s3", "s4"]
+    assert [s["greener"] for s in secs] == ["same", "less", "more", "unknown"]
+    assert all(s["wetness"] == 96 and s["status"] == "green" and s["temp"] is None and s["low_ground"] is None for s in secs)
+    assert all(s["sure"] == 0.22 for s in secs)                  # the twin's own sureness before any probe reading
+    assert out["field"]["status_date"] == "2026-11-03"
+    assert "field.sections" not in out["mock"] and "future" in out["mock"]
+    assert validate_field(out) == []
+
+
+def test_sections_without_the_twin_state_stay_not_ready():
+    out = b.not_ready_blocks(build_field(), _FIELD, sections=_sections_check(), twin_state=None)
+    assert "field.sections" in out["mock"]
+    assert all(s["status"] == "grey" and s["wetness"] is None and s["sure"] == 0 for s in out["field"]["sections"])
+    assert len(out["field"]["sections"]) == 4                     # the real parts' outlines, still without numbers
+    assert validate_field(out) == []

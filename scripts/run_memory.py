@@ -24,6 +24,7 @@ from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.ml import memory as fm  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
+from pipeline.twin.evaporation import bare_soil_setting  # noqa: E402
 
 
 def dataset(field, rules, lib, data=REPO / "data"):
@@ -33,7 +34,7 @@ def dataset(field, rules, lib, data=REPO / "data"):
     cov, by = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by["bare"], **{c: by[cov[c]] for c in cov}}
     rotation, rot_label = sim.rotation_for(field, rules)
-    twin = sim.replay(w, rotation, lib, soil, cn, bare_kc=rules["bare_soil"]["kc"], irrigated=False,
+    twin = sim.replay(w, rotation, lib, soil, cn, bare_kc=bare_soil_setting(rules["bare_soil"], soil), irrigated=False,
                       kc_climate=rules["kc_climate"]["apply"])["daily"]
     daily = pd.DataFrame({"date": pd.DatetimeIndex(twin["date"]), "eta_mm": twin["eta_mm"].to_numpy(float),
                           "etc_mm": twin["etc_mm"].to_numpy(float)})

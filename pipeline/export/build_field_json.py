@@ -227,18 +227,38 @@ def sources_block(soil_distance_m=None, soil_around=None):
 NOT_READY = ("field.sections", "future")     # build steps 8 and 9
 
 
-def not_ready_blocks(doc, field):
-    """Owner's answer 2 to REVIEW_2 (2026-11-13): no made-up number is exported. Until build steps 8 and 9 exist the
-    field's sections tile the real polygon and say nothing (grey, null wetness and temp, sure 0), the 2040 outlook
-    is null, and both blocks are named in `mock` so the site can say 'not ready yet'. The field's name, lat and lon
-    come from its config (no '(MOCK data)')."""
+GREENER_WORD = {"greener": "more", "less green": "less", "same": "same", "can't tell": "unknown"}
+
+
+def not_ready_blocks(doc, field, sections=None, twin_state=None):
+    """Owner's answer 2 to REVIEW_2 (2026-11-13): no made-up number is exported. A block not computed yet holds no
+    numbers and is named in `mock` so the site can say 'not ready yet'. The field's name, lat and lon come from its
+    config (no '(MOCK data)').
+
+    Sections (owner's group 2a, 2026-11-14): with data/checks/<field>/sections.json (scripts/run_sections.py: the parts
+    that tile the real field, each about one HLS pixel) AND the twin's state (data/clean/<field>/twin_state.json), each
+    part gets the twin's wetness (one bucket for the whole field: every part shares it), its status (rules.yaml
+    sections), the twin's own sureness before any probe reading (sure_prior), its own greenness word and its
+    low-ground flag. Without the twin's state the parts keep their outlines and say nothing. The 2040 outlook is
+    filled later in the export (build step 9); here it is null and named."""
     from pipeline.sections.grid import grid_sections
     out = copy.deepcopy(doc)
     out["field"]["name"], out["field"]["lat"], out["field"]["lon"] = field["name"], field["lat"], field["lon"]
-    out["field"]["sections"] = [{"id": s["id"], "polygon": s["polygon"], "status": "grey", "wetness": None, "temp": None,
-                                 "sure": 0} for s in grid_sections(field["polygon"])]
+    out["field"].pop("status_date", None)
+    mock = list(NOT_READY)
+    parts = sections["sections"] if sections else grid_sections(field["polygon"])
+    if sections and twin_state:
+        out["field"]["sections"] = [{
+            "id": s["id"], "polygon": s["polygon"], "status": s["status"], "wetness": int(round(s["wetness_pct"])),
+            "temp": None, "sure": round(float(twin_state["sure_prior"]), 2), "low_ground": s.get("low_ground"),
+            "greener": GREENER_WORD[s["greenness"]["usually"]]} for s in parts]
+        out["field"]["status_date"] = twin_state["date"]
+        mock.remove("field.sections")
+    else:
+        out["field"]["sections"] = [{"id": s["id"], "polygon": s["polygon"], "status": "grey", "wetness": None,
+                                     "temp": None, "sure": 0} for s in parts]
     out["future"] = None
-    out["mock"] = list(NOT_READY)
+    out["mock"] = mock
     return out
 
 
@@ -417,7 +437,9 @@ def export_step7(doc, field_id, plans):
     plans_unc = json.loads(unc_path.read_text()) if unc_path.exists() else None
     if plans["labels"].get("rain_version") != "corrected" or (plans_unc and plans_unc["labels"].get("rain_version") != "uncorrected"):
         raise ValueError("plans.json must be the corrected-rain run and rain_uncorrected/plans.json the uncorrected one")
-    out = not_ready_blocks(doc, field)
+    sec_path, state_path = checks / "sections.json", REPO / "data" / "clean" / field_id / "twin_state.json"
+    out = not_ready_blocks(doc, field, sections=json.loads(sec_path.read_text()) if sec_path.exists() else None,
+                           twin_state=json.loads(state_path.read_text()) if state_path.exists() else None)
     soil_card_path = REPO / "data" / "cards" / field_id / "soilgrids.json"
     soil_card = json.loads(soil_card_path.read_text()) if soil_card_path.exists() else {}
     soil_loc = soil_card.get("location", {})

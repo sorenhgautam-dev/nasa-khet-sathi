@@ -90,6 +90,29 @@ site/
 - `method.field_memory`: a short text (`words.en`, `words.ne`) and numbers for the method page. On the demo field
   it says the learned model did not beat the simple one and was left out. Show it as it is.
 
+## 6b. Landed on 14 November (Saturday), 00:40: room for real sections and the 2040 outlook
+
+New optional fields (details: `pipeline/export/CONTRACT_CHANGES.md`, top entry). They are empty until steps 8 and 9 land on
+Saturday. Then `mock` becomes empty.
+
+- Each section can say `low_ground` (true / false / null) and `greener` (`more` / `less` / `same` / `unknown`). Show a
+  small mark with a word, never colour alone.
+- `field.status_date`: show "as of <date>" wherever the sections' status and wetness appear.
+- Each plan, and each current-plan option, gets its own `future` (`harvest`, `harvest_low`, `harvest_high`, one value per
+  `future.years`), and maybe `future_uncorrected_rain` (show it as a range). On the 2040 screen show the plan the farmer
+  picked. `future.years` will be `[2040]`: label it "by 2040". `future.words` holds the plain sentences on what the range
+  means.
+
+## 6c. Landed on 14 November (Saturday), 01:30: the four parts are real
+
+- `field.sections` now holds 4 parts of about 30 m (2 x 2, `s1` SW, `s2` SE, `s3` NW, `s4` NE), not 36 squares.
+- Status and wetness come from the twin on `field.status_date` (3 November 2026). All four parts share them, since
+  there is one soil and one weather for the whole field. Only the probe will tell the parts apart.
+- `sure` is 0.22 before any probe reading.
+- `greener`: s3 "more", s2 "less". The difference is small, so say "a little".
+- `low_ground` is null everywhere (we can't tell).
+- `mock` is now `["future"]`.
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

@@ -1,0 +1,240 @@
+{
+ "id": "demo",
+ "placeholder": true,
+ "note": "Map of the farmland around the PLACEHOLDER demo field (its fetch box). Proposal: not yet in the contract.",
+ "bounds": [
+  [
+   27.625034,
+   85.379227
+  ],
+  [
+   27.714966,
+   85.480773
+  ]
+ ],
+ "bbox": [
+  85.379227,
+  27.625034,
+  85.480773,
+  27.714966
+ ],
+ "image": {
+  "crs": "EPSG:3857 (Web Mercator), for Leaflet L.imageOverlay(url, bounds)",
+  "width": 667,
+  "height": 667,
+  "ground_pixel_m": 15,
+  "css": "image-rendering: pixelated (the classes must not blur into new colours)",
+  "transparent": "not cropland"
+ },
+ "layers": [
+  {
+   "id": "bare_days",
+   "image": "demo_bare_days.png",
+   "bytes": 28825,
+   "title": {
+    "en": "Days of bare ground each year",
+    "ne": "हरेक वर्ष जमिन बाँझो रहने दिन"
+   },
+   "classes": [
+    {
+     "code": 0,
+     "min_days": 0,
+     "max_days": 30,
+     "en": "Under 30 days",
+     "ne": "30 दिनभन्दा कम",
+     "colour": "#ffffd4"
+    },
+    {
+     "code": 1,
+     "min_days": 30,
+     "max_days": 60,
+     "en": "30 to 60 days",
+     "ne": "30 देखि 60 दिन",
+     "colour": "#fed98e"
+    },
+    {
+     "code": 2,
+     "min_days": 60,
+     "max_days": 90,
+     "en": "60 to 90 days",
+     "ne": "60 देखि 90 दिन",
+     "colour": "#fe9929"
+    },
+    {
+     "code": 3,
+     "min_days": 90,
+     "max_days": 120,
+     "en": "90 to 120 days",
+     "ne": "90 देखि 120 दिन",
+     "colour": "#d95f0e"
+    },
+    {
+     "code": 4,
+     "min_days": 120,
+     "max_days": null,
+     "en": "120 days or more",
+     "ne": "120 दिन वा बढी",
+     "colour": "#993404"
+    }
+   ],
+   "no_data": {
+    "code": -1,
+    "colour": "#969696",
+    "en": "Not enough clear pictures",
+    "ne": "सफा तस्बिर पुगेनन्"
+   },
+   "legend": {
+    "en": [
+     "Seen from space, 2014 to 2025.",
+     "Each square is 30 metres.",
+     "Space sees green, not which crop.",
+     "No colour: not farmland on the map.",
+     "Your own field may differ."
+    ],
+    "ne": [
+     "अन्तरिक्षबाट हेरिएको, 2014 देखि 2025।",
+     "हरेक कोठा 30 मिटरको।",
+     "भू-उपग्रहले हरियो देख्छ, कुन बाली होइन।",
+     "रङ नभएको ठाउँ: नक्सामा खेत होइन।",
+     "तपाईंको आफ्नै खेत फरक हुन सक्छ।"
+    ]
+   }
+  },
+  {
+   "id": "seasons",
+   "image": "demo_seasons.png",
+   "bytes": 26760,
+   "title": {
+    "en": "Crops grown each year",
+    "ne": "हरेक वर्ष लगाइने बाली"
+   },
+   "classes": [
+    {
+     "code": 0,
+     "crops_a_year": 0,
+     "en": "No crop seen",
+     "ne": "बाली देखिएन",
+     "colour": "#edf8e9"
+    },
+    {
+     "code": 1,
+     "crops_a_year": 1,
+     "en": "One crop",
+     "ne": "एक बाली",
+     "colour": "#bae4b3"
+    },
+    {
+     "code": 2,
+     "crops_a_year": 2,
+     "en": "Two crops",
+     "ne": "दुई बाली",
+     "colour": "#74c476"
+    },
+    {
+     "code": 3,
+     "crops_a_year": "3 or more",
+     "en": "Three or more crops",
+     "ne": "तीन वा बढी बाली",
+     "colour": "#238b45"
+    }
+   ],
+   "no_data": {
+    "code": -1,
+    "colour": "#969696",
+    "en": "Not enough clear pictures",
+    "ne": "सफा तस्बिर पुगेनन्"
+   },
+   "legend": {
+    "en": [
+     "Seen from space, 2014 to 2025.",
+     "Each square is 30 metres.",
+     "Space sees green, not which crop.",
+     "No colour: not farmland on the map.",
+     "Your own field may differ."
+    ],
+    "ne": [
+     "अन्तरिक्षबाट हेरिएको, 2014 देखि 2025।",
+     "हरेक कोठा 30 मिटरको।",
+     "भू-उपग्रहले हरियो देख्छ, कुन बाली होइन।",
+     "रङ नभएको ठाउँ: नक्सामा खेत होइन।",
+     "तपाईंको आफ्नै खेत फरक हुन सक्छ।"
+    ]
+   }
+  }
+ ],
+ "numbers": [
+  {
+   "id": "median_bare_days",
+   "value": 7,
+   "low": 0,
+   "high": 30,
+   "unit": "days a year",
+   "en": [
+    "A typical field here is bare 7 days.",
+    "Could be 0 to 30 days."
+   ],
+   "ne": [
+    "यहाँको सामान्य खेत वर्षमा 7 दिन बाँझो।",
+    "0 देखि 30 दिन हुन सक्छ।"
+   ]
+  },
+  {
+   "id": "share_long_bare",
+   "value": 0.153,
+   "low": 0.0,
+   "high": 0.313,
+   "unit": "share of cropland",
+   "en": [
+    "2 in 10 fields: bare over two months.",
+    "Could be 0 to 3 in 10."
+   ],
+   "ne": [
+    "10 मध्ये 2 खेत दुई महिनाभन्दा बढी बाँझो।",
+    "10 मध्ये 0 देखि 3 हुन सक्छ।"
+   ]
+  },
+  {
+   "id": "share_two_seasons",
+   "value": 0.37,
+   "low": 0.19,
+   "high": 0.475,
+   "unit": "share of cropland",
+   "en": [
+    "4 in 10 fields: two crops a year.",
+    "Could be 2 to 5 in 10."
+   ],
+   "ne": [
+    "10 मध्ये 4 खेतमा वर्षमा दुई बाली।",
+    "10 मध्ये 2 देखि 5 हुन सक्छ।"
+   ]
+  }
+ ],
+ "ne_status": "needs native-speaker review",
+ "fields_in_area": [
+  "demo",
+  "sample_1",
+  "sample_2",
+  "sample_3",
+  "sample_4"
+ ],
+ "sources": [
+  {
+   "name": "NASA HLS (Landsat 8/9, Sentinel-2)",
+   "product": "HLSL30_VI and HLSS30_VI v2.0, NDVI and Fmask",
+   "resolution": "30 m",
+   "years": "2014-2025",
+   "type": "satellite"
+  },
+  {
+   "name": "ESA WorldCover",
+   "product": "10 m 2021 v200, cropland class (user's accuracy for Asia 80.6% +/- 2.8)",
+   "resolution": "10 m (cropland if half of a 30 m square)",
+   "years": "2021",
+   "type": "satellite"
+  }
+ ],
+ "method": {
+  "en": "Bare days and crop seasons as for the demo field's diary, for every cropland pixel; range = bare threshold 0.20 to 0.30 and WorldCover's published accuracy, worst case",
+  "checks": "data/checks/demo/area_map.json (VALIDATION 3.23)"
+ }
+}

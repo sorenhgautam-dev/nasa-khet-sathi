@@ -27,8 +27,57 @@ from pipeline.plans import generate as ge  # noqa: E402
 from pipeline.plans import options as po  # noqa: E402
 from pipeline.plans import score as sc  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
+from pipeline.twin import evaporation as evap  # noqa: E402
+from pipeline.twin import season  # noqa: E402
 from pipeline.twin.crops import season_length, simulatable_crops  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
+
+
+def dhm_rain(rules):
+    """Item 4b (rules.yaml gpm_series.dhm_scaling): DHM Bhaktapur's (index 1052) 1991-2020 monthly normals and the fit years,
+    for --rain dhm."""
+    n = pd.read_csv(REPO / "config" / "dhm_normals_1991_2020.csv", dtype={"month": str})
+    n = n[(n["index"] == 1052) & (n["variable"] == "precip_mm") & (n["month"] != "annual")]
+    if len(n) != 12:
+        raise ValueError("config/dhm_normals_1991_2020.csv: Bhaktapur needs 12 monthly precip_mm normals")
+    return {"normals_mm": {int(m): float(v) for m, v in zip(n["month"], n["value"])},
+            "years": rules["gpm_series"]["dhm_scaling"]["years"]}
+
+
+RAIN_DIRS = {"corrected": "", "uncorrected": "rain_uncorrected", "dhm": "rain_dhm"}
+
+def bare_setting(rules, soil):
+    """The twin's bare-soil argument (build step 2a): rules.yaml bare_soil (apply on: FAO-56's surface layer, off: the
+    constant Kc), unless --bare-soil forced one (main() stores it as rules['bare_soil']['force'])."""
+    return evap.bare_soil_setting(rules["bare_soil"], soil, rules["bare_soil"].get("force", "rules"))
+
+
+def paddy_rule(rules):
+    """Proposal 2c (rules.yaml paddy_rainfed, PROPOSED, apply false): the rule when --paddy-rainfed proposal asks for it (or
+    the owner switches apply on), else None (the default: rain-fed rice is the plain bucket)."""
+    pr = rules.get("paddy_rainfed") or {}
+    force = pr.get("force", "rules")
+    if force == "off" or (force == "rules" and not pr.get("apply")):
+        return None
+    if "prep_mm" not in pr:
+        raise ValueError("--paddy-rainfed proposal: rules.yaml has no paddy_rainfed rule")
+    return pr
+
+
+def rainfed_replay(w, crops, lib, soil, cn, kw, rules):
+    """The rain-fed replay. With proposal 2c the paddy is transplanted when the land-preparation rain allows
+    (season.paddy_transplant) and a season that cannot be transplanted in time gets harvest 0 (season.paddy_outcome)."""
+    rule = paddy_rule(rules)
+    if rule is None:
+        return sim.replay(w, crops, lib, soil, cn, irrigated=False, **kw)
+    plan = kw.get("plan") or sim.rotation_plan(crops, lib, w["date"].min(), w["date"].max())
+    plan, info = season.paddy_transplant(plan, w["date"], w["rain_mm"], lib, rule)
+    res = sim.replay(w, crops, lib, soil, cn, irrigated=False, **{**kw, "plan": plan})
+    res["seasons"] = season.paddy_outcome(res["seasons"], info)
+    res["years"] = sim.yearly(res["seasons"])
+    res["partial_years"] = {str(y["year"]): y["crops"] for y in res["years"] if sorted(y["crops"]) != sorted(crops)}
+    res["paddy_info"] = info
+    return res
 
 
 def _mmdd(t):
@@ -38,8 +87,8 @@ def _mmdd(t):
 def evaluate(specs, w, lib, soil, cn, rules, strict, erosion=None, years_max=None):
     crops = [sp["crop"] for sp in specs]
     plan = ge.plan_dates(specs, lib, w["date"].min(), w["date"].max())
-    kw = dict(bare_kc=rules["bare_soil"]["kc"], kc_climate=rules["kc_climate"]["apply"], plan=plan)
-    rf = sim.replay(w, crops, lib, soil, cn, irrigated=False, **kw)
+    kw = dict(bare_kc=bare_setting(rules, soil), kc_climate=rules["kc_climate"]["apply"], plan=plan)
+    rf = rainfed_replay(w, crops, lib, soil, cn, kw, rules)
     ir = sim.replay(w, crops, lib, soil, cn, irrigated=True, **kw)
     ok = {y["year"] for y in sc.complete(rf["years"], crops)}
     if years_max:
@@ -86,8 +135,8 @@ def plan_export(specs, w, lib, soil, cn, rules, labels):
     thirsty (rain-fed: days with Ks < 1), for the tips."""
     crops = [sp["crop"] for sp in specs]
     plan = ge.plan_dates(specs, lib, w["date"].min(), w["date"].max())
-    kw = dict(bare_kc=rules["bare_soil"]["kc"], kc_climate=rules["kc_climate"]["apply"], plan=plan)
-    rf = sim.replay(w, crops, lib, soil, cn, irrigated=False, **kw)
+    kw = dict(bare_kc=bare_setting(rules, soil), kc_climate=rules["kc_climate"]["apply"], plan=plan)
+    rf = rainfed_replay(w, crops, lib, soil, cn, kw, rules)
     ir = sim.replay(w, crops, lib, soil, cn, irrigated=True, **kw)
     daily = rf["daily"]
     n_years = len({y["year"] for y in sc.complete(rf["years"], crops)})
@@ -129,12 +178,23 @@ def choose(rows, current_id, keys, must_include):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--field", default="demo")
-    ap.add_argument("--rain", choices=("corrected", "uncorrected"), default="corrected")
+    ap.add_argument("--rain", choices=("corrected", "uncorrected", "dhm"), default="corrected")
+    ap.add_argument("--bare-soil", choices=("rules", "kc", "fao56"), default="rules",
+                    help="bare-soil evaporation: as rules.yaml bare_soil.apply says (default), the constant Kc, or FAO-56's "
+                         "surface layer (build step 2a)")
+    ap.add_argument("--out-dir", default=None,
+                    help="write plans.json here instead of data/checks/<field>/ (a check run; the diary is still read there)")
+    ap.add_argument("--paddy-rainfed", choices=("rules", "off", "proposal"), default="rules",
+                    help="rain-fed rice: as rules.yaml paddy_rainfed.apply says (default; off), the plain bucket, or the "
+                         "PROPOSED transplanting rule (2c, a what-if waiting for the owner)")
     a = ap.parse_args(argv)
     field, rules, lib = load_field(a.field), load_rules(), load_crops()
+    rules["bare_soil"]["force"] = a.bare_soil
+    rules.setdefault("paddy_rainfed", {})["force"] = a.paddy_rainfed
     clean = REPO / "data" / "clean" / field["id"]
-    out_dir = REPO / "data" / "checks" / field["id"]
-    w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain)
+    out_dir = REPO / "data" / "checks" / field["id"]                 # inputs (diary) are always read here
+    dest = (REPO / a.out_dir) if a.out_dir else out_dir
+    w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain, dhm=dhm_rain(rules) if a.rain == "dhm" else None)
     problems = sim.rain_record_problems(w)
     if problems:
         print("NOT YET POSSIBLE: " + "; ".join(problems))
@@ -169,8 +229,8 @@ def main(argv=None):
         alt = [{**r, "harvest": r[f"harvest_ky{v}"], "stability": r[f"stability_ky{v}"]} for r in rows]
         checks[f"ky_{v}"] = choose(alt, current_id, keys, must)
     by_id = {r["id"]: r for r in rows}
-    corrected_path = out_dir / "plans.json"
-    if a.rain == "uncorrected" and corrected_path.exists():   # the plans shown are chosen on the corrected rain
+    corrected_path = dest / "plans.json"                         # the corrected run of the same destination
+    if a.rain != "corrected" and corrected_path.exists():   # the plans shown are chosen on the corrected rain
         shown = json.loads(corrected_path.read_text())["picks"]
     else:
         shown = picks
@@ -226,7 +286,12 @@ def main(argv=None):
            "picks": picks, "shown": shown, "export": exports, "current_options": current_options, "robustness": checks,
            "n_plans": len(rows), "plans": rows,
            "plans_2002_2016": rows_pre}
-    path = out_dir / ("rain_uncorrected" if a.rain == "uncorrected" else "") / "plans.json"
+    if isinstance(bare_setting(rules, soil), dict):          # build step 2a; the default output stays as it was
+        out["labels"]["bare_soil"] = f"FAO-56 surface layer (eqs. 71-79; rules.yaml bare_soil): {bare_setting(rules, soil)}"
+    if paddy_rule(rules):                                     # proposal 2c, a what-if: never exported
+        out["labels"]["paddy_rainfed"] = ("PROPOSED rain-fed transplanting rule (rules.yaml paddy_rainfed, waiting for the "
+                                          "owner): " + str({k: v for k, v in paddy_rule(rules).items() if k not in ("force", "status")}))
+    path = dest / RAIN_DIRS[a.rain] / "plans.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, indent=1, default=str) + "\n")
     print(f"{len(rows)} plans, {picks['eligible']} with rice, Pareto {len(picks['pareto'])}; safest from the "

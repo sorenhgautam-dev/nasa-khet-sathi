@@ -24,6 +24,7 @@ from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.twin import season  # noqa: E402
 from pipeline.twin.crops import sow_date  # noqa: E402
+from pipeline.twin.evaporation import bare_soil_setting  # noqa: E402
 
 INK, INK2, MUTED, GRID, SURFACE = "#0b0b0b", "#52514e", "#898781", "#e1e0d9", "#fcfcfb"
 BLUE, ORANGE = "#2a78d6", "#eb6834"      # dataviz reference palette slots 1 and 2 (validated)
@@ -107,7 +108,7 @@ def main(argv=None):
     cn = {"bare": by_cover["bare"], **{c: by_cover[cover[c]] for c, _ in plan}}
     irrigated = sim.export_case(field.get("water_source")) == "irrigated"   # unknown -> rain-fed (owner, 2026-11-12)
     daily, summary = season.simulate(inputs[["date", "et0_mm", "rain_mm"]], plan, lib, soil, cn,
-                                     rules["bare_soil"]["kc"], irrigated)
+                                     bare_soil_setting(rules["bare_soil"], soil), irrigated)
     n_filled = int(inputs["rain_filled"].sum())
     labels = {
         "rain": (f"TEMPORARY: station rain (GHCN-Daily {field['validation_station']}), {inputs['date'].min().date()} to "

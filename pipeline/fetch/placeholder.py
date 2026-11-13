@@ -10,6 +10,9 @@ December (previous year) to March (winter) must both exceed the bare-soil line, 
 not separate a fallow or cleared plot among fields (its 30 m pixels mix with the neighbours), so passing
 squares are ranked by their weaker season's peak, and the winter rise (winter peak minus the
 October-November low after the rice harvest) is reported for each. HLS here ends in December 2025.
+Those are Nepal's seasons (DEMO_SEASONS, the default). A field abroad names its zone's own two seasons and the trough
+between them in its config, `placeholder_seasons` (build step 11; e.g. config/fields/ambohidratrimo.yaml), and the
+rise of its second season is reported as `<name>_rise`.
 
 REVIEW_NOTES M11: the soil-distance limit is rules.yaml soilgrids.nearest_cell_max_m; without the cached
 SoilGrids maps the distance is "unknown" and not used to rank. The config's chosen field is checked
@@ -61,22 +64,60 @@ def cropland_squares(classes, transform, lat, side_m=60, margin_m=30, clear_of_b
     return out
 
 
-def season_check(monthly, years, bare_ndvi):
-    """monthly: Series of NDVI indexed 'YYYY-MM'. Both seasons must top `bare_ndvi` in every year."""
+# Nepal's two crop seasons and the trough between them (the demo; owner, 2026-11-12): monsoon July-October, winter
+# December (previous year) to March, and the October-November low after the rice harvest (previous year).
+DEMO_SEASONS = {"seasons": [{"name": "monsoon", "months": [7, 8, 9, 10], "ends_in_year": 0},
+                            {"name": "winter", "months": [12, 1, 2, 3], "ends_in_year": 0}],
+                "trough": {"months": [10, 11], "ends_in_year": -1}}
+
+
+def season_months(season, year):
+    """'YYYY-MM' keys of a season's months for test year `year`. The last month listed falls in year + ends_in_year
+    (default 0); a month listed before a smaller one belongs to the year before (December, then January)."""
+    ms = [int(m) for m in season["months"]]
+    y = year + int(season.get("ends_in_year", 0))
+    out = []
+    for m in reversed(ms):
+        if out and m > int(out[-1][5:]):
+            y -= 1
+        out.append(f"{y}-{m:02d}")
+    return out[::-1]
+
+
+def seasons_from_config(cfg):
+    """The field config's `placeholder_seasons` ({seasons: [{name, months, ends_in_year?}, x2], trough: {months,
+    ends_in_year?}}) as season_check takes them; None (the demo has none) gives Nepal's DEMO_SEASONS."""
+    if not cfg:
+        return DEMO_SEASONS
+    seasons = [{"name": str(x["name"]), "months": [int(m) for m in x["months"]], "ends_in_year": int(x.get("ends_in_year", 0))}
+               for x in cfg["seasons"]]
+    if len(seasons) != 2:
+        raise ValueError(f"placeholder_seasons must name two seasons, not {len(seasons)}")
+    t = cfg["trough"]
+    return {"seasons": seasons, "trough": {"months": [int(m) for m in t["months"]], "ends_in_year": int(t.get("ends_in_year", 0))}}
+
+
+def season_check(monthly, years, bare_ndvi, seasons=None):
+    """monthly: Series of NDVI indexed 'YYYY-MM'. Both seasons must top `bare_ndvi` in every year. `seasons`
+    (seasons_from_config) defaults to Nepal's monsoon and winter (DEMO_SEASONS); the second season's rise above the
+    trough is reported as '<its name>_rise' ('winter_rise' on the demo)."""
+    seasons = seasons or DEMO_SEASONS
     peaks, failed, rise = [], [], []
+
+    def peak(keys, fn):
+        v = [monthly.get(k, np.nan) for k in keys]
+        return fn(v) if np.isfinite(v).any() else np.nan
     for y in years:
-        mon = [monthly.get(f"{y}-{m:02d}", np.nan) for m in (7, 8, 9, 10)]
-        win = [monthly.get(f"{y - 1}-12", np.nan)] + [monthly.get(f"{y}-{m:02d}", np.nan) for m in (1, 2, 3)]
-        aut = [monthly.get(f"{y - 1}-{m:02d}", np.nan) for m in (10, 11)]        # after the rice harvest
-        pm, pw = np.nanmax(mon) if np.isfinite(mon).any() else np.nan, np.nanmax(win) if np.isfinite(win).any() else np.nan
-        trough = np.nanmin(aut) if np.isfinite(aut).any() else np.nan
-        rise.append(None if not (np.isfinite(pw) and np.isfinite(trough)) else round(float(pw - trough), 3))
-        peaks += [pm, pw]
-        if not (pm > bare_ndvi and pw > bare_ndvi):
+        ps = [peak(season_months(x, y), np.nanmax) for x in seasons["seasons"]]
+        trough = peak(season_months(seasons["trough"], y), np.nanmin)
+        rise.append(None if not (np.isfinite(ps[-1]) and np.isfinite(trough)) else round(float(ps[-1] - trough), 3))
+        peaks += ps
+        if not all(p > bare_ndvi for p in ps):
             failed.append(y)
     finite = [p for p in peaks if np.isfinite(p)]
     return {"passes": not failed, "failed_years": failed, "min_peak": float(min(finite)) if finite else float("nan"),
-            "peaks": [None if not np.isfinite(p) else round(float(p), 3) for p in peaks], "winter_rise": rise}
+            "peaks": [None if not np.isfinite(p) else round(float(p), 3) for p in peaks],
+            f"{seasons['seasons'][-1]['name']}_rise": rise}
 
 
 def sample_monthly(comp, keys, transform, crs, lon, lat, half_m):
@@ -173,6 +214,10 @@ def reference_squares(field, classes=None, transform=None, rule_m=CLEAR_OF_BUILT
     `earlier_placeholders` in the config, each with `why_replaced`). REVIEW_NOTES H3: never label the
     config's current field as rejected. With the WorldCover classes, the chosen square's margin is checked
     against the built-up rule (M11) and any exception is written into its label."""
+    earlier = [{"role": "earlier", "lat": e["lat"], "lon": e["lon"], "side_m": e["side_m"],
+                "label": f"Earlier placeholder ({e['why_replaced']})"} for e in field.get("earlier_placeholders") or []]
+    if not field.get("polygon"):                       # a new field before its square is picked (build step 11)
+        return earlier
     lats = [p[1] for p in field["polygon"]]
     side = (max(lats) - min(lats)) * KM_PER_DEG * 1000
     chosen = {"role": "chosen", "lat": field["lat"], "lon": field["lon"], "side_m": side}
@@ -183,11 +228,7 @@ def reference_squares(field, classes=None, transform=None, rule_m=CLEAR_OF_BUILT
         chosen["margin_to_built_up_m"] = None if d is None else round(d, 1)
         exc = margin_exception_label(field["lat"], field["lon"], d, rule_m)
         chosen["label"] = "Chosen placeholder field" + (f" ({exc})" if exc else f" (margin clear of built-up by {rule_m} m or more)")
-    out = [chosen]
-    for e in field.get("earlier_placeholders") or []:
-        out.append({"role": "earlier", "lat": e["lat"], "lon": e["lon"], "side_m": e["side_m"],
-                    "label": f"Earlier placeholder ({e['why_replaced']})"})
-    return out
+    return [chosen] + earlier
 
 
 def pick(cands, n, min_apart_km):
@@ -275,18 +316,21 @@ def main(argv=None):
     origin = field["origin_point"]
     classes, wt = _worldcover(data, field["id"])
     comp, counts, keys, ht, hcrs = monthly_composites([data / "raw" / "hls_l30" / field["id"], data / "raw" / "hls_s30" / field["id"]])
+    for d in (data / "clean" / field["id"], data / "plots" / field["id"]):      # a new field has neither yet
+        d.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(data / "clean" / field["id"] / "hls_monthly_ndvi.npz", ndvi=comp.astype("float32"),
                         clear_obs=counts.astype("int16"), months=np.array(keys), transform=np.array(tuple(ht)[:6]),
                         crs=np.array(str(hcrs)))
     from pipeline.fetch.rules import load_rules
     limit = soil_limit_m(load_rules())                                # rules.yaml soilgrids.nearest_cell_max_m
     years, bare = [2023, 2024, 2025], 0.25
+    seasons = seasons_from_config(field.get("placeholder_seasons"))   # Nepal's monsoon and winter unless the config names others
     cands = cropland_squares(classes, wt, origin["lat"], side_m=60, margin_m=MARGIN_M, clear_of_built_m=CLEAR_OF_BUILT_M)
     print(f"{len(cands)} cropland squares clear of buildings; {len(keys)} HLS months {keys[0]} to {keys[-1]}", flush=True)
     scored = []
     for c in cands[::3]:                                   # every third: neighbours overlap almost entirely
         s, npx = sample_monthly(comp, keys, ht, hcrs, c["lon"], c["lat"], 30)
-        r = season_check(s, years, bare)
+        r = season_check(s, years, bare, seasons)
         if r["passes"]:
             scored.append({**c, **r, "hls_pixels": npx, "distance_km": round(distance_km(origin["lat"], origin["lon"], c["lat"], c["lon"]), 3)})
     soil_m = soil_distances(data / "raw" / "soilgrids" / field["id"] / "wcs", scored)
@@ -298,19 +342,24 @@ def main(argv=None):
     ref_series = []
     for r in refs:
         s, npx = sample_monthly(comp, keys, ht, hcrs, r["lon"], r["lat"], r["side_m"] / 2)
-        r.update(season_check(s, years, bare), side_m=round(r["side_m"], 1), hls_pixels=npx)
+        r.update(season_check(s, years, bare, seasons), side_m=round(r["side_m"], 1), hls_pixels=npx)
         ref_series.append(s)
-    out = {"rule": {"side_m": 60, "margin_m": MARGIN_M, "clear_of_built_m": CLEAR_OF_BUILT_M, "years": years,
-                    "bare_ndvi": bare, "soilgrids_nearest_cell_max_m": limit},
+    chosen = [r for r in refs if r["role"] == "chosen"]
+    rule = {"side_m": 60, "margin_m": MARGIN_M, "clear_of_built_m": CLEAR_OF_BUILT_M, "years": years,
+            "bare_ndvi": bare, "soilgrids_nearest_cell_max_m": limit}
+    if field.get("placeholder_seasons"):
+        rule["seasons"] = seasons                       # the zone's own seasons (build step 11); the demo's are implied
+    out = {"rule": rule,
            "passing": len(scored), "candidates": [{**c, "polygon": square_polygon(c["lat"], c["lon"], 60)} for c in best],
-           "chosen_field": refs[0], "earlier_placeholders": refs[1:]}
+           "chosen_field": chosen[0] if chosen else None, "earlier_placeholders": [r for r in refs if r["role"] == "earlier"]}
     (data / "clean" / field["id"] / "placeholder_candidates.json").write_text(json.dumps(out, indent=1) + "\n")
     series = [(f"Candidate {i}: {c['lat']:.5f} N, {c['lon']:.5f} E", sample_monthly(comp, keys, ht, hcrs, c["lon"], c["lat"], 30)[0])
               for i, c in enumerate(best, 1)] + [(f"{r['label']}: {r['lat']:.6f} N, {r['lon']:.6f} E", s)
                                                  for r, s in zip(refs, ref_series)]
     plot(classes, wt, best, refs, origin, series, data / "plots" / field["id"] / "placeholder_candidates.png", bare)
-    print(json.dumps({"passing": len(scored), "candidates": [{k: c[k] for k in ("lat", "lon", "min_peak", "winter_rise", "distance_km", "soilgrids_nearest_m", "peaks")} for c in best],
-                      "chosen_field": refs[0], "earlier_placeholders": refs[1:]}, indent=1))
+    rise = f"{seasons['seasons'][-1]['name']}_rise"
+    print(json.dumps({"passing": len(scored), "candidates": [{k: c[k] for k in ("lat", "lon", "min_peak", rise, "distance_km", "soilgrids_nearest_m", "peaks")} for c in best],
+                      "chosen_field": out["chosen_field"], "earlier_placeholders": out["earlier_placeholders"]}, indent=1))
     return 0
 
 

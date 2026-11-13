@@ -231,3 +231,48 @@ def test_sow_date_refuses_an_unknown_position():
     cal = {"windows": [{"sow": "10-15", "sow_end": "11-15"}], "default": 0}
     with pytest.raises(ValueError, match="position"):
         crops.sow_date(cal, 2015, position="early")
+
+
+# --- build step 2a: FAO-56 surface-layer evaporation on bare days (rules.yaml bare_soil; twin/evaporation.py) ---
+SURF = {"tew_mm": 20.0, "rew_mm": 9.0, "kc_max": 1.20, "de0_mm": 0.0}
+
+
+def _bare(rain, et0=4.5):
+    return pd.DataFrame({"rain_mm": rain, "et0_mm": et0, "kc": np.nan})
+
+
+def test_bare_surface_layer_evaporation_leaves_the_root_zone_and_stops_near_tew():
+    """Worked number (FAO-56 eqs. 71-74 with Kcb = 0, few = 1, Kc max 1.20, TEW 20, REW 9, ETo 4.5, no rain): day 1 and
+    2 E = 1.2 x 4.5 = 5.40 mm (stage 1, De 5.40 then 10.80); day 3 Kr = (20 - 10.80) / 11 = 0.836, E = 4.52 mm. The
+    root zone loses the same water, with Ks 1 (no transpiration, no stress); over 10 days less than TEW in all."""
+    out = sw.run_bucket(_bare([0.0] * 10), taw_mm=150.0, p_table=0.2, cn=91, dr0_mm=30.0, surface=SURF)
+    assert list(out["eta_mm"].iloc[:3]) == pytest.approx([5.40, 5.40, 4.5164], abs=1e-4)
+    assert list(out["de_mm"].iloc[:3]) == pytest.approx([5.40, 10.80, 15.3164], abs=1e-4)
+    assert (out["ks"] == 1.0).all() and not out["dry_day"].any() and (out["irrigation_mm"] == 0.0).all()
+    assert out["eta_mm"].sum() == pytest.approx(out["de_mm"].iloc[-1]) and out["eta_mm"].sum() < 20.0
+    assert out["dr_mm"].iloc[-1] == pytest.approx(30.0 + out["eta_mm"].sum())
+    assert (out["etc_mm"] == out["eta_mm"]).all()                       # bare soil: ETc = Ke ETo (Example 31, col. 8)
+
+
+def test_bare_rain_wets_the_surface_layer_and_the_root_zone_and_the_balance_closes():
+    rng = np.random.default_rng(7)
+    rain = rng.gamma(0.5, 12.0, 120) * (rng.random(120) < 0.3)
+    out = sw.run_bucket(_bare(rain, et0=5.0), taw_mm=150.0, p_table=0.2, cn=91, dr0_mm=40.0, surface={**SURF, "de0_mm": 20.0})
+    inflow = (out["rain_mm"] - out["runoff_mm"]).sum()
+    assert abs(inflow - (out["eta_mm"] + out["dp_mm"]).sum() - (40.0 - out["dr_mm"].iloc[-1])) < 1e-9
+    de_prev = np.r_[20.0, out["de_mm"].to_numpy()[:-1]]               # eq. 77 day by day
+    assert np.allclose(out["de_mm"], de_prev - (out["rain_mm"] - out["runoff_mm"]) + out["eta_mm"] + out["dpe_mm"])
+    assert ((out["de_mm"] >= 0) & (out["de_mm"] <= 20.0)).all()
+
+
+def test_bare_evaporation_stops_where_the_root_zone_reaches_the_wilting_point():
+    out = sw.run_bucket(_bare([0.0] * 5), taw_mm=100.0, p_table=0.2, cn=91, dr0_mm=97.0, surface=SURF)
+    assert out["dr_mm"].max() <= 100.0 and out["eta_mm"].sum() == pytest.approx(3.0)
+    assert out["de_mm"].iloc[-1] == pytest.approx(3.0)                  # the layer lost only what the bucket gave
+
+
+def test_the_bare_surface_path_refuses_irrigation_and_a_pond():
+    with pytest.raises(ValueError, match="bare"):
+        sw.run_bucket(_bare([0.0] * 3), taw_mm=100.0, p_table=0.2, cn=91, irrigate=True, surface=SURF)
+    with pytest.raises(ValueError, match="bare"):
+        sw.run_bucket(_bare([0.0] * 3), taw_mm=100.0, p_table=0.2, cn=91, ponded=[True] * 3, surface=SURF)

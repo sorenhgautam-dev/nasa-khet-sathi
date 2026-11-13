@@ -61,9 +61,15 @@ def step(dr_prev, rain_mm, runoff_mm, irrigation_mm, etc_mm, taw_mm, p):
     return {"dr_mm": dr, "ks": k, "eta_mm": eta, "dp_mm": dp}
 
 
-def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None):
+def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None, surface=None):
     """df: rain_mm, et0_mm, kc (one row per day). cn: number or per-day array. ponded: per-day flags (irrigated
-    paddy only). Returns a new frame; irrigation_mm includes the pond refill, pond_supply_mm is that part."""
+    paddy only). Returns a new frame; irrigation_mm includes the pond refill, pond_supply_mm is that part.
+    surface: bare soil only, FAO-56's surface layer (build step 2a; rules.yaml bare_soil): {tew_mm, rew_mm, kc_max,
+    de0_mm}; then df's kc is not used (see _run_bare_surface)."""
+    if surface is not None:
+        if irrigate or (ponded is not None and np.asarray(ponded, dtype=bool).any()):
+            raise ValueError("the FAO-56 surface layer is for bare soil, which is never irrigated or ponded")
+        return _run_bare_surface(df, taw_mm, p_table, cn, dr0_mm, surface)
     n = len(df)
     cn = np.broadcast_to(np.asarray(cn, dtype=float), (n,))
     ponded = np.zeros(n, dtype=bool) if ponded is None else np.asarray(ponded, dtype=bool)
@@ -83,6 +89,39 @@ def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None)
         rows.append({**s, "irrigation_mm": irr, "pond_supply_mm": irr if ponded[i] else 0.0})
         rows[-1].update(rain_mm=rain, runoff_mm=q, etc_mm=etc, p=p, raw_mm=p * taw_mm, ponded=bool(ponded[i]))
         dr = rows[-1]["dr_mm"]
+    out = pd.DataFrame(rows, index=df.index)
+    out["dry_day"] = out["ks"] < 1.0
+    return out
+
+
+def _run_bare_surface(df, taw_mm, p_table, cn, dr0_mm, surface):
+    """Bare soil, FAO-56 Chapter 7 (twin/evaporation.py): the day's evaporation E = Ke ETo (Kcb 0, few 1; Kr from the
+    surface layer's depletion of the previous day) leaves the surface layer AND the root zone, which holds it (the
+    layer is the top of the root zone). No Ks: bare soil has no transpiration and no water stress, so ETc = ETa = E
+    (FAO-56 Example 31, column 8) unless the root zone reaches the wilting point (eq. 86), where E stops and the layer
+    loses only what the bucket gave. Rain minus the same SCS runoff wets both; the root zone's balance is eq. 85."""
+    from pipeline.twin import evaporation as ev
+
+    n = len(df)
+    cn = np.broadcast_to(np.asarray(cn, dtype=float), (n,))
+    rows, dr, de = [], dr0_mm, float(surface["de0_mm"])
+    for i, (rain, et0) in enumerate(df[["rain_mm", "et0_mm"]].itertuples(index=False)):
+        q = scs_runoff_mm(rain, cn[i])
+        d = ev.surface_day(de, et0, rain - q, surface["tew_mm"], surface["rew_mm"], surface["kc_max"])
+        e_pot = e = d["e_mm"]
+        dr_new, dp = dr - (rain - q) + e, 0.0
+        if dr_new < 0:                                    # eq. 88
+            dp, dr_new = -dr_new, 0.0
+        if dr_new > taw_mm:                               # eq. 86
+            e -= dr_new - taw_mm
+            dr_new = taw_mm
+            d["de_mm"] = max(de - (rain - q), 0.0) + e
+        p = adjust_p(p_table, e_pot)
+        rows.append({"dr_mm": dr_new, "ks": 1.0, "eta_mm": e, "dp_mm": dp, "irrigation_mm": 0.0, "pond_supply_mm": 0.0,
+                     "rain_mm": rain, "runoff_mm": q, "etc_mm": e_pot, "p": p, "raw_mm": p * taw_mm, "ponded": False,
+                     "ke": d["ke"], "kr": d["kr"], "de_start_mm": d["de_start_mm"], "de_mm": d["de_mm"],
+                     "dpe_mm": d["dpe_mm"]})
+        dr, de = dr_new, d["de_mm"]
     out = pd.DataFrame(rows, index=df.index)
     out["dry_day"] = out["ks"] < 1.0
     return out

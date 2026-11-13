@@ -56,6 +56,11 @@
       "irrigated"
      ],
      "description": "The field's water source (config/fields/<id>.yaml; 'unknown' while it is not known). replay.<plan>[].harvest, dry_days and event are the field's own case: rain-fed for 'unknown' and 'rain-only'. While it is 'unknown', show the two cases side by side: 'if you can't water' (harvest, dry_days) and 'if you can water' (irrigated). Owner, 2026-11-12."
+    },
+    "status_date": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+     "description": "Build step 8 (2026-11-14): the day of the field twin's soil water behind every section's status and wetness (the latest day with weather). Show 'as of <date>'."
     }
    }
   },
@@ -192,6 +197,52 @@
       },
       "with_plan": {
        "$ref": "#/$defs/future_series"
+      },
+      "period": {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{4}$",
+       "description": "The years the climate change is computed for (e.g. 2026-2040); `years` holds the period's last year."
+      },
+      "models": {
+       "type": "array",
+       "minItems": 1,
+       "items": {
+        "type": "string",
+        "minLength": 1
+       },
+       "description": "The NEX-GDDP-CMIP6 climate models behind the range."
+      },
+      "scenarios": {
+       "type": "array",
+       "minItems": 1,
+       "items": {
+        "type": "string",
+        "minLength": 1
+       },
+       "description": "The emission scenarios behind the range (e.g. ssp245, ssp585)."
+      },
+      "words": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "en",
+        "ne"
+       ],
+       "properties": {
+        "en": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        },
+        "ne": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        }
+       },
+       "description": "Plain words on what the range means, English and Nepali."
       }
      }
     }
@@ -935,6 +986,14 @@
          }
         },
         "description": "For each suggested plan id: its five tabs when it is compared with THIS current plan (the gains and the crops that are new differ). Its score, crops, tips and replay do not change."
+       },
+       "future": {
+        "$ref": "#/$defs/future_series",
+        "description": "Build step 9 (2026-11-14): this plan's harvest under the future climate, one value per entry in future.years; harvest_low/high = the spread across climate models and scenarios. For this current-plan option."
+       },
+       "future_uncorrected_rain": {
+        "$ref": "#/$defs/future_series",
+        "description": "As plans[].future_uncorrected_rain, for this option."
        }
       }
      }
@@ -1027,6 +1086,22 @@
      "type": "number",
      "minimum": 0,
      "maximum": 1
+    },
+    "low_ground": {
+     "type": [
+      "boolean",
+      "null"
+     ],
+     "description": "Build step 8 (2026-11-14): true when this part lies lower than the land around it (NASADEM topographic position index; rules.yaml sections), where cold air can collect on still nights; null when not computed. Show a small 'low ground' mark, never colour alone."
+    },
+    "greener": {
+     "enum": [
+      "more",
+      "less",
+      "same",
+      "unknown"
+     ],
+     "description": "Build step 8 (2026-11-14): how this part's greenness usually compares with the rest of the field, from its own HLS 30 m pixels over the seasons (rules.yaml sections: a consistency test fixed in advance). 'unknown' = the satellite cannot tell."
     }
    }
   },
@@ -1277,6 +1352,14 @@
        "$ref": "#/$defs/pct"
       }
      }
+    },
+    "future": {
+     "$ref": "#/$defs/future_series",
+     "description": "Build step 9 (2026-11-14): this plan's harvest under the future climate, one value per entry in future.years; harvest_low/high = the spread across climate models and scenarios."
+    },
+    "future_uncorrected_rain": {
+     "$ref": "#/$defs/future_series",
+     "description": "The same outlook on GPM rain as published (no 2017 correction): show beside `future` as a range, like score_uncorrected_rain."
     }
    }
   },

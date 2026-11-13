@@ -24,6 +24,7 @@ from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.fetch.smap import monthly_anomaly  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
+from pipeline.twin.evaporation import bare_soil_setting  # noqa: E402
 
 
 def twin_wetness(weather, field, rules, lib, soil):
@@ -31,7 +32,7 @@ def twin_wetness(weather, field, rules, lib, soil):
     cov, by = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by["bare"], **{c: by[cov[c]] for c in cov}}
     rotation, _ = sim.rotation_for(field, rules)
-    r = sim.replay(weather, rotation, lib, soil, cn, bare_kc=rules["bare_soil"]["kc"], irrigated=False,
+    r = sim.replay(weather, rotation, lib, soil, cn, bare_kc=bare_soil_setting(rules["bare_soil"], soil), irrigated=False,
                    kc_climate=rules["kc_climate"]["apply"])
     d = r["daily"]
     return pd.Series(1.0 - d["dr_mm"].to_numpy(float) / d["taw_mm"].to_numpy(float), index=pd.DatetimeIndex(d["date"]))

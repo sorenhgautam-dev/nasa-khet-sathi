@@ -1,9 +1,17 @@
-"""Split a field's polygon into sections (CLAUDE.md "Sections"). Pure functions.
+"""Split a field's outline into sections (CLAUDE.md "Sections"; build step 8). Pure functions.
 
-About 10 m by 10 m squares, coarser for big fields, aiming for 10 to 40 sections. The grid covers the polygon's
-bounding box with equal cells that tile it exactly; a cell is kept when its centre lies inside the polygon.
-Terrace steps as boundaries and the per-section attributes (slope, low ground, soil, probe) are build step 8.
-Until then the export shows the sections as "not ready yet" (owner's answer 2 to REVIEW_2, 2026-11-13).
+- A field drawn by its four corners (config/fields/<id>.yaml `polygon`: SW, SE, NE, NW as [lon, lat]) is split by its
+  own corners: n_u x n_v four-sided sections from bilinear interpolation of the corners, n = round(side / cell_m) and at
+  least 1, a side being the mean of two opposite edges. The sections tile the field exactly, whatever its orientation.
+- Any other outline (or four corners that are not convex) is covered by square cells of its bounding box, each clipped
+  to the outline (Sutherland-Hodgman), so the pieces tile it too; crumbs under min_piece_m2 are dropped.
+- When a field would have more than max_sections, the cell side grows by coarsen_factor until it fits (CLAUDE.md:
+  coarser for big fields, at most 40).
+Ids s1..sN run row by row from the first corner (the south-west one). Polygons are [lon, lat] rings, not closed.
+
+Step 8 passes rules.yaml sections.cell_m (30 m, about one HLS pixel). The default 10 m is the step-1 grid that
+pipeline/export/build_field_json.py still draws while the export names the sections as "not ready yet".
+Distances use a flat-earth scale at the outline's mean latitude (good to well under a metre over a field).
 """
 import math
 
@@ -15,33 +23,137 @@ def inside(polygon, lon, lat):
     """Ray casting: is the point inside the polygon ([lon, lat] corners, ring not closed)?"""
     n, hit = len(polygon), False
     for i in range(n):
-        (x1, y1), (x2, y2) = polygon[i], polygon[(i + 1) % n]
+        (x1, y1), (x2, y2) = polygon[i][:2], polygon[(i + 1) % n][:2]
         if (y1 > lat) != (y2 > lat) and lon < (x2 - x1) * (lat - y1) / (y2 - y1) + x1:
             hit = not hit
     return hit
 
 
-def grid_sections(polygon, cell_m=10.0, max_sections=40):
-    """[{id: 's1'.., polygon: four [lon, lat] corners (SW, SE, NE, NW)}], row by row from the south-west corner."""
-    lons, lats = [p[0] for p in polygon], [p[1] for p in polygon]
-    lon0, lon1, lat0, lat1 = min(lons), max(lons), min(lats), max(lats)
-    m_lon = M_PER_DEG_LON_EQUATOR * math.cos(math.radians((lat0 + lat1) / 2.0))
-    width_m, height_m = (lon1 - lon0) * m_lon, (lat1 - lat0) * M_PER_DEG_LAT
+def shoelace(points):
+    """Area of a simple polygon given as (x, y) corners, ring not closed."""
+    n = len(points)
+    if n < 3:
+        return 0.0
+    s = sum(points[i][0] * points[(i + 1) % n][1] - points[(i + 1) % n][0] * points[i][1] for i in range(n))
+    return abs(s) / 2.0
+
+
+def _scale(polygon):
+    lat_mean = sum(p[1] for p in polygon) / len(polygon)
+    return M_PER_DEG_LON_EQUATOR * math.cos(math.radians(lat_mean)), M_PER_DEG_LAT
+
+
+def local_metres(polygon, origin=None, scale=None):
+    """[(x_m, y_m)] east and north of `origin` (default: the first corner), flat-earth at the mean latitude."""
+    mx, my = scale or _scale(polygon)
+    lon0, lat0 = origin or (polygon[0][0], polygon[0][1])
+    return [((p[0] - lon0) * mx, (p[1] - lat0) * my) for p in polygon]
+
+
+def area_m2(polygon):
+    """Area of a [lon, lat] polygon in square metres."""
+    return shoelace(local_metres(polygon))
+
+
+def clip_to_rect(points, xmin, ymin, xmax, ymax):
+    """Sutherland-Hodgman: the part of a polygon ((x, y) corners) inside an axis-parallel rectangle; [] if none.
+    Exact in area for any simple polygon (a concave one may come back with zero-width joins)."""
+    def x_cut(x0):
+        return lambda a, b: (x0, a[1] + (x0 - a[0]) / (b[0] - a[0]) * (b[1] - a[1]))
+
+    def y_cut(y0):
+        return lambda a, b: (a[0] + (y0 - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), y0)
+
+    edges = ((lambda p: p[0] >= xmin, x_cut(xmin)), (lambda p: p[0] <= xmax, x_cut(xmax)),
+             (lambda p: p[1] >= ymin, y_cut(ymin)), (lambda p: p[1] <= ymax, y_cut(ymax)))
+    pts = [tuple(p[:2]) for p in points]
+    for keep, cut in edges:
+        if not pts:
+            return []
+        out = []
+        for k in range(len(pts)):
+            cur, prev = pts[k], pts[k - 1]
+            if keep(cur):
+                if not keep(prev):
+                    out.append(cut(prev, cur))
+                out.append(cur)
+            elif keep(prev):
+                out.append(cut(prev, cur))
+        pts = out
+    clean = []
+    for p in pts:                                            # drop repeated corners
+        if not clean or abs(p[0] - clean[-1][0]) > 1e-12 or abs(p[1] - clean[-1][1]) > 1e-12:
+            clean.append(p)
+    if len(clean) > 1 and abs(clean[0][0] - clean[-1][0]) <= 1e-12 and abs(clean[0][1] - clean[-1][1]) <= 1e-12:
+        clean.pop()
+    return clean if len(clean) >= 3 else []
+
+
+def _convex(xy):
+    signs = set()
+    n = len(xy)
+    for i in range(n):
+        (x0, y0), (x1, y1), (x2, y2) = xy[i], xy[(i + 1) % n], xy[(i + 2) % n]
+        cross = (x1 - x0) * (y2 - y1) - (y1 - y0) * (x2 - x1)
+        if abs(cross) < 1e-9:
+            return False
+        signs.add(cross > 0)
+    return len(signs) == 1
+
+
+def _split_quad(p, cell_m, max_sections, coarsen_factor):
+    xy = local_metres(p)
+
+    def d(a, b):
+        return math.hypot(b[0] - a[0], b[1] - a[1])
+
+    side_u = (d(xy[0], xy[1]) + d(xy[3], xy[2])) / 2.0
+    side_v = (d(xy[0], xy[3]) + d(xy[1], xy[2])) / 2.0
     size = float(cell_m)
     while True:
-        nx, ny = max(1, round(width_m / size)), max(1, round(height_m / size))
-        cells = []
+        nu, nv = max(1, round(side_u / size)), max(1, round(side_v / size))
+        if nu * nv <= max_sections:
+            break
+        size *= coarsen_factor
+
+    def at(u, v):
+        return tuple((1 - u) * (1 - v) * p[0][k] + u * (1 - v) * p[1][k] + u * v * p[2][k] + (1 - u) * v * p[3][k]
+                     for k in (0, 1))
+
+    return [[at(i / nu, j / nv), at((i + 1) / nu, j / nv), at((i + 1) / nu, (j + 1) / nv), at(i / nu, (j + 1) / nv)]
+            for j in range(nv) for i in range(nu)]
+
+
+def _clip_grid(p, cell_m, max_sections, coarsen_factor, min_piece_m2):
+    origin, scale = (p[0][0], p[0][1]), _scale(p)
+    xy = local_metres(p, origin, scale)
+    xs, ys = [q[0] for q in xy], [q[1] for q in xy]
+    x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+    size = float(cell_m)
+    while True:
+        nx, ny = max(1, round((x1 - x0) / size)), max(1, round((y1 - y0) / size))
+        pieces = []
         for j in range(ny):
             for i in range(nx):
-                a, b = lon0 + (lon1 - lon0) * i / nx, lon0 + (lon1 - lon0) * (i + 1) / nx
-                c, d = lat0 + (lat1 - lat0) * j / ny, lat0 + (lat1 - lat0) * (j + 1) / ny
-                if i == nx - 1:
-                    b = lon1
-                if j == ny - 1:
-                    d = lat1
-                if inside(polygon, (a + b) / 2.0, (c + d) / 2.0):
-                    cells.append([[a, c], [b, c], [b, d], [a, d]])
-        if len(cells) <= max_sections:
+                a = x0 + (x1 - x0) * i / nx
+                b = x1 if i == nx - 1 else x0 + (x1 - x0) * (i + 1) / nx
+                c = y0 + (y1 - y0) * j / ny
+                e = y1 if j == ny - 1 else y0 + (y1 - y0) * (j + 1) / ny
+                piece = clip_to_rect(xy, a, c, b, e)
+                if piece and shoelace(piece) >= min_piece_m2:
+                    pieces.append(piece)
+        if len(pieces) <= max_sections:
             break
-        size *= 1.1
-    return [{"id": f"s{k + 1}", "polygon": [[round(x, 7), round(y, 7)] for x, y in cell]} for k, cell in enumerate(cells)]
+        size *= coarsen_factor
+    return [[(origin[0] + x / scale[0], origin[1] + y / scale[1]) for x, y in piece] for piece in pieces]
+
+
+def grid_sections(polygon, cell_m=10.0, max_sections=40, coarsen_factor=1.1, min_piece_m2=1.0):
+    """[{id: 's1'.., polygon: [lon, lat] corners (ring not closed), area_m2}], row by row from the first corner."""
+    pts = [(float(q[0]), float(q[1])) for q in polygon]
+    if len(pts) == 4 and _convex(local_metres(pts)):
+        cells = _split_quad(pts, cell_m, max_sections, coarsen_factor)
+    else:
+        cells = _clip_grid(pts, cell_m, max_sections, coarsen_factor, min_piece_m2)
+    return [{"id": f"s{k + 1}", "polygon": [[round(x, 7), round(y, 7)] for x, y in cell],
+             "area_m2": round(area_m2(cell), 1)} for k, cell in enumerate(cells)]

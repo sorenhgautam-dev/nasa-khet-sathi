@@ -398,3 +398,69 @@ def test_a_month_may_say_how_sure_its_cover_word_is():
     assert validate_field(d) == []
     d["diary"]["months"][0]["cover_sure"] = 1.2
     assert validate_field(d) != []
+
+
+# --- 2026-11-14 (owner's group 1): sections and the 2040 outlook become real ---
+
+def _with_future(d):
+    """A real 2040 outlook: one value per entry in years, a series for every plan."""
+    d["future"] = {"years": [2040], "period": "2026-2040", "models": ["A", "B", "C", "D", "E"],
+                   "scenarios": ["ssp245", "ssp585"],
+                   "nothing_changes": {"harvest": [70], "harvest_low": [60], "harvest_high": [80]},
+                   "with_plan": {"harvest": [75], "harvest_low": [65], "harvest_high": [85]},
+                   "words": {"en": ["Climate models do not agree."], "ne": ["जलवायु मोडेलहरू एकमत छैनन्।"]}}
+    for p in d["plans"]:
+        p["future"] = {"harvest": [70], "harvest_low": [60], "harvest_high": [80]}
+    return d
+
+
+def test_a_section_may_say_whether_it_is_low_ground_and_how_green_it_is():
+    d = build_field()
+    d["field"]["sections"][0].update(low_ground=True, greener="less")
+    d["field"]["sections"][1].update(low_ground=None, greener="unknown")
+    d["field"]["status_date"] = "2026-11-12"
+    assert validate_field(d) == []
+
+
+@pytest.mark.parametrize("key,value", [("greener", "greenish"), ("low_ground", "yes")])
+def test_the_section_words_are_closed(key, value):
+    d = build_field()
+    d["field"]["sections"][0][key] = value
+    assert validate_field(d) != []
+
+
+def test_the_status_date_is_a_date():
+    d = build_field()
+    d["field"]["status_date"] = "12 Nov"
+    assert validate_field(d) != []
+
+
+def test_each_plan_may_carry_its_own_2040_outlook():
+    assert validate_field(_with_future(build_field())) == []
+
+
+def test_a_plans_outlook_needs_one_value_per_year():
+    d = _with_future(build_field())
+    d["plans"][1]["future"]["harvest"] = [70, 71]
+    assert any("plans/cover_gap/future" in e for e in validate_field(d))
+
+
+def test_a_plans_outlook_keeps_low_below_middle_below_high():
+    d = _with_future(build_field())
+    d["plans"][2]["future"]["harvest_low"] = [90]
+    assert any("plans/safest/future" in e and "harvest_low <= harvest <= harvest_high" in e for e in validate_field(d))
+
+
+def test_a_plan_outlook_needs_the_outlook_block():
+    d = _with_future(build_field())
+    d["future"] = None
+    d["mock"] = ["future"]
+    assert any("plans/current/future" in e for e in validate_field(d))
+
+
+def test_the_outlook_may_carry_a_second_rain_version():
+    d = _with_future(build_field())
+    d["plans"][0]["future_uncorrected_rain"] = {"harvest": [68], "harvest_low": [58], "harvest_high": [79]}
+    assert validate_field(d) == []
+    d["plans"][0]["future_uncorrected_rain"]["harvest_high"] = [50]
+    assert any("future_uncorrected_rain" in e for e in validate_field(d))

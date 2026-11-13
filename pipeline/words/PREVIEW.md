@@ -3,7 +3,7 @@
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
 - Screens, and the words shared by many screens (screens.json, 180 texts): needs native-speaker review.
-- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 92 texts): needs native-speaker review.
+- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 93 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
 
@@ -272,6 +272,7 @@ This page is made from the word files in this folder; change those, not this pag
 | --- | --- |
 | This is a sample field, not yours. *(while the field is a sample, not a farmer's own)* | यो नमुना खेत हो, तपाईंको होइन। |
 | Nearby parts share one soil map. | नजिकका भागहरूको माटोको नक्सा एउटै छ। |
+| All parts get the same rain and weather. | सबै भागमा एउटै वर्षा र मौसम मानिएको छ। |
 | The soil numbers come from {soil_distance} m away. *(if the soil numbers are not from the field's own spot)* | माटोको नाप {soil_distance} मिटर परको हो। |
 | Planting dates are typical ones, not yours. | रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। |
 | Your winter crop dates may differ from ours. *(while the farmer has not said which winter crop is grown)* | तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। |

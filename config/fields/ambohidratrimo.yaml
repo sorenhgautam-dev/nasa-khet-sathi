@@ -1,0 +1,46 @@
+# A prepared field abroad (build step 11): the same pipeline, another continent and another rainy season.
+# Anything unknown is null with a TODO. Do not guess it.
+#
+# PLACEHOLDER (Claude's choice, 2026-11-14; the evidence is METHOD_NOTES 85): Ambohidratrimo district, Analamanga
+# region, in Madagascar's central highlands, about 12 km north-west of Antananarivo. The FAO Crop Calendar lists the
+# district in its "Highlands Zone South" (aez 004), where rice is grown in the rainy season and potato or wheat in the
+# dry season on the drained rice fields ("contre-saison"). The rains fall from November to March (southern hemisphere),
+# so every season sits about six months away from Nepal's. The origin point is the centre of a fetch box 2 km each way;
+# the field is a 60 m x 60 m square picked inside it by pipeline/fetch/placeholder.py (WorldCover cropland, at least
+# 100 m from built-up pixels, HLS greenness in both of the zone's seasons in 2023-2025; see placeholder_seasons).
+# Picked 2026-11-14 (Claude, by the demo's rule; METHOD_NOTES 86): candidate 1 of data/clean/ambohidratrimo/
+# placeholder_candidates.json, the first in the rule's own ranking (its weaker season's peak is the highest). Its NDVI
+# stays above 0.27 all year with no bare dry-season trough (dry_rise 0.11, 0.08, -0.08), so it may be perennial cover
+# or mixed pixels rather than rice then a dry-season crop: TODO(owner) check it on satellite imagery. Candidate 2
+# (-18.843208, 47.404083: green September-April, bare May-August) and candidate 3 lie in the same box, so switching
+# needs no new download.
+id: ambohidratrimo
+name: Ambohidratrimo field, Madagascar (PLACEHOLDER location and rotation)
+placeholder: true
+country: Madagascar
+origin_point: {lat: -18.83, lon: 47.42}   # Claude's choice, 2026-11-14: 60% WorldCover cropland and 8% built-up within 2 km; one HLS tile (T38KQE)
+lat: -18.834125                     # PLACEHOLDER field centre: candidate 1 (pipeline/fetch/placeholder.py, 2026-11-14); 1.84 km ESE of the origin point
+lon: 47.436917
+polygon: [[47.436632, -18.834395], [47.437202, -18.834395], [47.437202, -18.833855], [47.436632, -18.833855]]  # PLACEHOLDER: SW, SE, NE, NW as [lon, lat]
+fetch_box: [47.400997, -18.847986, 47.439003, -18.812014]  # [min_lon, min_lat, max_lon, max_lat]: 2 km N, S, E, W of origin_point (worldcover.box_around)
+bbox: [47.400997, -18.847986, 47.439003, -18.812014]       # index.json prepared area = the fetch box
+elevation_m: 1249.25               # NASADEM_HGT v001 mean over the PLACEHOLDER polygon (4 pixels, 1248-1250 m; slope 2.4 deg mean; data/clean/ambohidratrimo/nasadem_field.json, 2026-11-14). POWER cell: 1425.12 m
+water_source: null                  # TODO(owner): unknown, so both cases are run (rain-fed and irrigated)
+current_rotation: [rice, potato]    # PLACEHOLDER: rainy-season rice, then dry-season potato on the drained rice field (FAO Crop Calendar, Madagascar aez 004)
+current_rotation_options: [[rice, potato], [rice, wheat]]  # PLACEHOLDER: the calendar's dry season ("contre-saison") lists potato and wheat; as on the demo field, the farmer answers
+current_rotation_source: "PLACEHOLDER (Claude's choice, 2026-11-14): FAO Crop Calendar, Madagascar, 'Highlands Zone South' (aez 004; Analamanga incl. Ambohidratrimo district), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/MG/cropCalendar?language=en&aez=004 (read 2026-11-14): Rice 'Riz de saison de pluie ou vakiambiaty' sown 15 Nov-15 Dec, harvested 15 Apr-31 May (160-165 days); Potato 'Contre-saison' sown 1 May-15 Jun, harvested 15 Sep-15 Oct (120-150 days, irrigated, ridges on well-drained rice fields); Wheat 'Contre-saison' sown 15 Apr-15 Jun, harvested 15 Aug-15 Oct (150 days, irrigated). The real rotation comes from the farmer"
+fao_crop_calendar: {country: MG, aez: "004", name: "Highlands Zone South", last_updated: "26/02/2021", url: "https://api-cropcalendar.apps.fao.org/api/v1/countries/MG/cropCalendar?language=en&aez=004"}
+placeholder_seasons:                # the zone's two crop seasons for the placeholder greenness test (pipeline/fetch/placeholder.py)
+  # Claude's choice, 2026-11-14, from the FAO calendar windows above (rice sown 15 Nov-15 Dec and harvested 15 Apr-31 May;
+  # potato sown 1 May-15 Jun and harvested 15 Sep-15 Oct): a season's months are the calendar months that overlap the span
+  # from its latest sowing to its earliest harvest, when every sowing in the window has a crop in the ground. The trough
+  # is the months after the rice harvest begins and before the dry-season crop is up. The rice is sown in the previous
+  # calendar year, but its green months (January-April) fall in the test year. The demo's are Nepal's (DEMO_SEASONS).
+  seasons:
+    - {name: rainy, months: [1, 2, 3, 4], ends_in_year: 0}   # rice, 'saison de pluie' (15 Dec to 15 Apr)
+    - {name: dry, months: [7, 8, 9], ends_in_year: 0}        # potato or wheat, 'contre-saison' (15 Jun to 15 Sep)
+  trough: {months: [5, 6], ends_in_year: 0}                  # the rise of the dry season above this low is reported (dry_rise)
+utc_offset: "+03:00"                # Madagascar (East Africa Time, no daylight saving): IMERG UTC days run 03:00-03:00 local time
+time_zone: Indian/Antananarivo
+faostat_area_code: "129"            # FAOSTAT area code for Madagascar (checked against the bulk file's 'Area' column)
+validation_station: MA000067083     # NOAA GHCN-Daily ANTANANARIVO/IVATO (-18.800 N, 47.483 E, 1276 m; ghcnd-stations.txt), 7.4 km from the origin point. Validation only: its 2001-2025 record is patchy (fewer than 200 rain records in most years; S and I source flags)

@@ -147,13 +147,32 @@ def apply_break_correction(rain, factors, from_date, mask):
     return pd.Series(np.where(m, s.to_numpy() * f, s.to_numpy()), index=s.index), m
 
 
-def with_rain(weather, version):
-    """The weather table with rain_mm set to one rain version: 'corrected' (the twin's rain, as built) or
-    'uncorrected' (GPM as published, rain_uncorrected_mm), for the second run of every rain-based result."""
+def dhm_factors(rain, normals_mm, years):
+    """Owner's queue item 4b (rules.yaml gpm_series.dhm_scaling): {month: factor}, the station's 1991-2020 normal for the
+    month over the mean complete-month total of that month in `rain` (a Series by date) over `years` (inclusive)."""
+    tot = complete_month_totals(rain)
+    yrs = tot.index.get_level_values(0)
+    mean = tot[(yrs >= years[0]) & (yrs <= years[1])].groupby(level=1).mean()
+    bad = [MONTH_NAMES[m - 1] for m in range(1, 13) if m not in mean.index or not mean[m] > 0]
+    if bad:
+        raise ValueError(f"no complete month (or no rain) in {years[0]}-{years[1]} for {', '.join(bad)}: no factor")
+    return {m: float(normals_mm[m] / mean[m]) for m in range(1, 13)}
+
+
+def with_rain(weather, version, dhm=None):
+    """The weather table with rain_mm set to one rain version: 'corrected' (the twin's rain, as built),
+    'uncorrected' (GPM as published, rain_uncorrected_mm), for the second run of every rain-based result, or 'dhm'
+    (item 4b: the corrected rain times dhm_factors; dhm = {'normals_mm': {month: mm}, 'years': [first, last]})."""
     if version == "corrected":
         return weather
     if version == "uncorrected":
         if "rain_uncorrected_mm" not in weather:
             raise ValueError("the weather table has no rain_uncorrected_mm: rebuild it (pipeline.fetch.weather)")
         return weather.assign(rain_mm=weather["rain_uncorrected_mm"])
-    raise ValueError(f"unknown rain version '{version}' (corrected or uncorrected)")
+    if version == "dhm":
+        if not dhm or "normals_mm" not in dhm:
+            raise ValueError("rain version 'dhm' needs the station's monthly normals (rules.yaml gpm_series.dhm_scaling)")
+        d = pd.DatetimeIndex(weather["date"])
+        f = dhm_factors(pd.Series(weather["rain_mm"].to_numpy(float), index=d), dhm["normals_mm"], dhm["years"])
+        return weather.assign(rain_mm=weather["rain_mm"].to_numpy(float) * np.array([f[m] for m in d.month]))
+    raise ValueError(f"unknown rain version '{version}' (corrected, uncorrected or dhm)")

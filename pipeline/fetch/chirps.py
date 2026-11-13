@@ -66,6 +66,16 @@ def box_cells(lat, lon, box, field_lat, field_lon):
     return (int(rows[0]), int(rows[-1])), (int(cols[0]), int(cols[-1])), (fr - int(rows[0]), fc - int(cols[0]))
 
 
+def field_cell(lat, lon, field_lat, field_lon):
+    """(row, col) of the cached box cell holding the field now (build step 11: a field abroad is fetched for its box
+    before its square is picked). Fails loudly when the field is not inside a cached cell."""
+    lat, lon = np.asarray(lat, float), np.asarray(lon, float)
+    fr, fc = int(np.argmin(np.abs(lat - field_lat))), int(np.argmin(np.abs(lon - field_lon)))
+    if abs(lat[fr] - field_lat) > RES / 2 + 1e-6 or abs(lon[fc] - field_lon) > RES / 2 + 1e-6:
+        raise ValueError(f"the field ({field_lat}, {field_lon}) is outside the cached CHIRPS cells")
+    return fr, fc
+
+
 def days_from_time(values, units):
     """'days since 1980-01-01 ...' -> DatetimeIndex (whole days only)."""
     unit, _, origin = units.partition(" since ")
@@ -154,7 +164,7 @@ def build(field, data_dir, years_wanted, stopped=None):
     for y in sorted(have):
         r = load_year(raw_dir, y)
         first = first or r
-        fr, fc = r["field_cell"]
+        fr, fc = field_cell(r["lat"], r["lon"], field["lat"], field["lon"])      # the field as it is now
         box_mean = np.nanmean(r["values"].reshape(len(r["days"]), -1), axis=1)
         rows.append(pd.DataFrame({"date": r["days"], "rain_mm": r["values"][:, fr, fc], "rain_box_mean_mm": box_mean}))
         fills += int(r["fills"])
@@ -165,7 +175,7 @@ def build(field, data_dir, years_wanted, stopped=None):
     out.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(out, index=False)
     missing = [y for y in years_wanted if y not in have]
-    fr, fc = first["field_cell"]
+    fr, fc = field_cell(first["lat"], first["lon"], field["lat"], field["lon"])
     card = g.make_card(
         dataset="chirps", product="CHIRPS v3.0 daily final, rnl (ERA5-disaggregated)", version="3.0",
         variable="precip", units_in="mm/day", units_out="rain_mm (mm per UTC calendar day)", scale_factor=None,

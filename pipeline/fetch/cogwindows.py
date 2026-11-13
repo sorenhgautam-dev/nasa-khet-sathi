@@ -157,12 +157,21 @@ def read_granule(ur, assets, box, out_path, cookie):
     return meta
 
 
-def granules(set_name, box):
+def search_window(start, since=None, until=None):
+    """The temporal search window: the product's own start (or `since`, if later) to `until` (default 2025-12-31).
+    `since` lets a new field fetch its recent years first (build step 11: the placeholder pick needs 2023-2025);
+    a later run without it resumes and reads only the granules not yet cached."""
+    a = max(start, since) if since else start
+    return a, until or "2025-12-31"
+
+
+def granules(set_name, box, since=None, until=None):
     import earthaccess
     products, _ = SETS[set_name]
     chosen = []
     for sn, ver, start in products:
-        g = earthaccess.search_data(short_name=sn, version=ver, bounding_box=tuple(box), temporal=(start, "2025-12-31"))
+        g = earthaccess.search_data(short_name=sn, version=ver, bounding_box=tuple(box),
+                                    temporal=search_window(start, since, until))
         urs = [x["umm"]["GranuleUR"] for x in g]
         keep = set(missing_from([c["umm"]["GranuleUR"] for c in chosen], urs)) if chosen else set(urs)
         chosen += [x for x in g if x["umm"]["GranuleUR"] in keep]
@@ -170,12 +179,12 @@ def granules(set_name, box):
     return chosen
 
 
-def fetch_set(field, set_name, workers=6, cookie=None, limit=None):
+def fetch_set(field, set_name, workers=6, cookie=None, limit=None, since=None, until=None):
     import earthaccess
     earthaccess.login(strategy="netrc", persist=False)
     raw = REPO / "data" / "raw" / set_name / field["id"]
     raw.mkdir(parents=True, exist_ok=True)
-    gs = granules(set_name, field["fetch_box"])[:limit]
+    gs = granules(set_name, field["fetch_box"], since, until)[:limit]
     todo = [g for g in gs if not (raw / f"{g['umm']['GranuleUR']}.tif").exists()]
     print(f"{set_name}: {len(gs)} granules, {len(gs) - len(todo)} cached, {len(todo)} to read", flush=True)
     fails, done = {}, 0
@@ -200,7 +209,8 @@ def fetch_set(field, set_name, workers=6, cookie=None, limit=None):
             except Exception as e:                      # recorded and retried next run, never silently dropped
                 fails[ur] = f"{type(e).__name__}: {str(e)[:200]}"
     (raw / "failures.json").write_text(json.dumps(fails, indent=1) + "\n")
-    (raw / "granules.json").write_text(json.dumps(sorted(g["umm"]["GranuleUR"] for g in gs), indent=0) + "\n")
+    listed = json.loads((raw / "granules.json").read_text()) if (since or until) and (raw / "granules.json").exists() else []
+    (raw / "granules.json").write_text(json.dumps(sorted(set(listed) | {g["umm"]["GranuleUR"] for g in gs}), indent=0) + "\n")
     print(f"{set_name}: read {done}, failed {len(fails)} (see failures.json), total cached "
           f"{len(list(raw.glob('[!.]*.tif')))}", flush=True)
     return fails
@@ -355,6 +365,8 @@ def main(argv=None):
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--card", action="store_true", help="write each set's data card from the cache only (no network)")
+    ap.add_argument("--since", default=None, help="first date to search (YYYY-MM-DD); default: the product's start")
+    ap.add_argument("--until", default=None, help="last date to search (YYYY-MM-DD); default: 2025-12-31")
     a = ap.parse_args(argv)
     field = load_field(a.field)
     if a.card:
@@ -365,7 +377,7 @@ def main(argv=None):
     os.close(fd)
     try:
         for s in a.set:
-            fetch_set(field, s, workers=a.workers, cookie=cookie, limit=a.limit)
+            fetch_set(field, s, workers=a.workers, cookie=cookie, limit=a.limit, since=a.since, until=a.until)
     finally:
         os.remove(cookie)
     return 0

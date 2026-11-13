@@ -21,6 +21,11 @@ the Kc values used and the stage means. Bare soil keeps bare_kc.
 Irrigated fields: other crops are refilled whenever Dr passes RAW (soil_water.run_bucket); bare soil is
 never irrigated. Crops with no published seasonal Ky use the owner-assumed 1.0, labelled "assumed".
 
+Bare soil (build step 2a, rules.yaml bare_soil): `bare_kc` is either a number, the constant Kc of bare days (the
+method while bare_soil.apply is off), or a setting dict from evaporation.bare_soil_setting for FAO-56's surface layer
+(eqs. 71-79): evaporation then comes from the top Ze of the root zone only and stops near TEW, and each bare spell
+starts its surface layer at De = TEW x Dr / TAW of the depletion handed over (soil_water._run_bare_surface).
+
 Plans (REVIEW_NOTES L2 and H4): crops must be in date order, each sown after the previous one ends, and
 every crop must be simulatable (crops.simulatable_crops); otherwise ValueError. A season cut short by the
 end of the weather record is run but gets `complete: False` and no harvest number; complete seasons get
@@ -29,6 +34,7 @@ end of the weather record is run but gets `complete: False` and no harvest numbe
 import numpy as np
 import pandas as pd
 
+from pipeline.twin import evaporation as ev
 from pipeline.twin import soil_water as sw
 from pipeline.twin.crops import kc_curve, require_simulatable, season_kc, season_length
 from pipeline.twin.yield_ import harvest_pct
@@ -87,6 +93,9 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False)
     if kc_climate:
         check_climate_inputs(weather)
     require_simulatable(lib, [c for c, _ in plan])
+    surface = bare_kc if isinstance(bare_kc, dict) else None                 # build step 2a: FAO-56 surface layer
+    if surface is not None and surface.get("method") != "fao56_surface_layer":
+        raise ValueError(f"unknown bare-soil method {surface.get('method')!r}")
     segs = _segments(weather["date"], plan, lib)
     crops_in_plan = [c for c, _ in plan]
     frames, summary, seg_info, seasons, dr, taw_prev = [], {}, {}, [], 0.0, None
@@ -108,12 +117,16 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False)
                              "u2_late_ms": None, "rhmin_late_pct": None})
             seg["kc"] = kc_curve(st, kc_used)[: b - a]
         else:
-            seg["kc"] = bare_kc
+            seg["kc"] = bare_kc if surface is None else np.nan
         paddy = bool(crop and lib[crop].get("paddy"))
         ponded = np.ones(b - a, dtype=bool) if (paddy and irrigated) else None   # rain-fed paddy: plain bucket
         irrigate = bool(irrigated and crop)                                      # bare soil: never
+        layer = None
+        if surface is not None and not crop:
+            layer = {"tew_mm": surface["tew_mm"], "rew_mm": surface["rew_mm"], "kc_max": surface["kc_max"],
+                     "de0_mm": ev.de_start_mm(dr, taw, surface["tew_mm"])}
         out = sw.run_bucket(seg, taw_mm=taw, p_table=p_tab, cn=cn[crop or "bare"], dr0_mm=dr, irrigate=irrigate,
-                            ponded=ponded)
+                            ponded=ponded, surface=layer)
         out.insert(0, "date", seg["date"].to_numpy())
         out["segment"], out["crop"], out["taw_mm"] = name, crop, taw
         inflow = (out["rain_mm"] - out["runoff_mm"] + out["irrigation_mm"]).sum()   # pond water is inside irrigation
@@ -125,6 +138,9 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False)
             key = f"bare_{sum(1 for k in seg_info if k.startswith('bare')) + 1}"
         seg_info[key] = {"start": str(seg["date"].iloc[0].date()), "end": str(seg["date"].iloc[-1].date()),
                          "taw_mm": round(taw, 1), "zr_m": zr, "balance_residual_mm": residual}
+        if layer is not None:
+            seg_info[key].update(bare_method=surface["method"], tew_mm=surface["tew_mm"], rew_mm=surface["rew_mm"],
+                                 de_start_mm=layer["de0_mm"], evaporation_mm=float(out["eta_mm"].sum()))
         if crop:
             etc, eta, ky = out["etc_mm"].sum(), out["eta_mm"].sum(), lib[crop]["ky"]
             full = season_length(lib[crop]["stages_days"])
@@ -153,3 +169,119 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False)
         frames.append(out)
     summary["segments"], summary["seasons"] = seg_info, seasons
     return pd.concat(frames, ignore_index=True), summary
+
+
+# ---------- proposal 2c (rules.yaml paddy_rainfed: PROPOSED, apply false, waiting for the owner) ----------
+
+def paddy_transplant(plan, dates, rain_mm, lib, rule):
+    """When a RAIN-FED paddy can be transplanted (proposal 2c). Land preparation (soaking and puddling) needs
+    rule['prep_mm'] of rain counted from rule['prep_days'] days before the planned day; the paddy is transplanted on the
+    first day, on or after the planned day, by which that total is reached. More than rule['max_delay_days'] late, the
+    season fails: it stays at its planned day (so the year keeps its crops) and paddy_outcome() sets its harvest to 0.
+    A later crop that would overlap a moved paddy moves to the day after it ends (and so on down the plan); a crop pushed
+    past the end of the record is dropped, so its year is incomplete. Irrigated paddy is not passed here.
+    Returns (plan, info): info has one entry per paddy season (planned, transplanted, delay_days, prep_rain_mm, failed,
+    dropped_after)."""
+    dates = pd.DatetimeIndex(dates)
+    rain = pd.Series(np.asarray(rain_mm, dtype=float), index=dates)
+    out, info, cursor = [], [], None                     # cursor: first free day after the previous crop
+    for crop, start in plan:
+        day = pd.Timestamp(start)
+        if cursor is not None and day < cursor:
+            day = cursor
+        if lib[crop].get("paddy"):
+            planned = pd.Timestamp(start)
+            first = planned - pd.Timedelta(int(rule["prep_days"]), unit="D")
+            latest = planned + pd.Timedelta(int(rule["max_delay_days"]), unit="D")
+            cum = rain.loc[first:].cumsum()
+            ok = cum[(cum.index >= day) & (cum >= rule["prep_mm"] - 1e-9)]
+            when = ok.index[0] if len(ok) else None
+            failed = when is None or when > latest
+            prep = float(rain.loc[first:(latest if failed else when)].sum())
+            info.append({"crop": crop, "planned": str(planned.date()), "transplanted": None if failed else str(when.date()),
+                         "delay_days": None if failed else int((when - planned).days), "prep_rain_mm": prep,
+                         "failed": bool(failed), "dropped_after": []})
+            if not failed:
+                day = when
+            info[-1]["start"] = str(day.date())          # the day the season is simulated from
+        end = day + pd.Timedelta(season_length(lib[crop]["stages_days"]) - 1, unit="D")
+        if end > dates[-1]:
+            if info:
+                info[-1]["dropped_after"].append(crop)
+            continue
+        out.append((crop, str(day.date())))
+        cursor = end + pd.Timedelta(1, unit="D")
+    return out, info
+
+
+def paddy_outcome(seasons, info):
+    """The seasons with proposal 2c's outcome: a paddy that could not be transplanted in time gets harvest 0 (with a
+    note); every paddy season carries its transplanting delay. Matched by crop and start day."""
+    by_day = {}
+    for x in info:
+        by_day[(x["crop"], x["start"])] = x
+    out = []
+    for s_ in seasons:
+        x = by_day.get((s_["crop"], s_["start"]))
+        if x is None:
+            out.append(s_)
+            continue
+        s2 = {**s_, "transplant_planned": x["planned"], "transplant_delay_days": x["delay_days"],
+              "land_prep_rain_mm": x["prep_rain_mm"], "transplant_failed": x["failed"]}
+        if x["failed"]:
+            s2["harvest_pct"] = 0.0
+            s2["harvest_note"] = (f"not transplanted: {x['prep_rain_mm']:.0f} mm of land-preparation rain by the latest day, "
+                                  "short of the proposal's need (rules.yaml paddy_rainfed, PROPOSED)")
+        out.append(s2)
+    return out
+
+
+
+# ---------- item 4a (rules.yaml season_dates, apply false): the farmer's sowing dates from the satellite's seasons ----------
+SLOTS = {"monsoon": (6, 7, 8, 9, 10, 11), "winter": (12, 1, 2, 3, 4, 5)}      # rules.yaml rotation_guess (diary/guess.py)
+
+
+def _slot(day):
+    m = pd.Timestamp(day).month
+    return next(k for k, months in SLOTS.items() if m in months)
+
+
+def crop_slot(crop, sow, lib):
+    """The slot (monsoon or winter) of a crop's season: the slot of its middle day."""
+    n = season_length(lib[crop]["stages_days"])
+    return _slot(pd.Timestamp(sow) + pd.Timedelta(n // 2, unit="D"))
+
+
+def plan_from_seasons(plan, detected, lib, last_day):
+    """Item 4a. plan: [(crop, 'YYYY-MM-DD')] from the calendar; detected: the satellite's seasons [{start, peak, end}].
+    Each planned season takes the detected season of its own slot whose peak falls in the year the planned season ends;
+    sowing = that season's start minus the crop's initial stage (green-up read as the end of FAO-56's initial stage);
+    the crop keeps its own length. Then, in order of sowing, a crop that would start before the previous one ends starts
+    the day after it, and a season pushed past last_day is dropped. Returns (plan, info) with one info per planned
+    season: crop, calendar, sow, source ('hls' or 'calendar'), detected_minus_crop_days, moved_by_overlap, dropped."""
+    seasons = [{k: pd.Timestamp(v) for k, v in d.items() if k in ("start", "peak", "end")} for d in detected]
+    last_day = pd.Timestamp(last_day)
+    rows = []
+    for crop, sow in plan:
+        sow = pd.Timestamp(sow)
+        n = season_length(lib[crop]["stages_days"])
+        year, slot = (sow + pd.Timedelta(n - 1, unit="D")).year, crop_slot(crop, sow, lib)
+        mid = sow + pd.Timedelta(n // 2, unit="D")
+        cands = [d for d in seasons if _slot(d["peak"]) == slot and d["peak"].year == year]
+        d = min(cands, key=lambda x: abs((x["peak"] - mid).days)) if cands else None
+        new = d["start"] - pd.Timedelta(int(lib[crop]["stages_days"]["ini"]), unit="D") if d is not None else sow
+        rows.append({"crop": crop, "calendar": str(sow.date()), "sow": new, "n": n, "source": "hls" if d is not None else "calendar",
+                     "detected_minus_crop_days": None if d is None else int((d["end"] - d["start"]).days + 1 - n),
+                     "moved_by_overlap": False, "dropped": False})
+    out, cursor = [], None
+    for r in sorted(rows, key=lambda x: x["sow"]):
+        if cursor is not None and r["sow"] < cursor:
+            r["sow"], r["moved_by_overlap"] = cursor, True
+        end = r["sow"] + pd.Timedelta(r["n"] - 1, unit="D")
+        if end > last_day:
+            r["dropped"] = True
+            continue
+        out.append((r["crop"], str(r["sow"].date())))
+        cursor = end + pd.Timedelta(1, unit="D")
+    info = [{**{k: v for k, v in r.items() if k != "n"}, "sow": str(r["sow"].date())} for r in rows]
+    return out, info

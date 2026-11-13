@@ -4,6 +4,52 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, 01:45): `live.json` settles, then measures; `probe_log.json` has a schema (owner's probe brief)
+
+`site/data/live.json` exists only during the in-person demo (git-ignored). The bridge (`robot/bridge.py --sections
+s1,s2,s3,s4`) now writes it only when a part's state changes, never every 2-second line. `probe_log.json` (the public
+replay) is built only from real sessions and follows `pipeline/export/probe_log_schema.json`. Neither file exists yet:
+the team's bench test comes first.
+
+| `live.json` field | Meaning | What the UI must do |
+| --- | --- | --- |
+| `section`, `part`, `parts_total`, `time` | which part is being read (e.g. part 2 of 4), local time with UTC offset | "Part 2 of 4" |
+| `state` | `settling` / `measuring` / `done` / `test_again` | settling and measuring: a waiting animation, no number. test_again: "The reading jumped. Please test again." |
+| `steady`, `spread_pct`, `n` | the 10 measured lines agree within 3 points (rules.yaml probe) | Show a number only when `steady` |
+| `off_scale` | the median is 0 or 100 (the probe's limits) | "Off the scale", never as a value |
+| `wetness` | the settled median on the probe's own 0-100 scale (air 0, water 100); null unless done, steady and on scale | "drier / wetter than the other parts" (see `relative`) |
+| `relative` | `drier` / `wetter` / `about the same` / null, against the other parts read in this session | The word, with a picture |
+| `water_pct`, `give_or_take_pct` | soil water in % of volume, from the bench calibration, and its error; **null until the bench test** | "about 24% water, give or take 3" only when not null |
+| `band` | `needs water` / `good` / `too wet` / null, from the field's own soil and the crop growing now; **null until the bench test** | The word with its face and caveats |
+| `temp`, `temp_steady` | soil-probe temperature, null unless its 10 lines agree within 0.5 C | "not sure yet" when null |
+| `sure`, `fused_wetness` | the Kalman update of the twin; **null until the bench test** gives the probe's error | Fog clears as `sure` rises |
+| `prior` | `{wetness, sure}`: the twin's estimate before this reading; `twin_date` its date | "Before: …" |
+| `caveats` | plain lines to show with any number (soil cell 859 m away; the probe reads only the top few cm) | Show them under the number |
+| `parts` | `[{section, state, wetness, water_pct, band, sure, relative}]`: every part read so far | The map of parts fills in as the probe walks |
+| `source`, `stale`, `stale_reason`, `stale_since`, `note` | `stale: true` when the cable is pulled or 10 s pass with no line | Grey the live view and say "probe not connected" |
+
+## 2026-11-14 (Saturday, 01:30): the four parts are real (build step 8, owner's group 2a)
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `field.sections` | 36 grey 10 m squares, no numbers | **4 parts of about 30 m** (2 x 2; `s1` south-west, `s2` south-east, `s3` north-west, `s4` north-east), each about one HLS pixel. `status` and `wetness` come from the field twin's soil water on `field.status_date` (all four share one twin: the same soil and weather, so the same numbers). `sure` is the twin's own sureness before any probe reading (0.22 today). `temp` stays null until the probe reads that part. `greener`: `s3` "more", `s2` "less", `s1` and `s4` "same". `low_ground`: null in every part (NASADEM cannot tell on this flat valley floor) | Lay out 4 parts, not 36. Show "as of <status_date>". Draw `sure` as fog. `greener`: the difference is small (about 0.006 NDVI, mostly in winter), so say "a little greener" / "a little less green" |
+| `field.status_date` | absent | `"2026-11-03"`: the latest day with both NASA POWER and IMERG Late weather | Show "as of 3 November" |
+| `mock` | `["field.sections", "future"]` | `["future"]` | Only the 2040 outlook still says "not ready yet" |
+
+## 2026-11-14 (Saturday, 00:40): room for real sections and the 2040 outlook (build steps 8 and 9)
+
+All new fields are optional, so a site built against the old shape still works. They fill in when steps 8 and 9 land
+(Saturday). Then `mock` becomes empty.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `field.sections[].low_ground` (new, optional) | did not exist | `true` / `false` / `null`. True means this part lies lower than the land around it (NASADEM 30 m), so cold air can collect on still nights | Show a small "low ground" mark (a picture and a word, never colour alone). `null`: show nothing |
+| `field.sections[].greener` (new, optional) | did not exist | `"more"`, `"less"`, `"same"` or `"unknown"`: how green this part usually is next to the rest of the field, from its own HLS 30 m pixels over many seasons (a test fixed in advance says when a difference is real) | `more`/`less`: a small leaf mark with "greener than the rest" / "less green than the rest". `same`: nothing. `unknown`: "we can't tell" |
+| `field.status_date` (new, optional) | did not exist | `"YYYY-MM-DD"`: the day of the field twin's soil water behind every section's `status` and `wetness` (the latest day with weather data) | Show "as of <date>" on the screens that show sections |
+| `plans[].future`, `current_options.options[].future` (new, optional) | only `future.nothing_changes` and `future.with_plan` | each plan's own `{harvest, harvest_low, harvest_high}`, one value per entry in `future.years` | On the 2040 screen, show the plan the farmer picked: its own `future`. `nothing_changes` stays the current plan (the default option); `with_plan` stays the first suggested plan |
+| `plans[].future_uncorrected_rain`, `current_options.options[].future_uncorrected_rain` (new, optional) | did not exist | the same outlook on GPM rain as published (without the 2017 fix) | Show it as a range beside `future`, like `score_uncorrected_rain` |
+| `future.period`, `future.models`, `future.scenarios`, `future.words` (new, optional) | did not exist | `"2026-2040"`; the climate models and the two scenarios behind the range; `words`: `{en: [...], ne: [...]}`, plain sentences on what the range means | `years` holds the period's last year (`[2040]`): label it "by 2040". Show `words` under the dials |
+
 ## 2026-11-13 (Friday, 18:00): the soil source shows its neighbourhood; `live.json` time carries its UTC offset (owner's answers 10, 19)
 
 | What | Before | Now | What the UI must do |

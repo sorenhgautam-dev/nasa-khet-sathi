@@ -97,3 +97,64 @@ def ratio_to_gauges(rain_by_month, gauges_by_month):
         rain_sum, gauge_sum = rain_sum + r, gauge_sum + gm
     return {"months": months, "rain_mm": round(rain_sum, 1), "gauge_mean_mm": round(gauge_sum, 1),
             "ratio": round(rain_sum / gauge_sum, 2) if gauge_sum > 0 else None, "by_month": by_month}
+
+
+def gauge_loss_year(table, drop_pct_points, min_months, min_years_before):
+    """Rule (1) of rules.yaml gpm_series.break_test: the first year Y whose yearly mean IMERG gauge weight (at the
+    field's cell) is at least drop_pct_points below the mean of all the years before it, and stays that far below in
+    every later year. table: rows of 'month' ('YYYY-MM') and 'imerg_gauge_weight_pct'; a year counts with at least
+    min_months values, and Y needs at least min_years_before counted years before it. Pure."""
+    t = table.dropna(subset=["imerg_gauge_weight_pct"])
+    g = t.groupby(t["month"].str[:4].astype(int))["imerg_gauge_weight_pct"]
+    yearly = g.mean()[g.count() >= min_months]
+    years = [int(y) for y in yearly.index]
+    out = {"year": None, "yearly_mean_pct": {y: round(float(yearly[y]), 2) for y in years}}
+    for k, y in enumerate(years):
+        if k < min_years_before:
+            continue
+        before = float(yearly[years[:k]].mean())
+        line = before - drop_pct_points
+        if all(float(yearly[z]) <= line for z in years[k:]):
+            below = t[(t["month"].str[:4].astype(int) == y) & (t["imerg_gauge_weight_pct"] <= line)]["month"]
+            out.update(year=y, before_mean_pct=before, drop_pct_points=before - float(yearly[y]),
+                       first_month_below=str(below.min()) if len(below) else None)
+            return out
+    return out
+
+
+def break_test(gauge_table, gpm_yearly, chirps_yearly, rule):
+    """rules.yaml gpm_series.break_test (committed 6d2919c before any run on the field abroad): the break is found only
+    when (1) the gauge input is lost (gauge_loss_year), (2) Pettitt finds a change in the yearly GPM / CHIRPS ratio at
+    p < pettitt_p_max within change_year_tolerance years of the loss, and (3) CHIRPS's own yearly totals do not change
+    then. gpm_yearly, chirps_yearly: {year: mm}. Pure."""
+    why = []
+    if gauge_table is None or len(gauge_table) == 0:
+        why.append("no gauge-weight series (IMERG monthly gaugeRelativeWeighting)")
+    if not chirps_yearly:
+        why.append("no CHIRPS yearly totals")
+    if why:
+        return {"found": False, "why_not": why}
+    pmax, tol = rule["pettitt_p_max"], rule["change_year_tolerance"]
+    loss = gauge_loss_year(gauge_table, rule["gauge_drop_pct_points"], rule["min_months_per_year"], rule["min_years_before"])
+    y0 = loss["year"]
+    years = sorted(set(gpm_yearly) & set(chirps_yearly))
+    ratio = [gpm_yearly[y] / chirps_yearly[y] for y in years]
+    pr = pettitt(years, ratio)
+    pc = pettitt(years, [chirps_yearly[y] for y in years])
+    pg = pettitt(years, [gpm_yearly[y] for y in years])
+
+    def near(p):
+        return y0 is not None and abs(p["change_after"] + 1 - y0) <= tol
+    checks = {"gauge_loss": y0 is not None,
+              "gpm_steps_against_chirps": bool(pr["p"] < pmax and near(pr)),
+              "chirps_steady": bool(pc["p"] >= pmax or not near(pc))}
+    texts = {"gauge_loss": f"no sustained gauge-weight fall of {rule['gauge_drop_pct_points']} points",
+             "gpm_steps_against_chirps": "no significant change in GPM / CHIRPS at the gauge loss",
+             "chirps_steady": "CHIRPS itself changes at the same time"}
+    step = None
+    if y0 is not None and any(y < y0 for y in years) and any(y >= y0 for y in years):
+        step = float(np.mean([r for y, r in zip(years, ratio) if y >= y0]) / np.mean([r for y, r in zip(years, ratio) if y < y0]))
+    return {"found": all(checks.values()), "year": y0, "checks": checks,
+            "why_not": [texts[k] for k, v in checks.items() if not v], "gauge_loss": loss,
+            "gpm_over_chirps_pettitt": pr, "chirps_pettitt": pc, "gpm_pettitt": pg, "years": years,
+            "gpm_over_chirps": {y: round(float(r), 3) for y, r in zip(years, ratio)}, "step_gpm_over_chirps": step}

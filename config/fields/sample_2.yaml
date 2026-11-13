@@ -1,0 +1,34 @@
+# SAMPLE FIELD 2 (PLACEHOLDER), written by scripts/pick_sample_fields.py on 2026-11-14. Not a farmer's field: a 60 m
+# square picked by the demo field's own rule (pipeline/fetch/placeholder.py: WorldCover 2021 cropland with a 30 m cropland
+# margin, no built-up pixel within 100 m of the margin, HLS greenness above NDVI 0.25 in the monsoon and the winter of
+# 2023-2025), one per quadrant of the demo's fetch box, at least 1.5 km from the demo field and from the other samples
+# (rules.yaml sample_fields; owner's brief 4b, owner's 8b: labelled a sample and listed in index.json). Nobody has
+# checked it on satellite imagery yet (the demo's first square was a construction plot). The rotation, water source and
+# elevation are not known: the rotations are the demo's placeholders, elevation_m is filled when the pipeline runs.
+# Why picked: best-ranked passing square in the SE quadrant (rank 147 of 4752; weaker season's monthly peak NDVI 0.72), 4.33 km from the demo field
+id: sample_2
+name: Bhaktapur sample field 2 (PLACEHOLDER)
+placeholder: true
+sample: true
+sample_of: demo
+sample_why: best-ranked passing square in the SE quadrant (rank 147 of 4752; weaker season's monthly peak NDVI 0.72), 4.33 km from the demo field
+country: Nepal
+origin_point: {lat: 27.67, lon: 85.43}
+lat: 27.659292
+lon: 85.467708
+polygon:
+- [85.467403, 27.659022]
+- [85.468013, 27.659022]
+- [85.468013, 27.659562]
+- [85.467403, 27.659562]
+fetch_box: [85.379227, 27.625034, 85.480773, 27.714966]
+bbox: [85.379227, 27.625034, 85.480773, 27.714966]
+elevation_m: null
+water_source: null
+current_rotation: [rice, potato]
+current_rotation_options:
+- [rice, potato]
+- [rice, wheat]
+current_rotation_source: 'PLACEHOLDER (sample field, as the demo''s, owner 2026-11-12 and 2026-11-13): rice in the monsoon, then potato in winter, or rice then wheat; nobody has asked this field''s farmer'
+validation_station: NP000444540
+correction_label: Kathmandu-valley correction

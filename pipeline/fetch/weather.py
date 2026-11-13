@@ -48,6 +48,12 @@ POWER_MET_RES = "0.5 x 0.625 deg (POWER meteorology cell)"
 POWER_SOLAR_RES = "1 x 1 deg (POWER solar cell)"
 
 
+def station_corrects(field):
+    """Decision A (CLAUDE.md): POWER temperature is corrected from the station only when the config names the station
+    AND a correction_label; a station without a label is for validation only (build step 11, the field abroad)."""
+    return bool(field.get("validation_station") and field.get("correction_label"))
+
+
 def warn(message):
     print(f"WARNING: {message}", file=sys.stderr, flush=True)
 
@@ -200,6 +206,10 @@ def build(field, data_dir=REPO / "data", rules=None):
         if station is None:
             corrections[col] = {"label": "uncorrected POWER (no nearby station)", "applied": False,
                                 "months_uncorrected": list(range(1, 13))}
+            continue
+        if not station_corrects(field):
+            corrections[col] = {"label": "uncorrected POWER (the station is for validation only: no correction_label)",
+                                "applied": False, "months_uncorrected": list(range(1, 13))}
             continue
         c = bias.build_correction(power, station, col, tc["min_shared_days_per_year"], tc["min_shared_days_per_month"])
         label = f"{field.get('correction_label', 'station-based correction')} (station {station_id})"

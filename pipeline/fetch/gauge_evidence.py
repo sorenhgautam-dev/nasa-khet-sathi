@@ -103,13 +103,21 @@ def fetch_imerg(field, months, raw):
     return failed
 
 
+def gpcc_file(raw, a, b):
+    """The decade's global GPCC file: this field's copy, else the one already held for another field (build step 11:
+    one global file serves every field and is never downloaded twice). The field's own path when neither exists."""
+    from pipeline.fetch.grace import shared_file
+    name = f"full_data_monthly_v2022_{a}_{b}_10.nc"
+    return shared_file(Path(raw).parent, Path(raw).name, f"gpcc/{name}") or Path(raw) / "gpcc" / name
+
+
 def fetch_gpcc(raw):
     import requests
     out = raw / "gpcc"
     out.mkdir(parents=True, exist_ok=True)
     for a, b in GPCC_DECADES:
         nc = out / f"full_data_monthly_v2022_{a}_{b}_10.nc"
-        if nc.exists():
+        if nc.exists() or gpcc_file(raw, a, b).exists():
             continue
         gz = nc.with_suffix(".nc.gz")
         if not gz.exists():
@@ -146,7 +154,7 @@ def read_gpcc(raw, field):
     from scipy.io import netcdf_file
     rows, attrs = [], {}
     for a, b in GPCC_DECADES:
-        path = raw / "gpcc" / f"full_data_monthly_v2022_{a}_{b}_10.nc"
+        path = gpcc_file(raw, a, b)
         if not path.exists():
             continue
         with netcdf_file(str(path), "r", mmap=False) as nc:
@@ -202,8 +210,13 @@ def build(field, rules, data_dir=REPO / "data", failed=()):
         resolution="IMERG 0.1 deg (the field's cell and its 8 neighbours); GPCC 1.0 deg box " + str(gattrs.get("box_centre_lat_lon")),
         raw_attrs={"imerg": attrs, "gpcc": gattrs}, range_warnings={},
         summary={**summary, "imerg_months_with_a_value": int(len(have)), "imerg_months": [str(have["month"].min()), str(have["month"].max())]},
-        notes="Checks only (VALIDATION 3.9b): the evidence that IMERG Final's gauge input around the field is lost from "
-              f"{brk}. rules.yaml gpm_series.break_evidence quotes this card's summary.")
+        notes=("Checks only (VALIDATION 3.9b): the evidence that IMERG Final's gauge input around the field is lost from "
+               f"{brk}. rules.yaml gpm_series.break_evidence quotes this card's summary."
+               if field["id"] in rules["gpm_series"]["correction_fields"] else
+               f"Checks only: the gauge input behind IMERG Final around this field, summarised before and after {brk} (the "
+               "month the demo field's gauges were lost; rules.yaml gpm_series.correction_from). Whether this field has a "
+               "break of its own is rain check B's break test (rules.yaml gpm_series.break_test; "
+               f"data/checks/{field['id']}/break_test.json)."))
     card_path = g.write_card(card, Path(data_dir) / "cards" / field["id"])
     return {"table": out, "card": card_path, "summary": summary, "months": len(have)}
 

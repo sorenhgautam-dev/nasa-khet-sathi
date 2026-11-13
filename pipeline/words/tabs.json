@@ -312,6 +312,16 @@
     "basis": "CLAUDE.md 'Sections': most sections share one 250 m SoilGrids cell"
    },
    {
+    "id": "unk_weather_shared",
+    "when": [
+     "always"
+    ],
+    "en": "All parts get the same rain and weather.",
+    "ne": "सबै भागमा एउटै वर्षा र मौसम मानिएको छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "Owner's group 2a (2026-11-14): the four parts share one GPM cell, one POWER cell and one twin bucket (data/checks/demo/sections.json 'shared')"
+   },
+   {
     "id": "unk_soil_far",
     "when": [
      "soil_cell_far"

@@ -106,7 +106,7 @@ def fetch(field, data_dir=REPO / "data"):
         scale_factor=None, fill_values_removed={str(attrs["nodata"]): 0}, quality_flags_used="none (void-filled product; .num source file not used)",
         records_dropped=0, date_range=["2000-02-11", "2000-02-21"], time_zone="n/a (one survey, SRTM mission)",
         pixel_count=int(el["pixels"]), source="NASA JPL (2020), NASADEM Merged DEM Global 1 arc second V001, NASA EOSDIS LP DAAC, doi:10.5067/MEaSUREs/NASADEM/NASADEM_HGT.001",
-        resolution="1 arc-second (about 31 m N-S, 27 m E-W here)", raw_attrs=attrs,
+        resolution=f"1 arc-second (about {dy:.0f} m N-S, {dx:.0f} m E-W here)", raw_attrs=attrs,
         location={"box": box, "field_polygon": field["polygon"], "tile": tile},
         notes=(f"Field: elevation {el['mean']:.1f} m (range {el['min']:.0f}-{el['max']:.0f}), slope mean "
                f"{sl['mean']:.1f} deg (max {sl['max']:.1f}) over {el['pixels']} pixels"

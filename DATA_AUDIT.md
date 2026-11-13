@@ -174,9 +174,9 @@ UTC calendar-day labels; 9 cells of 0.05 deg overlapping the box; `data/clean/de
 | Use | field elevation now feeds ET0 (POWER's cell is 1,269.4 m; mean ET0 changed from 3.5045 to 3.5071 mm/day, then 3.5076 at the 60 m square's 1,325.0 m); slope is for revisiting the curve numbers (owner): 1.6 deg is about 2.8 % (the first placeholder's 2.2 deg was about 4 %), gentle, but terraces are likely in the hills | FOUND; curve numbers kept for this 1.6 deg valley-floor placeholder, revisit closed (owner, 2026-11-12, batch item 20); revisit for a terraced hill field |
 | Heights | above the EGM96 geoid | **VERIFIED**: NASADEM User Guide (Jan 2020) Section 3 ('the integer heights in the merged void-free DEM files are relative to the EGM96 geoid') and Table 1 |
 
-### 1.8 ECOSTRESS V003, V002 fallback (D4): DOWNLOADED (raw box windows; LSTE 769, ESI 310)
+### 1.8 ECOSTRESS V003, V002 fallback (D4): DOWNLOADED (raw box windows; LSTE 769, ESI 310); CLEANED 2026-11-14 (a check only, VALIDATION 4.2e)
 
-**Not used in any result (REVIEW_2 L11, 2026-11-13); five things to settle before step 8 uses it.** (1) 742 of 769 LST and 307 of 310 ESI granules are V002, the rest V003 (D4 is implemented correctly: no overpass has both). (2) The versions differ: in V002 no valid LST pixel has cloud = 1 (0 of 5.06 million), in V003 10.6% do, so a mixed series must apply the cloud layer to V003; no code does yet. (3) "Valid" LST runs from 14.6 K to 1,305.8 K (31,066 pixels in 16 granules): mask by QC first, then fail loudly (rule 12c). (4) 119 overpass times have two or three product iterations (`_01`, `_02`, `_03`) and 111 of the first pairs differ: pick one before averaging. (5) Overpasses fall at every hour of the day, and one 70 m pixel centre lies in the field (38% of that pixel is field): 10 m sections cannot differ by ECOSTRESS. The earlier finding stands: QC and cloud read 0 where there is no data (5,631,223 QC and 6,139,061 cloud pixels in LSTE), so both are used only where LST is valid.
+**Cleaned 2026-11-14 (`pipeline/fetch/ecostress.py`, rules fixed and committed before the first run, `fe3223a`, rules.yaml `validation_checks.ecostress`; card `eco_clean.json`, table `data/clean/demo/ecostress.parquet`, one row per overpass). The five traps:** (4) one granule per overpass, the latest build then iteration: 126 LSTE and 39 ESI granules replaced, 659 overpasses left (643 with LSTE, 16 with ESI only); (1-2) cloud = 1 dropped in both versions, QC and cloud read only beside a valid value; (3) LST kept only where QC bits 1-0 = 00 (best quality): every LST outside -98 to 70.7 C in the box was degraded (V002, bits 01) or under cloud (V003), so after masking none is left anywhere in the box and the hard limit (the coldest and hottest land surface measured from space; Scambos et al. 2018, Mildrexler et al. 2011) never fires; 11,940 kept box pixels lie outside rule 12's -30 to 50 C (counted as warnings, D2); (5) the field's value is the pixel at row 39, col 90 of the box grid: **37% of it is field and it holds 50% of the field**; the touching pixels hold 31%, 7% and 11% of the field (shares on a 1 m sub-grid) and their field-area-weighted mean is kept beside it. ESI is kept only where the same overpass has a kept LST at the pixel. **At the field pixel: 178 overpasses with a kept LST, 72 with a kept ESI (2018-2025)**, too few per season for the seasonal check (VALIDATION 4.2e). Before: **Not used in any result (REVIEW_2 L11, 2026-11-13); five things to settle before step 8 uses it.** (1) 742 of 769 LST and 307 of 310 ESI granules are V002, the rest V003 (D4 is implemented correctly: no overpass has both). (2) The versions differ: in V002 no valid LST pixel has cloud = 1 (0 of 5.06 million), in V003 10.6% do, so a mixed series must apply the cloud layer to V003; no code does yet. (3) "Valid" LST runs from 14.6 K to 1,305.8 K (31,066 pixels in 16 granules): mask by QC first, then fail loudly (rule 12c). (4) 119 overpass times have two or three product iterations (`_01`, `_02`, `_03`) and 111 of the first pairs differ: pick one before averaging. (5) Overpasses fall at every hour of the day, and one 70 m pixel centre lies in the field (38% of that pixel is field): 10 m sections cannot differ by ECOSTRESS. The earlier finding stands: QC and cloud read 0 where there is no data (5,631,223 QC and 6,139,061 cloud pixels in LSTE), so both are used only where LST is valid.
 
 `ECO_L2T_LSTE` V003 `C3998139651-LPCLOUD` (V002 `C2076090826-LPCLOUD`); `ECO_L4T_ESI` V003
 `C4057232495-LPCLOUD` (V002 `C2076104650-LPCLOUD`). Tile 45RUL. Over the box V003 has only **27 LSTE and
@@ -189,12 +189,24 @@ granules (31,066 pixels) hold LST outside -30..50 C before QC is applied. Boundl
 granule by geometry (the windows sit 33-50 km inside tile T45RUL's north and west edges; tile size 1568 px TODO-VERIFY).
 QC bits **VERIFIED** (ECOL2 User Guide V3, Table 6): bits 1&0 00 = produced, 01 = produced but degraded, 11 = not produced; 65,535 (25 V002 granules) sets every bit, i.e. "Pixel not produced" and "Missing/bad L1B data". LST is float32 Kelvin, cloud 1 = cloud, ESI a 0-1 ratio (Tiled User Guide V2, Tables 5 and 11). Time stamps in UTC: **TODO-VERIFY** (none of the guides states it).
 
-### 1.9 NEX-GDDP-CMIP6: NOT YET (step 9)
+### 1.9 NEX-GDDP-CMIP6: DOWNLOADING (step 9; 5 models complete at 01:00 on 2026-11-14, the run continues)
 
 Not in CMR; public bucket `nex-gddp-cmip6` lists 35 models (VERIFIED). Units **VERIFIED** (Tech Note v2, 31 May 2025,
 p. 3): pr kg m-2 s-1, tasmax/tasmin K, hurs %, rsds W m-2, sfcWind m s-1. sfcWind is nominally 10 m (CMIP6 day table:
-height10m), so u2 needs FAO-56 eq. 47. The bucket holds v1.0 and `_v2.0` files side by side: step 9 chooses v2.0 and
-records it. Calendars: per model, read from each file's `time:calendar` (**TODO-VERIFY** at fetch time).
+height10m), so u2 needs FAO-56 eq. 47 (not used: only pr, tasmax, tasmin). Rules: `rules.yaml` `future`, committed
+before the first download (`578b8a6`).
+
+| Item | Value | Status |
+| --- | --- | --- |
+| Access | NASA NCCS THREDDS (`ds.nccs.nasa.gov/thredds`, AMES/NEX/GDDP-CMIP6): catalogues for the file names, one NetcdfSubset point CSV per model, experiment, variable and year (`temporal=all`), and each file's OPeNDAP `.das` for its attributes. About 10 s a request; 4 connections; about 6 minutes per model (150 requests); retries with back-off (31 retries, 0 lost requests in the first 7 models) | DONE for the code; `pipeline/fetch/nexgddp.py`, log `data/raw/nexgddp/fetch.log` |
+| Cell | **27.625 N, 85.375 E**, the 0.25 deg cell holding the field; its centre is 9.8 km from the field. Requested at the centre; every answer must return that grid point (it did). Raw answers cached by cell (`data/raw/nexgddp/cell_27.625_85.375/`), so fields in the same cell reuse them | VERIFIED: every answer |
+| Units, fill | Every answer's header and every file's attributes: pr `kg m-2 s-1` -> `pr_mm` (x 86400), tasmax/tasmin `K` -> `tasmax_c`/`tasmin_c` (- 273.15). `_FillValue` = `missing_value` = 1e20; no scale_factor, add_offset or valid_range, so golden rule 12's ranges are the hard limits | VERIFIED |
+| Versions | Every file used is `_v2.0` (the NCCS catalogue holds v2.0 files; `version "2.0"` in the files); recorded per file in each model's `manifest.json` | VERIFIED |
+| Calendars | From each file's `time:calendar`: 360_day (KACE-1-0-G), 365_day (CanESM5), standard (MIROC-ES2L), others per model in the card; each answer must have that calendar's number of days. Only monthly means are used | VERIFIED (closes the TODO above) |
+| Licences | Each file's `cmip6_license`: CC-BY 4.0 or CC-BY-SA 4.0, by model and variable (KACE-1-0-G: pr CC-BY 4.0, tasmax/tasmin CC-BY-SA 4.0); CREDITS.md has the terms | VERIFIED per file |
+| Models | 35 folders; GFDL-CM4_gr2 left out by the rule (GFDL-CM4 again); the other 34 fetched in the order fixed by seed 2026 (`fetch_order.json`). **Left out by the guards:** CESM2 (no historical tasmax in its r4i1p1f1 folder); MIROC-ES2L (its tasmin files have **no units attribute**: refused, never assumed to be K; 50 files). Complete at 01:00: KACE-1-0-G, CanESM5, MPI-ESM1-2-LR, MIROC6, INM-CM5-0 | RUNNING |
+| Clean table, card | `data/clean/<field>/nexgddp_daily.parquet` (model days, never real dates); `data/cards/<field>/nexgddp.json` (models used, order, calendars, licences, variants) | DONE |
+| Switch-off | Without 5 complete models `scripts/run_future.py` writes the outlook as NOT YET and the field file's `future` stays null and in the mock list | BY DESIGN |
 
 ### 1.10 GRACE/GRACE-FO (D5, D7): DOWNLOADED
 
@@ -303,6 +315,71 @@ now fetches both sources, caches them in `data/raw/gauge_evidence/demo/`, writes
 | Variables, units | `numgauge`, stations in the box that month; `precip`, mm per month; the box centred 27.5 N, 85.5 E | guard: counts not negative, rain 0 to 3,000 mm a month |
 | Fills, flags | masked by each file's own fill value (none at these cells); no quality flags: these *are* the quality information | card |
 | Result | 297 months, 2001-01 to 2025-09, none missing. **Gauge weight at the field's cell: 96-98% in every one of the 192 months of 2001-2016** (96% in 109, 97% in 66, 98% in 17; the same range in all nine cells); **from January 2017 it drops** (2017 by month: 62, 68, 64, 61, 63, 60, 60, 55, 60, 61, 71, 70%); yearly means 2017-2025: 62.9, 56.3, 62.2, 56.0, 68.4, 71.8, 70.7, 65.8, 68.9% (single months 31-80%). **GPCC stations in the box: 44.9 to 53.2 a month by year in 2001-2016 (50.3 in 2011-2016); 1.0, 0.7, 1.0, 0.7 in 2017-2020.** GPCC's own box totals do not jump (2016 1,664 mm; 2017 1,658; 2018 1,642; then 1,887 and 2,172). IMERG's monthly rain sums to the daily files' totals (2018: 3,003 mm). The number on the method page was corrected from 96-97% to 96-98% | VALIDATION 3.9b |
+
+### 1.18 The field abroad: Ambohidratrimo, Madagascar (`config/fields/ambohidratrimo.yaml`; build step 11, added 2026-11-14)
+
+Same modules, same guards and cards as the demo, for a fetch box 2 km each way around -18.83, 47.42 (METHOD_NOTES 85-89).
+Driver: `scripts/fetch_field.py --field ambohidratrimo` (resumable; each step's log in `data/raw/_logs/ambohidratrimo_<step>.log`,
+its exit code in `data/raw/_logs/ambohidratrimo_steps.json`). Cards in `data/cards/ambohidratrimo/`. Field: a 60 m PLACEHOLDER
+square (candidate 1 of the demo's rule with the zone's seasons; METHOD_NOTES 86).
+
+| Dataset | Product, access | State (2026-11-14 night) | Notes |
+| --- | --- | --- | --- |
+| ESA WorldCover | v200 2021, tile S21E045, box window (no login) | done | 60.5% cropland, 26.7% grassland, 8.2% built-up of 196,992 pixels |
+| HLS-VI L30 + S30 | v2.0 windows of tile T38KQE (`cogwindows.py`); 2023-2025 first (`--since`), then 2013-2025 | 2023-2025 done (124 of 130 L30, 224 of 225 S30: 7 failures retried by the full run); full record running | 368 L30 + 638 S30 granules in the box; one tile, no overlap |
+| GPM IMERG daily | V07 Final through 2025-09-30, Late for Oct-Dec 2025 (as on the demo), OPeNDAP box subsets | running | the field's 0.1 deg cell is the origin's; UTC days = 03:00-03:00 local time (UTC+03:00) |
+| CHIRPS v3.0 `rnl` | yearly global files, range reads of the box's cells | running | checks only |
+| NASA POWER | point at the field, 2001-2025 | done (9,131 days, no fills, no range warnings) | cell elevation 1,425 m |
+| NASADEM | NASADEM_HGT v001, one tile | done | field 1,249 m (4 pixels, 1,248-1,250 m), slope 2.4 deg |
+| SoilGrids 2.0 | WCS maps of the box (36) | done | the field's own cell has a prediction (22 of 255 box cells have none); water held for plants (0-1 m) 146 mm at the field, 85-156 mm within 2 km |
+| Gauge evidence | GPM_3IMERGM V07 gauge weight (3 x 3 cells) and GPCC V2022 station counts; the two global GPCC files are read from the demo's folder, not downloaded again | running | checks only (rain check B break test) |
+| GRACE/GRACE-FO | the one global file held in `data/raw/grace/demo/`, reused | pending (driver) | regional context |
+| FAOSTAT | the bulk file held; Madagascar (area 129): rice, potato, wheat yields | pending (driver) | validation only |
+| GHCN-Daily | MA000067083 Antananarivo/Ivato, 7.4 km | done (2001-01-01 to 2025-08-23) | **validation only** (no `correction_label`, so no decision-A correction). Patchy: rain records per year 84-328 (over 300 only in 2003-2004); source flags S (2,697 rain records) and I (647) |
+| Not fetched | MODIS, SMAP, ECOSTRESS (no number shown abroad uses them); NEX-GDDP (its own fetcher, another piece); DHM normals (Nepal only) | | |
+
+### 1.19 Near-real-time weather for the twin's state now: NASA POWER and IMERG Late, 2026 (added 2026-11-14, build step 10)
+
+`pipeline/fetch/now.py` -> `data/clean/demo/weather_now.parquet`, card `data/cards/demo/weather_now.json`; raw files in
+`data/raw/power_now/demo/` and `data/raw/gpm_now/demo/late/`. `weather.parquet`, `power.parquet` and `gpm.parquet` are not
+touched. Read by `scripts/run_twin_now.py` (the twin's state, METHOD_NOTES 60).
+
+| Item | Value | Status |
+| --- | --- | --- |
+| Products | NASA POWER daily point API, community AG, one request for 2026-01-01 to 2026-11-13 (header sources GEOSIT, FLASHFLUX, POWER; days in local solar time); GPM IMERG Late V07 daily (`GPM_3IMERGDL`), 316 granules in CMR for 2026-01-01 to 2026-11-12, file versions **V07B, then V07C**, the box's 0.1 deg cells by GES DISC OPeNDAP (UTC days) | model-based (POWER); satellite, no monthly gauges (IMERG Late) |
+| Raw attributes | printed before converting and kept in the card: POWER units per parameter, fill -999; IMERG `precipitation` in mm/day with its `_FillValue` | rule 12a |
+| Last day of each input | POWER meteorology and PRECTOTCORR 10 Nov, **sunshine (ALLSKY_SFC_SW_DWN) 3 Nov**; IMERG Late 12 Nov (13 Nov not yet in CMR) | the state is **as of 3 Nov 2026**, set by POWER's sunshine |
+| Fills, records dropped | POWER -999 -> missing; the 10 days after 3 Nov dropped, never filled or guessed; no fill in the field's IMERG cell; no POWER rain fill needed (307 of 307 days are IMERG) | rule 12c |
+| Built how | exactly as `weather.parquet` (DATA_AUDIT 1.13): the Kathmandu-valley offsets and the frost quantile mapping fitted on the same 2001-2025 history, ET0 with the vapour pressure held from POWER at the field's 1,325 m, and the GPM break factors fitted on IMERG Final months applied to the 307 Late days (owner's answer 7). 2026 rain to 3 Nov: 1,171 mm (1,701 mm as published). **Check: the 2001-2025 history rebuilt by the same code equals `weather.parquet` in every column** (card `corrections.reproduction_of_weather_parquet`; `tests/test_twin_now.py`); the build stops if it does not | done |
+| Spike flags | POWER against IMERG Late only (no station days in 2026): 1 day flagged, in the card | decision B |
+| Caveats | IMERG Late changes file version within the year (V07B to V07C); Late sits at the un-gauged, too-wet level before scaling (VALIDATION 3.9b, 3.9c); 67 mm of scaled rain on 29-31 October (83 mm as published) sets the wet state of 3 Nov | |
+
+### 1.20 Area map of the demo box (derived product; Local Impact 4a, added 2026-11-14)
+
+| Item | Value | Status |
+| --- | --- | --- |
+| Inputs | the cached HLS-VI v2.0 box windows (1,471 granules, L30 and S30, tile T45RUL, 2013-04-24 to 2025-12) and ESA WorldCover 10 m 2021 v200 (1.14); nothing downloaded | read-only |
+| Method | per 30 m pixel, the field diary's series and rules (rules.yaml `area_map`, committed before the first run, `cb85cc8`); NDVI guard -1 to 1 on every window (`scale_ndvi`), Fmask bits 0-5 zero | `scripts/run_area_map.py` |
+| Cropland | WorldCover class 40 on a majority of the 10 m centres in a 30 m pixel: 47,866 pixels (4,308 ha, 43% of the box's 111,013 judged pixels); 31,150 wholly cropland. Every cropland pixel had at least 6 counted years | `data/checks/demo/area_map.json` |
+| Accuracy | WorldCover 2021 v200 cropland, Asia: user's 80.6% +/- 2.8, producer's 82.7% +/- 2.5 (PVR v2.0, 2022-10-25, Table A2.4 p. 29; global 80.6 +/- 1.5 and 79.3 +/- 1.5, Table 2 p. 15). This answers the product-wide part of the TODO-VERIFY in 1.14; Nepal's own accuracy is not published | VERIFIED (report opened 2026-11-14) |
+| Outputs | `site/data/area/demo_bare_days.png` (28.8 KB), `demo_seasons.png` (26.8 KB): 667 x 667 palette PNGs in EPSG:3857, exactly the fetch box, nearest neighbour from UTM 45N, about 15 m on the ground, non-cropland transparent; `site/data/area/demo.json` (bounds, classes, legend, numbers, sources) | written |
+| Check | the map reproduces the field's own diary numbers | VALIDATION 3.23: PASS |
+| Caveats | NDVI shows green cover, not which crop; mixed pixels (houses, trees) at field edges; WorldCover 2021 out of date in places; the bare threshold is untuned and moves the bare-day numbers a lot (METHOD_NOTES 83) | stated in the site file |
+
+### 1.21 GLDAS-2.1 Noah, monthly (a check on the twin only; added 2026-11-14, owner's request): DOWNLOADED AND CLEANED
+
+`pipeline/fetch/gldas.py`; table `data/clean/demo/gldas.parquet` (300 months), card `data/cards/demo/gldas.json`. **Use:** VALIDATION 4.2d only; never the twin's input, never shown to farmers.
+
+| Item | Value | Status |
+| --- | --- | --- |
+| Product | `GLDAS_NOAH025_M` v2.1 (CMR `C1342986036-GES_DISC`), Noah 3.6 land-surface model, monthly means of 3-hourly steps, 0.25 degree; **model-based**. File attribute `source`: 'Noah_v3.6 forced with GDAS-AGRMET-GPCPv13rA1' | VERIFIED: CMR, file attributes |
+| Access | GES DISC's own OPeNDAP (hydro1) answered **410 Service Retired** on 2026-11-14; NASA Earthdata Cloud OPeNDAP (DMR++ present) serves 3 x 3-cell DAP4 subsets, about 60 KB a month. Under 4 parallel requests the server answered 3 of 300 months with March 2001's granule: caught by the month guard, the module now checks every file's own `time_bnds` against the month asked for, and the three were fetched again | FOUND |
+| Cell | row 350, col 1061: centre 27.625 N, 85.375 E, 27.5-27.75 N, 85.25-85.5 E (about 25 x 28 km); the whole fetch box lies in it | FOUND |
+| Variables, units in | SoilMoi0_10cm, 10_40cm, 40_100cm, 100_200cm and RootMoist (kg m-2); Evap_tavg and Rainf_f_tavg (kg m-2 s-1); PotEvap, ESoil, Tveg, ECanop (W m-2); _FillValue -9999; no scale, offset or valid range (`vmin`/`vmax` are each file's global extremes) | VERIFIED: file attributes, checked on every read |
+| Units out | kg m-2 = mm; m3/m3 = mm / layer thickness (100, 300, 600, 1,000 mm); fluxes x 86,400 = mm/day; W m-2 x 86,400 / 2.45 MJ/kg = mm/day (FAO-56 latent heat; Noah's own constant differs by about 2%, which no correlation sees) | FOUND |
+| Guards | rule 12: soil moisture 0-0.6 m3/m3, rain 0-500 mm/day; every other water flux within +-500 mm/day (a unit check); a fill in the field's cell fails; 0 warnings. Values: 0-100 cm 0.106-0.329 m3/m3; ET 0.64-3.99 mm/day | FOUND |
+| Levels | ET 779 mm a year (twin ETa 692); potential evaporation 2,108 mm a year (twin ET0 1,325: Noah's PotEvap is not grass-reference ET0); rain 1,027 mm a year (twin 1,853): GPCP-forced, **no 2017 step** | FOUND |
+| Independence | GPCP v1.3 is gauge-adjusted (GPCC), so GLDAS may share some gauges with IMERG Final; its rain shows no 2017 jump | caveat |
 
 ## 2. Field outline over pixels
 

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://khet-sathi/schema/probe_log.json",
+  "title": "Khet Sathi probe replay: site/data/probe_log.json",
+  "description": "CLAUDE.md 'How judges will see it' 4 and the owner's probe brief (2026-11-14, fix 5): the parts walked with the REAL probe at the event, each settled then measured (robot/settle.py), with its median on the probe's own scale (air 0, water 100), spread, steadiness, water % and band (only after the bench test), and the twin before and after the Kalman update (only with the bench's R), so the public site can replay the demo. Built by scripts/build_probe_log.py from robot/bridge.py's logs; only sessions read from a real serial port (source 'serial:<port>'), never the fake probe. bench links the bench result that made the water %.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["field", "note", "built", "twin_date", "bench", "skipped", "sessions"],
+  "properties": {
+    "field": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "note": {"type": "string", "minLength": 1},
+    "built": {"type": "string", "minLength": 1},
+    "twin_date": {"type": ["string", "null"], "description": "The twin state's as-of day behind 'before'"},
+    "bench": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "additionalProperties": false, "required": ["file", "date", "cups", "mae_water_pct"],
+         "properties": {"file": {"type": "string"}, "date": {"type": "string"}, "cups": {"type": "integer", "minimum": 1},
+                        "mae_water_pct": {"type": "number", "minimum": 0, "description": "Leave-one-cup-out error: 'give or take'"}}}
+      ]
+    },
+    "skipped": {"type": "array", "items": {"type": "string"}, "description": "Sessions left out (not from a real serial port)"},
+    "sessions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "source", "start", "end", "parts"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "source": {"type": "string", "pattern": "^serial:.+"},
+          "start": {"type": "string"},
+          "end": {"type": "string"},
+          "parts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["section", "time", "state", "steady", "off_scale", "wetness", "spread_pct", "n", "temp",
+                           "water_pct", "give_or_take_pct", "band", "relative", "before", "after"],
+              "properties": {
+                "section": {"type": "string", "pattern": "^s[0-9]+$"},
+                "time": {"type": "string"},
+                "state": {"enum": ["done", "test_again"]},
+                "steady": {"type": "boolean"},
+                "off_scale": {"type": "boolean"},
+                "wetness": {"type": ["integer", "null"], "minimum": 0, "maximum": 100, "description": "Median on the probe's own scale; null if not steady or off the scale"},
+                "spread_pct": {"type": "number", "minimum": 0},
+                "n": {"type": "integer", "minimum": 1},
+                "temp": {"type": ["number", "null"], "minimum": -30, "maximum": 50},
+                "water_pct": {"type": ["number", "null"]},
+                "give_or_take_pct": {"type": ["number", "null"], "minimum": 0},
+                "band": {"enum": [null, "needs water", "good", "too wet"]},
+                "relative": {"enum": [null, "drier", "wetter", "about the same"]},
+                "before": {"$ref": "#/$defs/estimate_or_null"},
+                "after": {"$ref": "#/$defs/estimate_or_null"}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "estimate_or_null": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "additionalProperties": false, "required": ["wetness", "sure"],
+         "properties": {"wetness": {"type": "integer", "minimum": 0, "maximum": 100},
+                        "sure": {"type": "number", "minimum": 0, "maximum": 1}}}
+      ]
+    }
+  }
+}

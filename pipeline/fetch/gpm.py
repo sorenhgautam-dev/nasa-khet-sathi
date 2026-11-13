@@ -38,6 +38,22 @@ RAIN_RANGE = (0.0, 500.0)      # golden rule 12b (IMERG documents no valid range
 PRODUCTS = ("final", "late")   # cache folders, in priority order (D1)
 TIME_ZONE = ("UTC days (00:00-24:00 UTC = 05:45-05:45 Nepal time; IMERG V07 Technical Documentation (Huffman et al., 13 July 2023) p. 40: 'The time zone for these data sets is Universal Coordinated Time'; verified 2026-11-12; "
              "the files' own BeginTime/EndTime attributes are in raw_attrs.file)")
+NEPAL_OFFSET = "+05:45"        # the demo's config predates `utc_offset`; a field without the key is the demo's (build step 11)
+
+
+def local_day_label(utc_offset=None):
+    """What a UTC day (00:00-24:00 UTC) is in the field's local time, from the config's `utc_offset` ('+03:00')."""
+    off = utc_offset or NEPAL_OFFSET
+    sign = 1 if off[0] == "+" else -1
+    h, m = (int(x) for x in off[1:].split(":"))
+    minutes = (sign * (h * 60 + m)) % (24 * 60)
+    start = f"{minutes // 60:02d}:{minutes % 60:02d}"
+    return f"{start}-{start} Nepal time" if off == NEPAL_OFFSET else f"{start}-{start} local time (UTC{off})"
+
+
+def time_zone_text(utc_offset=None):
+    """The card's time_zone text for a field: TIME_ZONE (the demo's) with its own local day."""
+    return TIME_ZONE.replace("05:45-05:45 Nepal time", local_day_label(utc_offset))
 
 
 def cell_index(lat, lon):
@@ -218,7 +234,7 @@ def build(field, data_dir, start, end, last_final, cmr_products=None, failures=N
         quality_flags_used="none (precipitation_cnt not used yet)",
         records_dropped=int(df["rain_mm"].isna().sum()),
         date_range=[str(valid.min().date()), str(valid.max().date())] if len(valid) else [],
-        time_zone=TIME_ZONE, pixel_count=int(df["cells"].max()),
+        time_zone=time_zone_text(field.get("utc_offset")), pixel_count=int(df["cells"].max()),
         source="Huffman et al., GPM IMERG Final/Late Precipitation L3 1 day 0.1 degree V07, NASA GES DISC",
         resolution="0.1 deg (about 10 km); the field's cell and the box mean",
         raw_attrs={"precipitation": attrs["precipitation"], "file": attrs["file"],
@@ -276,8 +292,10 @@ def fetch(field, workers=4, data_dir=REPO / "data", start="2001-01-01", end="202
     days = {pd.Timestamp(x["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"][:10]): ("final", x.data_links()[0])
             for x in final}
     last_final = max(days)
-    late = earthaccess.search_data(short_name="GPM_3IMERGDL", version="07",
-                                   temporal=(str((last_final + pd.Timedelta(1, unit="D")).date()), end))
+    late = []                                   # a request ending before the last Final day needs no Late search
+    if pd.Timestamp(end) > last_final:
+        late = earthaccess.search_data(short_name="GPM_3IMERGDL", version="07",
+                                       temporal=(str((last_final + pd.Timedelta(1, unit="D")).date()), end))
     for x in late:
         d = pd.Timestamp(x["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"][:10])
         days.setdefault(d, ("late", x.data_links()[0]))

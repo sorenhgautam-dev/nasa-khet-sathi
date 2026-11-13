@@ -40,6 +40,16 @@ YEARS = (2001, 2025)
 SFLAG_S_CAVEAT = ("derived from hourly synoptic reports exchanged on the GTS. Daily values derived in this fashion may "
                   "differ significantly from 'true' daily data, particularly for precipitation (i.e., use with caution).")
 SFLAG_NAMES = {"S": "Global Summary of the Day (NCDC DSI-9618)"}       # GHCN-Daily readme v3.35, S-FLAG table
+DAY_BOUNDARY = ("Day boundary: S-flag values are GSOD summaries on "
+                "the GMT day (0000Z - 2359Z), i.e. {local}, and GSOD PRCP 'may include latter part of "
+                "previous day' (GSOD readme, NCEI 10/28/2020). A best day-alignment lag of 0 against POWER shows only that "
+                "no whole-day shift does better, not that the day boundaries match")
+
+
+def day_boundary_text(utc_offset=None):
+    """The station-day caveat in the field's local time (config `utc_offset`; none = the demo, Nepal)."""
+    from pipeline.fetch.gpm import local_day_label
+    return DAY_BOUNDARY.format(local=local_day_label(utc_offset))
 
 
 def parse(text, station):
@@ -122,17 +132,16 @@ def fetch(field, station, data_dir=REPO / "data", get_bytes=_http_get_bytes, cre
         records_dropped=info["qc_dropped"],
         date_range=[str(df["date"].min().date()), str(df["date"].max().date())],
         time_zone=(f"station observation day; OBS-TIME given on {info['obs_time_present']} of "
-                   f"{sum(info['raw_records'].values())} records used. Day boundary: S-flag values are GSOD summaries on "
-                   "the GMT day (0000Z - 2359Z), i.e. 05:45-05:45 Nepal time, and GSOD PRCP 'may include latter part of "
-                   "previous day' (GSOD readme, NCEI 10/28/2020). A best day-alignment lag of 0 against POWER shows only that "
-                   "no whole-day shift does better, not that the day boundaries match"),
+                   f"{sum(info['raw_records'].values())} records used. " + day_boundary_text(field.get("utc_offset"))),
         pixel_count=("n/a: one station point; distance to the field TODO-VERIFY (the station's coordinates are in "
                      "ghcnd-stations.txt, which is not cached)"),
         source=f"NOAA NCEI GHCN-Daily station {station} (ground station)", resolution="point",
         raw_attrs={"units": "tenths (readme v3.35)", "scale_factor": TENTHS, "add_offset": "ABSENT",
                    "_FillValue": MISSING, "valid_range": "ABSENT"},
         range_warnings=warned,
-        notes=(f"Validation; also the reference for decision A (POWER temperature correction). Its rain is never a "
+        notes=(("Validation; also the reference for decision A (POWER temperature correction). " if field.get("correction_label")
+                else "Validation only: the field config has no correction_label, so decision A does not use it. ")
+               + f"Its rain is never a "
                f"model input. Records per year (PRCP): {records_per_year(df, 'rain_mm')}. S-FLAG counts (records read, "
                f"2001-2025): {info['source_flags']}. "
                + ("GHCN-Daily readme v3.35 on S-flag values: \"" + SFLAG_S_CAVEAT + "\" Station rain and temperature "

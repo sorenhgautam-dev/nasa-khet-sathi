@@ -38,6 +38,17 @@ def cell_index(lat, lon, lat_bounds, lon_bounds):
     return int(i[0]), int(j[0])
 
 
+def shared_file(raw_root, field_id, pattern):
+    """A global file (one file covers every field) under raw_root/<field_id>/, else the same file already held for
+    another field under raw_root/<other>/ (build step 11: never downloaded twice). None if no field holds it."""
+    raw_root = Path(raw_root)
+    own = sorted((raw_root / field_id).glob(pattern))
+    if own:
+        return own[-1]
+    held = sorted(f for d in sorted(raw_root.glob("*")) if d.is_dir() for f in d.glob(pattern))
+    return held[-1] if held else None
+
+
 def series(time_days, lwe, unc, fill, valid):
     lwe, unc = np.where(lwe == fill, np.nan, lwe), np.where(unc == fill, np.nan, unc)
     bad = np.isfinite(lwe) & ((lwe < valid[0]) | (lwe > valid[1]))
@@ -79,6 +90,9 @@ def fetch(field, data_dir=REPO / "data", rules=None):
     raw = data_dir / "raw" / "grace" / field["id"]
     raw.mkdir(parents=True, exist_ok=True)
     nc = sorted(raw.glob("GRCTellus.JPL.*.nc"))
+    shared = None if nc else shared_file(raw.parent, field["id"], "GRCTellus.JPL.*.nc")
+    if shared is not None:                                 # the global file held for another field (build step 11)
+        nc = [shared]
     if not nc:
         earthaccess.login(strategy="netrc", persist=False)
         gr = earthaccess.search_data(short_name="TELLUS_GRAC-GRFO_MASCON_CRI_GRID_RL06.3_V4")
@@ -127,7 +141,9 @@ def fetch(field, data_dir=REPO / "data", rules=None):
                "GRACE / GRACE-FO gap (mid-2017 to mid-2018) is missing months, not fills. Anomaly relative to the "
                f"product's own baseline. Unscaled trend {trend:+.3f} cm/yr (OLS, for the record; the D7 rule is step 6). "
                f"A CRI scale factor exists ({factor:.4f} at this cell) but is {SCALE_NOT_APPLIED}; with it the trend "
-               f"would be {trend * factor:+.3f} cm/yr. CAVEAT: " + rules["groundwater"]["caveat"]))
+               f"would be {trend * factor:+.3f} cm/yr. CAVEAT: " + rules["groundwater"]["caveat"]
+               + (f" File: the global file already held for another field, {shared.relative_to(data_dir)} (not downloaded again)."
+                  if shared is not None else "")))
     return {"table": out, "card": g.write_card(card, data_dir / "cards" / field["id"]), "df": df, "cell": cell}
 
 

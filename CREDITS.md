@@ -50,10 +50,40 @@ maps are publicly available on the SoilGrids website under the CC-BY 4.0 License
 twin's soil now comes from the WCS maps of the whole box, the nearest cell with a prediction in all 36 maps, 859 m
 south-east of the placeholder field; of the six properties the twin reads only the two water contents).
 
-### NEX-GDDP-CMIP6 (metadata so far)
+### NEX-GDDP-CMIP6 (data, model-based; the 2040 outlook, build step 9)
 
-Public bucket `nex-gddp-cmip6` (AWS Open Data), listing of 35 model folders. Citation: TODO-VERIFY
-(step 9).
+- Dataset: NASA Earth Exchange Global Daily Downscaled Projections - CMIP6 (NEX-GDDP-CMIP6), NASA Center for Climate
+  Simulation, 2021, doi:10.7917/OFSG3345 (resolves to the NCCS page; verified 2026-11-14). Files of version 2.0, read
+  as point answers from NASA NCCS THREDDS (https://ds.nccs.nasa.gov/thredds, AMES/NEX/GDDP-CMIP6): pr, tasmax, tasmin
+  at one 0.25 deg cell, historical 1995-2014 and ssp245 / ssp585 2026-2040; the models used are listed in
+  `data/cards/<field>/nexgddp.json` and `data/checks/<field>/future.json`. Public bucket `nex-gddp-cmip6` (AWS Open
+  Data) lists the same 35 model folders.
+- Paper: Thrasher, B., Wang, W., Michaelis, A., Melton, F., Lee, T., Nemani, R. (2022). NASA Global Daily Downscaled
+  Projections, CMIP6. Scientific Data 9, 262, doi:10.1038/s41597-022-01393-4 (verified via Crossref 2026-11-14; NCCS's
+  v2 Tech Note misprints it as "9 (254)"). The files' own `references` attribute cites the BCSD method: Thrasher et al.
+  2012, Hydrol. Earth Syst. Sci. 16, 3309-3314.
+- Terms: each file's `cmip6_license` attribute, recorded per model and variable in the model's manifest
+  (`data/raw/nexgddp/<cell>/<model>/manifest.json`) and in the card: CC-BY 4.0 or CC-BY-SA 4.0 (e.g. KACE-1-0-G: pr
+  CC-BY 4.0, tasmax and tasmin CC-BY-SA 4.0). The NEX-GDDP-CMIP6 v2 Tech Note (31 May 2025, sec. 7, p. 33) says
+  derivatives "are governed by the original Terms of use" and points to that attribute; the AWS registry page says that
+  "as of September 2022, all NEX-GDDP-CMIP6 outputs are made available under a blanket Creative Commons Zero license
+  (CC0)", and the CMIP6 Terms of Use (PCMDI, version 6.2, 12 October 2022) say the CC BY-SA and CC BY-NC-SA licences
+  "were relaxed in October 2022" to CC BY 4.0. Raw files are never redistributed (`data/` is git-ignored); the site
+  shows only derived harvest percentages, with this attribution. Acknowledgement asked by the CMIP6 Terms of Use: "We
+  acknowledge the World Climate Research Programme, which, through its Working Group on Coupled Modelling, coordinated
+  and promoted CMIP6. We thank the climate modeling groups for producing and making available their model output, the
+  Earth System Grid Federation (ESGF) for archiving the data and providing access, and the multiple funding agencies
+  who support CMIP6 and ESGF." The terms also ask for a table of the models and institutions (in the card's summary).
+- Comparison only (VALIDATION 4.7): World Bank Climate Change Knowledge Portal, "Projected Climate Data, CMIP6
+  0.25-degree" (CC BY 4.0), https://datacatalog.worldbank.org/search/dataset/0042297, Nepal annual anomalies 2020-2039
+  vs 1995-2014 (read from its API by a research sub-agent, 2026-11-14); DHM (2024), "Update of Climate Change Study of
+  Nepal", Department of Hydrology and Meteorology, Government of Nepal (context only).
+- Method sources for the humidity rule (rules.yaml future.humidity): Held, I. M., Soden, B. J. (2006). Robust
+  responses of the hydrological cycle to global warming. J. Climate 19(21), 5686-5699, doi:10.1175/JCLI3990.1 (p. 5687:
+  "climate models tend to maintain a fixed tropospheric relative humidity as they warm"); Byrne, M. P., O'Gorman, P. A.
+  (2016). Understanding decreases in land relative humidity with global warming. J. Climate 29(24), 9045-9061,
+  doi:10.1175/JCLI-D-16-0351.1 (relative humidity "tends to ... decrease substantially over land"). Both verified by a
+  research sub-agent, 2026-11-14.
 
 ### NOAA NCEI GHCN-Daily, Version 3.35 (data, validation and station correction)
 
@@ -78,6 +108,19 @@ TODO-VERIFY on the FAOSTAT site.
 - FAO-56 Tables 11, 12, 14, 22 and 24 (Chapter 6: https://www.fao.org/4/x0490e/x0490e0b.htm; Chapter 8:
   https://www.fao.org/4/x0490e/x0490e0e.htm) and worked Examples 28, 30, 36, 37, 39: crop library and
   bucket tests.
+- FAO-56 Chapter 7 (https://www.fao.org/4/x0490e/x0490e0c.htm, read 2026-11-14): eqs. 71-79, Table 19 and worked
+  Examples 31 and 35: bare-soil evaporation from the surface layer (build step 2a, `pipeline/twin/evaporation.py`,
+  tests/test_evaporation.py).
+- Soil Science Society of America (2022). Glossary of Soil Science Terms, entry 'soil texture', p. 115
+  (https://agronomy.org/files/publications/soils-glossary/table-5.pdf, read 2026-11-14): USDA texture classes for the
+  REW of FAO-56 Table 19.
+- Proposal 2c only (rules.yaml paddy_rainfed, not applied; opened 2026-11-14 by a research sub-agent): Bouman, B.A.M.,
+  Barker, R., Humphreys, E., Tuong, T.P. et al. (2007). Rice: feeding the billions. Ch. 14 in Water for Food, Water for
+  Life (IWMI/Earthscan), Box 14.2; Balwinder-Singh et al. (2019). Field Crops Research 239:92-103, sec. 2.3.2; Han, E.,
+  Montes, C., Hussain, S.G., Krupnik, T.J. (2024). Climatic Change 177:77; Chaulagain et al. (2022). Agronomy Journal of
+  Nepal 6(1):87-94; Adhikari, Mehera & Haefele (2013). American Journal of Plant Sciences 4(12C):146-155; Brouwer, Prins
+  & Heibloem (1989). Irrigation Water Management Training Manual 4, Irrigation Scheduling, FAO, sec. 4.4; Sri Lanka
+  Department of Agriculture (RRDI), land preparation page.
 - FAO-66: Steduto, P., Hsiao, T.C., Fereres, E., Raes, D. (2012). Crop yield response to water. FAO
   Irrigation and Drainage Paper 66, Table 1 (Ky from FAO-33). https://www.fao.org/4/i2800e/i2800e02.pdf
 - ASCE-EWRI: Allen, R.G., Walter, I.A., Elliott, R.L., Howell, T.A., Itenfisu, D., Jensen, M.E., Snyder,
@@ -100,6 +143,11 @@ TODO-VERIFY on the FAOSTAT site.
 
 - FAO Crop Calendar, Nepal, "B. Hill Agro-ecological Zone" (lastUpdated 26/02/2021),
   https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12).
+- FAO Crop Calendar, Madagascar, "Highlands Zone South" (aez 004; lastUpdated 26/02/2021), the field abroad
+  (config/fields/ambohidratrimo.yaml): https://api-cropcalendar.apps.fao.org/api/v1/countries/MG/cropCalendar?language=en&aez=004
+  (read 2026-11-14). Read the same night to choose the field (METHOD_NOTES 85): the zone lists of Kenya (KE aez 007, 008,
+  012, 013, 019, 020), Ethiopia (ET 004-006), Madagascar (MG 004, 005, 008) and Guatemala (GT 002, 004, 005; no sowing
+  windows), from https://api-cropcalendar.apps.fao.org/api/v1/countries/<CC>/aez and .../cropCalendar.
 - Chaulagain, B., Bhattarai, R. K., Timalsina, H. P., Neupane, R., Kaduwal, S. (2025). Productivity and Land
   Use Efficiency of Maize Varieties under Different Row Spacings in a Maize–Finger Millet Relay Cropping
   System of the Mid-Hills of Nepal. Agronomy Journal of Nepal 9, 172–179, doi:10.3126/ajn.v9i1.91446.
@@ -222,6 +270,43 @@ for each claim (copied from notes/parallel_session.md).
 - Probe sketch (`robot/firmware/original_probe/`, the robot teammate's own code): uses the Arduino libraries OneWire
   and DallasTemperature (their licences: TODO-VERIFY with the robot teammate).
 
+### Sections sources (build step 8, 2026-11-14; cited in `config/rules.yaml` `sections` and `scripts/run_sections.py`)
+
+- Ju, J., Neigh, C., Sridhar, M., Claverie, M., Skakun, S., Roger, J.-C., Vermote, E., Dungan, J., Ashokkumar, L.,
+  Harmonized Landsat and Sentinel-2 (HLS) Product User Guide, product version 2.0, NASA GSFC / LP DAAC, last updated April
+  2026 (https://lpdaac.usgs.gov/documents/1698/HLS_User_Guide_V2.pdf, downloaded and read 2026-11-14): geolocation and
+  co-registration, sec. 2, 3.1, 4.3.
+- Buckley, S. M., et al., NASADEM User Guide, NASA JPL, January 2020 (https://lpdaac.usgs.gov/documents/592/NASADEM_User_Guide_V1.pdf,
+  read 2026-11-14): SRTM height errors, sec. 4.2.2.1 and 4.2.6.2.
+- Weiss, A. (2001), Topographic Position and Landforms Analysis, poster, ESRI User Conference, San Diego (not opened: the
+  poster link returned 404), as documented by Jenness, J. (2006), Topographic Position Index (tpi_jen.avx) extension for
+  ArcView 3.x, v. 1.2, Jenness Enterprises (http://www.jennessent.com/downloads/TPI_Documentation_online.pdf, read 2026-11-14).
+- Conover, W. J. (1999), Practical Nonparametric Statistics, 3rd ed., Wiley (sign test, interval for the median), and
+  Holm, S. (1979), A simple sequentially rejective multiple test procedure, Scandinavian Journal of Statistics 6, 65-70:
+  standard results, cited from memory, not opened.
+
+### Second onset measure (2026-11-14; cited in `config/rules.yaml` `onset_accumulation`, `pipeline/diary/onset_accumulation.py`)
+
+- Noska, R., Misra, V. (2016). Characterizing the onset and demise of the Indian summer monsoon. Geophysical Research
+  Letters 43, 4547-4554, doi:10.1002/2016GL068409 (authors' copy https://www.coaps.fsu.edu/~vmisra/ism.pdf, read
+  2026-11-13): eqs. 1-2 and the onset definition, p. 4548. The definition used, exactly.
+- Liebmann, B., Marengo, J. A. (2001), J. Climate 14, 4308-4318; Liebmann, B., et al. (2007), J. Climate 20, 2037-2050,
+  doi:10.1175/JCLI4122.1; Liebmann, B., et al. (2012), J. Climate 25, 4304-4322: the anomalous accumulation that Noska &
+  Misra build on. Cited for the method's origin; **not opened** (journals.ametsoc.org refused automated reads).
+- DHM Climate Division (Government of Nepal), Monsoon Onset and Withdrawal date information, 1968-2024 (file created
+  2024-10-20; https://www.dhm.gov.np/uploads/dhm/climateService/monsoon_onset_and_withdrawal_dates_english3.pdf, read
+  2026-11-14): earliest and latest onset (p. 1) for the sanity window; Table 1 (p. 3), onset dates 2001-2024, for the
+  year-by-year comparison (information only).
+
+### Area map and sample fields (Local Impact 4a and 4b, 2026-11-14; cited in `config/rules.yaml` `area_map`, `sample_fields`)
+
+- Tsendbazar, N., Xu, P., Herold, M., Lesiv, M., Duerauer, M. (2022). ESA WorldCover Product Validation Report (D12-PVR),
+  version 2.0, 2022-10-25, WorldCover 2021 v200: Table 2 p. 15 (global) and Table A2.4 p. 29 (Asia), cropland user's and
+  producer's accuracy (opened 2026-11-14, esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PVR_V2.0.pdf).
+- Brewer, C. A., Harrower, M., ColorBrewer 2.0 (colorbrewer2.org): the YlOrBr and Greens sequential palettes of the area
+  map, marked colour-blind safe there.
+- Data reused, nothing downloaded: HLS-VI v2.0 box windows and ESA WorldCover 10 m 2021 v200 (CC BY 4.0), as listed above.
+
 ### Licence notices (REVIEW_2, 2026-11-13; owner's answer 13: keep the DHM table with a notice, state the GSOD terms, say in LICENSE what MIT does not cover)
 
 - **Kathmandu Airport station values.** Every value has GHCN source flag `S` (NOAA Global Summary of the Day). The GSOD
@@ -255,6 +340,7 @@ Licences are read from each package's installed metadata.
 | pyet | 1.5.0 | MIT | step 3: reference library for ET0 in the tests (the same FAO-56 algorithm, so not an independent check; FAO-56's printed examples are) |
 | scipy | 1.18.1 | BSD-3-Clause | imported directly (Savitzky-Golay smoothing, Theil-Sen slopes, the netCDF-3 reader for GPCC) but installed only as a dependency of scikit-learn, pyet and others: not pinned in `requirements.txt` (REVIEW_2 L8, with the owner) |
 | affine | 3.0.1 | BSD-3-Clause | grid transforms; installed with rasterio, not pinned itself (REVIEW_2 L8) |
+| pillow | 13.0.0 | MIT-CMU (HPND) | the area map's palette PNGs (`pipeline/area/render.py`, 2026-11-14); installed with matplotlib (in requirements-lock.txt), not pinned itself |
 | earthaccess | 0.19.0 | MIT | Earthdata search, login (~/.netrc) and downloads (owner's go 2026-11-12) |
 | h5py | 3.16.0 | BSD-3-Clause | HDF5 / netCDF-4 files: GRACE, GPM subsets, AppEEARS output (owner's go 2026-11-12) |
 | rasterio | 1.5.2 (bundles GDAL 3.12.2) | BSD-3-Clause | GeoTIFF / COG windows: WorldCover, NASADEM, HLS, ECOSTRESS (owner's go 2026-11-12) |
@@ -303,3 +389,8 @@ Licences are read from each package's installed metadata.
 - NASA GPM IMERG V07 Late daily (GPM_3IMERGDL, GES DISC OPeNDAP), the 0.1 deg cells of field `demo`'s fetch box, 2014-2019, fetched 2026-11-13 by pipeline/fetch/gpm_late.py (rain check B confirmation only; never the twin's rain)
 - NASA SMAP L4 Global 3-hourly 9 km Surface and Root Zone Soil Moisture Geophysical Data (SPL4SMGP v008, model-assisted) and SMAP Enhanced L3 Radiometer Global Daily 9 km Soil Moisture (SPL3SMP_E v006), NSIDC DAAC via LP DAAC AppEEARS, the 9 km cell holding field `demo`, 2015-03-31 to 2025-12-31, cleaned 2026-11-13 by pipeline/fetch/smap.py (a check on the twin only; no number shown uses it)
 - NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `demo`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-13 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
+- NOAA NCEI GHCN-Daily v3.35, station MA000067083 (validation; temperature correction A), field `ambohidratrimo`, 2001-01-01 to 2025-08-23, fetched 2026-11-14
+- NASA POWER Daily API v2.10.3 (model-based), field `ambohidratrimo`, 2001-01-01 to 2025-12-31, fetched 2026-11-14
+- NASA POWER daily API (near-real-time: GEOS-IT, FLASHFlux; model-based) and NASA GPM IMERG Late V07 daily (GPM_3IMERGDL, GES DISC OPeNDAP), field `demo`, 2026-01-01 to 2026-11-03, fetched 2026-11-14 by pipeline/fetch/now.py (the twin's state now, build step 10)
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `ambohidratrimo`'s fetch box, 2001-2025, fetched 2026-11-14 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
+- NASA GLDAS-2.1 Noah monthly 0.25 deg (GLDAS_NOAH025_M v2.1, GES DISC, Earthdata Cloud OPeNDAP), soil moisture and evapotranspiration for the field's cell, 2001-2025, fetched 2026-11-14 (check on the twin only)

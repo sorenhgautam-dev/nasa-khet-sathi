@@ -116,16 +116,25 @@ def validate_field(doc, final=False):
         errors.append("field.sections: a section without wetness needs 'field.sections' in `mock`")
     if ("future" in not_ready) != (doc["future"] is None):
         errors.append("future: it is null exactly when 'future' is named in `mock`")
+    # build step 9 (2026-11-14): the outlook block, and each plan's and each current option's own series
+    series_list = []
     if doc["future"] is not None:
+        series_list += [(f"future/{k}", doc["future"][k]) for k in ("nothing_changes", "with_plan")]
+    for p in doc["plans"]:
+        series_list += [(f"plans/{p['id']}/{k}", p[k]) for k in ("future", "future_uncorrected_rain") if k in p]
+    for o in (doc.get("current_options") or {}).get("options", []):
+        series_list += [(f"current_options/{o['id']}/{k}", o[k]) for k in ("future", "future_uncorrected_rain") if k in o]
+    for name, s in series_list:
+        if doc["future"] is None:
+            errors.append(f"{name}: a 2040 outlook needs the future block (future.years)")
+            continue
         n = len(doc["future"]["years"])
-        for series in ("nothing_changes", "with_plan"):
-            s = doc["future"][series]
-            for key in ("harvest", "harvest_low", "harvest_high"):
-                if len(s[key]) != n:
-                    errors.append(f"future/{series}/{key}: needs {n} values, one per year")
-            for i, (lo, mid, hi) in enumerate(zip(s["harvest_low"], s["harvest"], s["harvest_high"])):
-                if not lo <= mid <= hi:
-                    errors.append(f"future/{series}: year {i} needs harvest_low <= harvest <= harvest_high")
+        for key in ("harvest", "harvest_low", "harvest_high"):
+            if len(s[key]) != n:
+                errors.append(f"{name}/{key}: needs {n} values, one per year")
+        for i, (lo, mid, hi) in enumerate(zip(s["harvest_low"], s["harvest"], s["harvest_high"])):
+            if not lo <= mid <= hi:
+                errors.append(f"{name}: year {i} needs harvest_low <= harvest <= harvest_high")
     sd = doc["method"]["season_detection"]
     by_id = {m["id"]: m for m in sd["methods"]}
     if sorted(by_id) != ["changepoint", "detective", "threshold"]:
