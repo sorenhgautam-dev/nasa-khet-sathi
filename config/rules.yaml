@@ -210,6 +210,66 @@ probe:                            # build step 10 (robot/bridge.py); the probe i
   repeat_spread_max_pct:
     value: 3
     source: "Claude's proposal, owner-approved 2026-11-12 (owner's batch decisions, item 24): five readings of one cup 'barely differ' (VALIDATION 5.2) when max - min is at most 3 points on the probe's 0-100% moisture scale; the variance of the same five readings is recorded as the probe's error variance R (CLAUDE.md 'Probe fusion'). No standard was opened; the robot teammate may tighten it after the first bench test"
+  # Build step 10 (pipeline/twin/kalman.py, pipeline/fetch/now.py, scripts/run_twin_now.py, robot/calibrate.py, robot/bridge.py,
+  # scripts/build_probe_log.py). Written and committed BEFORE the first run on real data (owner's answer 21); none of it is
+  # tuned to a result. Everything below marked "Claude's choice" is put to the owner.
+  kalman:
+    state:
+      value: "the twin's root-zone wetness 100 x (1 - Dr/TAW) in percent (0 = wilting point, 100 = field capacity) on the as_of day, for the field's current plan (data/checks/<field>/plans.json shown.current) in the field's export water case (pipeline/plans/simulate.export_case: rain-fed while the water source is unknown), run day by day from the first weather day through the as_of day (weather.parquet, then weather_now.parquet), the crop in the ground on that day included even though its season is not over"
+      source: "CLAUDE.md 'Probe fusion': predict x = twin soil wetness for today; the brief for step 10 (2026-11-13). Claude's reading, 2026-11-14"
+    as_of:
+      value: "the last day on which NASA POWER has every input the twin uses (T2M_MAX, T2M_MIN, RH2M, WS2M, ALLSKY_SFC_SW_DWN) and IMERG Late V07 has rain (POWER may fill only the rain of days IMERG lacks, as in weather.py: decision D and power_rain.max_filled_fraction_per_year). Nothing after it is filled or guessed; the state is labelled 'as of <date>'"
+      source: "Brief for step 10 (2026-11-13): 'the latest day both have'. POWER's solar input (FLASHFlux) arrives days after its meteorology (GEOS-IT), so the solar input usually sets the date"
+    p0:
+      value: {years: [2002, 2025], half_window_days: 15}
+      source: "Claude's choice, 2026-11-14 (CLAUDE.md: P0 from comparing SMAP with the twin; the brief's example: what the calendar alone tells): P0 = the mean, over the days within 15 days either side of the as_of day's calendar day, of the variance across the years 2002-2025 (the exported complete years) of the twin's wetness on that day. Averaging per-day variances keeps the seasonal change inside the 31-day window out of P0; the window steadies a variance taken from 24 years"
+    prior:
+      value: "prior_var = P0 x (1 - r^2); sure_prior = 1 - sqrt(prior_var / P0). r = the correlation of the daily anomalies of the twin's wetness (the state run) and of SMAP L4 root-zone soil moisture (SPL4SMGP sm_rootzone, data/clean/<field>/smap.parquet) over every day both have; a day's anomaly = its value minus the same series' mean over the days within 15 days either side of its calendar day, in the years both have"
+      source: "CLAUDE.md 'Probe fusion' (P0 and Q come from comparing SMAP with the twin). Claude's choice, 2026-11-14: 1 - r^2 is the share of the twin's anomaly variance that the best straight line on SMAP's anomaly leaves unexplained. If SMAP's errors are independent of the twin's errors and of the truth, the twin's own error variance cannot be larger, so prior_var is an upper bound and sure_prior a lower bound; with shared errors (both are models; SMAP L4's rain forcing is gauge-corrected and may share gauges with IMERG) it is not a bound. SMAP L4 is model-assisted, at 9 km, 0-100 cm: not the field's root zone. One r for every time of year (the r of the 31 days around as_of is reported, not used)"
+    q:
+      value: "q_var_per_day = prior_var x (1 - phi^2), phi = the lag-1 autocorrelation of the daily residual (twin anomaly minus k x SMAP anomaly, k the least-squares slope). Predict: P = min(P + Q x days since the last update, prior_var)"
+      source: "CLAUDE.md 'Probe fusion' (Pk = Pk + Q, the model variance grows daily). Claude's choice, 2026-11-14: if the twin's error behaves like a first-order autoregressive series with variance prior_var and lag-1 autocorrelation phi, its growth over the first day from a known state is prior_var x (1 - phi^2); the cap keeps P from passing what the twin alone gives"
+    r:
+      value: "R (twin wetness points squared) = R_probe x (b x 100 / (theta_fc - theta_wp))^2; R_probe = the sample variance (n - 1) of the five repeat-cup readings in probe percent, at least 1/12; b = the calibration slope (m3/m3 per probe percent); theta_fc and theta_wp of the root zone as in calibration.theta_to_wetness"
+      source: "CLAUDE.md 'Probe fusion' (R is the probe's error variance from repeated readings) and probe.repeat_spread_max_pct (owner-approved 2026-11-12). The floor of 1/12 is Claude's choice, 2026-11-14: the probe prints whole percents (the sketch's int moisturePercent), so five equal readings would give R = 0 and a probe trusted completely; a rounding error spread evenly over one step has variance step^2 / 12. R leaves out the calibration error and the depth mismatch (the probe's blade samples the top few cm, the twin's root zone is 0.4-1.5 m deep), so the update trusts the probe more than it should: the calibration residual is reported beside it, not used"
+    one_session_one_measurement:
+      value: {median_of_last_readings: 5}
+      source: "Claude's choice, 2026-11-14: lines 2 s apart from one insertion share their insertion and calibration error, so stacking them as independent readings would drive sure to about 1 within a minute. So each fusable line updates the section from the twin's prior (wetness_pct, prior_var) with z = the median of the session's last 5 fusable readings, converted; one session (one bridge run, one section) counts once, like one re-insertion in the repeat test that sets R"
+    not_fused_readings_pct:
+      value: [0, 100]
+      source: "Claude's choice, 2026-11-14: the sketch limits moisture to 0-100 (constrain), so a printed 0 or 100 may be a cut-off value (METHOD_NOTES 22); such a line is shown and logged but never fused"
+    z_outside_bucket:
+      value: "a converted reading below 0 (drier than wilting point) or above 100 (wetter than field capacity) is set to 0 or 100 for the update; the log keeps the value before and a flag z_limited"
+      source: "Claude's choice, 2026-11-14: the bucket holds no water above field capacity (FAO-56 eq. 88 drains it the same day) and none below wilting point (eq. 86), so the twin cannot take a value outside 0-100"
+  calibration:
+    cup_reading:
+      value: {skip_first_lines: 5}
+      source: "Claude's choice, 2026-11-14: a cup's reading is the median of its good lines after the first 5 (10 s for the probe to settle); the median, because one odd line must not move it"
+    theta_of_cup:
+      value: "theta_v = water_g / (dry_soil_g + water_g) x (filled_cup_g - empty_cup_g) / cup_volume_ml (water 1 g per ml); the air-dried soil's own water is not counted"
+      source: "Claude's choice, 2026-11-14 (CLAUDE.md: z is converted to volumetric water through the day's calibration): a weighed mixture packed to the cup's mark holds the mixture's water fraction of the packed mass. Air-dried soil keeps a few percent of water by volume, so every theta_v (and the probe's wetness) is low by that much: stated, not corrected"
+    fit:
+      value: "theta_v = a + b x probe percent, least squares through the dry, damp and wet cups"
+      source: "Claude's choice, 2026-11-14: three soil cups allow a straight line and one degree of freedom for its residual; capacitive probes are not linear over the whole range, so the line is trusted only between the dry and the wet cup (readings outside are still converted, and flagged)"
+    usable_when:
+      value: "the five repeats pass probe.repeat_spread_max_pct (VALIDATION 5.2), dry < damp < wet in probe percent (5.3) and the slope b is positive; otherwise calibration.json says usable: false and the bridge does not fuse"
+      source: "Claude's choice, 2026-11-14: a calibration that fails its own checks must not reach the site"
+    air_water_check_pct:
+      value: {air_max: 3, water_min: 97}
+      source: "Claude's choice, 2026-11-14 (VALIDATION 5.1): the probe maps its own raw reading to 0 % in air and 100 % in water (the sketch's DRY_VALUE 2467 and WET_VALUE 660), so air should read 0 to 3 and water 97 to 100 (within the owner-approved repeat spread of 3 points). Recorded, not blocking: the soil cups, not air and water, make the calibration"
+    theta_to_wetness:
+      value: "wetness = 100 x (theta_v - theta_wp) / (theta_fc - theta_wp), theta_fc and theta_wp the depth-weighted means of the SoilGrids layers (data/clean/<field>/soilgrids.parquet) over the twin state's root zone 0..Zr"
+      source: "FAO-56 eqs. 82 and 85 for a root zone of even wetness: 1 - Dr/TAW = (theta - theta_wp) / (theta_fc - theta_wp). Using the root zone's mean is Claude's choice, 2026-11-14, so the probe and the twin share one scale; the probe's few cm stand for the whole root zone (stated)"
+  live:
+    stale_after_s:
+      value: 10
+      source: "Claude's choice, 2026-11-14 (REVIEW_2 L7): live.json is marked stale (stale: true, with the reason) when no good line has come for 10 s (five of the probe's 2-second lines), when the port closes or the USB cable is pulled, and when the bridge stops, so the site never shows an old reading as live"
+    reconnect_every_s:
+      value: 2
+      source: "Claude's choice, 2026-11-14 (REVIEW_2 L7): after a pulled cable the bridge says so in plain words, marks live.json stale and tries to reopen the port every 2 s (the probe's own line interval) until it is back or Ctrl-C"
+    replay_sources:
+      value: ["serial"]
+      source: "Golden rule: no made-up number is ever exported (owner, 2026-11-13). Only sessions read from a real serial port may enter site/data/probe_log.json; sessions from robot/fake_probe.py, stdin or a pseudo-terminal are refused, and those sources may not write under site/data/ at all"
 
 ecostress:                        # optional layer (steps 6 and 8)
   qc_needs_valid_value:
