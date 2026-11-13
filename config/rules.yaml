@@ -81,6 +81,10 @@ soilgrids:
     value: 3000
     source: "Owner, 2026-11-12 (REVIEW_NOTES M5): if the field's own SoilGrids cell has no prediction, use the nearest SoilGrids cell within 3 km. FAO HWSD v2 is not used (owner-approved 2026-11-12 (owner's batch decisions, item 21): CC BY-NC-SA licence, 1 km cells, no water contents at 33 or 1500 kPa), with a caveat that the soil is not the field's own. Was 1 km (owner-approved 2026-11-12, step-4 review items 2 and 5). The distance is recorded in the data card"
 
+  neighbourhood:
+    value: {radius_m: 2000, depth_m: 1.0}
+    source: "Owner, 2026-11-13 (answer 10 to REVIEW_2 M5): keep the nearest soil cell and show the neighbourhood range. Shown: the water the soil holds for plants (field capacity minus wilting point) in the top metre, at the cell used and over every SoilGrids cell with values within 2 km of the field. The radius and the depth are Claude's choices; they are the ones REVIEW_2's check had already used on 2026-11-13 (so not fixed before a first look); put to the owner. A description only: the twin still uses the nearest cell"
+
 curve_numbers:                    # SCS-CN for the bucket's runoff (twin/runoff.py)
   hydrologic_soil_group:
     value: C

@@ -34,7 +34,7 @@ Result words: **PASS** · **FAIL** · **NOT YET POSSIBLE** (reason, and the step
 
 | # | Check | Result | Evidence |
 | --- | --- | --- | --- |
-| 1.1 | Tests pass | **PASS**: 963 passed, 0 failed, deprecation warnings treated as errors (2026-11-13, after the REVIEW_2 fixes; 871 before them, re-run by the review in a fresh environment whose `pip freeze` equals `requirements-lock.txt`; 675 on 2026-11-12 evening). A fresh venv from `requirements.txt` alone installs the exact `requirements-lock.txt` versions and passes the suite | `pytest -W error::DeprecationWarning` over `tests/` |
+| 1.1 | Tests pass | **PASS**: 966 passed, 0 failed, deprecation warnings treated as errors (2026-11-13, after the REVIEW_2 fixes; 871 before them, re-run by the review in a fresh environment whose `pip freeze` equals `requirements-lock.txt`; 675 on 2026-11-12 evening). A fresh venv from `requirements.txt` alone installs the exact `requirements-lock.txt` versions and passes the suite | `pytest -W error::DeprecationWarning` over `tests/` |
 | 1.2 | Every export validates | **PASS**: 3 files (the field, the index, `words.json`), 0 problems. Since 2026-11-13 16:00 `demo.json` holds no made-up number (owner's answer 2 to REVIEW_2): `field.sections` (step 8) and `future` (step 9) are named in its `mock` list and hold none (36 real 10 m sections, grey; `future` null); the diary, plans, replays, sources and method page are real. New: `validate --final` fails while anything is MOCK, when two plans grow the same crops, when a plan's harvest score is not its replay's mean, or when a year lacks the watered case (the freeze check; REVIEW_2 M13). The everyday check now also refuses a plan without a replay and replay years that do not run year by year | `python -m pipeline.export.validate`: 2 files, 0 problems |
 | 1.4 | The placeholder field is cropland | **PASS for the chosen field** (27.690767 N, 85.441792 E, 60 m; candidate 1 moved 25 m north by the owner, 2026-11-12, because the Kasan River's strip ran along its southern edge on Google Maps). The square and its 30 m margin are all WorldCover 2021 cropland (210 cells). HLS passes the simple greenness test in both seasons of 2023-2025 (lowest seasonal peak 0.784; winter rise 0.59-0.64 after the rice harvest); the test is a monthly NDVI peak above 0.25, which grass, weeds and trees also pass, so it cannot show a crop (REVIEW_NOTES M11). The 4 sampled pixels' footprints reach up to about 15 m beyond the 60 m square. None of the 9 covering HLS pixels holds a WorldCover tree cell; the nearest is 142 m north. **Exceptions:** its 30 m margin is 77 m from the nearest built-up pixel, against the search's 100 m: **accepted by the owner, 2026-11-12** as an exception to the 100 m rule. The river strip is too narrow to see in these data: the covering pixels stop about 6 m north of the river line as described, and the 4 pixels the season test uses stop about 36 m short. **FAIL for the first placeholder** (owner, satellite view: a construction plot beside new buildings, although WorldCover 2021 calls it cropland). Its HLS record through Dec 2025 still passes the simple bare-soil test (both seasons above NDVI 0.25) but shows **no winter crop** (winter peaks 0.39-0.45 vs monsoon 0.68-0.73, no rise after the rice harvest). | `placeholder_candidates.json` (`chosen_field`, `earlier_placeholders`), `placeholder_candidates.png`, `placeholder_field.png`; REVIEW_NOTES.md H3 |
 | 1.5 | Silent failures in the replay (ECC kit review) | **PASS after fixes**: 10 findings checked; NaN inputs, date gaps, POWER outside the GPM record, unknown water source, null events, an empty held-out split and a soil holding no water now stop loudly (tests in `test_replay.py`, `test_build_field_json.py`, `test_qmap.py`) | METHOD_NOTES.md item 15 |
@@ -129,13 +129,15 @@ normals.
 
 ## Totals
 
-Layer checks (recounted 2026-11-13 by REVIEW_2; rows 1.4 and 3.4 count twice):
-**PASS 18** (1.1, 1.2 with the MOCK warning, 1.2b, 1.4 for the chosen field, 1.5, 2.1 not independent, 2.1b, 2.1c, 2.1d, 2.2,
-2.3, 3.2, 3.4 for the station and the twin input (fitted reference), 3.5, 3.6, 3.11, 3.11b, 4.1c by month only),
-**FIXED 1** (2.4 irrigation bug), **FAIL 8** (1.4 for the first placeholder, 3.1 POWER rain and the twin's own rain level,
-3.3 onset, 3.4 POWER raw, 3.7, 3.8 before correction, 3.9 the three rain sources do not agree, 4.1d the onset rule),
-**decision recorded 1** (3.14: both, each for its job), **run with findings 15** (3.9b the data break and its correction,
-3.9c DHM's 2025 gauges, 3.10, 3.12, 3.13 the GPM day lag, 3.15 = 4.5, 3.16, 3.17 with the hot-day artefact, 3.18, 3.19,
-4.1 with both negative controls failing in the exported run, 4.1b, 4.2b SMAP, 4.4, 4.4b), **possible but not run 2** (4.2,
-4.3), **NOT YET POSSIBLE 7** (1.3, 3.1b, 4.6, 5.1, 5.2, 5.3, 6.1). **Open with the owner:** REVIEW_2.md's questions, first
-among them the site (C1), the mock blocks (H1), the third plan's name (H2) and the 92 Late days (H4).
+Layer checks (recounted 2026-11-13, evening, after the owner's answers; rows 1.4 and 3.4 count twice):
+**PASS 18** (1.1, 1.2, 1.2b, 1.4 for the chosen field, 1.5, 2.1 not independent, 2.1b, 2.1c, 2.1d, 2.2, 2.3, 3.2, 3.4 for
+the station and the twin input (fitted reference), 3.5, 3.6, 3.11, 3.11b, 4.1c by month only), **FIXED 1** (2.4 irrigation
+bug), **FAIL 8** (1.4 for the first placeholder, 3.1 POWER rain and the twin's own rain level, 3.3 onset, 3.4 POWER raw,
+3.7, 3.8 before correction, 3.9 the three rain sources do not agree, 4.1d the onset rule), **decision recorded 1** (3.14:
+both, each for its job), **run with findings 16** (3.9b the data break and its correction, 3.9c DHM's 2025 gauges, 3.10,
+3.12, 3.13 the GPM day lag, 3.15 = 4.5 with the "less sure" signal, 3.16, 3.17 with the hot-day artefact, 3.18, 3.19, 4.1
+with the new event rule and both negative controls failing, 4.1b, 4.2b SMAP, 4.4, 4.4b, 4.6 field memory: not kept),
+**possible but not run 2** (4.2, 4.3), **NOT YET POSSIBLE 6** (1.3, 3.1b, 5.1, 5.2, 5.3, 6.1). **Details the owner still has
+to approve** are marked "put to the owner" in `rules.yaml` and listed on the method page: the event seasons, the gain-range
+runs, the tips floor, the rain-level limit, the wheat-date distance, the soil neighbourhood, the "less sure" definition and
+the field-memory design.

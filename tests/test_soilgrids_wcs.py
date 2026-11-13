@@ -105,7 +105,7 @@ def test_the_profile_comes_from_the_nearest_cell_where_every_map_has_values(tmp_
     monkeypatch.setitem(sys.modules, "requests", None)                 # from the cache: no network at all
     _maps(tmp_path / "raw" / "soilgrids" / "t" / "wcs")
     field = {"id": "t", "lat": 27.6937, "lon": 85.4062, "fetch_box": [85.40, 27.685, 85.415, 27.70]}   # cell (2, 2)
-    r = sw.fetch(field, data_dir=tmp_path, rules={"soilgrids": {"nearest_cell_max_m": 3000}}, offline=True)
+    r = sw.fetch(field, data_dir=tmp_path, rules={"soilgrids": {"nearest_cell_max_m": 3000, "neighbourhood": {"radius_m": 2000, "depth_m": 1.0}}}, offline=True)
     assert (r["cell"]["row"], r["cell"]["col"]) not in [(2, 2), (2, 3)] and r["cell"]["distance_m"] > 0
     assert r["df"]["sand_pct"].tolist() == [38.0] * 6 and r["df"]["theta_fc_m3m3"].tolist() == [0.33] * 6
     card = json.loads(r["card"].read_text())
@@ -119,4 +119,23 @@ def test_the_profile_comes_from_the_nearest_cell_where_every_map_has_values(tmp_
 def test_offline_refuses_to_download_a_missing_map(tmp_path):
     field = {"id": "t", "lat": 27.6937, "lon": 85.4062, "fetch_box": [85.40, 27.685, 85.415, 27.70]}
     with pytest.raises(FileNotFoundError, match="offline"):
-        sw.fetch(field, data_dir=tmp_path, rules={"soilgrids": {"nearest_cell_max_m": 3000}}, offline=True)
+        sw.fetch(field, data_dir=tmp_path, rules={"soilgrids": {"nearest_cell_max_m": 3000, "neighbourhood": {"radius_m": 2000, "depth_m": 1.0}}}, offline=True)
+
+
+def test_the_neighbourhood_range_is_the_water_held_in_the_cells_around_the_field():
+    """Owner's answer 10 to REVIEW_2 (2026-11-13): show how the soil cell used compares with the cells near the field.
+    3 x 3 cells of about 250 m; field capacity 0.30 everywhere, wilting point 0.10 except 0.20 in the centre cell;
+    all depths alike, so the water held in the top metre is 200 mm, and 100 mm in the centre."""
+    fc = {d: np.full((3, 3), 0.30) for d in sw.DEPTHS}
+    wp = {d: np.full((3, 3), 0.10) for d in sw.DEPTHS}
+    for d in sw.DEPTHS:
+        wp[d][1, 1] = 0.20
+    valid = np.ones((3, 3), dtype=bool)
+    valid[0, 0] = False
+    lat, lon = 27.70 - 0.0025 * 1.5, 85.40 + 0.0025 * 1.5                 # the centre cell
+    out = sw.neighbourhood_taw(valid, T, fc, wp, lat, lon, used=(1, 1), radius_m=2000, depth_m=1.0)
+    assert out["cells"] == 8 and out["used_mm"] == pytest.approx(100.0)
+    assert out["min_mm"] == pytest.approx(100.0) and out["max_mm"] == pytest.approx(200.0) and out["median_mm"] == pytest.approx(200.0)
+    assert out["cells_holding_less"] == 0
+    near = sw.neighbourhood_taw(valid, T, fc, wp, lat, lon, used=(1, 1), radius_m=100, depth_m=1.0)
+    assert near["cells"] == 1

@@ -2324,7 +2324,7 @@
   },
   {
    "name": "ISRIC SoilGrids",
-   "product": "2.0: water the soil holds at field capacity and wilting point (machine-learning map); nearest cell with values, 859 m from the field",
+   "product": "2.0: water the soil holds at field capacity and wilting point (machine-learning map); nearest cell with values, 859 m from the field. Water it holds for plants in the top 1 m: 149 mm; the 56 cells within 2 km of the field hold 149 to 187 mm",
    "resolution": "250 m",
    "years": "one map",
    "type": "model"
@@ -2525,6 +2525,12 @@
     "choice": "Owner, 2026-11-12: let the three sources vote; if GPM agrees with the station, mark the day a real local storm. The 'suspect station' half is Claude's reading, owner-approved 2026-11-12 (step-4 review item 5). Caveat (REVIEW_NOTES H2, 2026-11-12): every Kathmandu Airport record is GHCN S-flag 'S', derived from synoptic reports, which the GHCN readme says to use with caution, especially for rain; a 'station value suspect' or 'real local storm' label rests on that series",
     "value": "when GPM exists, a flagged day where GPM agrees with the station (their pair passes the spike rule) is marked a real local storm; where GPM agrees with POWER instead, the station value is marked suspect",
     "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "soilgrids.neighbourhood",
+    "choice": "Owner, 2026-11-13 (answer 10 to REVIEW_2 M5): keep the nearest soil cell and show the neighbourhood range. Shown: the water the soil holds for plants (field capacity minus wilting point) in the top metre, at the cell used and over every SoilGrids cell with values within 2 km of the field. The radius and the depth are Claude's choices; they are the ones REVIEW_2's check had already used on 2026-11-13 (so not fixed before a first look); put to the owner. A description only: the twin still uses the nearest cell",
+    "value": "{'radius_m': 2000, 'depth_m': 1.0}",
+    "status": "Claude's choice, put to the owner"
    },
    {
     "id": "curve_numbers.by_cover",

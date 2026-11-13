@@ -37,7 +37,8 @@ DEFAULT_BAUD = 115200                     # the probe sketch's Serial.begin rate
 
 
 def _now():
-    return datetime.now().isoformat(timespec="seconds")
+    """Local time with its UTC offset, e.g. 2026-11-14T10:32:00+05:45 (owner's answer 19 to REVIEW_2, 2026-11-13)."""
+    return datetime.now().astimezone().isoformat(timespec="seconds")
 
 
 def write_atomic(path, doc):

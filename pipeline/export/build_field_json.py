@@ -191,13 +191,17 @@ def stated_choices(rules):
     return out
 
 
-def sources_block(soil_distance_m=None):
+def sources_block(soil_distance_m=None, soil_around=None):
     """Every dataset behind a number on the site (golden rule 8: model-based data labelled model).
 
     REVIEW_2 M5, M6 (2026-11-13): the soil row names what the twin reads (the two water contents) and, when the
     cell used is not the field's own, how far away it is (soil_distance_m, from the soil data card); the MODIS row
     says that no number shown uses it (bare days, cover months, the guess and the method page are HLS years only)."""
     soil_where = (f"; nearest cell with values, {soil_distance_m:.0f} m from the field" if soil_distance_m else "")
+    if soil_around and soil_around.get("cells", 0) > 1:      # owner's answer 10 (2026-11-13): the neighbourhood range
+        a = soil_around
+        soil_where += (f". Water it holds for plants in the top {a['depth_m']:g} m: {a['used_mm']:.0f} mm; the {a['cells']} cells "
+                       f"within {a['radius_m'] / 1000:g} km of the field hold {a['min_mm']:.0f} to {a['max_mm']:.0f} mm")
     return [
         {"name": "GPM IMERG", "product": "V07 Final daily (Late for Oct-Dec 2025); days from 2017 scaled back, month by "
          "month, to its own 2001-2016 level (the rain gauges behind it stopped reporting here)", "resolution": "0.1 deg (about 10 km)",
@@ -415,8 +419,10 @@ def export_step7(doc, field_id, plans):
         raise ValueError("plans.json must be the corrected-rain run and rain_uncorrected/plans.json the uncorrected one")
     out = not_ready_blocks(doc, field)
     soil_card_path = REPO / "data" / "cards" / field_id / "soilgrids.json"
-    soil_loc = json.loads(soil_card_path.read_text()).get("location", {}) if soil_card_path.exists() else {}
-    out["sources"] = sources_block(soil_distance_m=soil_loc.get("distance_m") if isinstance(soil_loc, dict) else None)
+    soil_card = json.loads(soil_card_path.read_text()) if soil_card_path.exists() else {}
+    soil_loc = soil_card.get("location", {})
+    out["sources"] = sources_block(soil_distance_m=soil_loc.get("distance_m") if isinstance(soil_loc, dict) else None,
+                                   soil_around=(soil_card.get("summary") or {}).get("water_held_for_plants"))
     card = json.loads((REPO / "data" / "cards" / field_id / "weather.json").read_text())
     rain_break = card["corrections"].get("rain_break", {})
     rain_check = json.loads((checks / "rain_check_b.json").read_text())

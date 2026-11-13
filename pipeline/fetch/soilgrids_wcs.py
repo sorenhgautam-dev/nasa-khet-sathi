@@ -122,6 +122,26 @@ def nearest_with_values(valid, transform, lat, lon):
     return best
 
 
+def neighbourhood_taw(valid, transform, fc, wp, lat, lon, used, radius_m, depth_m):
+    """How the cell used compares with the cells around the field (owner's answer 10 to REVIEW_2, 2026-11-13): the
+    water the soil holds for plants (field capacity minus wilting point, mm) over 0..depth_m, at the cell `used`
+    (row, col) and over every cell with values within radius_m of the field. fc, wp: {depth label: grid, m3/m3}.
+    A description only: the twin still uses the nearest cell."""
+    from pipeline.twin.soil_water import taw_from_layers
+    clat, clon = _centres(np.shape(valid), transform)
+
+    def held(r, c):
+        layers = pd.DataFrame([{"top_cm": int(d.replace("cm", "").split("-")[0]), "bottom_cm": int(d.replace("cm", "").split("-")[1]),
+                                "theta_fc_m3m3": float(fc[d][r, c]), "theta_wp_m3m3": float(wp[d][r, c])} for d in DEPTHS])
+        return taw_from_layers(layers, depth_m)
+    vals = [held(r, c) for r, c in zip(*np.nonzero(np.asarray(valid, dtype=bool)))
+            if distance_km(lat, lon, clat[r, c], clon[r, c]) * 1000 <= radius_m]
+    used_mm = held(*used)
+    return {"radius_m": radius_m, "depth_m": depth_m, "cells": len(vals), "used_mm": round(used_mm, 1),
+            "min_mm": round(float(np.min(vals)), 1), "median_mm": round(float(np.median(vals)), 1),
+            "max_mm": round(float(np.max(vals)), 1), "cells_holding_less": int(sum(v < used_mm - 1e-9 for v in vals))}
+
+
 def rest_comparison(rest_dir, grids, transform):
     """Cached REST answers for this field: their unit blocks, and their values against the maps at the same
     points. Returns (unit blocks or None, {"pairs", "equal", "worst_ratio"}). A value off by more than a factor
@@ -212,6 +232,10 @@ def fetch(field, data_dir=REPO / "data", rules=None, offline=False):
     out.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(out, index=False)
     no_pred = int((~have).sum())
+    N = rules["soilgrids"]["neighbourhood"]
+    around = neighbourhood_taw(have, transform, {d: convert("wv0033", grids[("wv0033", d)]) for d in DEPTHS},
+                               {d: convert("wv1500", grids[("wv1500", d)]) for d in DEPTHS}, field["lat"], field["lon"],
+                               (cell["row"], cell["col"]), N["radius_m"], N["depth_m"])
     declared = sorted({str(v) for v in nodatas.values()})
     own = cell["distance_m"] == 0
     caveat = ("The field's own cell has a prediction." if own else
@@ -229,7 +253,7 @@ def fetch(field, data_dir=REPO / "data", rules=None, offline=False):
         resolution="250 m (served in EPSG:4326, about 0.0023 deg)",
         raw_attrs={"grid": grid_attrs, "maps": maps, "units_source": UNITS_SOURCE, "units_check": units_how,
                    "rest_vs_wcs_values": comparison},
-        range_warnings=warned,
+        range_warnings=warned, summary={"water_held_for_plants": around},
         location={"requested": [field["lat"], field["lon"]], "used": [round(cell["lat"], 6), round(cell["lon"], 6)],
                   "used_row_col": [cell["row"], cell["col"]], "distance_m": cell["distance_m"],
                   "box": field["fetch_box"], "box_cells": int(have.size), "box_cells_without_prediction": no_pred,

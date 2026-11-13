@@ -206,8 +206,9 @@ drawn field is outside every prepared area:
 `{"fields": [{"id": "demo", "name": "Bhaktapur demo field", "country": "Nepal", "lat": 27.67, "lon": 85.43, "bbox": [85.42, 27.66, 85.44, 27.68]}]}`
 
 Live probe file for the demo, `site/data/live.json`, written by `robot/bridge.py`:
-`{"section": "s1", "wetness": 41, "temp": 17.9, "sure": 0.8, "time": "2026-11-14T10:32:00"}`
-(`temp` is null when the probe says "Check wiring"; `sure` is null until the step-10 Kalman update.)
+`{"section": "s1", "wetness": 41, "temp": 17.9, "sure": 0.8, "time": "2026-11-14T10:32:00+05:45"}`
+(`temp` is null when the probe says "Check wiring"; `sure` is null until the step-10 Kalman update; `time` is local time
+with its UTC offset, and the file is git-ignored: it exists during the in-person demo only; owner, 2026-11-13.)
 
 ## Data sources (fetch/)
 

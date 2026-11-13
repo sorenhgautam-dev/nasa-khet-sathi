@@ -121,8 +121,9 @@ sources list): that is build step 11, see [REVIEW_2.md](REVIEW_2.md), H6.*
 
 Optional checks, each with its own data card: `pipeline.fetch.chirps` and `pipeline.fetch.gpm_late` (a second and
 third look at the rain), `pipeline.fetch.gauge_evidence` (how many rain gauges stand behind GPM's rain),
-`pipeline.fetch.smap` with `scripts/run_smap_check.py` (soil moisture), and `scripts/run_dhm_bulletin_check.py`
-(Nepal's own gauges, if you have their monthly bulletins).
+`pipeline.fetch.smap` with `scripts/run_smap_check.py` (soil moisture), `scripts/run_dhm_bulletin_check.py`
+(Nepal's own gauges, if you have their monthly bulletins), and `scripts/run_memory.py` (does a small learned
+correction beat the physics twin on years it has not seen? On the demo field it does not, and we say so).
 
 ## Credits
 

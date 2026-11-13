@@ -368,7 +368,8 @@ Each has every rule-12 field plus `range_warnings`; the power, station, weather 
 `cross_source_flags` (B); the weather card carries `corrections` (A) and the ET0 elevation used. **Stale text inside
 cards (REVIEW_2 L1, not rebuilt because that needs the network or would re-run a fetch):** `gpm.json` time zone and
 `ghcn_NP000444540.json` distance and day boundary still read TODO-VERIFY although both are verified above (1.2, 1.11);
-`soilgrids.json` `units_source` likewise; `power.json` names the first placeholder's point (same POWER cell).
+`power.json` names the first placeholder's point (same POWER cell). `soilgrids.json` was rebuilt offline on 2026-11-13
+(its `units_source` is current, and its `summary` holds the neighbourhood range: owner's answer 10).
 
 ## 6. TODO-VERIFY (open)
 

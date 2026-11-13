@@ -320,3 +320,11 @@ def test_field_memory_that_wins_says_it_is_used():
     from pipeline.words import texts
     block = b.field_memory_block(_memory(True), texts.load("tabs"))
     assert block["kept"] is True and "We use it." in block["words"]["en"] and "left it out" not in block["words"]["en"]
+
+
+def test_the_soil_source_shows_the_neighbourhood_range():
+    """Owner's answer 10 to REVIEW_2 (2026-11-13)."""
+    from pipeline.export.build_field_json import sources_block
+    around = {"radius_m": 2000, "depth_m": 1.0, "cells": 56, "used_mm": 149.3, "min_mm": 149.3, "median_mm": 171.5, "max_mm": 186.8}
+    soil = {x["name"]: x for x in sources_block(soil_distance_m=859.3, soil_around=around)}["ISRIC SoilGrids"]["product"]
+    assert "859 m from the field" in soil and "149 mm" in soil and "56 cells within 2 km" in soil and "149 to 187 mm" in soil

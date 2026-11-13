@@ -198,3 +198,9 @@ def test_the_ds18b20_power_on_value_is_refused_not_passed_on():
     """A DS18B20 read before its first conversion reports 85.0 C; outside -30..50, so the bridge skips it."""
     with pytest.raises(probe.ProbeLineError, match="range"):
         probe.parse_line(_sketch_line(85.0, 45))
+
+
+def test_the_bridge_stamps_local_time_with_its_utc_offset():
+    """Owner's answer 19 to REVIEW_2 (2026-11-13): live.json's time says which clock it is."""
+    import re
+    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}", bridge._now())

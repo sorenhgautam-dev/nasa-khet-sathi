@@ -4,6 +4,13 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-13 (Friday, 18:00): the soil source shows its neighbourhood; `live.json` time carries its UTC offset (owner's answers 10, 19)
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `sources[]` SoilGrids `product` | "...; nearest cell with values, 859 m from the field" | adds "Water it holds for plants in the top 1 m: 149 mm; the 56 cells within 2 km of the field hold 149 to 187 mm" | Nothing (longer text) |
+| `site/data/live.json` `time` (in-person demo only; the file is git-ignored) | `"2026-11-14T10:32:00"` | `"2026-11-14T10:32:00+05:45"` (local time with its UTC offset) | Parse it with `new Date(...)`; do not assume UTC |
+
 ## 2026-11-13 (Friday, 17:45): two SI additions: a "less sure" signal per month, and the field-memory test on the method page
 
 | What | Before | Now | What the UI must do |
