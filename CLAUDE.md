@@ -119,12 +119,13 @@ khet-sathi/
     checks/             # validation-layer statistics: climate.py, crosscheck.py (incl. day alignment), spikes.py
     export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py,
                         # CONTRACT_CHANGES.md (what changed for the UI, and when)
-  scripts/              # backup.sh, make_review_pack.py, run_checks.py, scan_history.py
+  scripts/              # backup.sh, make_review_pack.py, scan_history.py; the runners run_checks.py, run_replay.py,
+                        # run_diary.py, run_plans.py, run_rain_check.py; checks run_smap_check.py, run_dhm_bulletin_check.py
   robot/
     probe.py            # parse the probe's USB serial lines (pure)
     bridge.py           # read the probe over USB serial, write site/data/live.json (live demo only)
     fake_probe.py       # prints the probe's exact lines, for tests and rehearsal without the hardware
-    firmware/           # empty: the probe's own code stays with the robot teammate (owner, 2026-11-12)
+    firmware/           # original_probe/: the robot teammate's sketch, kept unchanged (owner, 2026-11-12); khet_probe/ comes with 10b
   tests/
   data/                 # gitignored: raw/, clean/, cards/, checks/ (all per field)
   site/                 # the UI (owned by the UI teammate); we only write site/data/
@@ -133,6 +134,12 @@ khet-sathi/
     data/probe_log.json # recorded probe readings, replayed on the public site
     data/live.json      # live probe reading during the in-person demo only
 ```
+
+Not written yet (2026-11-13): `twin/erosion.py`, `twin/frost.py`, `twin/kalman.py`, `diary/bare_days.py`, `future/nexgddp.py`,
+`future/scenarios.py`, `sections/grid.py`, `ml/memory.py`. What exists instead: the relative erosion index in
+`plans/score.py`, the frost band in `diary/months.py`, bare days in `diary/greenness.py`. Added since this layout was
+written: `fetch/chirps.py`, `gpm_late.py`, `gauge_evidence.py`, `smap.py` (checks only), `checks/rain_check.py`,
+`diary/groundwater.py`, `guess.py`, `months.py`, `seasons.py`, `trends.py`.
 
 ## The output contract
 
@@ -200,7 +207,7 @@ Live probe file for the demo, `site/data/live.json`, written by `robot/bridge.py
 | --- | --- | --- | --- |
 | NASA POWER | Daily point API, community AG; 0.5 x 0.625 deg meteorology (MERRA-2, GEOS-IT for the latest 1-3 months), 1 x 1 deg solar (CERES SYN1deg) | T2M_MAX, T2M_MIN, RH2M, WS2M, ALLSKY_SFC_SW_DWN, PRECTOTCORR | HTTP, no login |
 | GPM IMERG | GPM_3IMERGDF V07 (Final, daily, 0.1 deg) through 2025-09-30, then GPM_3IMERGDL V07 (Late) for Oct-Dec 2025 (D1; the switch is recorded in the card's `segments`) | precipitation | earthaccess |
-| HLS | HLSL30_VI and HLSS30_VI v2.0 (30 m) | NDVI, plus the cloud-mask layer (name TODO-VERIFY by listing a granule) | earthaccess; read only the field's window |
+| HLS | HLSL30_VI and HLSS30_VI v2.0 (30 m) | NDVI, plus the cloud-mask layer `Fmask` (verified 2026-11-12, DATA_AUDIT 1.3) | earthaccess; read only the field's window |
 | MODIS | MOD13Q1.061 (250 m, 16-day) | NDVI before 2013 | earthaccess |
 | SMAP | SPL3SMP_E v006 (surface), SPL4SMGP v008 (root zone, model-assisted) | soil moisture | earthaccess |
 | SoilGrids 2.0 | 250 m | sand, clay, soc, bdod; water content at 33 kPa (wv0033) and 1500 kPa (wv1500) if present, else a pedotransfer function | REST API; if it is down, ISRIC's downloadable GeoTIFF files, recorded in the card. If the field's cell has no prediction, the nearest cell with values (250 m steps, up to 1 km), distance in the card |
@@ -231,7 +238,15 @@ monthly totals with DHM's published Bhaktapur averages, **and test for a break i
 ratio over 2001-2025, check the 4 neighbouring cells (hills nearby?), and say whether the jump is real or a
 data break. **Until that is settled, no rain trend or monsoon-shift trend is reported without saying the
 break may explain it** (`rules.yaml` gpm_series.trend_caveat; owner, 2026-11-12); (C) only if B shows GPM reads high, show a
-station-scaled run as the lower edge of a range, labelled, never as a replacement. NASA POWER
+station-scaled run as the lower edge of a range, labelled, never as a replacement. **Owner, 2026-11-13
+(decision 1):** rain check B found a data break (IMERG Final's monthly gauge input around the field is lost from
+January 2017; VALIDATION 3.9b), so the twin's rain from 2017 is scaled month by month back to GPM's own 2001-2016
+level (`rules.yaml` gpm_series.correction; IMERG Final days only, demo field only until a field's own rain check
+finds the break). The uncorrected GPM run is kept beside it (`weather.parquet` rain_uncorrected_mm; runners'
+`--rain uncorrected` into `data/checks/<field>/rain_uncorrected/`), and every result it changes is exported as a
+range (`replay` years' `uncorrected_rain`, plans' `score_uncorrected_rain`) and explained in plain words in the
+"unknown" tab and on the method page (`method.rain_correction`). Checks only, never the twin's rain: IMERG Late
+2014-2019 (`pipeline/fetch/gpm_late.py`) and CHIRPS v3.0 `rnl` 2001-2025 (`pipeline/fetch/chirps.py`). NASA POWER
 supplies temperature, humidity, wind and sunshine; POWER's PRECTOTCORR is kept for cross-checks only.
 IMERG days are UTC days (05:45 to 05:45 Nepal time; IMERG V07 Technical Documentation, 13 July 2023, p. 40); POWER days
 are local solar time (API header `time_standard: LST`). Say so wherever the two are compared, and
@@ -354,13 +369,14 @@ a published rule supports them.
 
 **Erosion (RUSLE, t/ha/yr):** `A = R * K * LS * C * P`. R from daily rainfall with a published
 erosivity equation; K from SoilGrids texture and organic carbon (EPIC/Williams formula); LS from
-SRTM slope; C from each month's cover in the rotation (bare high, crop medium, cover crop or residue
+NASADEM slope (D3); C from each month's cover in the rotation (bare high, crop medium, cover crop or residue
 low); P = terracing factor. Report as a comparison between plans ("soil kept"), not as a precise
-tonnage.
+tonnage. (As built, step 7: on one field K, LS and P cancel between plans, so `soil_kept` is 100 x (1 - the plan's
+erosion index / the index of bare fallow all year), from daily erosivity and each crop's C; `pipeline/plans/score.py`.)
 
 **Frost:** a frost night is Tmin below 0 C (risk band 0 to 2 C). Frost is never a per-year replay event
 (owner, 2026-11-12, REVIEW_NOTES M1): it is shown only as the monthly risk band. Sections in low ground (negative
-topographic position index from SRTM) get a cold-air pooling flag. Clear, calm nights (low cloud,
+topographic position index from NASADEM, D3) get a cold-air pooling flag. Clear, calm nights (low cloud,
 low wind) raise the risk.
 
 **Probe fusion (scalar Kalman update, per section):**
@@ -393,11 +409,17 @@ from comparing SMAP with the twin; document the values.
   water score. The rule for "steady" and for confidence is set and cited in `rules.yaml` at step 6.
 - **Monsoon onset (per year, GPM):** search from 15 May; onset is the first run of at least 2 wet days
   totalling 10 mm within 5 days, not followed by a 10-day dry spell (under 1 mm per day) in the next
-  20 days. Re-run with 15- and 20-day dry spells to show robustness. Sanity check: Nepal's
-  climatological onset is about 10 June.
+  20 days (counted from the onset date, as Moron, Robertson & Boer 2009 do; owner-approved 2026-11-13).
+  Re-run with 15- and 20-day dry spells to show robustness. Sanity check: DHM's normal onset is 13 June
+  in eastern Nepal, about two days later in Kathmandu (DHM Climate Division; replaces "about 10 June",
+  owner-approved 2026-11-13). **Owner, 2026-11-12: keep this rule as set, with no tuning to
+  the results**, although it fails the sanity check (median 16 May: in the valley late-May showers already
+  pass it, VALIDATION 4.1d). So the dates it finds are the first lasting rain spell, not the monsoon's
+  arrival, and every output says so.
 - **Trends:** Mann-Kendall test with Sen's slope (`pymannkendall`) on onset dates, hot days (above
   the local 90th percentile of Tmax), longest dry spell (consecutive days under 1 mm), and heavy-rain
-  days (20 mm or more). `shift_days` is the onset trend over the record, with its confidence range.
+  days (20 mm or more). `shift_days` is the onset trend over the record, with its confidence range, and
+  `null` ("can't tell") while the onset is pinned at its search start in most years (2026-11-13).
   Every rain-based trend (onset, `shift_days`, dry spells, heavy-rain days) carries the GPM-break caveat
   until rain check B settles it (owner, 2026-11-12).
 - **Monthly calendar:** classify each month as low, medium or high (terciles of the 2001 to 2025
@@ -410,11 +432,13 @@ from comparing SMAP with the twin; document the values.
 2. **Simulate:** run each sequence through every season 2001 to 2025 on one representative section.
 3. **Score (0 to 100):** harvest (mean harvest_pct), stability (10th percentile year), water (water
    need versus availability, made stricter when `diary.groundwater.direction` is falling; D7, method
-   and source recorded in `rules.yaml`), cover (fewer bare days), soil_kept (erosion versus the
-   current plan), plus pest-cycle breaks (no same crop family back to back) and nitrogen (legumes
+   and source recorded in `rules.yaml`), cover (fewer bare days; as built: the share of the year inside crop seasons, from the crop calendar, not from the
+   satellite), soil_kept (erosion versus the current plan; as built: versus bare fallow all year, see "Erosion"), plus pest-cycle breaks (no same crop family back to back) and nitrogen (legumes
    included).
 4. **Select:** keep the Pareto-best set; the three shown are the current plan, the best "cover the
-   gap" plan and the best "follow the shift" plan, re-ranked by the farmer's priority weights.
+   gap" plan and the best "follow the shift" plan, re-ranked by the farmer's priority weights. (Owner, 2026-11-13,
+   decision 5: while `shift_days` cannot be measured the third plan is `safest`, "Safest in bad years"; see build
+   step 7 and REVIEW_2 H2 on that name.)
 5. **Explain:** fill the five tabs from the numbers using templates (why, evidence with dataset names
    and years, benefits, unknowns, what to check locally). SI may polish wording at build time; a person
    reviews every text before export.
@@ -458,7 +482,7 @@ SI runs at build time or on the phone** (golden rule 13). Log every use in `CRED
    or bare. Train on high-confidence dates from the threshold method plus the farmer-confirmed
    calendar; test on held-out years; compare all three methods and use the best. Report the
    comparison in VALIDATION.md and on the site's method page. *(The method page needs a contract
-   field; propose it at step 6 and wait for the owner's go.)*
+   field; propose it at step 6 and wait for the owner's go. Done 2026-11-13: the required `method` block.)*
 2. **Field memory** (required, build step 7b): see "Field memory" above.
 3. **Plain words** (required, build step 7; `words/`): SI drafts the five tabs, the tips, the
    glossary and the Nepali translations from the numbers at build time. A person reviews every text
@@ -471,7 +495,7 @@ SI runs at build time or on the phone** (golden rule 13). Log every use in `CRED
 ## Probe bridge (robot/bridge.py)
 
 For the live demo only, on the laptop. The probe is the robot teammate's own build; its code is not
-changed and not in this repository (owner, 2026-11-12). Over USB serial it prints one line every 2
+changed (owner, 2026-11-12); the sketch is kept as it is in `robot/firmware/original_probe/`. Over USB serial it prints one line every 2
 seconds, exactly `Temperature: 23.1 °C  |  Moisture: 45%`, or `Temperature: Check wiring  |  Moisture: 45%`
 when the temperature sensor is disconnected. Moisture is already 0-100 %, calibrated on the probe, so it
 is the reading z as it is. `robot/probe.py` parses that format (anything else, or a value out of range, is
@@ -506,7 +530,7 @@ our side and nothing changeable after submission. Local judges also see the live
 - Ten screens, one action each: Home (zoom into the field); Where is your field (tap four corners,
   two picture questions); We looked at your field from space (rotation guess, two cards); Your field
   in small parts (sections with numbers and dots); How is each part (colours and faces); Let's check
-  the soil (probe, fog clears as `sure` rises); Watch your field's last {year_count} years (replay, baskets; 25 for 2001-2025, owner, 2026-11-12);
+  the soil (probe, fog clears as `sure` rises); Watch your field's last {year_count} years (replay, baskets; {year_count} comes from the data: 24 for the demo's complete years 2002-2025; owner, 2026-11-12);
   What should I grow (three plans, five tabs, tips); Your field in 2040 (nothing changes versus the
   plan, two dials); Your plan (takeaway, with "you know your land best"). No games.
 - Words a five-year-old and a ninety-year-old both understand: sentences of eight words or fewer; no
@@ -549,10 +573,18 @@ our side and nothing changeable after submission. Local judges also see the live
 6. **Diary:** GPM fetch (Final, then Late, D1) and onset; HLS/MODIS greenness; bare days; three-way
    season detection including the SI season detective; GRACE groundwater (D7); trends; monthly
    calendar; rotation guess. *Done when* `diary` in the field file is real and the three-method
-   comparison is in VALIDATION.md.
+   comparison is in VALIDATION.md. **6a** (onset, greenness, bare days) and **6b** (three season methods,
+   held-out comparison fixed in advance in `rules.yaml` season_detection: the threshold method is used,
+   VALIDATION 3.15) are built; **6c** (groundwater, trends, monthly calendar, rotation guess, diary export) is
+   built (2026-11-13; VALIDATION 3.16-3.18, 4.1c): the diary in `demo.json` is real, with `shift_days` null while
+   the onset is pinned at its search start.
 7. **Plans:** generate, simulate, score, select three, explain, tips; SI plain words (drafts and
    Nepali, all reviewed by a person; no audio). *Done when* `plans` is real and every tab has reviewed
-   text.
+   text. **Built and exported 2026-11-13** (owner's decisions 1, 4, 5): every suggested plan keeps rice in the
+   monsoon; the three plans are `current`, `cover_gap` ("Fill the empty months") and `safest` ("Safest in bad
+   years"), three different rotations (VALIDATION 3.19); tabs and tips come from the templates in
+   `pipeline/words` (`pipeline/plans/explain.py`). Still open: the owner's review of the English lines added
+   on 2026-11-13 and a native speaker's review of all Nepali.
 7b. **Field memory:** train and test (leave one year out); keep it only if it beats physics alone.
     *Done when* the result, either way, is in VALIDATION.md.
 8. **Sections, erosion, frost, ECOSTRESS:** per-section status and zones.
@@ -569,13 +601,24 @@ our side and nothing changeable after submission. Local judges also see the live
     reading (`analogRead`, before mapping and limiting), so a limited 0 or 100 % can be told apart; the
     USB line stays exactly as the sketch prints it (owner, 2026-11-12). The live view is one small piece
     for the UI teammate.
-    *Waiting for:* the Firebase project (owner's hand steps); the probe code is in
-    `robot/firmware/original_probe/`.
+    *Firebase project ready (owner, 2026-11-12):* `khet-sathi-probe`, Spark plan, Realtime Database in
+    Singapore (asia-southeast1), anonymous sign-in on, anonymous clean-up off. The web config is in `.env`
+    (gitignored) until 10b is built; the database is still locked (an unsigned read and write were both
+    refused, 2026-11-12). The web config is public by Firebase's design, but `scan_history.py` flags
+    `apiKey`. **Keys (owner, approved in advance, 2026-11-12):** two API keys, both restricted to the
+    Identity Toolkit API and the Token Service API only: the website's key, also restricted to the GitHub
+    Pages address; and a separate key for the probe, with no website restriction (the probe is not a
+    browser). `scan_history.py` lets through the website's key **by its exact value only**, nothing else (built 2026-11-13, owner's answer 14: the
+    script holds the key's SHA-256, never the key, and scans the working tree as well as the history; REVIEW_2 H7).
+    The probe's key is therefore never in the repository (it is entered on the probe, or kept in a
+    gitignored file). Claude gives the owner the exact console steps when 10b is built. The probe code
+    is in `robot/firmware/original_probe/`.
 11. **More fields and the judge path:** run the whole pipeline for two or three fields abroad; write
     `index.json`; record `probe_log.json`; write `README.md`. *Done when* each prepared field opens on
     the live site from a phone on mobile data.
 11b. **Optional:** photo check (on-device cover classifier).
-12. **Optional:** SMAP comparison; haze calendar.
+12. **Optional:** SMAP comparison (run 2026-11-13: `pipeline/fetch/smap.py`, `scripts/run_smap_check.py`, VALIDATION 4.2b;
+    SMAP L3 has no recommended-quality retrieval over the demo field, so the check uses the model-assisted L4); haze calendar.
 
 After every step: run the tests, export the field file, validate it, run the backup script, and note anything the UI
 teammate needs to know.

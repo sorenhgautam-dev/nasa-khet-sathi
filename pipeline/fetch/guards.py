@@ -42,7 +42,8 @@ CARD_FIELDS = [
 CARD_OPTIONAL = ["notes", "range_warnings", "segments",   # segments: product switches over time (D1)
                  "location",                               # {lat, lon, elevation_m, ...} of the cell or station
                  "corrections",                            # decision A: what was corrected, how, held-out error
-                 "cross_source_flags"]                     # decision B: rain spike flags (never deletions)
+                 "cross_source_flags",                     # decision B: rain spike flags (never deletions)
+                 "summary"]                                # what a check-only dataset shows, in numbers (REVIEW_2 M6)
 
 
 class DataGuardError(ValueError):

@@ -1,7 +1,83 @@
 # Contract changes (for the UI teammate)
 
-`schema.json` is the full truth. `site/data/fields/demo.json` is regenerated after every change and
-still holds **MOCK numbers**; real numbers arrive from build step 5 on.
+`schema.json` is the full truth. `site/data/fields/demo.json` is regenerated after every change. Since 2026-11-13 it is
+real except for **`field.sections` (step 8) and `future` (step 9), which are still MOCK**; the field name still ends
+"(MOCK data)" and nothing a program can read marks the two mock blocks (REVIEW_2 H1, with the owner).
+
+## 2026-11-13 (Friday, afternoon): REVIEW_2, an independent review. No key added, removed or renamed
+
+What changed in `demo.json` (labels and one evidence range; no result):
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `sources[]` MODIS row | "greenness (NDVI), before HLS" | adds "compared with HLS only; no number shown uses it" | Do not attribute any number to MODIS |
+| `sources[]` SoilGrids row | "soil texture and carbon" | "water the soil holds at field capacity and wilting point (machine-learning map); nearest cell with values, 859 m from the field" | Show the distance where the soil source is shown: it is not the field's own soil |
+| `method.rain_correction.gauges.weight_before_pct` | `[96, 97]` (read by hand) | `[96, 98]` (the full monthly series, fetched and carded) | Nothing |
+| `method.choices[].status` | 5 owner-approved choices read "Claude's choice" (a capital letter was missed) | they read "Claude's choice, owner-approved 2026-11-13"; two entries added (`plans.third_plan_rule`, "put to the owner"; `temperature_correction.min_shared_days_per_year`) | Nothing |
+
+What the validator now refuses (`python -m pipeline.export.validate`): a plan without a replay; replay years that do not
+run year by year. New: `--final`, the freeze check, which also fails while anything is MOCK, when two plans grow the same
+crops, when a plan's `score.harvest` is not the mean of its replay (within a point), or when a replay year lacks
+`irrigated`. `python -m pipeline.export.mock` no longer overwrites a file that holds real results (`--force` to do so).
+
+Things the review found that the UI should know (all in REVIEW_2.md):
+
+- **`event` is per plan, not per year of weather.** The same year carries different events on different plans in 7 of 24
+  years (2020 is `none` for `current` and `flood` for the other two). Do not show it as "the weather of that year" across
+  plans until the owner decides (REVIEW_2 M4).
+- **`score.harvest` and the replay's `harvest` are the rain-fed case; `score.water` comes from the watered run** (how much
+  of the crop's need irrigation must supply, counted 1.5 times while `diary.groundwater.direction` is `falling`).
+- **`irrigated` is `{harvest: 100, dry_days: 0}` in every year of every plan**, by construction: "if you can water" assumes
+  the water never runs out and counts thirst only. Label it so; it is not a forecast of full baskets (M15).
+- **`diary.groundwater.confidence` (1.0) is about the regional trend** (a GRACE mascon from the Bihar plain to Everest),
+  not about the field. Do not show it like a section's `sure` (M12).
+- **`diary.guess` (`["rice", "potato"]`) is a near-tie with wheat for the winter crop** (M11), and `diary.bare_days` (62)
+  counts days of bare ground (NDVI below 0.25), not days without a crop.
+- **`diary.months[].cover` (satellite) and the plans' crop dates (calendar) disagree in winter**: the satellite shows
+  bare ground in November and December and a crop from January to May; the placeholder potato runs 30 October to 21
+  February. Tips about bare months come from the plan calendar (H3).
+- **`plans[].name` is English only**; the Nepali names and all screen words are in `pipeline/words/screens.json`, which is
+  not published under `site/` (M14).
+
+
+## 2026-11-13 (Friday, midday): the plans are real; ranges for the rain fix; the method page grows (owner's decisions 1, 4, 5)
+
+`demo.json` now holds the three real plans (step 7), their replays, the real `sources`, and two new method-page blocks.
+Still MOCK: `field.sections` (step 8) and `future` (step 9); the sources list says so.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `plans[]` | MOCK | `current` (rice then potato, the placeholder), `cover_gap` "Fill the empty months" (rice sown 15 Jun, then wheat 15 Oct), **`safest` "Safest in bad years"** (rice 15 Jun, then lentil 15 Oct). Real scores, five tabs and tips in English and Nepali (all SI drafts: English for the owner's review, Nepali for a native speaker's) | The third plan's id is now **`safest`** (was `follow_shift` in the mock). Its Nepali name is in `pipeline/words/screens.json`, screen `what_to_grow`, `labels.plan.items.safest` |
+| `plans[].score_uncorrected_rain` | did not exist | **optional**, same four keys as `score`: the plan's scores with GPM's rain as published (no 2017 fix). Present only when a score differs | Show each score as a range from the lower to the higher of the two (e.g. water 51-55). Label: "with and without our rain fix" |
+| `replay.<plan>[].uncorrected_rain` | did not exist | **optional** `{harvest, dry_days, event, irrigated}`: the same year with GPM's rain as published. Present only in years it changes (for the demo's current plan 2004, 2005, 2010 and 2017-2025; `cover_gap` 2005, 2013, 2014 and 2017-2025; `safest` 2005, 2010, 2013 and 2017-2025; the events move because they rank years against each other) | Show the basket as a range (lower to higher harvest); if the event differs, show both icons small, or "may have been" |
+| `replay` keys | `current`, `cover_gap`, `follow_shift` (MOCK) | `current`, `cover_gap`, `safest`, 24 years each (2002-2025) | Read the keys from `plans[].id` |
+| `sources[]` | one MOCK entry | nine real datasets (GPM IMERG, NASA POWER, the airport station, HLS, MODIS, GRACE, SoilGrids, NASADEM, the twin) plus one MOCK entry for the parts still made up | Nothing new |
+| `method.rain_correction` | did not exist | **optional**: `applied`, `from` (2017-01-01), `reference_years`, `factors` (Jan-Dec), `held_out` (error and ratio against the airport station, before and after), `rain_mm_per_year`, `gauges` (gauge weight and station counts before and after), `words` `{en, ne}`: the plain-word explanation | On the method page, show `words` (Nepali first), then the numbers for readers who want them |
+| `method.choices` | did not exist | **optional** list of `{id, choice, value, status}`: every choice no published source fixes, with who approved it | A plain list on the method page (English, technical) |
+
+`validate.py` refuses an `uncorrected_rain` or `score_uncorrected_rain` that changes nothing.
+
+## 2026-11-13 (Friday): the diary is real; `shift_days` may be null
+
+`demo.json`'s `diary` now holds real numbers (step 6c). One change in meaning:
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `diary.shift_days` | a number | a number **or `null`**: null = "can't tell" | The demo field is **null**: the onset rule finds the first lasting rain spell, which is pinned at 15-17 May in 21 of 25 years, so no shift can be measured. Show "We can't tell yet" (fog), never "0 days" |
+| `diary.guess` | MOCK `["rice", "wheat"]` | `["rice", "potato"]` from season timing (a near-tie with wheat in winter) | Show it as a guess the farmer confirms or changes |
+| `diary.groundwater` | MOCK | falling, -2.57 cm/yr, confidence 1.0, from GRACE/GRACE-FO (regional, about 300 km) | Say "water stored under and on the land, across the whole region", not "your well" |
+| `diary.months[]` | MOCK | real words (rain, soil, heat by terciles of the field's own year; frost band; cover) | Nothing new |
+
+## 2026-11-13 (Friday, early): the method page's season comparison, APPLIED (owner's go)
+
+New **required** top-level key `method` (the site's method page). `demo.json` carries the real numbers from step 6b.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `method.season_detection` | did not exist | `chosen` (`threshold`, `changepoint` or `detective`), `margin` (0.02), `held_out_years`, `thin_days` (16), `rule_methods_agree` (0-1), and `methods`: three entries `{id, si, score, by_year: [{year, score}], start_diff_days, peak_diff_days, end_diff_days}` | On the method page, show the three methods side by side with their scores (0-1, e.g. as a share of 100 days), mark the SI one (`si: true`, the "season detective"), and say which one is used and why: a method replaces the threshold method only if it beats it by `margin`, a rule set before the test. Always show the caveat: there is no farmer calendar yet, so the score shows how well each method copes with missing images, **not** how accurate it is. The date differences are days between each method's season dates and the threshold method's (null for the threshold method) |
+
+`validate.py` checks that `chosen` follows the margin rule from the scores, so a hand edit cannot pick a
+different method. Words for the method page (English and Nepali) come at step 7 from `pipeline/words`.
 
 ## 2026-11-12 (Thursday evening): water source, soil temperature may be null, complete years, APPLIED (owner's batch decisions)
 
@@ -102,5 +178,5 @@ Also for the UI teammate: harvest for rice and other crops with no published Ky 
   so swap them.**
 - `sources[].type` is one of `satellite`, `model`, `station`, `probe`. Show "model" sources as
   model-based (golden rule 8).
-- At least 3 plans; one has id `current`. `replay` has a key per plan id, years 2001 to 2025.
+- At least 3 plans; one has id `current`. `replay` has a key per plan id; only complete years are exported, year by year (2002 to 2025 for the demo).
 - No extra keys are allowed anywhere. Ask before relying on a key that is not in the schema.

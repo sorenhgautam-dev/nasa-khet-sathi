@@ -2,6 +2,7 @@
 
     python -m pipeline.export.validate                # checks site/data/
     python -m pipeline.export.validate --data-dir DIR
+    python -m pipeline.export.validate --final        # the freeze check: also fails while anything is MOCK
 
 Schema checks come from schema.json / index_schema.json. The checks below cover what JSON Schema
 cannot say: order, uniqueness, cross-references and matching array lengths.
@@ -34,8 +35,34 @@ def _dupes(values):
     return sorted(dupes)
 
 
-def validate_field(doc):
-    """Return a list of problems; empty means the field file meets the contract."""
+def _final_errors(doc):
+    """What a file ready to freeze must also meet (REVIEW_2 M13; --final). Not part of the everyday check, because
+    the mock that the site was built with does not meet it: nothing MOCK left, three different rotations, each
+    plan's harvest score the mean of its replay (within 1 point of rounding), both water cases on every year."""
+    errors = []
+    if "MOCK" in json.dumps(doc, ensure_ascii=False):
+        errors.append("final: the file still contains MOCK data")
+    crops = {p["id"]: tuple(c["crop"] for c in p["crops"]) for p in doc["plans"]}
+    ids = list(crops)
+    for i, a in enumerate(ids):
+        for b in ids[i + 1:]:
+            if crops[a] == crops[b]:
+                errors.append(f"final: plans {a} and {b} grow the same crops (at least three rotations are asked for)")
+    for p in doc["plans"]:
+        years = doc["replay"].get(p["id"], [])
+        if years:
+            mean = sum(y["harvest"] for y in years) / len(years)
+            if abs(p["score"]["harvest"] - mean) > 1.0:
+                errors.append(f"final: plans/{p['id']}: score.harvest {p['score']['harvest']} is not the mean of its "
+                              f"replay ({mean:.1f})")
+        missing = [y["year"] for y in years if "irrigated" not in y]
+        if missing:
+            errors.append(f"final: replay/{p['id']}: no irrigated case in {missing} (contract: both always written)")
+    return errors
+
+
+def validate_field(doc, final=False):
+    """Return a list of problems; empty means the field file meets the contract. final=True adds the freeze checks."""
     errors = _schema_errors(doc, "schema.json")
     if errors:
         return errors
@@ -51,11 +78,24 @@ def validate_field(doc):
         if len(p["tips_ne"]) != len(p["tips"]):
             errors.append(f"plans/{p['id']}: tips_ne needs one Nepali tip per English tip "
                           f"({len(p['tips_ne'])} vs {len(p['tips'])})")
+    for pid in plan_ids:                    # REVIEW_2 M13: a plan card with no years behind it
+        if pid not in doc["replay"]:
+            errors.append(f"plans/{pid}: no replay for this plan")
     for key, years in doc["replay"].items():
         if key not in plan_ids:
             errors.append(f"replay/{key}: no plan with this id")
         if d := _dupes([y["year"] for y in years]):
             errors.append(f"replay/{key}: duplicate years {d}")
+        elif [y["year"] for y in years] != list(range(years[0]["year"], years[0]["year"] + len(years))):
+            errors.append(f"replay/{key}: years must run year by year, in order, with no gap")
+        for y in years:                     # owner's decision 1 (2026-11-13): the uncorrected run only where it differs
+            u = y.get("uncorrected_rain")
+            if u and all(u.get(k) == y.get(k) for k in ("harvest", "dry_days", "event", "irrigated")):
+                errors.append(f"replay/{key}/{y['year']}: uncorrected_rain is given but changes nothing")
+    for p in doc["plans"]:
+        u = p.get("score_uncorrected_rain")
+        if u and u == p["score"]:
+            errors.append(f"plans/{p['id']}: score_uncorrected_rain is given but changes nothing")
     n = len(doc["future"]["years"])
     for series in ("nothing_changes", "with_plan"):
         s = doc["future"][series]
@@ -65,11 +105,28 @@ def validate_field(doc):
         for i, (lo, mid, hi) in enumerate(zip(s["harvest_low"], s["harvest"], s["harvest_high"])):
             if not lo <= mid <= hi:
                 errors.append(f"future/{series}: year {i} needs harvest_low <= harvest <= harvest_high")
+    sd = doc["method"]["season_detection"]
+    by_id = {m["id"]: m for m in sd["methods"]}
+    if sorted(by_id) != ["changepoint", "detective", "threshold"]:
+        errors.append("method/season_detection/methods: needs threshold, changepoint and detective once each")
+    else:
+        for m in sd["methods"]:
+            if sorted(y["year"] for y in m["by_year"]) != sorted(sd["held_out_years"]):
+                errors.append(f"method/season_detection/{m['id']}: by_year must cover exactly the held-out years")
+        base, ch = by_id["threshold"]["score"], sd["chosen"]
+        best = max(by_id, key=lambda k: by_id[k]["score"])
+        want = best if best == "threshold" or by_id[best]["score"] - base >= sd["margin"] - 1e-9 else "threshold"
+        if ch != want:
+            errors.append(f"method/season_detection/chosen: the rule fixed in advance picks '{want}', not '{ch}'")
+        if by_id["detective"]["si"] is not True or by_id["threshold"]["si"] or by_id["changepoint"]["si"]:
+            errors.append("method/season_detection: only the detective is the SI method")
     gw = doc["diary"]["groundwater"]
     if gw["direction"] == "falling" and gw["trend_cm_per_year"] >= 0:
         errors.append("diary/groundwater: 'falling' needs a negative trend")
     if gw["direction"] == "rising" and gw["trend_cm_per_year"] <= 0:
         errors.append("diary/groundwater: 'rising' needs a positive trend")
+    if final:
+        errors += _final_errors(doc)
     return errors
 
 
@@ -95,7 +152,10 @@ def validate_index(doc):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--data-dir", default=str(REPO / "site" / "data"))
-    data_dir = Path(ap.parse_args(argv).data_dir)
+    ap.add_argument("--final", action="store_true",
+                    help="the freeze check before submission: MOCK data and the other final checks are failures")
+    args = ap.parse_args(argv)
+    data_dir = Path(args.data_dir)
     problems = {}
 
     index_path = data_dir / "index.json"
@@ -108,7 +168,7 @@ def main(argv=None):
     field_files = sorted((data_dir / "fields").glob("*.json"))
     for path in field_files:
         doc = json.loads(path.read_text())
-        errs = validate_field(doc)
+        errs = validate_field(doc, final=args.final)
         entry = next((f for f in (index or {}).get("fields", []) if f["id"] == path.stem), None)
         if index is not None and entry is None:
             errs.append("not listed in index.json")
@@ -116,8 +176,8 @@ def main(argv=None):
             errs.append("field lat/lon outside its bbox in index.json")
         if errs:
             problems[str(path)] = errs
-        if "MOCK" in path.read_text():
-            print(f"WARNING {path}: contains MOCK data, must be replaced before submission")
+        if "MOCK" in path.read_text() and not args.final:
+            print(f"WARNING {path}: contains MOCK data, must be replaced before submission (--final makes this a failure)")
 
     for f in (index or {}).get("fields", []):
         if not (data_dir / "fields" / f"{f['id']}.json").exists():

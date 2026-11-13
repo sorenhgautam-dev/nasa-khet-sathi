@@ -94,3 +94,22 @@ def test_mock_field_and_index_use_the_labelled_placeholder_from_the_field_config
     e = idx["fields"][0]
     assert e["bbox"] == cfg["bbox"] and "placeholder" in e["name"].lower()
     assert validate_field(d) == [] and validate_index(idx) == []
+
+
+def test_the_mock_never_overwrites_a_real_export_unless_forced(tmp_path):
+    """REVIEW_2 M13: `python -m pipeline.export.mock` used to replace the real demo.json silently."""
+    import json
+    import pytest
+    from pipeline.export import mock
+    mock.write_all(tmp_path)
+    mock.write_all(tmp_path)                                        # mock over mock is fine
+    path = tmp_path / "fields" / "demo.json"
+    doc = json.loads(path.read_text())
+    doc["sources"].insert(0, {"name": "GPM IMERG", "product": "V07", "resolution": "0.1 deg", "years": "2001-2025",
+                              "type": "satellite"})
+    path.write_text(json.dumps(doc))
+    with pytest.raises(FileExistsError, match="real"):
+        mock.write_all(tmp_path)
+    assert "GPM IMERG" in path.read_text()
+    mock.write_all(tmp_path, force=True)
+    assert "GPM IMERG" not in path.read_text()

@@ -105,3 +105,138 @@ def test_the_irrigated_case_must_cover_the_same_years():
     r["irrigated_years"] = r["irrigated_years"][1:]
     with pytest.raises(ValueError, match="irrigated"):
         b.apply_replay(build_field(), r, plan_id="current")
+
+
+def _seasons(best="threshold", det=0.982):
+    years = ["2018", "2022"]
+    return {"held_out": {"years": [2018, 2022], "thin_days": 16, "best": best, "best_margin": 0.02,
+                         "threshold_vs_changepoint_all_obs": 0.7293,
+                         "mean_score": {"threshold": 0.9667, "changepoint": 0.958, "detective": det},
+                         "per_year": {y: {"thinned": {"threshold": 0.95, "changepoint": 0.96, "detective": det}} for y in years}},
+            "season_date_differences_days": {"changepoint_vs_threshold": {"start": 14.5, "peak": 4.0, "end": 6.0},
+                                             "detective_vs_threshold": {"start": 4.5, "peak": 0.0, "end": 2.0}}}
+
+
+def test_the_method_page_gets_the_three_way_comparison():
+    out = b.apply_method(build_field(), _seasons())
+    sd = out["method"]["season_detection"]
+    assert sd["chosen"] == "threshold" and [m["id"] for m in sd["methods"]] == ["threshold", "changepoint", "detective"]
+    assert sd["methods"][2]["si"] and sd["methods"][2]["score"] == 0.982 and sd["methods"][1]["start_diff_days"] == 14.5
+    assert validate_field(out) == []
+
+
+def test_a_choice_against_the_rule_fixed_in_advance_is_refused():
+    with pytest.raises(ValueError, match="picks 'threshold'"):
+        b.apply_method(build_field(), _seasons(best="detective"))
+
+
+def _diary(shift=None):
+    months = [{"m": m, "rain": "low", "soil": "dry", "heat": "none", "frost": "none", "cover": "bare"}
+              for m in ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")]
+    return {"export": {"shift_days": shift, "bare_days": 62, "guess": ["rice", "potato"],
+                       "groundwater": {"trend_cm_per_year": -2.57, "direction": "falling", "confidence": 1.0}, "months": months}}
+
+
+def test_the_real_diary_replaces_the_mock_and_validates():
+    out = b.apply_diary(build_field(), _diary())
+    assert out["diary"]["shift_days"] is None and out["diary"]["guess"] == ["rice", "potato"]
+    assert out["diary"]["groundwater"]["direction"] == "falling" and validate_field(out) == []
+
+
+def test_a_diary_without_twelve_months_is_refused():
+    d = _diary(shift=-3.0)
+    d["export"]["months"].pop()
+    with pytest.raises(ValueError, match="twelve months"):
+        b.apply_diary(build_field(), d)
+
+
+# ---------- build step 7 (2026-11-13): plans, ranges for the uncorrected rain, sources, method page ----------
+
+def test_uncorrected_rain_is_added_only_to_years_it_changes():
+    from pipeline.export.build_field_json import with_uncorrected
+    base = [{"year": 2016, "harvest": 70, "dry_days": 80, "event": "none", "irrigated": {"harvest": 100, "dry_days": 0}},
+            {"year": 2020, "harvest": 84, "dry_days": 86, "event": "none", "irrigated": {"harvest": 100, "dry_days": 0}}]
+    unc = [dict(base[0]), {**base[1], "harvest": 90, "dry_days": 63, "event": "flood"}]
+    out = with_uncorrected(base, unc)
+    assert "uncorrected_rain" not in out[0]
+    assert out[1]["uncorrected_rain"] == {"harvest": 90, "dry_days": 63, "event": "flood", "irrigated": {"harvest": 100, "dry_days": 0}}
+    with pytest.raises(ValueError, match="same years"):
+        with_uncorrected(base, unc[:1])
+
+
+def test_stated_choices_list_claudes_choices_with_their_approval():
+    from pipeline.export.build_field_json import stated_choices
+    rules = {"a": {"x": {"value": 1, "source": "Claude's choice, owner-approved 2026-11-13: why"}},
+             "b": {"value": 2, "source": "FAO-56 Table 12"},
+             "c": {"value": 3, "source": "Claude's reading. Put to the owner"}}
+    out = stated_choices(rules)
+    assert [(c["id"], c["status"]) for c in out] == [("a.x", "Claude's choice, owner-approved 2026-11-13"),
+                                                     ("c", "Claude's choice, put to the owner")]
+
+
+def test_stated_choices_read_an_approval_however_it_is_capitalised():
+    """REVIEW_2 M7: sources that begin 'Owner-approved 2026-11-13 ...' were exported as plain 'Claude's choice'."""
+    from pipeline.export.build_field_json import stated_choices
+    rules = {"a": {"value": 1, "source": "Owner-approved 2026-11-13 (batch). Claude's choice: stop at 30 September"},
+             "b": {"value": 2, "source": "Owner-approved 2026-11-12 (proposed by Claude: 200 days)"}}
+    assert [(c["id"], c["status"]) for c in stated_choices(rules)] == [
+        ("a", "Claude's choice, owner-approved 2026-11-13"), ("b", "Claude's choice, owner-approved 2026-11-12")]
+
+
+def test_stated_choices_list_a_rule_added_by_claude_and_still_with_the_owner():
+    """REVIEW_2 M7: the one rule changed after its first run (plans.third_plan_rule) was missing from the list."""
+    from pipeline.export.build_field_json import stated_choices
+    rules = {"plans": {"third_plan_rule": {"value": "x", "source": "Owner, decision 5: option A. The fallback is "
+                                           "Claude's, fixed before the run. 'Other crops' was added by Claude AFTER "
+                                           "the first run. Put to the owner"}},
+             "other": {"value": 1, "source": "Replaces Claude's unsourced 0.2; NASA MCD12Q2 User Guide sec. 2.2"}}
+    assert [(c["id"], c["status"]) for c in stated_choices(rules)] == [
+        ("plans.third_plan_rule", "Claude's choice, put to the owner")]
+
+
+def test_the_real_rules_list_the_third_plan_rule_and_no_approved_choice_as_unapproved():
+    import re
+    from pathlib import Path
+    import yaml
+    from pipeline.export.build_field_json import stated_choices
+    rules = yaml.safe_load((Path(__file__).resolve().parents[1] / "config" / "rules.yaml").read_text())
+    out = {c["id"]: c for c in stated_choices(rules)}
+    assert "plans.third_plan_rule" in out
+    for c in out.values():
+        if c["status"] == "Claude's choice":
+            assert not re.search(r"(?i)owner-approved \d{4}-\d{2}-\d{2}", c["choice"]), c["id"]
+
+
+def test_the_sources_label_model_based_data_and_keep_the_mock_parts_labelled():
+    from pipeline.export.build_field_json import sources_block
+    s = {x["name"]: x for x in sources_block()}
+    assert s["NASA POWER"]["type"] == "model" and s["ISRIC SoilGrids"]["type"] == "model"
+    assert s["GPM IMERG"]["type"] == "satellite" and "2017" in s["GPM IMERG"]["product"]
+    assert any("MOCK" in x["name"] for x in s.values())
+
+
+def test_the_sources_say_what_each_dataset_is_really_used_for():
+    """REVIEW_2 M5, M6: MODIS changes no number shown; the twin reads only the soil's two water contents, from a cell
+    that is not the field's own."""
+    from pipeline.export.build_field_json import sources_block
+    s = {x["name"]: x for x in sources_block(soil_distance_m=859.3)}
+    assert "no number shown uses it" in s["MODIS Terra"]["product"]
+    soil = s["ISRIC SoilGrids"]["product"]
+    assert "field capacity" in soil and "wilting point" in soil and "texture" not in soil
+    assert "859 m from the field" in soil
+    assert "from the field" not in {x["name"]: x for x in sources_block()}["ISRIC SoilGrids"]["product"]
+
+
+def test_the_exported_demo_file_has_three_rice_plans_and_ranges_where_the_rain_fix_matters():
+    import json
+    from pathlib import Path
+    from pipeline.export.validate import validate_field
+    d = json.loads((Path(__file__).resolve().parents[1] / "site" / "data" / "fields" / "demo.json").read_text())
+    if "rain_correction" not in d["method"]:
+        pytest.skip("demo.json not yet exported with step 7")
+    assert validate_field(d) == [] and [p["id"] for p in d["plans"]] == ["current", "cover_gap", "safest"]
+    assert all(any(c["crop"] == "rice" for c in p["crops"]) for p in d["plans"])
+    assert len({tuple(sorted(c["crop"] for c in p["crops"])) for p in d["plans"]}) == 3      # three rotations
+    years = {y["year"]: y for y in d["replay"]["current"]}
+    assert all("uncorrected_rain" not in years[y] for y in years if y < 2004)
+    assert d["method"]["rain_correction"]["from"] == "2017-01-01"

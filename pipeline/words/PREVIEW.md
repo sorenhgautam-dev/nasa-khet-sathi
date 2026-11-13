@@ -2,8 +2,8 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 170 texts): needs native-speaker review.
-- The five tabs and the tips (screen 8) (tabs.json, 50 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 171 texts): needs native-speaker review.
+- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 77 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
 
@@ -186,6 +186,7 @@ This page is made from the word files in this folder; change those, not this pag
 | What you do now | अहिले जे गर्नुहुन्छ |
 | Fill the empty months | खाली महिनामा पनि बाली |
 | Follow the changing rains | बदलिँदो वर्षासँगै |
+| Safest in bad years | खराब वर्षमा सबैभन्दा भरपर्दो |
 | *Score names* | |
 | Harvest | उब्जनी |
 | Water | पानी |
@@ -215,6 +216,8 @@ This page is made from the word files in this folder; change those, not this pag
 | Rains now start about {shift_days_abs} days earlier. *(for the plan that follows the changing rains; if the rains now start earlier)* | वर्षा अहिले करिब {shift_days_abs} दिन चाँडै आउँछ। |
 | Rains now start about {shift_days_abs} days later. *(for the plan that follows the changing rains; if the rains now start later)* | वर्षा अहिले करिब {shift_days_abs} दिन ढिलो आउँछ। |
 | This plan plants to match the rains. *(for the plan that follows the changing rains)* | यो योजनामा वर्षा हेरेर रोपिन्छ। |
+| Bad years hurt it less than now. *(for the plan that did best in bad years; if bad years hurt this plan less than the current one)* | खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। |
+| The ground stays covered as much as now. *(for the plan that did best in bad years)* | जमिन अहिले जत्तिकै ढाकिएर रहन्छ। |
 | {legume_crop} feeds the soil for the next crop. *(if the plan has lentil or another crop that feeds the soil)* | {legume_crop}ले अर्को बालीका लागि माटोमा मल थप्छ। |
 | Stored water in this area is falling. *(if stored water in the area is falling; if the water score beats the current plan)* | यस क्षेत्रमा जम्मा पानी घट्दै छ। |
 | This plan needs less water. *(if stored water in the area is falling; if the water score beats the current plan)* | यो योजनालाई कम पानी चाहिन्छ। |
@@ -228,6 +231,7 @@ This page is made from the word files in this folder; change those, not this pag
 | --- | --- |
 | We replayed the weather from {year_first} to {year_last}. | {year_first} देखि {year_last} सम्मको मौसम फेरि चलायौं। |
 | Harvest was {harvest} out of 100 on average. | औसत उब्जनी १०० मा {harvest} थियो। |
+| Without our rain fix, it was {harvest_uncorrected}. *(if NASA's uncorrected rain gives another harvest number)* | हाम्रो वर्षा सुधारबिना यो {harvest_uncorrected} थियो। |
 | Very dry years: {drought_years} of {year_count}. | खडेरी परेका वर्ष: {year_count} मध्ये {drought_years}। |
 | Harvest numbers are computer estimates. | उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। |
 | {source_name}: {source_kind}, {source_resolution}, {source_years}. *(one line for each source)* | {source_name}: {source_kind}, {source_resolution}, {source_years}। |
@@ -258,13 +262,18 @@ This page is made from the word files in this folder; change those, not this pag
 | Nearby parts share one soil map. | नजिकका भागहरूको माटोको नक्सा एउटै छ। |
 | Planting dates are typical ones, not yours. | रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। |
 | We guessed how thirst hurts {assumed_crop}. *(if a crop's harvest loss from thirst is our assumption)* | {assumed_crop}मा तिर्खाको असर हाम्रो अनुमान हो। |
-| We assumed rice stands in water. *(if the plan has paddy rice)* | धान पानीमा डुबेको मानेका छौं। |
-| Without extra water, ten dry days end that. *(if the plan has paddy rice)* | थप पानी नभए, दस सुक्खा दिनमा त्यो सकिन्छ। |
+| If you can water, rice stands in water. *(if the plan has paddy rice)* | पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। |
+| Without water, rice lives on rain alone. *(if the plan has paddy rice)* | पानी नभए धान वर्षामा मात्र भर पर्छ। |
 | Your water is unknown, so we show both. *(if we do not know the field's water)* | पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। |
 | Our rain numbers come from space. *(if the nearby station records about a third less rain than the satellite)* | हाम्रो वर्षाको नाप अन्तरिक्षबाट आउँछ। |
 | The airport measures about a third less rain. *(if the nearby station records about a third less rain than the satellite)* | विमानस्थलले करिब एक तिहाइ कम वर्षा नाप्छ। |
 | Its record may miss some rain. *(if the nearby station records about a third less rain than the satellite)* | त्यहाँको नापले केही वर्षा छुटाउन सक्छ। |
 | We don't know which matches your field. *(if the nearby station records about a third less rain than the satellite)* | कुन तपाईंको खेतसँग मिल्छ, थाहा छैन। |
+| NASA checks its rain against ground rain gauges. *(if we lowered the rain numbers after the gauges stopped)* | नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। |
+| Near here, those gauge reports stopped in {rain_fix_year}. *(if we lowered the rain numbers after the gauges stopped)* | यहाँ नजिक ती मापकका खबर {rain_fix_year} मा रोकिए। |
+| Then NASA's rain here jumped too high. *(if we lowered the rain numbers after the gauges stopped)* | त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। |
+| We lowered rain from {rain_fix_year} to match before. *(if we lowered the rain numbers after the gauges stopped)* | हामीले {rain_fix_year} देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। |
+| That may also hide a real change. *(if we lowered the rain numbers after the gauges stopped)* | यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। |
 | Stored water is measured for a wide area. | जम्मा पानी ठूलो क्षेत्रको नापिएको हो। |
 | It is not your own well. | यो तपाईंको आफ्नै इनार होइन। |
 | We may count too many freezing nights. *(if some months have freezing nights)* | हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। |
@@ -280,7 +289,12 @@ This page is made from the word files in this folder; change those, not this pag
 | Ask if {new_crop} seed is sold nearby. *(if the plan adds a crop you do not grow now)* | नजिकै {new_crop}को बीउ पाइन्छ कि सोध्नुहोस्। |
 | Ask neighbours when they plant {new_crop}. *(if the plan adds a crop you do not grow now)* | छिमेकीलाई {new_crop} कहिले रोप्छन् भनी सोध्नुहोस्। |
 | Ask if {legume_crop} grows well here. *(if the plan has lentil or another crop that feeds the soil)* | यहाँ {legume_crop} राम्रो हुन्छ कि सोध्नुहोस्। |
+| {option_legume} after rice is another choice. *(if lentil after rice is worth naming as another choice)* | धानपछि {option_legume} लगाउनु अर्को उपाय हो। |
+| It feeds the soil. *(if lentil after rice is worth naming as another choice)* | यसले माटोलाई मल दिन्छ। |
+| Changing crop kinds keeps pests down. *(if lentil after rice is worth naming as another choice)* | फरक किसिमको बाली लगाउँदा कीरा घट्छन्। |
 | Check how much water you really have. *(if we do not know the field's water)* | तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। |
+| {water_crop} here usually needs watering. *(if a crop of the plan usually needs watering here)* | यहाँ {water_crop}लाई प्रायः पानी लगाउनुपर्छ। |
+| Check you can water it. *(if a crop of the plan usually needs watering here)* | पानी लगाउन सक्नुहुन्छ कि जाँच्नुहोस्। |
 | Try it on one small part first. | पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। |
 | You know your land best. | आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ। |
 
@@ -328,6 +342,29 @@ This page is made from the word files in this folder; change those, not this pag
 | Save this plan | यो योजना राख्नुहोस् |
 | Start again | फेरि सुरु गर्नुहोस् |
 | Made with pictures and numbers from NASA. | नासाका तस्बिर र अङ्कबाट बनाइएको। |
+
+## Method page
+
+### Rain correction
+
+*Nepali: needs native-speaker review.*
+
+| English | नेपाली |
+| --- | --- |
+| NASA's rain maps are checked against rain gauges. | नासाको वर्षाको नक्सा वर्षा मापकसँग जाँचिन्छ। |
+| Around this field, gauge reports stopped in {rain_fix_year}. | यो खेत वरिपरि मापकका खबर {rain_fix_year} मा रोकिए। |
+| Before, the gauges set almost all of it. | पहिले, धेरैजसो नाप मापकले नै मिलाउँथे। |
+| After, the picture from space took over. | त्यसपछि, अन्तरिक्षबाट हेरेको नापले ठाउँ लियो। |
+| Its yearly rain here jumped to {rain_after} mm. | यहाँको वार्षिक वर्षा {rain_after} मिलिमिटर पुग्यो। |
+| Before, it was {rain_before} mm. | पहिले यो {rain_before} मिलिमिटर थियो। |
+| The nearest town's usual rain: {rain_normal} mm. | नजिकको सहरको सामान्य वर्षा: {rain_normal} मिलिमिटर। |
+| We scaled each month from {rain_fix_year} back down. | हामीले {rain_fix_year} देखि हरेक महिना घटायौं। |
+| Each month now matches its earlier years. | अब हरेक महिना पहिलेका वर्षसँग मिल्छ। |
+| We tested this on years we kept aside. | यो जाँच अलग राखेका वर्षमा गर्‍यौं। |
+| Monthly error at the airport: {err_before} mm before. | विमानस्थलमा मासिक फरक: पहिले {err_before} मिलिमिटर। |
+| After our fix: {err_after} mm. | सुधारपछि: {err_after} मिलिमिटर। |
+| This fix may also hide real change. | यस सुधारले साँचो फेरबदल पनि लुकाउन सक्छ। |
+| So we show both, as a range. | त्यसैले हामी दुवै देखाउँछौं, दायराका रूपमा। |
 
 ### Words used on many screens
 

@@ -13,7 +13,7 @@ from pipeline.words.texts import WORD_FILES, iter_text_nodes, load
 OUT = Path(__file__).resolve().parent / "PREVIEW.md"
 TAB_ORDER = ["why", "evidence", "benefits", "unknown", "check"]
 FILE_LABELS = {"screens": "Screens, and the words shared by many screens",
-               "tabs": "The five tabs and the tips (screen 8)",
+               "tabs": "The five tabs and the tips (screen 8), and the method page's notes",
                "glossary": "Glossary", "crop_explainers": "Crop explainers"}
 
 
@@ -98,6 +98,10 @@ def render():
                 out += _table([_row(line, conditions) for line in tabs["tabs"][tab]], tabs["tabs"][tab])
             out += ["#### Tips / सुझाव", ""]
             out += _table([_row(line, conditions) for line in tabs["tips"]], tabs["tips"])
+    out += ["## Method page", ""]
+    for note, lines in tabs.get("method_page", {}).items():
+        out += [f"### {note.replace('_', ' ').capitalize()}", ""]
+        out += _table([_row(line, conditions) for line in lines], lines)
 
     shared = screens["shared"]
     out += ["### Words used on many screens", ""]

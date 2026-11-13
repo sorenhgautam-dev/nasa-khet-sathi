@@ -10,6 +10,19 @@
 *.key
 credentials*.json
 
+# Firmware and Firebase secrets (REVIEW_2 H7; owner's answer 14, 2026-11-13): the probe's key, Wi-Fi
+# passwords and any service-account file stay out of the public repository
+secrets.h
+google-services.json
+GoogleService-Info.plist
+serviceAccount*.json
+firebase-adminsdk*.json
+
+# The live probe reading is written during the in-person demo only (owner's answer 19, 2026-11-13);
+# the recorded site/data/probe_log.json IS committed
+/site/data/live.json
+/site/data/.live.json.tmp
+
 # Python
 .venv/
 __pycache__/
@@ -25,3 +38,6 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# editor settings (personal; VS Code created this when .env appeared, 2026-11-12)
+.vscode/

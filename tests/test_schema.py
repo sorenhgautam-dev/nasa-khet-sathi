@@ -100,6 +100,16 @@ def _tip_ne_empty(d): d["plans"][0]["tips_ne"][0] = ""
 def _tips_ne_one_more_than_tips(d): d["plans"][0]["tips_ne"].append("धानलाई पानी दिनुहोस्।")
 def _tips_ne_one_fewer_than_tips(d): d["plans"][0]["tips_ne"].pop()
 
+# method page (owner's go, 2026-11-13): the three-way season-detection comparison
+def _method_missing(d): del d["method"]
+def _method_two_methods(d): d["method"]["season_detection"]["methods"].pop()
+def _method_score_above_one(d): d["method"]["season_detection"]["methods"][0]["score"] = 1.2
+def _method_unknown_id(d): d["method"]["season_detection"]["methods"][0]["id"] = "guess"
+def _method_duplicate_id(d): d["method"]["season_detection"]["methods"][1]["id"] = "threshold"
+def _method_year_missing(d): d["method"]["season_detection"]["methods"][0]["by_year"].pop()
+def _method_chosen_against_rule(d): d["method"]["season_detection"]["chosen"] = "detective"   # 0.97 - 0.96 < 0.02
+def _method_threshold_is_si(d): d["method"]["season_detection"]["methods"][0]["si"] = True
+
 
 FIELD_BREAKS = [
     _status_blue, _sure_above_one, _sure_below_zero, _score_above_100, _score_below_0,
@@ -115,6 +125,8 @@ FIELD_BREAKS = [
     _irrigated_harvest_above_100, _irrigated_missing_dry_days, _irrigated_negative_dry_days, _irrigated_extra_key,
     _missing_tabs_ne, _missing_tips_ne, _tab_ne_missing_key, _tab_ne_extra_key, _tab_ne_empty, _tab_ne_in_english,
     _tip_ne_in_english, _tip_ne_empty, _tips_ne_one_more_than_tips, _tips_ne_one_fewer_than_tips,
+    _method_missing, _method_two_methods, _method_score_above_one, _method_unknown_id, _method_duplicate_id,
+    _method_year_missing, _method_chosen_against_rule, _method_threshold_is_si,
 ]
 
 
@@ -194,3 +206,72 @@ def test_field_water_source_is_required_and_closed():
 
 def test_the_mock_demo_field_water_source_is_unknown():
     assert build_field()["field"]["water_source"] == "unknown"
+
+
+def test_a_method_that_beats_the_margin_must_be_chosen():
+    from pipeline.export.mock import build_field
+    from pipeline.export.validate import validate_field
+    d = build_field()
+    sd = d["method"]["season_detection"]
+    sd["methods"][2]["score"] = 0.99                               # detective beats threshold 0.96 by 0.03
+    assert any("picks 'detective'" in e for e in validate_field(d))
+    sd["chosen"] = "detective"
+    assert validate_field(d) == []
+
+
+# --- REVIEW_2 M13: what the schema cannot say about plans and their replays ---
+
+def test_a_plan_without_a_replay_is_refused():
+    d = build_field()
+    del d["replay"]["safest"]
+    assert any("no replay" in e for e in validate_field(d))
+
+
+def test_replay_years_must_rise_one_by_one():
+    d = build_field()
+    d["replay"]["current"].pop(3)                                   # a gap
+    assert any("year by year" in e for e in validate_field(d))
+    d = build_field()
+    d["replay"]["current"].reverse()
+    assert any("year by year" in e for e in validate_field(d))
+
+
+def _final_ready():
+    """The mock made consistent and stripped of its MOCK words: what a file ready to freeze must look like."""
+    import json
+    d = json.loads(json.dumps(build_field(), ensure_ascii=False).replace("MOCK", "sample"))
+    d["plans"][2]["crops"][1]["crop"] = "wheat"                     # three different rotations
+    d["plans"][0]["crops"][1]["crop"] = "potato"
+    for p in d["plans"]:
+        for y in d["replay"][p["id"]]:
+            y["harvest"] = p["score"]["harvest"]
+    return d
+
+
+def test_a_consistent_file_without_mock_passes_the_final_check():
+    d = _final_ready()
+    assert validate_field(d) == [] and validate_field(d, final=True) == []
+
+
+def test_the_final_check_refuses_mock_data():
+    assert any("MOCK" in e for e in validate_field(build_field(), final=True))
+    assert validate_field(build_field()) == []                      # the everyday check only warns (CLI)
+
+
+def test_the_final_check_refuses_two_plans_with_the_same_crops():
+    d = _final_ready()
+    d["plans"][2]["crops"] = [dict(c) for c in d["plans"][1]["crops"]]
+    assert any("same crops" in e for e in validate_field(d, final=True))
+
+
+def test_the_final_check_refuses_a_score_that_is_not_the_replays_mean():
+    d = _final_ready()
+    d["plans"][0]["score"]["harvest"] = 5
+    assert any("score.harvest" in e for e in validate_field(d, final=True))
+
+
+def test_the_final_check_wants_both_water_cases_on_every_year():
+    d = _final_ready()
+    del d["replay"]["current"][0]["irrigated"]
+    assert validate_field(d) == []                                  # still optional in the schema (owner's call)
+    assert any("irrigated" in e for e in validate_field(d, final=True))

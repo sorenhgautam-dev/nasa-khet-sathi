@@ -1,0 +1,190 @@
+"""Build step 7 (first part): generate every plan, replay each through 2001-2025 in both water cases, score them,
+keep the Pareto set and pick the three to show. Writes data/checks/<field>/plans.json.
+
+    .venv/bin/python scripts/run_plans.py --field demo
+
+Rules in config/rules.yaml (plans, erosion, ky_assumed). Pure functions in pipeline/plans/.
+--rain uncorrected (owner's decision 1, 2026-11-13) reruns everything on GPM as published and writes to
+data/checks/<field>/rain_uncorrected/plans.json; the default is the twin's corrected rain.
+"""
+import argparse
+import json
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO))
+from pipeline.fetch.cropslib import load_crops  # noqa: E402
+from pipeline.fetch.fields import load_field  # noqa: E402
+from pipeline.fetch.rules import load_rules  # noqa: E402
+from pipeline.plans import events as ev  # noqa: E402
+from pipeline.plans import generate as ge  # noqa: E402
+from pipeline.plans import score as sc  # noqa: E402
+from pipeline.plans import simulate as sim  # noqa: E402
+from pipeline.twin.crops import season_length, simulatable_crops  # noqa: E402
+from pipeline.twin.inputs import with_rain  # noqa: E402
+
+
+def _mmdd(t):
+    return pd.Timestamp(t).strftime("%m-%d")
+
+
+def evaluate(specs, w, lib, soil, cn, rules, strict, erosion=None, years_max=None):
+    crops = [sp["crop"] for sp in specs]
+    plan = ge.plan_dates(specs, lib, w["date"].min(), w["date"].max())
+    kw = dict(bare_kc=rules["bare_soil"]["kc"], kc_climate=rules["kc_climate"]["apply"], plan=plan)
+    rf = sim.replay(w, crops, lib, soil, cn, irrigated=False, **kw)
+    ir = sim.replay(w, crops, lib, soil, cn, irrigated=True, **kw)
+    ok = {y["year"] for y in sc.complete(rf["years"], crops)}
+    if years_max:
+        ok = {y for y in ok if y <= years_max}
+    rf_years = [y for y in rf["years"] if y["year"] in ok]
+    ir_years = [y for y in ir["years"] if y["year"] in ok]
+    etc = {}
+    for s in ir["seasons"]:
+        if s["year"] in ok:
+            etc[s["year"]] = etc.get(s["year"], 0.0) + float(s["sum_etc_mm"])
+    irr = float(np.mean([y["irrigation_mm"] for y in ir_years]))
+    etc_mm = float(np.mean(list(etc.values())))
+    cover_days = sum(season_length(lib[c]["stages_days"]) for c in crops)
+    row = {"id": ge.plan_id(specs), "specs": specs, "crops": crops,
+           "spans": [{"crop": sp["crop"], "start": _mmdd(a), "end": _mmdd(b)}
+                     for sp in specs for a, b in [ge.season_in_year(sp, lib, ge.REF_YEAR)]],
+           "years": sorted(ok), **sc.harvest_metrics(rf_years), "irrigation_mm": round(irr, 1), "etc_mm": round(etc_mm, 1),
+           "water": sc.water_score(irr, etc_mm, strict), "cover": round(sc.cover_score(cover_days), 1),
+           "pest_break": int(sc.pest_break(crops, lib)), "nitrogen": int(sc.has_legume(crops, lib)),
+           "needs_water_window": any("irrigat" in str(lib[sp["crop"]]["calendar"]["windows"][sp["window"]].get("note", "")).lower()
+                                     and "rainfed" not in str(lib[sp["crop"]]["calendar"]["windows"][sp["window"]].get("note", "")).lower()
+                                     for sp in specs),
+           "ky_assumed": any(lib[c].get("ky_assumed") for c in crops)}
+    for v in rules["ky_assumed"]["sensitivity"]:
+        ys = [y for y in sim.yearly(sim.seasons_with_ky(rf["seasons"], lib, v)) if y["year"] in ok]
+        m = sc.harvest_metrics(ys)
+        row[f"harvest_ky{v}"], row[f"stability_ky{v}"] = m["harvest"], m["stability"]
+    if erosion:
+        rain = w.set_index("date")["rain_mm"]
+        seasons = [(c, s, str((pd.Timestamp(s) + pd.Timedelta(season_length(lib[c]["stages_days"]) - 1, unit="D")).date()))
+                   for c, s in plan]
+        c = sc.daily_c(rain.index, seasons, erosion["c_by_crop"], erosion["c_bare"])
+        wt = sc.month_weight(rain.index.month, erosion["month_amplitude"])
+        for key, beta in (("soil_kept", erosion["beta"]), ("soil_kept_beta_1_81", 1.81)):
+            e_plan = sc.erosion_index(rain.to_numpy(), c, erosion["threshold_mm"], beta, weight=wt)
+            e_bare = sc.erosion_index(rain.to_numpy(), np.full(len(rain), erosion["c_bare"]), erosion["threshold_mm"], beta, weight=wt)
+            row[key] = sc.soil_kept_score(e_plan, e_bare)
+    return row
+
+
+def plan_export(specs, w, lib, soil, cn, rules, labels):
+    """One plan replayed for the field file, in the shape of run_replay's export (build_field_json.apply_replay):
+    rain-fed years with their events, the watered years beside them, and per crop the month it is most often
+    thirsty (rain-fed: days with Ks < 1), for the tips."""
+    crops = [sp["crop"] for sp in specs]
+    plan = ge.plan_dates(specs, lib, w["date"].min(), w["date"].max())
+    kw = dict(bare_kc=rules["bare_soil"]["kc"], kc_climate=rules["kc_climate"]["apply"], plan=plan)
+    rf = sim.replay(w, crops, lib, soil, cn, irrigated=False, **kw)
+    ir = sim.replay(w, crops, lib, soil, cn, irrigated=True, **kw)
+    daily = rf["daily"]
+    n_years = len({y["year"] for y in sc.complete(rf["years"], crops)})
+    thirsty = {}
+    for c in dict.fromkeys(crops):
+        d = daily[(daily["crop"] == c) & daily["dry_day"]]
+        if len(d):
+            by_month = d.groupby(pd.DatetimeIndex(d["date"]).month).size()
+            thirsty[c] = {"month": int(by_month.idxmax()), "dry_days_per_year": round(float(by_month.max()) / n_years, 1)}
+    return {"labels": {**labels, "rotation": crops, "plan": ge.plan_id(specs)},
+            "years": rf["years"], "irrigated_years": ir["years"], "events": ev.year_events(rf["seasons"], rules["events"]),
+            "thirsty": thirsty}
+
+
+def choose(rows, current_id, keys, must_include):
+    return sc.choose_three(rows, current_id, keys, must_include)
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--field", default="demo")
+    ap.add_argument("--rain", choices=("corrected", "uncorrected"), default="corrected")
+    a = ap.parse_args(argv)
+    field, rules, lib = load_field(a.field), load_rules(), load_crops()
+    clean = REPO / "data" / "clean" / field["id"]
+    out_dir = REPO / "data" / "checks" / field["id"]
+    w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain)
+    problems = sim.rain_record_problems(w)
+    if problems:
+        print("NOT YET POSSIBLE: " + "; ".join(problems))
+        return 2
+    soil = pd.read_parquet(clean / "soilgrids.parquet")
+    cov, by = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
+    cn = {"bare": by["bare"], **{c: by[cov[c]] for c in cov}}
+    diary = json.loads((out_dir / "diary.json").read_text())
+    falling = diary["export"]["groundwater"]["direction"] == "falling"
+    P = rules["plans"]
+    strict = P["water_strict_when_falling"] if falling else 1.0
+    erosion = rules.get("erosion")
+    crops = sorted(simulatable_crops(lib))
+    plans = ge.generate(lib, crops, tuple(P["sow_positions"]), P["max_seasons"])
+    rotation, rot_label = sim.rotation_for(field, rules)
+    current_specs = ge.ordered([{"crop": c, "window": lib[c]["calendar"]["default"], "position": "middle"} for c in rotation], lib)
+    current_id = ge.plan_id(current_specs)
+    if current_id not in {ge.plan_id(p) for p in plans}:
+        plans.append(current_specs)
+    keys = [k for k in P["pareto_keys"] if k != "soil_kept" or erosion]
+    t0 = time.time()
+    rows, rows_pre = [], []
+    for i, specs in enumerate(plans):
+        rows.append(evaluate(specs, w, lib, soil, cn, rules, strict, erosion))
+        rows_pre.append(evaluate(specs, w, lib, soil, cn, rules, strict, erosion, years_max=2016))
+        if i % 50 == 0:
+            print(f"  {i}/{len(plans)} plans, {time.time() - t0:.0f} s", file=sys.stderr)
+    must = P["suggested_must_include"]
+    picks = choose(rows, current_id, keys, must)
+    checks = {"pre_2017_only": choose(rows_pre, current_id, keys, must)}
+    for v in rules["ky_assumed"]["sensitivity"]:
+        alt = [{**r, "harvest": r[f"harvest_ky{v}"], "stability": r[f"stability_ky{v}"]} for r in rows]
+        checks[f"ky_{v}"] = choose(alt, current_id, keys, must)
+    by_id = {r["id"]: r for r in rows}
+    corrected_path = out_dir / "plans.json"
+    if a.rain == "uncorrected" and corrected_path.exists():   # the plans shown are chosen on the corrected rain
+        shown = json.loads(corrected_path.read_text())["picks"]
+    else:
+        shown = picks
+    water = field.get("water_source") or "unknown"
+    exports = {}
+    for role in ("current", "cover_gap", "safest"):
+        r = by_id[shown[role]]
+        lab = {"field": field["name"], "rain_source": "gpm", "rain_version": a.rain, "water_source": water,
+               "rotation_source": rot_label if role == "current" else
+               f"suggested plan '{P['plan_names'][role]}' ({rules['plans']['third_plan_rule'] if role == 'safest' else rules['plans']['cover_gap_rule']}); "
+               + ("PLACEHOLDER field" if field.get("placeholder") else "")}
+        exports[role] = {"id": role, "plan": r["id"], "name": P["plan_names"][role], "spans": r["spans"],
+                         "score": {k: r[k] for k in ("harvest", "water", "cover", "soil_kept")},
+                         "stability": r["stability"], "pest_break": r["pest_break"], "nitrogen": r["nitrogen"],
+                         "needs_water_window": r["needs_water_window"], "ky_assumed": r["ky_assumed"],
+                         "replay": plan_export(r["specs"], w, lib, soil, cn, rules, lab)}
+    out = {"labels": {"field": field["name"], "current": f"{rotation} ({rot_label})", "water_case": "rain-fed (water source unknown)",
+                      "water_strict": strict, "soil_kept": "computed" if erosion else "NOT YET: rules.yaml erosion (C factors) pending",
+                      "rain_version": a.rain, "rain_caveat": rules["gpm_series"]["trend_caveat"],
+                      "pareto_keys": keys},
+           "picks": picks, "shown": shown, "export": exports, "robustness": checks, "n_plans": len(rows), "plans": rows,
+           "plans_2002_2016": rows_pre}
+    path = out_dir / ("rain_uncorrected" if a.rain == "uncorrected" else "") / "plans.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(out, indent=1, default=str) + "\n")
+    print(f"{len(rows)} plans, {picks['eligible']} with rice, Pareto {len(picks['pareto'])}; safest from the "
+          f"{picks['safest_from']}; {time.time() - t0:.0f} s")
+    for role in ("current", "cover_gap", "safest"):
+        r = by_id[shown[role]]
+        print(f"{role:10s} {r['id']:45s} harvest {r['harvest']:5.1f} stability {r['stability']:5.1f} water {r['water']:5.1f} "
+              f"cover {r['cover']:5.1f} soil {r.get('soil_kept', '-')} pest {r['pest_break']} N {r['nitrogen']} spans {r['spans']}")
+    for k, v in checks.items():
+        print(f"check {k}: cover_gap {v['cover_gap']}, safest {v['safest']}")
+    print(f"-> {path.relative_to(REPO)}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

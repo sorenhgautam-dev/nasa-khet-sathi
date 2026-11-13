@@ -72,13 +72,23 @@ def _plans():
          {"harvest": 72, "water": 40, "cover": 35, "soil_kept": 60}),
         ("cover_gap", "Fill the empty months", [("rice", "06-15", "10-30"), ("lentil", "11-01", "03-15")],
          {"harvest": 70, "water": 62, "cover": 70, "soil_kept": 75}),
-        ("follow_shift", "Plant later, with the rain", [("rice", "07-01", "11-10"), ("mustard", "11-20", "02-28")],
+        ("safest", "Safest in bad years", [("rice", "06-15", "10-30"), ("lentil", "11-01", "03-15")],
          {"harvest": 76, "water": 55, "cover": 55, "soil_kept": 66}),
     ]
     return [{"id": i, "name": n, "crops": [{"crop": c, "start": s, "end": e} for c, s, e in crops],
              "score": score, "tabs": _tabs(n), "tips": [f"MOCK tip for '{n}'."],
              "tabs_ne": _tabs_ne(n), "tips_ne": [f"MOCK '{n}' को नमुना सुझाव।"]}
             for i, n, crops, score in specs]
+
+
+def _with_ranges(plans, replay):
+    """Owner's decision 1 (2026-11-13): where GPM's uncorrected rain changes a result, the file carries it beside."""
+    plans[1]["score_uncorrected_rain"] = {**plans[1]["score"], "harvest": plans[1]["score"]["harvest"] + 4}
+    for y in replay["current"]:
+        if y["year"] in (2020, 2022):
+            y["uncorrected_rain"] = {"harvest": min(100, y["harvest"] + 6), "dry_days": max(0, y["dry_days"] - 5),
+                                     "event": "flood" if y["year"] == 2020 else y["event"], "irrigated": dict(y["irrigated"])}
+    return plans, replay
 
 
 def _replay(offset):
@@ -91,6 +101,7 @@ def _replay(offset):
 
 def build_field():
     plans = _plans()
+    plans, replay = _with_ranges(plans, {p["id"]: _replay(offset) for p, offset in zip(plans, (0, -2, 4))})
     return {
         "field": {"name": f"{_CFG['name']} (MOCK data)", "lat": LAT, "lon": LON,
                   "water_source": _CFG.get("water_source") or "unknown", "sections": _sections()},
@@ -98,10 +109,27 @@ def build_field():
                   "groundwater": {"trend_cm_per_year": -1.2, "direction": "falling", "confidence": 0.7},
                   "months": _months()},
         "plans": plans,
-        "replay": {p["id"]: _replay(offset) for p, offset in zip(plans, (0, -2, 4))},
+        "replay": replay,
         "future": {"years": [2026, 2040],
                    "nothing_changes": {"harvest": [70, 55], "harvest_low": [62, 41], "harvest_high": [76, 66]},
                    "with_plan": {"harvest": [78, 74], "harvest_low": [72, 63], "harvest_high": [83, 81]}},
+        "method": {"season_detection": {
+            "chosen": "threshold", "margin": 0.02, "held_out_years": [2018, 2022], "thin_days": 16, "rule_methods_agree": 0.73,
+            "methods": [{"id": "threshold", "si": False, "score": 0.96, "by_year": [{"year": 2018, "score": 0.95}, {"year": 2022, "score": 0.97}],
+                         "start_diff_days": None, "peak_diff_days": None, "end_diff_days": None},
+                        {"id": "changepoint", "si": False, "score": 0.95, "by_year": [{"year": 2018, "score": 0.98}, {"year": 2022, "score": 0.92}],
+                         "start_diff_days": 14, "peak_diff_days": 4, "end_diff_days": 6},
+                        {"id": "detective", "si": True, "score": 0.97, "by_year": [{"year": 2018, "score": 0.99}, {"year": 2022, "score": 0.95}],
+                         "start_diff_days": 4, "peak_diff_days": 0, "end_diff_days": 2}]},
+            "rain_correction": {
+                "applied": True, "from": "2017-01-01", "reference_years": [2001, 2016],
+                "factors": {m: 0.7 for m in ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")},
+                "held_out": {"months": 48, "error_before_mm": 90.0, "error_after_mm": 30.0, "ratio_before": 1.6, "ratio_after": 1.05},
+                "rain_mm_per_year": {"reference": 1840.0, "after_uncorrected": 2730.0, "after_corrected": 1880.0, "station_normal": 1375.0},
+                "gauges": {"weight_before_pct": [96, 97], "weight_after_pct": [56, 72], "stations_before": 50, "stations_after": 1},
+                "words": {"en": "MOCK: why and how the rain after 2016 was corrected.", "ne": "MOCK: २०१६ पछिको वर्षा किन र कसरी सच्याइयो।"}},
+            "choices": [{"id": "mock_choice", "choice": "MOCK: a choice no source fixes", "value": "1",
+                         "status": "Claude's choice, owner-approved"}]},
         "sources": [{"name": "MOCK data for building the site", "product": "pipeline/export/mock.py",
                      "resolution": "none (made up)", "years": "none", "type": "model"}],
     }
@@ -112,8 +140,19 @@ def build_index():
                         "lat": LAT, "lon": LON, "bbox": list(BBOX)}]}
 
 
-def write_all(out_dir):
+def write_all(out_dir, force=False):
+    """Write the mock field and index. Refuses to replace a field file that holds real results (any source that is
+    not the MOCK one) unless force=True (REVIEW_2 M13: the bare command used to overwrite the real export)."""
     out_dir = Path(out_dir)
+    dest = out_dir / "fields" / "demo.json"
+    if dest.exists() and not force:
+        try:
+            real = [x.get("name") for x in json.loads(dest.read_text()).get("sources", []) if "MOCK" not in str(x.get("name"))]
+        except (ValueError, AttributeError):
+            real = ["an unreadable file"]
+        if real:
+            raise FileExistsError(f"{dest} holds real results (sources: {real}); the mock will not replace it. "
+                                  "Pass --force (or force=True) only if you mean to throw the real export away")
     field, index = build_field(), build_index()
     errors = validate_field(field) + validate_index(index)
     if errors:
@@ -125,4 +164,5 @@ def write_all(out_dir):
 
 
 if __name__ == "__main__":
-    print(f"wrote mock to {write_all(Path(sys.argv[1]) if len(sys.argv) > 1 else REPO / 'site' / 'data')}")
+    _args = [a for a in sys.argv[1:] if a != "--force"]
+    print(f"wrote mock to {write_all(Path(_args[0]) if _args else REPO / 'site' / 'data', force='--force' in sys.argv[1:])}")

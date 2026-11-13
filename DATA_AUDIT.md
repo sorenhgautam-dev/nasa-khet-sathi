@@ -1,12 +1,13 @@
 # DATA_AUDIT.md
 
-Updated 2026-11-12 (later): placeholder field, fetch box and the first Earthdata fetches (build step 5,
+Updated 2026-11-13 (REVIEW_2, an independent AI review: stale lines corrected, the switch-off test run on the real export,
+SMAP cleaned, DHM's 2025 gauges and the gauge evidence added). Before that, 2026-11-12 (later): placeholder field, fetch box and the first Earthdata fetches (build step 5,
 parts without GPM). Regenerate the data-level parts after each fetch step.
 
 **Field (owner, 2026-11-12):** 27.67 N, 85.43 E is Bhaktapur's old city, so it is only the centre of the
 fetch box `[85.379227, 27.625034, 85.480773, 27.714966]` (5 km N, S, E, W). The field is a PLACEHOLDER
 60 m square at **27.690767 N, 85.441792 E**: the owner's candidate 1 (`pipeline/fetch/placeholder.py`), moved 25 m north away from the Kasan River strip (section 1.14). It replaced a 100 m square at 27.6785 N, 85.427417 E, which was a construction plot. Datasets fetched before
-this (GHCN, FAOSTAT) are not location-bound; POWER was re-fetched at the placeholder (same grid cell,
+this (GHCN, FAOSTAT) are not location-bound; POWER was fetched at the first, since rejected, placeholder (27.6785 N, 85.427417 E): the same POWER grid cell as the field (0 of 9,131 days differ between cached points; a 2016 request at the field's own point matches on all 366 days; REVIEW_2 L1; the card still names the old point;
 identical values).
 
 ## Status
@@ -17,11 +18,11 @@ identical values).
 | NOAA GHCN-Daily, Kathmandu Airport (validation; reference for correction A) | **Yes**: 2001-01-01 to 2025-08-24 | `data/cards/demo/ghcn_NP000444540.json` |
 | FAOSTAT QCL, Nepal yields (validation 4.3 only) | **Yes**: 2001 to 2024, 72 rows | `data/cards/demo/faostat_yields.json` |
 | Twin weather (derived: corrected POWER + rain merge + ET0) | **Built**: 2001-01-01 to 2025-12-31 | `data/cards/demo/weather.json` |
-| ESA WorldCover 2021 (placeholder field only) | **Yes**: box window, 1,080 x 1,224 pixels at 10 m | `data/cards/demo/worldcover.json` |
+| ESA WorldCover 2021 (placeholder field only) | **Yes**: box window, 1,079 x 1,219 pixels at 10 m | `data/cards/demo/worldcover.json` |
 | NASADEM | **Yes**: box, elevation and slope; field 1,325.0 m, slope 1.6 deg (4 pixels) | `data/cards/demo/nasadem.json` |
 | GRACE/GRACE-FO mascon CRI | **Yes**: 261 months, 2002-04 to 2026-09, the 0.5 deg cell holding the field (one 3 deg mascon) | `data/cards/demo/grace.json` |
-| GPM IMERG | **Downloading** (EULA accepted by the owner, 2026-11-12): daily box subsets; the run was cut off at 2009-03-03 when VS Code closed, resumed from the cache at 13:02, and ended with **7,558 of 9,131 days**: every day from 2021-09-11 to 2025-12-31 (1,573) failed while the laptop's internet was down (about 14:10-14:31; both GES DISC hosts unreachable, and AppEEARS failed to resolve at the same time). The retry (15:59, 2 workers) fetched them all: **9,131 of 9,131 days** (Final 9,039 to 2025-09-30, Late 92), 0 failed, 0 fills in the field's cell; `gpm.parquet`, the card and the weather table rebuilt from the cache at 16:31. Field-cell rain averages 2,162 mm/yr (2009 lowest 1,436; 2020 highest 3,120). **Well above the station from 2017:** in the station's well-recorded years GPM is 1,505 / 1,736 / 2,635 / 2,399 / 2,969 / 2,644 mm (2015, 2016, 2017, 2019, 2021, 2022) against the station's 1,495 / 1,460 / 1,146 / 1,559 / 1,737 / 1,756 and POWER's 1,205 / 1,155 / 1,077 / 1,182 / 1,562 / 1,242; spike flags rise from 9 to 170, mostly 'gpm disagrees with the other two'. Cause not yet known (IMERG over the valley, or the synoptic-derived station undercounting): VALIDATION 3.9 | after download (`data/cards/demo/gpm.json`) |
-| MODIS MOD13Q1, SMAP L3 and L4 | **MODIS downloaded** (one netCDF-4 for the box, 2001-2025). **SMAP requested**: 13 AppEEARS tasks (2 L3, 11 L4 by year) still processing on NASA's side at 13:05; a poller downloads each when it is ready | `data/cards/demo/modis.json` (576 composites, 2000-12-18 to 2025-12-19; the field touches 2 MODIS cells but holds no cell centre); SMAP after download |
+| GPM IMERG | **Yes: complete, 9,131 of 9,131 days** (Final 9,039 to 2025-09-30, Late 92; 0 days filled from POWER; the 3,195 Final days from 2017 are scaled in the twin's rain, see 1.2). Download history (EULA accepted by the owner, 2026-11-12): daily box subsets; the run was cut off at 2009-03-03 when VS Code closed, resumed from the cache at 13:02, and ended with **7,558 of 9,131 days**: every day from 2021-09-11 to 2025-12-31 (1,573) failed while the laptop's internet was down (about 14:10-14:31; both GES DISC hosts unreachable, and AppEEARS failed to resolve at the same time). The retry (15:59, 2 workers) fetched them all: **9,131 of 9,131 days** (Final 9,039 to 2025-09-30, Late 92), 0 failed, 0 fills in the field's cell; `gpm.parquet`, the card and the weather table rebuilt from the cache at 16:31. Field-cell rain averages 2,162 mm/yr (2009 lowest 1,436; 2020 highest 3,120). **Well above the station from 2017:** in the station's well-recorded years GPM is 1,505 / 1,736 / 2,635 / 2,399 / 2,969 / 2,644 mm (2015, 2016, 2017, 2019, 2021, 2022) against the station's 1,495 / 1,460 / 1,146 / 1,559 / 1,737 / 1,756 and POWER's 1,205 / 1,155 / 1,077 / 1,182 / 1,562 / 1,242; spike flags rise from 9 to 170, mostly 'gpm disagrees with the other two'. Cause not yet known (IMERG over the valley, or the synoptic-derived station undercounting): VALIDATION 3.9 | after download (`data/cards/demo/gpm.json`) |
+| MODIS MOD13Q1, SMAP L3 and L4 | **MODIS downloaded** (one netCDF-4 for the box, 2001-2025). **SMAP downloaded and cleaned (2026-11-13, REVIEW_2)**: 13 AppEEARS bundles (L3 AM and PM; L4 one per year, 2015-2025), `pipeline/fetch/smap.py` -> `data/clean/demo/smap.parquet`, card `smap.json`; a check only (1.5) | `data/cards/demo/modis.json` (576 composites, 2000-12-18 to 2025-12-19; the field touches 2 MODIS cells but holds no cell centre); SMAP after download |
 | HLS-VI (L30, S30) | **Yes**: all 1,471 granules (L30 336, S30 1,135), box windows of NDVI + Fmask, tile T45RUL; the retry finished with 0 failures (2026-11-12, 12:39). Monthly clear-sky composites built (`hls_monthly_ndvi.npz`) | `data/cards/demo/hls_l30.json`, `hls_s30.json` (from the cache, REVIEW_NOTES L7: 4 pixel centres in the field, 9 touching; no NDVI outside -1..1; 0 windows outside their granule, L6) |
 | ECOSTRESS LSTE, ESI | **Yes (raw windows)**: LSTE 769 (V003 27, V002 742), ESI 310 (V003 3, V002 307); the retry finished with 0 failures (2026-11-12, 12:41). Cleaning is step 8 | `data/cards/demo/eco_lste.json`, `eco_esi.json` (raw, from the cache, L7); cleaned cards at step 8 |
 | ISRIC SoilGrids 2.0 | **Box downloaded through the WCS** (36 maps: 6 properties x 6 depths, 45 x 38 cells of about 250 m; the REST point service was down). **Only 947 of 1,710 box cells have a prediction** (763 are 0 in all 36 maps, none in only some): SoilGrids leaves most of the Kathmandu valley floor empty; values sit in the surrounding hills. **The twin's soil table is now the nearest cell where all 36 maps are valid: 859 m south-east of the field** (27.6854 N, 85.4481 E), within the owner's 3 km (REVIEW_NOTES M5); rebuilt offline 2026-11-12. The REST module now writes `soilgrids_rest.*` only | `data/cards/demo/soilgrids.json` |
@@ -76,11 +77,11 @@ G official citations (CREDITS.md) · H full-history secret scan before going pub
 | Resolution | Meteorology "½° latitude by ⅝° longitude grid from GMAO MERRA-2" (about 55 x 62 km), with GEOS-IT for the latest 1 to 3 months until MERRA-2 overwrites it; solar "1° latitude by 1° longitude" from CERES SYN1deg Ed. 4.2 (2001 on), FLASHFlux 4A for the latest 3 to 4 months. POWER warns that series spanning a source change are not recommended for climate trends | **VERIFIED**: power.larc.nasa.gov/docs/methodology (sources_meteorology, sources_fluxes) |
 | PRECTOTCORR | "The average MERRA-2 bias corrected total precipitation at the surface of the earth" (POWER parameter manager); GEOS-IT for recent months lacks the gauge normalization | VERIFIED; the correction's gauge source is in Reichle et al. 2017 (not opened, TODO-VERIFY) |
 | Plot | A point product has no pixel grid to draw in our data; plotting the cell outline needs POWER's grid edges | TODO-VERIFY grid edges |
-| Known problem 1 | PRECTOTCORR yearly totals for 2001 to 2003 (621, 525, 534 mm) are about half of every later year. The station has almost no records then, and POWER documents no source change in those years | Cause TODO-VERIFY. **Decision D: never used to fill GPM gaps** |
+| Known problem 1 | **Not only rain (REVIEW_2 H8, 2026-11-13):** in 2001-2003 POWER's daytime temperature and humidity are off too: yearly mean Tmax 27.2-27.6 C against 24.6-26.8 C in every later year (POWER minus station Tmax about 1.7 C higher than in 2004-2012, in every month; the station shows no warm spell), RH 51.8% against 56-71%, so ET0 is 1,429 mm a year against 1,311 (+9%) and the diary's hot days number 96, 139, 113 against at most 66 later. The hot-day trend is therefore also given without these years; replay years 2002-2003 carry the excess ET0 (lowering it to the later level changes 3 of 24 years' harvest integers and no plan pick). PRECTOTCORR yearly totals for 2001 to 2003 (621, 525, 534 mm) are about half of every later year. The station has almost no records then, and POWER documents no source change in those years | Cause TODO-VERIFY. **Decision D: never used to fill GPM gaps** |
 | Known problem 2 | Implausible daily rain, e.g. **2025-03-01 233.7 mm** (station 3.8 mm, dry season) | **Decision B: flagged** (section 3); not removed |
 | Temperature bias | Against the station on shared days: Tmin too warm (January +3.8 C; monthly offsets +0.3 to +4.2 C), Tmax too cool from July to December (offsets down to -4.2 C in September) | FOUND; **decision A correction** applied in the twin's weather (1.13) |
 
-### 1.2 GPM IMERG: DOWNLOADING (GES DISC EULA accepted 2026-11-12; daily box subsets, 9,131 days)
+### 1.2 GPM IMERG: DOWNLOADED (GES DISC EULA accepted 2026-11-12; daily box subsets, 9,131 of 9,131 days); 2017+ CORRECTED (owner's decision 1, 2026-11-13)
 
 | Item | Value | Status |
 | --- | --- | --- |
@@ -88,25 +89,58 @@ G official citations (CREDITS.md) · H full-history secret scan before going pub
 | Variable | `precipitation`, float32, mm/day, no scale factor, fill -9999.9 (float32; the guard matches both spellings) | VERIFIED: UMM-Var `V3156651215-GES_DISC` |
 | Quality flags | `precipitation_cnt` = number of valid half-hourly values in the day, 'only given to gauge the significance of the daily rates'; count-0 cells are fill (GPM_3IMERGDF V07 abstract). Not a quality flag, so none applied. `precipitation_cnt_cond`: meaning not found | PARTLY VERIFIED (verified 2026-11-12); `precipitation_cnt_cond` TODO-VERIFY |
 | Time zone | UTC days (00:00-24:00 UTC = 05:45-05:45 Nepal time); each file's BeginTime 00:00:00.000Z and EndTime 23:59:59.999Z support it | **VERIFIED**: IMERG V07 Technical Documentation (13 July 2023) p. 40, 'The time zone for these data sets is Universal Coordinated Time'; the daily file is the mean of the 48 UTC half-hours of the data day (GPM_3IMERGDF V07 abstract) |
-| Fills found, records dropped, pixels, plot | — | NOT YET POSSIBLE: waiting for the download to finish, then `python -m pipeline.fetch.gpm --field demo --from-cache`. The card now counts real fills in the field's cell, failed days, days without a granule and days not cached separately per segment, records the dropped days and the date range actually covered, prints the raw attributes (units mm/day; scale_factor, add_offset, valid_range ABSENT; _FillValue -9999.9), and the run exits non-zero if any day is missing (REVIEW_NOTES M2) |
+| Fills found, records dropped, pixels, plot | 0 fills in the field's cell, 0 days dropped, 4 box cells (2 x 2, card `data/cards/demo/gpm.json`) | DONE (9,131 of 9,131 days: Final 9,039 to 2025-09-30, Late 92). Earlier note: The card now counts real fills in the field's cell, failed days, days without a granule and days not cached separately per segment, records the dropped days and the date range actually covered, prints the raw attributes (units mm/day; scale_factor, add_offset, valid_range ABSENT; _FillValue -9999.9), and the run exits non-zero if any day is missing (REVIEW_NOTES M2) |
 
-### 1.3 HLS Vegetation Indices: DOWNLOADED (box windows; 1,404 of 1,471 granules, tile T45RUL)
+**Rain check B (2026-11-13; VALIDATION 3.9b).** IMERG Final's gauge input collapses in January 2017 (monthly gauge
+weight 96-98% to 56-72%; GPCC Full Data V2022 stations in the field's 1-degree box about 50 to about 1 a month), and
+Pettitt finds a change in the yearly GPM totals after 2016 (p 0.0014). Against DHM's 1991-2020 normals GPM is
+1.34 x Bhaktapur's annual normal in 2001-2016 and 1.99 x in 2017-2025 (POWER 0.79 x; the airport station 1.00 x its
+own normal). The correction of 2017-2025 is applied (owner's decision 1, below). REVIEW_2 (2026-11-13) fetched the gauge
+evidence again and made it reproducible (1.17), and added DHM's own 2025 gauge totals as an independent check (1.16).
+
+**DHM's 1991-2020 normals (config/dhm_normals_1991_2020.csv).** Kathmandu Airport from DHM's official 'Climate
+Normals' table (20 stations; the DHM link is now 404, read from the Internet Archive copy of 30 Jan 2022); Bhaktapur
+(index 1052, 2.3 km from the field), Changu Narayan and Nagarkot are not in it and come from the 'Normal' columns of
+Annex 1 of DHM's monthly bulletins (Jan 2025 to Jul 2026), where an asterisk marks temperature normals averaged over
+the available years (all of Bhaktapur's and Changu Narayan's). **DHM counts a rainy day as 1 mm or more** (Monsoon
+2025 summary p. 3: 'the number of rainy days (precipitation >= 1 mm)'; bulletin Annex 1 columns '>=1.0mm'), the same
+as our ETCCDI wet day (rules.yaml monsoon_onset.wet_day_mm, trends.dry_day_mm). The owner's '1,200.4 mm' is the
+airport's measured June-September 2025 rain (DHM monsoon 2025 summary, Annex 1), not its annual normal (1,502 mm).
+
+**Break correction (owner's decision 1, 2026-11-13; rules.yaml gpm_series.correction).** The twin's rain
+(`weather.parquet` rain_mm) scales every IMERG Final day from 2017-01-01 by its calendar month's factor = mean
+complete-month total 2001-2016 / mean 2017-01 to 2025-09 (Jan 0.83, Feb 0.79, Mar 0.54, Apr 0.47, May 0.55, Jun 0.63,
+Jul 0.73, Aug 0.71, Sep 0.77, Oct 0.80, Nov 2.40, Dec 0.46; 3,195 days). The 92 Late days and any POWER-filled day are
+not scaled. Mean yearly rain 2017-2025: 2,731 mm as published, 1,882 corrected (2001-2016: 1,842). The rain as
+published stays in `rain_uncorrected_mm` (flag `rain_break_corrected`); every rain-based result is also run on it.
+Held out against the airport station (fit on odd years from 2017, test on even, and the reverse; 48 months): mean
+monthly error 93.7 -> 31.4 mm, total over the station 1.62 -> 1.06.
+
+**Check datasets (rain check B; never the twin's rain).** IMERG Late V07 daily 2014-2019 (`pipeline/fetch/gpm_late.py`,
+own cache `data/raw/gpm_late_check/`, `data/clean/demo/gpm_late_check.parquet`, card `gpm_late_check.json`) and CHIRPS
+v3.0 daily final `rnl` 2001-2025 (`pipeline/fetch/chirps.py`: HTTP range reads of the yearly global netCDF-4 files,
+only the chunks holding the box; precip mm/day, _FillValue -9999, no scale or offset, every day of the year checked;
+UTC calendar-day labels; 9 cells of 0.05 deg overlapping the box; `data/clean/demo/chirps.parquet`, card `chirps.json`). Results (VALIDATION 3.9b): CHIRPS has no step at 2017 (1,454 then 1,437 mm a year); IMERG Late steps 1.13 against Final's 1.62 and is wetter than gauge-adjusted Final in 2014-2016, equal to it from 2017.
+
+### 1.3 HLS Vegetation Indices: DOWNLOADED (box windows; all 1,471 granules: L30 336, S30 1,135, tile T45RUL)
 
 | Item | Value | Status |
 | --- | --- | --- |
 | Products | `HLSL30_VI` v2.0 (from 2013-04-11), `HLSS30_VI` v2.0 (from 2015-11-28) | VERIFIED: CMR |
 | NDVI | int16, scale 0.0001, **fill -19999** in the files (UMM-Var said -9999), valid -1 to 1 after scaling | **VERIFIED**: file tags (`_FillValue -19999`, `scale_factor 0.0001`) |
 | Cloud mask | **`Fmask`** (uint8, fill 255). Bits from each file's own `Fmask description` tag: 7-6 aerosol, 5 water, 4 snow/ice, 3 cloud shadow, 2 adjacent to cloud, 1 cloud, 0 cirrus. Clear = bits 0-5 all zero (`pipeline/diary/ndvi.py`); water (bit 5) is kept as not clear after a check (REVIEW_NOTES M12): no water-flagged observation over the field in June-August 2013-2025 (0 of 2,916), and only 0.001-0.004% of clear observations over the box's cropland in those months | **VERIFIED**: file tag |
-| Pixels | 30 m: a 10 m section is one-ninth of a pixel | count NOT YET POSSIBLE (B2) |
+| Pixels | 30 m: a 10 m section is one-ninth of a pixel | 4 pixel centres inside the field, 9 pixels touching it; the 4 cover 77.6% of the field and 22.4% of their footprint lies outside it (REVIEW_2) |
 
-### 1.4 MODIS MOD13Q1 v061: REQUESTED (AppEEARS task for the box, 2001-2025)
+### 1.4 MODIS MOD13Q1 v061: DOWNLOADED (AppEEARS, the box, 2001-2025: 576 composites, 447 kept at reliability 0). No number shown uses it (REVIEW_2 M6): the field is 5.9% of its 250 m pixel; it is compared with HLS only (section 3)
 
 | Item | Value | Status |
 | --- | --- | --- |
 | NDVI | `250m 16 days NDVI`: int16, scale 0.0001, fill -3000, valid raw -2000 to 10000 (that is, -0.2 to 1.0) | VERIFIED: UMM-Var `V3143914093-LPCLOUD` |
 | Quality and date layers | `_250m_16_days_pixel_reliability` (0 to 3, fill -1), `_250m_16_days_VI_Quality` (fill 65535), `_250m_16_days_composite_day_of_the_year` (1 to 366, fill -1) | **VERIFIED**: AppEEARS product API |
 
-### 1.5 SMAP: REQUESTED (AppEEARS: L3 AM and PM, L4 one task per year)
+### 1.5 SMAP: DOWNLOADED AND CLEANED 2026-11-13 (AppEEARS: L3 AM and PM, L4 one bundle per year). A check on the twin only
+
+**Result (REVIEW_2 Phase 3, `pipeline/fetch/smap.py`, card `data/cards/demo/smap.json`).** The 9 km EASE-Grid 2.0 cell holding the field (row 0, col 1 of the 2 x 2 box; the field lies 0.6 km and 2.9 km from its centre). **L4 (`SPL4SMGP` v008, model-assisted):** 31,432 three-hourly values, 2015-03-31 to 2025-12-31, no fills, root zone 0.155-0.422 m3/m3 (inside both the product's 0-0.9 and rule 12's 0-0.6); daily means of the eight values of each UTC day: 3,929 days, none incomplete. **L3 (`SPL3SMP_E` v006): not usable here.** Of 1,404 morning and 1,859 evening retrievals at the cell, **none is of recommended quality** (flag values 9 and 13 only; AppEEARS's own lookup table reads "doesn't have recommended quality" for both), and 237 and 263 of them exceed the product's valid maximum of 0.5 cm3/cm3 (up to 0.561). They are dropped and counted; the L3 columns are empty. A valley of city, paddy and steep hills is poor ground for a 9 km radiometer retrieval. **Use:** `scripts/run_smap_check.py` compares monthly anomalies of the L4 root zone with the twin's root-zone wetness (VALIDATION 4.2b). No number shown to farmers uses SMAP.
 
 | Item | Value | Status |
 | --- | --- | --- |
@@ -139,7 +173,9 @@ G official citations (CREDITS.md) · H full-history secret scan before going pub
 | Use | field elevation now feeds ET0 (POWER's cell is 1,269.4 m; mean ET0 changed from 3.5045 to 3.5071 mm/day, then 3.5076 at the 60 m square's 1,325.0 m); slope is for revisiting the curve numbers (owner): 1.6 deg is about 2.8 % (the first placeholder's 2.2 deg was about 4 %), gentle, but terraces are likely in the hills | FOUND; curve numbers kept for this 1.6 deg valley-floor placeholder, revisit closed (owner, 2026-11-12, batch item 20); revisit for a terraced hill field |
 | Heights | above the EGM96 geoid | **VERIFIED**: NASADEM User Guide (Jan 2020) Section 3 ('the integer heights in the merged void-free DEM files are relative to the EGM96 geoid') and Table 1 |
 
-### 1.8 ECOSTRESS V003, V002 fallback (D4): DOWNLOADED (raw box windows; LSTE 741, ESI 307)
+### 1.8 ECOSTRESS V003, V002 fallback (D4): DOWNLOADED (raw box windows; LSTE 769, ESI 310)
+
+**Not used in any result (REVIEW_2 L11, 2026-11-13); five things to settle before step 8 uses it.** (1) 742 of 769 LST and 307 of 310 ESI granules are V002, the rest V003 (D4 is implemented correctly: no overpass has both). (2) The versions differ: in V002 no valid LST pixel has cloud = 1 (0 of 5.06 million), in V003 10.6% do, so a mixed series must apply the cloud layer to V003; no code does yet. (3) "Valid" LST runs from 14.6 K to 1,305.8 K (31,066 pixels in 16 granules): mask by QC first, then fail loudly (rule 12c). (4) 119 overpass times have two or three product iterations (`_01`, `_02`, `_03`) and 111 of the first pairs differ: pick one before averaging. (5) Overpasses fall at every hour of the day, and one 70 m pixel centre lies in the field (38% of that pixel is field): 10 m sections cannot differ by ECOSTRESS. The earlier finding stands: QC and cloud read 0 where there is no data (5,631,223 QC and 6,139,061 cloud pixels in LSTE), so both are used only where LST is valid.
 
 `ECO_L2T_LSTE` V003 `C3998139651-LPCLOUD` (V002 `C2076090826-LPCLOUD`); `ECO_L4T_ESI` V003
 `C4057232495-LPCLOUD` (V002 `C2076104650-LPCLOUD`). Tile 45RUL. Over the box V003 has only **27 LSTE and
@@ -168,7 +204,7 @@ records it. Calendars: per model, read from each file's `time:calendar` (**TODO-
 | Cell | lat 27.5-28.0, lon 85.0-85.5, mascon 1213, land mask 1 | FOUND |
 | Series | 261 monthly solutions, 2002-04 to 2026-09; lwe -73.3 to +37.4 cm; GRACE/GRACE-FO gap months are absent, not filled | FOUND |
 | Resolution | 0.5 deg grid of 3-degree equal-area mascons: regional context only (file attribute) | VERIFIED |
-| CRI scale factor (owner, 2026-11-12, REVIEW_NOTES M4) | 1.4945 at the cell, recorded in the card, **not applied**: it is CLM-based (land hydrology; file attribute 'based on CLM data from 2002-2009'), the mascon includes glaciers and snow, and no source was found for applying it here. **Unscaled OLS trend -2.56 cm/yr** (261 months, 2002-04 to 2026-09; 2002-2025 only: -2.561); scaled it would be -3.82 cm/yr. `grace.parquet` has no scaled column any more | DECIDED |
+| CRI scale factor (owner, 2026-11-12, REVIEW_NOTES M4) | 1.4945 at the cell, recorded in the card, **not applied**: it is CLM-based (land hydrology; file attribute 'based on CLM data from 2002-2009'), the mascon includes glaciers and snow, and no source was found for applying it here. **Unscaled OLS trend -2.56 cm/yr; the exported value is the seasonal Sen slope, -2.57 cm/yr** (REVIEW_2: the cell belongs to JPL mascon 1213, 25.5-28.5 N, 85.0-88.5 E, 42 identical half-degree cells from the Bihar plain to Everest, Kathmandu on its western edge) (261 months, 2002-04 to 2026-09; 2002-2025 only: -2.561); scaled it would be -3.82 cm/yr. `grace.parquet` has no scaled column any more | DECIDED |
 | Caveat (owner) | regional water storage over one 3-degree mascon (about 330 km), including glaciers and the plains, **not the field's own aquifer**; carried in the card and in `rules.yaml` `groundwater.caveat` for every explanation | DECIDED |
 
 ### 1.11 NOAA GHCN-Daily, Kathmandu Airport (validation; reference for correction A): DOWNLOADED
@@ -212,7 +248,7 @@ records it. Calendars: per model, read from each file's `time:calendar` (**TODO-
 | Humidity | RH2M not corrected (no station humidity). For ET0 the actual vapour pressure is held from POWER (RH2M with POWER's own temperatures, FAO-56 eq. 19), capped at e0 of the corrected Tmin, and used with the corrected temperatures (owner, 2026-11-12, REVIEW_NOTES M6; columns `ea_kpa`, `ea_capped`). Cap binds on 5,056 of 9,131 days (3,028 even without the correction). Mean annual ET0 1,325 mm (used) vs 1,281 mm with RH held (`et0_rh_held_mm`); by month -0.06 to +0.37 mm/day; largest +0.97 mm on 2023-08-27. Card `corrections.ea_kpa` |
 | **Known limit** | one offset per month over-corrects extreme nights: Jan 2013 coldest corrected night **-4.2 C** vs the reported Kathmandu low of **-1.1 C** (raw POWER -0.1 C). Jan 2018: corrected 0.7 C vs station 0.0 C. Frost (step 8) needs a better method or a stated caveat |
 | Cold nights (owner, 2026-11-12) | held-out 2016, 2019, 2022: MAE offset **1.22** vs QM 1.34 C; January-coldest-night error offset 2.83 vs **QM 2.31** C; nights below 2 C (station 9) offset 22 vs **QM 15**. **Both used, each for its job**: offset in `tmin_c` (twin, ET0), QM in `tmin_frost_c` (frost only, risk bands, never a count) |
-| Rain | GPM downloading (D6); POWER fills only GPM gaps (D). The three-source vote is built and waits for GPM |
+| Rain | GPM IMERG complete (D6): 9,131 days, 0 filled from POWER (D); 3,195 Final days from 2017-01-01 scaled (owner's decision 1), `rain_uncorrected_mm` kept beside it. The three-source vote ran: 170 flags on 120 days (section 3) |
 | ET0 | FAO-56 PM from corrected temperatures; mean 3.63 mm/day, about 1,325 mm/yr (ea held from POWER, capped; 3.51 mm/day, 1,281 mm/yr with RH held); elevation = the field's NASADEM height (1,325.0 m over the 60 m square; 1,313.2 m over the first placeholder) |
 | Checks | weather.py now fails loudly if any day has `tmin_c` or `tmin_frost_c` above `tmax_c` (0 days each; smallest gaps 3.96 and 3.98 C; the earlier claim had no check behind it, REVIEW_NOTES M9); `tmin_frost_c` range-checked -30 to 50 C; `months_uncorrected` empty for Tmin, Tmax and frost Tmin (M8); both ET0 columns non-negative; POWER rain fill at most 5% of any year inside the GPM record (M2); the card names each column's source and resolution (M9) |
 
@@ -231,20 +267,48 @@ records it. Calendars: per model, read from each file's `time:calendar` (**TODO-
 | Dataset | What is fetched | Status |
 | --- | --- | --- |
 | MODIS MOD13Q1.061 | NDVI, pixel reliability, VI quality, composite day, 2001-2025, box, native sinusoidal, netCDF-4 (AppEEARS) | DOWNLOADED; layer names VERIFIED via the AppEEARS product API (closes the TODO in 1.4) |
-| SMAP SPL3SMP_E.006 | AM soil moisture + retrieval quality flag, PM the same, 2015-03-31 to 2025-12-31 | REQUESTED, processing on NASA's side at 13:05 (split: one task was 57.2 % over AppEEARS's file limit) |
-| SMAP SPL4SMGP.008 | root-zone and surface soil moisture, 3-hourly, one task per year | REQUESTED, processing or pending on NASA's side at 13:05 |
+| SMAP SPL3SMP_E.006 | AM soil moisture + retrieval quality flag, PM the same, 2015-03-31 to 2025-12-31 | DOWNLOADED (2026-11-12); cleaned 2026-11-13: no recommended-quality retrieval at the field's cell, not used (1.5) (split: one task was 57.2 % over AppEEARS's file limit) |
+| SMAP SPL4SMGP.008 | root-zone and surface soil moisture, 3-hourly, one task per year | DOWNLOADED (2015-2017 on 2026-11-12; 2018-2025 on 2026-11-13 from the same tasks); cleaned 2026-11-13 (1.5) |
 | HLS-VI | `NDVI` (int16, scale 0.0001, fill -19999) and `Fmask` (uint8, fill 255; bit meanings in the file's `Fmask description` tag) per granule, box window in UTM 45N, tile T45RUL | DONE (all 1,471 granules, 0 failures). **Cloud-mask layer name VERIFIED: `Fmask`** (closes the TODO in 1.3). NDVI files are strip-organised, so each window read takes about 10-20 s |
 | ECOSTRESS | LSTE: `LST`, `QC`, `cloud`; ESI: `ESI`, `cloud`; V003 first, V002 for overpasses V003 lacks (D4) | DONE (769 LSTE, 310 ESI, 0 failures) |
-| GPM IMERG | daily box subsets; Final ends 2025-09-30 in CMR (D1 confirmed) | DOWNLOADING (EULA accepted 2026-11-12). Cloud OPeNDAP fails for this collection (no DMR++); GES DISC Hyrax works |
+| GPM IMERG | daily box subsets; Final ends 2025-09-30 in CMR (D1 confirmed) | DONE: 9,131 of 9,131 days (EULA accepted 2026-11-12). Cloud OPeNDAP fails for this collection (no DMR++); GES DISC Hyrax works |
 
 ---
+
+### 1.16 DHM monthly bulletins, 2025 (validation only; added 2026-11-13, REVIEW_2 Phase 3)
+
+| Item | Value | Status |
+| --- | --- | --- |
+| Product | DHM Climate Division, monthly "Preliminary Precipitation and Temperature Summary", Annex 1 "Monthly precipitation and temperature data"; six bulletins (April, August, September, October, November, December 2025) | PRELIMINARY data; (c) DHM; **validation only, kept under `data/` (git-ignored), never redistributed** |
+| Stations | Bhaktapur (27.68 N, 85.42 E, 1,315 m; about 2.3 km from the field), Changu Narayan (27.72 N, 85.43 E, 1,502 m), Kathmandu Airport (27.70 N, 85.36 E, 1,337 m) | read from the bulletins |
+| Variables, units | monthly total, mm; the month's wettest day, mm, where read | transcribed by hand by a review sub-agent; **every value re-read in the bulletin text by the main review session** |
+| Fills, flags, records dropped | none: a hand-made table of 18 values (an empty cell is a value not read); range guard 0 to 3,000 mm a month | `data/raw/dhm_bulletins/demo/monthly_2025.csv`, the six PDFs beside it |
+| Time zone | Nepal time; DHM's rain day ends at 08:45 local (03:00 UTC), so single days differ from GPM's UTC days by up to a day | stated in the card |
+| Card, check | `data/cards/demo/dhm_bulletins.json`; `scripts/run_dhm_bulletin_check.py` -> `data/checks/demo/rain_vs_dhm_2025.json` | VALIDATION 3.9c |
+| Use | A check of the 2017 rain correction against gauges that are not the GHCN synoptic series and do not reach IMERG. No number shown uses it | |
+
+### 1.17 Gauge evidence for the 2017 break: IMERG monthly gauge weight and GPCC station counts (checks only; added 2026-11-13)
+
+Until 2026-11-13 the numbers in `rules.yaml gpm_series.break_evidence` (shown on the site's method page) had been read by
+hand by a research sub-agent, with no raw file, fetch code or card in the project (REVIEW_2 M6). `pipeline/fetch/gauge_evidence.py`
+now fetches both sources, caches them in `data/raw/gauge_evidence/demo/`, writes `data/clean/demo/gauge_evidence.parquet`
+(one row per month) and the card `data/cards/demo/gauge_evidence.json`, whose `summary` holds the quoted ranges.
+
+| Item | Value | Status |
+| --- | --- | --- |
+| Product 1 | `GPM_3IMERGM` V07 (monthly IMERG Final), GES DISC OPeNDAP subsets of the 3 x 3 cells of 0.1 deg around the field's cell | Earthdata login; raw attributes printed and stored in the card |
+| Variables, units | `gaugeRelativeWeighting`, percent (the weight of the gauge analysis in the final estimate); `precipitation`, mm/hr x hours in the month = mm per month | guard: weight 0 to 100 |
+| Product 2 | GPCC Full Data Monthly Product V2022, 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100), DWD open data, no login; two decade files, 2001-2020 (the product ends in 2020) | classic netCDF, read with scipy |
+| Variables, units | `numgauge`, stations in the box that month; `precip`, mm per month; the box centred 27.5 N, 85.5 E | guard: counts not negative, rain 0 to 3,000 mm a month |
+| Fills, flags | masked by each file's own fill value (none at these cells); no quality flags: these *are* the quality information | card |
+| Result | 297 months, 2001-01 to 2025-09, none missing. **Gauge weight at the field's cell: 96-98% in every one of the 192 months of 2001-2016** (96% in 109, 97% in 66, 98% in 17; the same range in all nine cells); **from January 2017 it drops** (2017 by month: 62, 68, 64, 61, 63, 60, 60, 55, 60, 61, 71, 70%); yearly means 2017-2025: 62.9, 56.3, 62.2, 56.0, 68.4, 71.8, 70.7, 65.8, 68.9% (single months 31-80%). **GPCC stations in the box: 44.9 to 53.2 a month by year in 2001-2016 (50.3 in 2011-2016); 1.0, 0.7, 1.0, 0.7 in 2017-2020.** GPCC's own box totals do not jump (2016 1,664 mm; 2017 1,658; 2018 1,642; then 1,887 and 2,172). IMERG's monthly rain sums to the daily files' totals (2018: 3,003 mm). The number on the method page was corrected from 96-97% to 96-98% | VALIDATION 3.9b |
 
 ## 2. Field outline over pixels
 
 Rerun 2026-11-12 for the current placeholder field (60 m square at 27.690767 N, 85.441792 E;
 `scripts/plot_pixels.py`, `data/checks/demo/field_pixels.json`, plots in `data/plots/pixels/demo/`). A pixel
 counts when its centre lies inside the polygon: **WorldCover 42, NASADEM 4, HLS 4**; GRACE: the field lies in one
-0.5 deg cell of one 3 deg mascon. GPM and SMAP: not downloaded yet. MODIS (250 m) and ECOSTRESS (70 m) are
+0.5 deg cell of one 3 deg mascon. GPM: the field lies in one 0.1 deg cell (centre 27.65 N, 85.45 E) of the 2 x 2 box. SMAP: one 9 km cell (1.5). MODIS (250 m) and ECOSTRESS (70 m) are
 downloaded but the script does not draw them yet. POWER and GHCN are points. (The file held the rejected first
 square until this rerun.)
 
@@ -255,53 +319,69 @@ square until this rerun.)
 | POWER vs GHCN rain | **49 complete months in 2015, 2016, 2017, 2019, 2021, 2022: POWER 21.3% drier, r = 0.93, mean absolute error 46.8 mm per month** | RUN (`data/checks/demo/crosscheck_power_ghcn_NP000444540.json`) |
 | POWER vs GHCN January Tmin | 205 shared days: station 3.7 C, POWER 7.5 C, **POWER +3.8 C** | RUN |
 | POWER vs GHCN May-June Tmax | 829 shared days: station 29.4 C, POWER 29.5 C, **POWER +0.08 C** | RUN |
-| Spike check B (rain > 50 mm and > 5x another source) | **9 days flagged**, written to the power, station and weather cards. POWER high: 2009-07-28 (59.2 vs 0.0), 2024-06-25 (74.2 vs 0.0), 2024-06-26 (114.3 vs 4.3), 2024-09-25 (55.9 vs 0.8), **2025-03-01 (233.7 vs 3.8)**. Station high: 2012-09-13 (134.6 vs 16.0), 2018-04-03 (51.1 vs 0.2), 2021-07-11 (90.9 vs 2.7), 2022-08-10 (76.2 vs 14.2). The 2024-09-27/28 flood is not flagged (ratios under 5). Nothing deleted. The station's 0.0 on the POWER-high days (2009-07-28, 2024-06-25) may be a missing synoptic report rather than a dry day (the station is synoptic-derived, 1.11): unverified, so the GPM vote decides | RUN |
-| Day alignment C (POWER vs station daily rain) | best lag **0** (see 1.11) | RUN |
-| GPM vs POWER vs GHCN rain | — | NOT YET POSSIBLE: GPM download running |
-| MODIS vs HLS NDVI, 2013 on | — | NOT YET POSSIBLE: both are downloaded; the comparison belongs to diary step 6 |
+| Spike check B (rain > 50 mm and > 5x another source) | **170 flags on 120 days with GPM** (high source GPM 130, station 27, POWER 13; votes: gpm disagrees with the other two 82, undecided 37, no third source that day 33, POWER spike 10, station value suspect 8, real local storm 0), written to the power, station, weather and (from 2026-11-13) GPM cards. Before GPM existed: 9 days flagged. POWER high: 2009-07-28 (59.2 vs 0.0), 2024-06-25 (74.2 vs 0.0), 2024-06-26 (114.3 vs 4.3), 2024-09-25 (55.9 vs 0.8), **2025-03-01 (233.7 vs 3.8)**. Station high: 2012-09-13 (134.6 vs 16.0), 2018-04-03 (51.1 vs 0.2), 2021-07-11 (90.9 vs 2.7), 2022-08-10 (76.2 vs 14.2). The 2024-09-27/28 flood is not flagged (ratios under 5). Nothing deleted. The station's 0.0 on the POWER-high days (2009-07-28, 2024-06-25) may be a missing synoptic report rather than a dry day (the station is synoptic-derived, 1.11): unverified, so the GPM vote decides | RUN |
+| Day alignment C | POWER vs station daily rain: best lag **0** (see 1.11). **GPM vs station: best lag -1** (Pearson 0.509 / 0.405 / 0.221 at -1 / 0 / +1; `crosscheck_gpm_ghcn_NP000444540.json`): station day d pairs best with GPM's UTC day d - 1, because the station's GSOD rain "may include latter part of previous day". Monthly comparisons are barely affected; the spike vote compares the same calendar day and is (REVIEW_2 M9) | RUN |
+| GPM vs POWER vs GHCN rain | Over 49 complete station months GPM as published is +41.2% (r 0.915, MAE 77.6 mm); the twin's corrected rain +8.3% (MAE 38.7 mm); over all 65 shared months MAE 34.7 mm, r 0.950 (CHIRPS 36.6, 0.938). The cause of the gap is the 2017 break (1.2; VALIDATION 3.9, 3.9b) | RUN |
+| MODIS vs HLS NDVI, 2013 on | 671 pairs within 8 days: r 0.83, MODIS minus HLS -0.085; where HLS shows bare ground MODIS is below 0.25 only 45% of the time (VALIDATION 3.10) | RUN |
 
 ## 4. Switch-off test
 
-**Result if run today:** the only export is still MOCK, so switching off any dataset changes nothing,
-and **every dataset is flagged**. POWER and GHCN now feed the twin's weather table, but no export yet.
+**Run on the real export, 2026-11-13 (REVIEW_2 Phase 3).** Each input was perturbed in memory or in a private copy
+of the repository (the project's own functions, nothing written here) and the whole plan step was rerun: generate,
+replay rain-fed and watered, score, Pareto, pick three. "Changes" counts the current plan's 24 exported years
+(harvest integer / dry days / event). Base case: the export itself, reproduced exactly.
 
-What each dataset must change once the pipeline exists (the pass criteria):
+| Input | Switched off or perturbed how | What changes in the export | Verdict |
+| --- | --- | --- | --- |
+| GPM IMERG (the twin's rain) | GPM as published instead of the corrected rain | harvest in 8 years, dry days in 6, event in 5; water and soil-kept scores of all three plans; (exported as the `uncorrected_rain` ranges) | **used** |
+| NASA POWER (ET0: temperature, humidity, wind, sunshine) | ET0 -10% / +10% | every year's harvest and dry days; plan harvest 72.3 -> 75.5 / 69.5 (current), 89.6 -> 93.2 / 86.0, 80.8 -> 84.0 / 78.1 | **used** |
+| GHCN station (temperature correction A, frost quantile mapping) | no station: uncorrected POWER | ET0 1,325 -> 1,285 mm/yr; plan harvest +1.5 to +1.7 points (72.3 -> 73.9, 89.6 -> 91.1, 80.8 -> 82.3); frost Tmin nights below 0 C 28 -> 1 and the median coldest January night 0.6 -> 3.9 C, so January's frost band would fall from "risk" to "none" | **used** |
+| SoilGrids (theta_fc, theta_wp only) | plant-available water -20% / +20% | all 24 years; plan harvest 72.3 -> 68.6 / 75.8, 89.6 -> 83.6 / 94.0, 80.8 -> 76.8 / 84.6. Not `soil_kept` (K cancels between plans) and not the events | **used** |
+| `config/crops.json` (root depth) | FAO-56 Table 22's smaller depths | all 24 years; 72.3 -> 66.1, 89.6 -> 79.7, 80.8 -> 76.2 | **used** |
+| GRACE/GRACE-FO | direction "steady" instead of "falling" | `diary.groundwater`; water scores 38.2 -> 58.8, 50.8 -> 67.2, 44.5 -> 63.0 (the 1.5x on irrigation); no harvest number | **used** |
+| HLS-VI | (traced and recomputed from the raw images) | `diary.bare_days`, `diary.guess`, `diary.months[].cover`, `method.season_detection`. Not `plans.score.cover`: that score is the share of the year inside crop seasons from the crop calendar (`pipeline/plans/score.py`) | **used** |
+| NASADEM (elevation, by hand into `demo.yaml`) | POWER's 1,269 m instead of 1,325 m | ET0 +0.08%: 0 of 24 harvest integers, 2 of 24 dry-day counts. Slope is read by no code | **barely used** |
+| DHM normals (`config/dhm_normals_1991_2020.csv`) | (traced) | `method.rain_correction.rain_mm_per_year.station_normal` and its sentence only | **used for one number** |
+| MODIS MOD13Q1 | (traced) | **nothing**: bare days, cover months, the guess and the method page use HLS years only. Its `sources` row now says so | **not used** |
+| SMAP, ECOSTRESS, WorldCover, FAOSTAT, CHIRPS, IMERG Late, GPCC, known events | (traced) | nothing, by design: checks, or the placement of the placeholder square (WorldCover); none is in `sources` | **checks only** |
+| NEX-GDDP-CMIP6 | not fetched | `future` is still MOCK (step 9) | **not yet** |
 
-| Dataset | Export keys that must change when it is switched off |
-| --- | --- |
-| NASA POWER | replay (via ET0 and temperature), plans.score, future, diary.months (heat, frost) |
-| GPM IMERG (D6: the twin's rain) | replay (harvest, dry_days, event), diary.shift_days, diary.months.rain, plans.score |
-| HLS + MODIS | diary.bare_days, diary.guess, diary.months.cover, plans.score.cover |
-| SMAP | field.sections[].sure (via P0 and Q) |
-| SoilGrids | replay.dry_days and harvest (via TAW), plans.score.soil_kept (K factor) |
-| NASADEM | sections, plans.score.soil_kept (LS), frost flags |
-| ECOSTRESS | section status (optional layer) |
-| NEX-GDDP-CMIP6 | future (harvest, harvest_low, harvest_high) |
-| GRACE/GRACE-FO (D7) | diary.groundwater, plans.score.water |
-| GHCN | twin temperatures (via correction A; weather card) |
-| FAOSTAT | none by design (validation only) |
+The expectations written here before the pipeline existed were wrong in three places, now corrected: HLS and MODIS do
+not change `plans.score.cover`; SoilGrids and NASADEM do not change `soil_kept` (K and LS cancel between plans on one
+field); SMAP does not feed `sure` and ECOSTRESS does not feed section status (neither is built).
+
+**Does the plan ranking hold?** In every case above the two suggested rotations stay **rice then wheat** and **rice
+then lentil**. The sowing position of the rice moves in three cases (ET0 -10%, the smaller root depths, a single
+yearly rain factor), and with wheat's roots at 1.0 m the two suggested plans are level (80.5 against 80.8). Scaling
+the 92 IMERG Late days as well changes no harvest, dry-day count or event in any of the three plans; only `soil_kept`
+of the two suggested plans rises from 74 to 75 (VALIDATION 4.4).
 
 ## 5. Data cards
 
-Written (all in `data/cards/demo/`): `power.json`, `ghcn_NP000444540.json`, `faostat_yields.json`, `weather.json`,
-`worldcover.json`, `nasadem.json`, `grace.json`, `soilgrids.json` (WCS) and `soilgrids_rest.json`, and from the cache
-(REVIEW_NOTES L7, 2026-11-12) `hls_l30.json`, `hls_s30.json`, `eco_lste.json`, `eco_esi.json`, `modis.json`; `gpm.json`
-after the download (`--from-cache`), SMAP cards after their bundles arrive. Each has every rule-12 field plus `range_warnings`; power and station cards carry
-`cross_source_flags` (B); the weather card carries `corrections` (A) and the ET0 elevation used.
+Written (all in `data/cards/demo/`, 20 on 2026-11-13): `power.json`, `ghcn_NP000444540.json`, `faostat_yields.json`,
+`weather.json`, `worldcover.json`, `nasadem.json`, `grace.json`, `soilgrids.json` (WCS; there is no `soilgrids_rest.json`:
+the REST point service was never used for the twin), `gpm.json`, `gpm_late_check.json`, `chirps.json`,
+`greenness_field.json`, and from the cache (REVIEW_NOTES L7) `hls_l30.json`, `hls_s30.json`, `eco_lste.json`,
+`eco_esi.json`, `modis.json`; new on 2026-11-13 (REVIEW_2): `smap.json`, `dhm_bulletins.json`, `gauge_evidence.json`.
+Each has every rule-12 field plus `range_warnings`; the power, station, weather and (from 2026-11-13) GPM cards carry
+`cross_source_flags` (B); the weather card carries `corrections` (A) and the ET0 elevation used. **Stale text inside
+cards (REVIEW_2 L1, not rebuilt because that needs the network or would re-run a fetch):** `gpm.json` time zone and
+`ghcn_NP000444540.json` distance and day boundary still read TODO-VERIFY although both are verified above (1.2, 1.11);
+`soilgrids.json` `units_source` likewise; `power.json` names the first placeholder's point (same POWER cell).
 
 ## 6. TODO-VERIFY (open)
 
-1. POWER: per-value quality flags; grid edges for a cell plot; cause of the 2001-2003 low rain totals.
+1. POWER: per-value quality flags; grid edges for a cell plot; cause of the 2001-2003 low rain totals and of the high daytime temperature and low humidity of the same years (REVIEW_2 H8; a likely cause, not verified: MERRA-2's land surface is driven by its own gauge-corrected rain, about half of normal here in those years).
 2. IMERG: ~~daily files cover the UTC day~~ (closed verified 2026-11-12); meaning of `precipitation_cnt_cond`.
 3. ~~HLS: list one granule's layers to find the cloud mask; its bits.~~ Closed: `Fmask`, bits from the file tag (1.3, 1.15).
 4. ~~MODIS: confirm the three expected layer names by listing a file.~~ Closed: AppEEARS product API (1.4, 1.15).
-5. SMAP L3: ~~which bit of `retrieval_qual_flag` means "recommended quality"~~ (closed verified 2026-11-12); L4 day boundary.
-6. SoilGrids: why the demo point's own cell has no prediction.
+5. SMAP L3: ~~which bit of `retrieval_qual_flag` means "recommended quality"~~ (closed verified 2026-11-12); ~~L4 day boundary~~ (closed 2026-11-13: the eight 3-hourly values stamped 01:30 to 22:30 UTC are averaged per UTC day, 1.5). Open: which rain forcing SMAP L4 v008 uses over Nepal (if it shares gauges with IMERG the SMAP check is less independent; VALIDATION 4.2b).
+6. ~~SoilGrids: why the demo point's own cell has no prediction.~~ Closed 2026-11-13 (REVIEW_2): ISRIC's FAQ "Which soil mask was used?" says the mask comes from the ESA land-cover map with urban (class 190), inland water, glaciers and bare areas masked out (docs.isric.org/globaldata/soilgrids/SoilGrids_faqs_01.html). That the field's own cell is class 190 there is inferred from the mask's shape, not read from the map.
 7. ECOSTRESS V003: ~~units, fill, flags~~ (closed verified 2026-11-12); time stamps.
 8. NEX-GDDP-CMIP6: ~~units, wind height~~ (closed verified 2026-11-12); version choice (v2.0) and calendars at fetch time; citation.
 9. ~~GRACE: variable, unit, grid, gap between missions.~~ Closed: file attributes (1.10).
 10. GHCN vs DHM: 194.1 vs 239.7 mm at Kathmandu Airport on 2024-09-28; access to DHM Bhaktapur and
-    Changu Narayan series.
+    Changu Narayan series (partly closed 2026-11-13: six months of 2025 transcribed from DHM's bulletins, 1.16; a longer series needs DHM).
 11. FAOSTAT formal citation text.
 12. Crops (crops.json): no published seasonal Ky for rice, lentil, mustard, buckwheat or finger millet;
     no FAO-56 stage lengths for mustard or buckwheat and no Kc, Zr or p for buckwheat.

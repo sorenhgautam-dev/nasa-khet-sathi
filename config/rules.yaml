@@ -1,5 +1,5 @@
 # Thresholds and rules. Every entry has a value AND a source (CLAUDE.md: never invent numbers).
-# Entries marked TODO-CONFIRM are Claude's choices waiting for the owner (none open after the owner's batch decisions of 2026-11-12); TODO-VERIFY = source detail to check. Load with
+# Claude's choices are marked TODO-CONFIRM until the owner decides (no TODO-CONFIRM is open: the owner approved every sourced threshold and, as 'Claude's choice, owner-approved 2026-11-13', every unsourced choice on 2026-11-13. Still with the owner, as the method page lists them (REVIEW_2 M7): gpm_series.correction_products and plans.third_plan_rule ('put to the owner'), and two readings never put to the owner, gpm_series.correction_fields and trends.shift_days_span); TODO-VERIFY = source detail to check. Load with
 # pipeline/fetch/rules.py; tests/test_rules.py fails if any entry lacks a source.
 
 rain_spike:                       # owner decision B, 2026-11-11
@@ -173,6 +173,16 @@ events:                           # replay.<plan>[].event (build step 5); source
     source: "Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 19): the contract allows one event per year; drought before flood, in the contract's enum order. Frost is no longer a replay event (owner, 2026-11-12, REVIEW_NOTES M1): the frost Tmin is known to overcount cold nights, so frost is shown only as a risk band in the monthly calendar (diary.months[].frost), never per year. The removed per-year rule (wheat 0 C mid-season, potato -2 C whole season, with its sources) is kept in METHOD_NOTES.md for the record"
 
 groundwater:                      # diary.groundwater from GRACE (D5, D7)
+  # step 6c additions (pipeline/diary/groundwater.py), fixed before they were run:
+  alpha:
+    value: 0.05
+    source: "Seasonal Mann-Kendall test (Hirsch, Slack & Smith 1982; Hirsch & Slack 1984; pymannkendall.seasonal_test) at the conventional 5% level. Claude's choice of test, owner-approved 2026-11-13: the test fits a monthly series with a strong yearly cycle and gaps (GRACE/GRACE-FO 2017-2018)"
+  direction_rule:
+    value: "steady unless p < alpha; then falling or rising by the sign of the seasonal Sen slope"
+    source: "Claude's choice, owner-approved 2026-11-13 (D7: 'the rule for steady and for confidence is set and cited in rules.yaml at step 6'): 'steady' = no trend at the test's 5% level"
+  confidence_rule:
+    value: "1 - p"
+    source: "Claude's choice, owner-approved 2026-11-13, no published source: how strongly the record shows a change (1 - the test's p-value); not a probability that the direction is right"
   scale_factor:
     value: "not applied: the unscaled trend is the main number; the factor's value at the cell is recorded in the card"
     source: "Owner, 2026-11-12 (REVIEW_NOTES M4): the CRI scale factor is CLM-based (land hydrology) and the mascon includes glaciers and snow; no source was found for applying it here, so it is not applied (earlier the same day: applied). File attribute (scale_factor.description): 'Gridded scale factors to be used with mascon solution that has the CRI filter applied; based on CLM data from 2002-2009'. A positive factor cannot change the trend's direction (the reader refuses a non-positive one)"
@@ -198,22 +208,43 @@ gpm_series:                       # rain check B (Friday): is the 2017 jump real
     value: 2017
     source: "Owner, 2026-11-12: from 2017 GPM's yearly totals jump well above both the Kathmandu Airport station and POWER (GPM/station about 1.0-1.2 in 2015-2016, then 1.5-2.3). Rain check B runs a change-point test on yearly GPM totals and on the yearly GPM/POWER ratio over 2001-2025, and checks the 4 neighbouring GPM cells (hills nearby?), then says whether the jump is real or a data break"
   trend_caveat:
-    value: "From 2017 GPM's rain jumps well above both the station and POWER. Until rain check B shows whether that is real or a break in the data, this trend may come from the break."
-    source: "Owner, 2026-11-12: until the break is settled, no rain trend or monsoon-shift trend is reported without saying the break may explain it (onset, shift_days, dry spells, heavy-rain days, rain terciles)"
+    value: "The rain gauges behind GPM's rain around this field stopped reporting in January 2017, and GPM's rain jumps then. The twin's rain after 2016 is scaled back to GPM's own 2001-2016 level, month by month, which also hides any real change across 2017. So a rain trend over 2001-2025 cannot be trusted either way: compare it with the uncorrected run."
+    source: "Owner, 2026-11-12: until the break is settled, no rain trend or monsoon-shift trend is reported without saying the break may explain it (onset, shift_days, dry spells, heavy-rain days, rain terciles). Rain check B (VALIDATION 3.9b, 2026-11-13) found a data break (gauge input lost from January 2017); the owner chose the correction below (2026-11-13, decision 1), so the caveat now names both the break and the correction"
+  correction:
+    value: "scale the twin's IMERG Final rain from correction_from on, month by month, back to GPM's own level over correction_reference_years: factor = the mean complete-month total of that calendar month over the reference years / its mean from correction_from to the last Final day, in the field's cell. The uncorrected rain is kept (weather.parquet rain_uncorrected_mm), every rain-based result is also run with it, and results it changes are shown as a range"
+    source: "Owner, 2026-11-13 (decision 1): apply 'scale 2017-2025 month by month back to GPM's own 2001-2016 level' (best on held-out months against the Kathmandu Airport station, VALIDATION 3.9b), keep the uncorrected GPM run too and show both as a range where it changes results. Cause: IMERG Final's monthly gauge input around the field collapses in January 2017 (GPM_3IMERGM gauge weight 96-98% to 56-72%; GPCC Full Data V2022 stations in the field's 1-degree box about 50 to about 1 a month). By construction the correction also removes any real change in rain across 2017"
+  correction_reference_years:
+    value: [2001, 2016]
+    source: "Owner, 2026-11-13 (decision 1): 'GPM's own 2001-2016 level'"
+  correction_from:
+    value: "2017-01-01"
+    source: "Owner, 2026-11-13 (decision 1): '2017-2025'; the gauge weight drops in January 2017 (GPM_3IMERGM, VALIDATION 3.9b)"
+  break_evidence:
+    value: {gauge_weight_before_pct: [96, 98], gauge_weight_after_pct: [56, 72], gpcc_stations_before: 50, gpcc_stations_after: 1}
+    source: "data/cards/<field>/gauge_evidence.json `summary` (pipeline/fetch/gauge_evidence.py, 2026-11-13, REVIEW_2 M6: all 297 months of 2001-01 to 2025-09 fetched; before that the numbers had been read by hand as 96-97%, and 17 of the 192 months before 2017 are in fact 98%). VALIDATION 3.9b: GPM_3IMERGM V07 gaugeRelativeWeighting at the field's cell and in the 3x3 cells around it (96-98% in every month of 2001-2016; yearly means 56-72% from January 2017) and GPCC Full Data Monthly V2022 stations in the field's 1-degree box (about 50 a month in 2011-2016, about 1 in 2017-2020), read by a research sub-agent (quotes in SI_LOG); shown on the method page"
+  correction_fields:
+    value: [demo]
+    source: "Owner, 2026-11-13 (decision 1) is about this field: 'the rain gauges behind NASA's correction disappeared around this field in January 2017'. Claude's reading: a field abroad (build step 11) is corrected only after its own rain check B finds the same break, since gauge networks differ by country"
+  correction_products:
+    value: [final]
+    source: "Claude's reading, fixed 2026-11-13 before the Late check (IMERG Late 2014-2019) was read: only IMERG Final days are scaled, and only they set the factors. The 92 IMERG Late days (Oct-Dec 2025, D1) are left as they are, because Late uses a climatological gauge calibration, not the monthly gauges that vanished, so the 2017 loss cannot reach it; the Late check tests that. POWER-filled days (none on the demo field) are another source and are not scaled either. If the Late check shows Late stepping up in 2017 as Final does, this is put back to the owner. Late check (2026-11-13, VALIDATION 3.9b): Late does not step with Final (1.13 against 1.62), but it is wetter than gauge-adjusted Final in 2014-2016 (Final/Late 0.64-0.85) and about equal to Final from 2017 (1.00-1.13): Late sits at the un-gauged level, so whether to scale the 92 Late days too is put to the owner"
 
 monsoon_onset:                    # diary, build step 6a (pipeline/diary/onset.py); rain = the twin's GPM rain
+  # Owner, 2026-11-12: the rule is kept as set in CLAUDE.md, with no tuning to the results, although it fails
+  # its sanity check (median 16 May vs DHM's normal onset of 13 June, VALIDATION 4.1d); the 15- and 20-day runs are robustness
+  # checks. The dates it finds are the first lasting rain spell, not the monsoon's arrival.
   search_from:
     value: "05-15"
     source: "CLAUDE.md 'Field diary' (owner): search from 15 May"
   search_until:
     value: "09-30"
-    source: "Claude's choice, TODO-CONFIRM: stop the search at 30 September, so a year with no qualifying start before the monsoon ends has no onset (reported as none, never guessed)"
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's choice: stop the search at 30 September, so a year with no qualifying start has no onset (reported as none, never guessed). DHM Climate Division, 'Monsoon Onset and Withdrawal date information' (1968-2024), p. 1, dhm.gov.np: normal onset (eastern Nepal) 13 June, latest on record 27 June 1982; normal withdrawal 2 October"
   wet_day_mm:
     value: 1.0
-    source: "Claude's reading of CLAUDE.md, TODO-CONFIRM: a wet day has at least 1 mm, the complement of the rule's own dry day 'under 1 mm per day' (and ETCCDI's wet day, RR >= 1 mm)"
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's reading of CLAUDE.md: a wet day has at least 1 mm, the complement of the rule's own dry day 'under 1 mm per day'; ETCCDI list of 27 indices (etccdi.pacificclimate.org): 'wet days, w (RR >= 1mm)'"
   wet_days_min:
     value: 2
-    source: "CLAUDE.md (owner): 'the first run of at least 2 wet days'. Claude's reading, TODO-CONFIRM: the onset day d is itself wet, and the wet days need not be consecutive"
+    source: "CLAUDE.md (owner): 'the first run of at least 2 wet days'. Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's reading: the onset day d is itself wet, and the wet days need not be consecutive, as in Moron, Robertson & Boer 2009 (J. Climate, sec. 2c): 'the first wet day of the first 5-day sequence receiving at least 40 mm'"
   window_days:
     value: 5
     source: "CLAUDE.md (owner): 'totalling 10 mm within 5 days'; the window is the 5 days starting on the onset day"
@@ -225,32 +256,170 @@ monsoon_onset:                    # diary, build step 6a (pipeline/diary/onset.p
     source: "CLAUDE.md (owner): 'not followed by a 10-day dry spell (under 1 mm per day)'"
   lookahead_days:
     value: 20
-    source: "CLAUDE.md (owner): 'in the next 20 days'. Claude's reading, TODO-CONFIRM: the 20 days after the onset day; a start whose look-ahead runs past the record is not confirmed"
+    source: "CLAUDE.md (owner): 'in the next 20 days'. Owner-approved 2026-11-13 (batch: every threshold with a published source). Counted from the onset date, d itself included, as Moron, Robertson & Boer 2009 (J. Climate, sec. 2c) count theirs: 'within the following 30 days from the onset date' (Claude first read it as the 20 days after d; the onset day is wet, so the readings differ only in the window's last day). A start whose look-ahead runs past the record is not confirmed"
   robustness_dry_spell_days:
     value: [15, 20]
     source: "CLAUDE.md (owner): 're-run with 15- and 20-day dry spells to show robustness'"
   climatology_check:
-    value: "about 10 June"
-    source: "CLAUDE.md (owner): 'Nepal's climatological onset is about 10 June' (a national date: the monsoon enters eastern Nepal first; the source for the date and for Kathmandu's own normal onset is TODO-VERIFY)"
+    value: "13 June (eastern Nepal; Kathmandu about 2 days later)"
+    source: "Owner-approved 2026-11-13 (sourced batch): DHM's normal onset replaces CLAUDE.md's earlier 'about 10 June'. DHM Climate Division, 'Monsoon Onset and Withdrawal date information' (1968-2024), p. 1, dhm.gov.np: the normal onset in eastern Nepal is 13 June (Kathmandu about two days later, a DHM meteorologist in the Kathmandu Post, 20 Jun 2024; '10 June' is an older figure, Kathmandu Post 14 Jun 2020; both news items opened by a research sub-agent)"
 
 greenness:                        # diary, build step 6a (pipeline/diary/greenness.py)
   min_clear_fraction:
     value: 0.75
-    source: "Claude's choice, TODO-CONFIRM (CLAUDE.md: 'require a minimum clear-pixel fraction per image'): an HLS image counts for the field only when at least 75% of the field's pixels are clear (Fmask bits 0-5 zero) and hold NDVI; for the 60 m demo field (4 HLS pixels) that is 3 of 4"
+    source: "Claude's choice, owner-approved 2026-11-13 (CLAUDE.md: 'require a minimum clear-pixel fraction per image'): an HLS image counts for the field only when at least 75% of the field's pixels are clear (Fmask bits 0-5 zero) and hold NDVI; for the 60 m demo field (4 HLS pixels) that is 3 of 4. No published source found: the HLS v2.0 User Guide (Apr 2026, sec. 6.4) gives the Fmask bits but no clear fraction; the one parcel rule found masks parcels with more than 50% of pixels masked (Sitokonstantinou 2022, arXiv 2211.12584, App. A.1), so 75% is stricter"
   modis_reliability_ok:
     value: [0]
-    source: "Claude's choice, TODO-CONFIRM: MOD13Q1 pixel reliability 0 ('good data') only; 1 (marginal), 2 (snow/ice) and 3 (cloudy) are dropped. Rank keys from the file's own Legend attribute"
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's choice: MOD13Q1 pixel reliability 0 ('good data') only; 1 (marginal), 2 (snow/ice) and 3 (cloudy) are dropped. Rank keys from the file's own Legend attribute; MOD13 User's Guide C6.1 (V3.10), Table 4: 0 'Good Data, Use with confidence', 1 'Marginal data, Useful, but look at other QA information'"
   hls_from:
     value: "2013-04-11"
     source: "CLAUDE.md 'Field diary': HLS from 2013, MODIS from 2000. The daily series uses HLS from its first clear field observation (HLSL30 starts with Landsat 8 in April 2013) and MODIS before it"
   pair_max_days:
     value: 8
-    source: "Claude's choice, TODO-CONFIRM: an HLS observation and a MODIS composite are compared when their dates are at most 8 days apart (half of MODIS's 16-day composite)"
+    source: "Claude's choice, owner-approved 2026-11-13: an HLS observation and a MODIS composite are compared when their dates are at most 8 days apart (half of MODIS's 16-day composite; no source for the limit). The MODIS date is the pixel's own 'composite day of the year' (MOD13 User's Guide sec. 5.1: 'adjacent selected pixels may originate from different days')"
 
 bare_days:                        # diary, build step 6a
   ndvi_max:
     value: 0.25
     source: "CLAUDE.md 'Field diary' (owner): a day is bare when interpolated NDVI is below the threshold, 'start at 0.25, tune with known bare dates' (not yet tuned)"
   uncertain_gap_days:
-    value: 30
-    source: "Claude's choice, TODO-CONFIRM (CLAUDE.md: 'widen uncertainty in cloudy months, days since last clear image'): a day is uncertain when the clear observations either side of it are more than 30 days apart"
+    value: 20
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). CLAUDE.md: 'widen uncertainty in cloudy months, days since last clear image': a day is uncertain when the clear observations either side of it are more than 20 days apart, the line NASA's HLS phenology product draws (MSLSP30NA User Guide V1.1, sec. 3.3: 'we only fill the gaps that are greater than 20 days'; an indirect source: the product fills longer gaps). Was 30, Claude's unsourced first choice"
+
+season_detection:                 # diary, build step 6b (pipeline/diary/seasons.py, pipeline/ml/seasons.py)
+  # The method settings were set while looking at the full HLS series; the comparison design (held_out_*,
+  # reference, best_margin) was fixed and written here BEFORE the held-out comparison was first run (2026-11-12,
+  # night). Sources opened 2026-11-12 by a research sub-agent (quotes checked); Claude's choices wait for the owner's batch.
+  smooth_window_days:
+    value: 31
+    source: "Claude's choice, owner-approved 2026-11-13: Savitzky-Golay window on the daily interpolated series (no source for 31 days: Chen et al. 2004 smoothed 10-day composites, not opened past the abstract; TIMESAT 3.3 manual, row 34, gives a rough half-window of a quarter of the points per year, far wider, and warns a large window 'affects the possibility to follow a rapid change')"
+  smooth_polyorder:
+    value: 2
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). TIMESAT 3.3 Software Manual sec. 3.6: 'we fit a quadratic polynomial'"
+  min_amplitude:
+    value: 0.1
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). NASA MCD12Q2 C6.1 User Guide sec. 2.2: a cycle counts when its amplitude 'is greater than or equal to 0.1, and greater than or equal to 35% of the time series maximum NBAR-EVI2 minus the minimum' (EVI2 there, NDVI here). Replaces Claude's unsourced 0.2, which gave exactly the same seasons on this field"
+  min_amplitude_range_fraction:
+    value: 0.35
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). NASA MCD12Q2 C6.1 User Guide sec. 2.2 (above): at least 35% of the maximum minus the minimum"
+  min_amplitude_range_years:
+    value: 3
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). NASA MCD12Q2 C6.1 User Guide sec. 2.2: the variation 'exhibited over the three-year interval' (the peak's calendar year and the years either side)"
+  threshold_fraction:
+    value: 0.2
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's choice within the published range: season start and end at 20% of the rise and of the fall (TIMESAT 3.3 manual sec. 4.4: start at 'a user defined level (often a certain fraction of the seasonal amplitude) measured from the left minimum level', end from the right minimum; its examples use 0.5 and 0.3; NASA MCD12Q2 uses 15%, 50% and 90% of the green-up amplitude)"
+  changepoint_params_per_change:
+    value: 2
+    source: "Owner-approved 2026-11-13 (batch: every threshold with a published source). PELT (Killick, Fearnhead & Eckley 2012) penalty; the 2 parameters per kink is Claude's reading, owner-approved 2026-11-13: sigma^2 x 2 x ln(n), a BIC-type penalty with 2 parameters per kink (its place and the change of slope); sigma = scatter of the clear observations about the smoothed curve (Killick, Fearnhead & Eckley 2012, arXiv:1101.1438 sec. 2: 'SIC, also known as BIC ... (beta = p log n), where p is the number of additional parameters introduced by adding a changepoint', for a cost of twice the negative log-likelihood, i.e. sigma^2 p ln n for a sum of squares; p = 2 is Claude's reading)"
+  changepoint_min_size_days:
+    value: 5
+    source: "Claude's choice, owner-approved 2026-11-13: no segment shorter than 5 days"
+  detective:
+    value: {trees: 300, min_samples_leaf: 5, seed: 0, slope_days: 15, low_window_days: 120, weather_days: 30,
+            mode_filter_days: 15, min_season_days: 30}
+    source: "Claude's choices, owner-approved 2026-11-13: random forest (scikit-learn) with 300 trees, leaves of at least 5 days, fixed seed; slopes over 15 days; 'time since green-up' = days since the lowest smoothed NDVI of the last 120 days; rain and temperature over the last 30 days; labels smoothed by a 15-day majority; growing runs shorter than 30 days are not seasons"
+  held_out_min_clear_obs:
+    value: 90
+    source: "Claude's choice, owner-approved 2026-11-13, fixed before the comparison: held-out years are full HLS years with at least 90 clear field observations (2018 and 2022-2025 on the demo field; written as '2017-2025' before the run, a miscount corrected afterwards, the rule unchanged), dense enough that their full-data labels are well constrained"
+  held_out_thin_days:
+    value: 16
+    source: "Claude's choice, owner-approved 2026-11-13, fixed before the comparison: in the held-out year keep only the first clear observation in each 16 days (Landsat 8's revisit and MODIS's composite period: the density of 2013-2016 and of cloudy months)"
+  reference:
+    value: "days where the threshold and change-point methods, on all observations, give the same label"
+    source: "Claude's choice, owner-approved 2026-11-13, fixed before the comparison: there is no field-observed calendar (placeholder field), so the reference is the two rule-based methods' agreement on dense data; each method is scored on how well it reproduces that reference from the thinned year. The two rule-based methods made the reference, so the score measures robustness to sparse data, not accuracy"
+  best_margin:
+    value: 0.02
+    source: "Claude's choice, owner-approved 2026-11-13, fixed before the comparison: the method with the best mean held-out score is used, but it replaces the simplest (threshold) method only if it beats it by at least 2 percentage points"
+  bare_max_from: 
+    value: "bare_days.ndvi_max"
+    source: "Between seasons a day is bare below the bare-day threshold (CLAUDE.md 0.25), harvested (stubble, residue or weeds) at or above it"
+
+trends:                           # diary, build step 6c (pipeline/diary/trends.py). Fixed before it was run.
+  alpha:
+    value: 0.05
+    source: "Mann-Kendall test (pymannkendall.original_test) and Sen's slope range (scipy.stats.theilslopes, Sen 1968) at the conventional 5% level"
+  dry_day_mm:
+    value: 1.0
+    source: "CLAUDE.md 'longest dry spell (consecutive days under 1 mm)'; ETCCDI CDD: 'maximum number of consecutive days with RR < 1mm' (etccdi.pacificclimate.org list of 27 indices)"
+  heavy_rain_mm:
+    value: 20.0
+    source: "CLAUDE.md 'heavy-rain days (20 mm or more)'; ETCCDI R20mm: 'annual count of days when PRCP >= 20mm'"
+  hot_day:
+    value: {pct: 90, window_days: 5, base_years: [2001, 2025]}
+    source: "CLAUDE.md 'hot days (above the local 90th percentile of Tmax)'; ETCCDI TX90p: 'the calendar day 90th percentile centred on a 5-day window'. The base period is the record itself (2001-2025; ETCCDI uses 1961-1990, which the twin's weather does not cover), and the in-base bootstrap is not applied: Claude's choices, owner-approved 2026-11-13"
+  hot_day_caveat:
+    value: "NASA POWER's daytime temperatures for 2001-2003 are too high here (the same years whose POWER rain is about half of later years), so a fall in hot days over 2001-2025 comes from those three years. The trend is also given without them (without_faulty_years): trust that one."
+    source: "REVIEW_2 H8 (AI review, 2026-11-13): POWER minus station Tmax on shared days is about 1.7 C higher in 2001-2003 than in 2004-2012, in every month, while the Kathmandu Airport station's own Tmax shows no warm spell; hot days number 96, 139 and 113 in 2001-2003 and at most 66 in any later year. The years left out are power_rain.never_fill_years. A label, not a threshold"
+  shift_days_unmeasurable_when:
+    value: "the onset is within 2 days of the search start in more than half of the years"
+    source: "Claude's rule, owner-approved 2026-11-13, set AFTER seeing that 21 of 25 onsets fall on 15-17 May (honest outputs, golden rule 11): an onset pinned at the search start cannot move earlier, so its trend cannot show a shift and shift_days is exported as null ('can't tell')"
+  shift_days_span:
+    value: "last year - first year"
+    source: "schema.json diary.shift_days: 'Sen's slope x record length'; Claude's reading: the change from the first to the last year, slope x (last - first)"
+
+months:                           # diary.months[], build step 6c (pipeline/diary/months.py). Fixed before it was run.
+  terciles:
+    value: "rain, soil, heat: the four lowest of the twelve 2001-2025 monthly means take the first word, the four highest the last"
+    source: "CLAUDE.md 'classify each month as low, medium or high (terciles of the 2001 to 2025 climatology)'; Claude's reading, owner-approved 2026-11-13: terciles of the twelve monthly means. Rain = GPM (with the GPM-break caveat); soil = the twin's root-zone wetness 1 - Dr/TAW, current rotation, rain-fed; heat = mean Tmax (station-corrected POWER)"
+  frost_c:
+    value: 0.0
+    source: "CLAUDE.md 'Frost' (owner): a frost night is Tmin below 0 C"
+  frost_risk_c:
+    value: 2.0
+    source: "CLAUDE.md 'Frost' (owner): risk band 0 to 2 C"
+  frost_month_rule:
+    value: "a month's band comes from its coldest night (frost Tmin, tmin_frost_c); a calendar month takes the band of its median coldest night over 2001-2025"
+    source: "Claude's choice, owner-approved 2026-11-13, no published source: the band a typical year reaches (the frost Tmin overcounts cold nights against the station, CLAUDE.md, so the band carries that caveat)"
+  cover_rule:
+    value: "the most common day label of the month in the HLS years (2014-2025) of the chosen season method"
+    source: "Claude's choice, owner-approved 2026-11-13: growing -> crop, harvested -> partial, bare -> bare (contract words); HLS years only, like bare days (VALIDATION 3.10)"
+
+rotation_guess:                   # diary.guess, build step 6c (pipeline/diary/guess.py). Fixed before it was run.
+  rule:
+    value: "per slot (monsoon: peak June-November; winter: peak December-May), the crop with the smallest median distance over the HLS years 2014-2025; distance = days outside the green-up window (sowing + initial stage), the harvest window and the length range (crop days minus initial stage), summed with equal weights at the crop's best window"
+    source: "Claude's choice, owner-approved 2026-11-13: crop windows and stage lengths from config/crops.json (each with its source); green-up at the end of FAO-56's initial stage ('planting date to approximately 10% ground cover', FAO-56 ch. 6); only crops with stage lengths (the ones the twin can simulate) take part. The farmer confirms the guess on screen; NDVI cannot name a crop"
+
+plans:                            # build step 7 (pipeline/plans/generate.py, score.py; scripts/run_plans.py)
+  sow_positions:
+    value: ["start", "middle", "end"]
+    source: "Owner's batch decisions item 10 (2026-11-12): the generator may sow at the start, middle or end of each window (crops.sow_date)"
+  max_seasons:
+    value: 3
+    source: "Claude's choice, owner-approved 2026-11-13: up to three seasons a year (none of the library's crops leaves room for a fourth)"
+  water_strict_when_falling:
+    value: 1.5
+    source: "Claude's choice, owner-approved 2026-11-13, no published source (D7: the water score is 'made stricter when diary.groundwater.direction is falling'): irrigation counts 1.5 times in the water score while the regional groundwater is falling"
+  suggested_must_include:
+    value: rice
+    source: "Owner, 2026-11-13 (decision 4): keep rice in the monsoon in every suggested plan. Every rice window in config/crops.json is a monsoon window (sowing 15 May to 15 Aug), so a plan with rice has it in the monsoon. The Pareto set is taken among the rice plans (and the current plan)"
+  cover_gap_rule:
+    value: "among the rice plans: the highest cover among plans that keep at least the current harvest (ties: higher harvest); if none, the highest cover"
+    source: "Claude's choice, owner-approved 2026-11-13 (CLAUDE.md 'the best cover the gap plan'; decision 6), fixed before the first run; chosen among rice plans (owner, decision 4). If it is rice then wheat, the plan is flagged: FAO's wheat window here is for irrigated wheat (decision 4)"
+  third_plan_rule:
+    value: "'Safest in bad years': among the rice plans of the Pareto set that grow other crops than the current and the cover-the-gap plan and keep at least today's cover, the best 10th-percentile year (ties: higher mean harvest). If no Pareto plan qualifies, every rice plan is looked at. The cover-the-gap plan, too, grows other crops than the current plan"
+    source: "Owner, 2026-11-13 (decision 5): option A, best in bad years among plans that keep at least today's cover, named 'Safest in bad years' (not 'follow the shift', since shift_days cannot be measured; revisit only if step 9's 2040 projections finish). The fallback to every rice plan is Claude's, fixed before the run. 'Other crops' was added by Claude AFTER the first run, which picked rice then wheat again with rice sown on 1 June instead of 15 June: the same rotation, while CLAUDE.md and the challenge ask for at least three rotations. Put to the owner"
+  plan_names:
+    value: {current: "What you do now", cover_gap: "Fill the empty months", safest: "Safest in bad years"}
+    source: "Owner, 2026-11-13 (decision 5): 'Safest in bad years'. 'What you do now' and 'Fill the empty months' are the names the site was built with (pipeline/export/mock.py, build step 1). Plan ids current, cover_gap (owner approved 2026-11-12, choice 4) and safest (replaces follow_shift, owner's decision 5)"
+  pareto_keys:
+    value: ["harvest", "stability", "water", "cover", "soil_kept", "pest_break", "nitrogen"]
+    source: "CLAUDE.md 'Plans' steps 3-4: harvest, stability (10th percentile year), water, cover, soil_kept, pest-cycle breaks, nitrogen"
+
+erosion:                          # plans' soil_kept (build step 7; pipeline/plans/score.py). Relative RUSLE: K, LS, P cancel on one field
+  # Sourced values found 2026-11-13 by a research sub-agent; Claude checked the C rows and the model in the saved texts.
+  # Added after the owner's 2026-11-13 approval of sourced thresholds, so listed for the owner.
+  c_by_crop:
+    value: {rice: 0.15, wheat: 0.20, maize: 0.38, potato: 0.34, lentil: 0.32, finger_millet: 0.20}
+    source: "Panagos et al. 2015b crop C factors as reprinted in Benavidez et al. 2018, HESS 22:6059, Table 9 (rice 0.15, common wheat and spelt 0.2, grain maize 0.38, potatoes 0.34, dried pulses 0.32); finger millet = Borrelli et al. 2017, Nat Commun 8:2013, Supplementary Table 2, Cereal Grains 'Various 0.2'. Whole-year averages from European/global rain timing. Paddy: a ponded field erodes less (USDA-ARS RUSLE note; Yoshikawa et al. 2004), so rice's 0.15 likely overstates its loss"
+  c_bare:
+    value: 1.0
+    source: "Wischmeier & Smith 1978, Agriculture Handbook 537, p. 4 (C is the ratio to 'tilled continuous fallow') and p. 8 ('L, S, C, and P each equal 1.0'); an upper bound for the gaps between crops (residue periods lose 23-47% of fallow loss, AH 537 Table 5)"
+  threshold_mm:
+    value: 12.7
+    source: "Wischmeier & Smith 1978, AH 537 p. 5: showers of 'less than one-half inch' omitted (12.7 mm)"
+  beta:
+    value: 1.7265
+    source: "Daily erosivity model R_day = 0.2686 [1 + 0.5412 cos(pi j / 6 - 7 pi / 6)] P_day^1.7265 (j = month), Xie et al., as tabulated in Yin et al. 2015, HESS 19:4113, Table 3 (fitted in China's monsoon climate); the constant 0.2686 cancels between plans. Sensitivity: 1.81, the average exponent of Richardson et al. 1983 (as reported by Sepaskhah & Panahi 2007, p. 241)"
+  month_amplitude:
+    value: 0.5412
+    source: "Same model: the seasonal multiplier 1 + 0.5412 cos(pi j / 6 - 7 pi / 6), largest in July"

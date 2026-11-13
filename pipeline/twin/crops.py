@@ -98,15 +98,19 @@ def season_length(stages):
 SOW_POSITIONS = {"start": 0.0, "middle": 0.5, "end": 1.0}
 
 
-def sow_date(calendar, year, position="middle"):
-    """A day in the default sowing window (rules.yaml crop_calendar), in `year` (window may cross 1 Jan). The
-    middle is the rule for the current plan; step 7's generator may also use the start or end (owner's batch
-    decisions item 10, 2026-11-12)."""
+def sow_date(calendar, year, position="middle", window=None):
+    """A day in a sowing window (the default one unless `window` gives another index; rules.yaml crop_calendar),
+    in `year` (the window may cross 1 Jan). The middle of the default window is the rule for the current plan;
+    step 7's generator also uses the other windows and the start or end (owner's batch decisions item 10,
+    2026-11-12)."""
     import pandas as pd
 
     if position not in SOW_POSITIONS:
         raise ValueError(f"sowing position '{position}' is not one of {list(SOW_POSITIONS)}")
-    w = calendar["windows"][calendar["default"]]
+    i = calendar["default"] if window is None else window
+    if not 0 <= i < len(calendar["windows"]):
+        raise ValueError(f"sowing window {i} does not exist (the crop has {len(calendar['windows'])})")
+    w = calendar["windows"][i]
     a = pd.Timestamp(f"{year}-{w['sow']}")
     b = pd.Timestamp(f"{year}-{w['sow_end']}")
     if b < a:

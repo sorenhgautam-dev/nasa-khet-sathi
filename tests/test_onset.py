@@ -79,6 +79,14 @@ def test_a_longer_dry_spell_rule_keeps_a_start_the_10_day_rule_rejects():
     assert on.onset_date(s, {**R, "dry_spell_days": 20}) == pd.Timestamp("2010-05-20")
 
 
+def test_the_look_ahead_counts_from_the_onset_day():
+    """Moron, Robertson & Boer 2009 count the look-ahead 'from the onset date': for a start on 1 June the 20 days
+    are 1-20 June. A 10-day dry spell 12-21 June ends on day 21, outside them, so 1 June is the onset (counting
+    from the day after, 2-21 June, would have rejected it)."""
+    s = _year({"06-01": 6.0, "06-02": 5.0, **_wet_after("06-03", days=9), **_wet_after("06-22")})
+    assert on.onset_date(s, R) == pd.Timestamp("2010-06-01")
+
+
 def test_no_onset_by_the_end_of_the_search_gives_none():
     assert on.onset_date(_year({}), R) is None
 

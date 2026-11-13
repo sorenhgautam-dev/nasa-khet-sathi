@@ -11,7 +11,10 @@ GITIGNORE = Path(__file__).resolve().parents[1] / ".gitignore"
 
 MUST_IGNORE = ["data/raw/imerg.nc4", "data/clean/power.parquet", "data/cards/power.json", ".env",
                ".env.local", "robot/.env", ".netrc", "keys/server.pem", ".venv/bin/python",
-               "pipeline/__pycache__/x.pyc", "review_pack.zip", "review_pack/DATA_AUDIT.md"]
+               "pipeline/__pycache__/x.pyc", "review_pack.zip", "review_pack/DATA_AUDIT.md",
+               # REVIEW_2 H7 and L7 (owner's answers 14 and 19, 2026-11-13): firmware and Firebase secrets, the live probe file
+               "robot/firmware/khet_probe/secrets.h", "site/google-services.json", "serviceAccountKey.json",
+               "keys/firebase-adminsdk-abc12.json", "site/data/live.json", "site/data/.live.json.tmp"]
 MUST_KEEP = ["site/data/fields/demo.json", "site/data/index.json", "pipeline/export/schema.json",
              "config/crops.json", "CREDITS.md", "scripts/backup.sh", "requirements.txt"]
 

@@ -4,8 +4,9 @@ Rule (rules.yaml monsoon_onset, from CLAUDE.md with Claude's readings marked the
 30 September, the onset is the first day d that
   - is wet (>= wet_day_mm),
   - starts a window of window_days days holding at least wet_days_min wet days and at least total_mm in all,
-  - and is not followed, in the lookahead_days days after d, by a run of dry_spell_days days each under
-    wet_day_mm.
+  - and is not followed, in the lookahead_days days counted from d (d itself included, as in Moron, Robertson &
+    Boer 2009: 'within the following 30 days from the onset date'; owner-approved 2026-11-12), by a run of
+    dry_spell_days days each under wet_day_mm. d is wet, so a dry spell can only start after it.
 A start whose window or look-ahead runs past the record is not confirmed. A missing day or date in the
 searched part of the record fails loudly (golden rule 12c): the rain is never filled here.
 
@@ -29,7 +30,7 @@ def onset_date(rain, rules, year=None):
     year = rain.index[0].year if year is None else year
     start = pd.Timestamp(f"{year}-{rules['search_from']}")
     end = pd.Timestamp(f"{year}-{rules['search_until']}")
-    reach = max(rules["window_days"] - 1, rules["lookahead_days"])
+    reach = max(rules["window_days"], rules["lookahead_days"]) - 1
     span = rain.loc[start: end + pd.Timedelta(reach, unit="D")]
     want = pd.date_range(start, min(end + pd.Timedelta(reach, unit="D"), rain.index[-1]))
     if len(span) != len(want) or not span.index.equals(want):
@@ -46,7 +47,7 @@ def onset_date(rain, rules, year=None):
         win = v[i:i + n_win]
         if len(win) < n_win or (win >= wet).sum() < rules["wet_days_min"] or win.sum() < rules["total_mm"]:
             continue
-        look = v[i + 1:i + 1 + n_look]
+        look = v[i:i + n_look]
         if len(look) < n_look:
             continue                                  # cannot confirm: the record ends first
         if _dry_run_max(look, wet) >= rules["dry_spell_days"]:

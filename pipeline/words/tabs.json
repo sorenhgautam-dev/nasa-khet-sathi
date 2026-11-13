@@ -1,5 +1,5 @@
 {
- "_about": "Five-tab templates (CLAUDE.md 'Plans' step 5: why, evidence, benefits, unknown, check). For each plan the pipeline keeps every line whose 'when' conditions all hold ('always' always holds), fills the {placeholders}, and joins them; if none holds, the 'fallback' line is used, so no tab is empty. A line with 'repeat': 'sources' is written once per entry of sources[]. 'basis' points at the cited claim behind a line. Tips (CLAUDE.md 'Plans' step 6) are one string each. Every Nepali text was drafted by SI (Claude) on 2026-11-12 and needs native-speaker review before export; each node carries ne_review until a reviewer replaces it with their name and date.",
+ "_about": "Five-tab templates (CLAUDE.md 'Plans' step 5: why, evidence, benefits, unknown, check). For each plan the pipeline keeps every line whose 'when' conditions all hold ('always' always holds), fills the {placeholders}, and joins them; if none holds, the 'fallback' line is used, so no tab is empty. A line with 'repeat': 'sources' is written once per entry of sources[]. 'basis' points at the cited claim behind a line. Tips (CLAUDE.md 'Plans' step 6) are one string each. Every Nepali text was drafted by SI (Claude) on 2026-11-12 and needs native-speaker review before export; each node carries ne_review until a reviewer replaces it with their name and date. 'method_page' holds the method page's plain-word notes (owner's decision 1, 2026-11-13: explain the rain fix there in plain words), filled the same way.",
  "tabs": {
   "why": [
    {
@@ -69,6 +69,27 @@
     "ne_review": "needs native-speaker review"
    },
    {
+    "id": "why_safest",
+    "when": [
+     "plan_is_safest",
+     "bad_years_better"
+    ],
+    "en": "Bad years hurt it less than now.",
+    "ne": "खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml plans.third_plan_rule (owner's decision 5): chosen for its 10th-percentile year, which beats the current plan's"
+   },
+   {
+    "id": "why_safest_cover",
+    "when": [
+     "plan_is_safest"
+    ],
+    "en": "The ground stays covered as much as now.",
+    "ne": "जमिन अहिले जत्तिकै ढाकिएर रहन्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml plans.third_plan_rule: only plans keeping at least today's cover"
+   },
+   {
     "id": "why_legume",
     "when": [
      "has_legume"
@@ -126,6 +147,16 @@
     "en": "Harvest was {harvest} out of 100 on average.",
     "ne": "औसत उब्जनी १०० मा {harvest} थियो।",
     "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ev_harvest_uncorrected",
+    "when": [
+     "rain_changes_harvest"
+    ],
+    "en": "Without our rain fix, it was {harvest_uncorrected}.",
+    "ne": "हाम्रो वर्षा सुधारबिना यो {harvest_uncorrected} थियो।",
+    "ne_review": "needs native-speaker review",
+    "basis": "owner's decision 1 (2026-11-13): keep the uncorrected GPM run and show both as a range"
    },
    {
     "id": "ev_dry_years",
@@ -288,20 +319,20 @@
     "when": [
      "has_rice"
     ],
-    "en": "We assumed rice stands in water.",
-    "ne": "धान पानीमा डुबेको मानेका छौं।",
+    "en": "If you can water, rice stands in water.",
+    "ne": "पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ।",
     "ne_review": "needs native-speaker review",
-    "basis": "METHOD_NOTES.md item 2"
+    "basis": "CLAUDE.md 'Rice' as implemented (REVIEW_NOTES H1): only the watered case keeps a pond"
    },
    {
     "id": "unk_rice_dry",
     "when": [
      "has_rice"
     ],
-    "en": "Without extra water, ten dry days end that.",
-    "ne": "थप पानी नभए, दस सुक्खा दिनमा त्यो सकिन्छ।",
+    "en": "Without water, rice lives on rain alone.",
+    "ne": "पानी नभए धान वर्षामा मात्र भर पर्छ।",
     "ne_review": "needs native-speaker review",
-    "basis": "rules.yaml paddy_rice.dry_run_days"
+    "basis": "CLAUDE.md 'Rice' as implemented (REVIEW_NOTES H1): rain-fed rice gets no water beyond rain"
    },
    {
     "id": "unk_water",
@@ -352,6 +383,56 @@
     "ne": "कुन तपाईंको खेतसँग मिल्छ, थाहा छैन।",
     "ne_review": "needs native-speaker review",
     "basis": "Owner, 2026-11-12, rain plan A: GPM stays the twin's rain; say that the airport station records about a third less, and do not treat the station as the truth (GHCN S-flag 'S', synoptic-derived, may under-record; REVIEW_NOTES H2). data/checks/demo/crosscheck_gpm_ghcn_NP000444540.json: GPM +41.2% against the station over 49 complete months (2015-2022), so the station is 29% lower; the 7a992fe8 scaling check gave x0.66 (34% lower) from 2016. Plan B (Friday): the 4 GPM cells and DHM's published Bhaktapur averages"
+   },
+   {
+    "id": "unk_gauges",
+    "when": [
+     "rain_corrected"
+    ],
+    "en": "NASA checks its rain against ground rain gauges.",
+    "ne": "नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "IMERG Final is calibrated to GPCC monthly gauge analyses (VALIDATION 3.9b)"
+   },
+   {
+    "id": "unk_gauges_stop",
+    "when": [
+     "rain_corrected"
+    ],
+    "en": "Near here, those gauge reports stopped in {rain_fix_year}.",
+    "ne": "यहाँ नजिक ती मापकका खबर {rain_fix_year} मा रोकिए।",
+    "ne_review": "needs native-speaker review",
+    "basis": "GPCC stations in the field's 1-degree box: about 50 a month to about 1 from January 2017 (VALIDATION 3.9b)"
+   },
+   {
+    "id": "unk_gauges_high",
+    "when": [
+     "rain_corrected"
+    ],
+    "en": "Then NASA's rain here jumped too high.",
+    "ne": "त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो।",
+    "ne_review": "needs native-speaker review",
+    "basis": "GPM 2017-2025 1.99 x Bhaktapur's normal, 2001-2016 1.34 x (VALIDATION 3.9b)"
+   },
+   {
+    "id": "unk_gauges_fix",
+    "when": [
+     "rain_corrected"
+    ],
+    "en": "We lowered rain from {rain_fix_year} to match before.",
+    "ne": "हामीले {rain_fix_year} देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml gpm_series.correction (owner's decision 1, 2026-11-13)"
+   },
+   {
+    "id": "unk_gauges_hide",
+    "when": [
+     "rain_corrected"
+    ],
+    "en": "That may also hide a real change.",
+    "ne": "यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml gpm_series.correction: by construction it removes any real change across 2017"
    },
    {
     "id": "unk_area_water",
@@ -431,12 +512,61 @@
     "ne_review": "needs native-speaker review"
    },
    {
+    "id": "chk_option",
+    "when": [
+     "legume_option"
+    ],
+    "en": "{option_legume} after rice is another choice.",
+    "ne": "धानपछि {option_legume} लगाउनु अर्को उपाय हो।",
+    "ne_review": "needs native-speaker review",
+    "basis": "owner's decision 4 (2026-11-13): name rice then lentil in the cover-the-gap plan's tabs as the legume option"
+   },
+   {
+    "id": "chk_option_soil",
+    "when": [
+     "legume_option"
+    ],
+    "en": "It feeds the soil.",
+    "ne": "यसले माटोलाई मल दिन्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "crop_explainers.json nitrogen claims (lentil is legume: true in config/crops.json)"
+   },
+   {
+    "id": "chk_option_pests",
+    "when": [
+     "legume_option"
+    ],
+    "en": "Changing crop kinds keeps pests down.",
+    "ne": "फरक किसिमको बाली लगाउँदा कीरा घट्छन्।",
+    "ne_review": "needs native-speaker review",
+    "basis": "crop_explainers.json pest-break claims"
+   },
+   {
     "id": "chk_water",
     "when": [
      "water_source_unknown"
     ],
     "en": "Check how much water you really have.",
     "ne": "तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "chk_water_crop",
+    "when": [
+     "needs_water_window"
+    ],
+    "en": "{water_crop} here usually needs watering.",
+    "ne": "यहाँ {water_crop}लाई प्रायः पानी लगाउनुपर्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "config/crops.json: FAO Crop Calendar, Nepal Hill zone, wheat window 'Irrigated Condition' (owner's decision 4)"
+   },
+   {
+    "id": "chk_water_crop_have",
+    "when": [
+     "needs_water_window"
+    ],
+    "en": "Check you can water it.",
+    "ne": "पानी लगाउन सक्नुहुन्छ कि जाँच्नुहोस्।",
     "ne_review": "needs native-speaker review"
    },
    {
@@ -489,5 +619,135 @@
    "ne_review": "needs native-speaker review",
    "basis": "CLAUDE.md 'Tips' (contour planting); a sourced slope threshold is still needed (step 8)"
   }
- ]
+ ],
+ "method_page": {
+  "rain_correction": [
+   {
+    "id": "mp_rain_check",
+    "when": [
+     "always"
+    ],
+    "en": "NASA's rain maps are checked against rain gauges.",
+    "ne": "नासाको वर्षाको नक्सा वर्षा मापकसँग जाँचिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_stop",
+    "when": [
+     "always"
+    ],
+    "en": "Around this field, gauge reports stopped in {rain_fix_year}.",
+    "ne": "यो खेत वरिपरि मापकका खबर {rain_fix_year} मा रोकिए।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_before",
+    "when": [
+     "always"
+    ],
+    "en": "Before, the gauges set almost all of it.",
+    "ne": "पहिले, धेरैजसो नाप मापकले नै मिलाउँथे।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_after",
+    "when": [
+     "always"
+    ],
+    "en": "After, the picture from space took over.",
+    "ne": "त्यसपछि, अन्तरिक्षबाट हेरेको नापले ठाउँ लियो।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_jump",
+    "when": [
+     "always"
+    ],
+    "en": "Its yearly rain here jumped to {rain_after} mm.",
+    "ne": "यहाँको वार्षिक वर्षा {rain_after} मिलिमिटर पुग्यो।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_was",
+    "when": [
+     "always"
+    ],
+    "en": "Before, it was {rain_before} mm.",
+    "ne": "पहिले यो {rain_before} मिलिमिटर थियो।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_town",
+    "when": [
+     "always"
+    ],
+    "en": "The nearest town's usual rain: {rain_normal} mm.",
+    "ne": "नजिकको सहरको सामान्य वर्षा: {rain_normal} मिलिमिटर।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_fix",
+    "when": [
+     "always"
+    ],
+    "en": "We scaled each month from {rain_fix_year} back down.",
+    "ne": "हामीले {rain_fix_year} देखि हरेक महिना घटायौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_match",
+    "when": [
+     "always"
+    ],
+    "en": "Each month now matches its earlier years.",
+    "ne": "अब हरेक महिना पहिलेका वर्षसँग मिल्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_test",
+    "when": [
+     "always"
+    ],
+    "en": "We tested this on years we kept aside.",
+    "ne": "यो जाँच अलग राखेका वर्षमा गर्‍यौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_err_before",
+    "when": [
+     "always"
+    ],
+    "en": "Monthly error at the airport: {err_before} mm before.",
+    "ne": "विमानस्थलमा मासिक फरक: पहिले {err_before} मिलिमिटर।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_err_after",
+    "when": [
+     "always"
+    ],
+    "en": "After our fix: {err_after} mm.",
+    "ne": "सुधारपछि: {err_after} मिलिमिटर।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_hide",
+    "when": [
+     "always"
+    ],
+    "en": "This fix may also hide real change.",
+    "ne": "यस सुधारले साँचो फेरबदल पनि लुकाउन सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_both",
+    "when": [
+     "always"
+    ],
+    "en": "So we show both, as a range.",
+    "ne": "त्यसैले हामी दुवै देखाउँछौं, दायराका रूपमा।",
+    "ne_review": "needs native-speaker review"
+   }
+  ]
+ }
 }

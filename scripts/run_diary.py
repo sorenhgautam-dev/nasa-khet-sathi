@@ -1,9 +1,12 @@
-"""Build step 6a: the field diary's first parts, from the cleaned data. Writes data/checks/<field>/diary_*.json.
+"""Build steps 6a and 6b: the field diary from the cleaned data. Writes data/checks/<field>/diary_*.json.
 
-    .venv/bin/python scripts/run_diary.py --field demo            # onset, greenness series, bare days
+    .venv/bin/python scripts/run_diary.py --field demo                  # onset, greenness, bare days, seasons
+    .venv/bin/python scripts/run_diary.py --field demo --steps seasons  # seasons only (step 6b)
 
 Rules in config/rules.yaml (monsoon_onset; gpm_series for the trend caveat). Pure functions live in
 pipeline/diary/; this script only reads files and writes the results.
+--rain uncorrected (owner's decision 1, 2026-11-13): reruns the rain-based steps (onset, diary) on GPM as published
+into data/checks/<field>/rain_uncorrected/; greenness and seasons are read from the main run.
 """
 import argparse
 import json
@@ -19,9 +22,24 @@ sys.path.insert(0, str(REPO))
 from pipeline.diary import greenness as gr  # noqa: E402
 from pipeline.diary import ndvi  # noqa: E402
 from pipeline.diary import onset as on  # noqa: E402
+from pipeline.diary import seasons as se  # noqa: E402
+from pipeline.diary import groundwater as gwm  # noqa: E402
+from pipeline.diary import guess as gu  # noqa: E402
+from pipeline.diary import months as mo  # noqa: E402
+from pipeline.diary import trends as tr  # noqa: E402
+from pipeline.fetch.cropslib import load_crops  # noqa: E402
+from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.fetch import guards as g  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
+from pipeline.ml import seasons as det  # noqa: E402
+from pipeline.twin.inputs import with_rain  # noqa: E402
+
+RAIN = {"version": "corrected"}   # set by main (--rain)
+
+
+def _weather(field, data=REPO / "data"):
+    return with_rain(pd.read_parquet(data / "clean" / field["id"] / "weather.parquet"), RAIN["version"])
 
 
 def _doy_to_date(doy):
@@ -30,7 +48,7 @@ def _doy_to_date(doy):
 
 
 def run_onset(field, rules, out_dir):
-    w = pd.read_parquet(REPO / "data" / "clean" / field["id"] / "weather.parquet")
+    w = _weather(field)
     if (w["rain_source"] != "gpm").any():
         raise ValueError("onset needs the twin's GPM rain on every day (D6); the weather table has other sources")
     rain = w.set_index("date")["rain_mm"]
@@ -47,8 +65,10 @@ def run_onset(field, rules, out_dir):
                  for y in by_year if by_year[y] and res["by_dry_spell_days"]["10"][y]]
         robust[spell] = {"years_same_as_10_day_rule": sum(1 for d in diffs if d == 0), "years_earlier": sum(1 for d in diffs if d < 0),
                          "median_shift_days": statistics.median(diffs) if diffs else None}
-    out = {"labels": {"field": field["name"], "rain": "GPM IMERG V07 (Final to 2025-09-30, Late after), 0.1 deg cell holding the field, UTC days",
-                      "rule": "rules.yaml monsoon_onset (CLAUDE.md 'Field diary'; Claude's readings marked TODO-CONFIRM there)",
+    out = {"labels": {"field": field["name"], "rain": "GPM IMERG V07 (Final to 2025-09-30, Late after), 0.1 deg cell holding the field, UTC days; "
+                      + ("as published (uncorrected run)" if RAIN["version"] == "uncorrected" else
+                         "Final days from 2017 scaled back to GPM's own 2001-2016 level (owner's decision 1, 2026-11-13)"),
+                      "rule": "rules.yaml monsoon_onset (CLAUDE.md 'Field diary'; Claude's readings owner-approved 2026-11-13)",
                       "climatology_check": rules["monsoon_onset"]["climatology_check"]["value"] if isinstance(rules["monsoon_onset"]["climatology_check"], dict) else rules["monsoon_onset"]["climatology_check"],
                       "gpm_break_caveat": rules["gpm_series"]["trend_caveat"],
                       "trend": "not computed in step 6a (trends are step 6c, and carry the caveat above)"},
@@ -172,15 +192,326 @@ def run_greenness(field, rules, out_dir, data):
     return out
 
 
+# ---------- step 6b: seasons, three methods ----------
+
+def _rule_methods(obs, start, end, S, bare_max):
+    """Threshold and change-point methods on one set of clear observations (pure functions in diary/seasons)."""
+    daily = gr.daily_series(obs, start, end).dropna(subset=["ndvi"]).reset_index(drop=True)
+    dates = pd.DatetimeIndex(daily["date"])
+    sm = se.smooth(daily["ndvi"], S["smooth_window_days"], S["smooth_polyorder"])
+    sigma = se.observation_sigma(daily, sm)
+    amp = (S["min_amplitude"], S["min_amplitude_range_fraction"], S["min_amplitude_range_years"])
+    th = se.threshold_seasons(dates, sm, amp[0], S["threshold_fraction"], amp[1], amp[2])
+    kinks = se.changepoints(daily["ndvi"], sigma, S["changepoint_params_per_change"], S["changepoint_min_size_days"])
+    fit = se.piecewise_linear_fit(daily["ndvi"], kinks)
+    cp = se.changepoint_seasons(dates, fit, kinks, *amp)
+    return {"dates": dates, "daily": daily, "smooth": sm, "sigma": sigma, "kinks": len(kinks),
+            "threshold": {"seasons": th, "labels": se.labels_from_seasons(dates, th, sm, bare_max)},
+            "changepoint": {"seasons": cp, "labels": se.labels_from_seasons(dates, cp, fit, bare_max)}}
+
+
+def _detective_features(res, weather, D):
+    w = weather.set_index("date").reindex(res["dates"])
+    return det.features(res["dates"], res["smooth"], w["rain_mm"], (w["tmax_c"] + w["tmin_c"]) / 2,
+                        D["slope_days"], D["low_window_days"], D["weather_days"])
+
+
+def _detective(model, res, weather, D, bare_max):
+    raw = det.predict(model, _detective_features(res, weather, D))
+    edge = np.where(res["smooth"] < bare_max, "bare", "harvested")
+    raw = np.where(pd.isna(raw), edge, raw)                      # window edges: curve only, never 'growing'
+    seasons, lab = se.seasons_from_labels(res["dates"], se.mode_filter(raw, D["mode_filter_days"]), res["smooth"],
+                                          bare_max, D["min_season_days"])
+    return {"seasons": seasons, "labels": lab}
+
+
+def _by_date(res, method):
+    return pd.Series(res[method]["labels"], index=res["dates"])
+
+
+def _season_rows(seasons, source):
+    return [{"start": str(s["start"].date()), "peak": str(s["peak"].date()), "end": str(s["end"].date()),
+             "days": int((s["end"] - s["start"]).days) + 1, "peak_ndvi": s["peak_ndvi"], "source": source}
+            for s in seasons]
+
+
+def _match_shift(a, b, max_days=45):
+    """Median absolute start, peak and end differences (days) between seasons of two methods whose peaks are
+    within max_days of each other."""
+    d = {"start": [], "peak": [], "end": []}
+    for s in a:
+        near = [t for t in b if abs((t["peak"] - s["peak"]).days) <= max_days]
+        if near:
+            t = min(near, key=lambda t: abs((t["peak"] - s["peak"]).days))
+            for k in d:
+                d[k].append(abs((t[k] - s[k]).days))
+    return {k: (float(np.median(v)) if v else None) for k, v in d.items()} | {"matched": len(d["peak"]), "of": len(a)}
+
+
+def run_seasons(field, rules, out_dir, data):
+    S, D = rules["season_detection"], rules["season_detection"]["detective"]
+    bare_max = rules["bare_days"]["ndvi_max"]
+    g_all = pd.read_parquet(data / "clean" / field["id"] / "greenness_field.parquet").dropna(subset=["ndvi"])
+    weather = _weather(field, data)[["date", "rain_mm", "tmax_c", "tmin_c"]]
+    hls = g_all[g_all["source"].str.startswith("hls")]
+    first_hls = max(hls["date"].min(), pd.Timestamp(rules["greenness"]["hls_from"]))
+    obs = hls[hls["date"] >= first_hls][["date", "ndvi"]].reset_index(drop=True)
+    mod = g_all[(g_all["source"] == "modis") & (g_all["date"] < first_hls)][["date", "ndvi"]].reset_index(drop=True)
+    start, end = str(first_hls.date()), "2025-12-31"
+
+    full = _rule_methods(obs, start, end, S, bare_max)
+    dates = full["dates"]
+    th_full, cp_full = _by_date(full, "threshold"), _by_date(full, "changepoint")
+    agree = (th_full == cp_full).to_numpy()
+    ref = th_full.where(agree)
+    X_full = _detective_features(full, weather, D)
+    n_obs = obs.groupby(obs["date"].dt.year).size()
+    dense = [int(y) for y, n in n_obs.items() if n >= S["held_out_min_clear_obs"] and y > first_hls.year
+             and dates.min() <= pd.Timestamp(f"{y}-01-01") and dates.max() >= pd.Timestamp(f"{y}-12-30")]
+    labels_full = full["threshold"]["labels"]
+
+    per_year, train_sizes = {}, {}
+    for Y in dense:
+        train_mask = dates.year.isin([y for y in dense if y != Y]) & agree
+        model = det.train(X_full[train_mask], labels_full[train_mask], D["trees"], D["min_samples_leaf"], D["seed"])
+        train_sizes[str(Y)] = int(train_mask.sum())
+        thin = _rule_methods(se.thin(obs, Y, S["held_out_thin_days"]), start, end, S, bare_max)
+        det_thin = _detective(model, thin, weather, D, bare_max)
+        det_dense = _detective(model, full, weather, D, bare_max)
+        ref_y = ref[(ref.index.year == Y)].dropna()
+
+        def score(series):
+            return round(se.agreement(series.reindex(ref_y.index).to_numpy(), ref_y.to_numpy()), 4)
+
+        per_year[str(Y)] = {
+            "reference_days": int(len(ref_y)),
+            "clear_obs_full": int(n_obs[Y]), "clear_obs_thinned": int((se.thin(obs, Y, S["held_out_thin_days"])["date"].dt.year == Y).sum()),
+            "thinned": {"threshold": score(_by_date(thin, "threshold")), "changepoint": score(_by_date(thin, "changepoint")),
+                        "detective": score(pd.Series(det_thin["labels"], index=thin["dates"]))},
+            "detective_on_all_obs": score(pd.Series(det_dense["labels"], index=dates)),
+            "threshold_vs_changepoint_all_obs": round(float(agree[dates.year == Y].mean()), 4)}
+        print(f"  held out {Y}: {per_year[str(Y)]['thinned']} (reference {len(ref_y)} days; detective on all obs "
+              f"{per_year[str(Y)]['detective_on_all_obs']})")
+    methods = ("threshold", "changepoint", "detective")
+    mean = {m: round(float(np.mean([per_year[y]["thinned"][m] for y in per_year])), 4) for m in methods}
+    best = se.choose_best(mean, "threshold", S["best_margin"])
+
+    final_model = det.train(X_full[dates.year.isin(dense) & agree], labels_full[dates.year.isin(dense) & agree],
+                            D["trees"], D["min_samples_leaf"], D["seed"])
+    det_full = _detective(final_model, full, weather, D, bare_max)
+    full["detective"] = det_full
+    modis = _rule_methods(mod, "2001-01-01", str((first_hls - pd.Timedelta(1, unit="D")).date()), S, bare_max)
+    modis["detective"] = _detective(final_model, modis, weather, D, bare_max)
+
+    def by_year(seasons_hls, seasons_mod):
+        out = {}
+        for rows in (_season_rows(seasons_mod, "modis"), _season_rows(seasons_hls, "hls")):
+            for r in rows:
+                out.setdefault(r["peak"][:4], []).append(r)
+        return dict(sorted(out.items()))
+
+    out = {
+        "labels": {"field": field["name"], "rule": "rules.yaml season_detection (comparison design fixed before it was run)",
+                   "day_labels": "growing = a crop season, green-up to end; harvested = between seasons, NDVI >= "
+                                 f"{bare_max} (stubble, residue or weeds); bare = between seasons, NDVI < {bare_max}",
+                   "what_it_shows": "green cover from space, not which crop; the farmer confirms the calendar",
+                   "no_ground_truth": "there is no field-observed calendar (placeholder field). The reference is the days on "
+                                      "which the threshold and change-point methods agree on all observations; each method is "
+                                      "scored on reproducing it from a thinned year. This measures robustness to sparse data, "
+                                      "not accuracy, and the two rule-based methods made the reference",
+                   "modis_years": "MODIS 16-day greenest-day composites of a 230 m pixel: seasons before "
+                                  f"{first_hls.date()} are not comparable with HLS years"},
+        "series": {"hls_from": str(first_hls.date()), "hls_clear_obs": int(len(obs)), "sigma_ndvi": round(full["sigma"], 4),
+                   "changepoint_kinks": full["kinks"], "modis_composites": int(len(mod))},
+        "held_out": {"years": dense, "thin_days": S["held_out_thin_days"], "training_days": train_sizes,
+                     "per_year": per_year, "mean_score": mean, "best": best, "best_margin": S["best_margin"],
+                     "threshold_vs_changepoint_all_obs": round(float(agree[dates.year.isin(dense)].mean()), 4)},
+        "season_date_differences_days": {
+            "changepoint_vs_threshold": _match_shift(full["threshold"]["seasons"], full["changepoint"]["seasons"]),
+            "detective_vs_threshold": _match_shift(full["threshold"]["seasons"], det_full["seasons"])},
+        "seasons_by_method": {m: by_year(full[m]["seasons"], modis[m]["seasons"]) for m in methods},
+        "chosen": {"method": best, "seasons_by_year": by_year(full[best]["seasons"], modis[best]["seasons"])},
+    }
+    path = out_dir / "diary_seasons.json"
+    path.write_text(json.dumps(out, indent=1, default=str) + "\n")
+    days = pd.concat([pd.DataFrame({"date": modis["dates"], "ndvi_smooth": modis["smooth"], "label": modis[best]["labels"],
+                                    "source": "modis"}),
+                      pd.DataFrame({"date": dates, "ndvi_smooth": full["smooth"], "label": full[best]["labels"],
+                                    "source": "hls"})], ignore_index=True)
+    days["label"] = days["label"].astype(str)
+    days.to_parquet(data / "clean" / field["id"] / "seasons_daily.parquet", index=False)
+    print(f"seasons: held-out years {dense}; mean score {mean}; chosen: {best}")
+    print(f"threshold vs change-point agreement on all obs (held-out years): {out['held_out']['threshold_vs_changepoint_all_obs']}")
+    print(f"date differences: {out['season_date_differences_days']}\n-> {path.relative_to(REPO)}")
+    return out
+
+
+# ---------- step 6c: groundwater, trends, monthly calendar, rotation guess ----------
+
+MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def _grace(field, rules, data):
+    """diary.groundwater from the cleaned monthly series (pipeline/fetch/grace.py: unscaled, owner M4)."""
+    df = pd.read_parquet(data / "clean" / field["id"] / "grace.parquet")
+    card = json.loads((data / "cards" / field["id"] / "grace.json").read_text())
+    s = gwm.monthly_series(df["date"], df["lwe_thickness_cm"])
+    G = rules["groundwater"]
+    t = gwm.trend(s, G["alpha"])
+    cell = card.get("location", {}).get("cell", {})
+    factor = cell.get("cri_scale_factor", {}).get("value")
+    out = {"trend_cm_per_year": round(t["trend_cm_per_year"], 2),
+           "direction": gwm.direction(t["trend_cm_per_year"], t["p"], G["alpha"]), "confidence": gwm.confidence(t["p"])}
+    detail = {**t, "cell_lat_bounds": cell.get("lat_bounds"), "cell_lon_bounds": cell.get("lon_bounds"),
+              "cri_scale_factor": factor, "scale_factor_applied": False,
+              "trend_if_scale_factor_applied_cm_per_year": round(t["trend_cm_per_year"] * factor, 2) if factor else None,
+              "solutions": int(df["lwe_thickness_cm"].notna().sum()),
+              "median_uncertainty_cm": round(float(df["uncertainty_cm"].median()), 2),
+              "ols_trend_cm_per_year_from_card": cell.get("trend_unscaled_cm_per_year"),
+              "caveat": G["caveat"]}
+    return out, detail
+
+
+def _onset_doy(out_dir):
+    d = json.loads((out_dir / "diary_onset.json").read_text())
+    return {int(y): v for y, v in d["day_of_year"].items()}, d
+
+
+def run_diary_6c(field, rules, out_dir, data, base_dir=None):
+    """base_dir: where the rain-free results (seasons, bare days) are read; out_dir by default."""
+    base_dir = base_dir or out_dir
+    lib = load_crops()
+    clean = data / "clean" / field["id"]
+    w = _weather(field, data)
+    rain = pd.Series(w["rain_mm"].to_numpy(float), index=pd.DatetimeIndex(w["date"]))
+    tmax = pd.Series(w["tmax_c"].to_numpy(float), index=pd.DatetimeIndex(w["date"]))
+    tfrost = pd.Series(w["tmin_frost_c"].to_numpy(float), index=pd.DatetimeIndex(w["date"]))
+    T, M = rules["trends"], rules["months"]
+    caveat = rules["gpm_series"]["trend_caveat"]
+
+    gw_out, gw_detail = _grace(field, rules, data)
+
+    doy, onset_doc = _onset_doy(out_dir)
+    pinned = tr.pinned_years(doy, rules["monsoon_onset"]["search_from"], within_days=2)   # each year's own 15 May
+    series = {"onset_day_of_year": doy,
+              "hot_days": tr.hot_days(tmax, T["hot_day"]["base_years"], T["hot_day"]["pct"], T["hot_day"]["window_days"]),
+              "longest_dry_spell_days": tr.longest_dry_spell(rain, T["dry_day_mm"]),
+              "heavy_rain_days": tr.heavy_rain_days(rain, T["heavy_rain_mm"])}
+    trends = {}
+    for k, vals in series.items():
+        r = tr.mk_sen(vals, T["alpha"])
+        chg = tr.over_record(r, r["first"], r["last"])
+        trends[k] = {**{x: (round(v, 3) if isinstance(v, float) else v) for x, v in r.items()},
+                     "change_over_record": chg[0], "change_low": chg[1], "change_high": chg[2],
+                     "values": {str(y): v for y, v in sorted(vals.items())},
+                     "caveat": caveat if k != "hot_days" else T["hot_day_caveat"]}
+    # REVIEW_2 H8: POWER's 2001-2003 are too hot here, so the hot-day trend is also given without those years
+    faulty = rules["power_rain"]["never_fill_years"]
+    r = tr.mk_sen(tr.without_years(series["hot_days"], faulty), T["alpha"])
+    trends["hot_days"]["without_faulty_years"] = {**{x: (round(v, 3) if isinstance(v, float) else v) for x, v in r.items()},
+                                                  "years_left_out": list(faulty)}
+    shift = trends["onset_day_of_year"]
+    onset_note = (f"The onset rule (kept as set by the owner) is pinned at the search start (15-17 May) in {pinned} of "
+                  f"{len(doy)} years: it finds the first lasting rain spell, not the monsoon's arrival, so its trend "
+                  "cannot show a monsoon shift (VALIDATION 4.1d).")
+
+    # monthly calendar
+    rain_m = rain.groupby([rain.index.year, rain.index.month]).sum().groupby(level=1).mean()
+    tmax_m = tmax.groupby(tmax.index.month).mean()
+    rotation, rot_label = sim.rotation_for(field, rules)
+    soil = pd.read_parquet(clean / "soilgrids.parquet")
+    cover_c, by_cover = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
+    cn = {"bare": by_cover["bare"], **{c: by_cover[cover_c[c]] for c in rotation}}
+    rep = sim.replay(w, rotation, lib, soil, cn, bare_kc=rules["bare_soil"]["kc"], irrigated=False,
+                     kc_climate=rules["kc_climate"]["apply"])
+    daily = rep["daily"]
+    wet = pd.Series((1 - daily["dr_mm"] / daily["taw_mm"]).to_numpy(float), index=pd.DatetimeIndex(daily["date"]))
+    wet_m = wet.groupby(wet.index.month).mean()
+    coldest = mo.coldest_by_month(tfrost)
+    frost_cal = mo.frost_by_calendar_month(coldest, M["frost_c"], M["frost_risk_c"])
+    lab = pd.read_parquet(clean / "seasons_daily.parquet")
+    lab = lab[(lab["source"] == "hls") & (lab["date"].dt.year >= 2014)]
+    cover = mo.cover_by_month(pd.Series(lab["label"].to_numpy(), index=pd.DatetimeIndex(lab["date"])))
+    words = {"rain": mo.tercile_words(rain_m.reindex(range(1, 13)).to_numpy(), ("low", "medium", "high")),
+             "soil": mo.tercile_words(wet_m.reindex(range(1, 13)).to_numpy(), ("dry", "medium", "wet")),
+             "heat": mo.tercile_words(tmax_m.reindex(range(1, 13)).to_numpy(), ("none", "some", "high"))}
+    months = [{"m": MONTH_NAMES[i], "rain": words["rain"][i], "soil": words["soil"][i], "heat": words["heat"][i],
+               "frost": frost_cal[i + 1], "cover": cover[i + 1]} for i in range(12)]
+    jan2010 = coldest[(2010, 1)]
+    frost_check = {"month": "2010-01", "coldest_night_c": round(jan2010, 2),
+                   "band": mo.frost_band(jan2010, M["frost_c"], M["frost_risk_c"]),
+                   "nights_below_0": int((tfrost["2010-01"] < M["frost_c"]).sum()),
+                   "nights_below_2": int((tfrost["2010-01"] < M["frost_risk_c"]).sum())}
+
+    # rotation guess
+    sj = json.loads((base_dir / "diary_seasons.json").read_text())
+    hls_seasons = [{k: pd.Timestamp(r[k]) for k in ("start", "peak", "end")}
+                   for rows in sj["chosen"]["seasons_by_year"].values() for r in rows if r["source"] == "hls"]
+    crops = [c for c in lib if lib[c].get("stages_days")]
+    gs = gu.guess(hls_seasons, lib, crops)
+    win = gs["slots"]["winter"]["fit"]
+    rw = {"rice_then_wheat": gs["slots"]["monsoon"]["fit"]["rice"]["median_total"] + win["wheat"]["median_total"],
+          "rice_then_potato": gs["slots"]["monsoon"]["fit"]["rice"]["median_total"] + win["potato"]["median_total"]}
+
+    bare = json.loads((base_dir / "diary_bare_days.json").read_text())["summary"]["mean_bare_days_hls_years"]
+    shift_days = None if pinned > len(doy) / 2 else shift["change_over_record"]
+    export = {"shift_days": shift_days, "bare_days": int(round(bare)), "guess": gs["guess"],
+              "groundwater": gw_out, "months": months}
+    out = {"labels": {"field": field["name"], "rotation_for_soil": f"{rotation} ({rot_label}), rain-fed twin",
+                      "rain_version": RAIN["version"],
+                      "rain_caveat": caveat, "onset_note": onset_note,
+                      "frost_caveat": "frost Tmin (quantile-mapped) overcounts cold nights against the station: a risk band, never a count",
+                      "guess_note": "timing only: NDVI shows green cover, not which crop; the farmer confirms"},
+           "export": export, "groundwater": gw_detail, "trends": trends, "onset_pinned_years": pinned,
+           "months_values": {"rain_mm": {MONTH_NAMES[m - 1]: round(float(v), 1) for m, v in rain_m.items()},
+                             "soil_wetness_0_1": {MONTH_NAMES[m - 1]: round(float(v), 3) for m, v in wet_m.items()},
+                             "tmax_c": {MONTH_NAMES[m - 1]: round(float(v), 1) for m, v in tmax_m.items()},
+                             "median_coldest_night_c": {MONTH_NAMES[m - 1]: round(float(np.median([v for (y, mm), v in coldest.items() if mm == m])), 1) for m in range(1, 13)}},
+           "frost_check_2010_01": frost_check, "rotation_guess": gs, "rotation_compare": rw}
+    path = out_dir / "diary.json"
+    path.write_text(json.dumps(out, indent=1, default=str) + "\n")
+    print(f"groundwater: {gw_out} (p {gw_detail['p']:.3g}, {gw_detail['first']}..{gw_detail['last']}, cell lat "
+          f"{gw_detail['cell_lat_bounds']} lon {gw_detail['cell_lon_bounds']}; OLS {gw_detail['ols_trend_cm_per_year_from_card']:+.2f}; "
+          f"if the scale factor were applied {gw_detail['trend_if_scale_factor_applied_cm_per_year']}, not applied: owner M4)")
+    for k, v in trends.items():
+        print(f"trend {k}: {v['slope_per_year']:+.3f}/yr [{v['low']:+.3f}, {v['high']:+.3f}], p {v['p']:.3f}, "
+              f"over record {v['change_over_record']} [{v['change_low']}, {v['change_high']}]")
+    print(f"onset pinned at search start in {pinned} of {len(doy)} years")
+    for mrow in months:
+        print("  ", mrow)
+    print(f"frost check Jan 2010: {frost_check}")
+    for slot in ("monsoon", "winter"):
+        fits = sorted(gs["slots"][slot]["fit"].items(), key=lambda kv: kv[1]["median_total"])
+        print(f"guess {slot}: " + "; ".join(f"{c} {f['median_total']:.0f} (start {f['median_start']:.0f}, end "
+                                             f"{f['median_end']:.0f}, length {f['median_length']:.0f})" for c, f in fits))
+    print(f"guess: {gs['guess']}; rice-wheat {rw['rice_then_wheat']:.0f} vs rice-potato {rw['rice_then_potato']:.0f} days\n-> {path.relative_to(REPO)}")
+    return out
+
+
 def main(argv=None):
-    ap = argparse.ArgumentParser(description=__doc__)
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--field", default="demo")
+    ap.add_argument("--steps", default="onset,greenness,seasons,diary",
+                    help="comma list of onset, greenness, seasons, diary")
+    ap.add_argument("--rain", choices=("corrected", "uncorrected"), default="corrected")
     a = ap.parse_args(argv)
+    steps = set(a.steps.split(","))
     field, rules = load_field(a.field), load_rules()
-    out_dir = REPO / "data" / "checks" / field["id"]
+    RAIN["version"] = a.rain
+    base_dir = REPO / "data" / "checks" / field["id"]
+    out_dir = base_dir / "rain_uncorrected" if a.rain == "uncorrected" else base_dir
     out_dir.mkdir(parents=True, exist_ok=True)
-    run_onset(field, rules, out_dir)
-    run_greenness(field, rules, out_dir, REPO / "data")
+    if a.rain == "uncorrected" and steps - {"onset", "diary"}:
+        print("--rain uncorrected reruns the rain-based steps only (onset, diary); greenness and seasons come from the main run")
+        steps &= {"onset", "diary"}
+    if "onset" in steps:
+        run_onset(field, rules, out_dir)
+    if "greenness" in steps:
+        run_greenness(field, rules, out_dir, REPO / "data")
+    if "seasons" in steps:
+        run_seasons(field, rules, out_dir, REPO / "data")
+    if "diary" in steps:
+        run_diary_6c(field, rules, out_dir, REPO / "data", base_dir=base_dir)
     return 0
 
 

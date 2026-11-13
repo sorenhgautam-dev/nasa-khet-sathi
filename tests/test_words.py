@@ -321,7 +321,7 @@ def test_every_tab_has_templates_and_never_comes_out_empty():
 
 def test_each_plan_kind_has_its_own_why():
     whens = [set(l["when"]) for l in load("tabs")["tabs"]["why"]]
-    for kind in ("plan_is_current", "plan_is_cover_gap", "plan_is_follow_shift"):
+    for kind in ("plan_is_current", "plan_is_cover_gap", "plan_is_safest", "plan_is_follow_shift"):
         assert any(kind in w for w in whens), kind
 
 
@@ -330,7 +330,7 @@ def test_a_rendered_tab_is_never_empty_for_any_plan_kind():
     reg = load("fill_registry")["placeholders"]
     sample = {name: entry["example"] for name, entry in reg.items()}
     sample["sources"] = [{k: reg[k]["example"] for k in reg if k.startswith("source_")}]
-    for kind in ("plan_is_current", "plan_is_cover_gap", "plan_is_follow_shift"):
+    for kind in ("plan_is_current", "plan_is_cover_gap", "plan_is_safest", "plan_is_follow_shift"):
         for tab, lines in tabs.items():
             for lang in ("en", "ne"):
                 assert render_tab(lines, {kind}, sample, lang).strip(), (kind, tab, lang)

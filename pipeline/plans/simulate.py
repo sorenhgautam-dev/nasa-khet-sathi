@@ -137,11 +137,15 @@ def ky_sensitivity(seasons, lib, values):
     return res
 
 
-def replay(weather, rotation, lib, soil, cn, bare_kc, irrigated, kc_climate=False):
+def replay(weather, rotation, lib, soil, cn, bare_kc, irrigated, kc_climate=False, plan=None):
     """weather: date, et0_mm, rain_mm, one row per day, no gaps; with kc_climate also ws2m_ms, ea_kpa and
-    tmax_c (other columns are ignored)."""
+    tmax_c (other columns are ignored). `plan` ([(crop, 'YYYY-MM-DD')], e.g. from generate.plan_dates) replaces
+    the default sowing of `rotation` (step 7: other windows and sowing positions)."""
     w = weather.reset_index(drop=True)
-    plan = rotation_plan(rotation, lib, w["date"].min(), w["date"].max())
+    if plan is None:
+        plan = rotation_plan(rotation, lib, w["date"].min(), w["date"].max())
+    else:
+        require_simulatable(lib, sorted({c for c, _ in plan}))
     cols = ["date", "et0_mm", "rain_mm"]
     if kc_climate:
         lacking = [c for c in ("ws2m_ms", "ea_kpa", "tmax_c") if c not in w]

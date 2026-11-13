@@ -41,7 +41,9 @@ Rossiter, D.: SoilGrids 2.0: producing soil information for the globe with quant
 uncertainty, SOIL, 7, 217–240, https://doi.org/10.5194/soil-7-217-2021, 2021." Licence: "The SoilGrids
 maps are publicly available on the SoilGrids website under the CC-BY 4.0 License."
 (https://www.isric.org/explore/soilgrids). Used: wv0033, wv1500, sand, clay, soc, bdod at six depths to
-2 m via the REST API (beta), from the nearest cell with values, 750 m from the demo point.
+2 m via the REST API (beta), from the nearest cell with values, 750 m from the demo point (superseded 2026-11-12: the
+twin's soil now comes from the WCS maps of the whole box, the nearest cell with a prediction in all 36 maps, 859 m
+south-east of the placeholder field; of the six properties the twin reads only the two water contents).
 
 ### NEX-GDDP-CMIP6 (metadata so far)
 
@@ -109,12 +111,37 @@ TODO-VERIFY on the FAOSTAT site.
   CMR C3195527175-POCLOUD (citation text TODO-VERIFY on the PO.DAAC landing page).
 - AppEEARS Team (2026). Application for Extracting and Exploring Analysis Ready Samples (AppEEARS). NASA
   EOSDIS LP DAAC, USGS EROS, https://appeears.earthdatacloud.nasa.gov (service used to cut MOD13Q1.061,
-  SPL3SMP_E.006 and SPL4SMGP.008 to the box; product citations added when the downloads are cleaned).
-- HLS-VI v2.0 (HLSL30_VI, HLSS30_VI) and ECOSTRESS tiled LSTE and ESI (V003, V002 where V003 lacks an
-  overpass): NASA LP DAAC; read as box windows of the cloud-optimised GeoTIFFs. Product citations are
-  added when the downloads are cleaned (TODO-VERIFY each DOI on its landing page).
-- GPM IMERG Final/Late daily V07 (Huffman et al., NASA GES DISC): fetcher built; not yet downloaded (the
-  account must accept the GES DISC EULA).
+  SPL3SMP_E.006 and SPL4SMGP.008 to the box).
+- **GPM IMERG V07, the twin's rain** (added 2026-11-13, REVIEW_2: this line had still said "not yet downloaded"):
+  Huffman, G. J., Stocker, E. F., Bolvin, D. T., Nelkin, E. J., Tan, J. (2023). GPM IMERG Final Precipitation L3 1 day
+  0.1 degree x 0.1 degree V07 (GPM_3IMERGDF), NASA GES DISC, doi:10.5067/GPM/IMERGDF/DAY/07; the same authors, GPM
+  IMERG Late Precipitation L3 1 day V07 (GPM_3IMERGDL), doi:10.5067/GPM/IMERGDL/DAY/07 (October to December 2025, and
+  the 2014-2019 check); GPM IMERG Final Precipitation L3 1 month V07 (GPM_3IMERGM), doi:10.5067/GPM/IMERG/3B-MONTH/07
+  (gauge weight, a check). Daily box subsets, 2001-01-01 to 2025-12-31, 9,131 days, fetched 2026-11-12 by
+  `pipeline/fetch/gpm.py` through GES DISC OPeNDAP. The Final days from 2017 are scaled in the twin (VALIDATION 3.9b).
+- MOD13Q1: Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061. NASA EOSDIS LP DAAC,
+  doi:10.5067/MODIS/MOD13Q1.061. Compared with HLS only; no number shown uses it.
+- HLS-VI v2.0: HLS Landsat OLI Vegetation Indices Daily Global 30 m (HLSL30_VI), doi:10.5067/HLS/HLSL30_VI.002, and HLS
+  Sentinel-2 MSI Vegetation Indices Daily Global 30 m (HLSS30_VI), doi:10.5067/HLS/HLSS30_VI.002, NASA LP DAAC; 1,471
+  granules of tile T45RUL, read as box windows of the cloud-optimised GeoTIFFs. **Contains modified Copernicus
+  Sentinel data (2015-2025)** (HLSS30).
+- SMAP: Reichle, R. et al., SMAP L4 Global 3-hourly 9 km EASE-Grid Surface and Root Zone Soil Moisture Geophysical
+  Data, Version 8 (SPL4SMGP), NASA NSIDC DAAC, doi:10.5067/T5RUATAQREF8 (model-assisted; a check on the twin, VALIDATION
+  4.2b); O'Neill, P. E. et al., SMAP Enhanced L3 Radiometer Global and Polar Grid Daily 9 km EASE-Grid Soil Moisture,
+  Version 6 (SPL3SMP_E), doi:10.5067/M20OXIZHY3RJ (downloaded; no recommended-quality retrieval over the field, not
+  used). Author lists as on the NSIDC landing pages (TODO-VERIFY the exact citation text).
+- ECOSTRESS tiled LST and emissivity (ECO_L2T_LSTE, doi:10.5067/ECOSTRESS/ECO_L2T_LSTE.002 and .003) and evaporative
+  stress index (ECO_L4T_ESI, doi:10.5067/ECOSTRESS/ECO_L4T_ESI.002), NASA LP DAAC: raw box windows downloaded, **not used
+  in any result yet** (build step 8).
+- GPCC: Schneider, U., Hänsel, S., Finger, P., Rustemeier, E., Ziese, M. (2022). GPCC Full Data Monthly Product Version
+  2022 at 1.0 degree, doi:10.5676/DWD_GPCC/FD_M_V2022_100 (station counts and totals; a check only).
+- CHIRPS v3.0: Climate Hazards Center, UC Santa Barbara, doi:10.15780/G2JQ0P (a check only; the paper to cite is named
+  on the CHC page and was not opened here).
+- ESA WorldCover: **(c) ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA
+  WorldCover consortium** (CC BY 4.0); Zanaga, D. et al. (2022), ESA WorldCover 10 m 2021 v200,
+  doi:10.5281/zenodo.7254221 (TODO-VERIFY the DOI on the landing page).
+- DHM (Department of Hydrology and Meteorology, Nepal): monthly "Preliminary Precipitation and Temperature Summary"
+  bulletins of 2025 (six months; (c) DHM, preliminary data; validation only, kept under `data/`, not in this repository).
 
 - ISRIC SoilGrids 2.0 through its WCS (maps.isric.org), 2026-11-12, for the whole fetch box: Poggio, L., de Sousa,
   L. M., Batjes, N. H., et al. (2021). SoilGrids 2.0: producing soil information for the globe with quantified
@@ -174,6 +201,37 @@ for each claim (copied from notes/parallel_session.md).
 - NARC NSSTRC (2020). Annual Report 2076/77 (2019/2020), National Seed Science Technology Research Centre, Khumaltar.
 - NASA Earth Observatory (2000). Measuring Vegetation.
 
+### Methods and sources added on 2026-11-13 (listed by REVIEW_2; each is cited where it is used, in `config/rules.yaml` or the module)
+
+- Pettitt, A. N. (1979). A non-parametric approach to the change-point problem. Applied Statistics 28, 126-135.
+- Mann, H. B. (1945), Econometrica 13, 245-259, and Kendall, M. G. (1975), Rank Correlation Methods; Sen, P. K. (1968),
+  JASA 63, 1379-1389; Hirsch, R. M., Slack, J. R., Smith, R. A. (1982), Water Resources Research 18, 107-121 (the
+  seasonal test); through `pymannkendall` and `scipy.stats.theilslopes`.
+- Savitzky, A., Golay, M. J. E. (1964), Analytical Chemistry 36, 1627-1639 (smoothing; `scipy.signal`); Killick, R.,
+  Fearnhead, P., Eckley, I. A. (2012), JASA 107, 1590-1598 (PELT; `ruptures`).
+- Doorenbos, J., Kassam, A. H. (1979). Yield response to water. FAO Irrigation and Drainage Paper 33.
+- Erosion (relative index for `soil_kept`): Wischmeier, W. H., Smith, D. D. (1978), Agriculture Handbook 537; the daily
+  erosivity model of Xie et al. as tabulated in Yin, S. et al. (2015), HESS 19, 4113-4126; crop C factors of Panagos et
+  al. (2015) as reprinted in Benavidez, R. et al. (2018), HESS 22, 6059-6086, and Borrelli, P. et al. (2017), Nature
+  Communications 8, 2013; Richardson et al. (1983) as reported by Sepaskhah and Panahi (2007) (sensitivity exponent).
+- Probe sketch (`robot/firmware/original_probe/`, the robot teammate's own code): uses the Arduino libraries OneWire
+  and DallasTemperature (their licences: TODO-VERIFY with the robot teammate).
+
+### Licence notices (REVIEW_2, 2026-11-13; owner's answer 13: keep the DHM table with a notice, state the GSOD terms, say in LICENSE what MIT does not cover)
+
+- **Kathmandu Airport station values.** Every value has GHCN source flag `S` (NOAA Global Summary of the Day). The GSOD
+  readme says of non-US data, under WMO Resolution 40, that "the data or any derived product shall not be provided to
+  other users or be used for the re-export of commercial services". GHCN-Daily's own readme has no such clause. The
+  station fits the temperature correction, so it stands behind every exported temperature-dependent number.
+- **DHM normals** (`config/dhm_normals_1991_2020.csv`, 156 values, not yet committed) and the 2025 bulletin values
+  (kept under `data/`): (c) DHM; no open licence was found on dhm.gov.np.
+- **FAO texts.** `pipeline/words/crop_explainers.json` and `glossary.json` quote FAO publications word for word (18 of
+  21 quotes); FAO publications are commonly CC BY-NC-SA 3.0 IGO. Crop values in `config/crops.json` come from FAO-56,
+  FAO-33/66 and the FAO Crop Calendar.
+- **LICENSE** now ends with "What this licence does not cover" (2026-11-13), and `config/dhm_normals_1991_2020.NOTICE.md` sits beside the DHM table.
+- No library is GPL or non-commercial: the 76 installed distributions are MIT, BSD, Apache, PSF or MIT-CMU (certifi and
+  tqdm are MPL-2.0).
+
 ## Libraries (installed in `.venv`, Python 3.12.9)
 
 Licences are read from each package's installed metadata.
@@ -182,14 +240,16 @@ Licences are read from each package's installed metadata.
 | --- | --- | --- | --- |
 | numpy | 2.5.4 | BSD-3-Clause (and bundled MIT, 0BSD, Zlib, CC0-1.0) | data guards, ET0 |
 | pandas | 2.3.3 | BSD-3-Clause | tables, review pack (pyet 1.5.0 needs pandas<3) |
-| xarray | 2026.9.0 | Apache-2.0 | (from step 6) gridded data |
+| xarray | 2026.9.0 | Apache-2.0 | pinned for gridded data; no module imports it today (h5py, rasterio and scipy read the files) |
 | pyarrow | 26.0.1 | Apache-2.0 | parquet |
 | PyYAML | 6.0.3 | MIT | config files |
 | jsonschema | 4.26.0 | MIT | contract validation |
 | requests | 2.34.2 | Apache-2.0 | HTTP fetches |
 | matplotlib | 3.11.2 | Matplotlib licence (PSF-based) | review plots |
 | pytest | 9.2.0 | MIT | tests |
-| pyet | 1.5.0 | MIT | step 3: independent reference for ET0 in the tests |
+| pyet | 1.5.0 | MIT | step 3: reference library for ET0 in the tests (the same FAO-56 algorithm, so not an independent check; FAO-56's printed examples are) |
+| scipy | 1.18.1 | BSD-3-Clause | imported directly (Savitzky-Golay smoothing, Theil-Sen slopes, the netCDF-3 reader for GPCC) but installed only as a dependency of scikit-learn, pyet and others: not pinned in `requirements.txt` (REVIEW_2 L8, with the owner) |
+| affine | 3.0.1 | BSD-3-Clause | grid transforms; installed with rasterio, not pinned itself (REVIEW_2 L8) |
 | earthaccess | 0.19.0 | MIT | Earthdata search, login (~/.netrc) and downloads (owner's go 2026-11-12) |
 | h5py | 3.16.0 | BSD-3-Clause | HDF5 / netCDF-4 files: GRACE, GPM subsets, AppEEARS output (owner's go 2026-11-12) |
 | rasterio | 1.5.2 (bundles GDAL 3.12.2) | BSD-3-Clause | GeoTIFF / COG windows: WorldCover, NASADEM, HLS, ECOSTRESS (owner's go 2026-11-12) |
@@ -215,14 +275,26 @@ Licences are read from each package's installed metadata.
 | Claude Opus 5.5 (Anthropic), via Claude Code (session 7a992fe8), with one web-fetch and two research sub-agents | 2026-11-12 (evening) | Owner review of d34fa93: pandas pin and fresh-install check, README.md, LICENSE (MIT), GitHub Pages workflow, FAO-56 Kc climate adjustment (eqs. 62, 63, 65) with tests from Example 27 and Box 15, REVIEW_NOTES status table, TODO-CONFIRM batch and TODO-VERIFY triage, rain sensitivity, event plan. The web-fetch sub-agent read FAO-56 Chapters 6 and 7 on fao.org; the research sub-agents read the repository and opened primary sources for the TODO-VERIFY items. Details in SI_LOG.md | Owner: to fill in after review |
 | Claude Opus 5.5 (Anthropic), via Claude Code (session 2f8edafe), with one web-fetch sub-agent | 2026-11-12 (Thursday evening) | The owner's batch decisions: flood rule fixed in advance (ETCCDI Rx1day, deciles 9-10), approvals in rules.yaml and the docs, complete-years export, rotation stop, both water cases, nullable soil temperature, sowing position, ECOSTRESS QC mask, five libraries pinned, rule 2 and audio removal in CLAUDE.md, word changes (months, labels, rain caveat, flood entry), probe bridge and fake probe; tests first. Earlier the same day: Nepali frost spelling, review-mark check, PREVIEW status lines. Details in SI_LOG.md | Owner review pending; Nepali needs native-speaker review |
 | Claude Code kit (team-prepared zip, 2026-11-07): superpowers plugin (MIT, already installed: its test-driven-development skill guided the work) and an ECC selection (MIT) | 2026-11-12 | Workflow guidance and one review prompt (above). The ECC skills and agents were **not installed** into `~/.claude` (blocked as a self-modification; the owner can copy them) | Owner |
+| Claude Opus 5.5 (Anthropic), via Claude Code (session 2f8edafe), with one research sub-agent | 2026-11-12 (late night) | Build step 6b: three season-detection methods (threshold; change-point with ruptures PELT; the SI season detective, a scikit-learn random forest trained on this field's own greenness, rain and temperature at build time, never on the site), the held-out comparison (VALIDATION 3.15), rules.yaml season_detection; the owner's decisions recorded (onset rule kept, flood years 2006 and 2020, Firebase keys). The research sub-agent opened the sources for the threshold batch (DHM onset dates, ETCCDI, Moron et al. 2009, HLS and MOD13 user guides, MSLSP30NA, MCD12Q2, TIMESAT 3.3, Killick et al. 2012); Claude checked the key quotes. Details in SI_LOG.md | Owner review pending |
+| Claude Opus 5.5 (Anthropic), via Claude Code (session 2f8edafe), with four research sub-agents | 2026-11-13 (Friday, early) | The owner's approvals applied (sourced thresholds), the method page's season comparison (contract key `method`), build step 6c (GRACE trend, Mann-Kendall trends, monthly calendar, rotation guess, real diary export), the GitHub Pages failure diagnosis; research sub-agents opened DHM normals, CHIRPS/APHRODITE access, IMERG calibration fields and rice-mapping papers for the owner's upgrade list. Details in SI_LOG.md | Owner review pending |
+| Claude Opus 5.5 (Anthropic), via Claude Code (session 2f8edafe) | 2026-11-13 (Friday, midday) | The owner's decisions 1-6: the GPM break correction and the uncorrected run beside it, IMERG Late and CHIRPS check downloads, build step 7 (three plans, their replays, tabs and tips from templates, Nepali drafts), the method page's rain note and stated choices. Details in SI_LOG.md | Owner review pending (English lines); native-speaker review pending (Nepali) |
+| Claude Fable 5.2 (Anthropic), via Claude Code (session 9f5addf3), with ten read-only sub-reviewers | 2026-11-13 (Friday, afternoon) | Independent AI review of the whole project. Phase 1: every equation, correction, rule and exported number recomputed from the primary sources; data handling, the rain break, the export, licences, security and the probe checked (`REVIEW_2.md`). Phase 2: fixes with tests first (method-page approval labels, the leap-year count of pinned onset years, the hot-day trend caveat, `sources` rows, validator checks and `--final`, the mock-overwrite guard, GPM card flags) and the stale documents brought up to date. Phase 3: SMAP cleaned and compared with the twin (`pipeline/fetch/smap.py`, `scripts/run_smap_check.py`), DHM's 2025 gauge totals as an independent rain check (`scripts/run_dhm_bulletin_check.py`), the gauge evidence made reproducible (`pipeline/fetch/gauge_evidence.py`), sensitivity and switch-off runs. Phase 4: the plan in `REVIEW_2.md`. No scientific method, rule, threshold or exported result was changed; those questions are listed for the owner | Owner: not reviewed by a person yet |
 
 ## Data fetched by the pipeline
 
 - NASA POWER Daily API v2.10.3 (model-based), field `demo`, 2001-01-01 to 2025-12-31, fetched 2026-11-11
 - NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation; temperature correction A), field `demo`, 2001-01-01 to 2025-08-24, fetched 2026-11-11
 - FAOSTAT QCL bulk file (FAO), Nepal rice, wheat and maize yields, 2001 to 2024, fetched 2026-11-11 (validation only)
-- ISRIC SoilGrids 2.0 REST API (model-based, CC-BY 4.0), field `demo`, cell 750 m from the field point, fetched 2026-11-12
+- ISRIC SoilGrids 2.0 REST API (model-based, CC-BY 4.0), field `demo`, cell 750 m from the field point, fetched 2026-11-12 (superseded the same day by the WCS maps of the whole box: the cell used is 859 m from the placeholder field)
 - NASA POWER Daily API v2.10.3 (model-based), field `demo`, 2001-01-01 to 2025-12-31, fetched 2026-11-12
 - ESA WorldCover 10 m 2021 v200 (CC BY 4.0), field `demo` fetch box, fetched 2026-11-12 (placeholder field only)
 - NASADEM_HGT v001 (NASA JPL, LP DAAC), field `demo` fetch box, fetched 2026-11-12
 - JPL GRACE/GRACE-FO mascon CRI RL06.3Mv04 (PO.DAAC), cell holding field `demo`, 2002-04 to 2026-09, fetched 2026-11-12
+- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), precipitation, gaugeRelativeWeighting and precipitationQualityIndex for the 3x3 block of 0.1 deg cells around field `demo`, 2001-01 to 2025-09, fetched 2026-11-13 by a research sub-agent (rain check B only; not a twin input)
+- GPCC Full Data Monthly V2022, 1.0 deg (Deutscher Wetterdienst, opendata.dwd.de), 2011-2020 file: station counts and totals around field `demo`, fetched 2026-11-13 by a research sub-agent (rain check B only)
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain), the cell holding field `demo` and its neighbours, 2020 only, read 2026-11-13 by a research sub-agent (rain check B test read; doi:10.15780/G2JQ0P)
+- DHM (Department of Hydrology and Meteorology, Nepal) 1991-2020 climate normals: the official 'Climate Normals' table (Kathmandu Airport; Internet Archive copy of 30 Jan 2022) and the 'Normal' columns of DHM's monthly bulletins, Jan 2025 to Jul 2026 (Bhaktapur, Changu Narayan, Nagarkot), transcribed 2026-11-13 by a research sub-agent into config/dhm_normals_1991_2020.csv with the document and page of every number (validation only)
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `demo`'s fetch box, 2001-2025, fetched 2026-11-13 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
+- NASA GPM IMERG V07 Late daily (GPM_3IMERGDL, GES DISC OPeNDAP), the 0.1 deg cells of field `demo`'s fetch box, 2014-2019, fetched 2026-11-13 by pipeline/fetch/gpm_late.py (rain check B confirmation only; never the twin's rain)
+- NASA SMAP L4 Global 3-hourly 9 km Surface and Root Zone Soil Moisture Geophysical Data (SPL4SMGP v008, model-assisted) and SMAP Enhanced L3 Radiometer Global Daily 9 km Soil Moisture (SPL3SMP_E v006), NSIDC DAAC via LP DAAC AppEEARS, the 9 km cell holding field `demo`, 2015-03-31 to 2025-12-31, cleaned 2026-11-13 by pipeline/fetch/smap.py (a check on the twin only; no number shown uses it)
+- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `demo`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-13 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)

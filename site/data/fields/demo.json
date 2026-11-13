@@ -308,16 +308,16 @@
   ]
  },
  "diary": {
-  "shift_days": 12,
-  "bare_days": 110,
+  "shift_days": null,
+  "bare_days": 62,
   "guess": [
    "rice",
-   "wheat"
+   "potato"
   ],
   "groundwater": {
-   "trend_cm_per_year": -1.2,
+   "trend_cm_per_year": -2.57,
    "direction": "falling",
-   "confidence": 0.7
+   "confidence": 1.0
   },
   "months": [
    {
@@ -325,7 +325,7 @@
     "rain": "low",
     "soil": "dry",
     "heat": "none",
-    "frost": "high",
+    "frost": "risk",
     "cover": "crop"
    },
    {
@@ -333,12 +333,12 @@
     "rain": "low",
     "soil": "dry",
     "heat": "none",
-    "frost": "risk",
+    "frost": "none",
     "cover": "crop"
    },
    {
     "m": "Mar",
-    "rain": "low",
+    "rain": "medium",
     "soil": "dry",
     "heat": "some",
     "frost": "none",
@@ -346,64 +346,64 @@
    },
    {
     "m": "Apr",
-    "rain": "low",
-    "soil": "dry",
-    "heat": "high",
+    "rain": "medium",
+    "soil": "medium",
+    "heat": "some",
     "frost": "none",
-    "cover": "partial"
+    "cover": "crop"
    },
    {
     "m": "May",
     "rain": "medium",
     "soil": "medium",
-    "heat": "high",
+    "heat": "some",
     "frost": "none",
-    "cover": "bare"
+    "cover": "crop"
    },
    {
     "m": "Jun",
     "rain": "high",
     "soil": "wet",
-    "heat": "some",
+    "heat": "high",
     "frost": "none",
-    "cover": "bare"
+    "cover": "partial"
    },
    {
     "m": "Jul",
     "rain": "high",
     "soil": "wet",
-    "heat": "none",
+    "heat": "high",
     "frost": "none",
-    "cover": "partial"
+    "cover": "crop"
    },
    {
     "m": "Aug",
     "rain": "high",
     "soil": "wet",
-    "heat": "none",
+    "heat": "high",
     "frost": "none",
     "cover": "crop"
    },
    {
     "m": "Sep",
-    "rain": "medium",
+    "rain": "high",
     "soil": "wet",
-    "heat": "none",
+    "heat": "high",
     "frost": "none",
     "cover": "crop"
    },
    {
     "m": "Oct",
-    "rain": "low",
+    "rain": "medium",
     "soil": "medium",
-    "heat": "none",
+    "heat": "some",
     "frost": "none",
     "cover": "crop"
    },
    {
     "m": "Nov",
     "rain": "low",
-    "soil": "dry",
+    "soil": "medium",
     "heat": "none",
     "frost": "none",
     "cover": "bare"
@@ -414,7 +414,7 @@
     "soil": "dry",
     "heat": "none",
     "frost": "risk",
-    "cover": "partial"
+    "cover": "bare"
    }
   ]
  },
@@ -425,40 +425,50 @@
    "crops": [
     {
      "crop": "rice",
-     "start": "06-15",
-     "end": "10-30"
+     "start": "06-23",
+     "end": "10-10"
     },
     {
-     "crop": "wheat",
-     "start": "11-15",
-     "end": "04-10"
+     "crop": "potato",
+     "start": "10-30",
+     "end": "02-21"
     }
    ],
    "score": {
     "harvest": 72,
+    "water": 38,
+    "cover": 62,
+    "soil_kept": 74
+   },
+   "score_uncorrected_rain": {
+    "harvest": 73,
     "water": 40,
-    "cover": 35,
-    "soil_kept": 60
+    "cover": 62,
+    "soil_kept": 71
    },
    "tabs": {
-    "why": "MOCK text for the why tab of 'What you do now'. Real text comes from build step 7.",
-    "evidence": "MOCK text for the evidence tab of 'What you do now'. Real text comes from build step 7.",
-    "benefits": "MOCK text for the benefits tab of 'What you do now'. Real text comes from build step 7.",
-    "unknown": "MOCK text for the unknown tab of 'What you do now'. Real text comes from build step 7.",
-    "check": "MOCK text for the check tab of 'What you do now'. Real text comes from build step 7."
+    "why": "This is what you grow now. We compare every other choice with it.",
+    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 72 out of 100 on average. Without our rain fix, it was 73. Very dry years: 7 of 24. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+    "benefits": "You already know how to grow these. Changing crops can keep pests and diseases down.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. Planting dates are typical ones, not yours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "check": "Ask your local farm advisor first. Check how much water you really have. Try it on one small part first. You know your land best."
    },
    "tips": [
-    "MOCK tip for 'What you do now'."
+    "Rice gets most thirsty in October. Water it then if you can.",
+    "Potato gets most thirsty in January. Water it then if you can.",
+    "Cover bare soil with straw in March."
    ],
    "tabs_ne": {
-    "why": "MOCK 'What you do now' योजनाको why ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "evidence": "MOCK 'What you do now' योजनाको evidence ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "benefits": "MOCK 'What you do now' योजनाको benefits ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "unknown": "MOCK 'What you do now' योजनाको unknown ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "check": "MOCK 'What you do now' योजनाको check ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।"
+    "why": "यो तपाईंले अहिले लगाउने बाली हो। हामी अरू हरेक विकल्पलाई यसैसँग दाँज्छौं।",
+    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ७२ थियो। हाम्रो वर्षा सुधारबिना यो ७३ थियो। खडेरी परेका वर्ष: २४ मध्ये ७। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+    "benefits": "यी बाली लगाउन तपाईंलाई पहिले नै आउँछ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
-    "MOCK 'What you do now' को नमुना सुझाव।"
+    "धानलाई कात्तिक (अक्टोबर–नोभेम्बर)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+    "आलुलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+    "चैत (मार्च–अप्रिल)मा खाली माटोलाई परालले ढाक्नुहोस्।"
    ]
   },
   {
@@ -468,81 +478,101 @@
     {
      "crop": "rice",
      "start": "06-15",
-     "end": "10-30"
+     "end": "10-02"
     },
     {
-     "crop": "lentil",
-     "start": "11-01",
-     "end": "03-15"
+     "crop": "wheat",
+     "start": "10-15",
+     "end": "03-03"
     }
    ],
    "score": {
-    "harvest": 70,
-    "water": 62,
-    "cover": 70,
-    "soil_kept": 75
+    "harvest": 90,
+    "water": 51,
+    "cover": 68,
+    "soil_kept": 74
+   },
+   "score_uncorrected_rain": {
+    "harvest": 90,
+    "water": 55,
+    "cover": 68,
+    "soil_kept": 72
    },
    "tabs": {
-    "why": "MOCK text for the why tab of 'Fill the empty months'. Real text comes from build step 7.",
-    "evidence": "MOCK text for the evidence tab of 'Fill the empty months'. Real text comes from build step 7.",
-    "benefits": "MOCK text for the benefits tab of 'Fill the empty months'. Real text comes from build step 7.",
-    "unknown": "MOCK text for the unknown tab of 'Fill the empty months'. Real text comes from build step 7.",
-    "check": "MOCK text for the check tab of 'Fill the empty months'. Real text comes from build step 7."
+    "why": "Your field is empty 62 days a year. Wheat can grow in that empty time. Stored water in this area is falling. This plan needs less water.",
+    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 90 out of 100 on average. Very dry years: 6 of 24. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+    "benefits": "Harvest: about 18 more, out of 100. Needs less water than now. Ground stays covered more of the year. Wheat roots reach water deeper down.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. Planting dates are typical ones, not yours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "check": "Ask your local farm advisor first. Ask if wheat seed is sold nearby. Ask neighbours when they plant wheat. Lentil after rice is another choice. It feeds the soil. Changing crop kinds keeps pests down. Check how much water you really have. Wheat here usually needs watering. Check you can water it. Try it on one small part first. You know your land best."
    },
    "tips": [
-    "MOCK tip for 'Fill the empty months'."
+    "Rice gets most thirsty in June. Water it then if you can.",
+    "Wheat gets most thirsty in February. Water it then if you can.",
+    "Cover bare soil with straw in April."
    ],
    "tabs_ne": {
-    "why": "MOCK 'Fill the empty months' योजनाको why ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "evidence": "MOCK 'Fill the empty months' योजनाको evidence ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "benefits": "MOCK 'Fill the empty months' योजनाको benefits ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "unknown": "MOCK 'Fill the empty months' योजनाको unknown ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "check": "MOCK 'Fill the empty months' योजनाको check ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।"
+    "why": "तपाईंको खेत वर्षमा ६२ दिन खाली हुन्छ। त्यो खाली समयमा गहुँ लगाउन सकिन्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
+    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ९० थियो। खडेरी परेका वर्ष: २४ मध्ये ६। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+    "benefits": "उब्जनी: १०० मा करिब १८ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। गहुँको जरा अझ गहिरो पानीसम्म पुग्छ।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै गहुँको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई गहुँ कहिले रोप्छन् भनी सोध्नुहोस्। धानपछि मसुर लगाउनु अर्को उपाय हो। यसले माटोलाई मल दिन्छ। फरक किसिमको बाली लगाउँदा कीरा घट्छन्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। यहाँ गहुँलाई प्रायः पानी लगाउनुपर्छ। पानी लगाउन सक्नुहुन्छ कि जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
-    "MOCK 'Fill the empty months' को नमुना सुझाव।"
+    "धानलाई असार (जुन–जुलाई)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+    "गहुँलाई फागुन (फेब्रुअरी–मार्च)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+    "बैशाख (अप्रिल–मे)मा खाली माटोलाई परालले ढाक्नुहोस्।"
    ]
   },
   {
-   "id": "follow_shift",
-   "name": "Plant later, with the rain",
+   "id": "safest",
+   "name": "Safest in bad years",
    "crops": [
     {
      "crop": "rice",
-     "start": "07-01",
-     "end": "11-10"
+     "start": "06-15",
+     "end": "10-02"
     },
     {
-     "crop": "mustard",
-     "start": "11-20",
-     "end": "02-28"
+     "crop": "lentil",
+     "start": "10-15",
+     "end": "02-24"
     }
    ],
    "score": {
-    "harvest": 76,
-    "water": 55,
-    "cover": 55,
-    "soil_kept": 66
+    "harvest": 81,
+    "water": 44,
+    "cover": 67,
+    "soil_kept": 74
+   },
+   "score_uncorrected_rain": {
+    "harvest": 82,
+    "water": 47,
+    "cover": 67,
+    "soil_kept": 72
    },
    "tabs": {
-    "why": "MOCK text for the why tab of 'Plant later, with the rain'. Real text comes from build step 7.",
-    "evidence": "MOCK text for the evidence tab of 'Plant later, with the rain'. Real text comes from build step 7.",
-    "benefits": "MOCK text for the benefits tab of 'Plant later, with the rain'. Real text comes from build step 7.",
-    "unknown": "MOCK text for the unknown tab of 'Plant later, with the rain'. Real text comes from build step 7.",
-    "check": "MOCK text for the check tab of 'Plant later, with the rain'. Real text comes from build step 7."
+    "why": "Bad years hurt it less than now. The ground stays covered as much as now. Lentil feeds the soil for the next crop. Stored water in this area is falling. This plan needs less water.",
+    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 81 out of 100 on average. Without our rain fix, it was 82. Very dry years: 6 of 24. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+    "benefits": "Harvest: about 9 more, out of 100. Needs less water than now. Ground stays covered more of the year. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. Planting dates are typical ones, not yours. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Check how much water you really have. Try it on one small part first. You know your land best."
    },
    "tips": [
-    "MOCK tip for 'Plant later, with the rain'."
+    "Rice gets most thirsty in June. Water it then if you can.",
+    "Lentil gets most thirsty in January. Water it then if you can.",
+    "Cover bare soil with straw in March."
    ],
    "tabs_ne": {
-    "why": "MOCK 'Plant later, with the rain' योजनाको why ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "evidence": "MOCK 'Plant later, with the rain' योजनाको evidence ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "benefits": "MOCK 'Plant later, with the rain' योजनाको benefits ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "unknown": "MOCK 'Plant later, with the rain' योजनाको unknown ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।",
-    "check": "MOCK 'Plant later, with the rain' योजनाको check ट्याबको नमुना पाठ। साँचो पाठ build step 7 ले बनाउँछ।"
+    "why": "खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। जमिन अहिले जत्तिकै ढाकिएर रहन्छ। मसुरले अर्को बालीका लागि माटोमा मल थप्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
+    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ८१ थियो। हाम्रो वर्षा सुधारबिना यो ८२ थियो। खडेरी परेका वर्ष: २४ मध्ये ६। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+    "benefits": "उब्जनी: १०० मा करिब ९ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
-    "MOCK 'Plant later, with the rain' को नमुना सुझाव।"
+    "धानलाई असार (जुन–जुलाई)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+    "मसुरलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
+    "चैत (मार्च–अप्रिल)मा खाली माटोलाई परालले ढाक्नुहोस्।"
    ]
   }
  ],
@@ -572,20 +602,38 @@
     "year": 2004,
     "harvest": 75,
     "dry_days": 85,
-    "event": "none",
+    "event": "flood",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 75,
+     "dry_days": 85,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2005,
     "harvest": 82,
     "dry_days": 72,
-    "event": "drought",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 82,
+     "dry_days": 72,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
@@ -632,10 +680,19 @@
     "year": 2010,
     "harvest": 66,
     "dry_days": 91,
-    "event": "drought",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 66,
+     "dry_days": 91,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
@@ -700,7 +757,697 @@
    },
    {
     "year": 2017,
+    "harvest": 73,
+    "dry_days": 84,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 75,
+     "dry_days": 84,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2018,
+    "harvest": 73,
+    "dry_days": 76,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 73,
+     "dry_days": 77,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2019,
+    "harvest": 68,
+    "dry_days": 111,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 70,
+     "dry_days": 105,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2020,
+    "harvest": 84,
+    "dry_days": 86,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 90,
+     "dry_days": 63,
+     "event": "flood",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2021,
+    "harvest": 66,
+    "dry_days": 100,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 68,
+     "dry_days": 95,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2022,
+    "harvest": 83,
+    "dry_days": 75,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 87,
+     "dry_days": 75,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2023,
+    "harvest": 65,
+    "dry_days": 87,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 66,
+     "dry_days": 87,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2024,
     "harvest": 75,
+    "dry_days": 80,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 77,
+     "dry_days": 79,
+     "event": "flood",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2025,
+    "harvest": 69,
+    "dry_days": 78,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 70,
+     "dry_days": 79,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   }
+  ],
+  "cover_gap": [
+   {
+    "year": 2002,
+    "harvest": 91,
+    "dry_days": 64,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2003,
+    "harvest": 90,
+    "dry_days": 57,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2004,
+    "harvest": 91,
+    "dry_days": 56,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2005,
+    "harvest": 97,
+    "dry_days": 25,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 97,
+     "dry_days": 25,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2006,
+    "harvest": 86,
+    "dry_days": 56,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2007,
+    "harvest": 95,
+    "dry_days": 29,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2008,
+    "harvest": 89,
+    "dry_days": 55,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2009,
+    "harvest": 86,
+    "dry_days": 56,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2010,
+    "harvest": 84,
+    "dry_days": 64,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2011,
+    "harvest": 90,
+    "dry_days": 52,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2012,
+    "harvest": 92,
+    "dry_days": 55,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2013,
+    "harvest": 80,
+    "dry_days": 85,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 80,
+     "dry_days": 85,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2014,
+    "harvest": 89,
+    "dry_days": 54,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 89,
+     "dry_days": 54,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2015,
+    "harvest": 93,
+    "dry_days": 43,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2016,
+    "harvest": 83,
+    "dry_days": 67,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2017,
+    "harvest": 90,
+    "dry_days": 49,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 91,
+     "dry_days": 48,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2018,
+    "harvest": 89,
+    "dry_days": 57,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 90,
+     "dry_days": 58,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2019,
+    "harvest": 86,
+    "dry_days": 75,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 89,
+     "dry_days": 66,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2020,
+    "harvest": 100,
+    "dry_days": 10,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 100,
+     "dry_days": 0,
+     "event": "flood",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2021,
+    "harvest": 85,
+    "dry_days": 64,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 87,
+     "dry_days": 61,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2022,
+    "harvest": 99,
+    "dry_days": 21,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 100,
+     "dry_days": 0,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2023,
+    "harvest": 84,
+    "dry_days": 64,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 85,
+     "dry_days": 59,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2024,
+    "harvest": 92,
+    "dry_days": 48,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 94,
+     "dry_days": 39,
+     "event": "flood",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2025,
+    "harvest": 89,
+    "dry_days": 46,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 90,
+     "dry_days": 46,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   }
+  ],
+  "safest": [
+   {
+    "year": 2002,
+    "harvest": 83,
+    "dry_days": 85,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2003,
+    "harvest": 80,
+    "dry_days": 87,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2004,
+    "harvest": 83,
+    "dry_days": 80,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2005,
+    "harvest": 88,
+    "dry_days": 73,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 88,
+     "dry_days": 73,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2006,
+    "harvest": 79,
+    "dry_days": 73,
+    "event": "flood",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2007,
+    "harvest": 85,
+    "dry_days": 62,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2008,
+    "harvest": 80,
+    "dry_days": 74,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2009,
+    "harvest": 78,
+    "dry_days": 81,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2010,
+    "harvest": 75,
+    "dry_days": 87,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 75,
+     "dry_days": 87,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2011,
+    "harvest": 81,
+    "dry_days": 74,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2012,
+    "harvest": 83,
+    "dry_days": 81,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2013,
+    "harvest": 74,
+    "dry_days": 97,
+    "event": "none",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 74,
+     "dry_days": 97,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
+    }
+   },
+   {
+    "year": 2014,
+    "harvest": 78,
+    "dry_days": 81,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2015,
+    "harvest": 82,
+    "dry_days": 84,
+    "event": "drought",
+    "irrigated": {
+     "harvest": 100,
+     "dry_days": 0
+    }
+   },
+   {
+    "year": 2016,
+    "harvest": 76,
     "dry_days": 84,
     "event": "none",
     "irrigated": {
@@ -709,587 +1456,174 @@
     }
    },
    {
-    "year": 2018,
-    "harvest": 73,
-    "dry_days": 77,
-    "event": "none",
-    "irrigated": {
-     "harvest": 100,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2019,
-    "harvest": 70,
-    "dry_days": 105,
-    "event": "none",
-    "irrigated": {
-     "harvest": 100,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2020,
-    "harvest": 90,
-    "dry_days": 63,
-    "event": "flood",
-    "irrigated": {
-     "harvest": 100,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2021,
-    "harvest": 68,
-    "dry_days": 95,
-    "event": "none",
-    "irrigated": {
-     "harvest": 100,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2022,
-    "harvest": 87,
-    "dry_days": 75,
-    "event": "none",
-    "irrigated": {
-     "harvest": 100,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2023,
-    "harvest": 66,
-    "dry_days": 87,
-    "event": "drought",
-    "irrigated": {
-     "harvest": 100,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2024,
-    "harvest": 77,
-    "dry_days": 79,
-    "event": "flood",
-    "irrigated": {
-     "harvest": 100,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2025,
-    "harvest": 70,
-    "dry_days": 79,
-    "event": "drought",
-    "irrigated": {
-     "harvest": 100,
-     "dry_days": 0
-    }
-   }
-  ],
-  "cover_gap": [
-   {
-    "year": 2001,
-    "harvest": 65,
-    "dry_days": 3,
-    "event": "none",
-    "irrigated": {
-     "harvest": 90,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2002,
-    "harvest": 72,
-    "dry_days": 6,
-    "event": "none",
-    "irrigated": {
-     "harvest": 87,
-     "dry_days": 1
-    }
-   },
-   {
-    "year": 2003,
-    "harvest": 79,
-    "dry_days": 9,
-    "event": "none",
-    "irrigated": {
-     "harvest": 84,
-     "dry_days": 4
-    }
-   },
-   {
-    "year": 2004,
-    "harvest": 61,
-    "dry_days": 12,
-    "event": "none",
-    "irrigated": {
-     "harvest": 91,
-     "dry_days": 2
-    }
-   },
-   {
-    "year": 2005,
-    "harvest": 68,
-    "dry_days": 15,
-    "event": "none",
-    "irrigated": {
-     "harvest": 88,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2006,
-    "harvest": 55,
-    "dry_days": 18,
-    "event": "drought",
-    "irrigated": {
-     "harvest": 85,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2007,
-    "harvest": 82,
-    "dry_days": 21,
-    "event": "none",
-    "irrigated": {
-     "harvest": 92,
-     "dry_days": 1
-    }
-   },
-   {
-    "year": 2008,
-    "harvest": 64,
-    "dry_days": 24,
-    "event": "none",
-    "irrigated": {
-     "harvest": 89,
-     "dry_days": 4
-    }
-   },
-   {
-    "year": 2009,
-    "harvest": 51,
-    "dry_days": 27,
-    "event": "drought",
-    "irrigated": {
-     "harvest": 86,
-     "dry_days": 2
-    }
-   },
-   {
-    "year": 2010,
-    "harvest": 78,
-    "dry_days": 0,
-    "event": "none",
-    "irrigated": {
-     "harvest": 83,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2011,
-    "harvest": 60,
-    "dry_days": 3,
-    "event": "none",
-    "irrigated": {
-     "harvest": 90,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2012,
-    "harvest": 67,
-    "dry_days": 6,
-    "event": "none",
-    "irrigated": {
-     "harvest": 87,
-     "dry_days": 1
-    }
-   },
-   {
-    "year": 2013,
-    "harvest": 74,
-    "dry_days": 9,
-    "event": "none",
-    "irrigated": {
-     "harvest": 84,
-     "dry_days": 4
-    }
-   },
-   {
-    "year": 2014,
+    "year": 2017,
     "harvest": 81,
-    "dry_days": 12,
+    "dry_days": 83,
     "event": "none",
     "irrigated": {
-     "harvest": 91,
-     "dry_days": 2
-    }
-   },
-   {
-    "year": 2015,
-    "harvest": 63,
-    "dry_days": 15,
-    "event": "none",
-    "irrigated": {
-     "harvest": 88,
+     "harvest": 100,
      "dry_days": 0
-    }
-   },
-   {
-    "year": 2016,
-    "harvest": 70,
-    "dry_days": 18,
-    "event": "none",
-    "irrigated": {
-     "harvest": 85,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2017,
-    "harvest": 57,
-    "dry_days": 21,
-    "event": "flood",
-    "irrigated": {
-     "harvest": 92,
-     "dry_days": 1
+    },
+    "uncorrected_rain": {
+     "harvest": 82,
+     "dry_days": 83,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2018,
-    "harvest": 59,
-    "dry_days": 24,
+    "harvest": 81,
+    "dry_days": 76,
     "event": "none",
     "irrigated": {
-     "harvest": 89,
-     "dry_days": 4
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 82,
+     "dry_days": 76,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2019,
-    "harvest": 66,
-    "dry_days": 27,
-    "event": "none",
-    "irrigated": {
-     "harvest": 86,
-     "dry_days": 2
-    }
-   },
-   {
-    "year": 2020,
-    "harvest": 73,
-    "dry_days": 0,
-    "event": "none",
-    "irrigated": {
-     "harvest": 83,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2021,
-    "harvest": 60,
-    "dry_days": 3,
-    "event": "flood",
-    "irrigated": {
-     "harvest": 90,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2022,
-    "harvest": 62,
-    "dry_days": 6,
-    "event": "none",
-    "irrigated": {
-     "harvest": 87,
-     "dry_days": 1
-    }
-   },
-   {
-    "year": 2023,
-    "harvest": 69,
-    "dry_days": 9,
-    "event": "none",
-    "irrigated": {
-     "harvest": 84,
-     "dry_days": 4
-    }
-   },
-   {
-    "year": 2024,
-    "harvest": 76,
-    "dry_days": 12,
-    "event": "none",
-    "irrigated": {
-     "harvest": 91,
-     "dry_days": 2
-    }
-   },
-   {
-    "year": 2025,
-    "harvest": 58,
-    "dry_days": 15,
-    "event": "none",
-    "irrigated": {
-     "harvest": 88,
-     "dry_days": 0
-    }
-   }
-  ],
-  "follow_shift": [
-   {
-    "year": 2001,
-    "harvest": 71,
-    "dry_days": 3,
-    "event": "none",
-    "irrigated": {
-     "harvest": 96,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2002,
     "harvest": 78,
-    "dry_days": 6,
+    "dry_days": 85,
     "event": "none",
     "irrigated": {
-     "harvest": 93,
-     "dry_days": 1
-    }
-   },
-   {
-    "year": 2003,
-    "harvest": 85,
-    "dry_days": 9,
-    "event": "none",
-    "irrigated": {
-     "harvest": 90,
-     "dry_days": 4
-    }
-   },
-   {
-    "year": 2004,
-    "harvest": 67,
-    "dry_days": 12,
-    "event": "none",
-    "irrigated": {
-     "harvest": 97,
-     "dry_days": 2
-    }
-   },
-   {
-    "year": 2005,
-    "harvest": 74,
-    "dry_days": 15,
-    "event": "none",
-    "irrigated": {
-     "harvest": 94,
+     "harvest": 100,
      "dry_days": 0
-    }
-   },
-   {
-    "year": 2006,
-    "harvest": 61,
-    "dry_days": 18,
-    "event": "drought",
-    "irrigated": {
-     "harvest": 91,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2007,
-    "harvest": 88,
-    "dry_days": 21,
-    "event": "none",
-    "irrigated": {
-     "harvest": 98,
-     "dry_days": 1
-    }
-   },
-   {
-    "year": 2008,
-    "harvest": 70,
-    "dry_days": 24,
-    "event": "none",
-    "irrigated": {
-     "harvest": 95,
-     "dry_days": 4
-    }
-   },
-   {
-    "year": 2009,
-    "harvest": 57,
-    "dry_days": 27,
-    "event": "drought",
-    "irrigated": {
-     "harvest": 92,
-     "dry_days": 2
-    }
-   },
-   {
-    "year": 2010,
-    "harvest": 84,
-    "dry_days": 0,
-    "event": "none",
-    "irrigated": {
-     "harvest": 89,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2011,
-    "harvest": 66,
-    "dry_days": 3,
-    "event": "none",
-    "irrigated": {
-     "harvest": 96,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2012,
-    "harvest": 73,
-    "dry_days": 6,
-    "event": "none",
-    "irrigated": {
-     "harvest": 93,
-     "dry_days": 1
-    }
-   },
-   {
-    "year": 2013,
-    "harvest": 80,
-    "dry_days": 9,
-    "event": "none",
-    "irrigated": {
-     "harvest": 90,
-     "dry_days": 4
-    }
-   },
-   {
-    "year": 2014,
-    "harvest": 87,
-    "dry_days": 12,
-    "event": "none",
-    "irrigated": {
-     "harvest": 97,
-     "dry_days": 2
-    }
-   },
-   {
-    "year": 2015,
-    "harvest": 69,
-    "dry_days": 15,
-    "event": "none",
-    "irrigated": {
-     "harvest": 94,
-     "dry_days": 0
-    }
-   },
-   {
-    "year": 2016,
-    "harvest": 76,
-    "dry_days": 18,
-    "event": "none",
-    "irrigated": {
-     "harvest": 91,
-     "dry_days": 3
-    }
-   },
-   {
-    "year": 2017,
-    "harvest": 63,
-    "dry_days": 21,
-    "event": "flood",
-    "irrigated": {
-     "harvest": 98,
-     "dry_days": 1
-    }
-   },
-   {
-    "year": 2018,
-    "harvest": 65,
-    "dry_days": 24,
-    "event": "none",
-    "irrigated": {
-     "harvest": 95,
-     "dry_days": 4
-    }
-   },
-   {
-    "year": 2019,
-    "harvest": 72,
-    "dry_days": 27,
-    "event": "none",
-    "irrigated": {
-     "harvest": 92,
-     "dry_days": 2
+    },
+    "uncorrected_rain": {
+     "harvest": 79,
+     "dry_days": 76,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2020,
-    "harvest": 79,
-    "dry_days": 0,
-    "event": "none",
+    "harvest": 93,
+    "dry_days": 55,
+    "event": "flood",
     "irrigated": {
-     "harvest": 89,
+     "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 98,
+     "dry_days": 27,
+     "event": "flood",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2021,
-    "harvest": 66,
-    "dry_days": 3,
-    "event": "flood",
+    "harvest": 77,
+    "dry_days": 85,
+    "event": "none",
     "irrigated": {
-     "harvest": 96,
-     "dry_days": 3
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 78,
+     "dry_days": 85,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2022,
-    "harvest": 68,
-    "dry_days": 6,
-    "event": "none",
+    "harvest": 90,
+    "dry_days": 73,
+    "event": "drought",
     "irrigated": {
-     "harvest": 93,
-     "dry_days": 1
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 94,
+     "dry_days": 64,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2023,
-    "harvest": 75,
-    "dry_days": 9,
-    "event": "none",
+    "harvest": 74,
+    "dry_days": 89,
+    "event": "drought",
     "irrigated": {
-     "harvest": 90,
-     "dry_days": 4
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 75,
+     "dry_days": 85,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2024,
     "harvest": 82,
-    "dry_days": 12,
-    "event": "none",
+    "dry_days": 80,
+    "event": "flood",
     "irrigated": {
-     "harvest": 97,
-     "dry_days": 2
+     "harvest": 100,
+     "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 85,
+     "dry_days": 76,
+     "event": "flood",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
     "year": 2025,
-    "harvest": 64,
-    "dry_days": 15,
-    "event": "none",
+    "harvest": 79,
+    "dry_days": 74,
+    "event": "drought",
     "irrigated": {
-     "harvest": 94,
+     "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 80,
+     "dry_days": 75,
+     "event": "drought",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    }
   ]
@@ -1330,11 +1664,498 @@
  },
  "sources": [
   {
+   "name": "GPM IMERG",
+   "product": "V07 Final daily (Late for Oct-Dec 2025); Final days from 2017 scaled back to its own 2001-2016 level (the rain gauges behind it stopped reporting here)",
+   "resolution": "0.1 deg (about 10 km)",
+   "years": "2001-2025",
+   "type": "satellite"
+  },
+  {
+   "name": "NASA POWER",
+   "product": "Daily API v2.10.3 (MERRA-2 weather, CERES sunshine); temperatures corrected to Kathmandu Airport",
+   "resolution": "0.5 x 0.625 deg (about 55 km)",
+   "years": "2001-2025",
+   "type": "model"
+  },
+  {
+   "name": "Kathmandu Airport station",
+   "product": "NOAA GHCN-Daily NP000444540 (temperature correction, checks)",
+   "resolution": "one point, 7 km west",
+   "years": "2001-2025",
+   "type": "station"
+  },
+  {
+   "name": "Harmonized Landsat Sentinel-2",
+   "product": "HLS-VI v2.0 greenness (NDVI)",
+   "resolution": "30 m",
+   "years": "2013-2025",
+   "type": "satellite"
+  },
+  {
+   "name": "MODIS Terra",
+   "product": "MOD13Q1 v061 greenness (NDVI), before HLS: compared with HLS only; no number shown uses it",
+   "resolution": "250 m",
+   "years": "2001-2013",
+   "type": "satellite"
+  },
+  {
+   "name": "GRACE and GRACE-FO",
+   "product": "JPL mascon CRI RL06.3 v04: water stored across the region",
+   "resolution": "about 300 km",
+   "years": "2002-2026",
+   "type": "satellite"
+  },
+  {
+   "name": "ISRIC SoilGrids",
+   "product": "2.0: water the soil holds at field capacity and wilting point (machine-learning map); nearest cell with values, 859 m from the field",
+   "resolution": "250 m",
+   "years": "one map",
+   "type": "model"
+  },
+  {
+   "name": "NASADEM",
+   "product": "v001 elevation",
+   "resolution": "30 m",
+   "years": "2000",
+   "type": "satellite"
+  },
+  {
+   "name": "Khet Sathi field twin",
+   "product": "FAO-56 soil water, FAO-33 harvest, from the data above",
+   "resolution": "the field",
+   "years": "2001-2025",
+   "type": "model"
+  },
+  {
    "name": "MOCK data for building the site",
-   "product": "pipeline/export/mock.py",
+   "product": "pipeline/export/mock.py: the field's parts (sections) and the 2040 future only, until build steps 8 and 9",
    "resolution": "none (made up)",
    "years": "none",
    "type": "model"
   }
- ]
+ ],
+ "method": {
+  "season_detection": {
+   "chosen": "threshold",
+   "margin": 0.02,
+   "held_out_years": [
+    2018,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "thin_days": 16,
+   "rule_methods_agree": 0.729,
+   "methods": [
+    {
+     "id": "threshold",
+     "si": false,
+     "score": 0.967,
+     "by_year": [
+      {
+       "year": 2018,
+       "score": 0.951
+      },
+      {
+       "year": 2022,
+       "score": 0.969
+      },
+      {
+       "year": 2023,
+       "score": 0.97
+      },
+      {
+       "year": 2024,
+       "score": 0.993
+      },
+      {
+       "year": 2025,
+       "score": 0.951
+      }
+     ],
+     "start_diff_days": null,
+     "peak_diff_days": null,
+     "end_diff_days": null
+    },
+    {
+     "id": "changepoint",
+     "si": false,
+     "score": 0.958,
+     "by_year": [
+      {
+       "year": 2018,
+       "score": 0.988
+      },
+      {
+       "year": 2022,
+       "score": 0.979
+      },
+      {
+       "year": 2023,
+       "score": 0.962
+      },
+      {
+       "year": 2024,
+       "score": 0.913
+      },
+      {
+       "year": 2025,
+       "score": 0.947
+      }
+     ],
+     "start_diff_days": 14.5,
+     "peak_diff_days": 4.0,
+     "end_diff_days": 6.0
+    },
+    {
+     "id": "detective",
+     "si": true,
+     "score": 0.98,
+     "by_year": [
+      {
+       "year": 2018,
+       "score": 0.996
+      },
+      {
+       "year": 2022,
+       "score": 0.972
+      },
+      {
+       "year": 2023,
+       "score": 0.977
+      },
+      {
+       "year": 2024,
+       "score": 1.0
+      },
+      {
+       "year": 2025,
+       "score": 0.955
+      }
+     ],
+     "start_diff_days": 4.5,
+     "peak_diff_days": 0.0,
+     "end_diff_days": 2.0
+    }
+   ]
+  },
+  "rain_correction": {
+   "applied": true,
+   "from": "2017-01-01",
+   "reference_years": [
+    2001,
+    2016
+   ],
+   "factors": {
+    "Jan": 0.826,
+    "Feb": 0.789,
+    "Mar": 0.543,
+    "Apr": 0.47,
+    "May": 0.546,
+    "Jun": 0.626,
+    "Jul": 0.733,
+    "Aug": 0.709,
+    "Sep": 0.772,
+    "Oct": 0.801,
+    "Nov": 2.398,
+    "Dec": 0.463
+   },
+   "held_out": {
+    "months": 48,
+    "error_before_mm": 93.7,
+    "error_after_mm": 31.4,
+    "ratio_before": 1.62,
+    "ratio_after": 1.06
+   },
+   "rain_mm_per_year": {
+    "reference": 1842,
+    "after_uncorrected": 2731,
+    "after_corrected": 1882,
+    "station_normal": 1375
+   },
+   "gauges": {
+    "weight_before_pct": [
+     96,
+     98
+    ],
+    "weight_after_pct": [
+     56,
+     72
+    ],
+    "stations_before": 50,
+    "stations_after": 1
+   },
+   "words": {
+    "en": "NASA's rain maps are checked against rain gauges. Around this field, gauge reports stopped in 2017. Before, the gauges set almost all of it. After, the picture from space took over. Its yearly rain here jumped to 2730 mm. Before, it was 1840 mm. The nearest town's usual rain: 1380 mm. We scaled each month from 2017 back down. Each month now matches its earlier years. We tested this on years we kept aside. Monthly error at the airport: 94 mm before. After our fix: 31 mm. This fix may also hide real change. So we show both, as a range.",
+    "ne": "नासाको वर्षाको नक्सा वर्षा मापकसँग जाँचिन्छ। यो खेत वरिपरि मापकका खबर २०१७ मा रोकिए। पहिले, धेरैजसो नाप मापकले नै मिलाउँथे। त्यसपछि, अन्तरिक्षबाट हेरेको नापले ठाउँ लियो। यहाँको वार्षिक वर्षा २७३० मिलिमिटर पुग्यो। पहिले यो १८४० मिलिमिटर थियो। नजिकको सहरको सामान्य वर्षा: १३८० मिलिमिटर। हामीले २०१७ देखि हरेक महिना घटायौं। अब हरेक महिना पहिलेका वर्षसँग मिल्छ। यो जाँच अलग राखेका वर्षमा गर्‍यौं। विमानस्थलमा मासिक फरक: पहिले ९४ मिलिमिटर। सुधारपछि: ३१ मिलिमिटर। यस सुधारले साँचो फेरबदल पनि लुकाउन सक्छ। त्यसैले हामी दुवै देखाउँछौं, दायराका रूपमा।"
+   }
+  },
+  "choices": [
+   {
+    "id": "power_rain.max_filled_fraction_per_year",
+    "choice": "Claude's proposal, owner-approved 2026-11-12 (owner's batch decisions, item 1) (REVIEW_NOTES M2): the weather table fails loudly if POWER fills more than 5% of any year's days (about 18 days), so a partly failed GPM download cannot turn into POWER rain unnoticed. Every filled day stays flagged (rain_filled, rain_source)",
+    "value": "0.05",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "temperature_correction.min_shared_days_per_year",
+    "choice": "Owner-approved 2026-11-12 (proposed by Claude: the 330-record rule leaves no Tmin years at Kathmandu Airport; 200 keeps 2015, 2016, 2017, 2019, 2021, 2022, 2023)",
+    "value": "200",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "cold_nights.quantiles",
+    "choice": "Claude's choice, owner-approved 2026-11-12 (step-4 review item 5): map at the 1st to 99th percentiles. Beyond the ends keep the end-quantile difference: Gudmundsson et al. 2012 state this for values above the training range; applying it below as well is Claude's choice",
+    "value": "99",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "rain_vote.rule",
+    "choice": "Owner, 2026-11-12: let the three sources vote; if GPM agrees with the station, mark the day a real local storm. The 'suspect station' half is Claude's reading, owner-approved 2026-11-12 (step-4 review item 5). Caveat (REVIEW_NOTES H2, 2026-11-12): every Kathmandu Airport record is GHCN S-flag 'S', derived from synoptic reports, which the GHCN readme says to use with caution, especially for rain; a 'station value suspect' or 'real local storm' label rests on that series",
+    "value": "when GPM exists, a flagged day where GPM agrees with the station (their pair passes the spike rule) is marked a real local storm; where GPM agrees with POWER instead, the station value is marked suspect",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "curve_numbers.by_cover",
+    "choice": "TR-55 (1986) Table 2-2b = NEH 630 Ch. 9 Table 9-1, hydrologic soil group C: Fallow bare soil 91; Small grain, straight row, good 83; Row crops, straight row, good 85; Close-seeded or broadcast legumes, straight row, good 81. Straight row and 'good' condition are Claude's choices for a flat valley-floor field, owner-approved 2026-11-12 (step-4 review item 5). Kept for the placeholder field, a 1.6 deg (about 2.8%) valley floor where a 30 m elevation model shows no terraces (owner-approved 2026-11-12 (owner's batch decisions, item 20)); revisit for a terraced hill field, which needs the contoured or contoured-and-terraced rows",
+    "value": "{'bare': 91, 'small_grain': 83, 'row_crop': 85, 'close_seeded_legume': 81}",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "curve_numbers.crop_cover",
+    "choice": "Claude's mapping of each crop to a TR-55 cover row, owner-approved 2026-11-12 (step-4 review item 5; TR-55 has no paddy row; rice uses small grain). Revisit for a terraced field, as above",
+    "value": "{'rice': 'small_grain', 'wheat': 'small_grain', 'maize': 'row_crop', 'potato': 'row_crop', 'lentil': 'close_seeded_legume', 'mustard': 'small_grain', 'buckwheat': 'small_grain', 'finger_millet': 'small_grain'}",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "crop_calendar.rule",
+    "choice": "Claude's choice, owner-approved 2026-11-12 (step-4 review item 5); start, middle or end in step 7 owner-approved 2026-11-12 (owner's batch decisions, item 10). Windows from the FAO Crop Calendar, Nepal Hill zone (crops.json calendar sources)",
+    "value": "sow at the middle of the crop's default sowing window; season length from crops.json stages_days. Step 7's plan generator may also sow at the window's start or end and keeps the sequences that fit without overlap; the current plan stays at the middle. No relay cropping, so maize then rice stays out (rice's latest default sowing is 15 Jul)",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "replay.year_of_season",
+    "choice": "Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 13): a winter crop sown in Oct-Nov belongs to the year of its harvest (potato sown 30 Oct 2001 counts in 2002)",
+    "value": "the year the season is harvested (its last day)",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "replay.combine_crops",
+    "choice": "Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 14): the contract (replay_year) has one harvest and one dry-day count per year",
+    "value": "a year's harvest is the mean of its crops' harvest percentages; its dry days are their sum",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "replay.dry_run_min_station_coverage",
+    "choice": "Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 2), for the TEMPORARY station-rain dry run only (never exported): a year is used only if the station has rain on at least 90% of its days; missing days are filled from POWER and flagged",
+    "value": "0.9",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "events.drought_decile_max",
+    "choice": "Rainfall deciles (Gibbs & Maher 1967, Bureau of Meteorology Bulletin No. 48; cited by WMO & GWP 2016, Handbook of Drought Indicators and Indices, WMO-No. 1173, pp. 11-12). Classes from Hayes, 'Drought Indices', National Drought Mitigation Center (archived 2009-05-10, https://webarchive.library.unt.edu/eot2008/20090510055327id_/http://www.drought.unl.edu/whatis/indices.htm): 'deciles 1-2: lowest 20% much below normal'. Applied to each crop's season rain over the replay record, decile = ceil(10 x rank / n) with average ranks for ties. The method wants a long record (Australia uses 100 years); 25 seasons is short. Calling 'much below normal' a drought: Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 17)",
+    "value": "2",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "events.precedence",
+    "choice": "Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 19): the contract allows one event per year; drought before flood, in the contract's enum order. Frost is no longer a replay event (owner, 2026-11-12, REVIEW_NOTES M1): the frost Tmin is known to overcount cold nights, so frost is shown only as a risk band in the monthly calendar (diary.months[].frost), never per year. The removed per-year rule (wheat 0 C mid-season, potato -2 C whole season, with its sources) is kept in METHOD_NOTES.md for the record",
+    "value": "['drought', 'flood']",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "groundwater.alpha",
+    "choice": "Seasonal Mann-Kendall test (Hirsch, Slack & Smith 1982; Hirsch & Slack 1984; pymannkendall.seasonal_test) at the conventional 5% level. Claude's choice of test, owner-approved 2026-11-13: the test fits a monthly series with a strong yearly cycle and gaps (GRACE/GRACE-FO 2017-2018)",
+    "value": "0.05",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "groundwater.direction_rule",
+    "choice": "Claude's choice, owner-approved 2026-11-13 (D7: 'the rule for steady and for confidence is set and cited in rules.yaml at step 6'): 'steady' = no trend at the test's 5% level",
+    "value": "steady unless p < alpha; then falling or rising by the sign of the seasonal Sen slope",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "groundwater.confidence_rule",
+    "choice": "Claude's choice, owner-approved 2026-11-13, no published source: how strongly the record shows a change (1 - the test's p-value); not a probability that the direction is right",
+    "value": "1 - p",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "probe.repeat_spread_max_pct",
+    "choice": "Claude's proposal, owner-approved 2026-11-12 (owner's batch decisions, item 24): five readings of one cup 'barely differ' (VALIDATION 5.2) when max - min is at most 3 points on the probe's 0-100% moisture scale; the variance of the same five readings is recorded as the probe's error variance R (CLAUDE.md 'Probe fusion'). No standard was opened; the robot teammate may tighten it after the first bench test",
+    "value": "3",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "gpm_series.correction_fields",
+    "choice": "Owner, 2026-11-13 (decision 1) is about this field: 'the rain gauges behind NASA's correction disappeared around this field in January 2017'. Claude's reading: a field abroad (build step 11) is corrected only after its own rain check B finds the same break, since gauge networks differ by country",
+    "value": "['demo']",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "gpm_series.correction_products",
+    "choice": "Claude's reading, fixed 2026-11-13 before the Late check (IMERG Late 2014-2019) was read: only IMERG Final days are scaled, and only they set the factors. The 92 IMERG Late days (Oct-Dec 2025, D1) are left as they are, because Late uses a climatological gauge calibration, not the monthly gauges that vanished, so the 2017 loss cannot reach it; the Late check tests that. POWER-filled days (none on the demo field) are another source and are not scaled either. If the Late check shows Late stepping up in 2017 as Final does, this is put back to the owner. Late check (2026-11-13, VALIDATION 3.9b): Late does not step with Final (1.13 against 1.62), but it is wetter than gauge-adjusted Final in 2014-2016 (Final/Late 0.64-0.85) and about equal to Final from 2017 (1.00-1.13): Late sits at the un-gauged level, so whether to scale the 92 Late days too is put to the owner",
+    "value": "['final']",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "monsoon_onset.search_until",
+    "choice": "Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's choice: stop the search at 30 September, so a year with no qualifying start has no onset (reported as none, never guessed). DHM Climate Division, 'Monsoon Onset and Withdrawal date information' (1968-2024), p. 1, dhm.gov.np: normal onset (eastern Nepal) 13 June, latest on record 27 June 1982; normal withdrawal 2 October",
+    "value": "09-30",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "monsoon_onset.wet_day_mm",
+    "choice": "Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's reading of CLAUDE.md: a wet day has at least 1 mm, the complement of the rule's own dry day 'under 1 mm per day'; ETCCDI list of 27 indices (etccdi.pacificclimate.org): 'wet days, w (RR >= 1mm)'",
+    "value": "1.0",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "monsoon_onset.wet_days_min",
+    "choice": "CLAUDE.md (owner): 'the first run of at least 2 wet days'. Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's reading: the onset day d is itself wet, and the wet days need not be consecutive, as in Moron, Robertson & Boer 2009 (J. Climate, sec. 2c): 'the first wet day of the first 5-day sequence receiving at least 40 mm'",
+    "value": "2",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "greenness.min_clear_fraction",
+    "choice": "Claude's choice, owner-approved 2026-11-13 (CLAUDE.md: 'require a minimum clear-pixel fraction per image'): an HLS image counts for the field only when at least 75% of the field's pixels are clear (Fmask bits 0-5 zero) and hold NDVI; for the 60 m demo field (4 HLS pixels) that is 3 of 4. No published source found: the HLS v2.0 User Guide (Apr 2026, sec. 6.4) gives the Fmask bits but no clear fraction; the one parcel rule found masks parcels with more than 50% of pixels masked (Sitokonstantinou 2022, arXiv 2211.12584, App. A.1), so 75% is stricter",
+    "value": "0.75",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "greenness.modis_reliability_ok",
+    "choice": "Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's choice: MOD13Q1 pixel reliability 0 ('good data') only; 1 (marginal), 2 (snow/ice) and 3 (cloudy) are dropped. Rank keys from the file's own Legend attribute; MOD13 User's Guide C6.1 (V3.10), Table 4: 0 'Good Data, Use with confidence', 1 'Marginal data, Useful, but look at other QA information'",
+    "value": "[0]",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "greenness.pair_max_days",
+    "choice": "Claude's choice, owner-approved 2026-11-13: an HLS observation and a MODIS composite are compared when their dates are at most 8 days apart (half of MODIS's 16-day composite; no source for the limit). The MODIS date is the pixel's own 'composite day of the year' (MOD13 User's Guide sec. 5.1: 'adjacent selected pixels may originate from different days')",
+    "value": "8",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.smooth_window_days",
+    "choice": "Claude's choice, owner-approved 2026-11-13: Savitzky-Golay window on the daily interpolated series (no source for 31 days: Chen et al. 2004 smoothed 10-day composites, not opened past the abstract; TIMESAT 3.3 manual, row 34, gives a rough half-window of a quarter of the points per year, far wider, and warns a large window 'affects the possibility to follow a rapid change')",
+    "value": "31",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.threshold_fraction",
+    "choice": "Owner-approved 2026-11-13 (batch: every threshold with a published source). Claude's choice within the published range: season start and end at 20% of the rise and of the fall (TIMESAT 3.3 manual sec. 4.4: start at 'a user defined level (often a certain fraction of the seasonal amplitude) measured from the left minimum level', end from the right minimum; its examples use 0.5 and 0.3; NASA MCD12Q2 uses 15%, 50% and 90% of the green-up amplitude)",
+    "value": "0.2",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.changepoint_params_per_change",
+    "choice": "Owner-approved 2026-11-13 (batch: every threshold with a published source). PELT (Killick, Fearnhead & Eckley 2012) penalty; the 2 parameters per kink is Claude's reading, owner-approved 2026-11-13: sigma^2 x 2 x ln(n), a BIC-type penalty with 2 parameters per kink (its place and the change of slope); sigma = scatter of the clear observations about the smoothed curve (Killick, Fearnhead & Eckley 2012, arXiv:1101.1438 sec. 2: 'SIC, also known as BIC ... (beta = p log n), where p is the number of additional parameters introduced by adding a changepoint', for a cost of twice the negative log-likelihood, i.e. sigma^2 p ln n for a sum of squares; p = 2 is Claude's reading)",
+    "value": "2",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.changepoint_min_size_days",
+    "choice": "Claude's choice, owner-approved 2026-11-13: no segment shorter than 5 days",
+    "value": "5",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.detective",
+    "choice": "Claude's choices, owner-approved 2026-11-13: random forest (scikit-learn) with 300 trees, leaves of at least 5 days, fixed seed; slopes over 15 days; 'time since green-up' = days since the lowest smoothed NDVI of the last 120 days; rain and temperature over the last 30 days; labels smoothed by a 15-day majority; growing runs shorter than 30 days are not seasons",
+    "value": "{'trees': 300, 'min_samples_leaf': 5, 'seed': 0, 'slope_days': 15, 'low_window_days': 120, 'weather_days': 30, 'mode_filter_days': 15, 'min_season_days': 30}",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.held_out_min_clear_obs",
+    "choice": "Claude's choice, owner-approved 2026-11-13, fixed before the comparison: held-out years are full HLS years with at least 90 clear field observations (2018 and 2022-2025 on the demo field; written as '2017-2025' before the run, a miscount corrected afterwards, the rule unchanged), dense enough that their full-data labels are well constrained",
+    "value": "90",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.held_out_thin_days",
+    "choice": "Claude's choice, owner-approved 2026-11-13, fixed before the comparison: in the held-out year keep only the first clear observation in each 16 days (Landsat 8's revisit and MODIS's composite period: the density of 2013-2016 and of cloudy months)",
+    "value": "16",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.reference",
+    "choice": "Claude's choice, owner-approved 2026-11-13, fixed before the comparison: there is no field-observed calendar (placeholder field), so the reference is the two rule-based methods' agreement on dense data; each method is scored on how well it reproduces that reference from the thinned year. The two rule-based methods made the reference, so the score measures robustness to sparse data, not accuracy",
+    "value": "days where the threshold and change-point methods, on all observations, give the same label",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "season_detection.best_margin",
+    "choice": "Claude's choice, owner-approved 2026-11-13, fixed before the comparison: the method with the best mean held-out score is used, but it replaces the simplest (threshold) method only if it beats it by at least 2 percentage points",
+    "value": "0.02",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "trends.hot_day",
+    "choice": "CLAUDE.md 'hot days (above the local 90th percentile of Tmax)'; ETCCDI TX90p: 'the calendar day 90th percentile centred on a 5-day window'. The base period is the record itself (2001-2025; ETCCDI uses 1961-1990, which the twin's weather does not cover), and the in-base bootstrap is not applied: Claude's choices, owner-approved 2026-11-13",
+    "value": "{'pct': 90, 'window_days': 5, 'base_years': [2001, 2025]}",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "trends.shift_days_unmeasurable_when",
+    "choice": "Claude's rule, owner-approved 2026-11-13, set AFTER seeing that 21 of 25 onsets fall on 15-17 May (honest outputs, golden rule 11): an onset pinned at the search start cannot move earlier, so its trend cannot show a shift and shift_days is exported as null ('can't tell')",
+    "value": "the onset is within 2 days of the search start in more than half of the years",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "trends.shift_days_span",
+    "choice": "schema.json diary.shift_days: 'Sen's slope x record length'; Claude's reading: the change from the first to the last year, slope x (last - first)",
+    "value": "last year - first year",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "months.terciles",
+    "choice": "CLAUDE.md 'classify each month as low, medium or high (terciles of the 2001 to 2025 climatology)'; Claude's reading, owner-approved 2026-11-13: terciles of the twelve monthly means. Rain = GPM (with the GPM-break caveat); soil = the twin's root-zone wetness 1 - Dr/TAW, current rotation, rain-fed; heat = mean Tmax (station-corrected POWER)",
+    "value": "rain, soil, heat: the four lowest of the twelve 2001-2025 monthly means take the first word, the four highest the last",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "months.frost_month_rule",
+    "choice": "Claude's choice, owner-approved 2026-11-13, no published source: the band a typical year reaches (the frost Tmin overcounts cold nights against the station, CLAUDE.md, so the band carries that caveat)",
+    "value": "a month's band comes from its coldest night (frost Tmin, tmin_frost_c); a calendar month takes the band of its median coldest night over 2001-2025",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "months.cover_rule",
+    "choice": "Claude's choice, owner-approved 2026-11-13: growing -> crop, harvested -> partial, bare -> bare (contract words); HLS years only, like bare days (VALIDATION 3.10)",
+    "value": "the most common day label of the month in the HLS years (2014-2025) of the chosen season method",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "rotation_guess.rule",
+    "choice": "Claude's choice, owner-approved 2026-11-13: crop windows and stage lengths from config/crops.json (each with its source); green-up at the end of FAO-56's initial stage ('planting date to approximately 10% ground cover', FAO-56 ch. 6); only crops with stage lengths (the ones the twin can simulate) take part. The farmer confirms the guess on screen; NDVI cannot name a crop",
+    "value": "per slot (monsoon: peak June-November; winter: peak December-May), the crop with the smallest median distance over the HLS years 2014-2025; distance = days outside the green-up window (sowing + initial stage), the harvest window and the length range (crop days minus initial stage), summed with equal weights at the crop's best window",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "plans.max_seasons",
+    "choice": "Claude's choice, owner-approved 2026-11-13: up to three seasons a year (none of the library's crops leaves room for a fourth)",
+    "value": "3",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "plans.water_strict_when_falling",
+    "choice": "Claude's choice, owner-approved 2026-11-13, no published source (D7: the water score is 'made stricter when diary.groundwater.direction is falling'): irrigation counts 1.5 times in the water score while the regional groundwater is falling",
+    "value": "1.5",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "plans.cover_gap_rule",
+    "choice": "Claude's choice, owner-approved 2026-11-13 (CLAUDE.md 'the best cover the gap plan'; decision 6), fixed before the first run; chosen among rice plans (owner, decision 4). If it is rice then wheat, the plan is flagged: FAO's wheat window here is for irrigated wheat (decision 4)",
+    "value": "among the rice plans: the highest cover among plans that keep at least the current harvest (ties: higher harvest); if none, the highest cover",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "plans.third_plan_rule",
+    "choice": "Owner, 2026-11-13 (decision 5): option A, best in bad years among plans that keep at least today's cover, named 'Safest in bad years' (not 'follow the shift', since shift_days cannot be measured; revisit only if step 9's 2040 projections finish). The fallback to every rice plan is Claude's, fixed before the run. 'Other crops' was added by Claude AFTER the first run, which picked rice then wheat again with rice sown on 1 June instead of 15 June: the same rotation, while CLAUDE.md and the challenge ask for at least three rotations. Put to the owner",
+    "value": "'Safest in bad years': among the rice plans of the Pareto set that grow other crops than the current and the cover-the-gap plan and keep at least today's cover, the best 10th-percentile year (ties: higher mean harvest). If no Pareto plan qualifies, every rice plan is looked at. The cover-the-gap plan, too, grows other crops than the current plan",
+    "status": "Claude's choice, put to the owner"
+   }
+  ]
+ }
 }

@@ -113,7 +113,7 @@ def main(argv=None):
         "rain": (f"TEMPORARY: station rain (GHCN-Daily {field['validation_station']}), {inputs['date'].min().date()} to "
                  f"{inputs['date'].max().date()}; {n_filled} missing day(s) filled from POWER and flagged. Step 5 uses GPM."),
         "et0": "FAO-56 Penman-Monteith from the twin's weather table (station-corrected temperatures)",
-        "soil": "SoilGrids 2.0 cell 750 m from the field point (see data card)",
+        "soil": "SoilGrids 2.0, the nearest cell with values to the field (distance in the data card)",
         "water_source": f"{field.get('water_source') or 'unknown'}; treated as {'irrigated' if irrigated else 'rain-only'}",
         "start": "Dr = 0 on the first day (end of the monsoon, FAO-56: after heavy rain the root zone is near field capacity)",
         "plan": plan, "curve_numbers": cn,

@@ -782,7 +782,7 @@
    "labels": {
     "plan": {
      "about": "Plan names",
-     "maps_to": "plans[].name for ids current, cover_gap, follow_shift (CLAUDE.md 'Plans' step 4; ids proposed)",
+     "maps_to": "plans[].name for ids current, cover_gap, safest (owner's decision 5, 2026-11-13; follow_shift kept for a possible revisit after step 9's 2040 projections)",
      "items": {
       "current": {
        "en": "What you do now",
@@ -797,6 +797,11 @@
       "follow_shift": {
        "en": "Follow the changing rains",
        "ne": "बदलिँदो वर्षासँगै",
+       "ne_review": "needs native-speaker review"
+      },
+      "safest": {
+       "en": "Safest in bad years",
+       "ne": "खराब वर्षमा सबैभन्दा भरपर्दो",
        "ne_review": "needs native-speaker review"
       }
      }

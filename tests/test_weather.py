@@ -119,7 +119,7 @@ def test_et0_uses_corrected_temperature_and_records_the_elevation_used(built):
 def test_once_gpm_exists_the_three_sources_vote_and_gpm_supplies_the_rain(tmp_path):
     data = _inputs(tmp_path)
     dates = pd.date_range("2015-01-01", "2022-12-31")
-    gpm = pd.DataFrame({"date": dates, "rain_mm": 2.0})
+    gpm = pd.DataFrame({"date": dates, "rain_mm": 2.0, "product": "final"})
     gpm.loc[dates == pd.Timestamp("2019-03-01"), "rain_mm"] = 4.0        # GPM sides with the station
     gpm.to_parquet(data / "clean" / "demo" / "gpm.parquet", index=False)
     _gpm_card(data, FIELD["lat"], FIELD["lon"])
@@ -155,7 +155,7 @@ def _gpm_card(data, lat, lon):
 
 
 def _gpm_rain(data):
-    gpm = pd.DataFrame({"date": pd.date_range("2015-01-01", "2022-12-31"), "rain_mm": 2.0})
+    gpm = pd.DataFrame({"date": pd.date_range("2015-01-01", "2022-12-31"), "rain_mm": 2.0, "product": "final"})
     gpm.to_parquet(data / "clean" / "demo" / "gpm.parquet", index=False)
 
 
@@ -178,7 +178,7 @@ def test_gpm_rain_without_its_card_stops_the_build(tmp_path):
 def _gpm_with_gaps(data, n_gaps, year=2018):
     """GPM rain on every day except `n_gaps` days of `year`, which POWER then fills."""
     dates = pd.date_range("2015-01-01", "2022-12-31")
-    gpm = pd.DataFrame({"date": dates, "rain_mm": 2.0})
+    gpm = pd.DataFrame({"date": dates, "rain_mm": 2.0, "product": "final"})
     gpm.loc[gpm["date"].isin(pd.date_range(f"{year}-06-01", periods=n_gaps)), "rain_mm"] = np.nan
     gpm.to_parquet(data / "clean" / "demo" / "gpm.parquet", index=False)
     _gpm_card(data, FIELD["lat"], FIELD["lon"])
@@ -334,3 +334,41 @@ def test_power_fill_at_the_cap_passes_and_is_counted_per_year(tmp_path):
     assert r["max_filled_fraction_per_year"] == 0.05
     assert r["by_year"]["2018"] == {"days": 365, "filled": 18, "missing": 0, "fraction_filled": pytest.approx(18 / 365)}
     assert r["by_year"]["2017"]["filled"] == 0 and r["filled_outside_gpm_record"] == 0
+
+
+# ---- GPM break correction (owner's decision 1, 2026-11-13; rules.yaml gpm_series) ----
+
+def _gpm_stepped(data):
+    """GPM 2 mm a day in 2015-2016 and 4 mm a day from 2017 (Final), the last quarter of 2022 from Late."""
+    dates = pd.date_range("2015-01-01", "2022-12-31")
+    gpm = pd.DataFrame({"date": dates, "rain_mm": np.where(dates.year >= 2017, 4.0, 2.0),
+                        "product": np.where(dates >= pd.Timestamp("2022-10-01"), "late", "final")})
+    gpm.to_parquet(data / "clean" / "demo" / "gpm.parquet", index=False)
+    _gpm_card(data, FIELD["lat"], FIELD["lon"])
+
+
+def test_final_rain_from_2017_is_scaled_back_and_the_uncorrected_rain_is_kept(tmp_path):
+    """Factors 2/4 = 0.5 per month (February (56 + 57) / 2 / 112 over 2015-2016 vs 2017-2022: 0.504...), from Final
+    days only; the Late days (Oct-Dec 2022) are left as they are."""
+    data = _inputs(tmp_path)
+    _gpm_stepped(data)
+    out = w.build(FIELD, data_dir=data, rules=load_rules())
+    df, card = pd.read_parquet(out["table"]), json.loads(out["card"].read_text())
+    s = df.set_index("date")
+    assert s.loc["2016-12-31", "rain_mm"] == 2.0 and s.loc["2017-07-01", "rain_mm"] == pytest.approx(2.0)
+    assert s.loc["2017-07-01", "rain_uncorrected_mm"] == 4.0 and bool(s.loc["2017-07-01", "rain_break_corrected"])
+    assert s.loc["2022-11-01", "rain_mm"] == 4.0 and not bool(s.loc["2022-11-01", "rain_break_corrected"])
+    b = card["corrections"]["rain_break"]
+    assert b["applied"] and b["factors_by_month"]["Jul"] == 0.5 and b["days_not_scaled_after_start"] == {"final": 0, "late": 92}
+    assert "rain_uncorrected_mm" in card["source"] and "rain_break_corrected" in card["resolution"]
+
+
+def test_a_field_without_a_rain_check_finding_is_not_corrected(tmp_path):
+    data = _inputs(tmp_path)
+    _gpm_stepped(data)
+    rules = load_rules()
+    rules["gpm_series"]["correction_fields"] = ["somewhere_else"]
+    out = w.build(FIELD, data_dir=data, rules=rules)
+    df, card = pd.read_parquet(out["table"]), json.loads(out["card"].read_text())
+    assert (df["rain_mm"] == df["rain_uncorrected_mm"]).all() and not df["rain_break_corrected"].any()
+    assert card["corrections"]["rain_break"]["applied"] is False

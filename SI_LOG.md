@@ -447,3 +447,229 @@ were already in the working tree (7a992fe8) and were not re-applied.
    Recommendation: (a), checked against "about 10 June" and the GPM-break caveat.
 2. TODO-CONFIRM choices: 75% clear pixels, MODIS reliability 0 only, uncertain when observations are more than
    30 days apart, onset readings.
+
+## 2026-11-12 (late night): build step 6b, three season-detection methods (Claude Opus 5.5 via Claude Code, session 2f8edafe)
+
+### Owner decisions recorded first (pasted in the chat, 2026-11-12)
+- Commit `f37ecc6` (step 6a) pushed on the owner's word (768 tests on the snapshot; history scan clean).
+- **Firebase** project `khet-sathi-probe` ready (Spark, Singapore, anonymous sign-in on, clean-up off); web config in
+  `.env` (gitignored); the database refused an unsigned read and write. **Keys, approved in advance for step 10b**: two
+  keys, both limited to the Identity Toolkit and Token Service APIs; the website's also limited to the GitHub Pages
+  address; the probe's with no website limit. `scan_history.py` will let through the website key by its exact value
+  only; the probe key never enters the repository (CLAUDE.md step 10b).
+- **Onset rule kept as set in CLAUDE.md, no tuning to the results** (15- and 20-day versions as robustness checks).
+- **Flood rule unchanged**: 2006 and 2020 reported as "flagged, no recorded flood"; 2020 noted against the GPM wet
+  shift after 2017 that rain check B tests (VALIDATION 4.1).
+- Thresholds: the owner asked to see each with its source and approve them in one batch.
+
+### What SI did (tests first)
+- A research sub-agent opened the sources for the TODO-CONFIRM thresholds and the new season settings; Claude checked
+  the key quotes in the saved text (MOD13 Table 4, Killick et al. SIC, TIMESAT 4.4, MSLSP30NA 3.3, MCD12Q2 2.2) and
+  opened the DHM onset page itself (normal onset 13 June, eastern Nepal; latest 27 June 1982; withdrawal 2 October).
+  The sources are in rules.yaml; every choice stays TODO-CONFIRM until the batch.
+- `pipeline/diary/seasons.py` (threshold method, change-point method, labels, thinning, scoring, choice) and
+  `pipeline/ml/seasons.py` (season detective features, training, prediction), 19 tests in `tests/test_seasons.py`
+  (worked examples: 20% of a 64-day rise is day 73; PELT finds the kinks 60, 124, 188 of a clean series).
+- rules.yaml `season_detection`: the comparison design (held-out years, 16-day thinning, reference, 2-point margin)
+  was written **before** the comparison was first run. One miscount in its text ('2017-2025' for the years with 90+
+  clear observations; the rule gives 2018 and 2022-2025) was corrected afterwards; the rule itself was not changed.
+- `scripts/run_diary.py --steps seasons` writes `data/checks/demo/diary_seasons.json` and
+  `data/clean/demo/seasons_daily.parquet` (the chosen method's day labels, for step 6c's monthly cover).
+
+### Findings
+- Held-out mean scores (threshold / change-point / detective): 0.967 / 0.958 / 0.982.
+  The detective is highest but short of the 2-point margin, so **the threshold method is used** (VALIDATION 3.15).
+- Every HLS year has two seasons: winter green-up late Dec-Jan, peak March, end mid-May; monsoon green-up June-early
+  July, peak August, end late October. The winter season's mid-May end fits wheat better than the placeholder's potato
+  (to weigh in step 6c's rotation guess, not decided here).
+- NASA's MCD12Q2 amplitude rule (>= 0.1 and >= 35% of the series range) gives exactly the same seasons as the
+  unsourced 0.2.
+
+### Please review (owner)
+1. The threshold batch (each with its source, in the chat and in rules.yaml).
+2. The method page needs a contract field (CLAUDE.md SI component 1): proposal in the chat; nothing is added to the
+   schema without the owner's go.
+
+## 2026-11-13 (Friday, early): approvals applied, method page, build step 6c (Claude Opus 5.5 via Claude Code, session 2f8edafe)
+
+### Owner decisions (pasted in the chat)
+- **Every threshold with a published source approved**, including the sourced replacements Claude recommended:
+  onset look-ahead counted from the onset date (Moron et al. 2009; changes no year), uncertain bare days after a
+  20-day gap (NASA MSLSP30NA; was 30), the season amplitude rule of NASA MCD12Q2 (>= 0.1 and >= 35% of the 3-year
+  range; same seasons and scores), DHM's normal onset (13 June, eastern Nepal) as the onset sanity date. The
+  unsourced choices are listed separately for the owner (chat).
+- **Season detection agreed**: the threshold method stays (the AI did not beat it by the margin set in advance);
+  the full three-way comparison goes into VALIDATION.md and the method page (`method.season_detection`, new
+  contract key). Field memory (7b) stays on the plan.
+- **Rotation guess**: weigh the evidence fairly; if rice then wheat fits better, say so and use it.
+- A further list of accuracy upgrades (rain against DHM normals and CHIRPS, the GPM 2017 jump, seasons into the
+  replay, rice flooding evidence, MODIS-HLS harmonisation, ranges, method-page context), after the must-haves.
+  Four research sub-agents started on the parts that need sources (no repository edits).
+
+### What SI did (tests first)
+- `pipeline/diary/groundwater.py`, `trends.py`, `months.py`, `guess.py` with 18 tests (`tests/test_diary_6c.py`);
+  two of Claude's first expectations in those tests were wrong (a tercile count; exact ties in a sine series) and
+  were corrected after checking by hand, the code unchanged. rules.yaml `groundwater`, `trends`, `months`,
+  `rotation_guess` written before the first run; `trends.shift_days_unmeasurable_when` was set after seeing the
+  pinned onsets (said so in its source).
+- `scripts/run_diary.py --steps diary` writes `data/checks/demo/diary.json` and the GRACE card;
+  `build_field_json` now writes the real diary and the method page into `demo.json` (validated).
+
+### Findings
+- GRACE: falling -2.57 cm/yr (2002-2026, p about 0), regional. Frost check January 2010: high (PASS, one event).
+- Onset pinned at 15-17 May in 21 of 25 years: `shift_days` null. Hot days falling, heavy-rain days rising
+  (GPM caveat), dry spells no clear trend.
+- Rotation guess by the rule fixed in advance: **rice then potato**, but the winter slot is a near-tie with wheat
+  (72 vs 74 days); timing cannot separate them.
+- GitHub Pages: the four failed runs stop at `configure-pages` with "Not Found": Pages is not enabled on the
+  repository (`has_pages: false`). All four action versions exist (checkout v7.0.1, configure-pages v6.0.0,
+  upload-pages-artifact v5.0.0, deploy-pages v5.0.1 are the latest releases). Hand step for the owner.
+- **Slip, found by the full test suite and fixed:** Claude's new `groundwater:` block in rules.yaml repeated an existing
+  key, so YAML silently replaced the owner's GRACE rules (caveat, scale-factor decision M4), and the first diary run
+  re-read the raw GRACE file and overwrote `data/cards/demo/grace.json`. Fixed: the three new entries were merged into
+  the original block, the diary now reads `data/clean/demo/grace.parquet` from `pipeline/fetch/grace.py`, and the card
+  was rebuilt from the cached file (same trend). `tests/test_rules.py` should catch a repeated top-level key next time
+  (added).
+
+### Rain check B, first result (research sub-agent, 2026-11-13; Claude checked its tables)
+- Daily IMERG V07 Final and Late files have no uncalibrated field (DDS of a 2017-07-15 granule: precipitation,
+  MWprecipitation, counts, randomError, probabilityLiquidPrecipitation); the half-hourly files carry
+  precipitationUncal (V07 release notes; ATBD Table 5). Late V07 was reprocessed back to 1998 with the Final's
+  climatological gauge adjustment (release notes; ATBD Table 3).
+- **The 2017 jump coincides with the loss of gauges**: IMERG monthly gauge weight 96-97% (2001-2016) -> 56-72% (2017+),
+  equivalent gauges about 60 -> about 9; GPCC Full Data V2022 stations in the field's 1-degree box about 50 -> about 1
+  a month (2017-2020). Claude recomputed the yearly means from the saved tables. Confirmation (Final vs Late) and the
+  owner's other rain checks are still to run.
+
+
+### Upgrade items 3 and 6, sources checked (research sub-agent, 2026-11-13; Claude spot-checked the saved texts)
+- The owner's "Zhang et al. 2026, ESSD" is **Zhao, Zhang, Dong, Yang, Fan, Liu & Xiao (2026)**, "Mapping paddy rice
+  distribution and cropping intensity in South and Southeast Asia (1995-2024) at 30 m resolution", ESSD 18:5583-5599,
+  doi:10.5194/essd-18-5583-2026. Region: Vietnam, Thailand, Cambodia, Myanmar, Laos, Bangladesh, India, Pakistan
+  (**not Nepal**). Flooding rule (sec. 2.3.2): in the 90 days before each season's peak, LSWI + 0.05 >= EVI, with
+  EVI <= 0.35 and LSWI > 0.05. 83.74-87.60% is **overall accuracy** of the rice map (Table 3); rice producer's
+  accuracy 0.69-0.78; sec. 4.1: rain-fed rice 'often fail[s] to produce a clear flooding signal'.
+- Sci Rep 12:13210 (2022), doi:10.1038/s41598-022-17454-y (southern Punjab, Pakistan, 2020): abstract 'overall
+  accuracies ... 96% for Sentinel-2, 91.7% for Landsat-8, and 82.6% for MODIS' for a random-forest rice/non-rice map;
+  **its own error matrix gives 96.7% (Landsat-8) and 92.6% (MODIS)** (sub-agent's arithmetic; no correction found).
+  Rice-class F1 83.8 / 75.5 / 65.5. Mapping accuracies, not season-date accuracies.
+- HLS VI v2.0 User Guide: layers `.EVI.tif` and `.NDMI.tif`, int16, scale 0.0001, fill -19999; NDMI =
+  (NIR - SWIR1)/(NIR + SWIR1), the LSWI formula (L30 B5, B6; S30 B8A, B11). Not the HLS 'NDWI' layer.
+
+### Upgrade item 1b, CHIRPS and APHRODITE access (research sub-agent, 2026-11-13)
+- **CHIRPS v3.0** (released 2025-01-01; 0.05 deg; 60N-60S; daily `final` for 2025 exists). Use the daily **`rnl`**
+  variant: `sat` disaggregates pentads with IMERG Late V07 ('not independent validation', daily readme). Even `rnl`
+  is scaled by a 1991-2020 climatology that 'incorporate[s] IMERG v6 Final inputs' (chirps3 page), so its year-to-year
+  changes come from infrared cloud data and stations. CHC's Nepal station plot: about 55 stations a month in
+  2001-2010, about 2-10 from 2011, flat across 2017, so **CHIRPS has its own break in 2011** but can test GPM's 2017
+  jump. CHIRPS3 is public domain (CC0 waiver) per CHC; cite doi:10.15780/G2JQ0P and Funk et al. 2026, Sci Data 13:718.
+- Access with no new dependency: h5py + requests, reading only the field's chunks of the yearly netCDF-4 files
+  (about 2.1 GB, about 1,900 requests, 3-6 hours unattended; the server throttles with HTTP 429). Test read:
+  2020-07-15 = 5.31 mm at the field's cell; **2020 total 1,418 mm against GPM's 3,120 mm** (one year only).
+- **APHRODITE is not simple**: an ID and password by e-mail; 'shall not be redistributed ... through the Internet'
+  (clashes with the public repository and site); APHRO_MA V1901 ends in 2015. Not used.
+
+### Upgrade item 1, DHM normals and the rain comparison (2026-11-13)
+- A research sub-agent transcribed DHM's 1991-2020 normals (config/dhm_normals_1991_2020.csv, every number with its
+  document and page). Claude checked the Kathmandu Airport row against the PDF image (exact match, 1,502 mm).
+- `pipeline/checks/rain_check.py` (monthly climatology over complete months; Pettitt test) with 4 tests; three of
+  Claude's first test expectations were wrong (a row DHM leaves blank; a test series that covered March; Pettitt's
+  p for a 10/10 step is 0.0016) and were corrected after checking by hand. `scripts/run_rain_check.py` writes
+  `data/checks/demo/rain_check_b.json`.
+- Two corrections tested on held-out years against the airport station, **neither applied**: scale to Bhaktapur's
+  normals (helps 2017-2025, harms 2001-2016) or scale 2017-2025 back to GPM's own 2001-2016 months (best on held-out
+  months; flattens any real change across 2017). Owner's decision.
+
+### Soil kept: sources (research sub-agent, 2026-11-13; Claude checked the rows in the saved texts)
+- Crop C factors: Panagos et al. 2015b as reprinted in Benavidez et al. 2018 (HESS 22:6059, Table 9): rice 0.15,
+  wheat 0.2, maize 0.38, potatoes 0.34, dried pulses 0.32; finger millet 0.2 (Borrelli et al. 2017, Supp. Table 2,
+  cereal grains). Bare 1.0 by definition (Wischmeier & Smith 1978, AH 537). Panagos 2015 itself was not opened
+  (paywalled); no Nepal or Himalaya C table found.
+- Daily erosivity: R_day = 0.2686[1 + 0.5412 cos(pi j/6 - 7 pi/6)] P_day^1.7265 (Xie et al., in Yin et al. 2015,
+  HESS 19:4113, Table 3). Sensitivity exponent 1.81 (Richardson et al. 1983, via Sepaskhah & Panahi 2007).
+- With soil kept, rice then wheat (sown 15 Jun and 15 Oct) beats the current placeholder plan on all five scores.
+
+
+## 2026-11-13 (Friday, midday): the owner's decisions 1-6 applied, build step 7 exported (Claude Opus 5.5 via Claude Code, session 2f8edafe)
+
+What SI (Claude) generated, and what a person must still review:
+- **Rain fix (decision 1)**: `pipeline/twin/inputs.py` (`complete_month_totals`, `break_factors`, `apply_break_correction`,
+  `with_rain`), `pipeline/fetch/weather.py` `correct_gpm_break`, `pipeline/checks/rain_check.py`
+  (`holdout_break_correction`, `step_ratio`), the `--rain uncorrected` switch in the three runners, tests
+  (`tests/test_rain_break.py`, new cases in `tests/test_weather.py`, `tests/test_rain_check.py`). Two of Claude's
+  first test expectations were wrong (February in a leap year changes the factor to 28.5/56) and were corrected by
+  hand-checking. Claude's readings, written into rules.yaml before the Late check was read: only IMERG Final days are
+  scaled and set the factors (Oct-Dec 2025 come from Late), and only the demo field is corrected. With Final-only
+  factors October's factor is 0.80 (0.56 when the Late October 2025 storm was included) and November's 2.40 (1.79):
+  November rests on a few mm.
+- **Downloads (decisions 2-3)**: `pipeline/fetch/gpm_late.py` (IMERG Late 2014-2019, separate cache) and
+  `pipeline/fetch/chirps.py` with `pipeline/fetch/rangefile.py` (HTTP range reads of the yearly CHIRPS files, a
+  deadline of Saturday 08:00), `tests/test_chirps.py`.
+- **Plans (decisions 4-5)**: `score.choose_three`, `pick_safest`, `same_crops`; `scripts/run_plans.py` exports each
+  shown plan's replay. **After the first run** Claude added "the three plans grow different crops": the rule as
+  fixed picked rice then wheat twice (rice sown 15 Jun and 1 Jun). Put to the owner, with the name question
+  ("Safest in bad years" for rice then lentil, which is safer than today but not than rice then wheat).
+- **Words**: `pipeline/plans/explain.py` (conditions and placeholders from the numbers; no free text at export), new
+  template lines in `pipeline/words/tabs.json` (safest plan; rain fix in the unknown tab and on the method page;
+  wheat needs watering; lentil as the legume option; the two rice lines rewritten for the paddy rule of REVIEW_NOTES
+  H1, which the old lines no longer matched), registry entries, and the Nepali name and lines. **Every new English line
+  needs the owner's review** (pipeline/words/PREVIEW.md); **every Nepali line needs a native speaker's review**.
+- **Export**: `build_field_json` (`replay_rows`, `with_uncorrected`, `apply_plans`, `sources_block`,
+  `rain_correction_block`, `stated_choices`), schema keys `uncorrected_rain`, `score_uncorrected_rain`,
+  `method.rain_correction`, `method.choices`, mock and tests.
+- **Decision 6**: every TODO-CONFIRM in rules.yaml, METHOD_NOTES and VALIDATION now reads "Claude's choice,
+  owner-approved 2026-11-13"; they are listed on the method page (`method.choices`, built from rules.yaml).
+
+## 2026-11-13 (Friday, afternoon): independent review, fixes and accuracy tests (Claude Fable 5.2 via Claude Code, session 9f5addf3)
+
+An AI review asked for by the owner, in four phases. The session stopped once after Phase 1 (its usage limit) and
+went on later the same afternoon. Everything below was generated by SI; **no person has reviewed it yet.**
+
+**Phase 1, review (no edits).** One main session plus ten read-only sub-reviewers it started (twin physics; events
+and diary numbers; weather and corrections; the rain break; satellite greenness; plans; static data and the
+switch-off trace; export and site; security, licences and probe; documents). Each recomputed its slice with its own
+code from the primary sources and compared with the project's functions and stored outputs; the main session re-ran
+the main findings itself and wrote `REVIEW_2.md`. 305 project file hashes were identical before and after.
+
+**Phase 2, fixes (tests first; nothing that changes a method, rule, threshold or result).**
+- `pipeline/export/build_field_json.py`: `stated_choices` reads an approval however it is capitalised and lists a rule
+  "added by Claude" (5 approved choices had been exported as unapproved; `plans.third_plan_rule` was missing);
+  `sources_block` says what MODIS and SoilGrids are really used for and gives the soil cell's distance from its card.
+- `pipeline/diary/trends.py`, `scripts/run_diary.py`: `pinned_years` counts from each year's own 15 May (a leap-year
+  slip had stored 19 and 21 instead of 21 and 22); `without_years` and `rules.yaml trends.hot_day_caveat` (a label):
+  the hot-day trend is also given without POWER's faulty 2001-2003.
+- `pipeline/export/validate.py`: a plan without a replay and replay years that do not run year by year are refused;
+  `--final` (the freeze check). `pipeline/export/mock.py`: will not overwrite a file holding real results.
+- `pipeline/fetch/weather.py`: the cross-source flags are written into the GPM card too. `scripts/run_season.py`: a
+  stale soil label.
+- Rerun in place: the diary step (both rain versions), the weather build (table identical, cards updated), the
+  export. `demo.json` changed in two `sources` rows and in `method.choices` only; no number changed.
+- Documents: VALIDATION.md (about 30 rows corrected or added, new totals), DATA_AUDIT.md (stale lines, sections 4
+  and 5 rewritten, 1.16 and 1.17 added), METHOD_NOTES.md (items corrected, 35-41 added), README.md, CLAUDE.md
+  (factual lines only), CONTRACT_CHANGES.md, CREDITS.md.
+
+**Phase 3, accuracy and more data.**
+- New code, tests first: `pipeline/fetch/smap.py` and `scripts/run_smap_check.py` (SMAP cleaned; L4 monthly anomalies
+  against the twin's wetness); `pipeline/checks/rain_check.py` `ratio_to_gauges` and
+  `scripts/run_dhm_bulletin_check.py` (the twin's 2025 rain against DHM's own gauges); `pipeline/fetch/gauge_evidence.py`
+  (IMERG monthly gauge weight and GPCC station counts, fetched and carded, so the evidence for the 2017 break no
+  longer rests on numbers read by hand). With all 297 months in hand the gauge weight before 2017 is 96-98%, not 96-97%: `rules.yaml
+  gpm_series.break_evidence` and the method page were corrected (17 of 192 months are 98%). Data cards may now carry a
+  `summary` (`pipeline/fetch/guards.py`, test first).
+- Downloads: the eight SMAP L4 years already finished at AppEEARS (existing tasks; 16 MB); IMERG monthly subsets for
+  2001-2025 (GES DISC OPeNDAP, the project's Earthdata login); two GPCC decade files (DWD open data, 45 MB); six DHM
+  bulletins of 2025 (validation only, under `data/`, with a hand-transcribed table of 18 values, each re-read by the
+  main session in the bulletin text). No new account, no new dependency.
+- Runs in a private copy of the repository (nothing written to the project): the plan step under 13 perturbations
+  (soil water, ET0, root depth, groundwater, four rain variants) and the station switched off; results in
+  VALIDATION 4.4 and DATA_AUDIT section 4.
+- Not done, and why: HLS EVI and NDMI for the paddy-flooding test (about 3,000 more windowed reads and a new rule
+  for the rotation guess, which needs the owner's go; the monsoon half of the guess, rice, is already the robust
+  half).
+
+**Phase 4.** Feasibility and the ordered plan are at the end of `REVIEW_2.md`.
+
+**For a person to review.** `REVIEW_2.md` (its questions for the owner first); the new English sentences inside
+`sources` ("compared with HLS only; no number shown uses it"; "water the soil holds at field capacity and wilting
+point (machine-learning map); nearest cell with values, 859 m from the field"); `rules.yaml trends.hot_day_caveat`;
+every document edit listed above. No Nepali text and no farmer-facing tab or tip was changed by this session.

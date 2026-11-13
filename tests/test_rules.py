@@ -33,3 +33,10 @@ def test_a_rule_without_a_source_fails(tmp_path):
     p.write_text("x:\n  y: {value: 3}\n")
     with pytest.raises(RulesError, match="x.y"):
         load_rules(p)
+
+
+def test_a_repeated_key_fails_loudly(tmp_path):
+    f = tmp_path / "rules.yaml"
+    f.write_text("a:\n  x:\n    value: 1\n    source: s\na:\n  y:\n    value: 2\n    source: s\n")
+    with pytest.raises(RulesError, match="repeats the key 'a'"):
+        load_rules(f)

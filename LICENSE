@@ -19,3 +19,29 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------------------------------------------------------------------------------
+What this licence does not cover
+--------------------------------------------------------------------------------
+
+The MIT licence above covers the code written by the Khet Sathi team in this
+repository. It does not cover third-party data, values and texts that the
+repository contains or that its exports are derived from. Those keep their own
+terms; CREDITS.md lists each source and how to cite it. In particular:
+
+- config/dhm_normals_1991_2020.csv: climate normals (c) Department of Hydrology
+  and Meteorology (DHM), Government of Nepal, reproduced with attribution for
+  validation. DHM states no open licence.
+- The Kathmandu Airport station values behind the temperature correction (NOAA
+  GHCN-Daily, derived from NOAA's Global Summary of the Day). For data from
+  outside the United States the GSOD terms follow WMO Resolution 40: "the data
+  or any derived product shall not be provided to other users or be used for
+  the re-export of commercial services". The repository holds no station file;
+  the exports in site/data/ carry a correction fitted to that station.
+- Quotations from FAO, CGIAR-centre and NARC publications in pipeline/words/
+  (each with its source) and crop values taken from FAO publications in
+  config/crops.json: (c) their publishers. FAO material is commonly licensed
+  CC BY-NC-SA 3.0 IGO.
+- The files in site/data/ are derived from NASA data, ISRIC SoilGrids
+  (CC BY 4.0), ESA WorldCover (CC BY 4.0) and the sources above. Use them with
+  the attributions in CREDITS.md.

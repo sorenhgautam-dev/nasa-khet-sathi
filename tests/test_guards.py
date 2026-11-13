@@ -247,3 +247,11 @@ def test_write_card_writes_json_named_after_the_dataset(tmp_path):
     path = g.write_card(card, tmp_path)
     assert path == tmp_path / "power.json"
     assert json.loads(path.read_text()) == card
+
+
+def test_a_card_may_carry_a_summary_of_what_the_dataset_shows():
+    """REVIEW_2 M6: the gauge-evidence card holds the ranges that rules.yaml quotes, so they can be re-read."""
+    from pipeline.fetch import guards as g
+    base = {k: "x" for k in g.CARD_FIELDS}
+    card = g.make_card(**base, summary={"gauge_weight_before_pct": [96.0, 98.0]})
+    assert card["summary"] == {"gauge_weight_before_pct": [96.0, 98.0]}

@@ -20,5 +20,23 @@ def _values(node, path):
     raise RulesError(f"rule {'.'.join(path)} must be a mapping with value and source")
 
 
+class _NoDuplicateKeys(yaml.SafeLoader):
+    """YAML silently keeps the last of two equal keys; a rules file must never do that (2026-11-13: a repeated
+    'groundwater' block replaced the owner's GRACE rules)."""
+
+
+def _mapping(loader, node, deep=False):
+    seen = set()
+    for key_node, _ in node.value:
+        key = loader.construct_object(key_node, deep=deep)
+        if key in seen:
+            raise RulesError(f"rules file repeats the key '{key}' (line {key_node.start_mark.line + 1})")
+        seen.add(key)
+    return loader.construct_mapping(node, deep=deep)
+
+
+_NoDuplicateKeys.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _mapping)
+
+
 def load_rules(path=RULES_PATH):
-    return _values(yaml.safe_load(Path(path).read_text()) or {}, ())
+    return _values(yaml.load(Path(path).read_text(), Loader=_NoDuplicateKeys) or {}, ())

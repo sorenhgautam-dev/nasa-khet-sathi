@@ -103,3 +103,57 @@ def et0_choice_summary(dates, et0_used, et0_rh_held, capped):
                                    "et0_mm": float(a[i]), "et0_rh_held_mm": float(b[i])},
             "cap_days": int(cap.sum()),
             "cap_days_by_month": {int(m): int(v) for m, v in by_month_cap.items() if v > 0}}
+
+
+# ---------- GPM break correction (owner's decision 1, 2026-11-13; rules.yaml gpm_series) ----------
+# IMERG Final's monthly gauge input around the field collapses in January 2017 (VALIDATION 3.9b), so its rain jumps.
+# The twin's rain from 2017 is scaled month by month back to GPM's own 2001-2016 level; the uncorrected rain is kept
+# beside it (rain_uncorrected_mm) and every result that changes is shown as a range. This removes any real change in
+# rain across 2017 as well, by construction.
+
+MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def complete_month_totals(rain):
+    """Totals of the calendar months whose every day has a value: Series indexed by (year, month)."""
+    s = pd.Series(rain).sort_index()
+    key = [s.index.year, s.index.month]
+    tot, have = s.groupby(key).sum(min_count=1), s.groupby(key).count()
+    days = pd.Series([pd.Period(f"{y}-{m:02d}").days_in_month for y, m in tot.index], index=tot.index)
+    return tot[have == days]
+
+
+def break_factors(rain, ref_years, from_date):
+    """{month: factor}: the mean complete-month total of each calendar month over ref_years (inclusive) divided by
+    its mean over the months from from_date on. rain: Series by date, NaN on days that must not take part (other
+    products, filled days), so their months are not complete and drop out."""
+    tot = complete_month_totals(rain)
+    years = tot.index.get_level_values(0)
+    start = pd.Timestamp(from_date)
+    pre = tot[(years >= ref_years[0]) & (years <= ref_years[1])].groupby(level=1).mean()
+    post = tot[[pd.Timestamp(year=y, month=m, day=1) >= start for y, m in tot.index]].groupby(level=1).mean()
+    bad = [MONTH_NAMES[m - 1] for m in range(1, 13) if m not in pre.index or m not in post.index or not post[m] > 0]
+    if bad:
+        raise ValueError(f"no complete month (or no rain) in one of the two periods for {', '.join(bad)}: no factor")
+    return {m: float(pre[m] / post[m]) for m in range(1, 13)}
+
+
+def apply_break_correction(rain, factors, from_date, mask):
+    """(corrected Series, applied bool array): rain x factors[month] on days from from_date where mask is True;
+    every other day unchanged."""
+    s = pd.Series(rain).astype(float)
+    m = np.asarray(mask, dtype=bool) & (s.index >= pd.Timestamp(from_date)) & s.notna().to_numpy()
+    f = np.array([factors[mm] for mm in s.index.month], dtype=float)
+    return pd.Series(np.where(m, s.to_numpy() * f, s.to_numpy()), index=s.index), m
+
+
+def with_rain(weather, version):
+    """The weather table with rain_mm set to one rain version: 'corrected' (the twin's rain, as built) or
+    'uncorrected' (GPM as published, rain_uncorrected_mm), for the second run of every rain-based result."""
+    if version == "corrected":
+        return weather
+    if version == "uncorrected":
+        if "rain_uncorrected_mm" not in weather:
+            raise ValueError("the weather table has no rain_uncorrected_mm: rebuild it (pipeline.fetch.weather)")
+        return weather.assign(rain_mm=weather["rain_uncorrected_mm"])
+    raise ValueError(f"unknown rain version '{version}' (corrected or uncorrected)")

@@ -10,6 +10,9 @@ Dry run: rain is the validation station (GHCN-Daily) for runs of years with enou
 exercises the whole replay on real temperatures and ET0 and is labelled TEMPORARY. The export step
 refuses it (pipeline/export/build_field_json.py).
 
+Rain versions (owner's decision 1, 2026-11-13): --rain corrected (default; the twin's rain, GPM scaled back from
+2017) or --rain uncorrected (GPM as published), which writes to data/checks/<field>/rain_uncorrected/.
+
 Writes data/checks/<field>/replay.json (normal) or replay_station_dryrun.json (dry run). Each water case
 (rain-fed, irrigated) carries per season and per year: harvest, dry days, irrigation_mm (including an
 irrigated paddy's pond water) and pond_supply_mm (that paddy part), plus the events.
@@ -28,7 +31,7 @@ from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import events as ev  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
-from pipeline.twin.inputs import covered_year_runs  # noqa: E402
+from pipeline.twin.inputs import covered_year_runs, with_rain  # noqa: E402
 
 
 def _case(res):
@@ -55,10 +58,12 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--field", default="demo")
     ap.add_argument("--temporary-station-rain", action="store_true")
+    ap.add_argument("--rain", choices=("corrected", "uncorrected"), default="corrected")
     a = ap.parse_args(argv)
     field, rules, lib, data = load_field(a.field), load_rules(), load_crops(), REPO / "data"
     clean = data / "clean" / field["id"]
-    w = pd.read_parquet(clean / "weather.parquet")
+    w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain)
+    out_dir = data / "checks" / field["id"] / ("rain_uncorrected" if a.rain == "uncorrected" else "")
     soil = pd.read_parquet(clean / "soilgrids.parquet")
     try:
         rotation, rot_label = sim.rotation_for(field, rules)
@@ -98,13 +103,16 @@ def main(argv=None):
             return 2
         cases = run(w, rotation, lib, soil, cn, rules)
         labels["rain_source"] = "gpm"
+        labels["rain_version"] = (f"{a.rain}: " + ("GPM IMERG as published (rain_uncorrected_mm)" if a.rain == "uncorrected" else
+                                  "GPM IMERG with Final days from 2017 scaled back to GPM's own 2001-2016 level month by month "
+                                  "(owner's decision 1, 2026-11-13; rules.yaml gpm_series.correction)"))
         labels["rain_days"] = {k: int(v) for k, v in w["rain_source"].value_counts().items()}
         labels["partial_years"] = cases[export_case]["partial_years"]
         out = {"labels": labels, **cases,
                "export": {"labels": labels, "years": cases[export_case]["years"],
                           "irrigated_years": cases["irrigated"]["years"],
                           "events": cases[export_case]["events"]}}
-        path = data / "checks" / field["id"] / "replay.json"
+        path = out_dir / "replay.json"
     else:
         st = pd.read_parquet(clean / f"ghcn_{field['validation_station']}.parquet").set_index("date")["rain_mm"]
         pw = pd.read_parquet(clean / "power.parquet").set_index("date")["rain_mm"]

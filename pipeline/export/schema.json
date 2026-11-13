@@ -11,7 +11,8 @@
   "plans",
   "replay",
   "future",
-  "sources"
+  "sources",
+  "method"
  ],
  "properties": {
   "field": {
@@ -70,8 +71,11 @@
    ],
    "properties": {
     "shift_days": {
-     "type": "number",
-     "description": "Monsoon-onset trend over the record, days (Sen's slope x record length). Negative = earlier."
+     "type": [
+      "number",
+      "null"
+     ],
+     "description": "Monsoon-onset trend over the record, days (Sen's slope x record length). Negative = earlier. null = can't tell (the onset rule is pinned at its search start in most years, so its trend cannot show a shift; 2026-11-13)."
     },
     "bare_days": {
      "type": "integer",
@@ -191,6 +195,390 @@
    "minItems": 1,
    "items": {
     "$ref": "#/$defs/source"
+   }
+  },
+  "method": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "season_detection"
+   ],
+   "description": "Numbers for the site's method page (owner's go, 2026-11-13). Words come from pipeline/words at step 7.",
+   "properties": {
+    "season_detection": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "chosen",
+      "margin",
+      "held_out_years",
+      "thin_days",
+      "rule_methods_agree",
+      "methods"
+     ],
+     "description": "The three-way season-detection comparison (CLAUDE.md 'Field diary'; VALIDATION 3.15). No field-observed calendar exists, so scores show robustness to sparse data, not accuracy.",
+     "properties": {
+      "chosen": {
+       "enum": [
+        "threshold",
+        "changepoint",
+        "detective"
+       ]
+      },
+      "margin": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1,
+       "description": "A method replaces the threshold method only if its mean score beats it by at least this; fixed before the test."
+      },
+      "held_out_years": {
+       "type": "array",
+       "minItems": 1,
+       "items": {
+        "type": "integer",
+        "minimum": 2001,
+        "maximum": 2025
+       }
+      },
+      "thin_days": {
+       "type": "integer",
+       "minimum": 1,
+       "description": "In a held-out year, one clear image kept per this many days."
+      },
+      "rule_methods_agree": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1,
+       "description": "Share of days in the held-out years on which the threshold and change-point methods agree on all images: the reference days."
+      },
+      "methods": {
+       "type": "array",
+       "minItems": 3,
+       "maxItems": 3,
+       "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "id",
+         "si",
+         "score",
+         "by_year",
+         "start_diff_days",
+         "peak_diff_days",
+         "end_diff_days"
+        ],
+        "properties": {
+         "id": {
+          "enum": [
+           "threshold",
+           "changepoint",
+           "detective"
+          ]
+         },
+         "si": {
+          "type": "boolean",
+          "description": "true for the SI (AI) season detective."
+         },
+         "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Mean share of reference days labelled the same from the thinned year."
+         },
+         "by_year": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+           "type": "object",
+           "additionalProperties": false,
+           "required": [
+            "year",
+            "score"
+           ],
+           "properties": {
+            "year": {
+             "type": "integer"
+            },
+            "score": {
+             "type": "number",
+             "minimum": 0,
+             "maximum": 1
+            }
+           }
+          }
+         },
+         "start_diff_days": {
+          "type": [
+           "number",
+           "null"
+          ],
+          "minimum": 0,
+          "description": "Median days between this method's and the threshold method's season dates (null for the threshold method itself)."
+         },
+         "peak_diff_days": {
+          "type": [
+           "number",
+           "null"
+          ],
+          "minimum": 0,
+          "description": "Median days between this method's and the threshold method's season dates (null for the threshold method itself)."
+         },
+         "end_diff_days": {
+          "type": [
+           "number",
+           "null"
+          ],
+          "minimum": 0,
+          "description": "Median days between this method's and the threshold method's season dates (null for the threshold method itself)."
+         }
+        }
+       }
+      }
+     }
+    },
+    "rain_correction": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "applied",
+      "from",
+      "reference_years",
+      "factors",
+      "held_out",
+      "rain_mm_per_year",
+      "gauges",
+      "words"
+     ],
+     "description": "The GPM break correction for the method page (owner's decision 1, 2026-11-13; VALIDATION 3.9b). IMERG Final days from `from` are scaled month by month back to GPM's own level over reference_years. words: the plain-word explanation, English and Nepali.",
+     "properties": {
+      "applied": {
+       "type": "boolean"
+      },
+      "from": {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+      },
+      "reference_years": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 2,
+       "items": {
+        "type": "integer",
+        "minimum": 2001,
+        "maximum": 2025
+       }
+      },
+      "factors": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+       ],
+       "properties": {
+        "Jan": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Feb": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Mar": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Apr": {
+         "type": "number",
+         "minimum": 0
+        },
+        "May": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Jun": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Jul": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Aug": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Sep": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Oct": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Nov": {
+         "type": "number",
+         "minimum": 0
+        },
+        "Dec": {
+         "type": "number",
+         "minimum": 0
+        }
+       },
+       "description": "Multiplier of each calendar month's rain from `from` on."
+      },
+      "held_out": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "months",
+        "error_before_mm",
+        "error_after_mm",
+        "ratio_before",
+        "ratio_after"
+       ],
+       "description": "Test against the Kathmandu Airport station's complete months on years not used to fit the factors: mean monthly error and total over the station's total, before and after.",
+       "properties": {
+        "months": {
+         "type": "integer",
+         "minimum": 1
+        },
+        "error_before_mm": {
+         "type": "number"
+        },
+        "error_after_mm": {
+         "type": "number"
+        },
+        "ratio_before": {
+         "type": "number"
+        },
+        "ratio_after": {
+         "type": "number"
+        }
+       }
+      },
+      "rain_mm_per_year": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "reference",
+        "after_uncorrected",
+        "after_corrected",
+        "station_normal"
+       ],
+       "description": "Mean yearly rain in the field's GPM cell: over reference_years, and from `from` on as published and corrected; station_normal = DHM's 1991-2020 normal at Bhaktapur.",
+       "properties": {
+        "reference": {
+         "type": "number"
+        },
+        "after_uncorrected": {
+         "type": "number"
+        },
+        "after_corrected": {
+         "type": "number"
+        },
+        "station_normal": {
+         "type": "number"
+        }
+       }
+      },
+      "gauges": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "weight_before_pct",
+        "weight_after_pct",
+        "stations_before",
+        "stations_after"
+       ],
+       "description": "IMERG's monthly gauge weight in the cells around the field (range of yearly means) and GPCC stations a month in the field's 1-degree box, before and after `from`.",
+       "properties": {
+        "weight_before_pct": {
+         "type": "array",
+         "minItems": 2,
+         "maxItems": 2,
+         "items": {
+          "type": "number"
+         }
+        },
+        "weight_after_pct": {
+         "type": "array",
+         "minItems": 2,
+         "maxItems": 2,
+         "items": {
+          "type": "number"
+         }
+        },
+        "stations_before": {
+         "type": "number"
+        },
+        "stations_after": {
+         "type": "number"
+        }
+       }
+      },
+      "words": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "en",
+        "ne"
+       ],
+       "properties": {
+        "en": {
+         "type": "string",
+         "minLength": 1
+        },
+        "ne": {
+         "$ref": "#/$defs/ne_text"
+        }
+       }
+      }
+     }
+    },
+    "choices": {
+     "type": "array",
+     "minItems": 1,
+     "description": "Our stated choices that no published source fixes, for the method page (owner, 2026-11-13: keep them listed there). English, technical: the method page is for readers who want the details.",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "id",
+       "choice",
+       "value",
+       "status"
+      ],
+      "properties": {
+       "id": {
+        "type": "string",
+        "minLength": 1
+       },
+       "choice": {
+        "type": "string",
+        "minLength": 1
+       },
+       "value": {
+        "type": "string",
+        "minLength": 1
+       },
+       "status": {
+        "type": "string",
+        "minLength": 1
+       }
+      }
+     }
+    }
    }
   }
  },
@@ -490,6 +878,31 @@
       "$ref": "#/$defs/ne_text"
      },
      "description": "Nepali version of tips: one per English tip, in the same order (validate.py checks the count)."
+    },
+    "score_uncorrected_rain": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "harvest",
+      "water",
+      "cover",
+      "soil_kept"
+     ],
+     "description": "The plan's scores with GPM's rain as published, without the 2017 correction (owner's decision 1, 2026-11-13). Present only when a score differs; show score and this as a range.",
+     "properties": {
+      "harvest": {
+       "$ref": "#/$defs/pct"
+      },
+      "water": {
+       "$ref": "#/$defs/pct"
+      },
+      "cover": {
+       "$ref": "#/$defs/pct"
+      },
+      "soil_kept": {
+       "$ref": "#/$defs/pct"
+      }
+     }
     }
    }
   },
@@ -540,6 +953,51 @@
        "type": "integer",
        "minimum": 0,
        "maximum": 366
+      }
+     }
+    },
+    "uncorrected_rain": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "harvest",
+      "dry_days",
+      "event"
+     ],
+     "description": "The same year run with GPM's rain as published, without the 2017 correction (owner's decision 1, 2026-11-13: the rain gauges behind NASA's correction stopped reporting around this field in January 2017). Present only in years where it changes harvest, dry_days, event or the irrigated case; the year's own values use the corrected rain. Show the two as a range (e.g. a basket from the lower to the higher harvest).",
+     "properties": {
+      "harvest": {
+       "$ref": "#/$defs/pct"
+      },
+      "dry_days": {
+       "type": "integer",
+       "minimum": 0,
+       "maximum": 366
+      },
+      "event": {
+       "enum": [
+        "none",
+        "drought",
+        "flood"
+       ]
+      },
+      "irrigated": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "harvest",
+        "dry_days"
+       ],
+       "properties": {
+        "harvest": {
+         "$ref": "#/$defs/pct"
+        },
+        "dry_days": {
+         "type": "integer",
+         "minimum": 0,
+         "maximum": 366
+        }
+       }
       }
      }
     }

@@ -15,6 +15,9 @@
 2. Rain (D6, D): GPM IMERG (data/clean/<field>/gpm.parquet) with POWER as fill-in only; until GPM is
    fetched, rain is missing. POWER may fill at most rules.yaml power_rain.max_filled_fraction_per_year of
    any year's days inside GPM's own record, or the build fails (REVIEW_NOTES M2); counts per year in the card.
+   GPM break (owner's decision 1, 2026-11-13; rules.yaml gpm_series.correction): IMERG Final days from
+   2017-01-01 are scaled month by month back to GPM's own 2001-2016 level (rain_mm, the twin's rain;
+   rain_break_corrected flags the days); the rain as published is kept as rain_uncorrected_mm for the second run.
 3. Spikes (B): flags from every rain source pair, written to this card and to each source's card.
 4. ET0 (step 3): FAO-56 Penman-Monteith from the corrected temperatures. Humidity (owner decision,
    2026-11-12, REVIEW_NOTES M6): the actual vapour pressure is held from POWER (RH2M with POWER's own
@@ -82,7 +85,7 @@ def _read_card(path):
     return json.loads(Path(path).read_text()) if Path(path).exists() else {}
 
 
-def column_sources(df, station_id, corrections, frost_method, gpm_card, n_filled, elev_m):
+def column_sources(df, station_id, corrections, frost_method, gpm_card, n_filled, elev_m, break_info=None):
     """Golden rule 12e (REVIEW_NOTES M9): {column: source} and {column: resolution} for every column but date."""
     st = f"NOAA GHCN-Daily {station_id} (ground station)" if station_id else None
 
@@ -112,7 +115,12 @@ def column_sources(df, station_id, corrections, frost_method, gpm_card, n_filled
         "tmin_frost_corrected": flag + ": True where a correction was applied to tmin_frost_c",
         "rh_pct": f"{POWER_SRC}, RH2M, not corrected (relative to POWER's own temperatures)",
         "ws2m_ms": f"{POWER_SRC}, WS2M", "rs_mj_m2_day": f"{POWER_SRC}, ALLSKY_SFC_SW_DWN",
-        "rain_mm": rain, "rain_source": flag + ": gpm, power_fill or missing", "rain_filled": flag + ": True where POWER filled",
+        "rain_mm": rain + (("; IMERG Final days from " + str(break_info.get("from")) + " scaled month by month back to GPM's own "
+                           f"{break_info.get('reference_years')} level (owner's decision 1, 2026-11-13; rules.yaml gpm_series.correction; "
+                           "factors in corrections.rain_break)") if break_info else ""),
+        "rain_uncorrected_mm": rain + "; as published, without the break correction (the uncorrected run)",
+        "rain_break_corrected": flag + ": True where the GPM break correction scaled the day",
+        "rain_source": flag + ": gpm, power_fill or missing", "rain_filled": flag + ": True where POWER filled",
         "ea_kpa": f"derived, model-based: from {POWER_SRC} RH2M, T2M_MAX, T2M_MIN (FAO-56 eq. 19), capped at e0(tmin_c)",
         "ea_capped": flag + ": True where ea_kpa is capped at e0(tmin_c)",
         "et0_mm": ("derived, model-based: FAO-56 Penman-Monteith (pipeline/twin/et0.py) from tmax_c, tmin_c, ea_kpa, "
@@ -121,16 +129,51 @@ def column_sources(df, station_id, corrections, frost_method, gpm_card, n_filled
     }
     res = {"tmax_c_power": POWER_MET_RES, "tmin_c_power": POWER_MET_RES, "tmax_c": met_corr, "tmin_c": met_corr,
            "tmin_frost_c": met_corr, "rh_pct": POWER_MET_RES, "ws2m_ms": POWER_MET_RES, "rs_mj_m2_day": POWER_SOLAR_RES,
-           "rain_mm": rain_res, "ea_kpa": POWER_MET_RES + " (corrected Tmin for the cap)",
+           "rain_mm": rain_res, "rain_uncorrected_mm": rain_res, "ea_kpa": POWER_MET_RES + " (corrected Tmin for the cap)",
            "et0_mm": f"mixed: {met_corr}; solar {POWER_SOLAR_RES}", "et0_rh_held_mm": f"mixed: {met_corr}; solar {POWER_SOLAR_RES}"}
     for k in ("tmax_corrected", "tmin_corrected", "tmin_frost_corrected", "ea_capped"):
         res[k] = "per day, as the column it flags"
-    for k in ("rain_source", "rain_filled"):
+    for k in ("rain_source", "rain_filled", "rain_break_corrected"):
         res[k] = "per day, as rain_mm"
     missing = [c for c in df.columns if c != "date" and (c not in src or c not in res)]
     if missing:
         raise g.DataGuardError(f"weather columns without a source or resolution (golden rule 12e): {missing}")
     return ({c: src[c] for c in df.columns if c != "date"}, {c: res[c] for c in df.columns if c != "date"})
+
+
+def correct_gpm_break(rain, gpm, rule, field_id):
+    """Owner's decision 1, 2026-11-13 (rules.yaml gpm_series.correction): the merged rain table gets
+    rain_uncorrected_mm (as published) and rain_break_corrected; rain_mm becomes the corrected rain. Only GPM days
+    of the products in correction_products take part, in the factors and in the scaling. Returns (table, card info)."""
+    rain = rain.copy()
+    rain["rain_uncorrected_mm"] = rain["rain_mm"]
+    rain["rain_break_corrected"] = False
+    if gpm is None:
+        return rain, None
+    if field_id not in rule["correction_fields"]:
+        return rain, {"applied": False, "status": f"not applied: field '{field_id}' has no rain check B finding of the "
+                                                  "break (rules.yaml gpm_series.correction_fields)"}
+    d = pd.DatetimeIndex(rain["date"])
+    prod = gpm.set_index("date")["product"].reindex(d).astype(str)
+    use = (rain["rain_source"].astype(str).to_numpy() == "gpm") & prod.isin(rule["correction_products"]).to_numpy()
+    rs = pd.Series(rain["rain_mm"].to_numpy(float), index=d)
+    ref = tuple(rule["correction_reference_years"])
+    factors = inputs.break_factors(rs.where(use), ref, rule["correction_from"])
+    corrected, applied = inputs.apply_break_correction(rs, factors, rule["correction_from"], use)
+    g.assert_in_range(corrected.to_numpy(), "rain_mm", "rain_mm (break-corrected)")
+    rain["rain_mm"], rain["rain_break_corrected"] = corrected.to_numpy(), applied
+    after = d >= pd.Timestamp(rule["correction_from"])
+    yrs = sorted(set(d[after].year))
+    info = {"applied": True, "method": rule["correction"], "decision": "Owner's decision 1, 2026-11-13 (VALIDATION 3.9b)",
+            "from": rule["correction_from"], "reference_years": list(ref), "products": list(rule["correction_products"]),
+            "factors_by_month": {inputs.MONTH_NAMES[m - 1]: round(f, 3) for m, f in factors.items()},
+            "days_scaled": int(applied.sum()),
+            "days_not_scaled_after_start": {k: int(((~applied) & after & (prod.to_numpy() == k)).sum())
+                                            for k in sorted(set(prod[after]))},
+            "mean_yearly_mm_from_start": {"uncorrected": round(float(rs[after].sum() / len(yrs)), 1),
+                                          "corrected": round(float(corrected[after].sum() / len(yrs)), 1)},
+            "caveat": rule["trend_caveat"]}
+    return rain, info
 
 
 def build(field, data_dir=REPO / "data", rules=None):
@@ -231,6 +274,8 @@ def build(field, data_dir=REPO / "data", rules=None):
                   "GPM not fetched yet: rain is missing on every day and nothing is filled (decision D)",
         "gpm_record": fills["primary_record"], "by_year": fills["by_year"],
         "filled_outside_gpm_record": fills["filled_outside_primary_record"]}
+    rain, break_info = correct_gpm_break(rain, gpm, rules["gpm_series"], fid)
+    corrections["rain_break"] = break_info or {"applied": False, "status": "no GPM record: nothing to correct"}
     df = df.merge(rain, on="date")
 
     sources = {"power": power[["date", "rain_mm"]]}
@@ -268,7 +313,8 @@ def build(field, data_dir=REPO / "data", rules=None):
     out = clean / "weather.parquet"
     n_filled = int(df["rain_filled"].sum())
     source, resolution = column_sources(df, station_id if station is not None else None, corrections, frost_method,
-                                        _read_card(cards / "gpm.json") if gpm is not None else None, n_filled, elev)
+                                        _read_card(cards / "gpm.json") if gpm is not None else None, n_filled, elev,
+                                        break_info if (break_info or {}).get("applied") else None)
     df.to_parquet(out, index=False)
     card = g.make_card(
         dataset="weather", product="Twin input weather (derived from the sources below)", version="pipeline 2026-11-11",
@@ -284,7 +330,8 @@ def build(field, data_dir=REPO / "data", rules=None):
                + " ET0: FAO-56 Penman-Monteith (pipeline/twin/et0.py) from corrected temperatures, with the actual "
                "vapour pressure held from POWER and capped at e0(tmin_c) (corrections.ea_kpa)."))
     card_path = g.write_card(card, cards)
-    for name, path in (("power", cards / "power.json"), ("station", cards / f"ghcn_{station_id}.json")):
+    for name, path in (("power", cards / "power.json"), ("station", cards / f"ghcn_{station_id}.json"),
+                       ("gpm", cards / "gpm.json")):       # decision B: into EACH source's card (REVIEW_2 M9)
         if path.exists():
             g.annotate_card(path, "cross_source_flags", [f for f in flags if name in (f["high_source"], f["low_source"])])
     return {"table": out, "card": card_path, "card_data": card}
@@ -305,6 +352,10 @@ def main(argv=None):
     print(f"ET0 mean annual: {e['et0_compare']['mean_annual_mm']['et0_mm']:.0f} mm (ea held from POWER, capped; used), "
           f"{e['et0_compare']['mean_annual_mm']['et0_rh_held_mm']:.0f} mm (RH held); cap binds on {e['cap_days']} day(s)")
     r = c["corrections"]["rain_mm"]
+    b = c["corrections"]["rain_break"]
+    if b.get("applied"):
+        print(f"GPM break correction from {b['from']}: factors {b['factors_by_month']}; {b['days_scaled']} days scaled; "
+              f"mean yearly rain from then {b['mean_yearly_mm_from_start']}; not scaled {b['days_not_scaled_after_start']}")
     print(f"rain: {r['status']}; POWER-filled days by year: "
           + str({y: v['filled'] for y, v in r['by_year'].items() if v['filled']}))
     print(f"Tmin above Tmax: {c['corrections']['tmin_not_above_tmax']['days']}")
