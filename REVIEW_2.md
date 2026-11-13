@@ -498,12 +498,12 @@ Nothing found suggests a threshold was tuned to pass a check and then hidden.
 - **L7. Probe bridge.** A pulled USB cable ends `robot/bridge.py:114-117` with a traceback and leaves a stale
   `live.json`; `time` has no UTC offset; section `s99` is accepted. Whether the DS18B20 is in the soil ("soil
   temperature") and how probe moisture (0% air, 100% water) maps to the twin's wetness are not stated. OPEN for step
-  10.
+  10. **FIXED 2026-11-14 (owner's probe brief): a pulled cable gives one plain message and marks `live.json` stale (also after 10 s of silence); parts the field does not have are refused (from `sections.json`); the sketch shows one DS18B20 on GPIO4 and cannot say whether it sits in soil or air (VALIDATION 5.x). The mapping to soil water waits for the team's bench test (`robot/CUPS_PROTOCOL.md`).**
 - **L8. Requirements.** `scipy` and `affine` are imported but only installed as dependencies of other packages;
   `xarray` and `flask` are pinned but never imported. Changing pins is the owner's. **Noted in CREDITS 2026-11-13.**
 - **L9. Leftovers.** `scripts/run_season.py:116` hard-codes "750 m"; `diary_onset.json` `labels.rule` says
   "TODO-CONFIRM"; `rules.yaml:234` says "about 10 June"; `SI_LOG.md:162,163,165` contain an absolute home path
-  (already public). **`run_season.py` and the `rules.yaml` comment FIXED 2026-11-13; the rest OPEN.**
+  (already public). **`run_season.py` and the `rules.yaml` comment FIXED 2026-11-13; the SI_LOG home paths FIXED 2026-11-14 (now `~/`); `diary_onset.json` TODO-CONFIRM OPEN.**
 - **L10. Onset robustness runs cannot show robustness.** With a 20-day look-ahead that starts on a wet day, a 15- or
   20-day dry spell is nearly impossible (`pipeline/diary/onset.py:50-54`); they differ from the main rule in 2007
   only. The dry-spell trend depends on where the year is cut (+0.69/yr p 0.052 by calendar year; +0.50, p 0.49
@@ -512,7 +512,7 @@ Nothing found suggests a threshold was tuned to pass a check and then hidden.
 - **L11. ECOSTRESS is unused (and rightly not in `sources`), but five traps wait for step 8:** 742 of 769 LST
   granules are V002; V002 never flags cloud on a valid pixel while V003 does on 10.6%; "valid" LST runs 14.6 K to
   1,306 K; 119 overpass times have two or three product iterations; one 70 m pixel centre lies in the field, so
-  10 m sections cannot differ by ECOSTRESS. OPEN (recorded in DATA_AUDIT 1.8).
+  10 m sections cannot differ by ECOSTRESS. OPEN (recorded in DATA_AUDIT 1.8). **FIXED 2026-11-14: the five traps handled in `pipeline/fetch/ecostress.py` (DATA_AUDIT 1.8); only 72 clear ESI overpasses survive, 4 seasons per slot against the 6 the pre-declared rule needs, so ECOSTRESS stays a check (VALIDATION 4.2e) and earns no diary line.**
 - **L12. Workflow.** `pages.yml` publishes without validating `site/data` or checking `site/index.html`. Owner's call.
 - **L13. Latent.** `pipeline/plans/events.py:31` groups seasons by crop only (a crop grown twice a year would be
   ranked across both slots; no exported plan does). `weather.build` lets a NaN pass (the stop comes later, in

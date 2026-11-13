@@ -326,15 +326,15 @@ square (candidate 1 of the demo's rule with the zone's seasons; METHOD_NOTES 86)
 | Dataset | Product, access | State (2026-11-14 night) | Notes |
 | --- | --- | --- | --- |
 | ESA WorldCover | v200 2021, tile S21E045, box window (no login) | done | 60.5% cropland, 26.7% grassland, 8.2% built-up of 196,992 pixels |
-| HLS-VI L30 + S30 | v2.0 windows of tile T38KQE (`cogwindows.py`); 2023-2025 first (`--since`), then 2013-2025 | 2023-2025 done (124 of 130 L30, 224 of 225 S30: 7 failures retried by the full run); full record running | 368 L30 + 638 S30 granules in the box; one tile, no overlap |
+| HLS-VI L30 + S30 | v2.0 windows of tile T38KQE (`cogwindows.py`); 2023-2025 first (`--since`), then 2013-2025 | done: 368 of 368 L30, 638 of 638 S30 (2013-04 to 2025-12; 2023-2025 first; 21 failed reads all succeeded on a retry); cards written | one tile, no overlap; the windows share one grid (two spellings of the same UTM 38 CRS, as on the demo) |
 | GPM IMERG daily | V07 Final through 2025-09-30, Late for Oct-Dec 2025 (as on the demo), OPeNDAP box subsets | running | the field's 0.1 deg cell is the origin's; UTC days = 03:00-03:00 local time (UTC+03:00) |
-| CHIRPS v3.0 `rnl` | yearly global files, range reads of the box's cells | running | checks only |
+| CHIRPS v3.0 `rnl` | yearly global files, range reads of the box's cells | done: 2001-2025 (25 years) | checks only. Mean 1,446 mm a year at the field's cell; wet November-March (January 340 mm), dry May-September (5-15 mm a month) |
 | NASA POWER | point at the field, 2001-2025 | done (9,131 days, no fills, no range warnings) | cell elevation 1,425 m |
 | NASADEM | NASADEM_HGT v001, one tile | done | field 1,249 m (4 pixels, 1,248-1,250 m), slope 2.4 deg |
 | SoilGrids 2.0 | WCS maps of the box (36) | done | the field's own cell has a prediction (22 of 255 box cells have none); water held for plants (0-1 m) 146 mm at the field, 85-156 mm within 2 km |
-| Gauge evidence | GPM_3IMERGM V07 gauge weight (3 x 3 cells) and GPCC V2022 station counts; the two global GPCC files are read from the demo's folder, not downloaded again | running | checks only (rain check B break test) |
-| GRACE/GRACE-FO | the one global file held in `data/raw/grace/demo/`, reused | pending (driver) | regional context |
-| FAOSTAT | the bulk file held; Madagascar (area 129): rice, potato, wheat yields | pending (driver) | validation only |
+| Gauge evidence | GPM_3IMERGM V07 gauge weight (3 x 3 cells) and GPCC V2022 station counts; the two global GPCC files are read from the demo's folder, not downloaded again | done: 297 of 297 months (2001-01 to 2025-09) | checks only. **Never gauge-dominated here:** the field cell's gauge weight is 22-62% a month in 2001-2016 and 37-65% from 2017 (yearly 40.5-54.7%); GPCC stations in the 1-degree box: 1.7 a month in 2011-2016, 1.2 in 2017-2020 |
+| GRACE/GRACE-FO | the one global file held in `data/raw/grace/demo/`, reused (not downloaded again) | done: 261 months, 2002-04 to 2026-09 | regional context; cell 19.0-18.5 S, 47.0-47.5 E; unscaled trend -0.43 cm a year (OLS, for the record) |
+| FAOSTAT | the bulk file held; Madagascar (area 129): rice, potato, wheat yields | done: 72 rows, 2001-2024 (flags A 22, E 49, X 1) | validation only; national means rice 2,894, potato 5,914, wheat 2,387 kg/ha (never shown to farmers) |
 | GHCN-Daily | MA000067083 Antananarivo/Ivato, 7.4 km | done (2001-01-01 to 2025-08-23) | **validation only** (no `correction_label`, so no decision-A correction). Patchy: rain records per year 84-328 (over 300 only in 2003-2004); source flags S (2,697 rain records) and I (647) |
 | Not fetched | MODIS, SMAP, ECOSTRESS (no number shown abroad uses them); NEX-GDDP (its own fetcher, another piece); DHM normals (Nepal only) | | |
 

@@ -117,7 +117,7 @@
   "status_date": "2026-11-03"
  },
  "diary": {
-  "shift_days": null,
+  "shift_days": -2.2,
   "bare_days": 62,
   "guess": [
    "rice",
@@ -237,7 +237,61 @@
     "cover": "bare",
     "cover_sure": 0.92
    }
-  ]
+  ],
+  "shift_days_low": -11.5,
+  "shift_days_high": 7.7,
+  "shift_source": {
+   "name": "DHM (Department of Hydrology and Meteorology, Government of Nepal)",
+   "product": "Monsoon onset dates, entry into eastern Nepal (Monsoon Onset and Withdrawal date information, Table 1)",
+   "resolution": "one date a year for Nepal (eastern Nepal; Kathmandu a few days later)",
+   "years": "2001-2024",
+   "type": "station"
+  },
+  "shift_note": {
+   "en": [
+    "The rains start when they used to.",
+    "No clear change since 2001.",
+    "From Nepal's weather office records.",
+    "Three independent records agree."
+   ],
+   "ne": [
+    "मनसुन पहिलेकै समयमा सुरु हुन्छ।",
+    "सन् २००१ यता स्पष्ट फरक छैन।",
+    "स्रोत: जल तथा मौसम विज्ञान विभाग।",
+    "तीनवटा छुट्टाछुट्टै अभिलेख एउटै कुरा भन्छन्।"
+   ]
+  },
+  "monsoon_start": {
+   "usual_from": "06-10",
+   "usual_to": "06-16",
+   "median": "06-13",
+   "late_after": "06-20",
+   "late_years": [
+    2009
+   ],
+   "late_share": 0.042,
+   "years": [
+    2001,
+    2024
+   ],
+   "source": "DHM",
+   "words": {
+    "en": [
+     "Rains usually reach Nepal 10–16 June.",
+     "Here, they come a few days later.",
+     "In 24 years, 1 came after 20 June.",
+     "Late year: 2009."
+    ],
+    "ne": [
+     "मनसुन प्रायः यो बेला नेपाल आइपुग्छ।",
+     "जेठ २७ देखि असार २ तिर (जुन १०–१६)।",
+     "यहाँ केही दिनपछि आइपुग्छ।",
+     "२४ वर्षमा १ पटक ढिलो आयो।",
+     "ढिलो भनेको असार ६ तिर (जुन २०) पछि।",
+     "ढिलो वर्ष: २००९।"
+    ]
+   }
+  }
  },
  "plans": [
   {
@@ -288,7 +342,29 @@
    "tips_ne": [
     "आलुलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
     "मंसिर (नोभेम्बर–डिसेम्बर)मा खाली माटोलाई परालले ढाक्नुहोस्।"
-   ]
+   ],
+   "future": {
+    "harvest": [
+     71
+    ],
+    "harvest_low": [
+     67
+    ],
+    "harvest_high": [
+     78
+    ]
+   },
+   "future_uncorrected_rain": {
+    "harvest": [
+     72
+    ],
+    "harvest_low": [
+     67
+    ],
+    "harvest_high": [
+     78
+    ]
+   }
   },
   {
    "id": "cover_gap",
@@ -336,7 +412,29 @@
    },
    "tips_ne": [
     "गहुँलाई फागुन (फेब्रुअरी–मार्च)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।"
-   ]
+   ],
+   "future": {
+    "harvest": [
+     88
+    ],
+    "harvest_low": [
+     85
+    ],
+    "harvest_high": [
+     93
+    ]
+   },
+   "future_uncorrected_rain": {
+    "harvest": [
+     89
+    ],
+    "harvest_low": [
+     86
+    ],
+    "harvest_high": [
+     93
+    ]
+   }
   },
   {
    "id": "safest",
@@ -384,7 +482,29 @@
    },
    "tips_ne": [
     "मसुरलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।"
-   ]
+   ],
+   "future": {
+    "harvest": [
+     80
+    ],
+    "harvest_low": [
+     76
+    ],
+    "harvest_high": [
+     85
+    ]
+   },
+   "future_uncorrected_rain": {
+    "harvest": [
+     80
+    ],
+    "harvest_low": [
+     77
+    ],
+    "harvest_high": [
+     85
+    ]
+   }
   }
  ],
  "replay": {
@@ -1487,7 +1607,77 @@
    }
   ]
  },
- "future": null,
+ "future": {
+  "years": [
+   2040
+  ],
+  "period": "2026-2040",
+  "models": [
+   "KACE-1-0-G",
+   "CanESM5",
+   "MPI-ESM1-2-LR",
+   "MIROC6",
+   "INM-CM5-0",
+   "INM-CM4-8",
+   "EC-Earth3",
+   "CMCC-ESM2",
+   "EC-Earth3-Veg-LR",
+   "TaiESM1",
+   "HadGEM3-GC31-LL",
+   "UKESM1-0-LL",
+   "ACCESS-ESM1-5",
+   "ACCESS-CM2",
+   "IPSL-CM6A-LR",
+   "GFDL-CM4",
+   "BCC-CSM2-MR",
+   "GFDL-ESM4",
+   "MRI-ESM2-0",
+   "CNRM-ESM2-1",
+   "CNRM-CM6-1",
+   "MPI-ESM1-2-HR",
+   "NorESM2-MM"
+  ],
+  "scenarios": [
+   "ssp245",
+   "ssp585"
+  ],
+  "nothing_changes": {
+   "harvest": [
+    71
+   ],
+   "harvest_low": [
+    67
+   ],
+   "harvest_high": [
+    78
+   ]
+  },
+  "with_plan": {
+   "harvest": [
+    88
+   ],
+   "harvest_low": [
+    85
+   ],
+   "harvest_high": [
+    93
+   ]
+  },
+  "words": {
+   "en": [
+    "Climate models show the years to 2040.",
+    "Each model shows a slightly different future.",
+    "The range spans the lowest to highest.",
+    "The real future could still fall outside."
+   ],
+   "ne": [
+    "जलवायु मोडेलहरूले सन् २०४० सम्मका वर्ष देखाउँछन्।",
+    "हरेक मोडेलले अलि फरक भविष्य देखाउँछ।",
+    "दायरा सबैभन्दा कमदेखि सबैभन्दा बढीसम्म हो।",
+    "साँचो भविष्य यो दायराबाहिर पनि पर्न सक्छ।"
+   ]
+  }
+ },
  "sources": [
   {
    "name": "GPM IMERG",
@@ -1550,6 +1740,20 @@
    "product": "FAO-56 soil water, FAO-33 harvest, from the data above",
    "resolution": "the field",
    "years": "2001-2025",
+   "type": "model"
+  },
+  {
+   "name": "DHM (Department of Hydrology and Meteorology, Government of Nepal)",
+   "product": "Monsoon onset dates, entry into eastern Nepal (Monsoon Onset and Withdrawal date information, Table 1)",
+   "resolution": "one date a year for Nepal (eastern Nepal; Kathmandu a few days later)",
+   "years": "2001-2024",
+   "type": "station"
+  },
+  {
+   "name": "NEX-GDDP-CMIP6",
+   "product": "daily, bias-corrected and downscaled (BCSD), v2.0",
+   "resolution": "0.25 deg",
+   "years": "1995-2014 and 2026-2040",
    "type": "model"
   }
  ],
@@ -2102,6 +2306,42 @@
     "status": "Claude's choice, put to the owner"
    },
    {
+    "id": "monsoon_onset_dhm.shift_days",
+    "choice": "Owner, 2026-11-14: 'Sen's slope x (years - 1), with its range, Mann-Kendall as in pipeline/diary/trends.py'. The 'no clear shift' wording rule is Claude's reading, fixed before the run; put to the owner",
+    "value": "Sen's slope of the onset's calendar day (non-leap year: 15 June = 166 in every year) on the year, times (last - first), with its 95% range (scipy theilslopes at 1 - trends.alpha) and the Mann-Kendall p (pymannkendall.original_test), as pipeline/diary/trends.py mk_sen and over_record. 'No clear shift' when the range includes 0 or p >= trends.alpha; otherwise earlier (slope < 0) or later",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "monsoon_onset_dhm.start_window",
+    "choice": "Owner, 2026-11-14: 'the usual start window: the middle half of the years, i.e. the 25th-75th percentile dates'. The percentile method and the rounding are Claude's choice, fixed before the run; put to the owner",
+    "value": "{'percentiles': [25, 75], 'method': \"numpy.percentile (linear, Hyndman & Fan type 7) of the calendar days of the record's years, each end rounded to the nearest day\"}",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "monsoon_onset_dhm.late_after",
+    "choice": "Owner's threshold, 2026-11-14 ('after 20 June', the owner's example). Claude's reading, fixed before the run; put to the owner: late = DHM's onset strictly after 20 June; years with the onset on 20 June itself are listed beside, not counted. Share = late years / years in the record",
+    "value": "06-20",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "monsoon_onset_dhm.cross_check",
+    "choice": "Owner, 2026-11-14 (item 3): 'Report whether each agrees with DHM: no clear shift ... Declare the agreement test before running (e.g. a trend range that includes 0, or overlapping trend ranges)'. Using both conditions is Claude's choice, fixed before the run; put to the owner. CHIRPS is daily at the cell (data/cards/<field>/chirps.json), so nothing is downloaded",
+    "value": "Noska & Misra 2016's onset, the record-mean variant exactly as onset_accumulation.definition and variants.climatological, on rain without the 2017 break: (a) CHIRPS v3.0 daily rnl at the field's cell (data/clean/<field>/chirps.parquet rain_mm, UTC days), 2001-2025, Dbar = its own 2001-2025 mean; (b) the twin's GPM rain for 2001-2016 only (before the correction starts; identical to GPM as published), Dbar = its own 2001-2016 mean. A record agrees with DHM ('no clear shift') when BOTH its Sen's slope 95% range includes 0 AND that range overlaps DHM's 2001-2024 slope range (days per year). Reported beside it, not part of the test: median date, years at a window edge (onset_accumulation.edge_days), Spearman correlation with DHM over shared years",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "monsoon_onset_dhm.words_rule",
+    "choice": "Owner, 2026-11-14 (item 3): 'If they all agree, the words are \"three independent records agree\". If not, say so plainly.' The shared-gauges clause is Claude's, for honesty (IMERG Final is gauge-adjusted with GPCC, rules.yaml gpm_series.break_evidence; CHIRPS blends station data), fixed before the run; put to the owner",
+    "value": "'Three independent records agree' only when DHM shows no clear shift and both cross-checks agree with it; otherwise the words say plainly which record does not agree. The how-we-know text adds that CHIRPS and GPM blend rain-gauge data and may share gauges with DHM's network",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "monsoon_onset_dhm.bs_dates",
+    "choice": "Claude's choice, fixed before the run; put to the owner. Nepali dates show Bikram Sambat first with the Gregorian date beside (owner, 2026-11-12; pipeline/words/screens.json months: each BS month begins about the middle of the Gregorian month, with TODO-VERIFY on the start days). A Gregorian date is turned into an approximate BS date by taking each BS month to start on the 15th (Jestha 1 about 15 May, Asar 1 about 15 June), marked 'तिर' (about). BS months start on a slightly different day each year, so the BS day can be off by one or two; a native speaker reviews every Nepali line",
+    "value": "{'month_starts_on_day': 15, 'mark': 'तिर'}",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
     "id": "greenness.min_clear_fraction",
     "choice": "Claude's choice, owner-approved 2026-11-13 (CLAUDE.md: 'require a minimum clear-pixel fraction per image'): an HLS image counts for the field only when at least 75% of the field's pixels are clear (Fmask bits 0-5 zero) and hold NDVI; for the 60 m demo field (4 HLS pixels) that is 3 of 4. No published source found: the HLS v2.0 User Guide (Apr 2026, sec. 6.4) gives the Fmask bits but no clear fraction; the one parcel rule found masks parcels with more than 50% of pixels masked (Sitokonstantinou 2022, arXiv 2211.12584, App. A.1), so 75% is stricter",
     "value": "0.75",
@@ -2601,11 +2841,34 @@
     "en": "We tried teaching a computer this field's habits. It learned from 24 seasons seen from space. We tested it on years it never saw. It did not beat our simple water count. So we left it out. It looks at greenness, not at the harvest.",
     "ne": "हामीले कम्प्युटरलाई यो खेतको बानी सिकाउन खोज्यौं। यसले अन्तरिक्षबाट देखिएका २४ बाली याममा सिक्यो। हामीले यसलाई नदेखेका वर्षमा जाँच्यौं। यसले हाम्रो सरल पानीको हिसाबलाई जित्न सकेन। त्यसैले हामीले यसलाई राखेनौं। यसले हरियाली हेर्छ, उब्जनी होइन।"
    }
+  },
+  "onset": {
+   "words": {
+    "en": [
+     "We tested two ways with satellite rain.",
+     "Neither could show a change in timing.",
+     "In 2017, rain gauges stopped feeding it.",
+     "After that, its rain is not steady.",
+     "So we use Nepal's official monsoon record.",
+     "No clear change since 2001.",
+     "Three independent records agree.",
+     "These records share some rain gauges."
+    ],
+    "ne": [
+     "हामीले भू-उपग्रहको वर्षाबाट दुई तरिका जाँच्यौं।",
+     "कुनैले पनि समयको फरक देखाउन सकेन।",
+     "सन् २०१७ मा वर्षा मापन केन्द्रको जानकारी रोकियो।",
+     "त्यसपछि भू-उपग्रहको वर्षा भरपर्दो रहेन।",
+     "त्यसैले हामी नेपाल सरकारको आधिकारिक मनसुन अभिलेख हेर्छौं।",
+     "सन् २००१ यता स्पष्ट फरक छैन।",
+     "तीनवटा छुट्टाछुट्टै अभिलेख एउटै कुरा भन्छन्।",
+     "यी अभिलेखले केही वर्षा मापन केन्द्र साझा गर्छन्।"
+    ]
+   },
+   "caveat": "DHM's date is the day the monsoon enters Nepal in the east. It reaches Kathmandu a few days later."
   }
  },
- "mock": [
-  "future"
- ],
+ "mock": [],
  "current_options": {
   "default": "rice_potato",
   "options": [
@@ -3056,6 +3319,28 @@
        "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
       }
      }
+    },
+    "future": {
+     "harvest": [
+      71
+     ],
+     "harvest_low": [
+      67
+     ],
+     "harvest_high": [
+      78
+     ]
+    },
+    "future_uncorrected_rain": {
+     "harvest": [
+      72
+     ],
+     "harvest_low": [
+      67
+     ],
+     "harvest_high": [
+      78
+     ]
     }
    },
    {
@@ -3505,6 +3790,28 @@
        "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
       }
      }
+    },
+    "future": {
+     "harvest": [
+      81
+     ],
+     "harvest_low": [
+      76
+     ],
+     "harvest_high": [
+      88
+     ]
+    },
+    "future_uncorrected_rain": {
+     "harvest": [
+      82
+     ],
+     "harvest_low": [
+      77
+     ],
+     "harvest_high": [
+      89
+     ]
     }
    }
   ]

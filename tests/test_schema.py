@@ -464,3 +464,34 @@ def test_the_outlook_may_carry_a_second_rain_version():
     assert validate_field(d) == []
     d["plans"][0]["future_uncorrected_rain"]["harvest_high"] = [50]
     assert any("future_uncorrected_rain" in e for e in validate_field(d))
+
+
+# --- owner, 2026-11-14: the monsoon's start from DHM's official record (shift, usual window, late years) ---
+
+def _with_dhm_onset(d):
+    d["diary"].update(shift_days=-2.2, shift_days_low=-11.5, shift_days_high=7.7,
+                      shift_source={"name": "DHM", "product": "Monsoon onset dates", "resolution": "one date a year",
+                                    "years": "2001-2024", "type": "station"},
+                      shift_note={"en": ["No clear change since 2001."], "ne": ["सन् २००१ यता स्पष्ट फरक छैन।"]},
+                      monsoon_start={"usual_from": "06-10", "usual_to": "06-16", "median": "06-13", "late_after": "06-20",
+                                     "late_years": [2009], "late_share": 0.042, "years": [2001, 2024], "source": "DHM",
+                                     "words": {"en": ["Late year: 2009."], "ne": ["ढिलो वर्ष: २००९।"]}})
+    d["method"]["onset"] = {"words": {"en": ["We use Nepal's official monsoon record."], "ne": ["..."]},
+                            "caveat": "DHM's date is the monsoon's entry into eastern Nepal."}
+    return d
+
+
+def test_the_diary_may_carry_dhms_monsoon_record():
+    assert validate_field(_with_dhm_onset(build_field())) == []
+
+
+def test_the_shift_must_sit_inside_its_range():
+    d = _with_dhm_onset(build_field())
+    d["diary"]["shift_days_low"] = 0.5
+    assert any("shift_days" in e for e in validate_field(d))
+
+
+def test_the_monsoon_start_uses_month_day_dates():
+    d = _with_dhm_onset(build_field())
+    d["diary"]["monsoon_start"]["usual_from"] = "10 June"
+    assert validate_field(d) != []

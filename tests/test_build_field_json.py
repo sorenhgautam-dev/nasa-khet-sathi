@@ -367,3 +367,54 @@ def test_sections_without_the_twin_state_stay_not_ready():
     assert all(s["status"] == "grey" and s["wetness"] is None and s["sure"] == 0 for s in out["field"]["sections"])
     assert len(out["field"]["sections"]) == 4                     # the real parts' outlines, still without numbers
     assert validate_field(out) == []
+
+
+def _onset_dhm():
+    import json
+    from pathlib import Path
+    return json.loads((Path(__file__).resolve().parents[1] / "data/checks/demo/onset_dhm.json").read_text())
+
+
+@pytest.mark.skipif(not __import__("pathlib").Path(__file__).resolve().parents[1].joinpath("data/checks/demo/onset_dhm.json").exists(),
+                    reason="needs scripts/run_onset_dhm.py output")
+def test_dhms_monsoon_record_fills_the_shift_and_the_usual_start():
+    """Owner, 2026-11-14: fill shift_days from DHM's official onset dates, with their range, credited to DHM."""
+    d = b.apply_onset_dhm(build_field(), _onset_dhm())
+    dy = d["diary"]
+    assert dy["shift_days"] == -2.2 and dy["shift_days_low"] == -11.5 and dy["shift_days_high"] == 7.7
+    assert dy["shift_source"]["name"].startswith("DHM") and dy["monsoon_start"]["late_years"] == [2009]
+    assert dy["monsoon_start"]["words"]["en"] and dy["shift_note"]["ne"]
+    assert any(s["name"].startswith("DHM") for s in d["sources"]) and d["method"]["onset"]["words"]["en"]
+    assert validate_field(d) == []
+    assert b.apply_onset_dhm(d, _onset_dhm())["sources"] == d["sources"]          # applying twice adds no second row
+
+
+def _future_check():
+    def run(h, lo, hi):
+        return {"outlook": {"harvest": h, "harvest_low": lo, "harvest_high": hi}}
+    plans = {"P_cur": {"corrected": run(70.9, 66.8, 72.8), "uncorrected": run(71.8, 67.3, 73.8)},
+             "P_wheat": {"corrected": run(87.8, 85.0, 89.2), "uncorrected": run(88.0, 85.1, 89.9)},
+             "P_lentil": {"corrected": run(79.4, 76.2, 81.0), "uncorrected": run(79.4, 76.2, 81.0)},
+             "P_opt": {"corrected": run(80.6, 76.0, 82.1), "uncorrected": run(80.9, 76.3, 82.4)}}
+    return {"models": ["A", "B", "C", "D", "E"], "labels": {"scenarios": ["ssp245", "ssp585"],
+            "periods": {"historical": [1995, 2014], "future": [2026, 2040]}}, "plans": plans}
+
+
+def test_the_2040_outlook_fills_every_plan_and_option():
+    """Owner's group 2e (2026-11-14): every shown plan and both current options, the spread across models and scenarios
+    as the range, rounded to whole points; the uncorrected rain as a second version only where it differs."""
+    d = build_field()
+    d["current_options"] = {"default": "rice_potato", "options": [{"id": "rice_potato"}, {"id": "rice_wheat"}]}
+    ids = {"current": "P_cur", "cover_gap": "P_wheat", "safest": "P_lentil"}
+    opt_ids = {"rice_potato": "P_cur", "rice_wheat": "P_opt"}
+    out = b.apply_future(d, _future_check(), ids, opt_ids)
+    f = out["future"]
+    assert f["years"] == [2040] and f["period"] == "2026-2040" and len(f["models"]) == 5
+    assert f["nothing_changes"] == {"harvest": [71], "harvest_low": [67], "harvest_high": [73]}
+    assert f["with_plan"] == {"harvest": [88], "harvest_low": [85], "harvest_high": [89]}
+    p = {x["id"]: x for x in out["plans"]}
+    assert p["safest"]["future"] == {"harvest": [79], "harvest_low": [76], "harvest_high": [81]}
+    assert "future_uncorrected_rain" in p["current"] and "future_uncorrected_rain" not in p["safest"]
+    assert out["current_options"]["options"][1]["future"]["harvest"] == [81]
+    assert "future" not in out.get("mock", [])
+    assert f["words"]["en"] and f["words"]["ne"]

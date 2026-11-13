@@ -1,0 +1,1224 @@
+{
+ "_about": "Draft Bengali words for the site, machine-translated by SI (Claude Opus 5.5 via Claude Code) from the English in pipeline/words/ on 2026-11-13 (night). Not reviewed: every text needs a native speaker's review. Keys name the English text node (pipeline/export/build_words.py iter_texts); 'en' is the English it translates (a test fails when the English changes, and the site then shows the English until the draft is updated). Screen rules kept: sentences of eight words or fewer, plain words, no science words on screens, placeholders unchanged, numbers as digits, Gregorian months (Bikram Sambat is Nepali only). 'quote' holds a verbatim source quotation: it stays in its original English and is never translated, so no adaptation of a licensed text (e.g. CC BY-NC-SA 3.0 IGO) is published; the glossary's 'basis' is not translated either. Bengali: পানি for water (Bangladesh usage; West Bengal says জল), জমি for field, ASCII digits (a reviewer may prefer ০-৯; the site would then convert them at fill time, as it does for Nepali). Finger millet is মারুয়া.",
+ "language": {
+  "code": "bn",
+  "name": "বাংলা",
+  "name_en": "Bengali",
+  "draft": true,
+  "status": "machine-translated (SI), needs native-speaker review",
+  "label": {
+   "bn": "খসড়া অনুবাদ",
+   "en": "Draft translation"
+  },
+  "quote_label": {
+   "bn": "মূল ইংরেজিতে উদ্ধৃতি",
+   "en": "Quotation in the original English"
+  },
+  "translated_from": "en",
+  "translated_by": "SI: Claude Opus 5.5 via Claude Code, 2026-11-13 (night); not reviewed"
+ },
+ "texts": {
+  "screens.home.title": {
+   "en": "Khet Sathi",
+   "bn": "খেত সাথী"
+  },
+  "screens.home.texts.tagline": {
+   "en": "Your field's friend.",
+   "bn": "আপনার জমির বন্ধু।"
+  },
+  "screens.home.texts.intro": {
+   "en": "Let's look at your field together.",
+   "bn": "আসুন, একসাথে আপনার জমি দেখি।"
+  },
+  "screens.home.texts.you_decide": {
+   "en": "We help you think. You decide.",
+   "bn": "আমরা ভাবতে সাহায্য করি। সিদ্ধান্ত আপনার।"
+  },
+  "screens.home.texts.start": {
+   "en": "Start",
+   "bn": "শুরু করুন"
+  },
+  "screens.home.texts.try_sample": {
+   "en": "Try our sample field",
+   "bn": "আমাদের নমুনা জমি দেখুন"
+  },
+  "screens.home.texts.sample_note": {
+   "en": "We picked this field as an example.",
+   "bn": "আমরা উদাহরণ হিসেবে এই জমি বেছে নিয়েছি।"
+  },
+  "screens.where.title": {
+   "en": "Where is your field?",
+   "bn": "আপনার জমি কোথায়?"
+  },
+  "screens.where.texts.corners": {
+   "en": "Tap the four corners of your field.",
+   "bn": "আপনার জমির চার কোণে চাপ দিন।"
+  },
+  "screens.where.texts.move_corner": {
+   "en": "Tap a corner again to move it.",
+   "bn": "কোণ সরাতে আবার চাপ দিন।"
+  },
+  "screens.where.texts.done": {
+   "en": "Done",
+   "bn": "হয়ে গেছে"
+  },
+  "screens.where.texts.outside": {
+   "en": "We have not looked at this place yet.",
+   "bn": "আমরা এই জায়গাটি এখনো দেখিনি।"
+  },
+  "screens.where.texts.outside_try": {
+   "en": "Try our sample field instead.",
+   "bn": "বরং আমাদের নমুনা জমি দেখুন।"
+  },
+  "screens.where.texts.q_water": {
+   "en": "Where does your field's water come from?",
+   "bn": "আপনার জমিতে পানি কোথা থেকে আসে?"
+  },
+  "screens.where.texts.q_shape": {
+   "en": "Is your field flat or on steps?",
+   "bn": "আপনার জমি সমতল, নাকি ধাপে ধাপে?"
+  },
+  "screens.where.labels.water.items.rain_only": {
+   "en": "Rain only",
+   "bn": "শুধু বৃষ্টি"
+  },
+  "screens.where.labels.water.items.canal": {
+   "en": "Canal",
+   "bn": "খাল"
+  },
+  "screens.where.labels.water.items.well": {
+   "en": "Well or pump",
+   "bn": "কুয়া বা পাম্প"
+  },
+  "screens.where.labels.water.items.other": {
+   "en": "Pipe or other",
+   "bn": "পাইপ বা অন্য কিছু"
+  },
+  "screens.where.labels.water.items.unknown": {
+   "en": "I don't know",
+   "bn": "জানি না"
+  },
+  "screens.where.labels.shape.items.flat": {
+   "en": "Flat",
+   "bn": "সমতল"
+  },
+  "screens.where.labels.shape.items.steps": {
+   "en": "Steps",
+   "bn": "ধাপে ধাপে"
+  },
+  "screens.where.labels.shape.items.slope": {
+   "en": "Slope",
+   "bn": "ঢালু"
+  },
+  "screens.from_space.title": {
+   "en": "We looked at your field from space",
+   "bn": "আমরা মহাকাশ থেকে আপনার জমি দেখেছি"
+  },
+  "screens.from_space.texts.guess": {
+   "en": "We think you grow {guess_list}.",
+   "bn": "আমাদের মনে হয়, আপনি {guess_list} চাষ করেন।"
+  },
+  "screens.from_space.texts.guess_right": {
+   "en": "Is this right?",
+   "bn": "এটা কি ঠিক?"
+  },
+  "screens.from_space.texts.guess_first": {
+   "en": "We think you grow {first_crop} first.",
+   "bn": "আমাদের মনে হয়, আপনি আগে {first_crop} চাষ করেন।"
+  },
+  "screens.from_space.texts.guess_options": {
+   "en": "Then {option_a} or {option_b}.",
+   "bn": "তারপর {option_a} বা {option_b}।"
+  },
+  "screens.from_space.texts.guess_which": {
+   "en": "Which one do you grow?",
+   "bn": "আপনি কোনটা চাষ করেন?"
+  },
+  "screens.from_space.texts.guess_cannot_tell": {
+   "en": "From space, both look the same.",
+   "bn": "মহাকাশ থেকে দুটোই একই রকম দেখায়।"
+  },
+  "screens.from_space.texts.yes": {
+   "en": "Yes",
+   "bn": "হ্যাঁ"
+  },
+  "screens.from_space.texts.no_fix": {
+   "en": "No, let me fix it",
+   "bn": "না, আমি ঠিক করি"
+  },
+  "screens.from_space.texts.bare": {
+   "en": "The ground is bare about {bare_days} days yearly.",
+   "bn": "বছরে প্রায় {bare_days} দিন জমি খালি থাকে।"
+  },
+  "screens.from_space.texts.bare_why": {
+   "en": "Uncovered soil can wash away in rain.",
+   "bn": "খোলা মাটি বৃষ্টিতে ধুয়ে যেতে পারে।"
+  },
+  "screens.from_space.texts.rains_earlier": {
+   "en": "Since {year_first}, rains start about {shift_days_abs} days earlier.",
+   "bn": "{year_first} থেকে বৃষ্টি প্রায় {shift_days_abs} দিন আগে আসে।"
+  },
+  "screens.from_space.texts.rains_later": {
+   "en": "Since {year_first}, rains start about {shift_days_abs} days later.",
+   "bn": "{year_first} থেকে বৃষ্টি প্রায় {shift_days_abs} দিন দেরিতে আসে।"
+  },
+  "screens.from_space.texts.rains_same": {
+   "en": "The rains start about when they used to.",
+   "bn": "বৃষ্টি প্রায় আগের মতো সময়েই আসে।"
+  },
+  "screens.from_space.texts.water_falling": {
+   "en": "Water stored in this whole area is falling.",
+   "bn": "এই পুরো এলাকায় জমা পানি কমছে।"
+  },
+  "screens.from_space.texts.water_steady": {
+   "en": "Water stored in this whole area is steady.",
+   "bn": "এই পুরো এলাকায় জমা পানি একই আছে।"
+  },
+  "screens.from_space.texts.water_rising": {
+   "en": "Water stored in this whole area is rising.",
+   "bn": "এই পুরো এলাকায় জমা পানি বাড়ছে।"
+  },
+  "screens.from_space.texts.water_wide": {
+   "en": "This trend is clear for the wide area.",
+   "bn": "বড় এলাকার জন্য এই ধারা স্পষ্ট।"
+  },
+  "screens.from_space.texts.water_not_yours": {
+   "en": "It does not tell about your own well.",
+   "bn": "এটা আপনার নিজের কুয়ার কথা বলে না।"
+  },
+  "screens.from_space.texts.water_not_well": {
+   "en": "This is the whole area, not your well.",
+   "bn": "এটা পুরো এলাকার, আপনার কুয়ার নয়।"
+  },
+  "screens.from_space.texts.calendar_title": {
+   "en": "Your field's twelve months",
+   "bn": "আপনার জমির বারো মাস"
+  },
+  "screens.from_space.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "bn": "নেপালি আর ইংরেজি মাস হুবহু মেলে না।"
+  },
+  "screens.from_space.texts.frost_note": {
+   "en": "We may show too many freezing nights.",
+   "bn": "আমরা হয়তো তুষার পড়া রাত বেশি দেখাচ্ছি।"
+  },
+  "screens.from_space.texts.month_less_sure": {
+   "en": "We are less sure about this month.",
+   "bn": "এই মাস নিয়ে আমরা কম নিশ্চিত।"
+  },
+  "screens.from_space.labels.rain.items.low": {
+   "en": "Little rain",
+   "bn": "অল্প বৃষ্টি"
+  },
+  "screens.from_space.labels.rain.items.medium": {
+   "en": "Some rain",
+   "bn": "কিছু বৃষ্টি"
+  },
+  "screens.from_space.labels.rain.items.high": {
+   "en": "Lots of rain",
+   "bn": "অনেক বৃষ্টি"
+  },
+  "screens.from_space.labels.soil.items.dry": {
+   "en": "Dry soil",
+   "bn": "শুকনো মাটি"
+  },
+  "screens.from_space.labels.soil.items.medium": {
+   "en": "Damp soil",
+   "bn": "সামান্য ভেজা মাটি"
+  },
+  "screens.from_space.labels.soil.items.wet": {
+   "en": "Wet soil",
+   "bn": "ভেজা মাটি"
+  },
+  "screens.from_space.labels.heat.items.none": {
+   "en": "Not hot",
+   "bn": "গরম নেই"
+  },
+  "screens.from_space.labels.heat.items.some": {
+   "en": "Some hot days",
+   "bn": "কিছু গরম দিন"
+  },
+  "screens.from_space.labels.heat.items.high": {
+   "en": "Many hot days",
+   "bn": "অনেক গরম দিন"
+  },
+  "screens.from_space.labels.frost.items.none": {
+   "en": "No freezing nights",
+   "bn": "তুষার পড়ে না"
+  },
+  "screens.from_space.labels.frost.items.risk": {
+   "en": "Some nights near freezing",
+   "bn": "কিছু রাতে তুষার পড়তে পারে"
+  },
+  "screens.from_space.labels.frost.items.high": {
+   "en": "Freezing nights likely",
+   "bn": "তুষার পড়ার সম্ভাবনা বেশি"
+  },
+  "screens.from_space.labels.cover.items.bare": {
+   "en": "Bare ground",
+   "bn": "খালি জমি"
+  },
+  "screens.from_space.labels.cover.items.partial": {
+   "en": "Some plants",
+   "bn": "কিছু গাছপালা"
+  },
+  "screens.from_space.labels.cover.items.crop": {
+   "en": "Full of crop",
+   "bn": "ফসলে ভরা"
+  },
+  "screens.parts.title": {
+   "en": "Your field in small parts",
+   "bn": "ছোট ছোট ভাগে আপনার জমি"
+  },
+  "screens.parts.texts.split": {
+   "en": "We split your field into {section_count} parts.",
+   "bn": "আমরা আপনার জমি {section_count} ভাগে ভাগ করেছি।"
+  },
+  "screens.parts.texts.numbers": {
+   "en": "Each part has a number.",
+   "bn": "প্রতিটি ভাগের একটি নম্বর আছে।"
+  },
+  "screens.parts.texts.tap_part": {
+   "en": "Tap a part to see it.",
+   "bn": "দেখতে কোনো ভাগে চাপ দিন।"
+  },
+  "screens.parts.texts.look_same": {
+   "en": "From space, nearby parts look the same.",
+   "bn": "মহাকাশ থেকে কাছাকাছি ভাগগুলো একই রকম দেখায়।"
+  },
+  "screens.parts.texts.stick_tells": {
+   "en": "The soil stick tells them apart.",
+   "bn": "মাটির কাঠি তাদের তফাত বলে দেয়।"
+  },
+  "screens.each_part.title": {
+   "en": "How is each part?",
+   "bn": "প্রতিটি ভাগ কেমন আছে?"
+  },
+  "screens.each_part.texts.part_name": {
+   "en": "Part {section}",
+   "bn": "ভাগ {section}"
+  },
+  "screens.each_part.texts.how_wet": {
+   "en": "How wet: {wetness} out of 100.",
+   "bn": "কতটা ভেজা: 100-এর মধ্যে {wetness}।"
+  },
+  "screens.each_part.texts.how_warm": {
+   "en": "How warm the soil is: {temp} degrees.",
+   "bn": "মাটি কতটা গরম: {temp} ডিগ্রি।"
+  },
+  "screens.each_part.texts.how_sure": {
+   "en": "How sure we are: {sure_pct} out of 100.",
+   "bn": "আমরা কতটা নিশ্চিত: 100-এর মধ্যে {sure_pct}।"
+  },
+  "screens.each_part.texts.fog": {
+   "en": "Fog means we are not sure yet.",
+   "bn": "কুয়াশা মানে আমরা এখনো নিশ্চিত নই।"
+  },
+  "screens.each_part.texts.faces": {
+   "en": "A smiling face means all is well.",
+   "bn": "হাসিমুখ মানে সব ঠিক আছে।"
+  },
+  "screens.each_part.labels.status.items.green": {
+   "en": "Doing well",
+   "bn": "ভালো আছে"
+  },
+  "screens.each_part.labels.status.items.yellow": {
+   "en": "Needs a look",
+   "bn": "একবার দেখা দরকার"
+  },
+  "screens.each_part.labels.status.items.red": {
+   "en": "Needs help now",
+   "bn": "এখনই সাহায্য দরকার"
+  },
+  "screens.each_part.labels.status.items.grey": {
+   "en": "We don't know yet",
+   "bn": "এখনো জানা নেই"
+  },
+  "screens.check_soil.title": {
+   "en": "Let's check the soil",
+   "bn": "চলুন মাটি পরীক্ষা করি"
+  },
+  "screens.check_soil.texts.push": {
+   "en": "Push the soil stick into this part.",
+   "bn": "মাটির কাঠি এই ভাগে পুঁতে দিন।"
+  },
+  "screens.check_soil.texts.hold": {
+   "en": "Hold it still for a moment.",
+   "bn": "একটু সময় স্থির করে ধরে রাখুন।"
+  },
+  "screens.check_soil.texts.clears": {
+   "en": "Your reading clears the fog.",
+   "bn": "আপনার মাপ কুয়াশা সরিয়ে দেয়।"
+  },
+  "screens.check_soil.texts.more_sure": {
+   "en": "Now we are more sure.",
+   "bn": "এখন আমরা আরও নিশ্চিত।"
+  },
+  "screens.check_soil.texts.wide_close": {
+   "en": "Space sees wide. Your stick sees close.",
+   "bn": "মহাকাশ দেখে অনেক দূর। আপনার কাঠি দেখে কাছ থেকে।"
+  },
+  "screens.check_soil.texts.together": {
+   "en": "Together they make a better guess.",
+   "bn": "দুটো মিলে ভালো অনুমান হয়।"
+  },
+  "screens.check_soil.texts.replay_check": {
+   "en": "Watch a soil check we did earlier.",
+   "bn": "আগে করা একটি মাটি পরীক্ষা দেখুন।"
+  },
+  "screens.last_years.title": {
+   "en": "Your field's last {year_count} years",
+   "bn": "আপনার জমির গত {year_count} বছর"
+  },
+  "screens.last_years.texts.basket": {
+   "en": "Each basket is one year's harvest.",
+   "bn": "প্রতিটি ঝুড়ি এক বছরের ফসল।"
+  },
+  "screens.last_years.texts.full_basket": {
+   "en": "A full basket is this field's best.",
+   "bn": "ভরা ঝুড়ি মানে এই জমির সেরা ফসল।"
+  },
+  "screens.last_years.texts.computer_made": {
+   "en": "A computer copy of your field made these.",
+   "bn": "আপনার জমির কম্পিউটার নকল এগুলো বানিয়েছে।"
+  },
+  "screens.last_years.texts.thirsty_days": {
+   "en": "The crop was thirsty on {dry_days} days.",
+   "bn": "{dry_days} দিন ফসল পিপাসায় ছিল।"
+  },
+  "screens.last_years.texts.with_water": {
+   "en": "With water when needed, it looks like this.",
+   "bn": "দরকারমতো পানি দিলে এমন হতো।"
+  },
+  "screens.last_years.texts.water_unknown": {
+   "en": "We don't know your water yet.",
+   "bn": "আমরা এখনো আপনার পানির উৎস জানি না।"
+  },
+  "screens.last_years.texts.both_shown": {
+   "en": "So we show both, side by side.",
+   "bn": "তাই আমরা দুটোই পাশাপাশি দেখাই।"
+  },
+  "screens.last_years.texts.play": {
+   "en": "Play",
+   "bn": "চালান"
+  },
+  "screens.last_years.texts.pause": {
+   "en": "Pause",
+   "bn": "থামান"
+  },
+  "screens.last_years.labels.event.items.none": {
+   "en": "A normal year",
+   "bn": "স্বাভাবিক বছর"
+  },
+  "screens.last_years.labels.event.items.drought": {
+   "en": "A drier year than usual",
+   "bn": "স্বাভাবিকের চেয়ে শুকনো বছর"
+  },
+  "screens.last_years.labels.event.items.flood": {
+   "en": "Too much rain in one day",
+   "bn": "এক দিনে অনেক বেশি বৃষ্টি"
+  },
+  "screens.last_years.labels.water_case.items.rain_fed": {
+   "en": "If you can't water",
+   "bn": "যদি পানি দিতে না পারেন"
+  },
+  "screens.last_years.labels.water_case.items.irrigated": {
+   "en": "If you can water",
+   "bn": "যদি পানি দিতে পারেন"
+  },
+  "screens.last_years.labels.event_season.items.winter": {
+   "en": "A dry winter",
+   "bn": "শুকনো শীত"
+  },
+  "screens.last_years.labels.event_season.items.monsoon": {
+   "en": "A dry rainy season",
+   "bn": "শুকনো বর্ষা"
+  },
+  "screens.what_to_grow.title": {
+   "en": "What should I grow?",
+   "bn": "আমি কী চাষ করব?"
+  },
+  "screens.what_to_grow.texts.three": {
+   "en": "Three choices: what to grow, and when.",
+   "bn": "তিনটি পছন্দ: কী চাষ করবেন, আর কখন।"
+  },
+  "screens.what_to_grow.texts.more_baskets": {
+   "en": "More baskets, more harvest.",
+   "bn": "বেশি ঝুড়ি, বেশি ফসল।"
+  },
+  "screens.what_to_grow.texts.more_drops": {
+   "en": "More drops, less worry about water.",
+   "bn": "বেশি ফোঁটা, পানির চিন্তা কম।"
+  },
+  "screens.what_to_grow.texts.priority_q": {
+   "en": "What matters most to you?",
+   "bn": "আপনার কাছে সবচেয়ে জরুরি কী?"
+  },
+  "screens.what_to_grow.texts.tips_title": {
+   "en": "Tips for your field",
+   "bn": "আপনার জমির জন্য পরামর্শ"
+  },
+  "screens.what_to_grow.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "bn": "নেপালি আর ইংরেজি মাস হুবহু মেলে না।"
+  },
+  "screens.what_to_grow.texts.learn_more": {
+   "en": "Why do some crops help the soil?",
+   "bn": "কিছু ফসল কেন মাটির উপকার করে?"
+  },
+  "screens.what_to_grow.labels.plan.items.current": {
+   "en": "What you do now",
+   "bn": "এখন আপনি যা করেন"
+  },
+  "screens.what_to_grow.labels.plan.items.cover_gap": {
+   "en": "Fill the empty months",
+   "bn": "খালি মাসগুলো ভরুন"
+  },
+  "screens.what_to_grow.labels.plan.items.follow_shift": {
+   "en": "Follow the changing rains",
+   "bn": "বদলানো বৃষ্টির সাথে চলুন"
+  },
+  "screens.what_to_grow.labels.plan.items.safest": {
+   "en": "Feed your soil",
+   "bn": "আপনার মাটিকে খাবার দিন"
+  },
+  "screens.what_to_grow.labels.score.items.harvest": {
+   "en": "Harvest",
+   "bn": "ফসল"
+  },
+  "screens.what_to_grow.labels.score.items.water": {
+   "en": "Water",
+   "bn": "পানি"
+  },
+  "screens.what_to_grow.labels.score.items.cover": {
+   "en": "Ground covered",
+   "bn": "ঢাকা জমি"
+  },
+  "screens.what_to_grow.labels.score.items.soil_kept": {
+   "en": "Soil kept",
+   "bn": "রক্ষা পাওয়া মাটি"
+  },
+  "screens.what_to_grow.labels.tab.items.why": {
+   "en": "Why this?",
+   "bn": "এটা কেন?"
+  },
+  "screens.what_to_grow.labels.tab.items.evidence": {
+   "en": "How do we know?",
+   "bn": "আমরা কীভাবে জানি?"
+  },
+  "screens.what_to_grow.labels.tab.items.benefits": {
+   "en": "What could it give?",
+   "bn": "এতে কী পাওয়া যেতে পারে?"
+  },
+  "screens.what_to_grow.labels.tab.items.unknown": {
+   "en": "What we don't know",
+   "bn": "যা আমরা জানি না"
+  },
+  "screens.what_to_grow.labels.tab.items.check": {
+   "en": "Ask someone who knows",
+   "bn": "কোনো জানা লোককে জিজ্ঞেস করুন"
+  },
+  "screens.what_to_grow.labels.priority.items.harvest": {
+   "en": "More harvest",
+   "bn": "বেশি ফসল"
+  },
+  "screens.what_to_grow.labels.priority.items.water": {
+   "en": "Less water",
+   "bn": "কম পানি"
+  },
+  "screens.what_to_grow.labels.priority.items.soil": {
+   "en": "Healthy soil",
+   "bn": "সুস্থ মাটি"
+  },
+  "screens.field_future.title": {
+   "en": "Your field in {future_year}",
+   "bn": "{future_year} সালে আপনার জমি"
+  },
+  "screens.field_future.texts.nothing_changes": {
+   "en": "If nothing changes",
+   "bn": "যদি কিছুই না বদলায়"
+  },
+  "screens.field_future.texts.with_plan": {
+   "en": "With the new plan",
+   "bn": "নতুন পরিকল্পনায়"
+  },
+  "screens.field_future.texts.range": {
+   "en": "Harvest: {future_low} to {future_high} out of 100.",
+   "bn": "ফসল: 100-এর মধ্যে {future_low} থেকে {future_high}।"
+  },
+  "screens.field_future.texts.nobody_knows": {
+   "en": "Nobody knows the future for sure.",
+   "bn": "ভবিষ্যৎ নিশ্চিত করে কেউ জানে না।"
+  },
+  "screens.field_future.texts.many_guesses": {
+   "en": "Many computer guesses make this range.",
+   "bn": "অনেক কম্পিউটার অনুমান মিলে এই সীমা।"
+  },
+  "screens.field_future.texts.try_sliders": {
+   "en": "Try less rain or more heat.",
+   "bn": "কম বৃষ্টি বা বেশি গরম দিয়ে দেখুন।"
+  },
+  "screens.field_future.texts.less_rain": {
+   "en": "Less rain",
+   "bn": "কম বৃষ্টি"
+  },
+  "screens.field_future.texts.more_heat": {
+   "en": "More heat",
+   "bn": "বেশি গরম"
+  },
+  "screens.your_plan.title": {
+   "en": "Your plan",
+   "bn": "আপনার পরিকল্পনা"
+  },
+  "screens.your_plan.texts.chose": {
+   "en": "Here is what you chose.",
+   "bn": "আপনি এটাই বেছে নিয়েছেন।"
+  },
+  "screens.your_plan.texts.what_when": {
+   "en": "What to grow, and when:",
+   "bn": "কী চাষ করবেন, আর কখন:"
+  },
+  "screens.your_plan.texts.plant_in": {
+   "en": "{crop}: plant in {sow_month}.",
+   "bn": "{crop}: {sow_month} মাসে লাগান।"
+  },
+  "screens.your_plan.texts.harvest_in": {
+   "en": "{crop}: harvest in {harvest_month}.",
+   "bn": "{crop}: {harvest_month} মাসে কাটুন।"
+  },
+  "screens.your_plan.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "bn": "নেপালি আর ইংরেজি মাস হুবহু মেলে না।"
+  },
+  "screens.your_plan.texts.know_best": {
+   "en": "You know your land best.",
+   "bn": "নিজের জমি আপনিই সবচেয়ে ভালো জানেন।"
+  },
+  "screens.your_plan.texts.advisor": {
+   "en": "Talk to a farm advisor before changing.",
+   "bn": "বদলানোর আগে কৃষি পরামর্শকের সাথে কথা বলুন।"
+  },
+  "screens.your_plan.texts.small_first": {
+   "en": "Try it on one small part first.",
+   "bn": "আগে একটি ছোট ভাগে চেষ্টা করুন।"
+  },
+  "screens.your_plan.texts.save": {
+   "en": "Save this plan",
+   "bn": "এই পরিকল্পনা রাখুন"
+  },
+  "screens.your_plan.texts.again": {
+   "en": "Start again",
+   "bn": "আবার শুরু করুন"
+  },
+  "screens.your_plan.texts.made_with": {
+   "en": "Made with pictures and numbers from NASA.",
+   "bn": "নাসার ছবি আর সংখ্যা দিয়ে তৈরি।"
+  },
+  "shared.buttons.next": {
+   "en": "Next",
+   "bn": "পরের"
+  },
+  "shared.buttons.back": {
+   "en": "Back",
+   "bn": "পেছনে"
+  },
+  "shared.buttons.word_help": {
+   "en": "What does this word mean?",
+   "bn": "এই শব্দের মানে কী?"
+  },
+  "shared.buttons.not_sure": {
+   "en": "Not sure yet",
+   "bn": "এখনো নিশ্চিত নয়"
+  },
+  "shared.crop_names.rice": {
+   "en": "rice",
+   "bn": "ধান"
+  },
+  "shared.crop_names.wheat": {
+   "en": "wheat",
+   "bn": "গম"
+  },
+  "shared.crop_names.maize": {
+   "en": "maize",
+   "bn": "ভুট্টা"
+  },
+  "shared.crop_names.potato": {
+   "en": "potato",
+   "bn": "আলু"
+  },
+  "shared.crop_names.lentil": {
+   "en": "lentil",
+   "bn": "মসুর"
+  },
+  "shared.crop_names.mustard": {
+   "en": "mustard",
+   "bn": "সরিষা"
+  },
+  "shared.crop_names.buckwheat": {
+   "en": "buckwheat",
+   "bn": "কুট্টু"
+  },
+  "shared.crop_names.finger_millet": {
+   "en": "finger millet",
+   "bn": "মারুয়া"
+  },
+  "shared.crop_names.bare": {
+   "en": "no crop",
+   "bn": "কোনো ফসল নেই"
+  },
+  "shared.months.Jan": {
+   "en": "January",
+   "bn": "জানুয়ারি"
+  },
+  "shared.months.Feb": {
+   "en": "February",
+   "bn": "ফেব্রুয়ারি"
+  },
+  "shared.months.Mar": {
+   "en": "March",
+   "bn": "মার্চ"
+  },
+  "shared.months.Apr": {
+   "en": "April",
+   "bn": "এপ্রিল"
+  },
+  "shared.months.May": {
+   "en": "May",
+   "bn": "মে"
+  },
+  "shared.months.Jun": {
+   "en": "June",
+   "bn": "জুন"
+  },
+  "shared.months.Jul": {
+   "en": "July",
+   "bn": "জুলাই"
+  },
+  "shared.months.Aug": {
+   "en": "August",
+   "bn": "আগস্ট"
+  },
+  "shared.months.Sep": {
+   "en": "September",
+   "bn": "সেপ্টেম্বর"
+  },
+  "shared.months.Oct": {
+   "en": "October",
+   "bn": "অক্টোবর"
+  },
+  "shared.months.Nov": {
+   "en": "November",
+   "bn": "নভেম্বর"
+  },
+  "shared.months.Dec": {
+   "en": "December",
+   "bn": "ডিসেম্বর"
+  },
+  "shared.source_kinds.satellite": {
+   "en": "seen from space",
+   "bn": "মহাকাশ থেকে দেখা"
+  },
+  "shared.source_kinds.model": {
+   "en": "worked out by computer",
+   "bn": "কম্পিউটারে হিসাব করা"
+  },
+  "shared.source_kinds.station": {
+   "en": "measured on the ground",
+   "bn": "মাটিতে মাপা"
+  },
+  "shared.source_kinds.probe": {
+   "en": "measured by the soil stick",
+   "bn": "মাটির কাঠি দিয়ে মাপা"
+  },
+  "shared.join.then": {
+   "en": "then",
+   "bn": "তারপর"
+  },
+  "shared.join.and": {
+   "en": "and",
+   "bn": "আর"
+  },
+  "glossary.evapotranspiration.term": {
+   "en": "evapotranspiration",
+   "bn": "বাষ্পীভবন-প্রস্বেদন"
+  },
+  "glossary.evapotranspiration.say": {
+   "en": "Water that rises into the air from the soil and from plant leaves.",
+   "bn": "মাটি আর গাছের পাতা থেকে বাতাসে উড়ে যাওয়া পানি।"
+  },
+  "glossary.soil_moisture_anomaly.term": {
+   "en": "soil moisture anomaly",
+   "bn": "মাটির আর্দ্রতার অস্বাভাবিকতা"
+  },
+  "glossary.soil_moisture_anomaly.say": {
+   "en": "How much wetter or drier the soil is than usual for that time of year.",
+   "bn": "বছরের ওই সময়ের তুলনায় মাটি স্বাভাবিকের চেয়ে কতটা ভেজা বা শুকনো।"
+  },
+  "glossary.ndvi.term": {
+   "en": "NDVI",
+   "bn": "NDVI (সবুজের সূচক)"
+  },
+  "glossary.ndvi.say": {
+   "en": "A greenness score from satellite pictures: the higher it is, the more living green leaves.",
+   "bn": "উপগ্রহের ছবি থেকে সবুজের মাপ: যত বেশি, তত বেশি জীবন্ত সবুজ পাতা।"
+  },
+  "glossary.frost_risk.term": {
+   "en": "frost risk",
+   "bn": "তুষারের ঝুঁকি"
+  },
+  "glossary.frost_risk.say": {
+   "en": "The chance of nights near or below freezing (under 2 °C) that can hurt crops.",
+   "bn": "ফসলের ক্ষতি করতে পারে এমন, 2 °C-এর নিচের ঠান্ডা রাতের সম্ভাবনা।"
+  },
+  "glossary.water_balance.term": {
+   "en": "water balance",
+   "bn": "পানির হিসাব (জল ভারসাম্য)"
+  },
+  "glossary.water_balance.say": {
+   "en": "The field's water account: rain and watering in; plant use, runoff and drainage out.",
+   "bn": "জমির পানির হিসাব: বৃষ্টি ও সেচ ভেতরে; গাছের ব্যবহার, গড়িয়ে যাওয়া ও চুইয়ে যাওয়া বাইরে।"
+  },
+  "glossary.monsoon_onset.term": {
+   "en": "monsoon onset",
+   "bn": "মৌসুমি বৃষ্টির শুরু"
+  },
+  "glossary.monsoon_onset.say": {
+   "en": "The day the monsoon rains truly begin, with no long dry break soon after.",
+   "bn": "যেদিন বর্ষার বৃষ্টি সত্যিই শুরু হয়, আর তার পরপরই লম্বা শুকনো সময় আসে না।"
+  },
+  "glossary.bare_days.term": {
+   "en": "bare days",
+   "bn": "খালি দিন"
+  },
+  "glossary.bare_days.say": {
+   "en": "Days in a year when the field has almost no green plants, seen from space.",
+   "bn": "বছরের যে দিনগুলোতে মহাকাশ থেকে জমিতে প্রায় কোনো সবুজ গাছ দেখা যায় না।"
+  },
+  "glossary.crop_rotation.term": {
+   "en": "crop rotation",
+   "bn": "শস্য আবর্তন"
+  },
+  "glossary.crop_rotation.say": {
+   "en": "Growing different crops one after another on the same field, season by season.",
+   "bn": "একই জমিতে মৌসুম ধরে একের পর এক ভিন্ন ফসল চাষ করা।"
+  },
+  "glossary.cover_crop.term": {
+   "en": "cover crop",
+   "bn": "আচ্ছাদন ফসল"
+  },
+  "glossary.cover_crop.say": {
+   "en": "A crop grown mainly to keep the soil covered and healthy between main crops.",
+   "bn": "প্রধান ফসলগুলোর মাঝে মাটি ঢেকে সুস্থ রাখতে লাগানো ফসল।"
+  },
+  "glossary.satellite.term": {
+   "en": "satellite",
+   "bn": "উপগ্রহ (স্যাটেলাইট)"
+  },
+  "glossary.satellite.say": {
+   "en": "A machine circling the Earth that sees wide areas at once, but not every detail.",
+   "bn": "পৃথিবীর চারপাশে ঘোরা যন্ত্র, যা একসাথে বড় এলাকা দেখে, কিন্তু সব খুঁটিনাটি নয়।"
+  },
+  "glossary.ground_measurement.term": {
+   "en": "ground measurement",
+   "bn": "মাটিতে নেওয়া মাপ"
+  },
+  "glossary.ground_measurement.say": {
+   "en": "A reading taken at one spot on the ground: exact there, but only there.",
+   "bn": "মাটিতে একটি জায়গায় নেওয়া মাপ: সেখানে ঠিক, কিন্তু শুধু সেখানেই।"
+  },
+  "glossary.data_fusion.term": {
+   "en": "data fusion",
+   "bn": "ডেটা ফিউশন (মাপ মেলানো)"
+  },
+  "glossary.data_fusion.say": {
+   "en": "Mixing space, computer and ground readings so each one fixes the others' weak spots.",
+   "bn": "মহাকাশ, কম্পিউটার আর মাটির মাপ মেলানো, যাতে একটি অন্যগুলোর দুর্বলতা সারায়।"
+  },
+  "glossary.model_based.term": {
+   "en": "model-based",
+   "bn": "মডেল-ভিত্তিক"
+  },
+  "glossary.model_based.say": {
+   "en": "Worked out by a computer from physics and other readings, not measured directly.",
+   "bn": "সরাসরি মাপা নয়; পদার্থবিদ্যা আর অন্য মাপ থেকে কম্পিউটারে হিসাব করা।"
+  },
+  "glossary.field_twin.term": {
+   "en": "field twin",
+   "bn": "জমির যমজ (কম্পিউটার নকল)"
+  },
+  "glossary.field_twin.say": {
+   "en": "Our computer copy of your field that replays each season's water and crops.",
+   "bn": "আপনার জমির আমাদের কম্পিউটার নকল, যা প্রতি মৌসুমের পানি আর ফসল আবার চালায়।"
+  },
+  "glossary.relative_harvest.term": {
+   "en": "relative yield",
+   "bn": "আপেক্ষিক ফলন"
+  },
+  "glossary.relative_harvest.say": {
+   "en": "This year's harvest compared with the best this field could give, never in tonnes.",
+   "bn": "এই জমির সেরা সম্ভাব্য ফসলের তুলনায় এ বছরের ফসল, কখনো টনে নয়।"
+  },
+  "glossary.water_stress.term": {
+   "en": "water stress",
+   "bn": "পানির চাপ"
+  },
+  "glossary.water_stress.say": {
+   "en": "Days when the soil is too dry for the crop to drink freely.",
+   "bn": "যেদিন মাটি এত শুকনো যে ফসল সহজে পানি পায় না।"
+  },
+  "glossary.irrigation.term": {
+   "en": "irrigation",
+   "bn": "সেচ"
+  },
+  "glossary.irrigation.say": {
+   "en": "Water brought to the field by canal, well or pipe, as well as rain.",
+   "bn": "বৃষ্টি ছাড়াও খাল, কুয়া বা পাইপ দিয়ে জমিতে আনা পানি।"
+  },
+  "glossary.drought_year.term": {
+   "en": "drought year",
+   "bn": "খরার বছর"
+  },
+  "glossary.drought_year.say": {
+   "en": "A crop season whose rain was among the lowest fifth of all seasons since 2001.",
+   "bn": "এমন ফসলের মৌসুম, যার বৃষ্টি 2001 থেকে সব মৌসুমের সবচেয়ে কম পঞ্চমাংশে ছিল।"
+  },
+  "glossary.flood_year.term": {
+   "en": "flood year",
+   "bn": "বন্যার বছর"
+  },
+  "glossary.flood_year.say": {
+   "en": "A year whose heaviest rain day was among the heaviest fifth of all years.",
+   "bn": "যে বছরের সবচেয়ে ভারী বৃষ্টির দিনটি সব বছরের সবচেয়ে ভারী পঞ্চমাংশে ছিল।"
+  },
+  "glossary.soil_probe.term": {
+   "en": "soil probe",
+   "bn": "মাটির প্রোব (মাটির কাঠি)"
+  },
+  "glossary.soil_probe.say": {
+   "en": "A small stick pushed into the soil that measures how wet and warm it is.",
+   "bn": "মাটিতে পোঁতা ছোট কাঠি, যা মাটি কতটা ভেজা আর গরম তা মাপে।"
+  },
+  "glossary.uncertainty.term": {
+   "en": "uncertainty",
+   "bn": "অনিশ্চয়তা"
+  },
+  "glossary.uncertainty.say": {
+   "en": "How far a number could be from the truth; on screen, fog shows it.",
+   "bn": "কোনো সংখ্যা সত্যি থেকে কত দূরে হতে পারে; পর্দায় কুয়াশা তা দেখায়।"
+  },
+  "glossary.regional_water_storage.term": {
+   "en": "regional water storage",
+   "bn": "আঞ্চলিক পানির মজুদ"
+  },
+  "glossary.regional_water_storage.say": {
+   "en": "All water held across a wide area, seen by satellites; not your own well.",
+   "bn": "উপগ্রহে দেখা বড় এলাকার সব জমা পানি; আপনার নিজের কুয়া নয়।"
+  },
+  "glossary.erosion.term": {
+   "en": "erosion",
+   "bn": "ভূমিক্ষয় (মাটির ক্ষয়)"
+  },
+  "glossary.erosion.say": {
+   "en": "Soil carried away from the field by rain water or wind.",
+   "bn": "বৃষ্টির পানি বা বাতাসে জমির মাটি সরে যাওয়া।"
+  },
+  "glossary.runoff.term": {
+   "en": "runoff",
+   "bn": "উপরিভাগের প্রবাহ"
+  },
+  "glossary.runoff.say": {
+   "en": "Rain that flows off the field instead of soaking into the soil.",
+   "bn": "বৃষ্টির পানি যা মাটিতে না ঢুকে জমি থেকে গড়িয়ে যায়।"
+  },
+  "glossary.nitrogen_fixing_crop.term": {
+   "en": "nitrogen-fixing crop",
+   "bn": "নাইট্রোজেন সংবন্ধনকারী ফসল (ডাল)"
+  },
+  "glossary.nitrogen_fixing_crop.say": {
+   "en": "A crop like lentil whose root bacteria turn nitrogen from air into plant food.",
+   "bn": "মসুরের মতো ফসল, যার শিকড়ের জীবাণু বাতাসের নাইট্রোজেনকে গাছের খাবার বানায়।"
+  },
+  "glossary.deep_rooting_crop.term": {
+   "en": "deep-rooting crop",
+   "bn": "গভীর শিকড়ের ফসল"
+  },
+  "glossary.deep_rooting_crop.say": {
+   "en": "A crop whose roots reach water and food deep in the soil.",
+   "bn": "এমন ফসল, যার শিকড় মাটির গভীরে পানি আর খাবার পায়।"
+  },
+  "glossary.drought_tolerant_crop.term": {
+   "en": "drought-tolerant crop",
+   "bn": "খরা সহনশীল ফসল"
+  },
+  "glossary.drought_tolerant_crop.say": {
+   "en": "A crop that still gives some harvest when the rains are short.",
+   "bn": "এমন ফসল, যা বৃষ্টি কম হলেও কিছু ফসল দেয়।"
+  },
+  "glossary.pest_cycle.term": {
+   "en": "pest cycle",
+   "bn": "পোকার চক্র"
+  },
+  "glossary.pest_cycle.say": {
+   "en": "Pests and diseases that build up when crops of one family follow each other.",
+   "bn": "একই পরিবারের ফসল পরপর লাগালে যে পোকা আর রোগ বাড়ে।"
+  },
+  "glossary.organic_matter.term": {
+   "en": "organic matter",
+   "bn": "জৈব পদার্থ"
+  },
+  "glossary.organic_matter.say": {
+   "en": "Rotting roots, leaves and dung in the soil that make it dark and crumbly.",
+   "bn": "মাটিতে পচা শিকড়, পাতা আর গোবর, যা মাটিকে কালো আর ঝুরঝুরে করে।"
+  },
+  "glossary.heat_stress.term": {
+   "en": "heat stress",
+   "bn": "তাপের চাপ"
+  },
+  "glossary.heat_stress.say": {
+   "en": "Days hotter than nine in ten of this place's usual days.",
+   "bn": "এই জায়গার সাধারণ দশ দিনের নয় দিনের চেয়ে বেশি গরম দিন।"
+  },
+  "glossary.resolution.term": {
+   "en": "resolution",
+   "bn": "রেজোলিউশন"
+  },
+  "glossary.resolution.say": {
+   "en": "The size of the patch of land that one satellite or computer number covers.",
+   "bn": "উপগ্রহ বা কম্পিউটারের একটি সংখ্যা যতটা জমি ঢাকে, তার মাপ।"
+  },
+  "glossary.climate_projection.term": {
+   "en": "climate projection",
+   "bn": "জলবায়ু প্রক্ষেপণ"
+  },
+  "glossary.climate_projection.say": {
+   "en": "A computer picture of possible future weather, given as a range, not a forecast.",
+   "bn": "সম্ভাব্য ভবিষ্যৎ আবহাওয়ার কম্পিউটার ছবি, একটি সীমা হিসেবে; পূর্বাভাস নয়।"
+  },
+  "crop_explainers.nitrogen_fixing.title": {
+   "en": "Crops that feed the soil",
+   "bn": "মাটিকে খাবার দেয় যে ফসল"
+  },
+  "crop_explainers.nitrogen_fixing.claims.0": {
+   "en": "Tiny helpers live in lentil roots.",
+   "bn": "মসুরের শিকড়ে ছোট্ট সাহায্যকারী থাকে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "These plants, in symbiosis with certain types of bacteria are able to convert atmospheric nitrogen (N2) into nitrogen compounds (ammonium) that can be used by plants, while also improving soil fertility (FAO, 2016a). The symbiosis occurs in nodules formed on the plant roots, where the nitrogen-fixing bacteria are hosted",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, printed p. 43 (PDF p. 52), section 2.1 'The role of pulses in nutrient (re)cycling': https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.1": {
+   "en": "They turn air into natural fertilizer.",
+   "bn": "তারা বাতাসকে প্রাকৃতিক সারে বদলে দেয়।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Pulses improve soil health by hosting helpful bacteria, called rhizobia, in their roots. These bacteria convert nitrogen from the air into fertilizers in the soil.",
+    "source": "FAO (2024), World Pulses Day 2024: Shining the spotlight on the vital role of pulses in promoting soil health and nourishing people, body text, paragraph after the Director-General's quote: https://www.fao.org/newsroom/detail/world-pulses-day-2024--shining-the-spotlight-on-the-vital-role-of-pulses-in-promoting-soil-health-and-nourishing-people/en"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.2": {
+   "en": "The next crop can use that fertilizer.",
+   "bn": "পরের ফসল সেই সার কাজে লাগাতে পারে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Provision of nitrogen derived from BNF to the subsequent crops ('nitrogen effect') increases yields especially where subsequent crops receive low or moderate levels of fertiliser.",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, printed p. 45, section 2.1: https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.3": {
+   "en": "So you may need less bought fertilizer.",
+   "bn": "তাই কেনা সার কম লাগতে পারে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "By fixing atmospheric nitrogen and solubilizing phosphates, pulses contribute to reducing the need for synthetic fertilizers",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, Executive summary, printed p. IX: https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.4": {
+   "en": "In Nepal, lentil often follows rice.",
+   "bn": "নেপালে মসুর প্রায়ই ধানের পরে আসে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "the majority of lentil in Nepal is grown in rice-based cropping system [35,36] and most of the rice varieties grown are medium to long-duration.",
+    "source": "CIMMYT (2020), Paudel, Devkota, Keil and McDonald, 'Climate and landscape mediate patterns of low lentil productivity in Nepal', PLoS ONE 15(4): e0231377, p. 14 of 19, Discussion: https://csisa.org/wp-content/uploads/sites/2/2020/04/Paudel_at_al-2020-Climate-and-landscape-mediate-patterns-of-low-lentil-productivity-in-Nepal.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.5": {
+   "en": "Here, lentil is sown mid-October to mid-November.",
+   "bn": "এখানে মসুর বোনা হয় মধ্য-অক্টোবর থেকে মধ্য-নভেম্বর।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March, 120-145 days",
+    "source": "FAO (2021), FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (lastUpdated 26/02/2021), Lentil (Winter) row: https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002"
+   }
+  },
+  "crop_explainers.cover.title": {
+   "en": "Crops that cover bare soil",
+   "bn": "খালি মাটি ঢেকে রাখা ফসল"
+  },
+  "crop_explainers.cover.claims.0": {
+   "en": "Rain does not hit covered soil hard.",
+   "bn": "ঢাকা মাটিতে বৃষ্টি জোরে আঘাত করে না।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Vegetative cover is important in CA for the protection of the soil against the impacts of raindrops; to keep the soil shaded; and maintain the highest possible moisture content.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, page text: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.1": {
+   "en": "More rain soaks in; less soil washes away.",
+   "bn": "বেশি পানি ভেতরে ঢোকে; কম মাটি ধুয়ে যায়।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Residues on the soil surface reduce the splash-effect of the raindrops, and once the energy of the raindrops has dissipated the drops proceed to the soil without any harmful effect. This results in higher infiltration and reduced runoff, leading to less erosion.",
+    "source": "FAO (n.d.), Benefits of Conservation Agriculture (CA), 'Environmental benefits that protect the soil': https://www.fao.org/conservation-agriculture/impact/benefits-of-ca/en/"
+   }
+  },
+  "crop_explainers.cover.claims.2": {
+   "en": "Their leftovers make the soil richer.",
+   "bn": "তাদের অবশিষ্ট অংশ মাটিকে উর্বর করে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Providing an additional source of organic matter to improve soil structure.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, list of cover-crop effects: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.3": {
+   "en": "They can help keep weeds and pests down.",
+   "bn": "এরা আগাছা আর পোকা কমাতে সাহায্য করতে পারে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Can be used to control weeds and pests.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, list of cover-crop effects: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.4": {
+   "en": "Lentil and mustard grow here in winter.",
+   "bn": "মসুর আর সরিষা এখানে শীতে হয়।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March; Colza (rapeseed): sowing 15 October to 15 November, harvest 15 March",
+    "source": "FAO (2021), FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (lastUpdated 26/02/2021), Lentil (Winter) and Colza (rapeseed) rows: https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002"
+   }
+  },
+  "crop_explainers.deep_rooting.title": {
+   "en": "Crops with deep roots",
+   "bn": "গভীর শিকড়ের ফসল"
+  },
+  "crop_explainers.deep_rooting.claims.0": {
+   "en": "Deep roots find water lower down.",
+   "bn": "গভীর শিকড় নিচের পানি খুঁজে পায়।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "TAW is the amount of water that a crop can extract from its root zone, and its magnitude depends on the type of soil and the rooting depth.",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, section 'Total available water (TAW)': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.1": {
+   "en": "They bring back food washed deep down.",
+   "bn": "নিচে ধুয়ে যাওয়া খাবার তারা ফিরিয়ে আনে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "as they root at different soil depths, they are capable of exploring different soil layers for nutrients. Nutrients that have been leached to deeper layers and that are no longer available for the commercial crop, can be 'recycled' by the crops in rotation. This way the rotation crops function as biological pumps.",
+    "source": "FAO (n.d.), Conservation Agriculture: Species diversification, section 'Crop rotation': https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.2": {
+   "en": "Roots leave channels that let rain in.",
+   "bn": "শিকড় নালা রেখে যায়, তা দিয়ে বৃষ্টি ঢোকে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Greater distribution of channels or biopores created by diverse roots (various forms, sizes and depths).",
+    "source": "FAO (n.d.), Conservation Agriculture: Species diversification, 'The effects of crop rotation:': https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.3": {
+   "en": "Millet roots can reach two metres down.",
+   "bn": "মারুয়ার শিকড় দুই মিটার পর্যন্ত নামতে পারে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "TABLE 22. Ranges of maximum effective rooting depth (Zr), and soil water depletion fraction for no stress (p), for common crops ... Millet 1.0-2.0 [m]",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, Table 22, row 'Millet': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.4": {
+   "en": "Maize roots go much deeper than potato roots.",
+   "bn": "ভুট্টার শিকড় আলুর চেয়ে অনেক গভীরে যায়।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Maize, Field (grain) (field corn) 1.0-1.7 [m] ... Potato 0.4-0.6 [m]",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, Table 22, rows 'Maize, Field (grain)' and 'Potato': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.drought_tolerant.title": {
+   "en": "Crops that cope with dry spells",
+   "bn": "খরা সামলাতে পারা ফসল"
+  },
+  "crop_explainers.drought_tolerant.claims.0": {
+   "en": "Millets cope with poor soil and hard weather.",
+   "bn": "বাজরা-জাতীয় ফসল দুর্বল মাটি আর কঠিন আবহাওয়া সয়।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "They can thrive on poor soils, resist or tolerate many crop diseases and pests, and are resilient to adverse climatic conditions.",
+    "source": "FAO (2023), International Year of Millets 2023: About, page text ('They' = millets; the page lists finger millet and names Nepal as a grower): https://www.fao.org/millets-2023/about/en"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.1": {
+   "en": "Finger millet is known as a hardy crop.",
+   "bn": "মারুয়া একটি শক্ত ফসল বলে পরিচিত।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "The resilient nature of finger millet makes it particularly well-suited for cultivation in harsh agro-climatic conditions.",
+    "source": "ICRISAT (n.d.), Finger millet: overview, page text: https://icrisat.org/crops/finger-millet/overview"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.2": {
+   "en": "But other millets need a little less water.",
+   "bn": "তবে বাজরায় এর চেয়ে একটু কম পানি লাগে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "has a slightly higher water requirement than most other millets and is found in cooler, elevated regions up to 2000 metres above sea level.",
+    "source": "FAO (1996), The World Sorghum and Millet Economies: Facts, Trends and Outlook (FAO and ICRISAT), Annex I, Annex I: https://www.fao.org/4/w1808e/w1808e0k.htm"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.3": {
+   "en": "Hill farmers often plant millet among their maize.",
+   "bn": "পাহাড়ের কৃষকেরা প্রায়ই ভুট্টার মাঝে মারুয়া লাগান।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "It is the fourth most important food crop in mid hills and high hills of Nepal and plays a vital role in the livelihood in these areas. ... It is pre-dominantly grown under maize/millet relay system in mid-hills of western, central and eastern regions",
+    "source": "NARC (2020), Annual Report 2076/77 (2019/2020), National Seed Science Technology Research Centre, NARC, Khumaltar, printed p. 24 (PDF p. 38), section 3.2.3, Introduction: https://nsstrc.narc.gov.np/sites/default/files/2021-05/Press%202020%20Annual%20report,%202076-77(1)%20final.pdf"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.4": {
+   "en": "Several different crops make total loss less likely.",
+   "bn": "নানা রকম ফসলে সব হারানোর ভয় কমে।",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
+    "source": "FAO (1998), FAO's Emergency Activities: Technical Handbook Series, Phase One: Prevention, section 2.1.1 'Crop Diversification': https://www.fao.org/4/X6869E/x6869e01.htm"
+   }
+  }
+ }
+}

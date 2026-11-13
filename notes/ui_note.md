@@ -113,6 +113,18 @@ Saturday. Then `mock` becomes empty.
 - `low_ground` is null everywhere (we can't tell).
 - `mock` is now `["future"]`.
 
+## 6d. Landed on 14 November (Saturday), 05:45: the 2040 outlook and the monsoon's usual start
+
+- `mock` is empty: nothing in the file is sample data any more.
+- `future` is real. Its `years` is `[2040]`, standing for 2026-2040. Each plan and current option has its own `future`
+  (harvest with a low-high range, from many climate models). The design has no 2040 screen, so the owner wants it on
+  the "How we know" page, with `future.words`.
+- `diary.shift_days` now comes from DHM's official onset dates (-2.2 days, range -11.5 to +7.7). Show `shift_note`:
+  "No clear change since 2001." Never "2 days earlier".
+- `diary.monsoon_start` gives the usual start (10-16 June, entry into eastern Nepal; a few days later here), late
+  years (2009 only, after 20 June) and its `words` in English and Nepali. Show it on "Next 3 months" and the diary.
+- `method.onset` holds the "How we know" paragraph on the monsoon's start.
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

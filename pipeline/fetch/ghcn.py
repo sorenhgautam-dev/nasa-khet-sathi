@@ -150,7 +150,8 @@ def fetch(field, station, data_dir=REPO / "data", get_bytes=_http_get_bytes, cre
     )
     card_path = g.write_card(card, data_dir / "cards" / fid)
     if credits_path:
-        ensure_credit(credits_path, f"- NOAA NCEI GHCN-Daily v3.35, station {station} (validation; temperature correction A), "
+        use = "validation; temperature correction A" if field.get("correction_label") else "validation only"
+        ensure_credit(credits_path, f"- NOAA NCEI GHCN-Daily v3.35, station {station} ({use}), "
                                     f"field `{fid}`, {card['date_range'][0]} to {card['date_range'][1]}, fetched {dt.date.today()}")
     return {"table": out, "card": card_path, "card_data": card}
 

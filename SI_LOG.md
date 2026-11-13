@@ -859,6 +859,18 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   readings, the own-year variant and its feeding `shift_days`, the 2-29 June window and the trust test. Also the proposed
   contract fields `diary.shift_days_low`, `diary.shift_days_high` and `diary.shift_note`, and the English words in
   `export_proposal`.
+- **The owner's answer (2026-11-14): "fix the answer, not the method".** No further onset definition was tried.
+  - **Rule before run:** `rules.yaml monsoon_onset_dhm` (`09c1327`). It covers the DHM record, `shift_days`, the start
+    window, late after 20 June, the cross-check agreement test, the words rule and the approximate BS dates.
+  - **The DHM table:** Table 1, 1968-2024, now in `config/dhm_onset_dates.csv` with a NOTICE. Both files went into the
+    integrator's commit `345d4b1` from the index, before the run.
+  - **Code (tests first):** `pipeline/diary/onset_dhm.py`, `tests/test_onset_dhm.py` (24 tests), `scripts/run_onset_dhm.py`
+    -> `data/checks/demo/onset_dhm.json`.
+  - **Result:** DHM shows no clear shift: -2.2 days (-11.5 to +7.7). The usual start is 10-16 June. Only 2009 came after
+    20 June (1 of 24 years). Both cross-checks pass the declared test, but weakly: wide ranges that lean later. CHIRPS's
+    onset by this method has median 17 May and does not follow DHM's years.
+  - **SI wrote** the English and Nepali drafts (diary, "Next 3 months", "How we know"). Every Nepali line needs a
+    native speaker's review, and its BS dates are approximate.
 
 ## 2026-11-13 (night): Local Impact, the area map and sample fields (Claude Opus 5.5 via Claude Code, parallel agent)
 
@@ -920,3 +932,46 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **For a person to review:** relative humidity held, the 3-month rain window, leaving out GFDL-CM4_gr2, MIROC-ES2L
   refused for tasmin files without units, the licence notes (CC-BY-SA 4.0 on some variables), and the proposed words
   for the 2040 screen. No farmer-facing text was exported.
+
+## 2026-11-13 (night): the field on another continent, build step 11 first part (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- **Chose the field abroad** (Claude's choice, METHOD_NOTES 85): Ambohidratrimo, Madagascar highlands (FAO Crop Calendar MG
+  aez 004: rainy-season rice, dry-season potato or wheat). Survey of 12 candidate points in Madagascar, Kenya and Ethiopia
+  (and Guatemala's calendar, which has no sowing windows): FAO calendars read from the public JSON API, HLS granule counts and
+  MGRS tiles from CMR, WorldCover class shares, GHCN-Daily coverage by year. Survey scripts in the session scratchpad only.
+- **Picked the 60 m square** by the demo's rule with the zone's own seasons (METHOD_NOTES 86): candidate 1, the rule's first
+  rank, picked without imagery. Its NDVI shows no bare dry-season trough, so it may not be a rice field: **for a person: check
+  it on satellite imagery** (candidates 2 and 3 need no new download).
+- **Wrote and committed a rule before any data of the field existed**: `gpm_series.break_test` (`6d2919c`), the thresholds
+  Claude's choices with reasons (20-point gauge-weight fall, Pettitt p < 0.05, one-year window). Checked that it classifies
+  the demo's evidence as a break (it does: 2017). Then ran it on the field abroad (VALIDATION 3.24).
+- **Generalised the fetch modules, the rain check and the driver** (METHOD_NOTES 87-89; `tests/test_field_abroad.py`, worked
+  numbers in every test): placeholder seasons from config, UTC-day labels from `utc_offset`, FAOSTAT country and crops,
+  CHIRPS field cell at build time, GRACE and GPCC global files reused, correction A only with a `correction_label`, HLS
+  `--since`, a GPM bug (Late search with from > to for a range ending before the last Final day), `scripts/fetch_field.py`.
+  The demo's `rain_check_b.json` is byte-identical before and after.
+- **A research sub-agent (Explore)** listed the Nepal-specific constants in the diary, plans, events, onset, words and export
+  (input for REVIEW_2 H6); Claude spot-checked five of its line numbers (all right). Nothing was changed from it tonight.
+- **For a person to review:** the field and square choice; the break-test thresholds; the config's `placeholder_seasons`
+  months read from the FAO windows.
+
+## 2026-11-13 (night): draft translations (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- **What SI did (tests first):** machine-translated every text in `pipeline/words/screens.json`, `glossary.json` and
+  `crop_explainers.json` (269 texts) from the English into Hindi (hi), Bengali (bn), Spanish (es), French (fr) and Swahili
+  (sw): `pipeline/words/drafts/<lang>.json`, one entry per English text node, recording the English it translates.
+  `pipeline/export/build_words.py` adds each draft text beside "en" and "ne" in its node of `site/data/words.json` (English
+  and Nepali unchanged) and a `languages` list (Nepali first; each draft with `draft: true`, status "machine-translated (SI),
+  needs native-speaker review", and a label "Draft translation" in that language and in English). Tests in
+  `tests/test_words_export.py`: same keys as the English and not stale, same placeholders and digits, eight-word screen
+  sentences, one-sentence glossary meanings, Gregorian months, the flag and label, every published node carries every draft.
+- **Kept in English on purpose:** the 21 verbatim source quotations of the crop explainers (18 from FAO) and the glossary's
+  `basis` notes. A translation would be an adaptation of a licensed text (e.g. CC BY-NC-SA 3.0 IGO); each draft entry
+  carries its quote verbatim, marked `lang: en, translated: false`, with its source.
+- **Choices a reviewer should check:** ASCII digits in every draft (Bengali readers may prefer ০-৯); Bengali uses পানি
+  (Bangladesh) not জল; Spanish uses usted and Latin American farm words (papa, computadora); French uses vous and no-break
+  spaces before ? ! : ;; finger millet is रागी / মারুয়া / mijo africano / éleusine / ulezi; Swahili keeps "buckwheat" (no
+  common word); the months note says "Nepali months don't line up exactly with these" in es, fr and sw, where "English
+  months" means nothing; a few Hindi lines are verbless to stay within eight words.
+- **Not translated (out of scope):** each plan's tabs and tips in `site/data/fields/demo.json` (English and Nepali only).
+- **For a person to review:** every draft text, by a native speaker of each language. No draft has been reviewed.

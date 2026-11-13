@@ -1,8 +1,9 @@
 {
  "about": {
-  "what": "Every word on the screens, in English (en) and Nepali (ne). Built from pipeline/words/ by pipeline/export/build_words.py; do not edit by hand.",
+  "what": "Every word on the screens, in English (en) and Nepali (ne), with draft machine translations beside them (see 'languages'). Built from pipeline/words/ by pipeline/export/build_words.py; do not edit by hand.",
   "nepali_review": "needs native-speaker review",
-  "placeholders": "Texts may hold {names} in braces: fill them from the field file (the same names in both languages; Nepali digits are Devanagari)."
+  "placeholders": "Texts may hold {names} in braces: fill them from the field file (the same names in both languages; Nepali digits are Devanagari).",
+  "drafts": "hi, bn, es, fr and sw are machine-translated (SI) from the English and need native-speaker review: show each language's 'label' beside its name whenever it is chosen. A node without a text in that language (listed in 'missing') shows the English. Numbers are ASCII digits; fill placeholders as they are, names from shared.crop_names and shared.months in the same language. Months are Gregorian (Bikram Sambat is Nepali only). The crop explainers' source quotes and the glossary's basis stay in the original English: show them with 'quote_label', never translated."
  },
  "screens": [
   {
@@ -11,7 +12,12 @@
    "title": {
     "en": "Khet Sathi",
     "ne": "खेत साथी",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "खेत साथी",
+    "bn": "খেত সাথী",
+    "es": "Khet Sathi",
+    "fr": "Khet Sathi",
+    "sw": "Khet Sathi"
    },
    "glossary": [
     "field_twin",
@@ -22,31 +28,56 @@
      "id": "tagline",
      "en": "Your field's friend.",
      "ne": "तपाईंको खेतको साथी।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपके खेत का साथी।",
+     "bn": "আপনার জমির বন্ধু।",
+     "es": "El amigo de su campo.",
+     "fr": "L'ami de votre champ.",
+     "sw": "Rafiki wa shamba lako."
     },
     {
      "id": "intro",
      "en": "Let's look at your field together.",
      "ne": "आउनुहोस्, सँगै तपाईंको खेत हेरौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आइए, साथ मिलकर आपका खेत देखें।",
+     "bn": "আসুন, একসাথে আপনার জমি দেখি।",
+     "es": "Miremos juntos su campo.",
+     "fr": "Regardons ensemble votre champ.",
+     "sw": "Tuangalie shamba lako pamoja."
     },
     {
      "id": "you_decide",
      "en": "We help you think. You decide.",
      "ne": "हामी सोच्न सघाउँछौं। निर्णय तपाईंको।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हम सोचने में मदद करते हैं। फ़ैसला आपका।",
+     "bn": "আমরা ভাবতে সাহায্য করি। সিদ্ধান্ত আপনার।",
+     "es": "Le ayudamos a pensar. Usted decide.",
+     "fr": "Nous vous aidons à réfléchir. Vous décidez.",
+     "sw": "Tunakusaidia kufikiri. Wewe unaamua."
     },
     {
      "id": "start",
      "en": "Start",
      "ne": "सुरु गरौं",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "शुरू करें",
+     "bn": "শুরু করুন",
+     "es": "Empezar",
+     "fr": "Commencer",
+     "sw": "Anza"
     },
     {
      "id": "try_sample",
      "en": "Try our sample field",
      "ne": "हाम्रो नमुना खेत हेर्नुहोस्",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हमारा नमूना खेत देखें",
+     "bn": "আমাদের নমুনা জমি দেখুন",
+     "es": "Vea nuestro campo de ejemplo",
+     "fr": "Voir notre champ d'exemple",
+     "sw": "Jaribu shamba letu la mfano"
     },
     {
      "id": "sample_note",
@@ -55,7 +86,12 @@
      ],
      "en": "We picked this field as an example.",
      "ne": "हामीले यो खेत उदाहरणका लागि छानेका हौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हमने यह खेत उदाहरण के लिए चुना है।",
+     "bn": "আমরা উদাহরণ হিসেবে এই জমি বেছে নিয়েছি।",
+     "es": "Elegimos este campo como ejemplo.",
+     "fr": "Nous avons choisi ce champ comme exemple.",
+     "sw": "Tulichagua shamba hili kama mfano."
     }
    ]
   },
@@ -65,7 +101,12 @@
    "title": {
     "en": "Where is your field?",
     "ne": "तपाईंको खेत कहाँ छ?",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "आपका खेत कहाँ है?",
+    "bn": "আপনার জমি কোথায়?",
+    "es": "¿Dónde está su campo?",
+    "fr": "Où est votre champ ?",
+    "sw": "Shamba lako liko wapi?"
    },
    "glossary": [
     "irrigation"
@@ -75,43 +116,78 @@
      "id": "corners",
      "en": "Tap the four corners of your field.",
      "ne": "आफ्नो खेतका चारवटै कुनामा थिच्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "अपने खेत के चारों कोनों पर दबाएँ।",
+     "bn": "আপনার জমির চার কোণে চাপ দিন।",
+     "es": "Toque las cuatro esquinas de su campo.",
+     "fr": "Touchez les quatre coins de votre champ.",
+     "sw": "Gusa pembe nne za shamba lako."
     },
     {
      "id": "move_corner",
      "en": "Tap a corner again to move it.",
      "ne": "कुना सार्न त्यसलाई फेरि थिच्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "कोना हटाने के लिए उसे फिर दबाएँ।",
+     "bn": "কোণ সরাতে আবার চাপ দিন।",
+     "es": "Toque una esquina otra vez para moverla.",
+     "fr": "Touchez encore un coin pour le déplacer.",
+     "sw": "Gusa pembe tena ili kuisogeza."
     },
     {
      "id": "done",
      "en": "Done",
      "ne": "भयो",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हो गया",
+     "bn": "হয়ে গেছে",
+     "es": "Listo",
+     "fr": "Terminé",
+     "sw": "Tayari"
     },
     {
      "id": "outside",
      "en": "We have not looked at this place yet.",
      "ne": "हामीले यो ठाउँ अहिलेसम्म हेरेका छैनौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हमने यह जगह अभी तक नहीं देखी।",
+     "bn": "আমরা এই জায়গাটি এখনো দেখিনি।",
+     "es": "Todavía no hemos mirado este lugar.",
+     "fr": "Nous n'avons pas encore regardé cet endroit.",
+     "sw": "Bado hatujaangalia mahali hapa."
     },
     {
      "id": "outside_try",
      "en": "Try our sample field instead.",
      "ne": "बरु हाम्रो नमुना खेत हेर्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "इसके बदले हमारा नमूना खेत देखें।",
+     "bn": "বরং আমাদের নমুনা জমি দেখুন।",
+     "es": "Mejor vea nuestro campo de ejemplo.",
+     "fr": "Essayez plutôt notre champ d'exemple.",
+     "sw": "Badala yake, jaribu shamba letu la mfano."
     },
     {
      "id": "q_water",
      "en": "Where does your field's water come from?",
      "ne": "तपाईंको खेतमा पानी कहाँबाट आउँछ?",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपके खेत में पानी कहाँ से आता है?",
+     "bn": "আপনার জমিতে পানি কোথা থেকে আসে?",
+     "es": "¿De dónde viene el agua de su campo?",
+     "fr": "D'où vient l'eau de votre champ ?",
+     "sw": "Maji ya shamba lako yanatoka wapi?"
     },
     {
      "id": "q_shape",
      "en": "Is your field flat or on steps?",
      "ne": "तपाईंको खेत समथर छ कि गरामा?",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपका खेत समतल है या सीढ़ीदार?",
+     "bn": "আপনার জমি সমতল, নাকি ধাপে ধাপে?",
+     "es": "¿Su campo es plano o en escalones?",
+     "fr": "Votre champ est-il plat ou en terrasses ?",
+     "sw": "Shamba lako ni tambarare au lina ngazi?"
     }
    ],
    "labels": {
@@ -122,27 +198,52 @@
       "rain_only": {
        "en": "Rain only",
        "ne": "वर्षा मात्र",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "सिर्फ़ बारिश",
+       "bn": "শুধু বৃষ্টি",
+       "es": "Solo lluvia",
+       "fr": "Pluie seulement",
+       "sw": "Mvua tu"
       },
       "canal": {
        "en": "Canal",
        "ne": "कुलो",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "नहर",
+       "bn": "খাল",
+       "es": "Canal",
+       "fr": "Canal",
+       "sw": "Mfereji"
       },
       "well": {
        "en": "Well or pump",
        "ne": "इनार वा पम्प",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "कुआँ या पंप",
+       "bn": "কুয়া বা পাম্প",
+       "es": "Pozo o bomba",
+       "fr": "Puits ou pompe",
+       "sw": "Kisima au pampu"
       },
       "other": {
        "en": "Pipe or other",
        "ne": "पाइप वा अरू",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "पाइप या कुछ और",
+       "bn": "পাইপ বা অন্য কিছু",
+       "es": "Tubería u otro",
+       "fr": "Tuyau ou autre",
+       "sw": "Bomba au kingine"
       },
       "unknown": {
        "en": "I don't know",
        "ne": "थाहा छैन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "मुझे नहीं पता",
+       "bn": "জানি না",
+       "es": "No sé",
+       "fr": "Je ne sais pas",
+       "sw": "Sijui"
       }
      }
     },
@@ -153,17 +254,32 @@
       "flat": {
        "en": "Flat",
        "ne": "समथर",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "समतल",
+       "bn": "সমতল",
+       "es": "Plano",
+       "fr": "Plat",
+       "sw": "Tambarare"
       },
       "steps": {
        "en": "Steps",
        "ne": "गरा",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "सीढ़ीदार",
+       "bn": "ধাপে ধাপে",
+       "es": "En escalones",
+       "fr": "En terrasses",
+       "sw": "Ngazi"
       },
       "slope": {
        "en": "Slope",
        "ne": "भिरालो",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "ढलान",
+       "bn": "ঢালু",
+       "es": "En pendiente",
+       "fr": "En pente",
+       "sw": "Mteremko"
       }
      }
     }
@@ -175,7 +291,12 @@
    "title": {
     "en": "We looked at your field from space",
     "ne": "हामीले अन्तरिक्षबाट तपाईंको खेत हेरेका छौं",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "हमने अंतरिक्ष से आपका खेत देखा",
+    "bn": "আমরা মহাকাশ থেকে আপনার জমি দেখেছি",
+    "es": "Miramos su campo desde el espacio",
+    "fr": "Nous avons regardé votre champ depuis l'espace",
+    "sw": "Tuliangalia shamba lako kutoka angani"
    },
    "glossary": [
     "satellite",
@@ -193,13 +314,23 @@
      "id": "guess",
      "en": "We think you grow {guess_list}.",
      "ne": "हाम्रो विचारमा तपाईं {guess_list} लगाउनुहुन्छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हमें लगता है, आप {guess_list} उगाते हैं।",
+     "bn": "আমাদের মনে হয়, আপনি {guess_list} চাষ করেন।",
+     "es": "Creemos que usted cultiva {guess_list}.",
+     "fr": "Nous pensons que vous cultivez {guess_list}.",
+     "sw": "Tunadhani unalima {guess_list}."
     },
     {
      "id": "guess_right",
      "en": "Is this right?",
      "ne": "के यो ठीक हो?",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "क्या यह सही है?",
+     "bn": "এটা কি ঠিক?",
+     "es": "¿Es correcto?",
+     "fr": "Est-ce juste ?",
+     "sw": "Je, hii ni sahihi?"
     },
     {
      "id": "guess_first",
@@ -208,7 +339,12 @@
      ],
      "en": "We think you grow {first_crop} first.",
      "ne": "हाम्रो विचारमा तपाईं पहिले {first_crop} लगाउनुहुन्छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हमें लगता है, आप पहले {first_crop} उगाते हैं।",
+     "bn": "আমাদের মনে হয়, আপনি আগে {first_crop} চাষ করেন।",
+     "es": "Creemos que primero cultiva {first_crop}.",
+     "fr": "Nous pensons que vous cultivez d'abord {first_crop}.",
+     "sw": "Tunadhani kwanza unalima {first_crop}."
     },
     {
      "id": "guess_options",
@@ -217,7 +353,12 @@
      ],
      "en": "Then {option_a} or {option_b}.",
      "ne": "त्यसपछि {option_a} वा {option_b}।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "फिर {option_a} या {option_b}।",
+     "bn": "তারপর {option_a} বা {option_b}।",
+     "es": "Luego {option_a} o {option_b}.",
+     "fr": "Puis {option_a} ou {option_b}.",
+     "sw": "Kisha {option_a} au {option_b}."
     },
     {
      "id": "guess_which",
@@ -226,7 +367,12 @@
      ],
      "en": "Which one do you grow?",
      "ne": "तपाईं कुन लगाउनुहुन्छ?",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आप इनमें से कौन-सी उगाते हैं?",
+     "bn": "আপনি কোনটা চাষ করেন?",
+     "es": "¿Cuál cultiva usted?",
+     "fr": "Laquelle cultivez-vous ?",
+     "sw": "Unalima ipi?"
     },
     {
      "id": "guess_cannot_tell",
@@ -235,31 +381,56 @@
      ],
      "en": "From space, both look the same.",
      "ne": "अन्तरिक्षबाट हेर्दा दुवै उस्तै देखिन्छन्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "अंतरिक्ष से दोनों एक जैसी दिखती हैं।",
+     "bn": "মহাকাশ থেকে দুটোই একই রকম দেখায়।",
+     "es": "Desde el espacio, las dos se ven iguales.",
+     "fr": "Depuis l'espace, les deux se ressemblent.",
+     "sw": "Kutoka angani, zote mbili zinaonekana sawa."
     },
     {
      "id": "yes",
      "en": "Yes",
      "ne": "हो",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हाँ",
+     "bn": "হ্যাঁ",
+     "es": "Sí",
+     "fr": "Oui",
+     "sw": "Ndiyo"
     },
     {
      "id": "no_fix",
      "en": "No, let me fix it",
      "ne": "होइन, म मिलाउँछु",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "नहीं, मुझे ठीक करने दें",
+     "bn": "না, আমি ঠিক করি",
+     "es": "No, déjeme corregirlo",
+     "fr": "Non, je corrige",
+     "sw": "Hapana, niache nirekebishe"
     },
     {
      "id": "bare",
      "en": "The ground is bare about {bare_days} days yearly.",
      "ne": "वर्षमा करिब {bare_days} दिन जमिन खाली रहन्छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "ज़मीन सालाना करीब {bare_days} दिन खाली रहती है।",
+     "bn": "বছরে প্রায় {bare_days} দিন জমি খালি থাকে।",
+     "es": "Cada año hay unos {bare_days} días sin cultivo.",
+     "fr": "Le sol reste nu environ {bare_days} jours l'an.",
+     "sw": "Ardhi huwa tupu karibu siku {bare_days} kila mwaka."
     },
     {
      "id": "bare_why",
      "en": "Uncovered soil can wash away in rain.",
      "ne": "नढाकिएको माटो पानीले बगाउन सक्छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "खुली मिट्टी बारिश में बह सकती है।",
+     "bn": "খোলা মাটি বৃষ্টিতে ধুয়ে যেতে পারে।",
+     "es": "La lluvia puede llevarse la tierra descubierta.",
+     "fr": "La pluie peut emporter un sol découvert.",
+     "sw": "Mvua inaweza kusomba udongo usiofunikwa."
     },
     {
      "id": "rains_earlier",
@@ -268,7 +439,12 @@
      ],
      "en": "Since {year_first}, rains start about {shift_days_abs} days earlier.",
      "ne": "{year_first} यता वर्षा करिब {shift_days_abs} दिन चाँडै आउँछ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "{year_first} से बारिश करीब {shift_days_abs} दिन जल्दी।",
+     "bn": "{year_first} থেকে বৃষ্টি প্রায় {shift_days_abs} দিন আগে আসে।",
+     "es": "Desde {year_first}, llueve unos {shift_days_abs} días antes.",
+     "fr": "Depuis {year_first}, pluies environ {shift_days_abs} jours plus tôt.",
+     "sw": "Tangu {year_first}, mvua huanza karibu siku {shift_days_abs} mapema."
     },
     {
      "id": "rains_later",
@@ -277,7 +453,12 @@
      ],
      "en": "Since {year_first}, rains start about {shift_days_abs} days later.",
      "ne": "{year_first} यता वर्षा करिब {shift_days_abs} दिन ढिलो आउँछ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "{year_first} से बारिश करीब {shift_days_abs} दिन देरी से।",
+     "bn": "{year_first} থেকে বৃষ্টি প্রায় {shift_days_abs} দিন দেরিতে আসে।",
+     "es": "Desde {year_first}, llueve unos {shift_days_abs} días más tarde.",
+     "fr": "Depuis {year_first}, pluies environ {shift_days_abs} jours plus tard.",
+     "sw": "Tangu {year_first}, mvua huanza karibu siku {shift_days_abs} baadaye."
     },
     {
      "id": "rains_same",
@@ -286,7 +467,12 @@
      ],
      "en": "The rains start about when they used to.",
      "ne": "वर्षा पहिलेजस्तै समयमा आउँछ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "बारिश लगभग पहले जैसे समय पर आती है।",
+     "bn": "বৃষ্টি প্রায় আগের মতো সময়েই আসে।",
+     "es": "Las lluvias empiezan casi como antes.",
+     "fr": "Les pluies commencent à peu près comme avant.",
+     "sw": "Mvua huanza karibu kama zamani."
     },
     {
      "id": "water_falling",
@@ -295,7 +481,12 @@
      ],
      "en": "Water stored in this whole area is falling.",
      "ne": "यो पूरै क्षेत्रमा जम्मा पानी घट्दै छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "पूरे इलाके में जमा पानी घट रहा है।",
+     "bn": "এই পুরো এলাকায় জমা পানি কমছে।",
+     "es": "En toda la zona, el agua guardada baja.",
+     "fr": "L'eau stockée dans toute la zone baisse.",
+     "sw": "Maji yaliyohifadhiwa katika eneo hili lote yanapungua."
     },
     {
      "id": "water_steady",
@@ -304,7 +495,12 @@
      ],
      "en": "Water stored in this whole area is steady.",
      "ne": "यो पूरै क्षेत्रमा जम्मा पानी उस्तै छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "पूरे इलाके में जमा पानी एक जैसा है।",
+     "bn": "এই পুরো এলাকায় জমা পানি একই আছে।",
+     "es": "Toda la zona: el agua guardada sigue igual.",
+     "fr": "L'eau stockée dans toute la zone est stable.",
+     "sw": "Maji yaliyohifadhiwa katika eneo hili lote hayabadiliki."
     },
     {
      "id": "water_rising",
@@ -313,7 +509,12 @@
      ],
      "en": "Water stored in this whole area is rising.",
      "ne": "यो पूरै क्षेत्रमा जम्मा पानी बढ्दै छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "पूरे इलाके में जमा पानी बढ़ रहा है।",
+     "bn": "এই পুরো এলাকায় জমা পানি বাড়ছে।",
+     "es": "En toda la zona, el agua guardada sube.",
+     "fr": "L'eau stockée dans toute la zone monte.",
+     "sw": "Maji yaliyohifadhiwa katika eneo hili lote yanaongezeka."
     },
     {
      "id": "water_wide",
@@ -322,31 +523,56 @@
      ],
      "en": "This trend is clear for the wide area.",
      "ne": "ठूलो क्षेत्रका लागि यो चाल स्पष्ट छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "बड़े इलाके के लिए यह रुझान साफ़ है।",
+     "bn": "বড় এলাকার জন্য এই ধারা স্পষ্ট।",
+     "es": "Esto está claro para la zona amplia.",
+     "fr": "Cette tendance est nette pour la grande zone.",
+     "sw": "Mwelekeo huu ni wazi kwa eneo pana."
     },
     {
      "id": "water_not_yours",
      "en": "It does not tell about your own well.",
      "ne": "यसले तपाईंको आफ्नै इनारबारे भन्दैन।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "इससे आपके अपने कुएँ का पता नहीं चलता।",
+     "bn": "এটা আপনার নিজের কুয়ার কথা বলে না।",
+     "es": "No dice nada de su propio pozo.",
+     "fr": "Cela ne dit rien de votre propre puits.",
+     "sw": "Haielezi kuhusu kisima chako mwenyewe."
     },
     {
      "id": "water_not_well",
      "en": "This is the whole area, not your well.",
      "ne": "यो पूरै क्षेत्रको कुरा हो, तपाईंको इनारको होइन।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "यह पूरा इलाका है, आपका कुआँ नहीं।",
+     "bn": "এটা পুরো এলাকার, আপনার কুয়ার নয়।",
+     "es": "Esto es toda la zona, no su pozo.",
+     "fr": "C'est toute la zone, pas votre puits.",
+     "sw": "Hili ni eneo lote, si kisima chako."
     },
     {
      "id": "calendar_title",
      "en": "Your field's twelve months",
      "ne": "तपाईंको खेतका बाह्र महिना",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपके खेत के बारह महीने",
+     "bn": "আপনার জমির বারো মাস",
+     "es": "Los doce meses de su campo",
+     "fr": "Les douze mois de votre champ",
+     "sw": "Miezi kumi na miwili ya shamba lako"
     },
     {
      "id": "months_note",
      "en": "Nepali and English months don't line up exactly.",
      "ne": "नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "नेपाली और अंग्रेज़ी महीने ठीक-ठीक मेल नहीं खाते।",
+     "bn": "নেপালি আর ইংরেজি মাস হুবহু মেলে না।",
+     "es": "Los meses nepalíes no coinciden exactamente con estos.",
+     "fr": "Les mois népalais diffèrent un peu de ceux-ci.",
+     "sw": "Miezi ya Kinepali hailingani kabisa na hii."
     },
     {
      "id": "frost_note",
@@ -355,13 +581,23 @@
      ],
      "en": "We may show too many freezing nights.",
      "ne": "हामीले तुषारो धेरै देखाएका हुन सक्छौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "पाले की रातें शायद ज़्यादा दिख रही हैं।",
+     "bn": "আমরা হয়তো তুষার পড়া রাত বেশি দেখাচ্ছি।",
+     "es": "Quizá mostramos demasiadas noches de helada.",
+     "fr": "Nous montrons peut-être trop de nuits de gel.",
+     "sw": "Huenda tunaonyesha usiku mwingi mno wa barafu."
     },
     {
      "id": "month_less_sure",
      "en": "We are less sure about this month.",
      "ne": "यो महिनाबारे हामी कम पक्का छौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "इस महीने पर हम कम पक्के हैं।",
+     "bn": "এই মাস নিয়ে আমরা কম নিশ্চিত।",
+     "es": "Estamos menos seguros de este mes.",
+     "fr": "Nous sommes moins sûrs pour ce mois.",
+     "sw": "Hatuna uhakika sana kuhusu mwezi huu."
     }
    ],
    "labels": {
@@ -372,17 +608,32 @@
       "low": {
        "en": "Little rain",
        "ne": "थोरै पानी",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "थोड़ी बारिश",
+       "bn": "অল্প বৃষ্টি",
+       "es": "Poca lluvia",
+       "fr": "Peu de pluie",
+       "sw": "Mvua kidogo"
       },
       "medium": {
        "en": "Some rain",
        "ne": "मध्यम पानी",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "कुछ बारिश",
+       "bn": "কিছু বৃষ্টি",
+       "es": "Algo de lluvia",
+       "fr": "Pluie moyenne",
+       "sw": "Mvua ya wastani"
       },
       "high": {
        "en": "Lots of rain",
        "ne": "धेरै पानी",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "बहुत बारिश",
+       "bn": "অনেক বৃষ্টি",
+       "es": "Mucha lluvia",
+       "fr": "Beaucoup de pluie",
+       "sw": "Mvua nyingi"
       }
      }
     },
@@ -393,17 +644,32 @@
       "dry": {
        "en": "Dry soil",
        "ne": "सुक्खा माटो",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "सूखी मिट्टी",
+       "bn": "শুকনো মাটি",
+       "es": "Tierra seca",
+       "fr": "Sol sec",
+       "sw": "Udongo mkavu"
       },
       "medium": {
        "en": "Damp soil",
        "ne": "ओसिलो माटो",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "नम मिट्टी",
+       "bn": "সামান্য ভেজা মাটি",
+       "es": "Tierra húmeda",
+       "fr": "Sol humide",
+       "sw": "Udongo wenye unyevu"
       },
       "wet": {
        "en": "Wet soil",
        "ne": "भिजेको माटो",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "गीली मिट्टी",
+       "bn": "ভেজা মাটি",
+       "es": "Tierra mojada",
+       "fr": "Sol mouillé",
+       "sw": "Udongo uliolowa"
       }
      }
     },
@@ -414,17 +680,32 @@
       "none": {
        "en": "Not hot",
        "ne": "गर्मी छैन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "गर्मी नहीं",
+       "bn": "গরম নেই",
+       "es": "Sin calor",
+       "fr": "Pas chaud",
+       "sw": "Hakuna joto"
       },
       "some": {
        "en": "Some hot days",
        "ne": "केही तातो दिन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "कुछ गर्म दिन",
+       "bn": "কিছু গরম দিন",
+       "es": "Algunos días calurosos",
+       "fr": "Quelques jours chauds",
+       "sw": "Siku kadhaa za joto"
       },
       "high": {
        "en": "Many hot days",
        "ne": "धेरै तातो दिन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "कई गर्म दिन",
+       "bn": "অনেক গরম দিন",
+       "es": "Muchos días calurosos",
+       "fr": "Beaucoup de jours chauds",
+       "sw": "Siku nyingi za joto"
       }
      }
     },
@@ -435,17 +716,32 @@
       "none": {
        "en": "No freezing nights",
        "ne": "तुषारो पर्दैन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "पाला नहीं पड़ता",
+       "bn": "তুষার পড়ে না",
+       "es": "Sin heladas",
+       "fr": "Pas de gel",
+       "sw": "Hakuna usiku wa barafu"
       },
       "risk": {
        "en": "Some nights near freezing",
        "ne": "कहिलेकाहीँ तुषारो पर्न सक्छ",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "कुछ रातें पाले के करीब",
+       "bn": "কিছু রাতে তুষার পড়তে পারে",
+       "es": "Algunas noches casi heladas",
+       "fr": "Quelques nuits proches du gel",
+       "sw": "Baadhi ya usiku karibu na barafu"
       },
       "high": {
        "en": "Freezing nights likely",
        "ne": "तुषारो पर्ने सम्भावना धेरै",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "पाला पड़ने की संभावना ज़्यादा",
+       "bn": "তুষার পড়ার সম্ভাবনা বেশি",
+       "es": "Heladas probables",
+       "fr": "Gel probable la nuit",
+       "sw": "Usiku wa barafu unatarajiwa"
       }
      }
     },
@@ -456,17 +752,32 @@
       "bare": {
        "en": "Bare ground",
        "ne": "खाली जमिन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "खाली ज़मीन",
+       "bn": "খালি জমি",
+       "es": "Tierra desnuda",
+       "fr": "Sol nu",
+       "sw": "Ardhi tupu"
       },
       "partial": {
        "en": "Some plants",
        "ne": "केही बिरुवा",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "कुछ पौधे",
+       "bn": "কিছু গাছপালা",
+       "es": "Algunas plantas",
+       "fr": "Quelques plantes",
+       "sw": "Mimea kiasi"
       },
       "crop": {
        "en": "Full of crop",
        "ne": "बालीले भरिएको",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "फ़सल से भरा",
+       "bn": "ফসলে ভরা",
+       "es": "Lleno de cultivo",
+       "fr": "Plein de culture",
+       "sw": "Imejaa mazao"
       }
      }
     }
@@ -478,7 +789,12 @@
    "title": {
     "en": "Your field in small parts",
     "ne": "तपाईंको खेत साना भागमा",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "छोटे हिस्सों में आपका खेत",
+    "bn": "ছোট ছোট ভাগে আপনার জমি",
+    "es": "Su campo en partes pequeñas",
+    "fr": "Votre champ en petites parties",
+    "sw": "Shamba lako katika sehemu ndogo"
    },
    "glossary": [
     "resolution",
@@ -489,31 +805,56 @@
      "id": "split",
      "en": "We split your field into {section_count} parts.",
      "ne": "हामीले तपाईंको खेत {section_count} भागमा बाँड्यौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हमने आपके खेत को {section_count} हिस्सों में बाँटा।",
+     "bn": "আমরা আপনার জমি {section_count} ভাগে ভাগ করেছি।",
+     "es": "Dividimos su campo en {section_count} partes.",
+     "fr": "Nous avons divisé votre champ en {section_count} parties.",
+     "sw": "Tuligawa shamba lako katika sehemu {section_count}."
     },
     {
      "id": "numbers",
      "en": "Each part has a number.",
      "ne": "हरेक भागको आफ्नै नम्बर छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हर हिस्से का एक नंबर है।",
+     "bn": "প্রতিটি ভাগের একটি নম্বর আছে।",
+     "es": "Cada parte tiene un número.",
+     "fr": "Chaque partie a un numéro.",
+     "sw": "Kila sehemu ina namba."
     },
     {
      "id": "tap_part",
      "en": "Tap a part to see it.",
      "ne": "हेर्न कुनै भागमा थिच्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "देखने के लिए किसी हिस्से पर दबाएँ।",
+     "bn": "দেখতে কোনো ভাগে চাপ দিন।",
+     "es": "Toque una parte para verla.",
+     "fr": "Touchez une partie pour la voir.",
+     "sw": "Gusa sehemu ili uione."
     },
     {
      "id": "look_same",
      "en": "From space, nearby parts look the same.",
      "ne": "अन्तरिक्षबाट नजिकका भागहरू उस्तै देखिन्छन्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "अंतरिक्ष से पड़ोसी हिस्से एक जैसे दिखते हैं।",
+     "bn": "মহাকাশ থেকে কাছাকাছি ভাগগুলো একই রকম দেখায়।",
+     "es": "Desde el espacio, partes vecinas se ven iguales.",
+     "fr": "Depuis l'espace, les parties voisines se ressemblent.",
+     "sw": "Kutoka angani, sehemu za karibu zinaonekana sawa."
     },
     {
      "id": "stick_tells",
      "en": "The soil stick tells them apart.",
      "ne": "माटो जाँच्ने यन्त्रले तिनको फरक देखाउँछ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "मिट्टी की छड़ी उनका फ़र्क बताती है।",
+     "bn": "মাটির কাঠি তাদের তফাত বলে দেয়।",
+     "es": "La varilla en la tierra las distingue.",
+     "fr": "La tige plantée dans le sol les distingue.",
+     "sw": "Kijiti cha udongo kinazitofautisha."
     }
    ]
   },
@@ -523,7 +864,12 @@
    "title": {
     "en": "How is each part?",
     "ne": "हरेक भाग कस्तो छ?",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "हर हिस्सा कैसा है?",
+    "bn": "প্রতিটি ভাগ কেমন আছে?",
+    "es": "¿Cómo está cada parte?",
+    "fr": "Comment va chaque partie ?",
+    "sw": "Kila sehemu ikoje?"
    },
    "glossary": [
     "uncertainty",
@@ -534,37 +880,67 @@
      "id": "part_name",
      "en": "Part {section}",
      "ne": "भाग {section}",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हिस्सा {section}",
+     "bn": "ভাগ {section}",
+     "es": "Parte {section}",
+     "fr": "Partie {section}",
+     "sw": "Sehemu {section}"
     },
     {
      "id": "how_wet",
      "en": "How wet: {wetness} out of 100.",
      "ne": "कति ओसिलो: १०० मा {wetness}।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "कितना गीला: 100 में से {wetness}।",
+     "bn": "কতটা ভেজা: 100-এর মধ্যে {wetness}।",
+     "es": "Cuánta humedad: {wetness} de 100.",
+     "fr": "Humidité : {wetness} sur 100.",
+     "sw": "Unyevu: {wetness} kati ya 100."
     },
     {
      "id": "how_warm",
      "en": "How warm the soil is: {temp} degrees.",
      "ne": "माटो कति तातो छ: {temp} डिग्री।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "मिट्टी कितनी गर्म: {temp} डिग्री।",
+     "bn": "মাটি কতটা গরম: {temp} ডিগ্রি।",
+     "es": "Calor de la tierra: {temp} grados.",
+     "fr": "Chaleur du sol : {temp} degrés.",
+     "sw": "Joto la udongo: digrii {temp}."
     },
     {
      "id": "how_sure",
      "en": "How sure we are: {sure_pct} out of 100.",
      "ne": "हामी कति पक्का: १०० मा {sure_pct}।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हम कितने पक्के: 100 में से {sure_pct}।",
+     "bn": "আমরা কতটা নিশ্চিত: 100-এর মধ্যে {sure_pct}।",
+     "es": "Cuán seguros estamos: {sure_pct} de 100.",
+     "fr": "Notre certitude : {sure_pct} sur 100.",
+     "sw": "Uhakika wetu: {sure_pct} kati ya 100."
     },
     {
      "id": "fog",
      "en": "Fog means we are not sure yet.",
      "ne": "कुहिरोको अर्थ, हामी अझै पक्का छैनौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "धुंध का मतलब, हम अभी पक्के नहीं।",
+     "bn": "কুয়াশা মানে আমরা এখনো নিশ্চিত নই।",
+     "es": "Niebla quiere decir: aún no estamos seguros.",
+     "fr": "Le brouillard : nous ne sommes pas encore sûrs.",
+     "sw": "Ukungu maana yake bado hatuna uhakika."
     },
     {
      "id": "faces",
      "en": "A smiling face means all is well.",
      "ne": "हाँसेको अनुहारको अर्थ सबै ठीक छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "मुस्कुराते चेहरे का मतलब, सब ठीक है।",
+     "bn": "হাসিমুখ মানে সব ঠিক আছে।",
+     "es": "Una cara sonriente: todo va bien.",
+     "fr": "Un visage souriant : tout va bien.",
+     "sw": "Uso wa tabasamu maana yake yote ni shwari."
     }
    ],
    "labels": {
@@ -575,22 +951,42 @@
       "green": {
        "en": "Doing well",
        "ne": "राम्रो छ",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "ठीक चल रहा है",
+       "bn": "ভালো আছে",
+       "es": "Va bien",
+       "fr": "Va bien",
+       "sw": "Inaendelea vizuri"
       },
       "yellow": {
        "en": "Needs a look",
        "ne": "एकपटक हेर्नुपर्छ",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "एक बार देख लें",
+       "bn": "একবার দেখা দরকার",
+       "es": "Hay que mirarla",
+       "fr": "À regarder",
+       "sw": "Inahitaji kuangaliwa"
       },
       "red": {
        "en": "Needs help now",
        "ne": "अहिले नै सहायता चाहिन्छ",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "अभी मदद चाहिए",
+       "bn": "এখনই সাহায্য দরকার",
+       "es": "Necesita ayuda ya",
+       "fr": "Besoin d'aide maintenant",
+       "sw": "Inahitaji msaada sasa"
       },
       "grey": {
        "en": "We don't know yet",
        "ne": "अझै थाहा छैन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "अभी पता नहीं",
+       "bn": "এখনো জানা নেই",
+       "es": "Aún no sabemos",
+       "fr": "Nous ne savons pas encore",
+       "sw": "Bado hatujui"
       }
      }
     }
@@ -602,7 +998,12 @@
    "title": {
     "en": "Let's check the soil",
     "ne": "माटो जाँचौं",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "आइए मिट्टी जाँचें",
+    "bn": "চলুন মাটি পরীক্ষা করি",
+    "es": "Revisemos la tierra",
+    "fr": "Vérifions le sol",
+    "sw": "Tupime udongo"
    },
    "glossary": [
     "soil_probe",
@@ -616,43 +1017,78 @@
      "id": "push",
      "en": "Push the soil stick into this part.",
      "ne": "माटो जाँच्ने यन्त्र यो भागमा गाड्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "मिट्टी की छड़ी इस हिस्से में गाड़ें।",
+     "bn": "মাটির কাঠি এই ভাগে পুঁতে দিন।",
+     "es": "Clave la varilla en esta parte.",
+     "fr": "Enfoncez la tige dans cette partie.",
+     "sw": "Choma kijiti cha udongo katika sehemu hii."
     },
     {
      "id": "hold",
      "en": "Hold it still for a moment.",
      "ne": "एकछिन नचलाई समात्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "इसे एक पल स्थिर पकड़े रहें।",
+     "bn": "একটু সময় স্থির করে ধরে রাখুন।",
+     "es": "Sosténgala quieta un momento.",
+     "fr": "Tenez-la immobile un instant.",
+     "sw": "Ishike bila kusogeza kwa muda kidogo."
     },
     {
      "id": "clears",
      "en": "Your reading clears the fog.",
      "ne": "तपाईंको नापले कुहिरो हटाउँछ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपकी नाप धुंध हटाती है।",
+     "bn": "আপনার মাপ কুয়াশা সরিয়ে দেয়।",
+     "es": "Su medida despeja la niebla.",
+     "fr": "Votre mesure dissipe le brouillard.",
+     "sw": "Kipimo chako kinaondoa ukungu."
     },
     {
      "id": "more_sure",
      "en": "Now we are more sure.",
      "ne": "अब हामी अझ पक्का छौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "अब हम ज़्यादा पक्के हैं।",
+     "bn": "এখন আমরা আরও নিশ্চিত।",
+     "es": "Ahora estamos más seguros.",
+     "fr": "Maintenant, nous sommes plus sûrs.",
+     "sw": "Sasa tuna uhakika zaidi."
     },
     {
      "id": "wide_close",
      "en": "Space sees wide. Your stick sees close.",
      "ne": "अन्तरिक्षले फराकिलो देख्छ। यन्त्रले नजिकबाट देख्छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "अंतरिक्ष दूर तक देखता है। आपकी छड़ी पास से देखती है।",
+     "bn": "মহাকাশ দেখে অনেক দূর। আপনার কাঠি দেখে কাছ থেকে।",
+     "es": "El espacio ve lo amplio. Su varilla ve de cerca.",
+     "fr": "L'espace voit large. Votre tige voit de près.",
+     "sw": "Angani huona mbali. Kijiti chako huona karibu."
     },
     {
      "id": "together",
      "en": "Together they make a better guess.",
      "ne": "दुवै मिलेर राम्रो अनुमान बन्छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "दोनों मिलकर बेहतर अंदाज़ा देते हैं।",
+     "bn": "দুটো মিলে ভালো অনুমান হয়।",
+     "es": "Juntos hacen una mejor estimación.",
+     "fr": "Ensemble, ils devinent mieux.",
+     "sw": "Pamoja vinatoa makisio bora."
     },
     {
      "id": "replay_check",
      "en": "Watch a soil check we did earlier.",
      "ne": "हामीले पहिले गरेको माटो जाँच हेर्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हमारी पहले की मिट्टी जाँच देखें।",
+     "bn": "আগে করা একটি মাটি পরীক্ষা দেখুন।",
+     "es": "Vea una revisión de tierra anterior.",
+     "fr": "Regardez une vérification faite plus tôt.",
+     "sw": "Tazama upimaji wa udongo tuliofanya awali."
     }
    ]
   },
@@ -662,7 +1098,12 @@
    "title": {
     "en": "Your field's last {year_count} years",
     "ne": "तपाईंको खेतका पछिल्ला {year_count} वर्ष",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "आपके खेत के पिछले {year_count} साल",
+    "bn": "আপনার জমির গত {year_count} বছর",
+    "es": "Los últimos {year_count} años de su campo",
+    "fr": "Les {year_count} dernières années de votre champ",
+    "sw": "Miaka {year_count} iliyopita ya shamba lako"
    },
    "glossary": [
     "relative_harvest",
@@ -678,31 +1119,56 @@
      "id": "basket",
      "en": "Each basket is one year's harvest.",
      "ne": "हरेक डोको एक वर्षको उब्जनी हो।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हर टोकरी एक साल की फ़सल है।",
+     "bn": "প্রতিটি ঝুড়ি এক বছরের ফসল।",
+     "es": "Cada canasta es la cosecha de un año.",
+     "fr": "Chaque panier est la récolte d'une année.",
+     "sw": "Kila kikapu ni mavuno ya mwaka mmoja."
     },
     {
      "id": "full_basket",
      "en": "A full basket is this field's best.",
      "ne": "भरिएको डोको यो खेतको सबैभन्दा राम्रो उब्जनी हो।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "भरी टोकरी: इस खेत की सबसे अच्छी फ़सल।",
+     "bn": "ভরা ঝুড়ি মানে এই জমির সেরা ফসল।",
+     "es": "Una canasta llena: lo mejor de este campo.",
+     "fr": "Panier plein : le meilleur de ce champ.",
+     "sw": "Kikapu kilichojaa ndicho bora kwa shamba hili."
     },
     {
      "id": "computer_made",
      "en": "A computer copy of your field made these.",
      "ne": "तपाईंको खेतको कम्प्युटर नमुनाले यी बनाएको हो।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपके खेत की कंप्यूटर नकल ने ये बनाए।",
+     "bn": "আপনার জমির কম্পিউটার নকল এগুলো বানিয়েছে।",
+     "es": "Una computadora copió su campo e hizo esto.",
+     "fr": "Un ordinateur, copiant votre champ, a fait ceci.",
+     "sw": "Nakala ya kompyuta ya shamba lako ilitengeneza haya."
     },
     {
      "id": "thirsty_days",
      "en": "The crop was thirsty on {dry_days} days.",
      "ne": "{dry_days} दिन बाली तिर्खायो।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "{dry_days} दिन फ़सल प्यासी रही।",
+     "bn": "{dry_days} দিন ফসল পিপাসায় ছিল।",
+     "es": "El cultivo tuvo sed {dry_days} días.",
+     "fr": "La culture a eu soif {dry_days} jours.",
+     "sw": "Mazao yalikuwa na kiu siku {dry_days}."
     },
     {
      "id": "with_water",
      "en": "With water when needed, it looks like this.",
      "ne": "चाहिएको बेला पानी दिँदा यस्तो हुन्थ्यो।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "ज़रूरत पर पानी देने से ऐसा होता।",
+     "bn": "দরকারমতো পানি দিলে এমন হতো।",
+     "es": "Con agua cuando hace falta, sería así.",
+     "fr": "Avec de l'eau au besoin, voici le résultat.",
+     "sw": "Kwa maji yanapohitajika, inaonekana hivi."
     },
     {
      "id": "water_unknown",
@@ -711,7 +1177,12 @@
      ],
      "en": "We don't know your water yet.",
      "ne": "हामीलाई तपाईंको पानीको स्रोत थाहा छैन।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "हमें अभी आपके पानी का पता नहीं।",
+     "bn": "আমরা এখনো আপনার পানির উৎস জানি না।",
+     "es": "Aún no sabemos de dónde viene su agua.",
+     "fr": "Nous ne connaissons pas encore votre eau.",
+     "sw": "Bado hatujui maji yako yanatoka wapi."
     },
     {
      "id": "both_shown",
@@ -720,19 +1191,34 @@
      ],
      "en": "So we show both, side by side.",
      "ne": "त्यसैले दुवै छेउछेउमा देखाएका छौं।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "इसलिए हम दोनों साथ-साथ दिखाते हैं।",
+     "bn": "তাই আমরা দুটোই পাশাপাশি দেখাই।",
+     "es": "Por eso mostramos ambos, lado a lado.",
+     "fr": "Alors nous montrons les deux, côte à côte.",
+     "sw": "Kwa hiyo tunaonyesha yote mawili, kando kwa kando."
     },
     {
      "id": "play",
      "en": "Play",
      "ne": "चलाउनुहोस्",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "चलाएँ",
+     "bn": "চালান",
+     "es": "Reproducir",
+     "fr": "Lancer",
+     "sw": "Cheza"
     },
     {
      "id": "pause",
      "en": "Pause",
      "ne": "रोक्नुहोस्",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "रोकें",
+     "bn": "থামান",
+     "es": "Pausa",
+     "fr": "Pause",
+     "sw": "Simamisha"
     }
    ],
    "labels": {
@@ -743,17 +1229,32 @@
       "none": {
        "en": "A normal year",
        "ne": "सामान्य वर्ष",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "सामान्य साल",
+       "bn": "স্বাভাবিক বছর",
+       "es": "Un año normal",
+       "fr": "Une année normale",
+       "sw": "Mwaka wa kawaida"
       },
       "drought": {
        "en": "A drier year than usual",
        "ne": "सामान्यभन्दा सुक्खा वर्ष",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "आम से सूखा साल",
+       "bn": "স্বাভাবিকের চেয়ে শুকনো বছর",
+       "es": "Un año más seco de lo normal",
+       "fr": "Une année plus sèche que d'habitude",
+       "sw": "Mwaka mkavu kuliko kawaida"
       },
       "flood": {
        "en": "Too much rain in one day",
        "ne": "एकै दिन धेरै ठूलो पानी",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "एक दिन में बहुत ज़्यादा बारिश",
+       "bn": "এক দিনে অনেক বেশি বৃষ্টি",
+       "es": "Demasiada lluvia en un día",
+       "fr": "Trop de pluie en un jour",
+       "sw": "Mvua nyingi mno kwa siku moja"
       }
      }
     },
@@ -764,12 +1265,22 @@
       "rain_fed": {
        "en": "If you can't water",
        "ne": "पानी लगाउन नसके",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "अगर पानी न दे सकें",
+       "bn": "যদি পানি দিতে না পারেন",
+       "es": "Si no puede regar",
+       "fr": "Si vous ne pouvez pas arroser",
+       "sw": "Kama huwezi kumwagilia"
       },
       "irrigated": {
        "en": "If you can water",
        "ne": "पानी लगाउन सके",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "अगर पानी दे सकें",
+       "bn": "যদি পানি দিতে পারেন",
+       "es": "Si puede regar",
+       "fr": "Si vous pouvez arroser",
+       "sw": "Kama unaweza kumwagilia"
       }
      }
     },
@@ -780,12 +1291,22 @@
       "winter": {
        "en": "A dry winter",
        "ne": "सुक्खा हिउँद",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "सूखी सर्दी",
+       "bn": "শুকনো শীত",
+       "es": "Un invierno seco",
+       "fr": "Un hiver sec",
+       "sw": "Kipindi cha baridi kikavu"
       },
       "monsoon": {
        "en": "A dry rainy season",
        "ne": "सुक्खा बर्खा",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "सूखी बरसात",
+       "bn": "শুকনো বর্ষা",
+       "es": "Una temporada de lluvias seca",
+       "fr": "Une saison des pluies sèche",
+       "sw": "Msimu wa mvua mkavu"
       }
      }
     }
@@ -797,7 +1318,12 @@
    "title": {
     "en": "What should I grow?",
     "ne": "म के लगाऊँ?",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मैं क्या उगाऊँ?",
+    "bn": "আমি কী চাষ করব?",
+    "es": "¿Qué debo cultivar?",
+    "fr": "Que dois-je cultiver ?",
+    "sw": "Nilime nini?"
    },
    "glossary": [
     "crop_rotation",
@@ -817,43 +1343,78 @@
      "id": "three",
      "en": "Three choices: what to grow, and when.",
      "ne": "तीन विकल्प: के लगाउने, कहिले लगाउने।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "तीन विकल्प: क्या उगाएँ, और कब।",
+     "bn": "তিনটি পছন্দ: কী চাষ করবেন, আর কখন।",
+     "es": "Tres opciones: qué cultivar, y cuándo.",
+     "fr": "Trois choix : quoi cultiver, et quand.",
+     "sw": "Machaguo matatu: ulime nini, na lini."
     },
     {
      "id": "more_baskets",
      "en": "More baskets, more harvest.",
      "ne": "धेरै डोको, धेरै उब्जनी।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "ज़्यादा टोकरियाँ, ज़्यादा फ़सल।",
+     "bn": "বেশি ঝুড়ি, বেশি ফসল।",
+     "es": "Más canastas, más cosecha.",
+     "fr": "Plus de paniers, plus de récolte.",
+     "sw": "Vikapu zaidi, mavuno zaidi."
     },
     {
      "id": "more_drops",
      "en": "More drops, less worry about water.",
      "ne": "धेरै थोपा, पानीको चिन्ता कम।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "ज़्यादा बूँदें, पानी की कम चिंता।",
+     "bn": "বেশি ফোঁটা, পানির চিন্তা কম।",
+     "es": "Más gotas, menos preocupación por el agua.",
+     "fr": "Plus de gouttes, moins de souci d'eau.",
+     "sw": "Matone zaidi, wasiwasi mdogo wa maji."
     },
     {
      "id": "priority_q",
      "en": "What matters most to you?",
      "ne": "तपाईंलाई सबैभन्दा के चाहिन्छ?",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपके लिए सबसे ज़रूरी क्या है?",
+     "bn": "আপনার কাছে সবচেয়ে জরুরি কী?",
+     "es": "¿Qué es lo más importante para usted?",
+     "fr": "Qu'est-ce qui compte le plus pour vous ?",
+     "sw": "Nini ni muhimu zaidi kwako?"
     },
     {
      "id": "tips_title",
      "en": "Tips for your field",
      "ne": "तपाईंको खेतका लागि सुझाव",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपके खेत के लिए सुझाव",
+     "bn": "আপনার জমির জন্য পরামর্শ",
+     "es": "Consejos para su campo",
+     "fr": "Conseils pour votre champ",
+     "sw": "Ushauri kwa shamba lako"
     },
     {
      "id": "months_note",
      "en": "Nepali and English months don't line up exactly.",
      "ne": "नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "नेपाली और अंग्रेज़ी महीने ठीक-ठीक मेल नहीं खाते।",
+     "bn": "নেপালি আর ইংরেজি মাস হুবহু মেলে না।",
+     "es": "Los meses nepalíes no coinciden exactamente con estos.",
+     "fr": "Les mois népalais diffèrent un peu de ceux-ci.",
+     "sw": "Miezi ya Kinepali hailingani kabisa na hii."
     },
     {
      "id": "learn_more",
      "en": "Why do some crops help the soil?",
      "ne": "केही बालीले माटोलाई किन मद्दत गर्छन्?",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "कुछ फ़सलें मिट्टी की मदद क्यों करती हैं?",
+     "bn": "কিছু ফসল কেন মাটির উপকার করে?",
+     "es": "¿Por qué algunos cultivos ayudan a la tierra?",
+     "fr": "Pourquoi certaines cultures aident-elles le sol ?",
+     "sw": "Kwa nini baadhi ya mazao husaidia udongo?"
     }
    ],
    "labels": {
@@ -864,22 +1425,42 @@
       "current": {
        "en": "What you do now",
        "ne": "अहिले जे गर्नुहुन्छ",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "जो आप अभी करते हैं",
+       "bn": "এখন আপনি যা করেন",
+       "es": "Lo que hace ahora",
+       "fr": "Ce que vous faites maintenant",
+       "sw": "Unachofanya sasa"
       },
       "cover_gap": {
        "en": "Fill the empty months",
        "ne": "खाली महिनामा पनि बाली",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "खाली महीने भरें",
+       "bn": "খালি মাসগুলো ভরুন",
+       "es": "Llenar los meses vacíos",
+       "fr": "Remplir les mois vides",
+       "sw": "Jaza miezi mitupu"
       },
       "follow_shift": {
        "en": "Follow the changing rains",
        "ne": "बदलिँदो वर्षासँगै",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "बदलती बारिश के साथ चलें",
+       "bn": "বদলানো বৃষ্টির সাথে চলুন",
+       "es": "Seguir las lluvias que cambian",
+       "fr": "Suivre les pluies qui changent",
+       "sw": "Fuata mvua zinazobadilika"
       },
       "safest": {
        "en": "Feed your soil",
        "ne": "माटोलाई मलिलो बनाउने",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "अपनी मिट्टी को पोषण दें",
+       "bn": "আপনার মাটিকে খাবার দিন",
+       "es": "Alimentar su tierra",
+       "fr": "Nourrir votre sol",
+       "sw": "Lisha udongo wako"
       }
      }
     },
@@ -890,22 +1471,42 @@
       "harvest": {
        "en": "Harvest",
        "ne": "उब्जनी",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "फ़सल",
+       "bn": "ফসল",
+       "es": "Cosecha",
+       "fr": "Récolte",
+       "sw": "Mavuno"
       },
       "water": {
        "en": "Water",
        "ne": "पानी",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "पानी",
+       "bn": "পানি",
+       "es": "Agua",
+       "fr": "Eau",
+       "sw": "Maji"
       },
       "cover": {
        "en": "Ground covered",
        "ne": "ढाकिएको जमिन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "ढकी ज़मीन",
+       "bn": "ঢাকা জমি",
+       "es": "Tierra cubierta",
+       "fr": "Sol couvert",
+       "sw": "Ardhi iliyofunikwa"
       },
       "soil_kept": {
        "en": "Soil kept",
        "ne": "जोगिएको माटो",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "बची मिट्टी",
+       "bn": "রক্ষা পাওয়া মাটি",
+       "es": "Tierra conservada",
+       "fr": "Sol gardé",
+       "sw": "Udongo uliohifadhiwa"
       }
      }
     },
@@ -916,27 +1517,52 @@
       "why": {
        "en": "Why this?",
        "ne": "किन यो?",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "यह क्यों?",
+       "bn": "এটা কেন?",
+       "es": "¿Por qué esto?",
+       "fr": "Pourquoi ce choix ?",
+       "sw": "Kwa nini hii?"
       },
       "evidence": {
        "en": "How do we know?",
        "ne": "हामीलाई कसरी थाहा भयो?",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "हमें कैसे पता?",
+       "bn": "আমরা কীভাবে জানি?",
+       "es": "¿Cómo lo sabemos?",
+       "fr": "Comment le savons-nous ?",
+       "sw": "Tunajuaje?"
       },
       "benefits": {
        "en": "What could it give?",
        "ne": "यसले के दिन सक्छ?",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "इससे क्या मिल सकता है?",
+       "bn": "এতে কী পাওয়া যেতে পারে?",
+       "es": "¿Qué podría dar?",
+       "fr": "Que pourrait-il apporter ?",
+       "sw": "Inaweza kuleta nini?"
       },
       "unknown": {
        "en": "What we don't know",
        "ne": "हामीलाई के थाहा छैन",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "जो हम नहीं जानते",
+       "bn": "যা আমরা জানি না",
+       "es": "Lo que no sabemos",
+       "fr": "Ce que nous ne savons pas",
+       "sw": "Tusichojua"
       },
       "check": {
        "en": "Ask someone who knows",
        "ne": "जानकारलाई सोध्नुहोस्",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "किसी जानकार से पूछें",
+       "bn": "কোনো জানা লোককে জিজ্ঞেস করুন",
+       "es": "Pregunte a alguien que sepa",
+       "fr": "Demandez à quelqu'un qui sait",
+       "sw": "Uliza mtu anayejua"
       }
      }
     },
@@ -947,17 +1573,32 @@
       "harvest": {
        "en": "More harvest",
        "ne": "धेरै उब्जनी",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "ज़्यादा फ़सल",
+       "bn": "বেশি ফসল",
+       "es": "Más cosecha",
+       "fr": "Plus de récolte",
+       "sw": "Mavuno zaidi"
       },
       "water": {
        "en": "Less water",
        "ne": "कम पानी",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "कम पानी",
+       "bn": "কম পানি",
+       "es": "Menos agua",
+       "fr": "Moins d'eau",
+       "sw": "Maji kidogo"
       },
       "soil": {
        "en": "Healthy soil",
        "ne": "स्वस्थ माटो",
-       "ne_review": "needs native-speaker review"
+       "ne_review": "needs native-speaker review",
+       "hi": "स्वस्थ मिट्टी",
+       "bn": "সুস্থ মাটি",
+       "es": "Tierra sana",
+       "fr": "Sol en bonne santé",
+       "sw": "Udongo wenye afya"
       }
      }
     }
@@ -969,7 +1610,12 @@
    "title": {
     "en": "Your field in {future_year}",
     "ne": "{future_year}मा तपाईंको खेत",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "{future_year} में आपका खेत",
+    "bn": "{future_year} সালে আপনার জমি",
+    "es": "Su campo en {future_year}",
+    "fr": "Votre champ en {future_year}",
+    "sw": "Shamba lako mwaka {future_year}"
    },
    "glossary": [
     "climate_projection",
@@ -981,49 +1627,89 @@
      "id": "nothing_changes",
      "en": "If nothing changes",
      "ne": "केही नबदले",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "अगर कुछ न बदले",
+     "bn": "যদি কিছুই না বদলায়",
+     "es": "Si nada cambia",
+     "fr": "Si rien ne change",
+     "sw": "Kama hakuna kinachobadilika"
     },
     {
      "id": "with_plan",
      "en": "With the new plan",
      "ne": "नयाँ योजनासँग",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "नई योजना के साथ",
+     "bn": "নতুন পরিকল্পনায়",
+     "es": "Con el nuevo plan",
+     "fr": "Avec le nouveau plan",
+     "sw": "Kwa mpango mpya"
     },
     {
      "id": "range",
      "en": "Harvest: {future_low} to {future_high} out of 100.",
      "ne": "उब्जनी: १०० मा {future_low} देखि {future_high} सम्म।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "फ़सल: 100 में से {future_low} से {future_high} तक।",
+     "bn": "ফসল: 100-এর মধ্যে {future_low} থেকে {future_high}।",
+     "es": "Cosecha: de {future_low} a {future_high} sobre 100.",
+     "fr": "Récolte : de {future_low} à {future_high} sur 100.",
+     "sw": "Mavuno: {future_low} hadi {future_high} kati ya 100."
     },
     {
      "id": "nobody_knows",
      "en": "Nobody knows the future for sure.",
      "ne": "भविष्य पक्का कसैलाई थाहा छैन।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "भविष्य पक्का कोई नहीं जानता।",
+     "bn": "ভবিষ্যৎ নিশ্চিত করে কেউ জানে না।",
+     "es": "Nadie sabe el futuro con certeza.",
+     "fr": "Personne ne connaît l'avenir avec certitude.",
+     "sw": "Hakuna anayejua kesho kwa uhakika."
     },
     {
      "id": "many_guesses",
      "en": "Many computer guesses make this range.",
      "ne": "धेरै कम्प्युटर अनुमानले यो दायरा बनाउँछन्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "कई कंप्यूटर अंदाज़ों से यह दायरा बना।",
+     "bn": "অনেক কম্পিউটার অনুমান মিলে এই সীমা।",
+     "es": "Muchas estimaciones por computadora dan este rango.",
+     "fr": "Beaucoup d'estimations par ordinateur donnent cette fourchette.",
+     "sw": "Makisio mengi ya kompyuta yanaunda kiwango hiki."
     },
     {
      "id": "try_sliders",
      "en": "Try less rain or more heat.",
      "ne": "कम पानी वा बढी गर्मी राखेर हेर्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "कम बारिश या ज़्यादा गर्मी आज़माएँ।",
+     "bn": "কম বৃষ্টি বা বেশি গরম দিয়ে দেখুন।",
+     "es": "Pruebe menos lluvia o más calor.",
+     "fr": "Essayez moins de pluie ou plus de chaleur.",
+     "sw": "Jaribu mvua kidogo au joto zaidi."
     },
     {
      "id": "less_rain",
      "en": "Less rain",
      "ne": "कम पानी",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "कम बारिश",
+     "bn": "কম বৃষ্টি",
+     "es": "Menos lluvia",
+     "fr": "Moins de pluie",
+     "sw": "Mvua kidogo"
     },
     {
      "id": "more_heat",
      "en": "More heat",
      "ne": "बढी गर्मी",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "ज़्यादा गर्मी",
+     "bn": "বেশি গরম",
+     "es": "Más calor",
+     "fr": "Plus de chaleur",
+     "sw": "Joto zaidi"
     }
    ]
   },
@@ -1033,7 +1719,12 @@
    "title": {
     "en": "Your plan",
     "ne": "तपाईंको योजना",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "आपकी योजना",
+    "bn": "আপনার পরিকল্পনা",
+    "es": "Su plan",
+    "fr": "Votre plan",
+    "sw": "Mpango wako"
    },
    "glossary": [
     "crop_rotation"
@@ -1043,67 +1734,122 @@
      "id": "chose",
      "en": "Here is what you chose.",
      "ne": "तपाईंले छान्नुभएको योजना यही हो।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "आपने यह चुना है।",
+     "bn": "আপনি এটাই বেছে নিয়েছেন।",
+     "es": "Esto es lo que eligió.",
+     "fr": "Voici ce que vous avez choisi.",
+     "sw": "Hiki ndicho ulichochagua."
     },
     {
      "id": "what_when",
      "en": "What to grow, and when:",
      "ne": "के लगाउने, कहिले लगाउने:",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "क्या उगाएँ, और कब:",
+     "bn": "কী চাষ করবেন, আর কখন:",
+     "es": "Qué cultivar, y cuándo:",
+     "fr": "Quoi cultiver, et quand :",
+     "sw": "Ulime nini, na lini:"
     },
     {
      "id": "plant_in",
      "en": "{crop}: plant in {sow_month}.",
      "ne": "{crop}: {sow_month}मा रोप्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "{crop}: {sow_month} में बोएँ।",
+     "bn": "{crop}: {sow_month} মাসে লাগান।",
+     "es": "{crop}: siembre en {sow_month}.",
+     "fr": "{crop} : semez en {sow_month}.",
+     "sw": "{crop}: panda mwezi {sow_month}."
     },
     {
      "id": "harvest_in",
      "en": "{crop}: harvest in {harvest_month}.",
      "ne": "{crop}: {harvest_month}मा काट्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "{crop}: {harvest_month} में काटें।",
+     "bn": "{crop}: {harvest_month} মাসে কাটুন।",
+     "es": "{crop}: coseche en {harvest_month}.",
+     "fr": "{crop} : récoltez en {harvest_month}.",
+     "sw": "{crop}: vuna mwezi {harvest_month}."
     },
     {
      "id": "months_note",
      "en": "Nepali and English months don't line up exactly.",
      "ne": "नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "नेपाली और अंग्रेज़ी महीने ठीक-ठीक मेल नहीं खाते।",
+     "bn": "নেপালি আর ইংরেজি মাস হুবহু মেলে না।",
+     "es": "Los meses nepalíes no coinciden exactamente con estos.",
+     "fr": "Les mois népalais diffèrent un peu de ceux-ci.",
+     "sw": "Miezi ya Kinepali hailingani kabisa na hii."
     },
     {
      "id": "know_best",
      "en": "You know your land best.",
      "ne": "आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "अपनी ज़मीन आप सबसे अच्छी जानते हैं।",
+     "bn": "নিজের জমি আপনিই সবচেয়ে ভালো জানেন।",
+     "es": "Usted conoce mejor su tierra.",
+     "fr": "Vous connaissez le mieux votre terre.",
+     "sw": "Wewe unaijua ardhi yako vizuri zaidi."
     },
     {
      "id": "advisor",
      "en": "Talk to a farm advisor before changing.",
      "ne": "बदल्नुअघि कृषि प्राविधिकसँग सल्लाह गर्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "बदलने से पहले कृषि सलाहकार से बात करें।",
+     "bn": "বদলানোর আগে কৃষি পরামর্শকের সাথে কথা বলুন।",
+     "es": "Hable con un asesor agrícola antes de cambiar.",
+     "fr": "Parlez à un conseiller agricole avant de changer.",
+     "sw": "Ongea na afisa ugani kabla ya kubadilisha."
     },
     {
      "id": "small_first",
      "en": "Try it on one small part first.",
      "ne": "पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "पहले एक छोटे हिस्से पर आज़माएँ।",
+     "bn": "আগে একটি ছোট ভাগে চেষ্টা করুন।",
+     "es": "Pruébelo primero en una parte pequeña.",
+     "fr": "Essayez d'abord sur une petite partie.",
+     "sw": "Jaribu kwanza kwenye sehemu ndogo moja."
     },
     {
      "id": "save",
      "en": "Save this plan",
      "ne": "यो योजना राख्नुहोस्",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "यह योजना सहेजें",
+     "bn": "এই পরিকল্পনা রাখুন",
+     "es": "Guardar este plan",
+     "fr": "Garder ce plan",
+     "sw": "Hifadhi mpango huu"
     },
     {
      "id": "again",
      "en": "Start again",
      "ne": "फेरि सुरु गर्नुहोस्",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "फिर से शुरू करें",
+     "bn": "আবার শুরু করুন",
+     "es": "Empezar de nuevo",
+     "fr": "Recommencer",
+     "sw": "Anza upya"
     },
     {
      "id": "made_with",
      "en": "Made with pictures and numbers from NASA.",
      "ne": "नासाका तस्बिर र अङ्कबाट बनाइएको।",
-     "ne_review": "needs native-speaker review"
+     "ne_review": "needs native-speaker review",
+     "hi": "नासा की तस्वीरों और अंकों से बना।",
+     "bn": "নাসার ছবি আর সংখ্যা দিয়ে তৈরি।",
+     "es": "Hecho con imágenes y números de la NASA.",
+     "fr": "Fait à partir d'images et de chiffres NASA.",
+     "sw": "Imetengenezwa kwa picha na namba za NASA."
     }
    ]
   }
@@ -1114,168 +1860,323 @@
     "id": "next",
     "en": "Next",
     "ne": "अगाडि",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "आगे",
+    "bn": "পরের",
+    "es": "Siguiente",
+    "fr": "Suivant",
+    "sw": "Endelea"
    },
    {
     "id": "back",
     "en": "Back",
     "ne": "पछाडि",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "पीछे",
+    "bn": "পেছনে",
+    "es": "Atrás",
+    "fr": "Retour",
+    "sw": "Rudi"
    },
    {
     "id": "word_help",
     "en": "What does this word mean?",
     "ne": "यो शब्दको अर्थ के हो?",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "इस शब्द का मतलब क्या है?",
+    "bn": "এই শব্দের মানে কী?",
+    "es": "¿Qué significa esta palabra?",
+    "fr": "Que veut dire ce mot ?",
+    "sw": "Neno hili lina maana gani?"
    },
    {
     "id": "not_sure",
     "en": "Not sure yet",
     "ne": "अझै पक्का छैन",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "अभी पक्का नहीं",
+    "bn": "এখনো নিশ্চিত নয়",
+    "es": "Aún no es seguro",
+    "fr": "Pas encore sûr",
+    "sw": "Bado si hakika"
    }
   ],
   "crop_names": {
    "rice": {
     "en": "rice",
     "ne": "धान",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "धान",
+    "bn": "ধান",
+    "es": "arroz",
+    "fr": "riz",
+    "sw": "mpunga"
    },
    "wheat": {
     "en": "wheat",
     "ne": "गहुँ",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "गेहूँ",
+    "bn": "গম",
+    "es": "trigo",
+    "fr": "blé",
+    "sw": "ngano"
    },
    "maize": {
     "en": "maize",
     "ne": "मकै",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मक्का",
+    "bn": "ভুট্টা",
+    "es": "maíz",
+    "fr": "maïs",
+    "sw": "mahindi"
    },
    "potato": {
     "en": "potato",
     "ne": "आलु",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "आलू",
+    "bn": "আলু",
+    "es": "papa",
+    "fr": "pomme de terre",
+    "sw": "viazi"
    },
    "lentil": {
     "en": "lentil",
     "ne": "मसुर",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मसूर",
+    "bn": "মসুর",
+    "es": "lenteja",
+    "fr": "lentille",
+    "sw": "dengu"
    },
    "mustard": {
     "en": "mustard",
     "ne": "तोरी",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "सरसों",
+    "bn": "সরিষা",
+    "es": "mostaza",
+    "fr": "moutarde",
+    "sw": "haradali"
    },
    "buckwheat": {
     "en": "buckwheat",
     "ne": "फापर",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "कुट्टू",
+    "bn": "কুট্টু",
+    "es": "trigo sarraceno",
+    "fr": "sarrasin",
+    "sw": "buckwheat"
    },
    "finger_millet": {
     "en": "finger millet",
     "ne": "कोदो",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "रागी",
+    "bn": "মারুয়া",
+    "es": "mijo africano",
+    "fr": "éleusine",
+    "sw": "ulezi"
    },
    "bare": {
     "en": "no crop",
     "ne": "खाली खेत",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "कोई फ़सल नहीं",
+    "bn": "কোনো ফসল নেই",
+    "es": "sin cultivo",
+    "fr": "pas de culture",
+    "sw": "hakuna zao"
    }
   },
   "months": {
    "Jan": {
     "en": "January",
     "ne": "माघ (जनवरी–फेब्रुअरी)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "जनवरी",
+    "bn": "জানুয়ারি",
+    "es": "enero",
+    "fr": "janvier",
+    "sw": "Januari"
    },
    "Feb": {
     "en": "February",
     "ne": "फागुन (फेब्रुअरी–मार्च)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "फ़रवरी",
+    "bn": "ফেব্রুয়ারি",
+    "es": "febrero",
+    "fr": "février",
+    "sw": "Februari"
    },
    "Mar": {
     "en": "March",
     "ne": "चैत (मार्च–अप्रिल)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मार्च",
+    "bn": "মার্চ",
+    "es": "marzo",
+    "fr": "mars",
+    "sw": "Machi"
    },
    "Apr": {
     "en": "April",
     "ne": "बैशाख (अप्रिल–मे)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "अप्रैल",
+    "bn": "এপ্রিল",
+    "es": "abril",
+    "fr": "avril",
+    "sw": "Aprili"
    },
    "May": {
     "en": "May",
     "ne": "जेठ (मे–जुन)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मई",
+    "bn": "মে",
+    "es": "mayo",
+    "fr": "mai",
+    "sw": "Mei"
    },
    "Jun": {
     "en": "June",
     "ne": "असार (जुन–जुलाई)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "जून",
+    "bn": "জুন",
+    "es": "junio",
+    "fr": "juin",
+    "sw": "Juni"
    },
    "Jul": {
     "en": "July",
     "ne": "साउन (जुलाई–अगस्ट)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "जुलाई",
+    "bn": "জুলাই",
+    "es": "julio",
+    "fr": "juillet",
+    "sw": "Julai"
    },
    "Aug": {
     "en": "August",
     "ne": "भदौ (अगस्ट–सेप्टेम्बर)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "अगस्त",
+    "bn": "আগস্ট",
+    "es": "agosto",
+    "fr": "août",
+    "sw": "Agosti"
    },
    "Sep": {
     "en": "September",
     "ne": "असोज (सेप्टेम्बर–अक्टोबर)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "सितंबर",
+    "bn": "সেপ্টেম্বর",
+    "es": "septiembre",
+    "fr": "septembre",
+    "sw": "Septemba"
    },
    "Oct": {
     "en": "October",
     "ne": "कात्तिक (अक्टोबर–नोभेम्बर)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "अक्टूबर",
+    "bn": "অক্টোবর",
+    "es": "octubre",
+    "fr": "octobre",
+    "sw": "Oktoba"
    },
    "Nov": {
     "en": "November",
     "ne": "मंसिर (नोभेम्बर–डिसेम्बर)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "नवंबर",
+    "bn": "নভেম্বর",
+    "es": "noviembre",
+    "fr": "novembre",
+    "sw": "Novemba"
    },
    "Dec": {
     "en": "December",
     "ne": "पुस (डिसेम्बर–जनवरी)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "दिसंबर",
+    "bn": "ডিসেম্বর",
+    "es": "diciembre",
+    "fr": "décembre",
+    "sw": "Desemba"
    }
   },
   "source_kinds": {
    "satellite": {
     "en": "seen from space",
     "ne": "अन्तरिक्षबाट देखिएको",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "अंतरिक्ष से देखा गया",
+    "bn": "মহাকাশ থেকে দেখা",
+    "es": "visto desde el espacio",
+    "fr": "vu depuis l'espace",
+    "sw": "imeonekana kutoka angani"
    },
    "model": {
     "en": "worked out by computer",
     "ne": "कम्प्युटरले निकालेको",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "कंप्यूटर से निकाला गया",
+    "bn": "কম্পিউটারে হিসাব করা",
+    "es": "calculado por computadora",
+    "fr": "calculé par ordinateur",
+    "sw": "imekokotolewa na kompyuta"
    },
    "station": {
     "en": "measured on the ground",
     "ne": "जमिनमा नापिएको",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़मीन पर नापा गया",
+    "bn": "মাটিতে মাপা",
+    "es": "medido en el suelo",
+    "fr": "mesuré au sol",
+    "sw": "imepimwa ardhini"
    },
    "probe": {
     "en": "measured by the soil stick",
     "ne": "माटो जाँच्ने यन्त्रले नापेको",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी की छड़ी से नापा गया",
+    "bn": "মাটির কাঠি দিয়ে মাপা",
+    "es": "medido con la varilla",
+    "fr": "mesuré par la tige",
+    "sw": "imepimwa na kijiti cha udongo"
    }
   },
   "join": {
    "then": {
     "en": "then",
     "ne": "अनि",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर",
+    "bn": "তারপর",
+    "es": "luego",
+    "fr": "puis",
+    "sw": "kisha"
    },
    "and": {
     "en": "and",
     "ne": "र",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "और",
+    "bn": "আর",
+    "es": "y",
+    "fr": "et",
+    "sw": "na"
    }
   }
  },
@@ -1285,12 +2186,22 @@
    "term": {
     "en": "evapotranspiration",
     "ne": "वाष्पीकरण र वाष्पोत्सर्जन",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "वाष्पोत्सर्जन",
+    "bn": "বাষ্পীভবন-প্রস্বেদন",
+    "es": "evapotranspiración",
+    "fr": "évapotranspiration",
+    "sw": "uvukizaji na mvuke wa mimea"
    },
    "say": {
     "en": "Water that rises into the air from the soil and from plant leaves.",
     "ne": "माटो र बिरुवाका पातबाट उडेर हावामा जाने पानी।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी से और पौधों की पत्तियों से हवा में उड़ने वाला पानी।",
+    "bn": "মাটি আর গাছের পাতা থেকে বাতাসে উড়ে যাওয়া পানি।",
+    "es": "Agua que sube al aire desde el suelo y las hojas de las plantas.",
+    "fr": "L'eau qui monte dans l'air depuis le sol et les feuilles des plantes.",
+    "sw": "Maji yanayopanda hewani kutoka udongoni na kwenye majani ya mimea."
    },
    "aliases_en": [
     "evaporation",
@@ -1311,12 +2222,22 @@
    "term": {
     "en": "soil moisture anomaly",
     "ne": "माटोको ओसको असामान्यता",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी की नमी में असामान्यता",
+    "bn": "মাটির আর্দ্রতার অস্বাভাবিকতা",
+    "es": "anomalía de humedad del suelo",
+    "fr": "anomalie d'humidité du sol",
+    "sw": "hitilafu ya unyevu wa udongo"
    },
    "say": {
     "en": "How much wetter or drier the soil is than usual for that time of year.",
     "ne": "वर्षको त्यो समयमा सामान्यभन्दा माटो कति बढी ओसिलो वा सुक्खा छ भन्ने कुरा।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "साल के उस समय के हिसाब से मिट्टी आम से कितनी गीली या सूखी है।",
+    "bn": "বছরের ওই সময়ের তুলনায় মাটি স্বাভাবিকের চেয়ে কতটা ভেজা বা শুকনো।",
+    "es": "Cuánto más húmedo o seco está el suelo que lo normal en esa época.",
+    "fr": "De combien le sol est plus humide ou plus sec que d'habitude à cette période.",
+    "sw": "Kiasi ambacho udongo una unyevu zaidi au ukavu zaidi kuliko kawaida wakati huo wa mwaka."
    },
    "aliases_en": [
     "soil moisture",
@@ -1334,12 +2255,22 @@
    "term": {
     "en": "NDVI",
     "ne": "एनडीभीआई (हरियालीको सूचकाङ्क)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "NDVI (हरियाली सूचकांक)",
+    "bn": "NDVI (সবুজের সূচক)",
+    "es": "NDVI (índice de verdor)",
+    "fr": "NDVI (indice de verdure)",
+    "sw": "NDVI (kipimo cha ukijani)"
    },
    "say": {
     "en": "A greenness score from satellite pictures: the higher it is, the more living green leaves.",
     "ne": "भू-उपग्रहको तस्बिरबाट निकालिएको हरियालीको अङ्क: जति बढी, उति धेरै हरिया पात।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "उपग्रह की तस्वीरों से हरियाली का अंक: जितना ज़्यादा, उतनी ज़्यादा हरी पत्तियाँ।",
+    "bn": "উপগ্রহের ছবি থেকে সবুজের মাপ: যত বেশি, তত বেশি জীবন্ত সবুজ পাতা।",
+    "es": "Una nota de verdor de fotos de satélite: cuanto más alta, más hojas verdes vivas.",
+    "fr": "Une note de verdure vue par satellite : plus haute, plus de feuilles vertes vivantes.",
+    "sw": "Alama ya ukijani kutoka picha za setilaiti: ikiwa juu, majani mabichi hai ni mengi."
    },
    "aliases_en": [
     "normalized difference vegetation index",
@@ -1358,12 +2289,22 @@
    "term": {
     "en": "frost risk",
     "ne": "तुषारोको जोखिम",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "पाले का खतरा",
+    "bn": "তুষারের ঝুঁকি",
+    "es": "riesgo de helada",
+    "fr": "risque de gel",
+    "sw": "hatari ya barafu"
    },
    "say": {
     "en": "The chance of nights near or below freezing (under 2 °C) that can hurt crops.",
     "ne": "बालीलाई हानि गर्न सक्ने, २ डिग्रीभन्दा चिसो रात पर्ने सम्भावना।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "फ़सलों को नुकसान पहुँचा सकने वाली, 2 °C से ठंडी रातों की संभावना।",
+    "bn": "ফসলের ক্ষতি করতে পারে এমন, 2 °C-এর নিচের ঠান্ডা রাতের সম্ভাবনা।",
+    "es": "Probabilidad de noches cerca o bajo cero (menos de 2 °C) que pueden dañar cultivos.",
+    "fr": "Probabilité de nuits sous 2 °C, proches du gel ou gelées, nuisibles aux cultures.",
+    "sw": "Uwezekano wa usiku karibu au chini ya kuganda (chini ya 2 °C), unaodhuru mazao."
    },
    "aliases_en": [],
    "ne_block": [],
@@ -1374,12 +2315,22 @@
    "term": {
     "en": "water balance",
     "ne": "पानीको हिसाब (जल सन्तुलन)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "जल संतुलन (पानी का हिसाब)",
+    "bn": "পানির হিসাব (জল ভারসাম্য)",
+    "es": "balance hídrico",
+    "fr": "bilan hydrique",
+    "sw": "mizania ya maji"
    },
    "say": {
     "en": "The field's water account: rain and watering in; plant use, runoff and drainage out.",
     "ne": "खेतको पानीको हिसाब: वर्षा र सिँचाइ भित्र; बिरुवाको प्रयोग, बहाव र चुहावट बाहिर।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "खेत का पानी-हिसाब: बारिश, सिंचाई अंदर; पौधों का उपयोग, बहाव, रिसाव बाहर।",
+    "bn": "জমির পানির হিসাব: বৃষ্টি ও সেচ ভেতরে; গাছের ব্যবহার, গড়িয়ে যাওয়া ও চুইয়ে যাওয়া বাইরে।",
+    "es": "La cuenta del agua: entran lluvia y riego; salen uso vegetal, escorrentía y drenaje.",
+    "fr": "Le compte d'eau du champ : pluie et arrosage entrent ; plantes, ruissellement et drainage en sortent.",
+    "sw": "Hesabu ya maji: mvua na umwagiliaji huingia; matumizi ya mimea, mtiririko na upenyaji hutoka."
    },
    "aliases_en": [
     "water budget",
@@ -1396,12 +2347,22 @@
    "term": {
     "en": "monsoon onset",
     "ne": "मनसुन सुरुवात",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मानसून की शुरुआत",
+    "bn": "মৌসুমি বৃষ্টির শুরু",
+    "es": "inicio del monzón",
+    "fr": "début de la mousson",
+    "sw": "mwanzo wa monsuni"
    },
    "say": {
     "en": "The day the monsoon rains truly begin, with no long dry break soon after.",
     "ne": "मनसुनको पानी साँच्चै सुरु भएको दिन, जसपछि छिट्टै लामो सुक्खा हुँदैन।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मानसूनी बारिश सचमुच शुरू होने का दिन, जिसके तुरंत बाद लंबा सूखा न हो।",
+    "bn": "যেদিন বর্ষার বৃষ্টি সত্যিই শুরু হয়, আর তার পরপরই লম্বা শুকনো সময় আসে না।",
+    "es": "Día en que el monzón empieza de verdad, sin larga pausa seca poco después.",
+    "fr": "Le jour où les pluies de mousson commencent vraiment, sans longue pause sèche juste après.",
+    "sw": "Siku mvua za monsuni zinapoanza kweli, bila kipindi kirefu cha ukame mara baada yake."
    },
    "aliases_en": [
     "onset"
@@ -1416,12 +2377,22 @@
    "term": {
     "en": "bare days",
     "ne": "खाली दिन",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "खाली दिन",
+    "bn": "খালি দিন",
+    "es": "días de suelo desnudo",
+    "fr": "jours de sol nu",
+    "sw": "siku za ardhi tupu"
    },
    "say": {
     "en": "Days in a year when the field has almost no green plants, seen from space.",
     "ne": "अन्तरिक्षबाट हेर्दा खेतमा हरियो बिरुवा लगभग नभएका वर्षका दिनहरू।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "साल के वे दिन जब अंतरिक्ष से खेत में लगभग कोई हरा पौधा नहीं दिखता।",
+    "bn": "বছরের যে দিনগুলোতে মহাকাশ থেকে জমিতে প্রায় কোনো সবুজ গাছ দেখা যায় না।",
+    "es": "Días del año en que, desde el espacio, el campo casi no tiene verde.",
+    "fr": "Jours de l'année où, vu de l'espace, le champ n'a presque pas de plantes vertes.",
+    "sw": "Siku za mwaka ambapo, kutoka angani, shamba karibu halina mimea ya kijani."
    },
    "aliases_en": [
     "fallow"
@@ -1434,12 +2405,22 @@
    "term": {
     "en": "crop rotation",
     "ne": "बाली चक्र",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "फ़सल चक्र",
+    "bn": "শস্য আবর্তন",
+    "es": "rotación de cultivos",
+    "fr": "rotation des cultures",
+    "sw": "mzunguko wa mazao"
    },
    "say": {
     "en": "Growing different crops one after another on the same field, season by season.",
     "ne": "एउटै खेतमा मौसमअनुसार एकपछि अर्को फरक बाली लगाउने तरिका।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "एक ही खेत में मौसम-दर-मौसम एक के बाद एक अलग फ़सलें उगाना।",
+    "bn": "একই জমিতে মৌসুম ধরে একের পর এক ভিন্ন ফসল চাষ করা।",
+    "es": "Sembrar cultivos distintos uno tras otro en el mismo campo, temporada tras temporada.",
+    "fr": "Cultiver des plantes différentes l'une après l'autre sur le même champ, saison après saison.",
+    "sw": "Kulima mazao tofauti moja baada ya jingine katika shamba lilelile, msimu baada ya msimu."
    },
    "aliases_en": [
     "rotation",
@@ -1455,12 +2436,22 @@
    "term": {
     "en": "cover crop",
     "ne": "ढाक्ने बाली",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "आवरण फ़सल",
+    "bn": "আচ্ছাদন ফসল",
+    "es": "cultivo de cobertura",
+    "fr": "culture de couverture",
+    "sw": "zao la kufunika udongo"
    },
    "say": {
     "en": "A crop grown mainly to keep the soil covered and healthy between main crops.",
     "ne": "मुख्य बालीहरूको बीचमा माटो ढाकेर स्वस्थ राख्न लगाइने बाली।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मुख्य फ़सलों के बीच मिट्टी को ढककर स्वस्थ रखने के लिए उगाई गई फ़सल।",
+    "bn": "প্রধান ফসলগুলোর মাঝে মাটি ঢেকে সুস্থ রাখতে লাগানো ফসল।",
+    "es": "Un cultivo sembrado sobre todo para cubrir y cuidar el suelo entre cultivos principales.",
+    "fr": "Culture semée surtout pour couvrir le sol et le garder sain entre les cultures principales.",
+    "sw": "Zao linalopandwa hasa kufunika udongo na kuuweka na afya kati ya mazao makuu."
    },
    "aliases_en": [
     "cover cropping"
@@ -1475,12 +2466,22 @@
    "term": {
     "en": "satellite",
     "ne": "भू-उपग्रह (स्याटेलाइट)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "उपग्रह (सैटेलाइट)",
+    "bn": "উপগ্রহ (স্যাটেলাইট)",
+    "es": "satélite",
+    "fr": "satellite",
+    "sw": "setilaiti"
    },
    "say": {
     "en": "A machine circling the Earth that sees wide areas at once, but not every detail.",
     "ne": "पृथ्वी घुम्ने यन्त्र, जसले ठूलो क्षेत्र एकैपटक देख्छ तर हरेक सानो कुरा होइन।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "पृथ्वी के चारों ओर घूमती मशीन: बड़ा इलाका एक साथ देखती है, हर बारीकी नहीं।",
+    "bn": "পৃথিবীর চারপাশে ঘোরা যন্ত্র, যা একসাথে বড় এলাকা দেখে, কিন্তু সব খুঁটিনাটি নয়।",
+    "es": "Una máquina que gira alrededor de la Tierra y ve zonas amplias, no cada detalle.",
+    "fr": "Machine tournant autour de la Terre : elle voit large, mais pas chaque détail.",
+    "sw": "Mashine inayozunguka Dunia inayoona maeneo mapana kwa mara moja, lakini si kila undani."
    },
    "aliases_en": [
     "remote sensing"
@@ -1496,12 +2497,22 @@
    "term": {
     "en": "ground measurement",
     "ne": "जमिनमा गरिएको नाप",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़मीनी माप",
+    "bn": "মাটিতে নেওয়া মাপ",
+    "es": "medición en tierra",
+    "fr": "mesure au sol",
+    "sw": "kipimo cha ardhini"
    },
    "say": {
     "en": "A reading taken at one spot on the ground: exact there, but only there.",
     "ne": "जमिनको एउटै ठाउँमा लिइएको नाप: त्यहाँ ठ्याक्कै, तर त्यहाँ मात्र।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़मीन पर एक जगह ली गई माप: वहाँ सटीक, पर सिर्फ़ वहीं।",
+    "bn": "মাটিতে একটি জায়গায় নেওয়া মাপ: সেখানে ঠিক, কিন্তু শুধু সেখানেই।",
+    "es": "Una medida tomada en un punto del suelo: exacta allí, pero solo allí.",
+    "fr": "Une mesure prise en un point du sol : exacte là, mais seulement là.",
+    "sw": "Kipimo kilichochukuliwa sehemu moja ardhini: sahihi pale, lakini pale tu."
    },
    "aliases_en": [
     "weather station",
@@ -1516,12 +2527,22 @@
    "term": {
     "en": "data fusion",
     "ne": "नाप मिलाउने तरिका (डाटा फ्युजन)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "डेटा फ़्यूज़न (माप मिलाना)",
+    "bn": "ডেটা ফিউশন (মাপ মেলানো)",
+    "es": "fusión de datos",
+    "fr": "fusion de données",
+    "sw": "uunganishaji wa data"
    },
    "say": {
     "en": "Mixing space, computer and ground readings so each one fixes the others' weak spots.",
     "ne": "अन्तरिक्ष, कम्प्युटर र जमिनका नाप मिलाएर एउटाको कमजोरी अर्कोले सच्याउने तरिका।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "अंतरिक्ष, कंप्यूटर और ज़मीनी माप मिलाना, ताकि हर एक दूसरों की कमी सुधारे।",
+    "bn": "মহাকাশ, কম্পিউটার আর মাটির মাপ মেলানো, যাতে একটি অন্যগুলোর দুর্বলতা সারায়।",
+    "es": "Mezclar medidas del espacio, de computadora y del suelo para que se corrijan entre sí.",
+    "fr": "Mêler mesures de l'espace, d'ordinateur et du sol pour que chacune corrige les autres.",
+    "sw": "Kuchanganya vipimo vya angani, kompyuta na ardhini ili kila kimoja kirekebishe udhaifu wa vingine."
    },
    "aliases_en": [
     "fusion",
@@ -1539,12 +2560,22 @@
    "term": {
     "en": "model-based",
     "ne": "मोडेलमा आधारित",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मॉडल-आधारित",
+    "bn": "মডেল-ভিত্তিক",
+    "es": "basado en modelos",
+    "fr": "issu d'un modèle",
+    "sw": "inayotokana na modeli"
    },
    "say": {
     "en": "Worked out by a computer from physics and other readings, not measured directly.",
     "ne": "सिधै नापिएको होइन, भौतिक नियम र अरू नापबाट कम्प्युटरले निकालेको।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "सीधे नापा नहीं गया; भौतिकी और दूसरी मापों से कंप्यूटर ने निकाला।",
+    "bn": "সরাসরি মাপা নয়; পদার্থবিদ্যা আর অন্য মাপ থেকে কম্পিউটারে হিসাব করা।",
+    "es": "Calculado por computadora con física y otras medidas, no medido directamente.",
+    "fr": "Calculé par ordinateur à partir de la physique et d'autres mesures, pas mesuré directement.",
+    "sw": "Imekokotolewa na kompyuta kwa fizikia na vipimo vingine, haikupimwa moja kwa moja."
    },
    "aliases_en": [
     "model",
@@ -1565,12 +2596,22 @@
    "term": {
     "en": "field twin",
     "ne": "खेतको कम्प्युटर नमुना",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "खेत का जुड़वाँ (कंप्यूटर नकल)",
+    "bn": "জমির যমজ (কম্পিউটার নকল)",
+    "es": "gemelo del campo",
+    "fr": "jumeau du champ",
+    "sw": "pacha wa shamba"
    },
    "say": {
     "en": "Our computer copy of your field that replays each season's water and crops.",
     "ne": "हरेक मौसमको पानी र बाली फेरि चलाउने तपाईंको खेतको कम्प्युटर नमुना।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "आपके खेत की हमारी कंप्यूटर नकल, जो हर मौसम का पानी और फ़सल दोहराती है।",
+    "bn": "আপনার জমির আমাদের কম্পিউটার নকল, যা প্রতি মৌসুমের পানি আর ফসল আবার চালায়।",
+    "es": "Copia de su campo en computadora, que repite agua y cultivos de cada temporada.",
+    "fr": "Notre copie informatique de votre champ, qui rejoue l'eau et les cultures de chaque saison.",
+    "sw": "Nakala yetu ya kompyuta ya shamba lako inayorudia maji na mazao ya kila msimu."
    },
    "aliases_en": [
     "twin",
@@ -1586,12 +2627,22 @@
    "term": {
     "en": "relative yield",
     "ne": "उब्जनी प्रतिशत",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "सापेक्ष उपज",
+    "bn": "আপেক্ষিক ফলন",
+    "es": "rendimiento relativo",
+    "fr": "rendement relatif",
+    "sw": "mavuno linganishi"
    },
    "say": {
     "en": "This year's harvest compared with the best this field could give, never in tonnes.",
     "ne": "यो खेतले दिन सक्ने सबैभन्दा राम्रो उब्जनीसँग दाँज्दा यस वर्षको उब्जनी, टनमा होइन।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "इस खेत की सबसे अच्छी फ़सल के मुकाबले इस साल की फ़सल, टन में नहीं।",
+    "bn": "এই জমির সেরা সম্ভাব্য ফসলের তুলনায় এ বছরের ফসল, কখনো টনে নয়।",
+    "es": "Cosecha de este año frente a la mejor posible del campo, nunca en toneladas.",
+    "fr": "La récolte de l'année comparée au mieux que ce champ peut donner, jamais en tonnes.",
+    "sw": "Mavuno ya mwaka huu ukilinganisha na bora ambayo shamba hili linaweza kutoa, si kwa tani."
    },
    "aliases_en": [
     "yield",
@@ -1613,12 +2664,22 @@
    "term": {
     "en": "water stress",
     "ne": "पानीको कमी",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "जल तनाव",
+    "bn": "পানির চাপ",
+    "es": "estrés hídrico",
+    "fr": "stress hydrique",
+    "sw": "upungufu wa maji"
    },
    "say": {
     "en": "Days when the soil is too dry for the crop to drink freely.",
     "ne": "माटो यति सुक्खा हुन्छ कि बालीले सजिलै पानी खान नसक्ने दिनहरू।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "वे दिन जब मिट्टी इतनी सूखी हो कि फ़सल आसानी से पानी न पी सके।",
+    "bn": "যেদিন মাটি এত শুকনো যে ফসল সহজে পানি পায় না।",
+    "es": "Días en que el suelo está tan seco que el cultivo no bebe a gusto.",
+    "fr": "Jours où le sol est trop sec pour que la culture boive librement.",
+    "sw": "Siku ambazo udongo ni mkavu mno kiasi kwamba mazao hayawezi kunywa maji kwa urahisi."
    },
    "aliases_en": [
     "stress",
@@ -1636,12 +2697,22 @@
    "term": {
     "en": "irrigation",
     "ne": "सिँचाइ",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "सिंचाई",
+    "bn": "সেচ",
+    "es": "riego",
+    "fr": "irrigation",
+    "sw": "umwagiliaji"
    },
    "say": {
     "en": "Water brought to the field by canal, well or pipe, as well as rain.",
     "ne": "वर्षाबाहेक कुलो, इनार वा पाइपबाट खेतमा ल्याइएको पानी।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "बारिश के अलावा नहर, कुएँ या पाइप से खेत में लाया गया पानी।",
+    "bn": "বৃষ্টি ছাড়াও খাল, কুয়া বা পাইপ দিয়ে জমিতে আনা পানি।",
+    "es": "Agua llevada al campo por canal, pozo o tubería, además de la lluvia.",
+    "fr": "L'eau amenée au champ par canal, puits ou tuyau, en plus de la pluie.",
+    "sw": "Maji yanayoletwa shambani kwa mfereji, kisima au bomba, pamoja na mvua."
    },
    "aliases_en": [
     "irrigated",
@@ -1656,12 +2727,22 @@
    "term": {
     "en": "drought year",
     "ne": "खडेरी वर्ष",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "सूखे का साल",
+    "bn": "খরার বছর",
+    "es": "año de sequía",
+    "fr": "année de sécheresse",
+    "sw": "mwaka wa ukame"
    },
    "say": {
     "en": "A crop season whose rain was among the lowest fifth of all seasons since 2001.",
     "ne": "सन् २००१ यताका सबैभन्दा सुक्खा पाँचौं भागमा पर्ने बाली मौसम।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "फ़सल-मौसम जिसकी बारिश 2001 से सभी मौसमों के सबसे कम पाँचवें हिस्से में रही।",
+    "bn": "এমন ফসলের মৌসুম, যার বৃষ্টি 2001 থেকে সব মৌসুমের সবচেয়ে কম পঞ্চমাংশে ছিল।",
+    "es": "Temporada de cultivo cuya lluvia estuvo en el quinto más bajo desde 2001.",
+    "fr": "Saison de culture dont la pluie est dans le cinquième le plus bas depuis 2001.",
+    "sw": "Msimu wa mazao ambao mvua yake ilikuwa katika sehemu ya tano ya chini tangu 2001."
    },
    "aliases_en": [
     "drought",
@@ -1675,12 +2756,22 @@
    "term": {
     "en": "flood year",
     "ne": "बाढी वर्ष",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "बाढ़ का साल",
+    "bn": "বন্যার বছর",
+    "es": "año de inundación",
+    "fr": "année d'inondation",
+    "sw": "mwaka wa mafuriko"
    },
    "say": {
     "en": "A year whose heaviest rain day was among the heaviest fifth of all years.",
     "ne": "पाँच वर्षमा एक पटक जति आउने, सबैभन्दा भारी पानी परेको दिन भएको वर्ष।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "साल जिसका सबसे भारी बारिश-दिन सभी सालों के सबसे भारी पाँचवें हिस्से में था।",
+    "bn": "যে বছরের সবচেয়ে ভারী বৃষ্টির দিনটি সব বছরের সবচেয়ে ভারী পঞ্চমাংশে ছিল।",
+    "es": "Año cuyo día de lluvia más fuerte estuvo en el quinto más fuerte de todos.",
+    "fr": "Année dont le jour le plus pluvieux compte parmi le cinquième le plus fort.",
+    "sw": "Mwaka ambao siku yake ya mvua kubwa zaidi ilikuwa katika sehemu ya tano ya juu."
    },
    "aliases_en": [
     "very wet day",
@@ -1696,12 +2787,22 @@
    "term": {
     "en": "soil probe",
     "ne": "माटो जाँच्ने यन्त्र (प्रोब)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी प्रोब (मिट्टी की छड़ी)",
+    "bn": "মাটির প্রোব (মাটির কাঠি)",
+    "es": "sonda de suelo",
+    "fr": "sonde de sol",
+    "sw": "kipima udongo (kijiti)"
    },
    "say": {
     "en": "A small stick pushed into the soil that measures how wet and warm it is.",
     "ne": "माटो कति ओसिलो र तातो छ भनेर नाप्न माटोमा गाडिने सानो यन्त्र।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी में गाड़ी जाने वाली छोटी छड़ी, जो नमी और गर्मी नापती है।",
+    "bn": "মাটিতে পোঁতা ছোট কাঠি, যা মাটি কতটা ভেজা আর গরম তা মাপে।",
+    "es": "Una varilla pequeña clavada en la tierra que mide su humedad y calor.",
+    "fr": "Une petite tige plantée dans le sol qui mesure son humidité et sa chaleur.",
+    "sw": "Kijiti kidogo kinachochomekwa udongoni kupima unyevu na joto lake."
    },
    "aliases_en": [
     "probe",
@@ -1719,12 +2820,22 @@
    "term": {
     "en": "uncertainty",
     "ne": "अनिश्चितता",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "अनिश्चितता",
+    "bn": "অনিশ্চয়তা",
+    "es": "incertidumbre",
+    "fr": "incertitude",
+    "sw": "kutokuwa na uhakika"
    },
    "say": {
     "en": "How far a number could be from the truth; on screen, fog shows it.",
     "ne": "कुनै अङ्क साँचोभन्दा कति फरक हुन सक्छ; स्क्रिनमा कुहिरोले यो देखाउँछ।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "कोई अंक सच से कितना दूर हो सकता है; स्क्रीन पर धुंध यह दिखाती है।",
+    "bn": "কোনো সংখ্যা সত্যি থেকে কত দূরে হতে পারে; পর্দায় কুয়াশা তা দেখায়।",
+    "es": "Cuánto puede alejarse un número de la verdad; en pantalla, la niebla lo muestra.",
+    "fr": "De combien un chiffre peut s'écarter de la vérité ; à l'écran, le brouillard le montre.",
+    "sw": "Kiasi namba inavyoweza kuwa mbali na ukweli; kwenye skrini, ukungu huonyesha hilo."
    },
    "aliases_en": [
     "uncertain",
@@ -1743,12 +2854,22 @@
    "term": {
     "en": "regional water storage",
     "ne": "क्षेत्रीय जल भण्डार",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "क्षेत्रीय जल भंडार",
+    "bn": "আঞ্চলিক পানির মজুদ",
+    "es": "almacenamiento regional de agua",
+    "fr": "stock d'eau régional",
+    "sw": "hifadhi ya maji ya eneo"
    },
    "say": {
     "en": "All water held across a wide area, seen by satellites; not your own well.",
     "ne": "भू-उपग्रहले नापेको ठूलो क्षेत्रभरिको सबै पानी; तपाईंको आफ्नै इनार होइन।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "उपग्रहों से देखा गया, बड़े इलाके में जमा सारा पानी; आपका अपना कुआँ नहीं।",
+    "bn": "উপগ্রহে দেখা বড় এলাকার সব জমা পানি; আপনার নিজের কুয়া নয়।",
+    "es": "Toda el agua guardada en una zona amplia, vista por satélites; no su pozo.",
+    "fr": "Toute l'eau stockée sur une grande zone, vue par satellite ; pas votre propre puits.",
+    "sw": "Maji yote yaliyohifadhiwa katika eneo pana, yanayoonwa na setilaiti; si kisima chako."
    },
    "aliases_en": [
     "groundwater",
@@ -1769,12 +2890,22 @@
    "term": {
     "en": "erosion",
     "ne": "भू-क्षय (माटो कटान)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मृदा अपरदन (मिट्टी का कटाव)",
+    "bn": "ভূমিক্ষয় (মাটির ক্ষয়)",
+    "es": "erosión",
+    "fr": "érosion",
+    "sw": "mmomonyoko wa udongo"
    },
    "say": {
     "en": "Soil carried away from the field by rain water or wind.",
     "ne": "पानी वा हावाले खेतको माटो बगाएर लैजाने क्रिया।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "बारिश के पानी या हवा से खेत की मिट्टी का बह जाना।",
+    "bn": "বৃষ্টির পানি বা বাতাসে জমির মাটি সরে যাওয়া।",
+    "es": "Tierra que el agua de lluvia o el viento se lleva del campo.",
+    "fr": "Sol emporté hors du champ par l'eau de pluie ou le vent.",
+    "sw": "Udongo unaosombwa kutoka shambani na maji ya mvua au upepo."
    },
    "aliases_en": [
     "soil loss",
@@ -1792,12 +2923,22 @@
    "term": {
     "en": "runoff",
     "ne": "सतही बहाव",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "अपवाह (बहता पानी)",
+    "bn": "উপরিভাগের প্রবাহ",
+    "es": "escorrentía",
+    "fr": "ruissellement",
+    "sw": "mtiririko wa maji juu ya ardhi"
    },
    "say": {
     "en": "Rain that flows off the field instead of soaking into the soil.",
     "ne": "माटोमा नपसी खेतबाट बगेर जाने वर्षाको पानी।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "बारिश का पानी जो मिट्टी में रिसने के बजाय खेत से बह जाता है।",
+    "bn": "বৃষ্টির পানি যা মাটিতে না ঢুকে জমি থেকে গড়িয়ে যায়।",
+    "es": "Lluvia que corre fuera del campo en vez de entrar en el suelo.",
+    "fr": "Pluie qui s'écoule hors du champ au lieu d'entrer dans le sol.",
+    "sw": "Mvua inayotiririka kutoka shambani badala ya kuingia udongoni."
    },
    "aliases_en": [
     "run-off",
@@ -1814,12 +2955,22 @@
    "term": {
     "en": "nitrogen-fixing crop",
     "ne": "नाइट्रोजन स्थिर गर्ने बाली (कोसे बाली)",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "नाइट्रोजन स्थिर करने वाली फ़सल (दलहन)",
+    "bn": "নাইট্রোজেন সংবন্ধনকারী ফসল (ডাল)",
+    "es": "cultivo fijador de nitrógeno",
+    "fr": "culture fixatrice d'azote",
+    "sw": "zao linalofunga naitrojeni"
    },
    "say": {
     "en": "A crop like lentil whose root bacteria turn nitrogen from air into plant food.",
     "ne": "मसुरजस्तो बाली, जसको जराका ब्याक्टेरियाले हावाको नाइट्रोजनलाई बिरुवाको खाना बनाउँछन्।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मसूर जैसी फ़सल: जड़ों के जीवाणु हवा की नाइट्रोजन को पौधों का भोजन बनाते हैं।",
+    "bn": "মসুরের মতো ফসল, যার শিকড়ের জীবাণু বাতাসের নাইট্রোজেনকে গাছের খাবার বানায়।",
+    "es": "Cultivo como la lenteja: sus bacterias de raíz convierten nitrógeno del aire en alimento.",
+    "fr": "Culture comme la lentille, dont les bactéries des racines changent l'azote de l'air en engrais.",
+    "sw": "Zao kama dengu: bakteria wa mizizi yake hugeuza naitrojeni ya hewa kuwa chakula cha mimea."
    },
    "aliases_en": [
     "nitrogen-fixing",
@@ -1842,12 +2993,22 @@
    "term": {
     "en": "deep-rooting crop",
     "ne": "गहिरो जरा भएको बाली",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "गहरी जड़ वाली फ़सल",
+    "bn": "গভীর শিকড়ের ফসল",
+    "es": "cultivo de raíz profunda",
+    "fr": "culture à racines profondes",
+    "sw": "zao lenye mizizi mirefu"
    },
    "say": {
     "en": "A crop whose roots reach water and food deep in the soil.",
     "ne": "जरा माटोको गहिराइसम्म पुगेर पानी र खाना लिन सक्ने बाली।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "ऐसी फ़सल जिसकी जड़ें मिट्टी में गहरे तक पानी और भोजन पाती हैं।",
+    "bn": "এমন ফসল, যার শিকড় মাটির গভীরে পানি আর খাবার পায়।",
+    "es": "Un cultivo cuyas raíces llegan al agua y alimento hondo en el suelo.",
+    "fr": "Une culture dont les racines atteignent l'eau et la nourriture loin dans le sol.",
+    "sw": "Zao ambalo mizizi yake hufikia maji na chakula ndani kabisa ya udongo."
    },
    "aliases_en": [
     "deep-rooting",
@@ -1863,12 +3024,22 @@
    "term": {
     "en": "drought-tolerant crop",
     "ne": "खडेरी सहने बाली",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "सूखा सहने वाली फ़सल",
+    "bn": "খরা সহনশীল ফসল",
+    "es": "cultivo tolerante a la sequía",
+    "fr": "culture tolérante à la sécheresse",
+    "sw": "zao linalostahimili ukame"
    },
    "say": {
     "en": "A crop that still gives some harvest when the rains are short.",
     "ne": "पानी कम पर्दा पनि केही उब्जनी दिने बाली।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "ऐसी फ़सल जो कम बारिश में भी कुछ उपज देती है।",
+    "bn": "এমন ফসল, যা বৃষ্টি কম হলেও কিছু ফসল দেয়।",
+    "es": "Un cultivo que aún da algo de cosecha cuando falta lluvia.",
+    "fr": "Une culture qui donne encore un peu de récolte quand la pluie manque.",
+    "sw": "Zao ambalo bado hutoa mavuno kiasi mvua zikiwa chache."
    },
    "aliases_en": [
     "drought-tolerant",
@@ -1884,12 +3055,22 @@
    "term": {
     "en": "pest cycle",
     "ne": "कीरा र रोगको चक्र",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "कीट चक्र",
+    "bn": "পোকার চক্র",
+    "es": "ciclo de plagas",
+    "fr": "cycle des ravageurs",
+    "sw": "mzunguko wa wadudu"
    },
    "say": {
     "en": "Pests and diseases that build up when crops of one family follow each other.",
     "ne": "एउटै परिवारका बाली पालैपालो लगाउँदा बढ्दै जाने कीरा र रोग।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "एक ही परिवार की फ़सलें एक के बाद एक लगाने पर बढ़ते कीड़े और रोग।",
+    "bn": "একই পরিবারের ফসল পরপর লাগালে যে পোকা আর রোগ বাড়ে।",
+    "es": "Plagas y enfermedades que crecen cuando cultivos de una familia se siguen.",
+    "fr": "Ravageurs et maladies qui s'accumulent quand des cultures d'une même famille se suivent.",
+    "sw": "Wadudu na magonjwa yanayoongezeka mazao ya familia moja yakifuatana."
    },
    "aliases_en": [
     "crop family",
@@ -1903,12 +3084,22 @@
    "term": {
     "en": "organic matter",
     "ne": "प्राङ्गारिक पदार्थ",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "जैविक पदार्थ",
+    "bn": "জৈব পদার্থ",
+    "es": "materia orgánica",
+    "fr": "matière organique",
+    "sw": "mabaki ya viumbe hai"
    },
    "say": {
     "en": "Rotting roots, leaves and dung in the soil that make it dark and crumbly.",
     "ne": "माटोलाई कालो र खुकुलो बनाउने कुहिएका जरा, पात र गोबर।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी में सड़ती जड़ें, पत्तियाँ और गोबर, जो उसे काली और भुरभुरी बनाते हैं।",
+    "bn": "মাটিতে পচা শিকড়, পাতা আর গোবর, যা মাটিকে কালো আর ঝুরঝুরে করে।",
+    "es": "Raíces, hojas y estiércol podridos en el suelo, que lo vuelven oscuro y suelto.",
+    "fr": "Racines, feuilles et fumier qui pourrissent dans le sol et le rendent sombre et meuble.",
+    "sw": "Mizizi, majani na samadi vinavyooza udongoni, vinavyoufanya mweusi na laini."
    },
    "aliases_en": [
     "organic carbon",
@@ -1925,12 +3116,22 @@
    "term": {
     "en": "heat stress",
     "ne": "तातोको असर",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "गर्मी का तनाव",
+    "bn": "তাপের চাপ",
+    "es": "estrés por calor",
+    "fr": "stress thermique",
+    "sw": "athari ya joto"
    },
    "say": {
     "en": "Days hotter than nine in ten of this place's usual days.",
     "ne": "यस ठाउँका सामान्य दस दिनमध्ये नौ दिनभन्दा तातो दिनहरू।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "इस जगह के आम दस में से नौ दिनों से ज़्यादा गर्म दिन।",
+    "bn": "এই জায়গার সাধারণ দশ দিনের নয় দিনের চেয়ে বেশি গরম দিন।",
+    "es": "Días más calurosos que nueve de cada diez días normales de este lugar.",
+    "fr": "Jours plus chauds que neuf sur dix des jours habituels de ce lieu.",
+    "sw": "Siku zenye joto kuliko siku tisa kati ya kumi za kawaida za mahali hapa."
    },
    "aliases_en": [
     "percentile",
@@ -1945,12 +3146,22 @@
    "term": {
     "en": "resolution",
     "ne": "रिजोल्युसन",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "रिज़ॉल्यूशन",
+    "bn": "রেজোলিউশন",
+    "es": "resolución",
+    "fr": "résolution",
+    "sw": "kiwango cha undani"
    },
    "say": {
     "en": "The size of the patch of land that one satellite or computer number covers.",
     "ne": "भू-उपग्रह वा कम्प्युटरको एउटा अङ्कले ढाक्ने जमिनको टुक्राको आकार।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़मीन के उस टुकड़े का आकार, जिसे उपग्रह या कंप्यूटर का एक अंक ढकता है।",
+    "bn": "উপগ্রহ বা কম্পিউটারের একটি সংখ্যা যতটা জমি ঢাকে, তার মাপ।",
+    "es": "El tamaño del pedazo de tierra que cubre un número de satélite o computadora.",
+    "fr": "La taille du bout de terrain couvert par un chiffre de satellite ou d'ordinateur.",
+    "sw": "Ukubwa wa kipande cha ardhi kinachowakilishwa na namba moja ya setilaiti au kompyuta."
    },
    "aliases_en": [
     "pixel",
@@ -1967,12 +3178,22 @@
    "term": {
     "en": "climate projection",
     "ne": "जलवायु प्रक्षेपण",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "जलवायु अनुमान (प्रक्षेपण)",
+    "bn": "জলবায়ু প্রক্ষেপণ",
+    "es": "proyección climática",
+    "fr": "projection climatique",
+    "sw": "makadirio ya tabianchi"
    },
    "say": {
     "en": "A computer picture of possible future weather, given as a range, not a forecast.",
     "ne": "भविष्यको सम्भावित मौसमको कम्प्युटर अनुमान, दायराका रूपमा, पक्का भविष्यवाणी होइन।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "संभावित भविष्य के मौसम की कंप्यूटर तस्वीर, एक दायरे में; पक्की भविष्यवाणी नहीं।",
+    "bn": "সম্ভাব্য ভবিষ্যৎ আবহাওয়ার কম্পিউটার ছবি, একটি সীমা হিসেবে; পূর্বাভাস নয়।",
+    "es": "Una imagen por computadora del tiempo futuro posible, dada como rango, no pronóstico.",
+    "fr": "Une image informatique du temps futur possible, donnée en fourchette, pas une prévision.",
+    "sw": "Picha ya kompyuta ya hali ya hewa inayowezekana baadaye, kama kiwango, si utabiri."
    },
    "aliases_en": [
     "climate",
@@ -1995,7 +3216,12 @@
    "title": {
     "en": "Crops that feed the soil",
     "ne": "माटोलाई मल दिने बाली",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी को खिलाने वाली फ़सलें",
+    "bn": "মাটিকে খাবার দেয় যে ফসল",
+    "es": "Cultivos que alimentan la tierra",
+    "fr": "Cultures qui nourrissent le sol",
+    "sw": "Mazao yanayolisha udongo"
    },
    "examples": [
     "lentil"
@@ -2013,7 +3239,12 @@
       "where": "printed p. 43 (PDF p. 52), section 2.1 'The role of pulses in nutrient (re)cycling'",
       "quote": "These plants, in symbiosis with certain types of bacteria are able to convert atmospheric nitrogen (N2) into nitrogen compounds (ammonium) that can be used by plants, while also improving soil fertility (FAO, 2016a). The symbiosis occurs in nodules formed on the plant roots, where the nitrogen-fixing bacteria are hosted",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "मसूर की जड़ों में छोटे मददगार रहते हैं।",
+     "bn": "মসুরের শিকড়ে ছোট্ট সাহায্যকারী থাকে।",
+     "es": "Diminutos ayudantes viven en raíces de lenteja.",
+     "fr": "Des petites aides habitent les racines de lentille.",
+     "sw": "Wasaidizi wadogo wanaishi katika mizizi ya dengu."
     },
     {
      "en": "They turn air into natural fertilizer.",
@@ -2027,7 +3258,12 @@
       "where": "body text, paragraph after the Director-General's quote",
       "quote": "Pulses improve soil health by hosting helpful bacteria, called rhizobia, in their roots. These bacteria convert nitrogen from the air into fertilizers in the soil.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "वे हवा को कुदरती खाद में बदलते हैं।",
+     "bn": "তারা বাতাসকে প্রাকৃতিক সারে বদলে দেয়।",
+     "es": "Convierten el aire en abono natural.",
+     "fr": "Ils changent l'air en engrais naturel.",
+     "sw": "Wanageuza hewa kuwa mbolea ya asili."
     },
     {
      "en": "The next crop can use that fertilizer.",
@@ -2041,7 +3277,12 @@
       "where": "printed p. 45, section 2.1",
       "quote": "Provision of nitrogen derived from BNF to the subsequent crops ('nitrogen effect') increases yields especially where subsequent crops receive low or moderate levels of fertiliser.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "अगली फ़सल वह खाद इस्तेमाल कर सकती है।",
+     "bn": "পরের ফসল সেই সার কাজে লাগাতে পারে।",
+     "es": "El siguiente cultivo puede usar ese abono.",
+     "fr": "La culture suivante peut utiliser cet engrais.",
+     "sw": "Zao linalofuata linaweza kutumia mbolea hiyo."
     },
     {
      "en": "So you may need less bought fertilizer.",
@@ -2056,7 +3297,12 @@
       "quote": "By fixing atmospheric nitrogen and solubilizing phosphates, pulses contribute to reducing the need for synthetic fertilizers",
       "accessed": "2026-11-12",
       "note": "FAO gives no figure for how much less fertilizer the next crop needs, so the text says 'may'."
-     }
+     },
+     "hi": "तो खरीदी खाद कम लग सकती है।",
+     "bn": "তাই কেনা সার কম লাগতে পারে।",
+     "es": "Así quizá necesite menos abono comprado.",
+     "fr": "Vous aurez peut-être besoin de moins d'engrais acheté.",
+     "sw": "Kwa hiyo huenda ukahitaji mbolea ya kununua kidogo."
     },
     {
      "en": "In Nepal, lentil often follows rice.",
@@ -2071,7 +3317,12 @@
       "quote": "the majority of lentil in Nepal is grown in rice-based cropping system [35,36] and most of the rice varieties grown are medium to long-duration.",
       "accessed": "2026-11-12",
       "note": "All authors are CIMMYT (a CGIAR centre). The study is about the Terai; no source opened describes rice then lentil in the Kathmandu valley itself."
-     }
+     },
+     "hi": "नेपाल: मसूर अक्सर धान के बाद आती है।",
+     "bn": "নেপালে মসুর প্রায়ই ধানের পরে আসে।",
+     "es": "En Nepal, la lenteja suele seguir al arroz.",
+     "fr": "Au Népal, la lentille suit souvent le riz.",
+     "sw": "Nchini Nepal, dengu mara nyingi hufuata mpunga."
     },
     {
      "en": "Here, lentil is sown mid-October to mid-November.",
@@ -2086,7 +3337,12 @@
       "quote": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March, 120-145 days",
       "accessed": "2026-11-12",
       "note": "Data row as recorded in config/crops.json (lentil calendar), not prose from the page."
-     }
+     },
+     "hi": "यहाँ मसूर बुआई: मध्य अक्टूबर से मध्य नवंबर।",
+     "bn": "এখানে মসুর বোনা হয় মধ্য-অক্টোবর থেকে মধ্য-নভেম্বর।",
+     "es": "Aquí se siembra lenteja desde mediados de octubre. La siembra sigue hasta mediados de noviembre.",
+     "fr": "Ici, semis de lentille de mi-octobre à mi-novembre.",
+     "sw": "Hapa, dengu hupandwa kuanzia katikati ya Oktoba. Upandaji huisha katikati ya Novemba."
     }
    ]
   },
@@ -2095,7 +3351,12 @@
    "title": {
     "en": "Crops that cover bare soil",
     "ne": "खाली माटोलाई ढाकेर राख्ने बाली",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "खाली मिट्टी ढकने वाली फ़सलें",
+    "bn": "খালি মাটি ঢেকে রাখা ফসল",
+    "es": "Cultivos que cubren la tierra desnuda",
+    "fr": "Cultures qui couvrent le sol nu",
+    "sw": "Mazao yanayofunika udongo mtupu"
    },
    "examples": [
     "lentil",
@@ -2114,7 +3375,12 @@
       "where": "page text",
       "quote": "Vegetative cover is important in CA for the protection of the soil against the impacts of raindrops; to keep the soil shaded; and maintain the highest possible moisture content.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "ढकी मिट्टी पर बारिश ज़ोर से नहीं लगती।",
+     "bn": "ঢাকা মাটিতে বৃষ্টি জোরে আঘাত করে না।",
+     "es": "La lluvia no golpea fuerte la tierra cubierta.",
+     "fr": "La pluie frappe moins fort un sol couvert.",
+     "sw": "Mvua haipigi kwa nguvu udongo uliofunikwa."
     },
     {
      "en": "More rain soaks in; less soil washes away.",
@@ -2128,7 +3394,12 @@
       "where": "'Environmental benefits that protect the soil'",
       "quote": "Residues on the soil surface reduce the splash-effect of the raindrops, and once the energy of the raindrops has dissipated the drops proceed to the soil without any harmful effect. This results in higher infiltration and reduced runoff, leading to less erosion.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "पानी ज़्यादा रिसता है, मिट्टी कम बहती है।",
+     "bn": "বেশি পানি ভেতরে ঢোকে; কম মাটি ধুয়ে যায়।",
+     "es": "Entra más agua; se va menos tierra.",
+     "fr": "Plus d'eau entre ; moins de terre s'en va.",
+     "sw": "Maji mengi huingia; udongo kidogo husombwa."
     },
     {
      "en": "Their leftovers make the soil richer.",
@@ -2142,7 +3413,12 @@
       "where": "list of cover-crop effects",
       "quote": "Providing an additional source of organic matter to improve soil structure.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "उनके बचे हिस्से मिट्टी को उपजाऊ बनाते हैं।",
+     "bn": "তাদের অবশিষ্ট অংশ মাটিকে উর্বর করে।",
+     "es": "Sus restos hacen la tierra más rica.",
+     "fr": "Leurs restes enrichissent le sol.",
+     "sw": "Mabaki yao hurutubisha udongo."
     },
     {
      "en": "They can help keep weeds and pests down.",
@@ -2156,7 +3432,12 @@
       "where": "list of cover-crop effects",
       "quote": "Can be used to control weeds and pests.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "वे खरपतवार और कीड़े घटाने में मददगार हैं।",
+     "bn": "এরা আগাছা আর পোকা কমাতে সাহায্য করতে পারে।",
+     "es": "Pueden ayudar a frenar malezas y plagas.",
+     "fr": "Elles peuvent freiner mauvaises herbes et ravageurs.",
+     "sw": "Yanaweza kusaidia kupunguza magugu na wadudu."
     },
     {
      "en": "Lentil and mustard grow here in winter.",
@@ -2171,7 +3452,12 @@
       "quote": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March; Colza (rapeseed): sowing 15 October to 15 November, harvest 15 March",
       "accessed": "2026-11-12",
       "note": "Data rows as recorded in config/crops.json. The Hill zone lists rapeseed, which crops.json calls mustard."
-     }
+     },
+     "hi": "मसूर और सरसों यहाँ सर्दी में उगती हैं।",
+     "bn": "মসুর আর সরিষা এখানে শীতে হয়।",
+     "es": "Lenteja y mostaza crecen aquí en invierno.",
+     "fr": "Lentille et moutarde poussent ici en hiver.",
+     "sw": "Dengu na haradali hukua hapa wakati wa baridi."
     }
    ]
   },
@@ -2180,7 +3466,12 @@
    "title": {
     "en": "Crops with deep roots",
     "ne": "गहिरो जरा भएका बाली",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "गहरी जड़ों वाली फ़सलें",
+    "bn": "গভীর শিকড়ের ফসল",
+    "es": "Cultivos de raíces profundas",
+    "fr": "Cultures à racines profondes",
+    "sw": "Mazao yenye mizizi mirefu"
    },
    "examples": [
     "finger_millet",
@@ -2200,7 +3491,12 @@
       "where": "section 'Total available water (TAW)'",
       "quote": "TAW is the amount of water that a crop can extract from its root zone, and its magnitude depends on the type of soil and the rooting depth.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "गहरी जड़ें नीचे का पानी ढूँढ लेती हैं।",
+     "bn": "গভীর শিকড় নিচের পানি খুঁজে পায়।",
+     "es": "Las raíces hondas encuentran agua más abajo.",
+     "fr": "Les racines profondes trouvent l'eau plus bas.",
+     "sw": "Mizizi mirefu hupata maji yaliyo chini zaidi."
     },
     {
      "en": "They bring back food washed deep down.",
@@ -2214,7 +3510,12 @@
       "where": "section 'Crop rotation'",
       "quote": "as they root at different soil depths, they are capable of exploring different soil layers for nutrients. Nutrients that have been leached to deeper layers and that are no longer available for the commercial crop, can be 'recycled' by the crops in rotation. This way the rotation crops function as biological pumps.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "नीचे बहा भोजन वे वापस ऊपर लाती हैं।",
+     "bn": "নিচে ধুয়ে যাওয়া খাবার তারা ফিরিয়ে আনে।",
+     "es": "Recuperan el alimento que el agua llevó abajo.",
+     "fr": "Elles remontent la nourriture emportée en profondeur.",
+     "sw": "Huleta tena juu chakula kilichosombwa chini."
     },
     {
      "en": "Roots leave channels that let rain in.",
@@ -2229,7 +3530,12 @@
       "quote": "Greater distribution of channels or biopores created by diverse roots (various forms, sizes and depths).",
       "accessed": "2026-11-12",
       "note": "Partly supported: FAO says diverse roots make channels and (on the 'Soil organic cover' page) that some roots raise percolation; it does not tie this to deep roots alone."
-     }
+     },
+     "hi": "जड़ें नालियाँ छोड़ती हैं; बारिश उनसे घुसती है।",
+     "bn": "শিকড় নালা রেখে যায়, তা দিয়ে বৃষ্টি ঢোকে।",
+     "es": "Raíces dejan canales por donde entra la lluvia.",
+     "fr": "Les racines laissent des canaux pour la pluie.",
+     "sw": "Mizizi huacha njia zinazoruhusu mvua kuingia."
     },
     {
      "en": "Millet roots can reach two metres down.",
@@ -2244,7 +3550,12 @@
       "quote": "TABLE 22. Ranges of maximum effective rooting depth (Zr), and soil water depletion fraction for no stress (p), for common crops ... Millet 1.0-2.0 [m]",
       "accessed": "2026-11-12",
       "note": "FAO-56 gives 'Millet' as one row; finger millet is assumed to fit it (crops.json)."
-     }
+     },
+     "hi": "रागी की जड़ें दो मीटर तक जाती हैं।",
+     "bn": "মারুয়ার শিকড় দুই মিটার পর্যন্ত নামতে পারে।",
+     "es": "Las raíces del mijo pueden bajar dos metros.",
+     "fr": "Les racines du mil peuvent atteindre deux mètres.",
+     "sw": "Mizizi ya ulezi inaweza kufika mita mbili chini."
     },
     {
      "en": "Maize roots go much deeper than potato roots.",
@@ -2258,7 +3569,12 @@
       "where": "Table 22, rows 'Maize, Field (grain)' and 'Potato'",
       "quote": "Maize, Field (grain) (field corn) 1.0-1.7 [m] ... Potato 0.4-0.6 [m]",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "मक्के की जड़ें आलू से कहीं गहरी हैं।",
+     "bn": "ভুট্টার শিকড় আলুর চেয়ে অনেক গভীরে যায়।",
+     "es": "Maíz: raíces mucho más hondas que la papa.",
+     "fr": "Le maïs a des racines bien plus profondes. Celles de la pomme de terre restent courtes.",
+     "sw": "Mahindi yana mizizi mirefu zaidi sana kuliko viazi."
     }
    ]
   },
@@ -2267,7 +3583,12 @@
    "title": {
     "en": "Crops that cope with dry spells",
     "ne": "सुक्खा सहन सक्ने बाली",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "needs native-speaker review",
+    "hi": "सूखा झेलने वाली फ़सलें",
+    "bn": "খরা সামলাতে পারা ফসল",
+    "es": "Cultivos que aguantan la sequía",
+    "fr": "Cultures qui supportent la sécheresse",
+    "sw": "Mazao yanayostahimili ukame"
    },
    "examples": [
     "finger_millet"
@@ -2285,7 +3606,12 @@
       "where": "page text ('They' = millets; the page lists finger millet and names Nepal as a grower)",
       "quote": "They can thrive on poor soils, resist or tolerate many crop diseases and pests, and are resilient to adverse climatic conditions.",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "मोटे अनाज खराब मिट्टी, कठिन मौसम झेलते हैं।",
+     "bn": "বাজরা-জাতীয় ফসল দুর্বল মাটি আর কঠিন আবহাওয়া সয়।",
+     "es": "Los mijos aguantan suelo pobre y mal tiempo.",
+     "fr": "Les mils supportent sol pauvre et temps difficile.",
+     "sw": "Mawele na ulezi huvumilia udongo duni, hali ngumu."
     },
     {
      "en": "Finger millet is known as a hardy crop.",
@@ -2300,7 +3626,12 @@
       "quote": "The resilient nature of finger millet makes it particularly well-suited for cultivation in harsh agro-climatic conditions.",
       "accessed": "2026-11-12",
       "note": "Sources call finger millet resilient and hardy, not the most drought-tolerant millet; the next claim says so."
-     }
+     },
+     "hi": "रागी एक मज़बूत फ़सल मानी जाती है।",
+     "bn": "মারুয়া একটি শক্ত ফসল বলে পরিচিত।",
+     "es": "El mijo africano tiene fama de resistente.",
+     "fr": "L'éleusine est connue comme une culture robuste.",
+     "sw": "Ulezi unajulikana kama zao lenye ustahimilivu."
     },
     {
      "en": "But other millets need a little less water.",
@@ -2315,7 +3646,12 @@
       "quote": "has a slightly higher water requirement than most other millets and is found in cooler, elevated regions up to 2000 metres above sea level.",
       "accessed": "2026-11-12",
       "note": "Honesty caveat kept on purpose. Nepali names two other millets (proso, foxtail): reviewer to check."
-     }
+     },
+     "hi": "पर बाजरे को इससे थोड़ा कम पानी चाहिए।",
+     "bn": "তবে বাজরায় এর চেয়ে একটু কম পানি লাগে।",
+     "es": "Pero otros mijos piden algo menos de agua.",
+     "fr": "Mais d'autres mils demandent un peu moins d'eau.",
+     "sw": "Lakini mawele yanahitaji maji kidogo kuliko ulezi."
     },
     {
      "en": "Hill farmers often plant millet among their maize.",
@@ -2329,7 +3665,12 @@
       "where": "printed p. 24 (PDF p. 38), section 3.2.3, Introduction",
       "quote": "It is the fourth most important food crop in mid hills and high hills of Nepal and plays a vital role in the livelihood in these areas. ... It is pre-dominantly grown under maize/millet relay system in mid-hills of western, central and eastern regions",
       "accessed": "2026-11-12"
-     }
+     },
+     "hi": "पहाड़ी किसान अक्सर मक्के में रागी लगाते हैं।",
+     "bn": "পাহাড়ের কৃষকেরা প্রায়ই ভুট্টার মাঝে মারুয়া লাগান।",
+     "es": "En las colinas suelen sembrar mijo entre maíz.",
+     "fr": "En colline, mil et maïs poussent souvent ensemble.",
+     "sw": "Milimani, wakulima mara nyingi huchanganya ulezi na mahindi."
     },
     {
      "en": "Several different crops make total loss less likely.",
@@ -2344,9 +3685,110 @@
       "quote": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
       "accessed": "2026-11-12",
       "note": "FAO frames this as diversification across crops, not rotation specifically."
-     }
+     },
+     "hi": "अलग-अलग फ़सलें पूरे नुकसान का डर घटाती हैं।",
+     "bn": "নানা রকম ফসলে সব হারানোর ভয় কমে।",
+     "es": "Varios cultivos distintos hacen menos probable perderlo todo.",
+     "fr": "Des cultures variées évitent mieux de tout perdre.",
+     "sw": "Mazao mbalimbali hupunguza hatari ya kupoteza kila kitu."
     }
    ]
   }
- }
+ },
+ "languages": [
+  {
+   "code": "ne",
+   "name": "नेपाली",
+   "name_en": "Nepali",
+   "draft": false,
+   "status": "needs native-speaker review"
+  },
+  {
+   "code": "en",
+   "name": "English",
+   "name_en": "English",
+   "draft": false,
+   "status": "source text"
+  },
+  {
+   "code": "hi",
+   "name": "हिन्दी",
+   "name_en": "Hindi",
+   "draft": true,
+   "status": "machine-translated (SI), needs native-speaker review",
+   "label": {
+    "hi": "मसौदा अनुवाद",
+    "en": "Draft translation"
+   },
+   "quote_label": {
+    "hi": "मूल अंग्रेज़ी में उद्धरण",
+    "en": "Quotation in the original English"
+   },
+   "missing": []
+  },
+  {
+   "code": "bn",
+   "name": "বাংলা",
+   "name_en": "Bengali",
+   "draft": true,
+   "status": "machine-translated (SI), needs native-speaker review",
+   "label": {
+    "bn": "খসড়া অনুবাদ",
+    "en": "Draft translation"
+   },
+   "quote_label": {
+    "bn": "মূল ইংরেজিতে উদ্ধৃতি",
+    "en": "Quotation in the original English"
+   },
+   "missing": []
+  },
+  {
+   "code": "es",
+   "name": "Español",
+   "name_en": "Spanish",
+   "draft": true,
+   "status": "machine-translated (SI), needs native-speaker review",
+   "label": {
+    "es": "Traducción provisional",
+    "en": "Draft translation"
+   },
+   "quote_label": {
+    "es": "Cita en el inglés original",
+    "en": "Quotation in the original English"
+   },
+   "missing": []
+  },
+  {
+   "code": "fr",
+   "name": "Français",
+   "name_en": "French",
+   "draft": true,
+   "status": "machine-translated (SI), needs native-speaker review",
+   "label": {
+    "fr": "Traduction provisoire",
+    "en": "Draft translation"
+   },
+   "quote_label": {
+    "fr": "Citation dans l'anglais d'origine",
+    "en": "Quotation in the original English"
+   },
+   "missing": []
+  },
+  {
+   "code": "sw",
+   "name": "Kiswahili",
+   "name_en": "Swahili",
+   "draft": true,
+   "status": "machine-translated (SI), needs native-speaker review",
+   "label": {
+    "sw": "Rasimu ya tafsiri",
+    "en": "Draft translation"
+   },
+   "quote_label": {
+    "sw": "Nukuu kwa Kiingereza asilia",
+    "en": "Quotation in the original English"
+   },
+   "missing": []
+  }
+ ]
 }

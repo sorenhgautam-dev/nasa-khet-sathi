@@ -80,7 +80,7 @@
       "number",
       "null"
      ],
-     "description": "Monsoon-onset trend over the record, days (Sen's slope x record length). Negative = earlier. null = can't tell (the onset rule is pinned at its search start in most years, so its trend cannot show a shift; 2026-11-13)."
+     "description": "Monsoon-onset trend over the record, days (Sen's slope x (years - 1)). Negative = earlier. Since 2026-11-14 (owner) from DHM's official onset dates (diary.shift_source), not from satellite rain; null = can't tell."
     },
     "bare_days": {
      "type": "integer",
@@ -132,6 +132,82 @@
      "maxItems": 12,
      "items": {
       "$ref": "#/$defs/month"
+     }
+    },
+    "shift_days_low": {
+     "type": [
+      "number",
+      "null"
+     ],
+     "description": "Lower end of shift_days' 95% range (Sen's slope range x (years - 1))."
+    },
+    "shift_days_high": {
+     "type": [
+      "number",
+      "null"
+     ],
+     "description": "Upper end of shift_days' 95% range."
+    },
+    "shift_source": {
+     "$ref": "#/$defs/source",
+     "description": "Where shift_days comes from (owner, 2026-11-14: DHM's official monsoon onset record)."
+    },
+    "shift_note": {
+     "$ref": "#/$defs/words_en_ne",
+     "description": "Plain words on whether the rains moved, English and Nepali."
+    },
+    "monsoon_start": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "usual_from",
+      "usual_to",
+      "median",
+      "late_after",
+      "late_years",
+      "late_share",
+      "years",
+      "source"
+     ],
+     "description": "Owner, 2026-11-14: when the monsoon usually starts, from DHM's onset dates (entry into eastern Nepal; Kathmandu a few days later). usual_from/to = the middle half of the years (25th-75th percentile); late = strictly after late_after.",
+     "properties": {
+      "usual_from": {
+       "$ref": "#/$defs/mmdd"
+      },
+      "usual_to": {
+       "$ref": "#/$defs/mmdd"
+      },
+      "median": {
+       "$ref": "#/$defs/mmdd"
+      },
+      "late_after": {
+       "$ref": "#/$defs/mmdd"
+      },
+      "late_years": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      },
+      "late_share": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "years": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 2,
+       "items": {
+        "type": "integer"
+       }
+      },
+      "source": {
+       "type": "string"
+      },
+      "words": {
+       "$ref": "#/$defs/words_en_ne"
+      }
      }
     }
    }
@@ -702,6 +778,22 @@
          "$ref": "#/$defs/ne_text"
         }
        }
+      }
+     }
+    },
+    "onset": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "words"
+     ],
+     "description": "The method page's monsoon-start paragraph (owner, 2026-11-14): two satellite-rain methods tested and why they cannot show a trend; DHM's official record used instead.",
+     "properties": {
+      "words": {
+       "$ref": "#/$defs/words_en_ne"
+      },
+      "caveat": {
+       "type": "string"
       }
      }
     }
@@ -1551,6 +1643,28 @@
    "minLength": 1,
    "pattern": "[\\u0900-\\u097F]",
    "description": "Nepali text: must contain Devanagari (owner, 2026-11-12)."
+  },
+  "words_en_ne": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "en",
+    "ne"
+   ],
+   "properties": {
+    "en": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "ne": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
   }
  }
 }

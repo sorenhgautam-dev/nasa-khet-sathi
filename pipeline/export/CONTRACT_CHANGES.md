@@ -4,6 +4,21 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, 05:45): the 2040 outlook is real; the monsoon's start comes from DHM's official record
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `future` | `null`, named in `mock` | real: `years` `[2040]` (the period 2026-2040, `period`), `models` (the NEX-GDDP-CMIP6 climate models used), `scenarios` (`ssp245`, `ssp585`), `nothing_changes` (the current plan), `with_plan` (Fill the empty months), `words` (en, ne) on what the range means | Show it on the "How we know" page (owner: the design has no 2040 screen). Label the years "by 2040". Show the range and the `words` |
+| `plans[].future`, `current_options.options[].future` | absent | each plan's and option's own `{harvest, harvest_low, harvest_high}` in whole points | Compare with that plan's `score.harvest` (today). Say "about the same" when today sits inside the range |
+| `plans[].future_uncorrected_rain` (and per option) | absent | the same on GPM rain as published, only where it differs | Show as a wider range, like `score_uncorrected_rain` |
+| `mock` | `["future"]` | `[]`: nothing is sample data any more | Nothing says "not ready yet" |
+| `diary.shift_days` | `null` ("can't tell") | **from DHM's official onset dates 2001-2024**: `-2.2` days, with `shift_days_low` `-11.5` and `shift_days_high` `7.7` | Say "no clear change since 2001" (`shift_note`), never "2 days earlier" |
+| `diary.shift_source` (new) | absent | a source object for DHM's record (`type` `station`) | Credit DHM next to the answer |
+| `diary.shift_note` (new) | absent | `{en, ne}` plain sentences: no clear change since 2001, from Nepal's weather office | Show on the diary screen |
+| `diary.monsoon_start` (new) | absent | `{usual_from "06-10", usual_to "06-16", median "06-13", late_after "06-20", late_years [2009], late_share 0.042, years [2001, 2024], source "DHM", words {en, ne}}` (entry into eastern Nepal; Kathmandu a few days later) | Show `words` on "Next 3 months" in June-July and on the diary screen |
+| `method.onset` (new) | absent | `{words {en, ne}, caveat}`: two satellite-rain methods tested; the 2017 gauge loss made them unreliable for trends; Nepal's official record used | Show on "How we know" |
+| `sources[]` | 9 rows | + DHM onset dates, + NEX-GDDP-CMIP6 (`type` `model`) | Nothing new |
+
 ## 2026-11-14 (Saturday, 01:45): `live.json` settles, then measures; `probe_log.json` has a schema (owner's probe brief)
 
 `site/data/live.json` exists only during the in-person demo (git-ignored). The bridge (`robot/bridge.py --sections

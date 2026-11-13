@@ -32,6 +32,10 @@ terms; CREDITS.md lists each source and how to cite it. In particular:
 - config/dhm_normals_1991_2020.csv: climate normals (c) Department of Hydrology
   and Meteorology (DHM), Government of Nepal, reproduced with attribution for
   validation. DHM states no open licence.
+- config/dhm_onset_dates.csv: monsoon onset dates (c) Department of Hydrology
+  and Meteorology (DHM), Government of Nepal, reproduced with attribution; the
+  site's "has the monsoon shifted?" answer and usual start window come from
+  them. DHM states no open licence.
 - The Kathmandu Airport station values behind the temperature correction (NOAA
   GHCN-Daily, derived from NOAA's Global Summary of the Day). For data from
   outside the United States the GSOD terms follow WMO Resolution 40: "the data

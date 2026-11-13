@@ -262,6 +262,65 @@ def not_ready_blocks(doc, field, sections=None, twin_state=None):
     return out
 
 
+def apply_onset_dhm(doc, onset):
+    """Owner, 2026-11-14 ("fix the answer, not the method"): the monsoon's shift and usual start come from DHM's official
+    onset dates (data/checks/<field>/onset_dhm.json, scripts/run_onset_dhm.py; rules.yaml monsoon_onset_dhm), credited
+    to DHM, with the caveat that DHM's date is the monsoon's entry into eastern Nepal. The two satellite-rain onset
+    methods stay recorded as failed checks (VALIDATION 4.1d, 4.1e, 3.22)."""
+    out = copy.deepcopy(doc)
+    e = onset["export_proposal"]
+    dy = out["diary"]
+    dy["shift_days"], dy["shift_days_low"], dy["shift_days_high"] = (e["diary.shift_days"], e["diary.shift_days_low"],
+                                                                     e["diary.shift_days_high"])
+    dy["shift_source"] = dict(e["diary.shift_source"])
+    dy["shift_note"] = {k: list(e["diary.shift_note"][k]) for k in ("en", "ne")}
+    dy["monsoon_start"] = {**e["diary.monsoon_start"], "words": {k: list(e["next3.rice_start"][k]) for k in ("en", "ne")}}
+    out["method"]["onset"] = {"words": {k: list(e["method.how_we_know"][k]) for k in ("en", "ne")},
+                              "caveat": e["method.onset_caveat"]}
+    row = dict(e["sources[] (new row)"])
+    out["sources"] = [s for s in out["sources"] if s["name"] != row["name"]] + [row]
+    return out
+
+
+FUTURE_WORDS = {   # what the range means (owner's group 2e, 2026-11-14); Nepali needs native-speaker review
+    "en": ["Climate models show the years to 2040.", "Each model shows a slightly different future.",
+           "The range spans the lowest to highest.", "The real future could still fall outside."],
+    "ne": ["जलवायु मोडेलहरूले सन् २०४० सम्मका वर्ष देखाउँछन्।", "हरेक मोडेलले अलि फरक भविष्य देखाउँछ।",
+           "दायरा सबैभन्दा कमदेखि सबैभन्दा बढीसम्म हो।", "साँचो भविष्य यो दायराबाहिर पनि पर्न सक्छ।"]}
+
+
+def apply_future(doc, future, plan_ids, option_ids):
+    """Build step 9 (owner's group 2e, 2026-11-14): the 2040 outlook from data/checks/<field>/future.json
+    (scripts/run_future.py: NEX-GDDP-CMIP6 delta change onto the field's corrected 2001-2025 weather; rules.yaml future).
+    plan_ids: {role: plan id}; option_ids: {option id: plan id}. Each series is the median run with the lowest and
+    highest model-scenario run as its range, in whole points; `years` [2040] stands for the period 2026-2040. The
+    uncorrected-rain version is added only where it differs. Removes 'future' from `mock`."""
+    out = copy.deepcopy(doc)
+
+    def series(pid, version):
+        o = future["plans"][pid][version]["outlook"]
+        return {"harvest": [int(round(o["harvest"]))], "harvest_low": [int(round(o["harvest_low"]))],
+                "harvest_high": [int(round(o["harvest_high"]))]}
+
+    per = future["labels"]["periods"]["future"]
+    out["future"] = {"years": [per[1]], "period": f"{per[0]}-{per[1]}", "models": list(future["models"]),
+                     "scenarios": list(future["labels"]["scenarios"]),
+                     "nothing_changes": series(plan_ids["current"], "corrected"),
+                     "with_plan": series(plan_ids["cover_gap"], "corrected"), "words": FUTURE_WORDS}
+    for p in out["plans"]:
+        p["future"] = series(plan_ids[p["id"]], "corrected")
+        u = series(plan_ids[p["id"]], "uncorrected")
+        if u != p["future"]:
+            p["future_uncorrected_rain"] = u
+    for o in (out.get("current_options") or {}).get("options", []):
+        o["future"] = series(option_ids[o["id"]], "corrected")
+        u = series(option_ids[o["id"]], "uncorrected")
+        if u != o["future"]:
+            o["future_uncorrected_rain"] = u
+    out["mock"] = [m for m in out.get("mock", []) if m != "future"]
+    return out
+
+
 PLAN_SOURCES = ("GPM IMERG", "NASA POWER", "ISRIC SoilGrids", "GRACE and GRACE-FO")
 
 
@@ -445,6 +504,9 @@ def export_step7(doc, field_id, plans):
     soil_loc = soil_card.get("location", {})
     out["sources"] = sources_block(soil_distance_m=soil_loc.get("distance_m") if isinstance(soil_loc, dict) else None,
                                    soil_around=(soil_card.get("summary") or {}).get("water_held_for_plants"))
+    onset_path = checks / "onset_dhm.json"
+    if onset_path.exists():
+        out = apply_onset_dhm(out, json.loads(onset_path.read_text()))
     card = json.loads((REPO / "data" / "cards" / field_id / "weather.json").read_text())
     rain_break = card["corrections"].get("rain_break", {})
     rain_check = json.loads((checks / "rain_check_b.json").read_text())
@@ -475,7 +537,22 @@ def export_step7(doc, field_id, plans):
            "station_rain_lower": 0.25 <= station_less <= 0.40, "rain_corrected": bool(rain_break.get("applied")),
            "rain_fix_year": int(rain_break["from"][:4]) if rain_break.get("applied") else None,
            "legume_option": ex.legume_option(plans["plans"], rules["plans"]["suggested_must_include"], lib)}
-    return apply_plans(out, plans, plans_unc, lib, words, ctx)
+    out = apply_plans(out, plans, plans_unc, lib, words, ctx)
+    future_path = checks / "future.json"
+    if future_path.exists():
+        fut = json.loads(future_path.read_text())
+        plan_ids = {r: plans["export"][r]["plan"] for r in ("current", "cover_gap", "safest")}
+        option_ids = {o["id"]: o["plan"] for o in plans.get("current_options") or []}
+        missing = [p for p in list(plan_ids.values()) + list(option_ids.values()) if p not in fut["plans"]]
+        if missing:
+            raise ValueError(f"future.json lacks the plans {missing}: rerun scripts/run_future.py after run_plans.py")
+        out = apply_future(out, fut, plan_ids, option_ids)
+        src = dict(fut["words_proposed"]["source_entry"])
+        out["sources"] = [s for s in out["sources"] if s["name"] != src["name"]] + [src]
+        errs = validate_field(out)
+        if errs:
+            raise ValueError(f"field file would break the contract: {errs}")
+    return out
 
 
 if __name__ == "__main__":

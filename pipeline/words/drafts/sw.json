@@ -1,0 +1,1224 @@
+{
+ "_about": "Draft Swahili words for the site, machine-translated by SI (Claude Opus 5.5 via Claude Code) from the English in pipeline/words/ on 2026-11-13 (night). Not reviewed: every text needs a native speaker's review. Keys name the English text node (pipeline/export/build_words.py iter_texts); 'en' is the English it translates (a test fails when the English changes, and the site then shows the English until the draft is updated). Screen rules kept: sentences of eight words or fewer, plain words, no science words on screens, placeholders unchanged, numbers as digits, Gregorian months (Bikram Sambat is Nepali only). 'quote' holds a verbatim source quotation: it stays in its original English and is never translated, so no adaptation of a licensed text (e.g. CC BY-NC-SA 3.0 IGO) is published; the glossary's 'basis' is not translated either. Swahili: East African standard; ulezi for finger millet, mpunga for the rice crop, viazi for potato. 'buckwheat' has no common Swahili word and is kept as is: reviewer to check.",
+ "language": {
+  "code": "sw",
+  "name": "Kiswahili",
+  "name_en": "Swahili",
+  "draft": true,
+  "status": "machine-translated (SI), needs native-speaker review",
+  "label": {
+   "sw": "Rasimu ya tafsiri",
+   "en": "Draft translation"
+  },
+  "quote_label": {
+   "sw": "Nukuu kwa Kiingereza asilia",
+   "en": "Quotation in the original English"
+  },
+  "translated_from": "en",
+  "translated_by": "SI: Claude Opus 5.5 via Claude Code, 2026-11-13 (night); not reviewed"
+ },
+ "texts": {
+  "screens.home.title": {
+   "en": "Khet Sathi",
+   "sw": "Khet Sathi"
+  },
+  "screens.home.texts.tagline": {
+   "en": "Your field's friend.",
+   "sw": "Rafiki wa shamba lako."
+  },
+  "screens.home.texts.intro": {
+   "en": "Let's look at your field together.",
+   "sw": "Tuangalie shamba lako pamoja."
+  },
+  "screens.home.texts.you_decide": {
+   "en": "We help you think. You decide.",
+   "sw": "Tunakusaidia kufikiri. Wewe unaamua."
+  },
+  "screens.home.texts.start": {
+   "en": "Start",
+   "sw": "Anza"
+  },
+  "screens.home.texts.try_sample": {
+   "en": "Try our sample field",
+   "sw": "Jaribu shamba letu la mfano"
+  },
+  "screens.home.texts.sample_note": {
+   "en": "We picked this field as an example.",
+   "sw": "Tulichagua shamba hili kama mfano."
+  },
+  "screens.where.title": {
+   "en": "Where is your field?",
+   "sw": "Shamba lako liko wapi?"
+  },
+  "screens.where.texts.corners": {
+   "en": "Tap the four corners of your field.",
+   "sw": "Gusa pembe nne za shamba lako."
+  },
+  "screens.where.texts.move_corner": {
+   "en": "Tap a corner again to move it.",
+   "sw": "Gusa pembe tena ili kuisogeza."
+  },
+  "screens.where.texts.done": {
+   "en": "Done",
+   "sw": "Tayari"
+  },
+  "screens.where.texts.outside": {
+   "en": "We have not looked at this place yet.",
+   "sw": "Bado hatujaangalia mahali hapa."
+  },
+  "screens.where.texts.outside_try": {
+   "en": "Try our sample field instead.",
+   "sw": "Badala yake, jaribu shamba letu la mfano."
+  },
+  "screens.where.texts.q_water": {
+   "en": "Where does your field's water come from?",
+   "sw": "Maji ya shamba lako yanatoka wapi?"
+  },
+  "screens.where.texts.q_shape": {
+   "en": "Is your field flat or on steps?",
+   "sw": "Shamba lako ni tambarare au lina ngazi?"
+  },
+  "screens.where.labels.water.items.rain_only": {
+   "en": "Rain only",
+   "sw": "Mvua tu"
+  },
+  "screens.where.labels.water.items.canal": {
+   "en": "Canal",
+   "sw": "Mfereji"
+  },
+  "screens.where.labels.water.items.well": {
+   "en": "Well or pump",
+   "sw": "Kisima au pampu"
+  },
+  "screens.where.labels.water.items.other": {
+   "en": "Pipe or other",
+   "sw": "Bomba au kingine"
+  },
+  "screens.where.labels.water.items.unknown": {
+   "en": "I don't know",
+   "sw": "Sijui"
+  },
+  "screens.where.labels.shape.items.flat": {
+   "en": "Flat",
+   "sw": "Tambarare"
+  },
+  "screens.where.labels.shape.items.steps": {
+   "en": "Steps",
+   "sw": "Ngazi"
+  },
+  "screens.where.labels.shape.items.slope": {
+   "en": "Slope",
+   "sw": "Mteremko"
+  },
+  "screens.from_space.title": {
+   "en": "We looked at your field from space",
+   "sw": "Tuliangalia shamba lako kutoka angani"
+  },
+  "screens.from_space.texts.guess": {
+   "en": "We think you grow {guess_list}.",
+   "sw": "Tunadhani unalima {guess_list}."
+  },
+  "screens.from_space.texts.guess_right": {
+   "en": "Is this right?",
+   "sw": "Je, hii ni sahihi?"
+  },
+  "screens.from_space.texts.guess_first": {
+   "en": "We think you grow {first_crop} first.",
+   "sw": "Tunadhani kwanza unalima {first_crop}."
+  },
+  "screens.from_space.texts.guess_options": {
+   "en": "Then {option_a} or {option_b}.",
+   "sw": "Kisha {option_a} au {option_b}."
+  },
+  "screens.from_space.texts.guess_which": {
+   "en": "Which one do you grow?",
+   "sw": "Unalima ipi?"
+  },
+  "screens.from_space.texts.guess_cannot_tell": {
+   "en": "From space, both look the same.",
+   "sw": "Kutoka angani, zote mbili zinaonekana sawa."
+  },
+  "screens.from_space.texts.yes": {
+   "en": "Yes",
+   "sw": "Ndiyo"
+  },
+  "screens.from_space.texts.no_fix": {
+   "en": "No, let me fix it",
+   "sw": "Hapana, niache nirekebishe"
+  },
+  "screens.from_space.texts.bare": {
+   "en": "The ground is bare about {bare_days} days yearly.",
+   "sw": "Ardhi huwa tupu karibu siku {bare_days} kila mwaka."
+  },
+  "screens.from_space.texts.bare_why": {
+   "en": "Uncovered soil can wash away in rain.",
+   "sw": "Mvua inaweza kusomba udongo usiofunikwa."
+  },
+  "screens.from_space.texts.rains_earlier": {
+   "en": "Since {year_first}, rains start about {shift_days_abs} days earlier.",
+   "sw": "Tangu {year_first}, mvua huanza karibu siku {shift_days_abs} mapema."
+  },
+  "screens.from_space.texts.rains_later": {
+   "en": "Since {year_first}, rains start about {shift_days_abs} days later.",
+   "sw": "Tangu {year_first}, mvua huanza karibu siku {shift_days_abs} baadaye."
+  },
+  "screens.from_space.texts.rains_same": {
+   "en": "The rains start about when they used to.",
+   "sw": "Mvua huanza karibu kama zamani."
+  },
+  "screens.from_space.texts.water_falling": {
+   "en": "Water stored in this whole area is falling.",
+   "sw": "Maji yaliyohifadhiwa katika eneo hili lote yanapungua."
+  },
+  "screens.from_space.texts.water_steady": {
+   "en": "Water stored in this whole area is steady.",
+   "sw": "Maji yaliyohifadhiwa katika eneo hili lote hayabadiliki."
+  },
+  "screens.from_space.texts.water_rising": {
+   "en": "Water stored in this whole area is rising.",
+   "sw": "Maji yaliyohifadhiwa katika eneo hili lote yanaongezeka."
+  },
+  "screens.from_space.texts.water_wide": {
+   "en": "This trend is clear for the wide area.",
+   "sw": "Mwelekeo huu ni wazi kwa eneo pana."
+  },
+  "screens.from_space.texts.water_not_yours": {
+   "en": "It does not tell about your own well.",
+   "sw": "Haielezi kuhusu kisima chako mwenyewe."
+  },
+  "screens.from_space.texts.water_not_well": {
+   "en": "This is the whole area, not your well.",
+   "sw": "Hili ni eneo lote, si kisima chako."
+  },
+  "screens.from_space.texts.calendar_title": {
+   "en": "Your field's twelve months",
+   "sw": "Miezi kumi na miwili ya shamba lako"
+  },
+  "screens.from_space.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "sw": "Miezi ya Kinepali hailingani kabisa na hii."
+  },
+  "screens.from_space.texts.frost_note": {
+   "en": "We may show too many freezing nights.",
+   "sw": "Huenda tunaonyesha usiku mwingi mno wa barafu."
+  },
+  "screens.from_space.texts.month_less_sure": {
+   "en": "We are less sure about this month.",
+   "sw": "Hatuna uhakika sana kuhusu mwezi huu."
+  },
+  "screens.from_space.labels.rain.items.low": {
+   "en": "Little rain",
+   "sw": "Mvua kidogo"
+  },
+  "screens.from_space.labels.rain.items.medium": {
+   "en": "Some rain",
+   "sw": "Mvua ya wastani"
+  },
+  "screens.from_space.labels.rain.items.high": {
+   "en": "Lots of rain",
+   "sw": "Mvua nyingi"
+  },
+  "screens.from_space.labels.soil.items.dry": {
+   "en": "Dry soil",
+   "sw": "Udongo mkavu"
+  },
+  "screens.from_space.labels.soil.items.medium": {
+   "en": "Damp soil",
+   "sw": "Udongo wenye unyevu"
+  },
+  "screens.from_space.labels.soil.items.wet": {
+   "en": "Wet soil",
+   "sw": "Udongo uliolowa"
+  },
+  "screens.from_space.labels.heat.items.none": {
+   "en": "Not hot",
+   "sw": "Hakuna joto"
+  },
+  "screens.from_space.labels.heat.items.some": {
+   "en": "Some hot days",
+   "sw": "Siku kadhaa za joto"
+  },
+  "screens.from_space.labels.heat.items.high": {
+   "en": "Many hot days",
+   "sw": "Siku nyingi za joto"
+  },
+  "screens.from_space.labels.frost.items.none": {
+   "en": "No freezing nights",
+   "sw": "Hakuna usiku wa barafu"
+  },
+  "screens.from_space.labels.frost.items.risk": {
+   "en": "Some nights near freezing",
+   "sw": "Baadhi ya usiku karibu na barafu"
+  },
+  "screens.from_space.labels.frost.items.high": {
+   "en": "Freezing nights likely",
+   "sw": "Usiku wa barafu unatarajiwa"
+  },
+  "screens.from_space.labels.cover.items.bare": {
+   "en": "Bare ground",
+   "sw": "Ardhi tupu"
+  },
+  "screens.from_space.labels.cover.items.partial": {
+   "en": "Some plants",
+   "sw": "Mimea kiasi"
+  },
+  "screens.from_space.labels.cover.items.crop": {
+   "en": "Full of crop",
+   "sw": "Imejaa mazao"
+  },
+  "screens.parts.title": {
+   "en": "Your field in small parts",
+   "sw": "Shamba lako katika sehemu ndogo"
+  },
+  "screens.parts.texts.split": {
+   "en": "We split your field into {section_count} parts.",
+   "sw": "Tuligawa shamba lako katika sehemu {section_count}."
+  },
+  "screens.parts.texts.numbers": {
+   "en": "Each part has a number.",
+   "sw": "Kila sehemu ina namba."
+  },
+  "screens.parts.texts.tap_part": {
+   "en": "Tap a part to see it.",
+   "sw": "Gusa sehemu ili uione."
+  },
+  "screens.parts.texts.look_same": {
+   "en": "From space, nearby parts look the same.",
+   "sw": "Kutoka angani, sehemu za karibu zinaonekana sawa."
+  },
+  "screens.parts.texts.stick_tells": {
+   "en": "The soil stick tells them apart.",
+   "sw": "Kijiti cha udongo kinazitofautisha."
+  },
+  "screens.each_part.title": {
+   "en": "How is each part?",
+   "sw": "Kila sehemu ikoje?"
+  },
+  "screens.each_part.texts.part_name": {
+   "en": "Part {section}",
+   "sw": "Sehemu {section}"
+  },
+  "screens.each_part.texts.how_wet": {
+   "en": "How wet: {wetness} out of 100.",
+   "sw": "Unyevu: {wetness} kati ya 100."
+  },
+  "screens.each_part.texts.how_warm": {
+   "en": "How warm the soil is: {temp} degrees.",
+   "sw": "Joto la udongo: digrii {temp}."
+  },
+  "screens.each_part.texts.how_sure": {
+   "en": "How sure we are: {sure_pct} out of 100.",
+   "sw": "Uhakika wetu: {sure_pct} kati ya 100."
+  },
+  "screens.each_part.texts.fog": {
+   "en": "Fog means we are not sure yet.",
+   "sw": "Ukungu maana yake bado hatuna uhakika."
+  },
+  "screens.each_part.texts.faces": {
+   "en": "A smiling face means all is well.",
+   "sw": "Uso wa tabasamu maana yake yote ni shwari."
+  },
+  "screens.each_part.labels.status.items.green": {
+   "en": "Doing well",
+   "sw": "Inaendelea vizuri"
+  },
+  "screens.each_part.labels.status.items.yellow": {
+   "en": "Needs a look",
+   "sw": "Inahitaji kuangaliwa"
+  },
+  "screens.each_part.labels.status.items.red": {
+   "en": "Needs help now",
+   "sw": "Inahitaji msaada sasa"
+  },
+  "screens.each_part.labels.status.items.grey": {
+   "en": "We don't know yet",
+   "sw": "Bado hatujui"
+  },
+  "screens.check_soil.title": {
+   "en": "Let's check the soil",
+   "sw": "Tupime udongo"
+  },
+  "screens.check_soil.texts.push": {
+   "en": "Push the soil stick into this part.",
+   "sw": "Choma kijiti cha udongo katika sehemu hii."
+  },
+  "screens.check_soil.texts.hold": {
+   "en": "Hold it still for a moment.",
+   "sw": "Ishike bila kusogeza kwa muda kidogo."
+  },
+  "screens.check_soil.texts.clears": {
+   "en": "Your reading clears the fog.",
+   "sw": "Kipimo chako kinaondoa ukungu."
+  },
+  "screens.check_soil.texts.more_sure": {
+   "en": "Now we are more sure.",
+   "sw": "Sasa tuna uhakika zaidi."
+  },
+  "screens.check_soil.texts.wide_close": {
+   "en": "Space sees wide. Your stick sees close.",
+   "sw": "Angani huona mbali. Kijiti chako huona karibu."
+  },
+  "screens.check_soil.texts.together": {
+   "en": "Together they make a better guess.",
+   "sw": "Pamoja vinatoa makisio bora."
+  },
+  "screens.check_soil.texts.replay_check": {
+   "en": "Watch a soil check we did earlier.",
+   "sw": "Tazama upimaji wa udongo tuliofanya awali."
+  },
+  "screens.last_years.title": {
+   "en": "Your field's last {year_count} years",
+   "sw": "Miaka {year_count} iliyopita ya shamba lako"
+  },
+  "screens.last_years.texts.basket": {
+   "en": "Each basket is one year's harvest.",
+   "sw": "Kila kikapu ni mavuno ya mwaka mmoja."
+  },
+  "screens.last_years.texts.full_basket": {
+   "en": "A full basket is this field's best.",
+   "sw": "Kikapu kilichojaa ndicho bora kwa shamba hili."
+  },
+  "screens.last_years.texts.computer_made": {
+   "en": "A computer copy of your field made these.",
+   "sw": "Nakala ya kompyuta ya shamba lako ilitengeneza haya."
+  },
+  "screens.last_years.texts.thirsty_days": {
+   "en": "The crop was thirsty on {dry_days} days.",
+   "sw": "Mazao yalikuwa na kiu siku {dry_days}."
+  },
+  "screens.last_years.texts.with_water": {
+   "en": "With water when needed, it looks like this.",
+   "sw": "Kwa maji yanapohitajika, inaonekana hivi."
+  },
+  "screens.last_years.texts.water_unknown": {
+   "en": "We don't know your water yet.",
+   "sw": "Bado hatujui maji yako yanatoka wapi."
+  },
+  "screens.last_years.texts.both_shown": {
+   "en": "So we show both, side by side.",
+   "sw": "Kwa hiyo tunaonyesha yote mawili, kando kwa kando."
+  },
+  "screens.last_years.texts.play": {
+   "en": "Play",
+   "sw": "Cheza"
+  },
+  "screens.last_years.texts.pause": {
+   "en": "Pause",
+   "sw": "Simamisha"
+  },
+  "screens.last_years.labels.event.items.none": {
+   "en": "A normal year",
+   "sw": "Mwaka wa kawaida"
+  },
+  "screens.last_years.labels.event.items.drought": {
+   "en": "A drier year than usual",
+   "sw": "Mwaka mkavu kuliko kawaida"
+  },
+  "screens.last_years.labels.event.items.flood": {
+   "en": "Too much rain in one day",
+   "sw": "Mvua nyingi mno kwa siku moja"
+  },
+  "screens.last_years.labels.water_case.items.rain_fed": {
+   "en": "If you can't water",
+   "sw": "Kama huwezi kumwagilia"
+  },
+  "screens.last_years.labels.water_case.items.irrigated": {
+   "en": "If you can water",
+   "sw": "Kama unaweza kumwagilia"
+  },
+  "screens.last_years.labels.event_season.items.winter": {
+   "en": "A dry winter",
+   "sw": "Kipindi cha baridi kikavu"
+  },
+  "screens.last_years.labels.event_season.items.monsoon": {
+   "en": "A dry rainy season",
+   "sw": "Msimu wa mvua mkavu"
+  },
+  "screens.what_to_grow.title": {
+   "en": "What should I grow?",
+   "sw": "Nilime nini?"
+  },
+  "screens.what_to_grow.texts.three": {
+   "en": "Three choices: what to grow, and when.",
+   "sw": "Machaguo matatu: ulime nini, na lini."
+  },
+  "screens.what_to_grow.texts.more_baskets": {
+   "en": "More baskets, more harvest.",
+   "sw": "Vikapu zaidi, mavuno zaidi."
+  },
+  "screens.what_to_grow.texts.more_drops": {
+   "en": "More drops, less worry about water.",
+   "sw": "Matone zaidi, wasiwasi mdogo wa maji."
+  },
+  "screens.what_to_grow.texts.priority_q": {
+   "en": "What matters most to you?",
+   "sw": "Nini ni muhimu zaidi kwako?"
+  },
+  "screens.what_to_grow.texts.tips_title": {
+   "en": "Tips for your field",
+   "sw": "Ushauri kwa shamba lako"
+  },
+  "screens.what_to_grow.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "sw": "Miezi ya Kinepali hailingani kabisa na hii."
+  },
+  "screens.what_to_grow.texts.learn_more": {
+   "en": "Why do some crops help the soil?",
+   "sw": "Kwa nini baadhi ya mazao husaidia udongo?"
+  },
+  "screens.what_to_grow.labels.plan.items.current": {
+   "en": "What you do now",
+   "sw": "Unachofanya sasa"
+  },
+  "screens.what_to_grow.labels.plan.items.cover_gap": {
+   "en": "Fill the empty months",
+   "sw": "Jaza miezi mitupu"
+  },
+  "screens.what_to_grow.labels.plan.items.follow_shift": {
+   "en": "Follow the changing rains",
+   "sw": "Fuata mvua zinazobadilika"
+  },
+  "screens.what_to_grow.labels.plan.items.safest": {
+   "en": "Feed your soil",
+   "sw": "Lisha udongo wako"
+  },
+  "screens.what_to_grow.labels.score.items.harvest": {
+   "en": "Harvest",
+   "sw": "Mavuno"
+  },
+  "screens.what_to_grow.labels.score.items.water": {
+   "en": "Water",
+   "sw": "Maji"
+  },
+  "screens.what_to_grow.labels.score.items.cover": {
+   "en": "Ground covered",
+   "sw": "Ardhi iliyofunikwa"
+  },
+  "screens.what_to_grow.labels.score.items.soil_kept": {
+   "en": "Soil kept",
+   "sw": "Udongo uliohifadhiwa"
+  },
+  "screens.what_to_grow.labels.tab.items.why": {
+   "en": "Why this?",
+   "sw": "Kwa nini hii?"
+  },
+  "screens.what_to_grow.labels.tab.items.evidence": {
+   "en": "How do we know?",
+   "sw": "Tunajuaje?"
+  },
+  "screens.what_to_grow.labels.tab.items.benefits": {
+   "en": "What could it give?",
+   "sw": "Inaweza kuleta nini?"
+  },
+  "screens.what_to_grow.labels.tab.items.unknown": {
+   "en": "What we don't know",
+   "sw": "Tusichojua"
+  },
+  "screens.what_to_grow.labels.tab.items.check": {
+   "en": "Ask someone who knows",
+   "sw": "Uliza mtu anayejua"
+  },
+  "screens.what_to_grow.labels.priority.items.harvest": {
+   "en": "More harvest",
+   "sw": "Mavuno zaidi"
+  },
+  "screens.what_to_grow.labels.priority.items.water": {
+   "en": "Less water",
+   "sw": "Maji kidogo"
+  },
+  "screens.what_to_grow.labels.priority.items.soil": {
+   "en": "Healthy soil",
+   "sw": "Udongo wenye afya"
+  },
+  "screens.field_future.title": {
+   "en": "Your field in {future_year}",
+   "sw": "Shamba lako mwaka {future_year}"
+  },
+  "screens.field_future.texts.nothing_changes": {
+   "en": "If nothing changes",
+   "sw": "Kama hakuna kinachobadilika"
+  },
+  "screens.field_future.texts.with_plan": {
+   "en": "With the new plan",
+   "sw": "Kwa mpango mpya"
+  },
+  "screens.field_future.texts.range": {
+   "en": "Harvest: {future_low} to {future_high} out of 100.",
+   "sw": "Mavuno: {future_low} hadi {future_high} kati ya 100."
+  },
+  "screens.field_future.texts.nobody_knows": {
+   "en": "Nobody knows the future for sure.",
+   "sw": "Hakuna anayejua kesho kwa uhakika."
+  },
+  "screens.field_future.texts.many_guesses": {
+   "en": "Many computer guesses make this range.",
+   "sw": "Makisio mengi ya kompyuta yanaunda kiwango hiki."
+  },
+  "screens.field_future.texts.try_sliders": {
+   "en": "Try less rain or more heat.",
+   "sw": "Jaribu mvua kidogo au joto zaidi."
+  },
+  "screens.field_future.texts.less_rain": {
+   "en": "Less rain",
+   "sw": "Mvua kidogo"
+  },
+  "screens.field_future.texts.more_heat": {
+   "en": "More heat",
+   "sw": "Joto zaidi"
+  },
+  "screens.your_plan.title": {
+   "en": "Your plan",
+   "sw": "Mpango wako"
+  },
+  "screens.your_plan.texts.chose": {
+   "en": "Here is what you chose.",
+   "sw": "Hiki ndicho ulichochagua."
+  },
+  "screens.your_plan.texts.what_when": {
+   "en": "What to grow, and when:",
+   "sw": "Ulime nini, na lini:"
+  },
+  "screens.your_plan.texts.plant_in": {
+   "en": "{crop}: plant in {sow_month}.",
+   "sw": "{crop}: panda mwezi {sow_month}."
+  },
+  "screens.your_plan.texts.harvest_in": {
+   "en": "{crop}: harvest in {harvest_month}.",
+   "sw": "{crop}: vuna mwezi {harvest_month}."
+  },
+  "screens.your_plan.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "sw": "Miezi ya Kinepali hailingani kabisa na hii."
+  },
+  "screens.your_plan.texts.know_best": {
+   "en": "You know your land best.",
+   "sw": "Wewe unaijua ardhi yako vizuri zaidi."
+  },
+  "screens.your_plan.texts.advisor": {
+   "en": "Talk to a farm advisor before changing.",
+   "sw": "Ongea na afisa ugani kabla ya kubadilisha."
+  },
+  "screens.your_plan.texts.small_first": {
+   "en": "Try it on one small part first.",
+   "sw": "Jaribu kwanza kwenye sehemu ndogo moja."
+  },
+  "screens.your_plan.texts.save": {
+   "en": "Save this plan",
+   "sw": "Hifadhi mpango huu"
+  },
+  "screens.your_plan.texts.again": {
+   "en": "Start again",
+   "sw": "Anza upya"
+  },
+  "screens.your_plan.texts.made_with": {
+   "en": "Made with pictures and numbers from NASA.",
+   "sw": "Imetengenezwa kwa picha na namba za NASA."
+  },
+  "shared.buttons.next": {
+   "en": "Next",
+   "sw": "Endelea"
+  },
+  "shared.buttons.back": {
+   "en": "Back",
+   "sw": "Rudi"
+  },
+  "shared.buttons.word_help": {
+   "en": "What does this word mean?",
+   "sw": "Neno hili lina maana gani?"
+  },
+  "shared.buttons.not_sure": {
+   "en": "Not sure yet",
+   "sw": "Bado si hakika"
+  },
+  "shared.crop_names.rice": {
+   "en": "rice",
+   "sw": "mpunga"
+  },
+  "shared.crop_names.wheat": {
+   "en": "wheat",
+   "sw": "ngano"
+  },
+  "shared.crop_names.maize": {
+   "en": "maize",
+   "sw": "mahindi"
+  },
+  "shared.crop_names.potato": {
+   "en": "potato",
+   "sw": "viazi"
+  },
+  "shared.crop_names.lentil": {
+   "en": "lentil",
+   "sw": "dengu"
+  },
+  "shared.crop_names.mustard": {
+   "en": "mustard",
+   "sw": "haradali"
+  },
+  "shared.crop_names.buckwheat": {
+   "en": "buckwheat",
+   "sw": "buckwheat"
+  },
+  "shared.crop_names.finger_millet": {
+   "en": "finger millet",
+   "sw": "ulezi"
+  },
+  "shared.crop_names.bare": {
+   "en": "no crop",
+   "sw": "hakuna zao"
+  },
+  "shared.months.Jan": {
+   "en": "January",
+   "sw": "Januari"
+  },
+  "shared.months.Feb": {
+   "en": "February",
+   "sw": "Februari"
+  },
+  "shared.months.Mar": {
+   "en": "March",
+   "sw": "Machi"
+  },
+  "shared.months.Apr": {
+   "en": "April",
+   "sw": "Aprili"
+  },
+  "shared.months.May": {
+   "en": "May",
+   "sw": "Mei"
+  },
+  "shared.months.Jun": {
+   "en": "June",
+   "sw": "Juni"
+  },
+  "shared.months.Jul": {
+   "en": "July",
+   "sw": "Julai"
+  },
+  "shared.months.Aug": {
+   "en": "August",
+   "sw": "Agosti"
+  },
+  "shared.months.Sep": {
+   "en": "September",
+   "sw": "Septemba"
+  },
+  "shared.months.Oct": {
+   "en": "October",
+   "sw": "Oktoba"
+  },
+  "shared.months.Nov": {
+   "en": "November",
+   "sw": "Novemba"
+  },
+  "shared.months.Dec": {
+   "en": "December",
+   "sw": "Desemba"
+  },
+  "shared.source_kinds.satellite": {
+   "en": "seen from space",
+   "sw": "imeonekana kutoka angani"
+  },
+  "shared.source_kinds.model": {
+   "en": "worked out by computer",
+   "sw": "imekokotolewa na kompyuta"
+  },
+  "shared.source_kinds.station": {
+   "en": "measured on the ground",
+   "sw": "imepimwa ardhini"
+  },
+  "shared.source_kinds.probe": {
+   "en": "measured by the soil stick",
+   "sw": "imepimwa na kijiti cha udongo"
+  },
+  "shared.join.then": {
+   "en": "then",
+   "sw": "kisha"
+  },
+  "shared.join.and": {
+   "en": "and",
+   "sw": "na"
+  },
+  "glossary.evapotranspiration.term": {
+   "en": "evapotranspiration",
+   "sw": "uvukizaji na mvuke wa mimea"
+  },
+  "glossary.evapotranspiration.say": {
+   "en": "Water that rises into the air from the soil and from plant leaves.",
+   "sw": "Maji yanayopanda hewani kutoka udongoni na kwenye majani ya mimea."
+  },
+  "glossary.soil_moisture_anomaly.term": {
+   "en": "soil moisture anomaly",
+   "sw": "hitilafu ya unyevu wa udongo"
+  },
+  "glossary.soil_moisture_anomaly.say": {
+   "en": "How much wetter or drier the soil is than usual for that time of year.",
+   "sw": "Kiasi ambacho udongo una unyevu zaidi au ukavu zaidi kuliko kawaida wakati huo wa mwaka."
+  },
+  "glossary.ndvi.term": {
+   "en": "NDVI",
+   "sw": "NDVI (kipimo cha ukijani)"
+  },
+  "glossary.ndvi.say": {
+   "en": "A greenness score from satellite pictures: the higher it is, the more living green leaves.",
+   "sw": "Alama ya ukijani kutoka picha za setilaiti: ikiwa juu, majani mabichi hai ni mengi."
+  },
+  "glossary.frost_risk.term": {
+   "en": "frost risk",
+   "sw": "hatari ya barafu"
+  },
+  "glossary.frost_risk.say": {
+   "en": "The chance of nights near or below freezing (under 2 °C) that can hurt crops.",
+   "sw": "Uwezekano wa usiku karibu au chini ya kuganda (chini ya 2 °C), unaodhuru mazao."
+  },
+  "glossary.water_balance.term": {
+   "en": "water balance",
+   "sw": "mizania ya maji"
+  },
+  "glossary.water_balance.say": {
+   "en": "The field's water account: rain and watering in; plant use, runoff and drainage out.",
+   "sw": "Hesabu ya maji: mvua na umwagiliaji huingia; matumizi ya mimea, mtiririko na upenyaji hutoka."
+  },
+  "glossary.monsoon_onset.term": {
+   "en": "monsoon onset",
+   "sw": "mwanzo wa monsuni"
+  },
+  "glossary.monsoon_onset.say": {
+   "en": "The day the monsoon rains truly begin, with no long dry break soon after.",
+   "sw": "Siku mvua za monsuni zinapoanza kweli, bila kipindi kirefu cha ukame mara baada yake."
+  },
+  "glossary.bare_days.term": {
+   "en": "bare days",
+   "sw": "siku za ardhi tupu"
+  },
+  "glossary.bare_days.say": {
+   "en": "Days in a year when the field has almost no green plants, seen from space.",
+   "sw": "Siku za mwaka ambapo, kutoka angani, shamba karibu halina mimea ya kijani."
+  },
+  "glossary.crop_rotation.term": {
+   "en": "crop rotation",
+   "sw": "mzunguko wa mazao"
+  },
+  "glossary.crop_rotation.say": {
+   "en": "Growing different crops one after another on the same field, season by season.",
+   "sw": "Kulima mazao tofauti moja baada ya jingine katika shamba lilelile, msimu baada ya msimu."
+  },
+  "glossary.cover_crop.term": {
+   "en": "cover crop",
+   "sw": "zao la kufunika udongo"
+  },
+  "glossary.cover_crop.say": {
+   "en": "A crop grown mainly to keep the soil covered and healthy between main crops.",
+   "sw": "Zao linalopandwa hasa kufunika udongo na kuuweka na afya kati ya mazao makuu."
+  },
+  "glossary.satellite.term": {
+   "en": "satellite",
+   "sw": "setilaiti"
+  },
+  "glossary.satellite.say": {
+   "en": "A machine circling the Earth that sees wide areas at once, but not every detail.",
+   "sw": "Mashine inayozunguka Dunia inayoona maeneo mapana kwa mara moja, lakini si kila undani."
+  },
+  "glossary.ground_measurement.term": {
+   "en": "ground measurement",
+   "sw": "kipimo cha ardhini"
+  },
+  "glossary.ground_measurement.say": {
+   "en": "A reading taken at one spot on the ground: exact there, but only there.",
+   "sw": "Kipimo kilichochukuliwa sehemu moja ardhini: sahihi pale, lakini pale tu."
+  },
+  "glossary.data_fusion.term": {
+   "en": "data fusion",
+   "sw": "uunganishaji wa data"
+  },
+  "glossary.data_fusion.say": {
+   "en": "Mixing space, computer and ground readings so each one fixes the others' weak spots.",
+   "sw": "Kuchanganya vipimo vya angani, kompyuta na ardhini ili kila kimoja kirekebishe udhaifu wa vingine."
+  },
+  "glossary.model_based.term": {
+   "en": "model-based",
+   "sw": "inayotokana na modeli"
+  },
+  "glossary.model_based.say": {
+   "en": "Worked out by a computer from physics and other readings, not measured directly.",
+   "sw": "Imekokotolewa na kompyuta kwa fizikia na vipimo vingine, haikupimwa moja kwa moja."
+  },
+  "glossary.field_twin.term": {
+   "en": "field twin",
+   "sw": "pacha wa shamba"
+  },
+  "glossary.field_twin.say": {
+   "en": "Our computer copy of your field that replays each season's water and crops.",
+   "sw": "Nakala yetu ya kompyuta ya shamba lako inayorudia maji na mazao ya kila msimu."
+  },
+  "glossary.relative_harvest.term": {
+   "en": "relative yield",
+   "sw": "mavuno linganishi"
+  },
+  "glossary.relative_harvest.say": {
+   "en": "This year's harvest compared with the best this field could give, never in tonnes.",
+   "sw": "Mavuno ya mwaka huu ukilinganisha na bora ambayo shamba hili linaweza kutoa, si kwa tani."
+  },
+  "glossary.water_stress.term": {
+   "en": "water stress",
+   "sw": "upungufu wa maji"
+  },
+  "glossary.water_stress.say": {
+   "en": "Days when the soil is too dry for the crop to drink freely.",
+   "sw": "Siku ambazo udongo ni mkavu mno kiasi kwamba mazao hayawezi kunywa maji kwa urahisi."
+  },
+  "glossary.irrigation.term": {
+   "en": "irrigation",
+   "sw": "umwagiliaji"
+  },
+  "glossary.irrigation.say": {
+   "en": "Water brought to the field by canal, well or pipe, as well as rain.",
+   "sw": "Maji yanayoletwa shambani kwa mfereji, kisima au bomba, pamoja na mvua."
+  },
+  "glossary.drought_year.term": {
+   "en": "drought year",
+   "sw": "mwaka wa ukame"
+  },
+  "glossary.drought_year.say": {
+   "en": "A crop season whose rain was among the lowest fifth of all seasons since 2001.",
+   "sw": "Msimu wa mazao ambao mvua yake ilikuwa katika sehemu ya tano ya chini tangu 2001."
+  },
+  "glossary.flood_year.term": {
+   "en": "flood year",
+   "sw": "mwaka wa mafuriko"
+  },
+  "glossary.flood_year.say": {
+   "en": "A year whose heaviest rain day was among the heaviest fifth of all years.",
+   "sw": "Mwaka ambao siku yake ya mvua kubwa zaidi ilikuwa katika sehemu ya tano ya juu."
+  },
+  "glossary.soil_probe.term": {
+   "en": "soil probe",
+   "sw": "kipima udongo (kijiti)"
+  },
+  "glossary.soil_probe.say": {
+   "en": "A small stick pushed into the soil that measures how wet and warm it is.",
+   "sw": "Kijiti kidogo kinachochomekwa udongoni kupima unyevu na joto lake."
+  },
+  "glossary.uncertainty.term": {
+   "en": "uncertainty",
+   "sw": "kutokuwa na uhakika"
+  },
+  "glossary.uncertainty.say": {
+   "en": "How far a number could be from the truth; on screen, fog shows it.",
+   "sw": "Kiasi namba inavyoweza kuwa mbali na ukweli; kwenye skrini, ukungu huonyesha hilo."
+  },
+  "glossary.regional_water_storage.term": {
+   "en": "regional water storage",
+   "sw": "hifadhi ya maji ya eneo"
+  },
+  "glossary.regional_water_storage.say": {
+   "en": "All water held across a wide area, seen by satellites; not your own well.",
+   "sw": "Maji yote yaliyohifadhiwa katika eneo pana, yanayoonwa na setilaiti; si kisima chako."
+  },
+  "glossary.erosion.term": {
+   "en": "erosion",
+   "sw": "mmomonyoko wa udongo"
+  },
+  "glossary.erosion.say": {
+   "en": "Soil carried away from the field by rain water or wind.",
+   "sw": "Udongo unaosombwa kutoka shambani na maji ya mvua au upepo."
+  },
+  "glossary.runoff.term": {
+   "en": "runoff",
+   "sw": "mtiririko wa maji juu ya ardhi"
+  },
+  "glossary.runoff.say": {
+   "en": "Rain that flows off the field instead of soaking into the soil.",
+   "sw": "Mvua inayotiririka kutoka shambani badala ya kuingia udongoni."
+  },
+  "glossary.nitrogen_fixing_crop.term": {
+   "en": "nitrogen-fixing crop",
+   "sw": "zao linalofunga naitrojeni"
+  },
+  "glossary.nitrogen_fixing_crop.say": {
+   "en": "A crop like lentil whose root bacteria turn nitrogen from air into plant food.",
+   "sw": "Zao kama dengu: bakteria wa mizizi yake hugeuza naitrojeni ya hewa kuwa chakula cha mimea."
+  },
+  "glossary.deep_rooting_crop.term": {
+   "en": "deep-rooting crop",
+   "sw": "zao lenye mizizi mirefu"
+  },
+  "glossary.deep_rooting_crop.say": {
+   "en": "A crop whose roots reach water and food deep in the soil.",
+   "sw": "Zao ambalo mizizi yake hufikia maji na chakula ndani kabisa ya udongo."
+  },
+  "glossary.drought_tolerant_crop.term": {
+   "en": "drought-tolerant crop",
+   "sw": "zao linalostahimili ukame"
+  },
+  "glossary.drought_tolerant_crop.say": {
+   "en": "A crop that still gives some harvest when the rains are short.",
+   "sw": "Zao ambalo bado hutoa mavuno kiasi mvua zikiwa chache."
+  },
+  "glossary.pest_cycle.term": {
+   "en": "pest cycle",
+   "sw": "mzunguko wa wadudu"
+  },
+  "glossary.pest_cycle.say": {
+   "en": "Pests and diseases that build up when crops of one family follow each other.",
+   "sw": "Wadudu na magonjwa yanayoongezeka mazao ya familia moja yakifuatana."
+  },
+  "glossary.organic_matter.term": {
+   "en": "organic matter",
+   "sw": "mabaki ya viumbe hai"
+  },
+  "glossary.organic_matter.say": {
+   "en": "Rotting roots, leaves and dung in the soil that make it dark and crumbly.",
+   "sw": "Mizizi, majani na samadi vinavyooza udongoni, vinavyoufanya mweusi na laini."
+  },
+  "glossary.heat_stress.term": {
+   "en": "heat stress",
+   "sw": "athari ya joto"
+  },
+  "glossary.heat_stress.say": {
+   "en": "Days hotter than nine in ten of this place's usual days.",
+   "sw": "Siku zenye joto kuliko siku tisa kati ya kumi za kawaida za mahali hapa."
+  },
+  "glossary.resolution.term": {
+   "en": "resolution",
+   "sw": "kiwango cha undani"
+  },
+  "glossary.resolution.say": {
+   "en": "The size of the patch of land that one satellite or computer number covers.",
+   "sw": "Ukubwa wa kipande cha ardhi kinachowakilishwa na namba moja ya setilaiti au kompyuta."
+  },
+  "glossary.climate_projection.term": {
+   "en": "climate projection",
+   "sw": "makadirio ya tabianchi"
+  },
+  "glossary.climate_projection.say": {
+   "en": "A computer picture of possible future weather, given as a range, not a forecast.",
+   "sw": "Picha ya kompyuta ya hali ya hewa inayowezekana baadaye, kama kiwango, si utabiri."
+  },
+  "crop_explainers.nitrogen_fixing.title": {
+   "en": "Crops that feed the soil",
+   "sw": "Mazao yanayolisha udongo"
+  },
+  "crop_explainers.nitrogen_fixing.claims.0": {
+   "en": "Tiny helpers live in lentil roots.",
+   "sw": "Wasaidizi wadogo wanaishi katika mizizi ya dengu.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "These plants, in symbiosis with certain types of bacteria are able to convert atmospheric nitrogen (N2) into nitrogen compounds (ammonium) that can be used by plants, while also improving soil fertility (FAO, 2016a). The symbiosis occurs in nodules formed on the plant roots, where the nitrogen-fixing bacteria are hosted",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, printed p. 43 (PDF p. 52), section 2.1 'The role of pulses in nutrient (re)cycling': https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.1": {
+   "en": "They turn air into natural fertilizer.",
+   "sw": "Wanageuza hewa kuwa mbolea ya asili.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Pulses improve soil health by hosting helpful bacteria, called rhizobia, in their roots. These bacteria convert nitrogen from the air into fertilizers in the soil.",
+    "source": "FAO (2024), World Pulses Day 2024: Shining the spotlight on the vital role of pulses in promoting soil health and nourishing people, body text, paragraph after the Director-General's quote: https://www.fao.org/newsroom/detail/world-pulses-day-2024--shining-the-spotlight-on-the-vital-role-of-pulses-in-promoting-soil-health-and-nourishing-people/en"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.2": {
+   "en": "The next crop can use that fertilizer.",
+   "sw": "Zao linalofuata linaweza kutumia mbolea hiyo.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Provision of nitrogen derived from BNF to the subsequent crops ('nitrogen effect') increases yields especially where subsequent crops receive low or moderate levels of fertiliser.",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, printed p. 45, section 2.1: https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.3": {
+   "en": "So you may need less bought fertilizer.",
+   "sw": "Kwa hiyo huenda ukahitaji mbolea ya kununua kidogo.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "By fixing atmospheric nitrogen and solubilizing phosphates, pulses contribute to reducing the need for synthetic fertilizers",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, Executive summary, printed p. IX: https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.4": {
+   "en": "In Nepal, lentil often follows rice.",
+   "sw": "Nchini Nepal, dengu mara nyingi hufuata mpunga.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "the majority of lentil in Nepal is grown in rice-based cropping system [35,36] and most of the rice varieties grown are medium to long-duration.",
+    "source": "CIMMYT (2020), Paudel, Devkota, Keil and McDonald, 'Climate and landscape mediate patterns of low lentil productivity in Nepal', PLoS ONE 15(4): e0231377, p. 14 of 19, Discussion: https://csisa.org/wp-content/uploads/sites/2/2020/04/Paudel_at_al-2020-Climate-and-landscape-mediate-patterns-of-low-lentil-productivity-in-Nepal.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.5": {
+   "en": "Here, lentil is sown mid-October to mid-November.",
+   "sw": "Hapa, dengu hupandwa kuanzia katikati ya Oktoba. Upandaji huisha katikati ya Novemba.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March, 120-145 days",
+    "source": "FAO (2021), FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (lastUpdated 26/02/2021), Lentil (Winter) row: https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002"
+   }
+  },
+  "crop_explainers.cover.title": {
+   "en": "Crops that cover bare soil",
+   "sw": "Mazao yanayofunika udongo mtupu"
+  },
+  "crop_explainers.cover.claims.0": {
+   "en": "Rain does not hit covered soil hard.",
+   "sw": "Mvua haipigi kwa nguvu udongo uliofunikwa.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Vegetative cover is important in CA for the protection of the soil against the impacts of raindrops; to keep the soil shaded; and maintain the highest possible moisture content.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, page text: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.1": {
+   "en": "More rain soaks in; less soil washes away.",
+   "sw": "Maji mengi huingia; udongo kidogo husombwa.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Residues on the soil surface reduce the splash-effect of the raindrops, and once the energy of the raindrops has dissipated the drops proceed to the soil without any harmful effect. This results in higher infiltration and reduced runoff, leading to less erosion.",
+    "source": "FAO (n.d.), Benefits of Conservation Agriculture (CA), 'Environmental benefits that protect the soil': https://www.fao.org/conservation-agriculture/impact/benefits-of-ca/en/"
+   }
+  },
+  "crop_explainers.cover.claims.2": {
+   "en": "Their leftovers make the soil richer.",
+   "sw": "Mabaki yao hurutubisha udongo.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Providing an additional source of organic matter to improve soil structure.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, list of cover-crop effects: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.3": {
+   "en": "They can help keep weeds and pests down.",
+   "sw": "Yanaweza kusaidia kupunguza magugu na wadudu.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Can be used to control weeds and pests.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, list of cover-crop effects: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.4": {
+   "en": "Lentil and mustard grow here in winter.",
+   "sw": "Dengu na haradali hukua hapa wakati wa baridi.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March; Colza (rapeseed): sowing 15 October to 15 November, harvest 15 March",
+    "source": "FAO (2021), FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (lastUpdated 26/02/2021), Lentil (Winter) and Colza (rapeseed) rows: https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002"
+   }
+  },
+  "crop_explainers.deep_rooting.title": {
+   "en": "Crops with deep roots",
+   "sw": "Mazao yenye mizizi mirefu"
+  },
+  "crop_explainers.deep_rooting.claims.0": {
+   "en": "Deep roots find water lower down.",
+   "sw": "Mizizi mirefu hupata maji yaliyo chini zaidi.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "TAW is the amount of water that a crop can extract from its root zone, and its magnitude depends on the type of soil and the rooting depth.",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, section 'Total available water (TAW)': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.1": {
+   "en": "They bring back food washed deep down.",
+   "sw": "Huleta tena juu chakula kilichosombwa chini.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "as they root at different soil depths, they are capable of exploring different soil layers for nutrients. Nutrients that have been leached to deeper layers and that are no longer available for the commercial crop, can be 'recycled' by the crops in rotation. This way the rotation crops function as biological pumps.",
+    "source": "FAO (n.d.), Conservation Agriculture: Species diversification, section 'Crop rotation': https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.2": {
+   "en": "Roots leave channels that let rain in.",
+   "sw": "Mizizi huacha njia zinazoruhusu mvua kuingia.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Greater distribution of channels or biopores created by diverse roots (various forms, sizes and depths).",
+    "source": "FAO (n.d.), Conservation Agriculture: Species diversification, 'The effects of crop rotation:': https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.3": {
+   "en": "Millet roots can reach two metres down.",
+   "sw": "Mizizi ya ulezi inaweza kufika mita mbili chini.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "TABLE 22. Ranges of maximum effective rooting depth (Zr), and soil water depletion fraction for no stress (p), for common crops ... Millet 1.0-2.0 [m]",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, Table 22, row 'Millet': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.4": {
+   "en": "Maize roots go much deeper than potato roots.",
+   "sw": "Mahindi yana mizizi mirefu zaidi sana kuliko viazi.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Maize, Field (grain) (field corn) 1.0-1.7 [m] ... Potato 0.4-0.6 [m]",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, Table 22, rows 'Maize, Field (grain)' and 'Potato': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.drought_tolerant.title": {
+   "en": "Crops that cope with dry spells",
+   "sw": "Mazao yanayostahimili ukame"
+  },
+  "crop_explainers.drought_tolerant.claims.0": {
+   "en": "Millets cope with poor soil and hard weather.",
+   "sw": "Mawele na ulezi huvumilia udongo duni, hali ngumu.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "They can thrive on poor soils, resist or tolerate many crop diseases and pests, and are resilient to adverse climatic conditions.",
+    "source": "FAO (2023), International Year of Millets 2023: About, page text ('They' = millets; the page lists finger millet and names Nepal as a grower): https://www.fao.org/millets-2023/about/en"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.1": {
+   "en": "Finger millet is known as a hardy crop.",
+   "sw": "Ulezi unajulikana kama zao lenye ustahimilivu.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "The resilient nature of finger millet makes it particularly well-suited for cultivation in harsh agro-climatic conditions.",
+    "source": "ICRISAT (n.d.), Finger millet: overview, page text: https://icrisat.org/crops/finger-millet/overview"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.2": {
+   "en": "But other millets need a little less water.",
+   "sw": "Lakini mawele yanahitaji maji kidogo kuliko ulezi.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "has a slightly higher water requirement than most other millets and is found in cooler, elevated regions up to 2000 metres above sea level.",
+    "source": "FAO (1996), The World Sorghum and Millet Economies: Facts, Trends and Outlook (FAO and ICRISAT), Annex I, Annex I: https://www.fao.org/4/w1808e/w1808e0k.htm"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.3": {
+   "en": "Hill farmers often plant millet among their maize.",
+   "sw": "Milimani, wakulima mara nyingi huchanganya ulezi na mahindi.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "It is the fourth most important food crop in mid hills and high hills of Nepal and plays a vital role in the livelihood in these areas. ... It is pre-dominantly grown under maize/millet relay system in mid-hills of western, central and eastern regions",
+    "source": "NARC (2020), Annual Report 2076/77 (2019/2020), National Seed Science Technology Research Centre, NARC, Khumaltar, printed p. 24 (PDF p. 38), section 3.2.3, Introduction: https://nsstrc.narc.gov.np/sites/default/files/2021-05/Press%202020%20Annual%20report,%202076-77(1)%20final.pdf"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.4": {
+   "en": "Several different crops make total loss less likely.",
+   "sw": "Mazao mbalimbali hupunguza hatari ya kupoteza kila kitu.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
+    "source": "FAO (1998), FAO's Emergency Activities: Technical Handbook Series, Phase One: Prevention, section 2.1.1 'Crop Diversification': https://www.fao.org/4/X6869E/x6869e01.htm"
+   }
+  }
+ }
+}

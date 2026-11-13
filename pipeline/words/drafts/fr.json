@@ -1,0 +1,1224 @@
+{
+ "_about": "Draft French words for the site, machine-translated by SI (Claude Opus 5.5 via Claude Code) from the English in pipeline/words/ on 2026-11-13 (night). Not reviewed: every text needs a native speaker's review. Keys name the English text node (pipeline/export/build_words.py iter_texts); 'en' is the English it translates (a test fails when the English changes, and the site then shows the English until the draft is updated). Screen rules kept: sentences of eight words or fewer, plain words, no science words on screens, placeholders unchanged, numbers as digits, Gregorian months (Bikram Sambat is Nepali only). 'quote' holds a verbatim source quotation: it stays in its original English and is never translated, so no adaptation of a licensed text (e.g. CC BY-NC-SA 3.0 IGO) is published; the glossary's 'basis' is not translated either. French: vous; a no-break space before ? ! : ; (French typography). Finger millet is éleusine; months in lower case.",
+ "language": {
+  "code": "fr",
+  "name": "Français",
+  "name_en": "French",
+  "draft": true,
+  "status": "machine-translated (SI), needs native-speaker review",
+  "label": {
+   "fr": "Traduction provisoire",
+   "en": "Draft translation"
+  },
+  "quote_label": {
+   "fr": "Citation dans l'anglais d'origine",
+   "en": "Quotation in the original English"
+  },
+  "translated_from": "en",
+  "translated_by": "SI: Claude Opus 5.5 via Claude Code, 2026-11-13 (night); not reviewed"
+ },
+ "texts": {
+  "screens.home.title": {
+   "en": "Khet Sathi",
+   "fr": "Khet Sathi"
+  },
+  "screens.home.texts.tagline": {
+   "en": "Your field's friend.",
+   "fr": "L'ami de votre champ."
+  },
+  "screens.home.texts.intro": {
+   "en": "Let's look at your field together.",
+   "fr": "Regardons ensemble votre champ."
+  },
+  "screens.home.texts.you_decide": {
+   "en": "We help you think. You decide.",
+   "fr": "Nous vous aidons à réfléchir. Vous décidez."
+  },
+  "screens.home.texts.start": {
+   "en": "Start",
+   "fr": "Commencer"
+  },
+  "screens.home.texts.try_sample": {
+   "en": "Try our sample field",
+   "fr": "Voir notre champ d'exemple"
+  },
+  "screens.home.texts.sample_note": {
+   "en": "We picked this field as an example.",
+   "fr": "Nous avons choisi ce champ comme exemple."
+  },
+  "screens.where.title": {
+   "en": "Where is your field?",
+   "fr": "Où est votre champ ?"
+  },
+  "screens.where.texts.corners": {
+   "en": "Tap the four corners of your field.",
+   "fr": "Touchez les quatre coins de votre champ."
+  },
+  "screens.where.texts.move_corner": {
+   "en": "Tap a corner again to move it.",
+   "fr": "Touchez encore un coin pour le déplacer."
+  },
+  "screens.where.texts.done": {
+   "en": "Done",
+   "fr": "Terminé"
+  },
+  "screens.where.texts.outside": {
+   "en": "We have not looked at this place yet.",
+   "fr": "Nous n'avons pas encore regardé cet endroit."
+  },
+  "screens.where.texts.outside_try": {
+   "en": "Try our sample field instead.",
+   "fr": "Essayez plutôt notre champ d'exemple."
+  },
+  "screens.where.texts.q_water": {
+   "en": "Where does your field's water come from?",
+   "fr": "D'où vient l'eau de votre champ ?"
+  },
+  "screens.where.texts.q_shape": {
+   "en": "Is your field flat or on steps?",
+   "fr": "Votre champ est-il plat ou en terrasses ?"
+  },
+  "screens.where.labels.water.items.rain_only": {
+   "en": "Rain only",
+   "fr": "Pluie seulement"
+  },
+  "screens.where.labels.water.items.canal": {
+   "en": "Canal",
+   "fr": "Canal"
+  },
+  "screens.where.labels.water.items.well": {
+   "en": "Well or pump",
+   "fr": "Puits ou pompe"
+  },
+  "screens.where.labels.water.items.other": {
+   "en": "Pipe or other",
+   "fr": "Tuyau ou autre"
+  },
+  "screens.where.labels.water.items.unknown": {
+   "en": "I don't know",
+   "fr": "Je ne sais pas"
+  },
+  "screens.where.labels.shape.items.flat": {
+   "en": "Flat",
+   "fr": "Plat"
+  },
+  "screens.where.labels.shape.items.steps": {
+   "en": "Steps",
+   "fr": "En terrasses"
+  },
+  "screens.where.labels.shape.items.slope": {
+   "en": "Slope",
+   "fr": "En pente"
+  },
+  "screens.from_space.title": {
+   "en": "We looked at your field from space",
+   "fr": "Nous avons regardé votre champ depuis l'espace"
+  },
+  "screens.from_space.texts.guess": {
+   "en": "We think you grow {guess_list}.",
+   "fr": "Nous pensons que vous cultivez {guess_list}."
+  },
+  "screens.from_space.texts.guess_right": {
+   "en": "Is this right?",
+   "fr": "Est-ce juste ?"
+  },
+  "screens.from_space.texts.guess_first": {
+   "en": "We think you grow {first_crop} first.",
+   "fr": "Nous pensons que vous cultivez d'abord {first_crop}."
+  },
+  "screens.from_space.texts.guess_options": {
+   "en": "Then {option_a} or {option_b}.",
+   "fr": "Puis {option_a} ou {option_b}."
+  },
+  "screens.from_space.texts.guess_which": {
+   "en": "Which one do you grow?",
+   "fr": "Laquelle cultivez-vous ?"
+  },
+  "screens.from_space.texts.guess_cannot_tell": {
+   "en": "From space, both look the same.",
+   "fr": "Depuis l'espace, les deux se ressemblent."
+  },
+  "screens.from_space.texts.yes": {
+   "en": "Yes",
+   "fr": "Oui"
+  },
+  "screens.from_space.texts.no_fix": {
+   "en": "No, let me fix it",
+   "fr": "Non, je corrige"
+  },
+  "screens.from_space.texts.bare": {
+   "en": "The ground is bare about {bare_days} days yearly.",
+   "fr": "Le sol reste nu environ {bare_days} jours l'an."
+  },
+  "screens.from_space.texts.bare_why": {
+   "en": "Uncovered soil can wash away in rain.",
+   "fr": "La pluie peut emporter un sol découvert."
+  },
+  "screens.from_space.texts.rains_earlier": {
+   "en": "Since {year_first}, rains start about {shift_days_abs} days earlier.",
+   "fr": "Depuis {year_first}, pluies environ {shift_days_abs} jours plus tôt."
+  },
+  "screens.from_space.texts.rains_later": {
+   "en": "Since {year_first}, rains start about {shift_days_abs} days later.",
+   "fr": "Depuis {year_first}, pluies environ {shift_days_abs} jours plus tard."
+  },
+  "screens.from_space.texts.rains_same": {
+   "en": "The rains start about when they used to.",
+   "fr": "Les pluies commencent à peu près comme avant."
+  },
+  "screens.from_space.texts.water_falling": {
+   "en": "Water stored in this whole area is falling.",
+   "fr": "L'eau stockée dans toute la zone baisse."
+  },
+  "screens.from_space.texts.water_steady": {
+   "en": "Water stored in this whole area is steady.",
+   "fr": "L'eau stockée dans toute la zone est stable."
+  },
+  "screens.from_space.texts.water_rising": {
+   "en": "Water stored in this whole area is rising.",
+   "fr": "L'eau stockée dans toute la zone monte."
+  },
+  "screens.from_space.texts.water_wide": {
+   "en": "This trend is clear for the wide area.",
+   "fr": "Cette tendance est nette pour la grande zone."
+  },
+  "screens.from_space.texts.water_not_yours": {
+   "en": "It does not tell about your own well.",
+   "fr": "Cela ne dit rien de votre propre puits."
+  },
+  "screens.from_space.texts.water_not_well": {
+   "en": "This is the whole area, not your well.",
+   "fr": "C'est toute la zone, pas votre puits."
+  },
+  "screens.from_space.texts.calendar_title": {
+   "en": "Your field's twelve months",
+   "fr": "Les douze mois de votre champ"
+  },
+  "screens.from_space.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "fr": "Les mois népalais diffèrent un peu de ceux-ci."
+  },
+  "screens.from_space.texts.frost_note": {
+   "en": "We may show too many freezing nights.",
+   "fr": "Nous montrons peut-être trop de nuits de gel."
+  },
+  "screens.from_space.texts.month_less_sure": {
+   "en": "We are less sure about this month.",
+   "fr": "Nous sommes moins sûrs pour ce mois."
+  },
+  "screens.from_space.labels.rain.items.low": {
+   "en": "Little rain",
+   "fr": "Peu de pluie"
+  },
+  "screens.from_space.labels.rain.items.medium": {
+   "en": "Some rain",
+   "fr": "Pluie moyenne"
+  },
+  "screens.from_space.labels.rain.items.high": {
+   "en": "Lots of rain",
+   "fr": "Beaucoup de pluie"
+  },
+  "screens.from_space.labels.soil.items.dry": {
+   "en": "Dry soil",
+   "fr": "Sol sec"
+  },
+  "screens.from_space.labels.soil.items.medium": {
+   "en": "Damp soil",
+   "fr": "Sol humide"
+  },
+  "screens.from_space.labels.soil.items.wet": {
+   "en": "Wet soil",
+   "fr": "Sol mouillé"
+  },
+  "screens.from_space.labels.heat.items.none": {
+   "en": "Not hot",
+   "fr": "Pas chaud"
+  },
+  "screens.from_space.labels.heat.items.some": {
+   "en": "Some hot days",
+   "fr": "Quelques jours chauds"
+  },
+  "screens.from_space.labels.heat.items.high": {
+   "en": "Many hot days",
+   "fr": "Beaucoup de jours chauds"
+  },
+  "screens.from_space.labels.frost.items.none": {
+   "en": "No freezing nights",
+   "fr": "Pas de gel"
+  },
+  "screens.from_space.labels.frost.items.risk": {
+   "en": "Some nights near freezing",
+   "fr": "Quelques nuits proches du gel"
+  },
+  "screens.from_space.labels.frost.items.high": {
+   "en": "Freezing nights likely",
+   "fr": "Gel probable la nuit"
+  },
+  "screens.from_space.labels.cover.items.bare": {
+   "en": "Bare ground",
+   "fr": "Sol nu"
+  },
+  "screens.from_space.labels.cover.items.partial": {
+   "en": "Some plants",
+   "fr": "Quelques plantes"
+  },
+  "screens.from_space.labels.cover.items.crop": {
+   "en": "Full of crop",
+   "fr": "Plein de culture"
+  },
+  "screens.parts.title": {
+   "en": "Your field in small parts",
+   "fr": "Votre champ en petites parties"
+  },
+  "screens.parts.texts.split": {
+   "en": "We split your field into {section_count} parts.",
+   "fr": "Nous avons divisé votre champ en {section_count} parties."
+  },
+  "screens.parts.texts.numbers": {
+   "en": "Each part has a number.",
+   "fr": "Chaque partie a un numéro."
+  },
+  "screens.parts.texts.tap_part": {
+   "en": "Tap a part to see it.",
+   "fr": "Touchez une partie pour la voir."
+  },
+  "screens.parts.texts.look_same": {
+   "en": "From space, nearby parts look the same.",
+   "fr": "Depuis l'espace, les parties voisines se ressemblent."
+  },
+  "screens.parts.texts.stick_tells": {
+   "en": "The soil stick tells them apart.",
+   "fr": "La tige plantée dans le sol les distingue."
+  },
+  "screens.each_part.title": {
+   "en": "How is each part?",
+   "fr": "Comment va chaque partie ?"
+  },
+  "screens.each_part.texts.part_name": {
+   "en": "Part {section}",
+   "fr": "Partie {section}"
+  },
+  "screens.each_part.texts.how_wet": {
+   "en": "How wet: {wetness} out of 100.",
+   "fr": "Humidité : {wetness} sur 100."
+  },
+  "screens.each_part.texts.how_warm": {
+   "en": "How warm the soil is: {temp} degrees.",
+   "fr": "Chaleur du sol : {temp} degrés."
+  },
+  "screens.each_part.texts.how_sure": {
+   "en": "How sure we are: {sure_pct} out of 100.",
+   "fr": "Notre certitude : {sure_pct} sur 100."
+  },
+  "screens.each_part.texts.fog": {
+   "en": "Fog means we are not sure yet.",
+   "fr": "Le brouillard : nous ne sommes pas encore sûrs."
+  },
+  "screens.each_part.texts.faces": {
+   "en": "A smiling face means all is well.",
+   "fr": "Un visage souriant : tout va bien."
+  },
+  "screens.each_part.labels.status.items.green": {
+   "en": "Doing well",
+   "fr": "Va bien"
+  },
+  "screens.each_part.labels.status.items.yellow": {
+   "en": "Needs a look",
+   "fr": "À regarder"
+  },
+  "screens.each_part.labels.status.items.red": {
+   "en": "Needs help now",
+   "fr": "Besoin d'aide maintenant"
+  },
+  "screens.each_part.labels.status.items.grey": {
+   "en": "We don't know yet",
+   "fr": "Nous ne savons pas encore"
+  },
+  "screens.check_soil.title": {
+   "en": "Let's check the soil",
+   "fr": "Vérifions le sol"
+  },
+  "screens.check_soil.texts.push": {
+   "en": "Push the soil stick into this part.",
+   "fr": "Enfoncez la tige dans cette partie."
+  },
+  "screens.check_soil.texts.hold": {
+   "en": "Hold it still for a moment.",
+   "fr": "Tenez-la immobile un instant."
+  },
+  "screens.check_soil.texts.clears": {
+   "en": "Your reading clears the fog.",
+   "fr": "Votre mesure dissipe le brouillard."
+  },
+  "screens.check_soil.texts.more_sure": {
+   "en": "Now we are more sure.",
+   "fr": "Maintenant, nous sommes plus sûrs."
+  },
+  "screens.check_soil.texts.wide_close": {
+   "en": "Space sees wide. Your stick sees close.",
+   "fr": "L'espace voit large. Votre tige voit de près."
+  },
+  "screens.check_soil.texts.together": {
+   "en": "Together they make a better guess.",
+   "fr": "Ensemble, ils devinent mieux."
+  },
+  "screens.check_soil.texts.replay_check": {
+   "en": "Watch a soil check we did earlier.",
+   "fr": "Regardez une vérification faite plus tôt."
+  },
+  "screens.last_years.title": {
+   "en": "Your field's last {year_count} years",
+   "fr": "Les {year_count} dernières années de votre champ"
+  },
+  "screens.last_years.texts.basket": {
+   "en": "Each basket is one year's harvest.",
+   "fr": "Chaque panier est la récolte d'une année."
+  },
+  "screens.last_years.texts.full_basket": {
+   "en": "A full basket is this field's best.",
+   "fr": "Panier plein : le meilleur de ce champ."
+  },
+  "screens.last_years.texts.computer_made": {
+   "en": "A computer copy of your field made these.",
+   "fr": "Un ordinateur, copiant votre champ, a fait ceci."
+  },
+  "screens.last_years.texts.thirsty_days": {
+   "en": "The crop was thirsty on {dry_days} days.",
+   "fr": "La culture a eu soif {dry_days} jours."
+  },
+  "screens.last_years.texts.with_water": {
+   "en": "With water when needed, it looks like this.",
+   "fr": "Avec de l'eau au besoin, voici le résultat."
+  },
+  "screens.last_years.texts.water_unknown": {
+   "en": "We don't know your water yet.",
+   "fr": "Nous ne connaissons pas encore votre eau."
+  },
+  "screens.last_years.texts.both_shown": {
+   "en": "So we show both, side by side.",
+   "fr": "Alors nous montrons les deux, côte à côte."
+  },
+  "screens.last_years.texts.play": {
+   "en": "Play",
+   "fr": "Lancer"
+  },
+  "screens.last_years.texts.pause": {
+   "en": "Pause",
+   "fr": "Pause"
+  },
+  "screens.last_years.labels.event.items.none": {
+   "en": "A normal year",
+   "fr": "Une année normale"
+  },
+  "screens.last_years.labels.event.items.drought": {
+   "en": "A drier year than usual",
+   "fr": "Une année plus sèche que d'habitude"
+  },
+  "screens.last_years.labels.event.items.flood": {
+   "en": "Too much rain in one day",
+   "fr": "Trop de pluie en un jour"
+  },
+  "screens.last_years.labels.water_case.items.rain_fed": {
+   "en": "If you can't water",
+   "fr": "Si vous ne pouvez pas arroser"
+  },
+  "screens.last_years.labels.water_case.items.irrigated": {
+   "en": "If you can water",
+   "fr": "Si vous pouvez arroser"
+  },
+  "screens.last_years.labels.event_season.items.winter": {
+   "en": "A dry winter",
+   "fr": "Un hiver sec"
+  },
+  "screens.last_years.labels.event_season.items.monsoon": {
+   "en": "A dry rainy season",
+   "fr": "Une saison des pluies sèche"
+  },
+  "screens.what_to_grow.title": {
+   "en": "What should I grow?",
+   "fr": "Que dois-je cultiver ?"
+  },
+  "screens.what_to_grow.texts.three": {
+   "en": "Three choices: what to grow, and when.",
+   "fr": "Trois choix : quoi cultiver, et quand."
+  },
+  "screens.what_to_grow.texts.more_baskets": {
+   "en": "More baskets, more harvest.",
+   "fr": "Plus de paniers, plus de récolte."
+  },
+  "screens.what_to_grow.texts.more_drops": {
+   "en": "More drops, less worry about water.",
+   "fr": "Plus de gouttes, moins de souci d'eau."
+  },
+  "screens.what_to_grow.texts.priority_q": {
+   "en": "What matters most to you?",
+   "fr": "Qu'est-ce qui compte le plus pour vous ?"
+  },
+  "screens.what_to_grow.texts.tips_title": {
+   "en": "Tips for your field",
+   "fr": "Conseils pour votre champ"
+  },
+  "screens.what_to_grow.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "fr": "Les mois népalais diffèrent un peu de ceux-ci."
+  },
+  "screens.what_to_grow.texts.learn_more": {
+   "en": "Why do some crops help the soil?",
+   "fr": "Pourquoi certaines cultures aident-elles le sol ?"
+  },
+  "screens.what_to_grow.labels.plan.items.current": {
+   "en": "What you do now",
+   "fr": "Ce que vous faites maintenant"
+  },
+  "screens.what_to_grow.labels.plan.items.cover_gap": {
+   "en": "Fill the empty months",
+   "fr": "Remplir les mois vides"
+  },
+  "screens.what_to_grow.labels.plan.items.follow_shift": {
+   "en": "Follow the changing rains",
+   "fr": "Suivre les pluies qui changent"
+  },
+  "screens.what_to_grow.labels.plan.items.safest": {
+   "en": "Feed your soil",
+   "fr": "Nourrir votre sol"
+  },
+  "screens.what_to_grow.labels.score.items.harvest": {
+   "en": "Harvest",
+   "fr": "Récolte"
+  },
+  "screens.what_to_grow.labels.score.items.water": {
+   "en": "Water",
+   "fr": "Eau"
+  },
+  "screens.what_to_grow.labels.score.items.cover": {
+   "en": "Ground covered",
+   "fr": "Sol couvert"
+  },
+  "screens.what_to_grow.labels.score.items.soil_kept": {
+   "en": "Soil kept",
+   "fr": "Sol gardé"
+  },
+  "screens.what_to_grow.labels.tab.items.why": {
+   "en": "Why this?",
+   "fr": "Pourquoi ce choix ?"
+  },
+  "screens.what_to_grow.labels.tab.items.evidence": {
+   "en": "How do we know?",
+   "fr": "Comment le savons-nous ?"
+  },
+  "screens.what_to_grow.labels.tab.items.benefits": {
+   "en": "What could it give?",
+   "fr": "Que pourrait-il apporter ?"
+  },
+  "screens.what_to_grow.labels.tab.items.unknown": {
+   "en": "What we don't know",
+   "fr": "Ce que nous ne savons pas"
+  },
+  "screens.what_to_grow.labels.tab.items.check": {
+   "en": "Ask someone who knows",
+   "fr": "Demandez à quelqu'un qui sait"
+  },
+  "screens.what_to_grow.labels.priority.items.harvest": {
+   "en": "More harvest",
+   "fr": "Plus de récolte"
+  },
+  "screens.what_to_grow.labels.priority.items.water": {
+   "en": "Less water",
+   "fr": "Moins d'eau"
+  },
+  "screens.what_to_grow.labels.priority.items.soil": {
+   "en": "Healthy soil",
+   "fr": "Sol en bonne santé"
+  },
+  "screens.field_future.title": {
+   "en": "Your field in {future_year}",
+   "fr": "Votre champ en {future_year}"
+  },
+  "screens.field_future.texts.nothing_changes": {
+   "en": "If nothing changes",
+   "fr": "Si rien ne change"
+  },
+  "screens.field_future.texts.with_plan": {
+   "en": "With the new plan",
+   "fr": "Avec le nouveau plan"
+  },
+  "screens.field_future.texts.range": {
+   "en": "Harvest: {future_low} to {future_high} out of 100.",
+   "fr": "Récolte : de {future_low} à {future_high} sur 100."
+  },
+  "screens.field_future.texts.nobody_knows": {
+   "en": "Nobody knows the future for sure.",
+   "fr": "Personne ne connaît l'avenir avec certitude."
+  },
+  "screens.field_future.texts.many_guesses": {
+   "en": "Many computer guesses make this range.",
+   "fr": "Beaucoup d'estimations par ordinateur donnent cette fourchette."
+  },
+  "screens.field_future.texts.try_sliders": {
+   "en": "Try less rain or more heat.",
+   "fr": "Essayez moins de pluie ou plus de chaleur."
+  },
+  "screens.field_future.texts.less_rain": {
+   "en": "Less rain",
+   "fr": "Moins de pluie"
+  },
+  "screens.field_future.texts.more_heat": {
+   "en": "More heat",
+   "fr": "Plus de chaleur"
+  },
+  "screens.your_plan.title": {
+   "en": "Your plan",
+   "fr": "Votre plan"
+  },
+  "screens.your_plan.texts.chose": {
+   "en": "Here is what you chose.",
+   "fr": "Voici ce que vous avez choisi."
+  },
+  "screens.your_plan.texts.what_when": {
+   "en": "What to grow, and when:",
+   "fr": "Quoi cultiver, et quand :"
+  },
+  "screens.your_plan.texts.plant_in": {
+   "en": "{crop}: plant in {sow_month}.",
+   "fr": "{crop} : semez en {sow_month}."
+  },
+  "screens.your_plan.texts.harvest_in": {
+   "en": "{crop}: harvest in {harvest_month}.",
+   "fr": "{crop} : récoltez en {harvest_month}."
+  },
+  "screens.your_plan.texts.months_note": {
+   "en": "Nepali and English months don't line up exactly.",
+   "fr": "Les mois népalais diffèrent un peu de ceux-ci."
+  },
+  "screens.your_plan.texts.know_best": {
+   "en": "You know your land best.",
+   "fr": "Vous connaissez le mieux votre terre."
+  },
+  "screens.your_plan.texts.advisor": {
+   "en": "Talk to a farm advisor before changing.",
+   "fr": "Parlez à un conseiller agricole avant de changer."
+  },
+  "screens.your_plan.texts.small_first": {
+   "en": "Try it on one small part first.",
+   "fr": "Essayez d'abord sur une petite partie."
+  },
+  "screens.your_plan.texts.save": {
+   "en": "Save this plan",
+   "fr": "Garder ce plan"
+  },
+  "screens.your_plan.texts.again": {
+   "en": "Start again",
+   "fr": "Recommencer"
+  },
+  "screens.your_plan.texts.made_with": {
+   "en": "Made with pictures and numbers from NASA.",
+   "fr": "Fait à partir d'images et de chiffres NASA."
+  },
+  "shared.buttons.next": {
+   "en": "Next",
+   "fr": "Suivant"
+  },
+  "shared.buttons.back": {
+   "en": "Back",
+   "fr": "Retour"
+  },
+  "shared.buttons.word_help": {
+   "en": "What does this word mean?",
+   "fr": "Que veut dire ce mot ?"
+  },
+  "shared.buttons.not_sure": {
+   "en": "Not sure yet",
+   "fr": "Pas encore sûr"
+  },
+  "shared.crop_names.rice": {
+   "en": "rice",
+   "fr": "riz"
+  },
+  "shared.crop_names.wheat": {
+   "en": "wheat",
+   "fr": "blé"
+  },
+  "shared.crop_names.maize": {
+   "en": "maize",
+   "fr": "maïs"
+  },
+  "shared.crop_names.potato": {
+   "en": "potato",
+   "fr": "pomme de terre"
+  },
+  "shared.crop_names.lentil": {
+   "en": "lentil",
+   "fr": "lentille"
+  },
+  "shared.crop_names.mustard": {
+   "en": "mustard",
+   "fr": "moutarde"
+  },
+  "shared.crop_names.buckwheat": {
+   "en": "buckwheat",
+   "fr": "sarrasin"
+  },
+  "shared.crop_names.finger_millet": {
+   "en": "finger millet",
+   "fr": "éleusine"
+  },
+  "shared.crop_names.bare": {
+   "en": "no crop",
+   "fr": "pas de culture"
+  },
+  "shared.months.Jan": {
+   "en": "January",
+   "fr": "janvier"
+  },
+  "shared.months.Feb": {
+   "en": "February",
+   "fr": "février"
+  },
+  "shared.months.Mar": {
+   "en": "March",
+   "fr": "mars"
+  },
+  "shared.months.Apr": {
+   "en": "April",
+   "fr": "avril"
+  },
+  "shared.months.May": {
+   "en": "May",
+   "fr": "mai"
+  },
+  "shared.months.Jun": {
+   "en": "June",
+   "fr": "juin"
+  },
+  "shared.months.Jul": {
+   "en": "July",
+   "fr": "juillet"
+  },
+  "shared.months.Aug": {
+   "en": "August",
+   "fr": "août"
+  },
+  "shared.months.Sep": {
+   "en": "September",
+   "fr": "septembre"
+  },
+  "shared.months.Oct": {
+   "en": "October",
+   "fr": "octobre"
+  },
+  "shared.months.Nov": {
+   "en": "November",
+   "fr": "novembre"
+  },
+  "shared.months.Dec": {
+   "en": "December",
+   "fr": "décembre"
+  },
+  "shared.source_kinds.satellite": {
+   "en": "seen from space",
+   "fr": "vu depuis l'espace"
+  },
+  "shared.source_kinds.model": {
+   "en": "worked out by computer",
+   "fr": "calculé par ordinateur"
+  },
+  "shared.source_kinds.station": {
+   "en": "measured on the ground",
+   "fr": "mesuré au sol"
+  },
+  "shared.source_kinds.probe": {
+   "en": "measured by the soil stick",
+   "fr": "mesuré par la tige"
+  },
+  "shared.join.then": {
+   "en": "then",
+   "fr": "puis"
+  },
+  "shared.join.and": {
+   "en": "and",
+   "fr": "et"
+  },
+  "glossary.evapotranspiration.term": {
+   "en": "evapotranspiration",
+   "fr": "évapotranspiration"
+  },
+  "glossary.evapotranspiration.say": {
+   "en": "Water that rises into the air from the soil and from plant leaves.",
+   "fr": "L'eau qui monte dans l'air depuis le sol et les feuilles des plantes."
+  },
+  "glossary.soil_moisture_anomaly.term": {
+   "en": "soil moisture anomaly",
+   "fr": "anomalie d'humidité du sol"
+  },
+  "glossary.soil_moisture_anomaly.say": {
+   "en": "How much wetter or drier the soil is than usual for that time of year.",
+   "fr": "De combien le sol est plus humide ou plus sec que d'habitude à cette période."
+  },
+  "glossary.ndvi.term": {
+   "en": "NDVI",
+   "fr": "NDVI (indice de verdure)"
+  },
+  "glossary.ndvi.say": {
+   "en": "A greenness score from satellite pictures: the higher it is, the more living green leaves.",
+   "fr": "Une note de verdure vue par satellite : plus haute, plus de feuilles vertes vivantes."
+  },
+  "glossary.frost_risk.term": {
+   "en": "frost risk",
+   "fr": "risque de gel"
+  },
+  "glossary.frost_risk.say": {
+   "en": "The chance of nights near or below freezing (under 2 °C) that can hurt crops.",
+   "fr": "Probabilité de nuits sous 2 °C, proches du gel ou gelées, nuisibles aux cultures."
+  },
+  "glossary.water_balance.term": {
+   "en": "water balance",
+   "fr": "bilan hydrique"
+  },
+  "glossary.water_balance.say": {
+   "en": "The field's water account: rain and watering in; plant use, runoff and drainage out.",
+   "fr": "Le compte d'eau du champ : pluie et arrosage entrent ; plantes, ruissellement et drainage en sortent."
+  },
+  "glossary.monsoon_onset.term": {
+   "en": "monsoon onset",
+   "fr": "début de la mousson"
+  },
+  "glossary.monsoon_onset.say": {
+   "en": "The day the monsoon rains truly begin, with no long dry break soon after.",
+   "fr": "Le jour où les pluies de mousson commencent vraiment, sans longue pause sèche juste après."
+  },
+  "glossary.bare_days.term": {
+   "en": "bare days",
+   "fr": "jours de sol nu"
+  },
+  "glossary.bare_days.say": {
+   "en": "Days in a year when the field has almost no green plants, seen from space.",
+   "fr": "Jours de l'année où, vu de l'espace, le champ n'a presque pas de plantes vertes."
+  },
+  "glossary.crop_rotation.term": {
+   "en": "crop rotation",
+   "fr": "rotation des cultures"
+  },
+  "glossary.crop_rotation.say": {
+   "en": "Growing different crops one after another on the same field, season by season.",
+   "fr": "Cultiver des plantes différentes l'une après l'autre sur le même champ, saison après saison."
+  },
+  "glossary.cover_crop.term": {
+   "en": "cover crop",
+   "fr": "culture de couverture"
+  },
+  "glossary.cover_crop.say": {
+   "en": "A crop grown mainly to keep the soil covered and healthy between main crops.",
+   "fr": "Culture semée surtout pour couvrir le sol et le garder sain entre les cultures principales."
+  },
+  "glossary.satellite.term": {
+   "en": "satellite",
+   "fr": "satellite"
+  },
+  "glossary.satellite.say": {
+   "en": "A machine circling the Earth that sees wide areas at once, but not every detail.",
+   "fr": "Machine tournant autour de la Terre : elle voit large, mais pas chaque détail."
+  },
+  "glossary.ground_measurement.term": {
+   "en": "ground measurement",
+   "fr": "mesure au sol"
+  },
+  "glossary.ground_measurement.say": {
+   "en": "A reading taken at one spot on the ground: exact there, but only there.",
+   "fr": "Une mesure prise en un point du sol : exacte là, mais seulement là."
+  },
+  "glossary.data_fusion.term": {
+   "en": "data fusion",
+   "fr": "fusion de données"
+  },
+  "glossary.data_fusion.say": {
+   "en": "Mixing space, computer and ground readings so each one fixes the others' weak spots.",
+   "fr": "Mêler mesures de l'espace, d'ordinateur et du sol pour que chacune corrige les autres."
+  },
+  "glossary.model_based.term": {
+   "en": "model-based",
+   "fr": "issu d'un modèle"
+  },
+  "glossary.model_based.say": {
+   "en": "Worked out by a computer from physics and other readings, not measured directly.",
+   "fr": "Calculé par ordinateur à partir de la physique et d'autres mesures, pas mesuré directement."
+  },
+  "glossary.field_twin.term": {
+   "en": "field twin",
+   "fr": "jumeau du champ"
+  },
+  "glossary.field_twin.say": {
+   "en": "Our computer copy of your field that replays each season's water and crops.",
+   "fr": "Notre copie informatique de votre champ, qui rejoue l'eau et les cultures de chaque saison."
+  },
+  "glossary.relative_harvest.term": {
+   "en": "relative yield",
+   "fr": "rendement relatif"
+  },
+  "glossary.relative_harvest.say": {
+   "en": "This year's harvest compared with the best this field could give, never in tonnes.",
+   "fr": "La récolte de l'année comparée au mieux que ce champ peut donner, jamais en tonnes."
+  },
+  "glossary.water_stress.term": {
+   "en": "water stress",
+   "fr": "stress hydrique"
+  },
+  "glossary.water_stress.say": {
+   "en": "Days when the soil is too dry for the crop to drink freely.",
+   "fr": "Jours où le sol est trop sec pour que la culture boive librement."
+  },
+  "glossary.irrigation.term": {
+   "en": "irrigation",
+   "fr": "irrigation"
+  },
+  "glossary.irrigation.say": {
+   "en": "Water brought to the field by canal, well or pipe, as well as rain.",
+   "fr": "L'eau amenée au champ par canal, puits ou tuyau, en plus de la pluie."
+  },
+  "glossary.drought_year.term": {
+   "en": "drought year",
+   "fr": "année de sécheresse"
+  },
+  "glossary.drought_year.say": {
+   "en": "A crop season whose rain was among the lowest fifth of all seasons since 2001.",
+   "fr": "Saison de culture dont la pluie est dans le cinquième le plus bas depuis 2001."
+  },
+  "glossary.flood_year.term": {
+   "en": "flood year",
+   "fr": "année d'inondation"
+  },
+  "glossary.flood_year.say": {
+   "en": "A year whose heaviest rain day was among the heaviest fifth of all years.",
+   "fr": "Année dont le jour le plus pluvieux compte parmi le cinquième le plus fort."
+  },
+  "glossary.soil_probe.term": {
+   "en": "soil probe",
+   "fr": "sonde de sol"
+  },
+  "glossary.soil_probe.say": {
+   "en": "A small stick pushed into the soil that measures how wet and warm it is.",
+   "fr": "Une petite tige plantée dans le sol qui mesure son humidité et sa chaleur."
+  },
+  "glossary.uncertainty.term": {
+   "en": "uncertainty",
+   "fr": "incertitude"
+  },
+  "glossary.uncertainty.say": {
+   "en": "How far a number could be from the truth; on screen, fog shows it.",
+   "fr": "De combien un chiffre peut s'écarter de la vérité ; à l'écran, le brouillard le montre."
+  },
+  "glossary.regional_water_storage.term": {
+   "en": "regional water storage",
+   "fr": "stock d'eau régional"
+  },
+  "glossary.regional_water_storage.say": {
+   "en": "All water held across a wide area, seen by satellites; not your own well.",
+   "fr": "Toute l'eau stockée sur une grande zone, vue par satellite ; pas votre propre puits."
+  },
+  "glossary.erosion.term": {
+   "en": "erosion",
+   "fr": "érosion"
+  },
+  "glossary.erosion.say": {
+   "en": "Soil carried away from the field by rain water or wind.",
+   "fr": "Sol emporté hors du champ par l'eau de pluie ou le vent."
+  },
+  "glossary.runoff.term": {
+   "en": "runoff",
+   "fr": "ruissellement"
+  },
+  "glossary.runoff.say": {
+   "en": "Rain that flows off the field instead of soaking into the soil.",
+   "fr": "Pluie qui s'écoule hors du champ au lieu d'entrer dans le sol."
+  },
+  "glossary.nitrogen_fixing_crop.term": {
+   "en": "nitrogen-fixing crop",
+   "fr": "culture fixatrice d'azote"
+  },
+  "glossary.nitrogen_fixing_crop.say": {
+   "en": "A crop like lentil whose root bacteria turn nitrogen from air into plant food.",
+   "fr": "Culture comme la lentille, dont les bactéries des racines changent l'azote de l'air en engrais."
+  },
+  "glossary.deep_rooting_crop.term": {
+   "en": "deep-rooting crop",
+   "fr": "culture à racines profondes"
+  },
+  "glossary.deep_rooting_crop.say": {
+   "en": "A crop whose roots reach water and food deep in the soil.",
+   "fr": "Une culture dont les racines atteignent l'eau et la nourriture loin dans le sol."
+  },
+  "glossary.drought_tolerant_crop.term": {
+   "en": "drought-tolerant crop",
+   "fr": "culture tolérante à la sécheresse"
+  },
+  "glossary.drought_tolerant_crop.say": {
+   "en": "A crop that still gives some harvest when the rains are short.",
+   "fr": "Une culture qui donne encore un peu de récolte quand la pluie manque."
+  },
+  "glossary.pest_cycle.term": {
+   "en": "pest cycle",
+   "fr": "cycle des ravageurs"
+  },
+  "glossary.pest_cycle.say": {
+   "en": "Pests and diseases that build up when crops of one family follow each other.",
+   "fr": "Ravageurs et maladies qui s'accumulent quand des cultures d'une même famille se suivent."
+  },
+  "glossary.organic_matter.term": {
+   "en": "organic matter",
+   "fr": "matière organique"
+  },
+  "glossary.organic_matter.say": {
+   "en": "Rotting roots, leaves and dung in the soil that make it dark and crumbly.",
+   "fr": "Racines, feuilles et fumier qui pourrissent dans le sol et le rendent sombre et meuble."
+  },
+  "glossary.heat_stress.term": {
+   "en": "heat stress",
+   "fr": "stress thermique"
+  },
+  "glossary.heat_stress.say": {
+   "en": "Days hotter than nine in ten of this place's usual days.",
+   "fr": "Jours plus chauds que neuf sur dix des jours habituels de ce lieu."
+  },
+  "glossary.resolution.term": {
+   "en": "resolution",
+   "fr": "résolution"
+  },
+  "glossary.resolution.say": {
+   "en": "The size of the patch of land that one satellite or computer number covers.",
+   "fr": "La taille du bout de terrain couvert par un chiffre de satellite ou d'ordinateur."
+  },
+  "glossary.climate_projection.term": {
+   "en": "climate projection",
+   "fr": "projection climatique"
+  },
+  "glossary.climate_projection.say": {
+   "en": "A computer picture of possible future weather, given as a range, not a forecast.",
+   "fr": "Une image informatique du temps futur possible, donnée en fourchette, pas une prévision."
+  },
+  "crop_explainers.nitrogen_fixing.title": {
+   "en": "Crops that feed the soil",
+   "fr": "Cultures qui nourrissent le sol"
+  },
+  "crop_explainers.nitrogen_fixing.claims.0": {
+   "en": "Tiny helpers live in lentil roots.",
+   "fr": "Des petites aides habitent les racines de lentille.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "These plants, in symbiosis with certain types of bacteria are able to convert atmospheric nitrogen (N2) into nitrogen compounds (ammonium) that can be used by plants, while also improving soil fertility (FAO, 2016a). The symbiosis occurs in nodules formed on the plant roots, where the nitrogen-fixing bacteria are hosted",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, printed p. 43 (PDF p. 52), section 2.1 'The role of pulses in nutrient (re)cycling': https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.1": {
+   "en": "They turn air into natural fertilizer.",
+   "fr": "Ils changent l'air en engrais naturel.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Pulses improve soil health by hosting helpful bacteria, called rhizobia, in their roots. These bacteria convert nitrogen from the air into fertilizers in the soil.",
+    "source": "FAO (2024), World Pulses Day 2024: Shining the spotlight on the vital role of pulses in promoting soil health and nourishing people, body text, paragraph after the Director-General's quote: https://www.fao.org/newsroom/detail/world-pulses-day-2024--shining-the-spotlight-on-the-vital-role-of-pulses-in-promoting-soil-health-and-nourishing-people/en"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.2": {
+   "en": "The next crop can use that fertilizer.",
+   "fr": "La culture suivante peut utiliser cet engrais.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Provision of nitrogen derived from BNF to the subsequent crops ('nitrogen effect') increases yields especially where subsequent crops receive low or moderate levels of fertiliser.",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, printed p. 45, section 2.1: https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.3": {
+   "en": "So you may need less bought fertilizer.",
+   "fr": "Vous aurez peut-être besoin de moins d'engrais acheté.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "By fixing atmospheric nitrogen and solubilizing phosphates, pulses contribute to reducing the need for synthetic fertilizers",
+    "source": "FAO (2016), Soils and pulses: symbiosis for life, Executive summary, printed p. IX: https://www.fao.org/4/i6437e/i6437e.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.4": {
+   "en": "In Nepal, lentil often follows rice.",
+   "fr": "Au Népal, la lentille suit souvent le riz.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "the majority of lentil in Nepal is grown in rice-based cropping system [35,36] and most of the rice varieties grown are medium to long-duration.",
+    "source": "CIMMYT (2020), Paudel, Devkota, Keil and McDonald, 'Climate and landscape mediate patterns of low lentil productivity in Nepal', PLoS ONE 15(4): e0231377, p. 14 of 19, Discussion: https://csisa.org/wp-content/uploads/sites/2/2020/04/Paudel_at_al-2020-Climate-and-landscape-mediate-patterns-of-low-lentil-productivity-in-Nepal.pdf"
+   }
+  },
+  "crop_explainers.nitrogen_fixing.claims.5": {
+   "en": "Here, lentil is sown mid-October to mid-November.",
+   "fr": "Ici, semis de lentille de mi-octobre à mi-novembre.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March, 120-145 days",
+    "source": "FAO (2021), FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (lastUpdated 26/02/2021), Lentil (Winter) row: https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002"
+   }
+  },
+  "crop_explainers.cover.title": {
+   "en": "Crops that cover bare soil",
+   "fr": "Cultures qui couvrent le sol nu"
+  },
+  "crop_explainers.cover.claims.0": {
+   "en": "Rain does not hit covered soil hard.",
+   "fr": "La pluie frappe moins fort un sol couvert.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Vegetative cover is important in CA for the protection of the soil against the impacts of raindrops; to keep the soil shaded; and maintain the highest possible moisture content.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, page text: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.1": {
+   "en": "More rain soaks in; less soil washes away.",
+   "fr": "Plus d'eau entre ; moins de terre s'en va.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Residues on the soil surface reduce the splash-effect of the raindrops, and once the energy of the raindrops has dissipated the drops proceed to the soil without any harmful effect. This results in higher infiltration and reduced runoff, leading to less erosion.",
+    "source": "FAO (n.d.), Benefits of Conservation Agriculture (CA), 'Environmental benefits that protect the soil': https://www.fao.org/conservation-agriculture/impact/benefits-of-ca/en/"
+   }
+  },
+  "crop_explainers.cover.claims.2": {
+   "en": "Their leftovers make the soil richer.",
+   "fr": "Leurs restes enrichissent le sol.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Providing an additional source of organic matter to improve soil structure.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, list of cover-crop effects: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.3": {
+   "en": "They can help keep weeds and pests down.",
+   "fr": "Elles peuvent freiner mauvaises herbes et ravageurs.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Can be used to control weeds and pests.",
+    "source": "FAO (n.d.), Conservation Agriculture: Soil organic cover, list of cover-crop effects: https://www.fao.org/conservation-agriculture/in-practice/soil-organic-cover/en/"
+   }
+  },
+  "crop_explainers.cover.claims.4": {
+   "en": "Lentil and mustard grow here in winter.",
+   "fr": "Lentille et moutarde poussent ici en hiver.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Lentil (Winter): sowing 15 October to 15 November, harvest 15 February to 15 March; Colza (rapeseed): sowing 15 October to 15 November, harvest 15 March",
+    "source": "FAO (2021), FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (lastUpdated 26/02/2021), Lentil (Winter) and Colza (rapeseed) rows: https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002"
+   }
+  },
+  "crop_explainers.deep_rooting.title": {
+   "en": "Crops with deep roots",
+   "fr": "Cultures à racines profondes"
+  },
+  "crop_explainers.deep_rooting.claims.0": {
+   "en": "Deep roots find water lower down.",
+   "fr": "Les racines profondes trouvent l'eau plus bas.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "TAW is the amount of water that a crop can extract from its root zone, and its magnitude depends on the type of soil and the rooting depth.",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, section 'Total available water (TAW)': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.1": {
+   "en": "They bring back food washed deep down.",
+   "fr": "Elles remontent la nourriture emportée en profondeur.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "as they root at different soil depths, they are capable of exploring different soil layers for nutrients. Nutrients that have been leached to deeper layers and that are no longer available for the commercial crop, can be 'recycled' by the crops in rotation. This way the rotation crops function as biological pumps.",
+    "source": "FAO (n.d.), Conservation Agriculture: Species diversification, section 'Crop rotation': https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.2": {
+   "en": "Roots leave channels that let rain in.",
+   "fr": "Les racines laissent des canaux pour la pluie.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Greater distribution of channels or biopores created by diverse roots (various forms, sizes and depths).",
+    "source": "FAO (n.d.), Conservation Agriculture: Species diversification, 'The effects of crop rotation:': https://www.fao.org/conservation-agriculture/in-practice/species-diversification/en/"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.3": {
+   "en": "Millet roots can reach two metres down.",
+   "fr": "Les racines du mil peuvent atteindre deux mètres.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "TABLE 22. Ranges of maximum effective rooting depth (Zr), and soil water depletion fraction for no stress (p), for common crops ... Millet 1.0-2.0 [m]",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, Table 22, row 'Millet': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.deep_rooting.claims.4": {
+   "en": "Maize roots go much deeper than potato roots.",
+   "fr": "Le maïs a des racines bien plus profondes. Celles de la pomme de terre restent courtes.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Maize, Field (grain) (field corn) 1.0-1.7 [m] ... Potato 0.4-0.6 [m]",
+    "source": "FAO (1998), Crop evapotranspiration: guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 8, Table 22, rows 'Maize, Field (grain)' and 'Potato': https://www.fao.org/4/x0490e/x0490e0e.htm"
+   }
+  },
+  "crop_explainers.drought_tolerant.title": {
+   "en": "Crops that cope with dry spells",
+   "fr": "Cultures qui supportent la sécheresse"
+  },
+  "crop_explainers.drought_tolerant.claims.0": {
+   "en": "Millets cope with poor soil and hard weather.",
+   "fr": "Les mils supportent sol pauvre et temps difficile.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "They can thrive on poor soils, resist or tolerate many crop diseases and pests, and are resilient to adverse climatic conditions.",
+    "source": "FAO (2023), International Year of Millets 2023: About, page text ('They' = millets; the page lists finger millet and names Nepal as a grower): https://www.fao.org/millets-2023/about/en"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.1": {
+   "en": "Finger millet is known as a hardy crop.",
+   "fr": "L'éleusine est connue comme une culture robuste.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "The resilient nature of finger millet makes it particularly well-suited for cultivation in harsh agro-climatic conditions.",
+    "source": "ICRISAT (n.d.), Finger millet: overview, page text: https://icrisat.org/crops/finger-millet/overview"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.2": {
+   "en": "But other millets need a little less water.",
+   "fr": "Mais d'autres mils demandent un peu moins d'eau.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "has a slightly higher water requirement than most other millets and is found in cooler, elevated regions up to 2000 metres above sea level.",
+    "source": "FAO (1996), The World Sorghum and Millet Economies: Facts, Trends and Outlook (FAO and ICRISAT), Annex I, Annex I: https://www.fao.org/4/w1808e/w1808e0k.htm"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.3": {
+   "en": "Hill farmers often plant millet among their maize.",
+   "fr": "En colline, mil et maïs poussent souvent ensemble.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "It is the fourth most important food crop in mid hills and high hills of Nepal and plays a vital role in the livelihood in these areas. ... It is pre-dominantly grown under maize/millet relay system in mid-hills of western, central and eastern regions",
+    "source": "NARC (2020), Annual Report 2076/77 (2019/2020), National Seed Science Technology Research Centre, NARC, Khumaltar, printed p. 24 (PDF p. 38), section 3.2.3, Introduction: https://nsstrc.narc.gov.np/sites/default/files/2021-05/Press%202020%20Annual%20report,%202076-77(1)%20final.pdf"
+   }
+  },
+  "crop_explainers.drought_tolerant.claims.4": {
+   "en": "Several different crops make total loss less likely.",
+   "fr": "Des cultures variées évitent mieux de tout perdre.",
+   "quote": {
+    "lang": "en",
+    "translated": false,
+    "text": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
+    "source": "FAO (1998), FAO's Emergency Activities: Technical Handbook Series, Phase One: Prevention, section 2.1.1 'Crop Diversification': https://www.fao.org/4/X6869E/x6869e01.htm"
+   }
+  }
+ }
+}

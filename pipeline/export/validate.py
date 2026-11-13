@@ -150,6 +150,10 @@ def validate_field(doc, final=False):
             errors.append(f"method/season_detection/chosen: the rule fixed in advance picks '{want}', not '{ch}'")
         if by_id["detective"]["si"] is not True or by_id["threshold"]["si"] or by_id["changepoint"]["si"]:
             errors.append("method/season_detection: only the detective is the SI method")
+    dy = doc["diary"]          # owner, 2026-11-14: the shift sits inside its own range
+    if dy.get("shift_days") is not None and dy.get("shift_days_low") is not None and dy.get("shift_days_high") is not None:
+        if not dy["shift_days_low"] <= dy["shift_days"] <= dy["shift_days_high"]:
+            errors.append("diary/shift_days: needs shift_days_low <= shift_days <= shift_days_high")
     gw = doc["diary"]["groundwater"]
     if gw["direction"] == "falling" and gw["trend_cm_per_year"] >= 0:
         errors.append("diary/groundwater: 'falling' needs a negative trend")
