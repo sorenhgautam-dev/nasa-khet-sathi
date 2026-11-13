@@ -104,7 +104,34 @@ paddy_rice:
 bare_soil:
   kc:
     value: 0.3
-    source: "CLAUDE.md 'Crop water use': bare soil days use a soil evaporation coefficient, 'start with 0.3, tune, document' (not yet tuned)"
+    source: "CLAUDE.md 'Crop water use': bare soil days use a soil evaporation coefficient, 'start with 0.3, tune, document' (not yet tuned). The method used while `apply` is false: a constant Kc drawing on the next crop's whole root zone through Ks"
+  # Build step 2a (2026-11-14, night; REVIEW_NOTES M7, METHOD_NOTES 18): FAO-56's surface-layer method, approved in advance by
+  # the owner (a published method, not fitted to validation events). Written and committed before its first run on real data.
+  # FAO-56 = Allen et al. 1998, Chapter 7, https://www.fao.org/4/x0490e/x0490e0c.htm (read 2026-11-14). Code: pipeline/twin/evaporation.py
+  apply:
+    value: false
+    source: "Off until the integrator switches it on and reruns everything (brief for 2a, 2026-11-13). While false the twin uses `kc`; scripts/run_replay.py and run_plans.py take --bare-soil fao56 to run it anyway"
+  method:
+    value: "bare days: Ke = Kr x Kc max (eq. 71 with Kcb = 0 and few = 1); Kr = 1 while De <= REW, else (TEW - De) / (TEW - REW) (eq. 74, De at the end of the previous day); E = Ke x ET0; surface layer De = max(De_prev - (rain - runoff), 0) + E, limited to 0..TEW (eqs. 77-79, no irrigation, fw = 1, no transpiration). E also leaves the root-zone bucket (the layer is its top), with no Ks (no transpiration, no stress: ETc = ETa = E), and stops if the bucket reaches TAW (eq. 86). Runoff: the same SCS runoff as the bucket. Bare soil is never irrigated"
+    source: "FAO-56 eqs. 71-79. Example 31 (bare soil): 'For rain on bare soil few = 1'; 'Since the soil in this situation is bare, one could set the Kcb equal to zero so that maximum Ke becomes Ke = Kc max = 1.20. Then all of the evaporation would be deducted from the surface soil layer'. Eq. 77 includes ROi. The day's rain wets the layer after the day's evaporation (eq. 74 as printed takes De,i-1; Example 35 note 9: 'If precipitation and irrigation occur late in the day, then column 6 should be set equal to De,i-1'), as the twin's bucket takes Ks before the day's rain (FAO-56 Example 37). The order and the shared runoff are Claude's reading, fixed before the first run; put to the owner"
+  ze_m:
+    value: 0.10
+    source: "FAO-56 eq. 73: 'Where unknown, a value for Ze, the effective depth of the soil evaporation layer, of 0.10-0.15 m is recommended'; 0.10 m is the depth of Table 19's TEW column and of Examples 31 and 35. Claude's choice within the range, fixed before the first run"
+  tew:
+    value: "1000 x (theta_fc - 0.5 x theta_wp) x Ze (eq. 73), with theta_fc and theta_wp of the twin's SoilGrids table (data/clean/<field>/soilgrids.parquet) averaged by depth over 0..Ze. Demo (0-5 and 5-15 cm): 25.7 mm"
+    source: "FAO-56 eq. 73; the soil's own water contents (the same values as the root zone's TAW) rather than Table 19's typical ones (brief for 2a). The demo's 25.7 mm is above Table 19's loam TEW (16-22 mm) because SoilGrids' field capacity (0.33) is above Table 19's loam range (0.20-0.30)"
+  rew_mm:
+    value: "the midpoint of table_19_rew_mm for the USDA texture class of SoilGrids' top layer (0-5 cm). Demo: sand 33.6, silt 45.8, clay 20.6 % = loam, 8-10 mm -> 9 mm. A class with no Table 19 row (sandy clay loam, clay loam, sandy clay) stops the run"
+    source: "FAO-56 Table 19; Example 31 uses REW 9 mm for loam ('For Loam: TEW ~ 20 mm and REW ~ 9 mm'). The midpoint is Claude's choice, fixed before the first run. Texture: SSSA Glossary of Soil Science Terms (2022), 'soil texture', p. 115: 'loam - Soil material that contains 7 to 27% clay, 28 to 50% silt, and <52% sand' (p. 115 opened; the other classes, on p. 116, follow the USDA Soil Survey Manual as coded in the NRCS texture calculator: TODO-VERIFY)"
+  table_19_rew_mm:
+    value: {sand: [2, 7], loamy sand: [4, 8], sandy loam: [6, 10], loam: [8, 10], silt loam: [8, 11], silt: [8, 11], silty clay loam: [8, 11], silty clay: [8, 12], clay: [8, 12]}
+    source: "FAO-56 Table 19, 'stage 1 REW' (mm), read 2026-11-14 (its 'Silt clay loam' row is the USDA silty clay loam)"
+  kc_max:
+    value: 1.20
+    source: "FAO-56 eq. 72 with Kcb = 0 and h = 0 (no plants, so the climate term, multiplied by (h/3)^0.3, vanishes): max(1.2, 0.05) = 1.20; Example 31 (bare loam): 'From Eq. 72 Kc max = 1.20'. FAO-56 allows 'about 1.1' when the soil is wetted daily or every two days; not used (Claude's choice, fixed before the first run)"
+  de_start:
+    value: "on the first day of each bare spell De = TEW x Dr / TAW, Dr being the root-zone depletion handed over to the spell: a root zone at field capacity starts the layer wet (De = 0), one at the wilting point starts it dry (De = TEW)"
+    source: "FAO-56 Chapter 7, 'Initial depletion': 'the user can assume that the topsoil is near field capacity following a heavy rain or irrigation, i.e., De, i-1 = 0. Where a long period of time has elapsed since the last wetting, the user can assume that all evaporable water has been depleted ... i.e., De, i-1 = TEW'. Between those two cases the root zone's own relative depletion, the fraction the twin already carries at every hand-over (METHOD_NOTES 1, season.carry_over). Claude's reading, fixed before the first run; put to the owner"
 
 kc_climate:                       # REVIEW_NOTES M7, owner review of d34fa93 (item 6); twin/crops.py, twin/season.py
   apply:
@@ -614,3 +641,62 @@ future:                           # build step 9 (pipeline/fetch/nexgddp.py, pip
   slider_grid:
     value: {rain_factor: [1.0, 0.9, 0.8, 0.7], warming_c: [0.0, 0.5, 1.0, 1.5, 2.0]}
     source: "CLAUDE.md 'Slider scenarios': 'precompute a grid (rain x 1.0, 0.9, 0.8, 0.7; warming +0, +0.5, +1, +1.5, +2 C) for the three plans'. Applied to the observed weather as the deltas are: every day's rain times the factor, the warming added to every temperature (Tmax and Tmin alike), ET0 rebuilt with relative humidity held"
+
+sections:                         # build step 8, small version (pipeline/sections/, scripts/run_sections.py). Fixed and committed before its first run.
+  cell_m:
+    value: 30
+    source: "Integrator's step-8 brief, 2026-11-13: a section is about one HLS pixel (HLS User Guide v2.0, Apr 2026, sec. 3.3: 'Spatial resolution 30 m'), so the 60 m demo square gives 2 x 2. CLAUDE.md 'Sections' asked for about 10 m squares, 10 to 40 of them: a 10 m section has no satellite pixel of its own, so its greenness would only repeat its neighbours'. The demo gets 4 sections, fewer than CLAUDE.md's 10: put to the owner"
+  max_sections:
+    value: 40
+    source: "CLAUDE.md 'Sections': aiming for 10 to 40 sections, coarser for big fields"
+  coarsen_factor:
+    value: 1.1
+    source: "Claude's choice, kept from the step-1 grid (2026-11-13): when a field would have more than max_sections, the section side grows by 10% at a time until it fits"
+  split:
+    value: "four corners: split by the field's own corners (bilinear), n = round(side / cell_m) per direction and at least 1, a side being the mean of two opposite edges; any other outline: cells of its bounding box clipped to it, pieces under 1 m2 dropped"
+    source: "Claude's choice, 2026-11-13 (brief: 'works for any field'): the sections tile the field exactly, whatever its orientation (pipeline/sections/grid.py)"
+  hls_weights:
+    value: "a section's NDVI on one image is the area-weighted mean of the HLS pixels it overlaps (weight = overlap area / section area; the section's corners projected to the HLS tile's UTM grid, edges straight)"
+    source: "Integrator's step-8 brief, 2026-11-13"
+  hls_clear:
+    value: "as the field's greenness (pipeline/diary/ndvi.py clear_mask and scale_ndvi; greenness.min_clear_fraction), by area: an image counts for a section when its clear pixels holding NDVI carry at least min_clear_fraction of the section's weight; its NDVI is then the weighted mean over those pixels"
+    source: "Integrator's step-8 brief, 2026-11-13: 'mask clouds exactly as the field's greenness does'. By area instead of by pixel count is Claude's reading (a section holds parts of pixels)"
+  common_images:
+    value: "the sections are compared only on images where every section counts; the field (all sections) on such an image is the area-weighted mean of its sections"
+    source: "Claude's choice, 2026-11-13: every part is compared with the field on the same days"
+  peak:
+    value: "a season's peak = the maximum of the smoothed daily curve (pipeline/diary/greenness.daily_series, then season_detection.smooth_window_days and smooth_polyorder) between the season's start and end; anomaly = the section's peak minus the field's peak (all sections) in that season"
+    source: "Integrator's step-8 brief, 2026-11-13 ('the peak NDVI by year, the field's peak (all sections) and the anomaly'); the curve drawn as the diary's season detection draws it (season_detection). Claude's reading"
+  seasons:
+    value: "the diary's chosen seasons (data/checks/<field>/diary_seasons.json, HLS rows), each in its slot by the month of its peak (rotation_guess: monsoon June-November, winter December-May)"
+    source: "Integrator's step-8 brief, 2026-11-13: 'per section and season (the diary's monsoon and winter seasons)'"
+  min_obs_per_season:
+    value: 3
+    source: "Claude's choice, 2026-11-13: a season counts only when at least 3 compared images fall between its start and end (with fewer, the peak is mostly drawn by the interpolation)"
+  usually_test:
+    value: "per section, a two-sided exact sign test on its seasons' anomalies (zeros left out), with Holm's step-down over the field's sections at family alpha. Rejected: 'greener' if most anomalies are positive, else 'less green'. Not rejected: 'same' if the distribution-free ci_level interval for the median anomaly (order statistics: the interval that inverts the sign test) lies within plus or minus same_margin_ndvi, otherwise 'can't tell'. Also 'can't tell' when there are so few seasons that no outcome could pass Holm's first step"
+    source: "Claude's choice of test, 2026-11-13, fixed before the first run (brief: 'pre-declare a consistency test'). Sign test and the median's interval: Conover 1999, Practical Nonparametric Statistics, 3rd ed., sec. 3.4 and 3.2; Holm 1979, Scand. J. Statist. 6:65-70 (standard results; neither text opened tonight). The seasons of one field are not fully independent (a tree line stays a tree line): 'usually' means a steady sign, which is what the test asks"
+  alpha:
+    value: 0.05
+    source: "Conventional 5% level, as trends.alpha and groundwater.alpha"
+  ci_level:
+    value: 0.95
+    source: "Claude's choice, 2026-11-13: the 95% interval, matching alpha"
+  same_margin_ndvi:
+    value: 0.05
+    source: "Claude's choice, 2026-11-13, fixed before the first run: about twice the scatter of single clear observations about the field's smoothed curve (diary_seasons.json series.sigma_ndvi = 0.0267): a smaller difference cannot be told from one image's noise"
+  tpi_radius_m:
+    value: 500
+    source: "Weiss 2001 (Topographic Position and Landforms Analysis, poster, ESRI User Conference, San Diego) as documented by Jenness 2006 (Topographic Position Index v1.2, tpi_jen.avx, documentation): TPI = a cell's elevation minus the mean elevation of its neighbourhood (p. 5), illustrated with circles of 500 m and 2000 m radius (p. 5); 'small neighborhoods capture small and local hills and valleys' (p. 7). 500 m, the smaller one, is Claude's choice for a field-scale flag. De Reu et al. 2013 not opened"
+  tpi_threshold_sd:
+    value: -1.0
+    source: "Weiss 2001's six slope-position classes as listed by Jenness 2006 (criteria set 'Sample 6-Class, de-emphasize class 2 & 5 (Weiss 2001)'): Valley TPI <= -1 SD; Lower Slope -1 SD < TPI <= -0.5 SD; SD = the standard deviation of the elevations within the neighbourhood (ddof 0: Claude's reading). Low ground = Weiss's valley class"
+  dem_relative_error_m:
+    value: 7.0
+    source: "NASADEM User Guide (Buckley et al., Jan 2020) sec. 4.2.2.1: SRTM's requirement was a '10-m relative height error' (90%), and 'a global assessment of the SRTM performance showed the average absolute and relative height errors to be ~6.8 m and 7 m' (Rodriguez et al. 2005, 2006). NASADEM reprocesses SRTM (over North America its correction lowered the RMSE against ICESat from 6.1 to 5.3 m, sec. 4.2.6.2). A section whose TPI is smaller in size than this gets low_ground null ('can't tell'). Conservative: the relative error covers longer distances than 500 m"
+  low_ground_rule:
+    value: "a section's TPI and SD are the area-weighted means over its NASADEM pixels (each pixel's TPI over a circle of tpi_radius_m around it, itself included); low_ground = null when |TPI| < dem_relative_error_m, else true when TPI <= tpi_threshold_sd x SD, else false"
+    source: "CLAUDE.md 'Frost': sections in low ground (negative TPI from NASADEM, D3) get a cold-air pooling flag. Threshold from Weiss 2001, the DEM's stated error from the NASADEM User Guide (above); the combination is Claude's, fixed before the first run"
+  status_red_ks_below:
+    value: 0.5
+    source: "Claude's choice, 2026-11-13, fixed before the first run. FAO-56 eq. 84: Ks = (TAW - Dr) / ((1 - p) TAW) falls from 1 at RAW to 0 at TAW. Green when Dr <= RAW (Ks = 1, no stress); red when Ks < 0.5 (the crop gets less than half the water it would use unstressed: the root zone has used more than half of the water between RAW and TAW); yellow between; grey without a twin state. Every section shares the one twin state (one soil, one weather, one crop calendar)"
