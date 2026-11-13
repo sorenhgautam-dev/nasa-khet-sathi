@@ -349,6 +349,34 @@ season_detection:                 # diary, build step 6b (pipeline/diary/seasons
     value: "bare_days.ndvi_max"
     source: "Between seasons a day is bare below the bare-day threshold (CLAUDE.md 0.25), harvested (stubble, residue or weeds) at or above it"
 
+  cover_sure:
+    value: "per calendar month, the share of the days in the HLS years on which the season detective (SI) and the threshold method give the same day label (growing, harvested, bare)"
+    source: "Owner, 2026-11-13 (priorities after REVIEW_2): add the season detective as an uncertainty signal, 'less sure' where it and the threshold method disagree; an addition, not a method change (the threshold method still sets every exported season and cover word). Exported as diary.months[].cover_sure, 0 to 1 like a section's sure. The detective is the final model of the step-6b comparison, trained on the days where the two rule methods agree in the densely observed years, so on those days it has seen the answer and agreement there is high by construction: the number says where SI and the rule part ways, not how right either is. Claude's definition, written and committed before its first run; put to the owner"
+
+field_memory:                     # build step 7b (pipeline/ml/memory.py, scripts/run_memory.py); owner's priorities, 2026-11-13
+  # Written and committed BEFORE the first run (owner's answer 21). NDVI is a stand-in for harvest: say so with the result.
+  target:
+    value: "each detected season's peak NDVI in the HLS years (the chosen season method), as its difference from the mean peak of its slot (monsoon, winter)"
+    source: "CLAUDE.md 'Field memory': predict each season's observed peak-NDVI anomaly. Claude's reading (anomaly = difference from the slot's own mean over the HLS years), fixed before the first run; put to the owner"
+  window:
+    value: "the days from the season's detected start to its peak"
+    source: "Claude's choice, fixed before the first run: what the crop went through before the satellite saw its peak; put to the owner"
+  physics_only:
+    value: "the twin's water shortfall over the window, 1 - sum(ETa) / sum(ETc), for the field's current rotation, rain-fed, as the only predictor (a straight line fitted on the training years)"
+    source: "CLAUDE.md 'Field memory': the physics-only baseline is the twin's simulated stress. Claude's reading, fixed before the first run; put to the owner"
+  memory_features:
+    value: ["twin_shortfall", "rain_mm", "longest_dry_spell_days", "tmax_mean_c", "onset_doy", "slot_is_winter"]
+    source: "CLAUDE.md 'Field memory': 'from the twin's simulated stress, onset date and dry spells'; rain and mean Tmax over the window and the season's slot are Claude's additions, fixed before the first run; put to the owner. onset_doy is the first lasting rain spell of the season's monsoon (a winter season takes the monsoon before it)"
+  model:
+    value: {kind: ridge, alpha: 1.0, standardise: true}
+    source: "CLAUDE.md 'Field memory': 'ridge regression or a small random forest'. Ridge with alpha 1.0 on standardised predictors is Claude's choice for about two dozen seasons, fixed before the first run; put to the owner"
+  validation:
+    value: "leave one year out: both seasons of the held-out year are predicted by a model fitted on the other years; the score is the root-mean-square error of the predicted peak anomaly"
+    source: "CLAUDE.md 'Field memory': leave-one-year-out validation"
+  keep_rule:
+    value: "the memory is kept only if its held-out error is lower than physics alone AND lower than predicting no anomaly at all; otherwise physics only. The result is reported either way"
+    source: "CLAUDE.md 'Field memory': 'Apply the correction to future runs only if it beats the physics-only baseline on held-out years; otherwise report the result honestly and keep physics only'. Also beating 'no anomaly' is Claude's addition, fixed before the first run; put to the owner"
+
 trends:                           # diary, build step 6c (pipeline/diary/trends.py). Fixed before it was run.
   alpha:
     value: 0.05
