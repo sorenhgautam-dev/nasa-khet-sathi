@@ -586,6 +586,73 @@
        }
       }
      }
+    },
+    "field_memory": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "kept",
+      "seasons",
+      "years",
+      "error",
+      "words"
+     ],
+     "description": "Field memory (SI; build step 7b; owner, 2026-11-13): a small learned correction that predicts each season's peak greenness (NDVI, a stand-in for harvest) from the twin's stress and the weather, tested on years it had not seen (leave one year out). It is used only if it beats the physics twin alone AND 'no anomaly'; the result is shown either way. Optional.",
+     "properties": {
+      "kept": {
+       "type": "boolean",
+       "description": "true = it won its test and is used; false = left out (physics only)."
+      },
+      "seasons": {
+       "type": "integer",
+       "minimum": 1
+      },
+      "years": {
+       "type": "integer",
+       "minimum": 1
+      },
+      "error": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "no_anomaly",
+        "physics_only",
+        "memory"
+       ],
+       "description": "Held-out root-mean-square error of the predicted peak-NDVI anomaly (NDVI units; lower is better).",
+       "properties": {
+        "no_anomaly": {
+         "type": "number",
+         "minimum": 0
+        },
+        "physics_only": {
+         "type": "number",
+         "minimum": 0
+        },
+        "memory": {
+         "type": "number",
+         "minimum": 0
+        }
+       }
+      },
+      "words": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "en",
+        "ne"
+       ],
+       "properties": {
+        "en": {
+         "type": "string",
+         "minLength": 1
+        },
+        "ne": {
+         "$ref": "#/$defs/ne_text"
+        }
+       }
+      }
+     }
     }
    }
   },
@@ -1030,6 +1097,12 @@
       "crop"
      ],
      "description": "Typical ground cover that month."
+    },
+    "cover_sure": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1,
+     "description": "How sure the month's `cover` word is, 0 to 1 like a section's `sure` (owner, 2026-11-13): the share of days in the satellite years on which our two ways of reading the seasons, the rule (threshold) method and the SI season detective, give the same label. A lower number = less sure: show fog. Optional. It says where the two part ways, not how right either is."
     }
    }
   },

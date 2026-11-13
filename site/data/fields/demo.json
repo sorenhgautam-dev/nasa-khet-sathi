@@ -926,7 +926,8 @@
     "soil": "dry",
     "heat": "none",
     "frost": "risk",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 0.91
    },
    {
     "m": "Feb",
@@ -934,7 +935,8 @@
     "soil": "dry",
     "heat": "none",
     "frost": "none",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 1.0
    },
    {
     "m": "Mar",
@@ -942,7 +944,8 @@
     "soil": "dry",
     "heat": "some",
     "frost": "none",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 1.0
    },
    {
     "m": "Apr",
@@ -950,7 +953,8 @@
     "soil": "medium",
     "heat": "some",
     "frost": "none",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 1.0
    },
    {
     "m": "May",
@@ -958,7 +962,8 @@
     "soil": "medium",
     "heat": "some",
     "frost": "none",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 0.94
    },
    {
     "m": "Jun",
@@ -966,7 +971,8 @@
     "soil": "wet",
     "heat": "high",
     "frost": "none",
-    "cover": "partial"
+    "cover": "partial",
+    "cover_sure": 0.8
    },
    {
     "m": "Jul",
@@ -974,7 +980,8 @@
     "soil": "wet",
     "heat": "high",
     "frost": "none",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 0.98
    },
    {
     "m": "Aug",
@@ -982,7 +989,8 @@
     "soil": "wet",
     "heat": "high",
     "frost": "none",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 1.0
    },
    {
     "m": "Sep",
@@ -990,7 +998,8 @@
     "soil": "wet",
     "heat": "high",
     "frost": "none",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 1.0
    },
    {
     "m": "Oct",
@@ -998,7 +1007,8 @@
     "soil": "medium",
     "heat": "some",
     "frost": "none",
-    "cover": "crop"
+    "cover": "crop",
+    "cover_sure": 0.95
    },
    {
     "m": "Nov",
@@ -1006,7 +1016,8 @@
     "soil": "medium",
     "heat": "none",
     "frost": "none",
-    "cover": "bare"
+    "cover": "bare",
+    "cover_sure": 0.97
    },
    {
     "m": "Dec",
@@ -1014,7 +1025,8 @@
     "soil": "dry",
     "heat": "none",
     "frost": "risk",
-    "cover": "bare"
+    "cover": "bare",
+    "cover_sure": 0.92
    }
   ]
  },
@@ -2707,6 +2719,36 @@
     "status": "Claude's choice, owner-approved 2026-11-13"
    },
    {
+    "id": "field_memory.target",
+    "choice": "CLAUDE.md 'Field memory': predict each season's observed peak-NDVI anomaly. Claude's reading (anomaly = difference from the slot's own mean over the HLS years), fixed before the first run; put to the owner",
+    "value": "each detected season's peak NDVI in the HLS years (the chosen season method), as its difference from the mean peak of its slot (monsoon, winter)",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "field_memory.window",
+    "choice": "Claude's choice, fixed before the first run: what the crop went through before the satellite saw its peak; put to the owner",
+    "value": "the days from the season's detected start to its peak",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "field_memory.physics_only",
+    "choice": "CLAUDE.md 'Field memory': the physics-only baseline is the twin's simulated stress. Claude's reading, fixed before the first run; put to the owner",
+    "value": "the twin's water shortfall over the window, 1 - sum(ETa) / sum(ETc), for the field's current rotation, rain-fed, as the only predictor (a straight line fitted on the training years)",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "field_memory.model",
+    "choice": "CLAUDE.md 'Field memory': 'ridge regression or a small random forest'. Ridge with alpha 1.0 on standardised predictors is Claude's choice for about two dozen seasons, fixed before the first run; put to the owner",
+    "value": "{'kind': 'ridge', 'alpha': 1.0, 'standardise': True}",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "field_memory.keep_rule",
+    "choice": "CLAUDE.md 'Field memory': 'Apply the correction to future runs only if it beats the physics-only baseline on held-out years; otherwise report the result honestly and keep physics only'. Also beating 'no anomaly' is Claude's addition, fixed before the first run; put to the owner",
+    "value": "the memory is kept only if its held-out error is lower than physics alone AND lower than predicting no anomaly at all; otherwise physics only. The result is reported either way",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
     "id": "trends.hot_day",
     "choice": "CLAUDE.md 'hot days (above the local 90th percentile of Tmax)'; ETCCDI TX90p: 'the calendar day 90th percentile centred on a 5-day window'. The base period is the record itself (2001-2025; ETCCDI uses 1961-1990, which the twin's weather does not cover), and the in-base bootstrap is not applied: Claude's choices, owner-approved 2026-11-13",
     "value": "{'pct': 90, 'window_days': 5, 'base_years': [2001, 2025]}",
@@ -2796,7 +2838,21 @@
     "value": "the satellite's bare months (diary.months[].cover == 'bare'): for the current plan the first of them; for a suggested plan the first of them in which that plan's own calendar also leaves the ground bare; no such month, no tip",
     "status": "Claude's choice, put to the owner"
    }
-  ]
+  ],
+  "field_memory": {
+   "kept": false,
+   "seasons": 24,
+   "years": 12,
+   "error": {
+    "no_anomaly": 0.029,
+    "physics_only": 0.032,
+    "memory": 0.035
+   },
+   "words": {
+    "en": "We tried teaching a computer this field's habits. It learned from 24 seasons seen from space. We tested it on years it never saw. It did not beat our simple water count. So we left it out. It looks at greenness, not at the harvest.",
+    "ne": "हामीले कम्प्युटरलाई यो खेतको बानी सिकाउन खोज्यौं। यसले अन्तरिक्षबाट देखिएका २४ बाली याममा सिक्यो। हामीले यसलाई नदेखेका वर्षमा जाँच्यौं। यसले हाम्रो सरल पानीको हिसाबलाई जित्न सकेन। त्यसैले हामीले यसलाई राखेनौं। यसले हरियाली हेर्छ, उब्जनी होइन।"
+   }
+  }
  },
  "mock": [
   "field.sections",

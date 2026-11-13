@@ -334,11 +334,16 @@ def run_seasons(field, rules, out_dir, data):
     }
     path = out_dir / "diary_seasons.json"
     path.write_text(json.dumps(out, indent=1, default=str) + "\n")
+    # label = the chosen method's; label_threshold and label_detective feed the 'less sure' signal (rules.yaml
+    # season_detection.cover_sure: the SI detective against the rule method, owner's priorities, 2026-11-13)
     days = pd.concat([pd.DataFrame({"date": modis["dates"], "ndvi_smooth": modis["smooth"], "label": modis[best]["labels"],
-                                    "source": "modis"}),
+                                    "label_threshold": modis["threshold"]["labels"],
+                                    "label_detective": modis["detective"]["labels"], "source": "modis"}),
                       pd.DataFrame({"date": dates, "ndvi_smooth": full["smooth"], "label": full[best]["labels"],
-                                    "source": "hls"})], ignore_index=True)
-    days["label"] = days["label"].astype(str)
+                                    "label_threshold": full["threshold"]["labels"],
+                                    "label_detective": full["detective"]["labels"], "source": "hls"})], ignore_index=True)
+    for col in ("label", "label_threshold", "label_detective"):
+        days[col] = days[col].astype(str)
     days.to_parquet(data / "clean" / field["id"] / "seasons_daily.parquet", index=False)
     print(f"seasons: held-out years {dense}; mean score {mean}; chosen: {best}")
     print(f"threshold vs change-point agreement on all obs (held-out years): {out['held_out']['threshold_vs_changepoint_all_obs']}")
@@ -439,6 +444,12 @@ def run_diary_6c(field, rules, out_dir, data, base_dir=None):
              "heat": mo.tercile_words(tmax_m.reindex(range(1, 13)).to_numpy(), ("none", "some", "high"))}
     months = [{"m": MONTH_NAMES[i], "rain": words["rain"][i], "soil": words["soil"][i], "heat": words["heat"][i],
                "frost": frost_cal[i + 1], "cover": cover[i + 1]} for i in range(12)]
+    if {"label_threshold", "label_detective"} <= set(lab.columns):       # the SI detective as a 'less sure' signal
+        idx = pd.DatetimeIndex(lab["date"])
+        sure = mo.cover_sure_by_month(pd.Series(lab["label_threshold"].to_numpy(), index=idx),
+                                      pd.Series(lab["label_detective"].to_numpy(), index=idx))
+        for i in range(12):
+            months[i]["cover_sure"] = sure[i + 1]
     jan2010 = coldest[(2010, 1)]
     frost_check = {"month": "2010-01", "coldest_night_c": round(jan2010, 2),
                    "band": mo.frost_band(jan2010, M["frost_c"], M["frost_risk_c"]),

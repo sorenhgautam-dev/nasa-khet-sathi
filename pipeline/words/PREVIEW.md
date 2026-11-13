@@ -2,8 +2,8 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 179 texts): needs native-speaker review.
-- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 84 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 180 texts): needs native-speaker review.
+- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 92 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
 
@@ -82,6 +82,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Your field's twelve months | तपाईंको खेतका बाह्र महिना |
 | Nepali and English months don't line up exactly. | नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्। |
 | We may show too many freezing nights. *(if some months have freezing nights)* | हामीले तुषारो धेरै देखाएका हुन सक्छौं। |
+| We are less sure about this month. | यो महिनाबारे हामी कम पक्का छौं। |
 | *Calendar: rain each month* | |
 | Little rain | थोरै पानी |
 | Some rain | मध्यम पानी |
@@ -381,6 +382,21 @@ This page is made from the word files in this folder; change those, not this pag
 | After our fix: {err_after} mm. | सुधारपछि: {err_after} मिलिमिटर। |
 | This fix may also hide real change. | यस सुधारले साँचो फेरबदल पनि लुकाउन सक्छ। |
 | So we show both, as a range. | त्यसैले हामी दुवै देखाउँछौं, दायराका रूपमा। |
+
+### Field memory
+
+*Nepali: needs native-speaker review.*
+
+| English | नेपाली |
+| --- | --- |
+| We tried teaching a computer this field's habits. | हामीले कम्प्युटरलाई यो खेतको बानी सिकाउन खोज्यौं। |
+| It learned from {memory_seasons} seasons seen from space. | यसले अन्तरिक्षबाट देखिएका {memory_seasons} बाली याममा सिक्यो। |
+| We tested it on years it never saw. | हामीले यसलाई नदेखेका वर्षमा जाँच्यौं। |
+| It did not beat our simple water count. *(if the field memory did not win its test and is left out)* | यसले हाम्रो सरल पानीको हिसाबलाई जित्न सकेन। |
+| So we left it out. *(if the field memory did not win its test and is left out)* | त्यसैले हामीले यसलाई राखेनौं। |
+| It did better than our simple water count. *(if the field memory won its test and is used)* | यसले हाम्रो सरल पानीको हिसाबभन्दा राम्रो गर्‍यो। |
+| We use it. *(if the field memory won its test and is used)* | हामी यसलाई प्रयोग गर्छौं। |
+| It looks at greenness, not at the harvest. | यसले हरियाली हेर्छ, उब्जनी होइन। |
 
 ### Words used on many screens
 

@@ -356,6 +356,12 @@
      "en": "We may show too many freezing nights.",
      "ne": "हामीले तुषारो धेरै देखाएका हुन सक्छौं।",
      "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "month_less_sure",
+     "en": "We are less sure about this month.",
+     "ne": "यो महिनाबारे हामी कम पक्का छौं।",
+     "ne_review": "needs native-speaker review"
     }
    ],
    "labels": {

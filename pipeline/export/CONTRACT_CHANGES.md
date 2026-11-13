@@ -4,6 +4,13 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-13 (Friday, 17:45): two SI additions: a "less sure" signal per month, and the field-memory test on the method page
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `diary.months[].cover_sure` (new, optional) | did not exist | a number 0 to 1, like a section's `sure`: how often our two ways of reading the seasons (the rule method and the SI "season detective") agree in that month. Demo: June 0.80, the other months 0.91 to 1.00 | Show a month with a lower number as less sure (a little fog, as for sections); words.json screen 3 `month_less_sure`: "We are less sure about this month." Never hide the month's `cover` word |
+| `method.field_memory` (new, optional) | did not exist | `{kept, seasons, years, error: {no_anomaly, physics_only, memory}, words: {en, ne}}`: we tried to teach a small model this field's habits and tested it on years it had not seen. Demo: `kept: false` (it did not beat the simple water count), 24 seasons, 12 years | Show `words` on the method page, whichever way it went. An honest "it did not help" is part of the method |
+
 ## 2026-11-13 (Friday, 17:30): the farmer confirms the winter crop: `current_options` (owner's answer 6)
 
 From space the winter crop of the demo field could be potato or wheat: the timing cannot tell them apart. So screen 3 asks

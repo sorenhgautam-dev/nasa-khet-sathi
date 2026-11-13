@@ -674,7 +674,10 @@ All 21 questions were answered. "Done" means tests first, rerun, re-exported, do
 | 18 | Show the groundwater confidence as "the regional trend is clear", never as certainty about the field | **Done** in the words (screen 3 `water_wide`, `water_not_yours`) and in the note for the UI |
 | 19 | The owner confirms where the temperature sensor sits; `live.json` with a UTC offset and git-ignored | Git-ignore **done**; the UTC offset comes with the probe step |
 | 20 | Approve both readings | **Done** in `rules.yaml` |
-| 21 | Commit each new rule locally before its first run | **In force** since `a8b9b45` |
+| 21 | Commit each new rule locally before its first run | **In force** since `a8b9b45` (also `dfb1d4f`) |
+| Priority | The season detective as an uncertainty signal ("less sure" where it and the threshold method disagree) | **Done**: `diary.months[].cover_sure` (June 0.80; other months 0.91-1.00); an addition, the threshold method still decides |
+| Priority | A minimal, honestly tested field memory (7b) | **Done, and it lost**: held-out error 0.035 against 0.032 for physics alone and 0.030 for "no anomaly" (24 seasons, 12 years), so it is not used; the result is on the method page (`method.field_memory`) and in VALIDATION 4.6 |
+| Priority | A note for the UI teammate; a fallback site if his UI is not in the repository by Saturday 12:00 | Note **done** (`notes/ui_note.md`, kept current with each contract change). Fallback site: to build on Saturday if needed |
 
 ---
 

@@ -114,7 +114,7 @@ khet-sathi/
     plans/              # generate.py, simulate.py, score.py, explain.py
     future/             # nexgddp.py, scenarios.py
     sections/           # grid.py: split the field polygon into sections, attach per-section attributes
-    ml/                 # seasons.py (season detective classifier), memory.py (field memory)
+    ml/                 # seasons.py (season detective classifier), memory.py (field memory: tested, not used)
     words/              # SI drafts of tabs, tips, glossary, Nepali text (text only: no audio, owner 2026-11-12)
     checks/             # validation-layer statistics: climate.py, crosscheck.py (incl. day alignment), spikes.py
     export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py, build_words.py,
@@ -595,7 +595,8 @@ our side and nothing changeable after submission. Local judges also see the live
    `pipeline/words` (`pipeline/plans/explain.py`). Still open: the owner's review of the English lines added
    on 2026-11-13 and a native speaker's review of all Nepali.
 7b. **Field memory:** train and test (leave one year out); keep it only if it beats physics alone.
-    *Done when* the result, either way, is in VALIDATION.md.
+    *Done when* the result, either way, is in VALIDATION.md. **Run 2026-11-13: it does not beat physics alone (nor
+    "no anomaly") on held-out years, so it is not used; VALIDATION 4.6, `method.field_memory`.**
 8. **Sections, erosion, frost, ECOSTRESS:** per-section status and zones.
 9. **Future:** NEX-GDDP deltas, scenario grid, `harvest_low` / `harvest_high` from the spread.
 10. **Probe bridge and Kalman.**

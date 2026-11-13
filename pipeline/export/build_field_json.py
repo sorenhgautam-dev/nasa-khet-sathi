@@ -241,6 +241,19 @@ def not_ready_blocks(doc, field):
 PLAN_SOURCES = ("GPM IMERG", "NASA POWER", "ISRIC SoilGrids", "GRACE and GRACE-FO")
 
 
+def field_memory_block(memory, words_tabs):
+    """The method page's field-memory block from data/checks/<field>/field_memory.json (build step 7b): the test's
+    numbers and plain words, whichever way it went (CLAUDE.md: 'report the result either way')."""
+    from pipeline.words.texts import render_tab
+    r = memory["result"]
+    held = {"memory_kept" if r["kept"] else "memory_not_kept"}
+    vals = {"memory_seasons": int(r["n_seasons"])}
+    lines = words_tabs["method_page"]["field_memory"]
+    return {"kept": bool(r["kept"]), "seasons": int(r["n_seasons"]), "years": int(r["n_years"]),
+            "error": {k: round(float(r["rmse"][k]), 3) for k in ("no_anomaly", "physics_only", "memory")},
+            "words": {lang: render_tab(lines, held, vals, lang) for lang in ("en", "ne")}}
+
+
 def rain_correction_block(rain_break, rain_check, evidence, words_tabs, shared):
     """method.rain_correction (owner's decision 1, 2026-11-13): the numbers, and the plain words from
     pipeline/words/tabs.json method_page.rain_correction in English and Nepali."""
@@ -413,6 +426,9 @@ def export_step7(doc, field_id, plans):
             raise ValueError("the rain was corrected but the uncorrected run is missing (owner's decision 1: show both)")
         out["method"]["rain_correction"] = rain_correction_block(rain_break, rain_check, rules["gpm_series"]["break_evidence"],
                                                                  words["tabs"], words["shared"])
+    memory_path = checks / "field_memory.json"
+    if memory_path.exists():
+        out["method"]["field_memory"] = field_memory_block(json.loads(memory_path.read_text()), words["tabs"])
     import yaml
     out["method"]["choices"] = stated_choices(yaml.safe_load((REPO / "config" / "rules.yaml").read_text()))
     ratio = rain_check["break_correction"]["twin_rain_vs_station_all_shared_months"]["ratio"]

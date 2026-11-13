@@ -141,6 +141,23 @@ def test_frost_band_per_year_month_and_per_calendar_month():
     assert cal[1] == "high" and cal[7] == "none"           # median coldest January night -0.2
 
 
+def test_cover_sure_is_the_share_of_days_on_which_two_methods_give_the_same_label():
+    """rules.yaml season_detection.cover_sure (owner's priorities, 2026-11-13): the SI season detective as a 'less sure'
+    signal. January: the two methods agree on 31 of 31 days; February: on 14 of 28."""
+    idx = pd.date_range("2021-01-01", "2021-02-28")
+    a = pd.Series("growing", index=idx)
+    b = a.copy()
+    b["2021-02-15":] = "bare"
+    out = mo.cover_sure_by_month(a, b)
+    assert out == {1: 1.0, 2: 0.5}
+
+
+def test_cover_sure_needs_the_same_days_from_both_methods():
+    idx = pd.date_range("2021-01-01", "2021-01-31")
+    with pytest.raises(ValueError, match="same days"):
+        mo.cover_sure_by_month(pd.Series("bare", index=idx), pd.Series("bare", index=idx[:-1]))
+
+
 def test_cover_word_is_the_most_common_label_of_the_month():
     d = _days("2020-01-01", "2020-02-29")
     lab = pd.Series(["growing"] * 20 + ["bare"] * 11 + ["harvested"] * 29, index=d)

@@ -295,3 +295,28 @@ def test_the_exported_demo_file_holds_the_current_plan_for_both_winter_crops():
     assert set(wheat["compared"]) == {"cover_gap", "safest"}
     assert "Your winter crop dates may differ from ours." in d["plans"][0]["tabs"]["unknown"]
     assert "sample field" in d["plans"][0]["tabs"]["unknown"]
+
+
+# --- field memory on the method page (build step 7b; owner's priorities, 2026-11-13) ---
+
+def _memory(kept):
+    return {"result": {"n_seasons": 24, "n_years": 12, "kept": kept,
+                       "rmse": {"no_anomaly": 0.0296, "physics_only": 0.0321, "memory": 0.035 if not kept else 0.02}}}
+
+
+def test_field_memory_that_did_not_beat_physics_is_reported_and_left_out():
+    from pipeline.words import texts
+    block = b.field_memory_block(_memory(False), texts.load("tabs"))
+    assert block["kept"] is False and block["seasons"] == 24 and block["years"] == 12
+    assert block["error"] == {"no_anomaly": 0.03, "physics_only": 0.032, "memory": 0.035}
+    assert "It did not beat our simple water count." in block["words"]["en"] and "So we left it out." in block["words"]["en"]
+    assert "24" in block["words"]["en"] and "२४" in block["words"]["ne"]
+    doc = build_field()
+    doc["method"]["field_memory"] = block
+    assert validate_field(doc) == []
+
+
+def test_field_memory_that_wins_says_it_is_used():
+    from pipeline.words import texts
+    block = b.field_memory_block(_memory(True), texts.load("tabs"))
+    assert block["kept"] is True and "We use it." in block["words"]["en"] and "left it out" not in block["words"]["en"]

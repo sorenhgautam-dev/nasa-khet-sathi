@@ -77,11 +77,21 @@ site/
   `replay` for the current plan; and for the two other plans the `tabs` / `tabs_ne` in the option's `compared`
   (their "about N more" lines depend on what they are compared with). Everything else stays.
 
-## 6. Changes still coming (each will be in CONTRACT_CHANGES.md as it lands)
+## 6. Landed on 13 November, 17:45: two SI pieces
 
-- A "less sure" signal for the months where our two ways of reading the satellite disagree.
+- `diary.months[].cover_sure` (0 to 1): how sure the month's cover word is. Lower = show a little fog and
+  "We are less sure about this month." (words.json, screen 3, `month_less_sure`). June is 0.80 on the demo field.
+- `method.field_memory`: a short text (`words.en`, `words.ne`) and numbers for the method page. On the demo field
+  it says the learned model did not beat the simple one and was left out. Show it as it is.
 
-## 7. Site rules we promised the judges (from CLAUDE.md)
+## 7. Still to come
+
+- `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when
+  they are real, with no other change of shape.
+- The probe: `data/live.json` (in-person demo) and `data/probe_log.json` (the replay).
+
+
+## 8. Site rules we promised the judges (from CLAUDE.md)
 
 Ten screens, one action each. Sentences of eight words or fewer. Pictures before words; never colour alone.
 Buttons at least 48 px. Designed at 360 px wide. First screen under 300 KB. Plain HTML, CSS and JavaScript;

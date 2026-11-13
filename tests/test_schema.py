@@ -387,3 +387,14 @@ def test_every_option_covers_the_same_years_and_compares_every_suggested_plan():
     d = _with_options()
     d["current_options"]["options"][1]["crops"] = d["current_options"]["options"][0]["crops"]
     assert any("same crops" in e for e in validate_field(d))
+
+
+# --- owner's priorities, 2026-11-13: the season detective (SI) as a 'less sure' signal per month ---
+
+def test_a_month_may_say_how_sure_its_cover_word_is():
+    d = build_field()
+    for m in d["diary"]["months"]:
+        m["cover_sure"] = 0.82
+    assert validate_field(d) == []
+    d["diary"]["months"][0]["cover_sure"] = 1.2
+    assert validate_field(d) != []

@@ -46,6 +46,16 @@ def frost_by_calendar_month(coldest, frost_c, risk_c):
     return out
 
 
+def cover_sure_by_month(labels_a, labels_b):
+    """{month: share of days, 0 to 1, on which two season methods give the same day label}. rules.yaml
+    season_detection.cover_sure: the rule (threshold) method against the SI season detective; a low share marks a
+    month where the cover word is less sure. Both series must cover the same days."""
+    if len(labels_a) != len(labels_b) or not labels_a.index.equals(labels_b.index):
+        raise ValueError("the two methods' labels must cover the same days")
+    same = pd.Series(labels_a.to_numpy().astype(str) == labels_b.to_numpy().astype(str), index=labels_a.index)
+    return {int(m): round(float(s.mean()), 2) for m, s in same.groupby(same.index.month)}
+
+
 def cover_by_month(labels):
     """{month: cover word of the most common day label}"""
     out = {}

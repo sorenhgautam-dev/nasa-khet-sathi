@@ -810,6 +810,80 @@
     "ne": "त्यसैले हामी दुवै देखाउँछौं, दायराका रूपमा।",
     "ne_review": "needs native-speaker review"
    }
+  ],
+  "field_memory": [
+   {
+    "id": "mp_memory_try",
+    "when": [
+     "always"
+    ],
+    "en": "We tried teaching a computer this field's habits.",
+    "ne": "हामीले कम्प्युटरलाई यो खेतको बानी सिकाउन खोज्यौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_memory_seasons",
+    "when": [
+     "always"
+    ],
+    "en": "It learned from {memory_seasons} seasons seen from space.",
+    "ne": "यसले अन्तरिक्षबाट देखिएका {memory_seasons} बाली याममा सिक्यो।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_memory_test",
+    "when": [
+     "always"
+    ],
+    "en": "We tested it on years it never saw.",
+    "ne": "हामीले यसलाई नदेखेका वर्षमा जाँच्यौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_memory_lost",
+    "when": [
+     "memory_not_kept"
+    ],
+    "en": "It did not beat our simple water count.",
+    "ne": "यसले हाम्रो सरल पानीको हिसाबलाई जित्न सकेन।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_memory_out",
+    "when": [
+     "memory_not_kept"
+    ],
+    "en": "So we left it out.",
+    "ne": "त्यसैले हामीले यसलाई राखेनौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_memory_won",
+    "when": [
+     "memory_kept"
+    ],
+    "en": "It did better than our simple water count.",
+    "ne": "यसले हाम्रो सरल पानीको हिसाबभन्दा राम्रो गर्‍यो।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_memory_in",
+    "when": [
+     "memory_kept"
+    ],
+    "en": "We use it.",
+    "ne": "हामी यसलाई प्रयोग गर्छौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_memory_green",
+    "when": [
+     "always"
+    ],
+    "en": "It looks at greenness, not at the harvest.",
+    "ne": "यसले हरियाली हेर्छ, उब्जनी होइन।",
+    "ne_review": "needs native-speaker review"
+   }
   ]
  }
 }
