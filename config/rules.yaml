@@ -826,3 +826,72 @@ sections:                         # build step 8, small version (pipeline/sectio
   status_red_ks_below:
     value: 0.5
     source: "Claude's choice, 2026-11-13, fixed before the first run. FAO-56 eq. 84: Ks = (TAW - Dr) / ((1 - p) TAW) falls from 1 at RAW to 0 at TAW. Green when Dr <= RAW (Ks = 1, no stress); red when Ks < 0.5 (the crop gets less than half the water it would use unstressed: the root zone has used more than half of the water between RAW and TAW); yellow between; grey without a twin state. Every section shares the one twin state (one soil, one weather, one crop calendar)"
+
+area_map:                         # Local Impact 4a (pipeline/area/, scripts/run_area_map.py). Written and committed BEFORE the first run.
+  # Every cropland pixel of the demo fetch box, by the field diary's own methods. No new download: HLS windows and
+  # WorldCover 2021 already cached for the box. Nothing here is tuned to a validation event.
+  cropland:
+    value: {worldcover_class: 40, min_cropland_fraction: 0.5, min_coverage_fraction: 0.5}
+    source: "Claude's choice, 2026-11-14 (majority rule, the usual way to carry a class map to a coarser grid): an HLS 30 m pixel is cropland when at least half of the WorldCover 2021 v200 10 m pixels whose centres fall inside it are class 40 (cropland). It is judged only when at least half the expected number of WorldCover centres fall inside it (900 m2 over one WorldCover pixel's area at the box centre, about 11.8), that is, when it lies inside the fetch box"
+  pure_check_min_fraction:
+    value: 1.0
+    source: "Claude's choice, 2026-11-14: a check on mixed pixels (a 30 m pixel half cropland, half houses or trees, mixes their greenness): every area number is also given for pixels whose WorldCover centres are all cropland. A check, not part of the range"
+  series:
+    value: "per pixel, the field diary's own series: HLS v2.0 L30 and S30 clear observations (Fmask bits 0-5 zero, NDVI not fill) from greenness.hls_from to 2025-12-31, same-day observations averaged, NDVI interpolated linearly in time between clear observations and never outside them (pipeline/diary/greenness.py daily_series). One pixel is its own 'field', so greenness.min_clear_fraction reduces to clear or not"
+    source: "Owner's brief (Local Impact 4a, 2026-11-13): the same NDVI threshold, interpolation, cloud mask and years as the field's diary. MODIS (250 m) is not used: it cannot be mapped at 30 m, and the field's headline bare-days number is the HLS years' (below)"
+  years:
+    value: [2014, 2025]
+    source: "The HLS years of the field's headline bare-days number (diary_bare_days.json summary mean_bare_days_hls_years: 2014-2025, each year with at least 300 days with a value) and of the field's HLS seasons"
+  min_days_with_value:
+    value: 300
+    source: "The field diary's own rule for a year to count (scripts/run_diary.py run_greenness mean_bare: days_with_value >= 300); used for bare days and for seasons"
+  min_years:
+    value: 6
+    source: "Claude's choice, 2026-11-14: a pixel is shown only if at least half of the 12 HLS years count for it; otherwise it is 'not enough clear pictures'"
+  bare_days:
+    value: "a day is bare when the interpolated NDVI is below bare_days.ndvi_max; a pixel's number is the mean of its yearly bare-day counts over the years that count"
+    source: "rules.yaml bare_days (the field diary's rule, CLAUDE.md 'Bare days'); the mean over years as the field's summary mean_bare_days_hls_years"
+  seasons:
+    value: "the threshold method chosen in step 6b (rules.yaml season_detection: Savitzky-Golay 31 days, order 2; amplitude 0.1 and 35% of the 3-year range; start and end at 20%), run on each pixel's whole daily series; a season belongs to the calendar year of its peak (as diary_seasons.json seasons_by_year); a pixel's seasons a year = the mean count over the years that count, rounded to the nearest whole number (halves up), classes 0, 1, 2, 3 or more"
+    source: "Owner's brief (4a): the season detection method chosen in step 6b, the threshold method (VALIDATION 3.15). Rounding the mean is Claude's choice, 2026-11-14"
+  long_bare_days:
+    value: 60
+    source: "Claude's choice, 2026-11-14, no published source: 'bare more than 60 days a year', two months, an amount a farmer can picture. The demo field's own value (62.5 days a year, HLS years) was known when this was set"
+  numbers:
+    value: ["median_bare_days: the median over cropland pixels of each pixel's mean bare days a year", "share_long_bare: the share of cropland pixels whose mean bare days a year exceed long_bare_days", "share_two_seasons: the share of cropland pixels with two crop seasons a year"]
+    source: "Owner's brief (4a): two or three honest area numbers, each with its uncertainty. Shares are of the cropland pixels shown (enough clear pictures), each pixel 0.09 ha"
+  threshold_shift:
+    value: 0.05
+    source: "Claude's choice, 2026-11-14: the bare-day numbers are recomputed with bare_days.ndvi_max 0.05 lower and 0.05 higher (0.20, 0.30), about twice the scatter of the field's clear observations about its smoothed curve (sigma 0.0267, diary_seasons.json series.sigma_ndvi). The season method does not use the bare threshold, so share_two_seasons has no threshold range"
+  year_to_year:
+    value: "each number is also computed for each single year 2014-2025 from that year's per-pixel values (a pixel-year counts with min_days_with_value); the lowest and highest year are reported beside the multi-year number, as the spread between years, not as its error"
+    source: "Owner's brief (4a): the year-to-year spread. Claude's reading, 2026-11-14"
+  worldcover_accuracy:
+    value: {asia_cropland_users_pct: 80.6, asia_cropland_users_ci_pct: 2.8, asia_cropland_producers_pct: 82.7, asia_cropland_producers_ci_pct: 2.5, global_cropland_users_pct: 80.6, global_cropland_users_ci_pct: 1.5, global_cropland_producers_pct: 79.3, global_cropland_producers_ci_pct: 1.5}
+    source: "ESA WorldCover Product Validation Report (D12-PVR) v2.0, 2022-10-25 (Tsendbazar, Xu, Herold, Lesiv, Duerauer), WorldCover 2021 v200: Table A2.4 p. 29 (Asia, confusion matrix corrected by sample inclusion probabilities): Cropland user's accuracy 80.6 +/- 2.8, producer's accuracy 82.7 +/- 2.5; Table 2 p. 15 (global): user's 80.6 +/- 1.5, producer's 79.3 +/- 1.5; Asia overall 82.1 +/- 1.0 (Table 3 p. 16). Opened 2026-11-14 at esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/docs/WorldCover_PVR_V2.0.pdf"
+  worldcover_bound:
+    value: "commission share c = 1 - (Asia user's accuracy - its confidence half-width) = 1 - 0.778 = 0.222; worst case, every wrongly mapped pixel on one side: a share s lies in [max(0, (s - c) / (1 - c)), min(1, s / (1 - c))]; the median lies between the per-pixel quantiles 0.5 - c/2 and 0.5 + c/2. Omission (real cropland the map leaves out, 1 - producer's accuracy) cannot be bounded from these data and is stated in words"
+    source: "Claude's choice, 2026-11-14: a worst-case bound from the published user's accuracy (its lower confidence end), not a statistical interval. The accuracy is continental, not Nepal's or the box's own; WorldCover 2021 is also out of date in places (the first placeholder square was a construction plot, owner 2026-11-12)"
+  range_shown:
+    value: "low and high of each multi-year number = the lowest and highest of the threshold-shift values and the WorldCover bound; the year-to-year spread is shown apart"
+    source: "Claude's choice, 2026-11-14"
+  field_check:
+    value: "VALIDATION 3.23 passes when (a) the map's code, fed the demo field's own mean observation series (greenness_field.parquet, HLS rows from the field's first clear observation), gives exactly the diary's bare days in each year 2014-2025 (diary_bare_days.json by_year) and exactly its threshold seasons of the HLS years (start, peak, end; diary_seasons.json chosen seasons_by_year); (b) the diary's mean bare days of the HLS years lies within the range of the field's own HLS pixels' mean bare days on the map; (c) every field pixel's seasons-a-year class equals the diary's (its HLS seasons per year, averaged over 2014-2025 and rounded)"
+    source: "Owner's brief (4a): a consistency check, not tuning. Claude's definition, fixed 2026-11-14 before the first run. (b) has no tolerance: the field's series is the mean of its pixels', so its value should lie among theirs"
+  classes:
+    value: {bare_days_breaks: [30, 60, 90, 120], bare_days_colours: ["#ffffd4", "#fed98e", "#fe9929", "#d95f0e", "#993404"], seasons_colours: ["#edf8e9", "#bae4b3", "#74c476", "#238b45"], no_data_colour: "#969696"}
+    source: "Claude's choice, 2026-11-14: five bare-day classes, under 30, 30-60, 60-90, 90-120, 120 or more days a year; four season classes 0, 1, 2, 3 or more. Colours: ColorBrewer 2.0 (Brewer & Harrower, colorbrewer2.org) sequential YlOrBr 5-class and Greens 4-class, both marked colour-blind safe there; light = little, dark = much. The legend always carries the numbers (never colour alone)"
+  render:
+    value: {crs: "EPSG:3857", ground_pixel_m: 15, resampling: nearest, non_cropland: transparent}
+    source: "Claude's choice, 2026-11-14: Leaflet's L.imageOverlay stretches an image linearly between its corners in Web Mercator, so the class grid is warped from UTM 45N to EPSG:3857 by nearest neighbour (classes are never averaged) at about 15 m on the ground at the box centre, half an HLS pixel, so the 0.7 degree turn of the UTM grid stays readable; each PNG must stay under 100 KB"
+
+sample_fields:                    # Local Impact 4b (pipeline/area/samples.py, scripts/pick_sample_fields.py). Written and committed BEFORE the first run.
+  candidate_rule:
+    value: "the demo's own rule, by import from pipeline/fetch/placeholder.py: 60 m squares of WorldCover 2021 cropland with a 30 m cropland margin and no built-up pixel within 100 m of the margin (cropland_squares), whose HLS monthly greenness tops NDVI 0.25 in the monsoon and the winter of each of 2023-2025 (season_check, Nepal's seasons, the default), ranked as the demo's were (rank: SoilGrids cell within soilgrids.nearest_cell_max_m first, then the weaker season's peak, then distance to the box centre). Every candidate square is tested, not every third"
+    source: "Owner's brief (4b, 2026-11-13): pick by the same rule as the demo field (REVIEW_NOTES H3; config/fields/demo.yaml header). Testing every square instead of every third is Claude's choice, 2026-11-14: the same rule on a denser list"
+  spread:
+    value: {split_at: origin_point, per_quadrant: 1, min_apart_km: 1.5}
+    source: "Owner's brief (4b): e.g. the best candidate in each quadrant of the box, at least 1.5 km from the demo field and from each other. Claude's reading, 2026-11-14: the box is split into four quadrants at its centre (the demo's origin_point, 27.67 N, 85.43 E); going down the ranked list, a candidate is taken when its quadrant has none yet and its centre is at least 1.5 km (great circle) from the demo field's centre and from every sample already taken. A quadrant with no such candidate gets none (reported)"
+  label:
+    value: "config/fields/sample_<n>.yaml: placeholder true, sample true, name 'Bhaktapur sample field <n> (PLACEHOLDER)', the demo's placeholder rotations, water_source null, the demo's fetch_box, bbox, validation_station and correction_label"
+    source: "Owner's brief (4b) and owner's 8b (2026-11-14, via the integrator): each is labelled a sample and listed in index.json (the integrator writes index.json)"
