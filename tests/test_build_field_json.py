@@ -254,3 +254,27 @@ def test_the_exported_demo_file_has_three_rice_plans_and_ranges_where_the_rain_f
     years = {y["year"]: y for y in d["replay"]["current"]}
     assert all("uncorrected_rain" not in years[y] for y in years if y < 2004)
     assert d["method"]["rain_correction"]["from"] == "2017-01-01"
+
+
+# --- owner's answer 9 to REVIEW_2 (2026-11-13): one weather event per year, with the season of a one-season drought ---
+
+def test_a_drought_year_carries_the_season_it_comes_from():
+    r = _replay()
+    y0 = r["years"][3]["year"]
+    r["events"][str(y0)] = "drought"
+    r["event_seasons"] = {str(y0): "winter"}
+    rows = b.replay_rows(r)
+    row = next(x for x in rows if x["year"] == y0)
+    assert row["event"] == "drought" and row["event_season"] == "winter"
+    assert all("event_season" not in x for x in rows if x["year"] != y0)
+
+
+def test_the_uncorrected_run_keeps_its_own_event_season():
+    r, u = _replay(), _replay()
+    y0 = r["years"][3]["year"]
+    u["events"][str(y0)] = "drought"
+    u["event_seasons"] = {str(y0): "monsoon"}
+    rows = b.with_uncorrected(b.replay_rows(r), b.replay_rows(u))
+    row = next(x for x in rows if x["year"] == y0)
+    assert row["event"] == "none" and row["uncorrected_rain"]["event"] == "drought"
+    assert row["uncorrected_rain"]["event_season"] == "monsoon"

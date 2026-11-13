@@ -2,8 +2,8 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 171 texts): needs native-speaker review.
-- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 77 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 175 texts): needs native-speaker review.
+- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 83 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
 
@@ -64,7 +64,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Is this right? | के यो ठीक हो? |
 | Yes | हो |
 | No, let me fix it | होइन, म मिलाउँछु |
-| No crop on {bare_days} days each year. | हरेक वर्ष {bare_days} दिन खेतमा बाली हुँदैन। |
+| The ground is bare about {bare_days} days yearly. | वर्षमा करिब {bare_days} दिन जमिन खाली रहन्छ। |
 | Uncovered soil can wash away in rain. | नढाकिएको माटो पानीले बगाउन सक्छ। |
 | Since {year_first}, rains start about {shift_days_abs} days earlier. *(if the rains now start earlier)* | {year_first} यता वर्षा करिब {shift_days_abs} दिन चाँडै आउँछ। |
 | Since {year_first}, rains start about {shift_days_abs} days later. *(if the rains now start later)* | {year_first} यता वर्षा करिब {shift_days_abs} दिन ढिलो आउँछ। |
@@ -72,6 +72,8 @@ This page is made from the word files in this folder; change those, not this pag
 | Water stored in this whole area is falling. *(if stored water in the area is falling)* | यो पूरै क्षेत्रमा जम्मा पानी घट्दै छ। |
 | Water stored in this whole area is steady. *(if stored water in the area is steady)* | यो पूरै क्षेत्रमा जम्मा पानी उस्तै छ। |
 | Water stored in this whole area is rising. *(if stored water in the area is rising)* | यो पूरै क्षेत्रमा जम्मा पानी बढ्दै छ। |
+| This trend is clear for the wide area. *(if the wide area's water trend is clear)* | ठूलो क्षेत्रका लागि यो चाल स्पष्ट छ। |
+| It does not tell about your own well. | यसले तपाईंको आफ्नै इनारबारे भन्दैन। |
 | This is the whole area, not your well. | यो पूरै क्षेत्रको कुरा हो, तपाईंको इनारको होइन। |
 | Your field's twelve months | तपाईंको खेतका बाह्र महिना |
 | Nepali and English months don't line up exactly. | नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्। |
@@ -160,13 +162,16 @@ This page is made from the word files in this folder; change those, not this pag
 | So we show both, side by side. *(if we do not know the field's water)* | त्यसैले दुवै छेउछेउमा देखाएका छौं। |
 | Play | चलाउनुहोस् |
 | Pause | रोक्नुहोस् |
-| *What happened that year* | |
+| *What the weather did that year. It is about the field, so it is the same on every plan (owner, 2026-11-13)* | |
 | A normal year | सामान्य वर्ष |
-| A very dry year | खडेरी परेको वर्ष |
+| A drier year than usual | सामान्यभन्दा सुक्खा वर्ष |
 | Too much rain in one day | एकै दिन धेरै ठूलो पानी |
 | *The two baskets for each year, side by side (owner, 2026-11-12)* | |
 | If you can't water | पानी लगाउन नसके |
 | If you can water | पानी लगाउन सके |
+| *Which season a drier year comes from, when it is one season only (owner, 2026-11-13)* | |
+| A dry winter | सुक्खा हिउँद |
+| A dry rainy season | सुक्खा बर्खा |
 
 ### 8. What should I grow? / म के लगाऊँ?
 
@@ -186,7 +191,7 @@ This page is made from the word files in this folder; change those, not this pag
 | What you do now | अहिले जे गर्नुहुन्छ |
 | Fill the empty months | खाली महिनामा पनि बाली |
 | Follow the changing rains | बदलिँदो वर्षासँगै |
-| Safest in bad years | खराब वर्षमा सबैभन्दा भरपर्दो |
+| Feed your soil | माटोलाई मलिलो बनाउने |
 | *Score names* | |
 | Harvest | उब्जनी |
 | Water | पानी |
@@ -211,14 +216,14 @@ This page is made from the word files in this folder; change those, not this pag
 | --- | --- |
 | This is what you grow now. *(for the plan you have now)* | यो तपाईंले अहिले लगाउने बाली हो। |
 | We compare every other choice with it. *(for the plan you have now)* | हामी अरू हरेक विकल्पलाई यसैसँग दाँज्छौं। |
-| Your field is empty {bare_days} days a year. *(for the plan that fills empty months)* | तपाईंको खेत वर्षमा {bare_days} दिन खाली हुन्छ। |
-| {new_crop} can grow in that empty time. *(for the plan that fills empty months; if the plan adds a crop you do not grow now)* | त्यो खाली समयमा {new_crop} लगाउन सकिन्छ। |
+| The ground is bare about {bare_days} days yearly. *(for the plan that fills empty months)* | वर्षमा करिब {bare_days} दिन जमिन खाली रहन्छ। |
+| This plan grows crops {cover_days_gain} more days. *(for the plan that fills empty months; if the plan keeps a crop on the ground for more days)* | यो योजनामा {cover_days_gain} दिन बढी बाली हुन्छ। |
 | Rains now start about {shift_days_abs} days earlier. *(for the plan that follows the changing rains; if the rains now start earlier)* | वर्षा अहिले करिब {shift_days_abs} दिन चाँडै आउँछ। |
 | Rains now start about {shift_days_abs} days later. *(for the plan that follows the changing rains; if the rains now start later)* | वर्षा अहिले करिब {shift_days_abs} दिन ढिलो आउँछ। |
 | This plan plants to match the rains. *(for the plan that follows the changing rains)* | यो योजनामा वर्षा हेरेर रोपिन्छ। |
-| Bad years hurt it less than now. *(for the plan that did best in bad years; if bad years hurt this plan less than the current one)* | खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। |
-| The ground stays covered as much as now. *(for the plan that did best in bad years)* | जमिन अहिले जत्तिकै ढाकिएर रहन्छ। |
+| This plan is here to feed your soil. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | यो योजना माटोलाई मलिलो बनाउन हो। |
 | {legume_crop} feeds the soil for the next crop. *(if the plan has lentil or another crop that feeds the soil)* | {legume_crop}ले अर्को बालीका लागि माटोमा मल थप्छ। |
+| Bad years hurt it less than now. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if bad years hurt this plan less than the current one)* | खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। |
 | Stored water in this area is falling. *(if stored water in the area is falling; if the water score beats the current plan)* | यस क्षेत्रमा जम्मा पानी घट्दै छ। |
 | This plan needs less water. *(if stored water in the area is falling; if the water score beats the current plan)* | यो योजनालाई कम पानी चाहिन्छ। |
 | It did well when we replayed your field. *(if nothing else applies)* | तपाईंको खेत फेरि चलाएर हेर्दा यो राम्रो देखियो। |
@@ -232,7 +237,7 @@ This page is made from the word files in this folder; change those, not this pag
 | We replayed the weather from {year_first} to {year_last}. | {year_first} देखि {year_last} सम्मको मौसम फेरि चलायौं। |
 | Harvest was {harvest} out of 100 on average. | औसत उब्जनी १०० मा {harvest} थियो। |
 | Without our rain fix, it was {harvest_uncorrected}. *(if NASA's uncorrected rain gives another harvest number)* | हाम्रो वर्षा सुधारबिना यो {harvest_uncorrected} थियो। |
-| Very dry years: {drought_years} of {year_count}. | खडेरी परेका वर्ष: {year_count} मध्ये {drought_years}। |
+| Drier than usual: {drought_years} of {year_count} years. | सामान्यभन्दा सुक्खा: {year_count} मध्ये {drought_years} वर्ष। |
 | Harvest numbers are computer estimates. | उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। |
 | {source_name}: {source_kind}, {source_resolution}, {source_years}. *(one line for each source)* | {source_name}: {source_kind}, {source_resolution}, {source_years}। |
 
@@ -243,7 +248,9 @@ This page is made from the word files in this folder; change those, not this pag
 | English | नेपाली |
 | --- | --- |
 | You already know how to grow these. *(for the plan you have now)* | यी बाली लगाउन तपाईंलाई पहिले नै आउँछ। |
-| Harvest: about {harvest_gain} more, out of 100. *(if the harvest score beats the current plan)* | उब्जनी: १०० मा करिब {harvest_gain} बढी। |
+| Harvest: about {harvest_gain} more, out of 100. *(if the harvest gain is one number)* | उब्जनी: १०० मा करिब {harvest_gain} बढी। |
+| Harvest: about {gain_low} to {gain_high} more. *(if the harvest gain runs from one number to a higher one)* | उब्जनी: करिब {gain_low} देखि {gain_high} बढी। |
+| Harvest: up to {gain_high} more, maybe none. *(if the harvest may be higher or no better)* | उब्जनी: {gain_high} सम्म बढी, वा उस्तै। |
 | Needs less water than now. *(if the water score beats the current plan)* | अहिलेभन्दा कम पानी चाहिन्छ। |
 | Ground stays covered more of the year. *(if the ground-cover score beats the current plan)* | वर्षको धेरै समय जमिन ढाकिएको रहन्छ। |
 | Less soil washes away in heavy rain. *(if the soil-kept score beats the current plan)* | ठूलो पानी पर्दा कम माटो बग्छ। |
@@ -260,7 +267,10 @@ This page is made from the word files in this folder; change those, not this pag
 | --- | --- |
 | This is a sample field, not yours. *(while the field is a sample, not a farmer's own)* | यो नमुना खेत हो, तपाईंको होइन। |
 | Nearby parts share one soil map. | नजिकका भागहरूको माटोको नक्सा एउटै छ। |
+| The soil numbers come from {soil_distance} m away. *(if the soil numbers are not from the field's own spot)* | माटोको नाप {soil_distance} मिटर परको हो। |
 | Planting dates are typical ones, not yours. | रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। |
+| We don't know how deep roots reach here. *(for a suggested plan, to say why the gain is a range)* | यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। |
+| So the harvest gain is a range. *(for a suggested plan, to say why the gain is a range)* | त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। |
 | We guessed how thirst hurts {assumed_crop}. *(if a crop's harvest loss from thirst is our assumption)* | {assumed_crop}मा तिर्खाको असर हाम्रो अनुमान हो। |
 | If you can water, rice stands in water. *(if the plan has paddy rice)* | पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। |
 | Without water, rice lives on rain alone. *(if the plan has paddy rice)* | पानी नभए धान वर्षामा मात्र भर पर्छ। |
@@ -274,6 +284,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Then NASA's rain here jumped too high. *(if we lowered the rain numbers after the gauges stopped)* | त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। |
 | We lowered rain from {rain_fix_year} to match before. *(if we lowered the rain numbers after the gauges stopped)* | हामीले {rain_fix_year} देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। |
 | That may also hide a real change. *(if we lowered the rain numbers after the gauges stopped)* | यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। |
+| Our rain may still read too high. *(if our rain is well above the nearest town's usual rain)* | हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। |
 | Stored water is measured for a wide area. | जम्मा पानी ठूलो क्षेत्रको नापिएको हो। |
 | It is not your own well. | यो तपाईंको आफ्नै इनार होइन। |
 | We may count too many freezing nights. *(if some months have freezing nights)* | हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। |

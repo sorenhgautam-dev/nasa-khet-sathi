@@ -1048,27 +1048,25 @@
    },
    "tabs": {
     "why": "This is what you grow now. We compare every other choice with it.",
-    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 72 out of 100 on average. Without our rain fix, it was 73. Very dry years: 7 of 24. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 72 out of 100 on average. Without our rain fix, it was 73. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
     "benefits": "You already know how to grow these. Changing crops can keep pests and diseases down.",
-    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. Planting dates are typical ones, not yours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
     "check": "Ask your local farm advisor first. Check how much water you really have. Try it on one small part first. You know your land best."
    },
    "tips": [
-    "Rice gets most thirsty in October. Water it then if you can.",
     "Potato gets most thirsty in January. Water it then if you can.",
-    "Cover bare soil with straw in March."
+    "Cover bare soil with straw in November."
    ],
    "tabs_ne": {
     "why": "यो तपाईंले अहिले लगाउने बाली हो। हामी अरू हरेक विकल्पलाई यसैसँग दाँज्छौं।",
-    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ७२ थियो। हाम्रो वर्षा सुधारबिना यो ७३ थियो। खडेरी परेका वर्ष: २४ मध्ये ७। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ७२ थियो। हाम्रो वर्षा सुधारबिना यो ७३ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
     "benefits": "यी बाली लगाउन तपाईंलाई पहिले नै आउँछ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
-    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
     "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
-    "धानलाई कात्तिक (अक्टोबर–नोभेम्बर)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
     "आलुलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
-    "चैत (मार्च–अप्रिल)मा खाली माटोलाई परालले ढाक्नुहोस्।"
+    "मंसिर (नोभेम्बर–डिसेम्बर)मा खाली माटोलाई परालले ढाक्नुहोस्।"
    ]
   },
   {
@@ -1090,7 +1088,7 @@
     "harvest": 90,
     "water": 51,
     "cover": 68,
-    "soil_kept": 74
+    "soil_kept": 75
    },
    "score_uncorrected_rain": {
     "harvest": 90,
@@ -1099,33 +1097,29 @@
     "soil_kept": 72
    },
    "tabs": {
-    "why": "Your field is empty 62 days a year. Wheat can grow in that empty time. Stored water in this area is falling. This plan needs less water.",
-    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 90 out of 100 on average. Very dry years: 6 of 24. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
-    "benefits": "Harvest: about 18 more, out of 100. Needs less water than now. Ground stays covered more of the year. Wheat roots reach water deeper down.",
-    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. Planting dates are typical ones, not yours. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "why": "The ground is bare about 62 days yearly. This plan grows crops 25 more days. Stored water in this area is falling. This plan needs less water.",
+    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 90 out of 100 on average. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+    "benefits": "Harvest: about 8 to 22 more. Needs less water than now. Ground stays covered more of the year. Less soil washes away in heavy rain. Wheat roots reach water deeper down.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
     "check": "Ask your local farm advisor first. Ask if wheat seed is sold nearby. Ask neighbours when they plant wheat. Lentil after rice is another choice. It feeds the soil. Changing crop kinds keeps pests down. Check how much water you really have. Wheat here usually needs watering. Check you can water it. Try it on one small part first. You know your land best."
    },
    "tips": [
-    "Rice gets most thirsty in June. Water it then if you can.",
-    "Wheat gets most thirsty in February. Water it then if you can.",
-    "Cover bare soil with straw in April."
+    "Wheat gets most thirsty in February. Water it then if you can."
    ],
    "tabs_ne": {
-    "why": "तपाईंको खेत वर्षमा ६२ दिन खाली हुन्छ। त्यो खाली समयमा गहुँ लगाउन सकिन्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
-    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ९० थियो। खडेरी परेका वर्ष: २४ मध्ये ६। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
-    "benefits": "उब्जनी: १०० मा करिब १८ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। गहुँको जरा अझ गहिरो पानीसम्म पुग्छ।",
-    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "why": "वर्षमा करिब ६२ दिन जमिन खाली रहन्छ। यो योजनामा २५ दिन बढी बाली हुन्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
+    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ९० थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+    "benefits": "उब्जनी: करिब ८ देखि २२ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। ठूलो पानी पर्दा कम माटो बग्छ। गहुँको जरा अझ गहिरो पानीसम्म पुग्छ।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धानमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
     "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै गहुँको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई गहुँ कहिले रोप्छन् भनी सोध्नुहोस्। धानपछि मसुर लगाउनु अर्को उपाय हो। यसले माटोलाई मल दिन्छ। फरक किसिमको बाली लगाउँदा कीरा घट्छन्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। यहाँ गहुँलाई प्रायः पानी लगाउनुपर्छ। पानी लगाउन सक्नुहुन्छ कि जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
-    "धानलाई असार (जुन–जुलाई)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
-    "गहुँलाई फागुन (फेब्रुअरी–मार्च)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
-    "बैशाख (अप्रिल–मे)मा खाली माटोलाई परालले ढाक्नुहोस्।"
+    "गहुँलाई फागुन (फेब्रुअरी–मार्च)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।"
    ]
   },
   {
    "id": "safest",
-   "name": "Safest in bad years",
+   "name": "Feed your soil",
    "crops": [
     {
      "crop": "rice",
@@ -1142,7 +1136,7 @@
     "harvest": 81,
     "water": 44,
     "cover": 67,
-    "soil_kept": 74
+    "soil_kept": 75
    },
    "score_uncorrected_rain": {
     "harvest": 82,
@@ -1151,28 +1145,24 @@
     "soil_kept": 72
    },
    "tabs": {
-    "why": "Bad years hurt it less than now. The ground stays covered as much as now. Lentil feeds the soil for the next crop. Stored water in this area is falling. This plan needs less water.",
-    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 81 out of 100 on average. Without our rain fix, it was 82. Very dry years: 6 of 24. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
-    "benefits": "Harvest: about 9 more, out of 100. Needs less water than now. Ground stays covered more of the year. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
-    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. Planting dates are typical ones, not yours. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
+    "why": "This plan is here to feed your soil. Lentil feeds the soil for the next crop. Bad years hurt it less than now. Stored water in this area is falling. This plan needs less water.",
+    "evidence": "We replayed the weather from 2002 to 2025. Harvest was 81 out of 100 on average. Without our rain fix, it was 82. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
+    "benefits": "Harvest: about 4 to 14 more. Needs less water than now. Ground stays covered more of the year. Less soil washes away in heavy rain. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
+    "unknown": "This is a sample field, not yours. Nearby parts share one soil map. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
     "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Check how much water you really have. Try it on one small part first. You know your land best."
    },
    "tips": [
-    "Rice gets most thirsty in June. Water it then if you can.",
-    "Lentil gets most thirsty in January. Water it then if you can.",
-    "Cover bare soil with straw in March."
+    "Lentil gets most thirsty in January. Water it then if you can."
    ],
    "tabs_ne": {
-    "why": "खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। जमिन अहिले जत्तिकै ढाकिएर रहन्छ। मसुरले अर्को बालीका लागि माटोमा मल थप्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
-    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ८१ थियो। हाम्रो वर्षा सुधारबिना यो ८२ थियो। खडेरी परेका वर्ष: २४ मध्ये ६। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
-    "benefits": "उब्जनी: १०० मा करिब ९ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
-    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
+    "why": "यो योजना माटोलाई मलिलो बनाउन हो। मसुरले अर्को बालीका लागि माटोमा मल थप्छ। खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। यस क्षेत्रमा जम्मा पानी घट्दै छ। यो योजनालाई कम पानी चाहिन्छ।",
+    "evidence": "२००२ देखि २०२५ सम्मको मौसम फेरि चलायौं। औसत उब्जनी १०० मा ८१ थियो। हाम्रो वर्षा सुधारबिना यो ८२ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
+    "benefits": "उब्जनी: करिब ४ देखि १४ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। ठूलो पानी पर्दा कम माटो बग्छ। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
+    "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिक ती मापकका खबर २०१७ मा रोकिए। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा पानी ठूलो क्षेत्रको नापिएको हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
     "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
-    "धानलाई असार (जुन–जुलाई)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
-    "मसुरलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।",
-    "चैत (मार्च–अप्रिल)मा खाली माटोलाई परालले ढाक्नुहोस्।"
+    "मसुरलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।"
    ]
   }
  ],
@@ -1230,6 +1220,7 @@
      "harvest": 82,
      "dry_days": 72,
      "event": "drought",
+     "event_season": "monsoon",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -1240,7 +1231,8 @@
     "year": 2006,
     "harvest": 71,
     "dry_days": 72,
-    "event": "flood",
+    "event": "drought",
+    "event_season": "winter",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1264,6 +1256,16 @@
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 73,
+     "dry_days": 73,
+     "event": "drought",
+     "event_season": "winter",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
@@ -1289,6 +1291,7 @@
      "harvest": 66,
      "dry_days": 91,
      "event": "drought",
+     "event_season": "monsoon",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -1320,6 +1323,7 @@
     "harvest": 63,
     "dry_days": 115,
     "event": "drought",
+    "event_season": "monsoon",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1340,6 +1344,7 @@
     "harvest": 75,
     "dry_days": 92,
     "event": "drought",
+    "event_season": "monsoon",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1349,7 +1354,7 @@
     "year": 2016,
     "harvest": 66,
     "dry_days": 93,
-    "event": "drought",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1397,7 +1402,7 @@
     "year": 2019,
     "harvest": 68,
     "dry_days": 111,
-    "event": "drought",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1481,7 +1486,7 @@
     "uncorrected_rain": {
      "harvest": 66,
      "dry_days": 87,
-     "event": "drought",
+     "event": "none",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -1520,6 +1525,7 @@
      "harvest": 70,
      "dry_days": 79,
      "event": "drought",
+     "event_season": "winter",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -1556,6 +1562,15 @@
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 91,
+     "dry_days": 56,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
@@ -1571,6 +1586,7 @@
      "harvest": 97,
      "dry_days": 25,
      "event": "drought",
+     "event_season": "monsoon",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -1581,7 +1597,8 @@
     "year": 2006,
     "harvest": 86,
     "dry_days": 56,
-    "event": "flood",
+    "event": "drought",
+    "event_season": "winter",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1605,6 +1622,16 @@
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 89,
+     "dry_days": 55,
+     "event": "drought",
+     "event_season": "winter",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
@@ -1621,10 +1648,20 @@
     "year": 2010,
     "harvest": 84,
     "dry_days": 64,
-    "event": "drought",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 84,
+     "dry_days": 64,
+     "event": "drought",
+     "event_season": "monsoon",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
@@ -1651,19 +1688,11 @@
     "year": 2013,
     "harvest": 80,
     "dry_days": 85,
-    "event": "none",
+    "event": "drought",
+    "event_season": "monsoon",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
-    },
-    "uncorrected_rain": {
-     "harvest": 80,
-     "dry_days": 85,
-     "event": "drought",
-     "irrigated": {
-      "harvest": 100,
-      "dry_days": 0
-     }
     }
    },
    {
@@ -1674,15 +1703,6 @@
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
-    },
-    "uncorrected_rain": {
-     "harvest": 89,
-     "dry_days": 54,
-     "event": "drought",
-     "irrigated": {
-      "harvest": 100,
-      "dry_days": 0
-     }
     }
    },
    {
@@ -1690,6 +1710,7 @@
     "harvest": 93,
     "dry_days": 43,
     "event": "drought",
+    "event_season": "monsoon",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1766,7 +1787,7 @@
     "year": 2020,
     "harvest": 100,
     "dry_days": 10,
-    "event": "flood",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1804,7 +1825,7 @@
     "year": 2022,
     "harvest": 99,
     "dry_days": 21,
-    "event": "drought",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1831,7 +1852,7 @@
     "uncorrected_rain": {
      "harvest": 85,
      "dry_days": 59,
-     "event": "drought",
+     "event": "none",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -1869,7 +1890,8 @@
     "uncorrected_rain": {
      "harvest": 90,
      "dry_days": 46,
-     "event": "none",
+     "event": "drought",
+     "event_season": "winter",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -1906,6 +1928,15 @@
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 83,
+     "dry_days": 80,
+     "event": "none",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
@@ -1921,6 +1952,7 @@
      "harvest": 88,
      "dry_days": 73,
      "event": "drought",
+     "event_season": "monsoon",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -1931,7 +1963,8 @@
     "year": 2006,
     "harvest": 79,
     "dry_days": 73,
-    "event": "flood",
+    "event": "drought",
+    "event_season": "winter",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -1955,6 +1988,16 @@
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
+    },
+    "uncorrected_rain": {
+     "harvest": 80,
+     "dry_days": 74,
+     "event": "drought",
+     "event_season": "winter",
+     "irrigated": {
+      "harvest": 100,
+      "dry_days": 0
+     }
     }
    },
    {
@@ -1980,6 +2023,7 @@
      "harvest": 75,
      "dry_days": 87,
      "event": "drought",
+     "event_season": "monsoon",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -2010,26 +2054,18 @@
     "year": 2013,
     "harvest": 74,
     "dry_days": 97,
-    "event": "none",
+    "event": "drought",
+    "event_season": "monsoon",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
-    },
-    "uncorrected_rain": {
-     "harvest": 74,
-     "dry_days": 97,
-     "event": "drought",
-     "irrigated": {
-      "harvest": 100,
-      "dry_days": 0
-     }
     }
    },
    {
     "year": 2014,
     "harvest": 78,
     "dry_days": 81,
-    "event": "drought",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -2040,6 +2076,7 @@
     "harvest": 82,
     "dry_days": 84,
     "event": "drought",
+    "event_season": "monsoon",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -2116,7 +2153,7 @@
     "year": 2020,
     "harvest": 93,
     "dry_days": 55,
-    "event": "flood",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -2154,7 +2191,7 @@
     "year": 2022,
     "harvest": 90,
     "dry_days": 73,
-    "event": "drought",
+    "event": "none",
     "irrigated": {
      "harvest": 100,
      "dry_days": 0
@@ -2181,7 +2218,7 @@
     "uncorrected_rain": {
      "harvest": 75,
      "dry_days": 85,
-     "event": "drought",
+     "event": "none",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -2220,6 +2257,7 @@
      "harvest": 80,
      "dry_days": 75,
      "event": "drought",
+     "event_season": "winter",
      "irrigated": {
       "harvest": 100,
       "dry_days": 0
@@ -2232,7 +2270,7 @@
  "sources": [
   {
    "name": "GPM IMERG",
-   "product": "V07 Final daily (Late for Oct-Dec 2025); Final days from 2017 scaled back to its own 2001-2016 level (the rain gauges behind it stopped reporting here)",
+   "product": "V07 Final daily (Late for Oct-Dec 2025); days from 2017 scaled back, month by month, to its own 2001-2016 level (the rain gauges behind it stopped reporting here)",
    "resolution": "0.1 deg (about 10 km)",
    "years": "2001-2025",
    "type": "satellite"
@@ -2431,7 +2469,7 @@
    "rain_mm_per_year": {
     "reference": 1842,
     "after_uncorrected": 2731,
-    "after_corrected": 1882,
+    "after_corrected": 1874,
     "station_normal": 1375
    },
    "gauges": {
@@ -2513,6 +2551,18 @@
     "status": "Claude's choice, owner-approved 2026-11-12"
    },
    {
+    "id": "events.seasons",
+    "choice": "DHM's seasons, as in its seasonal summaries (monsoon June to September; winter December to February, counted in the year of its January and February; a winter with a month missing from the record is left out). Drought (drought_decile_max) is judged on each season's rain total over the record's seasons; where a year's drought comes from one season the export says which (replay year event_season: 'winter' or 'monsoon'; owner's answer 9: 'dry winter'). Claude's reading of the owner's answer, fixed and committed before its first run; put to the owner",
+    "value": "{'monsoon': [6, 7, 8, 9], 'winter': [12, 1, 2]}",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "events.flood_day",
+    "choice": "Owner's answer 9 (one event per year for the field): the wettest day of the calendar year, no longer of a plan's crop-season days, which is ETCCDI's own annual Rx1day (etccdi.pacificclimate.org list of 27 indices). Classes and deciles as before (flood_decile_min). Claude's reading, fixed and committed before its first run; put to the owner",
+    "value": "the calendar year's wettest day (ETCCDI Rx1day), in deciles flood_decile_min..10 of the record's years",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
     "id": "events.drought_decile_max",
     "choice": "Rainfall deciles (Gibbs & Maher 1967, Bureau of Meteorology Bulletin No. 48; cited by WMO & GWP 2016, Handbook of Drought Indicators and Indices, WMO-No. 1173, pp. 11-12). Classes from Hayes, 'Drought Indices', National Drought Mitigation Center (archived 2009-05-10, https://webarchive.library.unt.edu/eot2008/20090510055327id_/http://www.drought.unl.edu/whatis/indices.htm): 'deciles 1-2: lowest 20% much below normal'. Applied to each crop's season rain over the replay record, decile = ceil(10 x rank / n) with average ranks for ties. The method wants a long record (Australia uses 100 years); 25 seasons is short. Calling 'much below normal' a drought: Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 17)",
     "value": "2",
@@ -2549,16 +2599,22 @@
     "status": "Claude's choice, owner-approved 2026-11-12"
    },
    {
+    "id": "gpm_series.level_caveat_ratio",
+    "choice": "Owner, 2026-11-13 (answer 8 to REVIEW_2 H4): one 'unknown' line that the rain may still read high, keyed on the ratio of the twin's mean yearly rain to DHM's 1991-2020 normal of the nearest station. The limit 1.25 is Claude's choice, fixed before its first run (the lower edge of the 25 to 40 percent band that keyed the station lines, owner-approved 2026-11-12); put to the owner. A field without such a normal gets no line",
+    "value": "1.25",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
     "id": "gpm_series.correction_fields",
-    "choice": "Owner, 2026-11-13 (decision 1) is about this field: 'the rain gauges behind NASA's correction disappeared around this field in January 2017'. Claude's reading: a field abroad (build step 11) is corrected only after its own rain check B finds the same break, since gauge networks differ by country",
+    "choice": "Owner, 2026-11-13 (decision 1) is about this field: 'the rain gauges behind NASA's correction disappeared around this field in January 2017'. Claude's reading, owner-approved 2026-11-13 (answer 20 to REVIEW_2): a field abroad (build step 11) is corrected only after its own rain check B finds the same break, since gauge networks differ by country",
     "value": "['demo']",
-    "status": "Claude's choice"
+    "status": "Claude's choice, owner-approved 2026-11-13"
    },
    {
     "id": "gpm_series.correction_products",
-    "choice": "Claude's reading, fixed 2026-11-13 before the Late check (IMERG Late 2014-2019) was read: only IMERG Final days are scaled, and only they set the factors. The 92 IMERG Late days (Oct-Dec 2025, D1) are left as they are, because Late uses a climatological gauge calibration, not the monthly gauges that vanished, so the 2017 loss cannot reach it; the Late check tests that. POWER-filled days (none on the demo field) are another source and are not scaled either. If the Late check shows Late stepping up in 2017 as Final does, this is put back to the owner. Late check (2026-11-13, VALIDATION 3.9b): Late does not step with Final (1.13 against 1.62), but it is wetter than gauge-adjusted Final in 2014-2016 (Final/Late 0.64-0.85) and about equal to Final from 2017 (1.00-1.13): Late sits at the un-gauged level, so whether to scale the 92 Late days too is put to the owner",
-    "value": "['final']",
-    "status": "Claude's choice, put to the owner"
+    "choice": "Owner, 2026-11-13 (answer 7 to REVIEW_2 H4): scale the 92 IMERG Late days (Oct-Dec 2025) with the same monthly factors; owner-approved 2026-11-13. The factors are still set by IMERG Final months only (correction_factor_products). Reason: the Late check and DHM's own 2025 gauges show Late at the un-gauged, too-wet level (October 2025: 427.7 mm against 204.8 / 210.5 / 197.7 mm at three gauges; VALIDATION 3.9b, 3.9c). History: Claude's reading, fixed 2026-11-13 before the Late check (IMERG Late 2014-2019) was read: only IMERG Final days are scaled, and only they set the factors. The 92 IMERG Late days (Oct-Dec 2025, D1) are left as they are, because Late uses a climatological gauge calibration, not the monthly gauges that vanished, so the 2017 loss cannot reach it; the Late check tests that. POWER-filled days (none on the demo field) are another source and are not scaled either. If the Late check shows Late stepping up in 2017 as Final does, this is put back to the owner. Late check (2026-11-13, VALIDATION 3.9b): Late does not step with Final (1.13 against 1.62), but it is wetter than gauge-adjusted Final in 2014-2016 (Final/Late 0.64-0.85) and about equal to Final from 2017 (1.00-1.13): Late sits at the un-gauged level, so whether to scale the 92 Late days too is put to the owner",
+    "value": "['final', 'late']",
+    "status": "Claude's choice, owner-approved 2026-11-13"
    },
    {
     "id": "monsoon_onset.search_until",
@@ -2664,9 +2720,9 @@
    },
    {
     "id": "trends.shift_days_span",
-    "choice": "schema.json diary.shift_days: 'Sen's slope x record length'; Claude's reading: the change from the first to the last year, slope x (last - first)",
+    "choice": "schema.json diary.shift_days: 'Sen's slope x record length'; Claude's reading, owner-approved 2026-11-13 (answer 20 to REVIEW_2): the change from the first to the last year, slope x (last - first)",
     "value": "last year - first year",
-    "status": "Claude's choice"
+    "status": "Claude's choice, owner-approved 2026-11-13"
    },
    {
     "id": "months.terciles",
@@ -2712,8 +2768,32 @@
    },
    {
     "id": "plans.third_plan_rule",
-    "choice": "Owner, 2026-11-13 (decision 5): option A, best in bad years among plans that keep at least today's cover, named 'Safest in bad years' (not 'follow the shift', since shift_days cannot be measured; revisit only if step 9's 2040 projections finish). The fallback to every rice plan is Claude's, fixed before the run. 'Other crops' was added by Claude AFTER the first run, which picked rice then wheat again with rice sown on 1 June instead of 15 June: the same rotation, while CLAUDE.md and the challenge ask for at least three rotations. Put to the owner",
+    "choice": "Owner, 2026-11-13 (decision 5): option A, best in bad years among plans that keep at least today's cover, named 'Safest in bad years' (not 'follow the shift', since shift_days cannot be measured; revisit only if step 9's 2040 projections finish). The fallback to every rice plan is Claude's, fixed before the run. 'Other crops' was added by Claude AFTER the first run, which picked rice then wheat again with rice sown on 1 June instead of 15 June: the same rotation, while CLAUDE.md and the challenge ask for at least three rotations. Owner-approved 2026-11-13 (answer 3 to REVIEW_2: the plan stays as chosen and is renamed 'Feed your soil')",
     "value": "'Safest in bad years': among the rice plans of the Pareto set that grow other crops than the current and the cover-the-gap plan and keep at least today's cover, the best 10th-percentile year (ties: higher mean harvest). If no Pareto plan qualifies, every rice plan is looked at. The cover-the-gap plan, too, grows other crops than the current plan",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "plans.gain_range",
+    "choice": "Owner, 2026-11-13 (answer 4 to REVIEW_2 H2): keep FAO's larger root depths for the scores; show the harvest gain as a range and explain it in the 'unknown' tab. Which runs make the range is Claude's reading, fixed and committed before its first run; put to the owner",
+    "value": "the harvest gain of a suggested plan over the current plan is shown as a range: both plans are replayed with each of their crops at the smaller and at the larger root depth of its FAO-56 Table 22 range (config/crops.json zr_range_m), every combination, a crop having the same depth in both plans; the smallest and the largest gain are shown, rounded",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "plans.current_options",
+    "choice": "Owner, 2026-11-13 (answer 6 to REVIEW_2 H3): the app asks the farmer to confirm the winter crop; precompute every answer (rice then potato, and rice then wheat with wheat on the FAO Hill-zone window that best fits the satellite's winter season). The distance is Claude's reading of 'best fits', fixed and committed before its first run; put to the owner",
+    "value": "the current plan is exported once for each rotation in the field's current_rotation_options (config/fields/<id>.yaml), each with both water cases and both rain versions; the suggested plans stay as chosen and are compared with whichever the farmer picks. The first option is the default (the field's current_rotation, default windows, sown at the middle). In another option, a crop that the default does not grow is sown on the date (start, middle or end of a calendar window the twin can simulate, not overlapping the option's other crops) whose simulated season lies closest to the satellite's season of the same slot: the median over the HLS years of the days between green-up (sowing + initial stage against the detected start) plus the days between season ends; ties go to the later date",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "tips.thirsty_min_dry_days_per_year",
+    "choice": "Owner, 2026-11-13 (answer 5): a floor before any 'thirsty' tip. The number is Claude's choice, fixed and committed before its first run: the tip is shown only when, in the month the crop is most often short of water, that happens on at least 5 days a year on average over the rain-fed replay. Put to the owner",
+    "value": "5",
+    "status": "Claude's choice, put to the owner"
+   },
+   {
+    "id": "tips.straw_months",
+    "choice": "Owner, 2026-11-13 (answer 5): the straw tip from the satellite's bare months. The rule for a suggested plan is Claude's reading (a plan that grows a crop in a month does not need straw then), fixed and committed before its first run; put to the owner",
+    "value": "the satellite's bare months (diary.months[].cover == 'bare'): for the current plan the first of them; for a suggested plan the first of them in which that plan's own calendar also leaves the ground bare; no such month, no tip",
     "status": "Claude's choice, put to the owner"
    }
   ]

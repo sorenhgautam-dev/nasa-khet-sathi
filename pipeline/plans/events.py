@@ -1,16 +1,19 @@
-"""One event per replay year (contract: none, drought, flood), from the weather of each crop season.
-Rules and sources in rules.yaml `events`. Pure.
+"""One weather event per calendar year for the field (contract: none, drought, flood). Pure.
 
-- drought: the season's rain is in deciles 1-2 of that crop's seasons over the record (decile =
-  ceil(10 x rank / n), average ranks for ties)
-- flood: the year's wettest crop-season day (ETCCDI Rx1day over its seasons' days) is in deciles 9-10
-  ("much above normal", `flood_decile_min`) of the record's years. Fixed in advance from those sources and
-  never tuned on the known floods, which are validation layer 4.1 (owner, 2026-11-12)
-A year takes the first of its events in `precedence` order, else 'none'.
+Owner's answer 9 to REVIEW_2 (2026-11-13; rules.yaml `events`, committed before its first run): the event is about
+the field's weather, so it is the same on every plan. Until then it was computed from each plan's own crop seasons,
+and the same year could differ between plans (7 of 24 years in the demo export).
 
-Frost is not a replay event (owner, 2026-11-12, REVIEW_NOTES M1): the frost Tmin is known to overcount cold
-nights, so frost is shown only as a risk band in the monthly calendar (diary.months[].frost), never per year.
-Nothing here reads a frost rule.
+- drought: the rain of a season is in deciles 1..drought_decile_max of that season over the record (decile =
+  ceil(10 x rank / n), average ranks for ties). Seasons are DHM's (rules `seasons`): monsoon June to September;
+  winter December to February, counted in the year of its January and February. A season with a month outside the
+  record is left out. Where a year's drought comes from one season only, `event_seasons` says which.
+- flood: the calendar year's wettest day (ETCCDI Rx1day) is in deciles flood_decile_min..10 of the record's years.
+A year takes the first of its events in `precedence` order, else 'none'. Both rules are relative: about one season
+and one year in five is flagged whatever the amounts.
+
+Frost is not a replay event (owner, 2026-11-12, REVIEW_NOTES M1): it is shown only as a risk band in the monthly
+calendar (diary.months[].frost), never per year.
 """
 import math
 
@@ -20,35 +23,61 @@ EVENTS = ("drought", "flood")
 
 
 def _deciles(values):
-    """decile = ceil(10 x rank / n), ranks ascending with average ranks for ties (as for drought)."""
+    """decile = ceil(10 x rank / n), ranks ascending with average ranks for ties."""
     ranks = values.rank(method="average")
     return (10 * ranks / len(values)).apply(math.ceil)
 
 
-def season_flags(seasons, rules):
-    """Per season: {'drought'} when its rain is in deciles 1..drought_decile_max of that crop's seasons."""
-    df = pd.DataFrame(seasons)
-    deciles = df.groupby("crop")["rain_mm"].transform(_deciles)
-    return [{"drought"} if d <= rules["drought_decile_max"] else set() for d in deciles]
+def season_totals(rain, months):
+    """{season year: rain total} for the seasons whose every day is in the record. A season that crosses the new
+    year (December to February) is counted in the year of its January."""
+    idx = rain.index
+    wraps = 12 in months and 1 in months
+    year = pd.Series(idx.year + ((idx.month >= 7) & wraps), index=idx)
+    sel = idx.month.isin(months)
+    tot, have = rain[sel].groupby(year[sel]).sum(), rain[sel].groupby(year[sel]).count()
+    out = {}
+    for y in tot.index:
+        need = sum(pd.Period(f"{y - 1 if (wraps and m >= 7) else y}-{m:02d}").days_in_month for m in months)
+        if have[y] == need:
+            out[int(y)] = float(tot[y])
+    return out
 
 
-def flood_years(seasons, rules):
-    """Years whose wettest crop-season day (Rx1day over all their seasons) is in deciles flood_decile_min..10
-    of the record's years."""
-    rx1day = pd.DataFrame(seasons).groupby("year")["rain_max_day_mm"].max()
-    deciles = _deciles(rx1day)
-    return {int(y) for y, d in deciles.items() if d >= rules["flood_decile_min"]}
-
-
-def year_events(seasons, rules):
-    """{'2001': 'none' | 'drought' | 'flood', ...} for every year that has a season."""
+def field_year_events(rain, rules):
+    """rain: daily Series by date, no gaps. Returns {'events': {'2001': 'none' | 'drought' | 'flood', ...},
+    'event_seasons': {year: season} for droughts that come from exactly one season, 'detail': per-year numbers}."""
     unknown = [e for e in rules["precedence"] if e not in EVENTS]
     if unknown:
         raise ValueError(f"events.precedence lists {unknown}: replay events are only {list(EVENTS)} "
                          "(frost is a monthly risk band, not a replay event; REVIEW_NOTES M1)")
-    out = {}
-    for s, f in zip(seasons, season_flags(seasons, rules)):
-        out.setdefault(str(s["year"]), set()).update(f)
-    for y in flood_years(seasons, rules):
-        out[str(y)].add("flood")
-    return {y: next((e for e in rules["precedence"] if e in f), "none") for y, f in sorted(out.items())}
+    rain = pd.Series(rain).astype(float)
+    if rain.isna().any():
+        raise ValueError(f"missing rain on {int(rain.isna().sum())} day(s): events are never computed over gaps")
+    years = sorted(set(rain.index.year))
+    dry = {y: [] for y in years}
+    detail = {str(y): {} for y in years}
+    for name, months in rules["seasons"].items():
+        tot = pd.Series(season_totals(rain, list(months)))
+        dec = _deciles(tot)
+        for y in years:
+            detail[str(y)][f"{name}_mm"] = round(float(tot[y]), 1) if y in tot.index else None
+            detail[str(y)][f"{name}_decile"] = int(dec[y]) if y in tot.index else None
+            if y in tot.index and dec[y] <= rules["drought_decile_max"]:
+                dry[y].append(name)
+    rx = rain.groupby(rain.index.year).max()
+    rx_dec = _deciles(rx)
+    events, seasons = {}, {}
+    for y in years:
+        flags = set()
+        if dry[y]:
+            flags.add("drought")
+        if rx_dec[y] >= rules["flood_decile_min"]:
+            flags.add("flood")
+        e = next((k for k in rules["precedence"] if k in flags), "none")
+        events[str(y)] = e
+        if e == "drought" and len(dry[y]) == 1:
+            seasons[str(y)] = dry[y][0]
+        detail[str(y)].update(wettest_day_mm=round(float(rx[y]), 1), wettest_day=str(rain[rain.index.year == y].idxmax().date()),
+                              flood_class=bool(rx_dec[y] >= rules["flood_decile_min"]), dry_seasons=list(dry[y]))
+    return {"events": events, "event_seasons": seasons, "detail": detail}

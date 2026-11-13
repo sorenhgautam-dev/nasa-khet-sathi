@@ -963,7 +963,14 @@
       "drought",
       "flood"
      ],
-     "description": "The year's weather event for the crop seasons. No 'frost' (owner, 2026-11-12, REVIEW_NOTES M1): frost is shown only as a risk band in diary.months[].frost."
+     "description": "The year's weather event for the FIELD: the same on every plan (owner, 2026-11-13). drought = the monsoon's or the winter's rain in the lowest fifth of the record; flood = the calendar year's wettest day in the top fifth; drought goes first. No 'frost' (owner, 2026-11-12): frost is shown only as a risk band in diary.months[].frost."
+    },
+    "event_season": {
+     "enum": [
+      "monsoon",
+      "winter"
+     ],
+     "description": "Only with event 'drought', and only when the drought comes from one season (owner, 2026-11-13): 'winter' = a dry winter (December to February), 'monsoon' = a dry monsoon (June to September). Absent when both seasons were dry, and for every other event."
     },
     "irrigated": {
      "type": "object",
@@ -1008,6 +1015,13 @@
         "drought",
         "flood"
        ]
+      },
+      "event_season": {
+       "enum": [
+        "monsoon",
+        "winter"
+       ],
+       "description": "Only with event 'drought', and only when the drought comes from one season (owner, 2026-11-13): 'winter' = a dry winter (December to February), 'monsoon' = a dry monsoon (June to September). Absent when both seasons were dry, and for every other event."
       },
       "irrigated": {
        "type": "object",

@@ -95,9 +95,29 @@ def plan_export(specs, w, lib, soil, cn, rules, labels):
         if len(d):
             by_month = d.groupby(pd.DatetimeIndex(d["date"]).month).size()
             thirsty[c] = {"month": int(by_month.idxmax()), "dry_days_per_year": round(float(by_month.max()) / n_years, 1)}
+    # one weather event per year for the field, the same on every plan (owner's answer 9 to REVIEW_2, 2026-11-13)
+    fe = ev.field_year_events(pd.Series(w["rain_mm"].to_numpy(float), index=pd.DatetimeIndex(w["date"])), rules["events"])
     return {"labels": {**labels, "rotation": crops, "plan": ge.plan_id(specs)},
-            "years": rf["years"], "irrigated_years": ir["years"], "events": ev.year_events(rf["seasons"], rules["events"]),
-            "thirsty": thirsty}
+            "years": rf["years"], "irrigated_years": ir["years"], "events": fe["events"],
+            "event_seasons": fe["event_seasons"], "event_detail": fe["detail"], "thirsty": thirsty}
+
+
+def gain_range(specs_plan, specs_current, w, lib, soil, cn, rules):
+    """Owner's answer 4 to REVIEW_2 (2026-11-13; rules.yaml plans.gain_range): the plan's mean harvest minus the current
+    plan's, with each of their crops at the smaller and at the larger root depth of its FAO-56 Table 22 range (every
+    combination, a crop having the same depth in both plans). Returns {low, high, runs}."""
+    import copy
+    import itertools
+    crops = sorted({sp["crop"] for sp in list(specs_plan) + list(specs_current)})
+    runs = []
+    for combo in itertools.product(*[lib[c]["zr_range_m"] for c in crops]):
+        lib2 = copy.deepcopy(lib)
+        for c, z in zip(crops, combo):
+            lib2[c]["zr_m"] = z
+        hp = evaluate(specs_plan, w, lib2, soil, cn, rules, 1.0)["harvest"]
+        hc = evaluate(specs_current, w, lib2, soil, cn, rules, 1.0)["harvest"]
+        runs.append({"zr_m": dict(zip(crops, combo)), "plan": round(hp, 2), "current": round(hc, 2), "gain": round(hp - hc, 2)})
+    return {"low": min(r["gain"] for r in runs), "high": max(r["gain"] for r in runs), "runs": runs}
 
 
 def choose(rows, current_id, keys, must_include):
@@ -165,6 +185,8 @@ def main(argv=None):
                          "stability": r["stability"], "pest_break": r["pest_break"], "nitrogen": r["nitrogen"],
                          "needs_water_window": r["needs_water_window"], "ky_assumed": r["ky_assumed"],
                          "replay": plan_export(r["specs"], w, lib, soil, cn, rules, lab)}
+        if role != "current":
+            exports[role]["gain_range"] = gain_range(r["specs"], by_id[shown["current"]]["specs"], w, lib, soil, cn, rules)
     out = {"labels": {"field": field["name"], "current": f"{rotation} ({rot_label})", "water_case": "rain-fed (water source unknown)",
                       "water_strict": strict, "soil_kept": "computed" if erosion else "NOT YET: rules.yaml erosion (C factors) pending",
                       "rain_version": a.rain, "rain_caveat": rules["gpm_series"]["trend_caveat"],

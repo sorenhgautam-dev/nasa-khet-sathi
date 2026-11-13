@@ -44,7 +44,8 @@ def main(argv=None):
     clean = REPO / "data" / "clean" / field["id"]
     w = pd.read_parquet(clean / "weather.parquet").set_index("date")
     w.index = pd.DatetimeIndex(w.index)
-    late_start = w.index[(~w["rain_break_corrected"].to_numpy(bool)) & (w.index >= pd.Timestamp("2017-01-01"))].min()
+    gpm = pd.read_parquet(clean / "gpm.parquet")
+    late_start = pd.DatetimeIndex(gpm.loc[gpm["product"].astype(str) == "late", "date"]).min()   # IMERG Late days (D1)
     series = {"gpm_as_published": w["rain_uncorrected_mm"], "twin_rain": w["rain_mm"]}
     for name, file, col in (("chirps", "chirps.parquet", "rain_mm"), ("power", "power.parquet", "rain_mm")):
         if (clean / file).exists():

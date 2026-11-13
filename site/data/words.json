@@ -215,8 +215,8 @@
     },
     {
      "id": "bare",
-     "en": "No crop on {bare_days} days each year.",
-     "ne": "हरेक वर्ष {bare_days} दिन खेतमा बाली हुँदैन।",
+     "en": "The ground is bare about {bare_days} days yearly.",
+     "ne": "वर्षमा करिब {bare_days} दिन जमिन खाली रहन्छ।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -277,6 +277,21 @@
      ],
      "en": "Water stored in this whole area is rising.",
      "ne": "यो पूरै क्षेत्रमा जम्मा पानी बढ्दै छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "water_wide",
+     "when": [
+      "groundwater_trend_clear"
+     ],
+     "en": "This trend is clear for the wide area.",
+     "ne": "ठूलो क्षेत्रका लागि यो चाल स्पष्ट छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "water_not_yours",
+     "en": "It does not tell about your own well.",
+     "ne": "यसले तपाईंको आफ्नै इनारबारे भन्दैन।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -680,7 +695,7 @@
    ],
    "labels": {
     "event": {
-     "about": "What happened that year",
+     "about": "What the weather did that year. It is about the field, so it is the same on every plan (owner, 2026-11-13)",
      "maps_to": "replay.<plan>[].event",
      "items": {
       "none": {
@@ -689,8 +704,8 @@
        "ne_review": "needs native-speaker review"
       },
       "drought": {
-       "en": "A very dry year",
-       "ne": "खडेरी परेको वर्ष",
+       "en": "A drier year than usual",
+       "ne": "सामान्यभन्दा सुक्खा वर्ष",
        "ne_review": "needs native-speaker review"
       },
       "flood": {
@@ -712,6 +727,22 @@
       "irrigated": {
        "en": "If you can water",
        "ne": "पानी लगाउन सके",
+       "ne_review": "needs native-speaker review"
+      }
+     }
+    },
+    "event_season": {
+     "about": "Which season a drier year comes from, when it is one season only (owner, 2026-11-13)",
+     "maps_to": "replay.<plan>[].event_season; only present with event 'drought'. Show it instead of the 'drought' words",
+     "items": {
+      "winter": {
+       "en": "A dry winter",
+       "ne": "सुक्खा हिउँद",
+       "ne_review": "needs native-speaker review"
+      },
+      "monsoon": {
+       "en": "A dry rainy season",
+       "ne": "सुक्खा बर्खा",
        "ne_review": "needs native-speaker review"
       }
      }
@@ -786,7 +817,7 @@
    "labels": {
     "plan": {
      "about": "Plan names",
-     "maps_to": "plans[].name for ids current, cover_gap, safest (owner's decision 5, 2026-11-13; follow_shift kept for a possible revisit after step 9's 2040 projections)",
+     "maps_to": "plans[].name for ids current, cover_gap, safest. The third plan is called 'Feed your soil' (owner, 2026-11-13, answer 3 to REVIEW_2; its id stays 'safest'); follow_shift is kept for a possible revisit after step 9's 2040 projections",
      "items": {
       "current": {
        "en": "What you do now",
@@ -804,8 +835,8 @@
        "ne_review": "needs native-speaker review"
       },
       "safest": {
-       "en": "Safest in bad years",
-       "ne": "खराब वर्षमा सबैभन्दा भरपर्दो",
+       "en": "Feed your soil",
+       "ne": "माटोलाई मलिलो बनाउने",
        "ne_review": "needs native-speaker review"
       }
      }

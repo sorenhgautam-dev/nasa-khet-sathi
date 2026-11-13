@@ -177,7 +177,8 @@ written: `fetch/chirps.py`, `gpm_late.py`, `gauge_evidence.py`, `smap.py` (check
 ```
 
 Value rules: `status` is green, yellow, red or grey (grey = unknown). `event` is none, drought or
-flood (frost is only a monthly risk band, owner, 2026-11-12). `sure` runs 0 to 1. Scores run 0 to 100, higher is better for the farmer. Month words:
+flood (frost is only a monthly risk band, owner, 2026-11-12); it is the field's weather for the calendar year, the same on every
+plan, and a drought that comes from one season carries `event_season`, winter or monsoon (owner, 2026-11-13). `sure` runs 0 to 1. Scores run 0 to 100, higher is better for the farmer. Month words:
 `rain` low, medium, high; `soil` dry, medium, wet; `heat` none, some, high; `frost` none, risk, high;
 `cover` bare, partial, crop. `groundwater.direction` is falling, steady or rising (falling needs a
 negative trend, rising a positive one); `groundwater.confidence` runs 0 to 1. In `future`, each
@@ -246,8 +247,9 @@ break may explain it** (`rules.yaml` gpm_series.trend_caveat; owner, 2026-11-12)
 station-scaled run as the lower edge of a range, labelled, never as a replacement. **Owner, 2026-11-13
 (decision 1):** rain check B found a data break (IMERG Final's monthly gauge input around the field is lost from
 January 2017; VALIDATION 3.9b), so the twin's rain from 2017 is scaled month by month back to GPM's own 2001-2016
-level (`rules.yaml` gpm_series.correction; IMERG Final days only, demo field only until a field's own rain check
-finds the break). The uncorrected GPM run is kept beside it (`weather.parquet` rain_uncorrected_mm; runners'
+level (`rules.yaml` gpm_series.correction; demo field only until a field's own rain check finds the break; **owner,
+2026-11-13, answer 7 to REVIEW_2:** the 92 IMERG Late days of Oct-Dec 2025 are scaled too, with the factors fitted on
+Final months). The uncorrected GPM run is kept beside it (`weather.parquet` rain_uncorrected_mm; runners'
 `--rain uncorrected` into `data/checks/<field>/rain_uncorrected/`), and every result it changes is exported as a
 range (`replay` years' `uncorrected_rain`, plans' `score_uncorrected_rain`) and explained in plain words in the
 "unknown" tab and on the method page (`method.rain_correction`). Checks only, never the twin's rain: IMERG Late
@@ -442,8 +444,8 @@ from comparing SMAP with the twin; document the values.
    included).
 4. **Select:** keep the Pareto-best set; the three shown are the current plan, the best "cover the
    gap" plan and the best "follow the shift" plan, re-ranked by the farmer's priority weights. (Owner, 2026-11-13,
-   decision 5: while `shift_days` cannot be measured the third plan is `safest`, "Safest in bad years"; see build
-   step 7 and REVIEW_2 H2 on that name.)
+   decision 5: while `shift_days` cannot be measured the third plan is `safest`; since the owner's answer 3 of the same
+   day it is shown as "Feed your soil", because rice then wheat does better in bad years.)
 5. **Explain:** fill the five tabs from the numbers using templates (why, evidence with dataset names
    and years, benefits, unknowns, what to check locally). SI may polish wording at build time; a person
    reviews every text before export.
@@ -586,7 +588,7 @@ our side and nothing changeable after submission. Local judges also see the live
 7. **Plans:** generate, simulate, score, select three, explain, tips; SI plain words (drafts and
    Nepali, all reviewed by a person; no audio). *Done when* `plans` is real and every tab has reviewed
    text. **Built and exported 2026-11-13** (owner's decisions 1, 4, 5): every suggested plan keeps rice in the
-   monsoon; the three plans are `current`, `cover_gap` ("Fill the empty months") and `safest` ("Safest in bad
+   monsoon; the three plans are `current`, `cover_gap` ("Fill the empty months") and `safest` (shown as "Feed your soil" since the owner's answer 3 of 2026-11-13; first "Safest in bad
    years"), three different rotations (VALIDATION 3.19); tabs and tips come from the templates in
    `pipeline/words` (`pipeline/plans/explain.py`). Still open: the owner's review of the English lines added
    on 2026-11-13 and a native speaker's review of all Nepali.

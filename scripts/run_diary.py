@@ -405,11 +405,13 @@ def run_diary_6c(field, rules, out_dir, data, base_dir=None):
                      "change_over_record": chg[0], "change_low": chg[1], "change_high": chg[2],
                      "values": {str(y): v for y, v in sorted(vals.items())},
                      "caveat": caveat if k != "hot_days" else T["hot_day_caveat"]}
-    # REVIEW_2 H8: POWER's 2001-2003 are too hot here, so the hot-day trend is also given without those years
+    # REVIEW_2 H8 and the owner's answer 11 (2026-11-13): NASA POWER's 2001-2003 are faulty here (rain, daytime
+    # temperature, humidity), so every trend is reported for the whole record AND without those years (2004-2025)
     faulty = rules["power_rain"]["never_fill_years"]
-    r = tr.mk_sen(tr.without_years(series["hot_days"], faulty), T["alpha"])
-    trends["hot_days"]["without_faulty_years"] = {**{x: (round(v, 3) if isinstance(v, float) else v) for x, v in r.items()},
-                                                  "years_left_out": list(faulty)}
+    for k, vals in series.items():
+        r = tr.mk_sen(tr.without_years(vals, faulty), T["alpha"])
+        trends[k]["without_faulty_years"] = {**{x: (round(v, 3) if isinstance(v, float) else v) for x, v in r.items()},
+                                             "years_left_out": list(faulty)}
     shift = trends["onset_day_of_year"]
     onset_note = (f"The onset rule (kept as set by the owner) is pinned at the search start (15-17 May) in {pinned} of "
                   f"{len(doy)} years: it finds the first lasting rain spell, not the monsoon's arrival, so its trend "

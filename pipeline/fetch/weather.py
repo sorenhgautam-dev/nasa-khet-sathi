@@ -143,8 +143,9 @@ def column_sources(df, station_id, corrections, frost_method, gpm_card, n_filled
 
 def correct_gpm_break(rain, gpm, rule, field_id):
     """Owner's decision 1, 2026-11-13 (rules.yaml gpm_series.correction): the merged rain table gets
-    rain_uncorrected_mm (as published) and rain_break_corrected; rain_mm becomes the corrected rain. Only GPM days
-    of the products in correction_products take part, in the factors and in the scaling. Returns (table, card info)."""
+    rain_uncorrected_mm (as published) and rain_break_corrected; rain_mm becomes the corrected rain. GPM days of the
+    products in correction_products are scaled; only days of the products in correction_factor_products set the
+    factors (owner's answer 7 to REVIEW_2, 2026-11-13: the Late days take the Final factors). Returns (table, info)."""
     rain = rain.copy()
     rain["rain_uncorrected_mm"] = rain["rain_mm"]
     rain["rain_break_corrected"] = False
@@ -155,10 +156,13 @@ def correct_gpm_break(rain, gpm, rule, field_id):
                                                   "break (rules.yaml gpm_series.correction_fields)"}
     d = pd.DatetimeIndex(rain["date"])
     prod = gpm.set_index("date")["product"].reindex(d).astype(str)
-    use = (rain["rain_source"].astype(str).to_numpy() == "gpm") & prod.isin(rule["correction_products"]).to_numpy()
+    gpm_day = rain["rain_source"].astype(str).to_numpy() == "gpm"
+    use = gpm_day & prod.isin(rule["correction_products"]).to_numpy()
+    factor_products = rule.get("correction_factor_products", rule["correction_products"])
+    fit = gpm_day & prod.isin(factor_products).to_numpy()
     rs = pd.Series(rain["rain_mm"].to_numpy(float), index=d)
     ref = tuple(rule["correction_reference_years"])
-    factors = inputs.break_factors(rs.where(use), ref, rule["correction_from"])
+    factors = inputs.break_factors(rs.where(fit), ref, rule["correction_from"])
     corrected, applied = inputs.apply_break_correction(rs, factors, rule["correction_from"], use)
     g.assert_in_range(corrected.to_numpy(), "rain_mm", "rain_mm (break-corrected)")
     rain["rain_mm"], rain["rain_break_corrected"] = corrected.to_numpy(), applied
@@ -166,6 +170,7 @@ def correct_gpm_break(rain, gpm, rule, field_id):
     yrs = sorted(set(d[after].year))
     info = {"applied": True, "method": rule["correction"], "decision": "Owner's decision 1, 2026-11-13 (VALIDATION 3.9b)",
             "from": rule["correction_from"], "reference_years": list(ref), "products": list(rule["correction_products"]),
+            "factor_products": list(factor_products),
             "factors_by_month": {inputs.MONTH_NAMES[m - 1]: round(f, 3) for m, f in factors.items()},
             "days_scaled": int(applied.sum()),
             "days_not_scaled_after_start": {k: int(((~applied) & after & (prod.to_numpy() == k)).sum())

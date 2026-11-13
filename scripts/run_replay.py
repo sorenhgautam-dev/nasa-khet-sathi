@@ -42,6 +42,9 @@ def _case(res):
 
 def run(weather, rotation, lib, soil, cn, rules):
     out = {}
+    # one weather event per year for the field, from its rain alone (owner's answer 9 to REVIEW_2, 2026-11-13)
+    fe = ev.field_year_events(pd.Series(weather["rain_mm"].to_numpy(float), index=pd.DatetimeIndex(weather["date"])),
+                              rules["events"])
     for case, irrigated in (("rain-fed", False), ("irrigated", True)):
         res = sim.replay(weather, rotation, lib, soil, cn, bare_kc=rules["bare_soil"]["kc"], irrigated=irrigated,
                          kc_climate=rules["kc_climate"]["apply"])
@@ -50,7 +53,7 @@ def run(weather, rotation, lib, soil, cn, rules):
         for v in [rules["ky_assumed"]["neutral"], *rules["ky_assumed"]["sensitivity"]]:
             sens[str(v)] = sim.yearly(sim.seasons_with_ky(res["seasons"], lib, v))
         out[case]["ky_sensitivity"] = sens
-        out[case]["events"] = ev.year_events(res["seasons"], rules["events"])
+        out[case]["events"], out[case]["event_seasons"] = fe["events"], fe["event_seasons"]
     return out
 
 
@@ -111,7 +114,8 @@ def main(argv=None):
         out = {"labels": labels, **cases,
                "export": {"labels": labels, "years": cases[export_case]["years"],
                           "irrigated_years": cases["irrigated"]["years"],
-                          "events": cases[export_case]["events"]}}
+                          "events": cases[export_case]["events"],
+                          "event_seasons": cases[export_case]["event_seasons"]}}
         path = out_dir / "replay.json"
     else:
         st = pd.read_parquet(clean / f"ghcn_{field['validation_station']}.parquet").set_index("date")["rain_mm"]

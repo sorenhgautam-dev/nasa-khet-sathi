@@ -316,3 +316,26 @@ def test_a_file_with_blocks_not_ready_passes_the_final_check_if_nothing_is_made_
     for sec in d["field"]["sections"]:
         sec.update(status="grey", wetness=None, temp=None, sure=0)
     assert "MOCK" not in json.dumps(d) and validate_field(d, final=True) == []
+
+
+# --- owner's answer 9 to REVIEW_2 (2026-11-13): one weather event per year for the field, the same on every plan ---
+
+def test_a_drought_may_name_its_season_and_nothing_else_may():
+    d = build_field()
+    for rows in d["replay"].values():
+        rows[0]["event"] = "drought"
+        rows[0]["event_season"] = "winter"
+    assert validate_field(d) == []
+    for rows in d["replay"].values():
+        rows[0]["event"] = "flood"
+    assert any("event_season" in e for e in validate_field(d))
+    d["replay"]["current"][0]["event_season"] = "spring"
+    assert validate_field(d) != []
+
+
+def test_the_same_year_has_the_same_event_on_every_plan():
+    d = build_field()
+    assert validate_field(d) == []
+    y = d["replay"]["current"][2]
+    y["event"] = "flood" if y["event"] != "flood" else "none"
+    assert any("same event" in e for e in validate_field(d))

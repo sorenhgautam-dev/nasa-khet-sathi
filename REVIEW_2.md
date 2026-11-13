@@ -648,6 +648,36 @@ Security and probe
 
 ---
 
+## The owner's answers (2026-11-13, about 15:10) and what was done with each
+
+All 21 questions were answered. "Done" means tests first, rerun, re-exported, documents updated, committed and pushed.
+
+| # | Answer | Status |
+| --- | --- | --- |
+| 1 | Commit and push now; the owner enables Pages by hand | **Done**: `6476cc2`, then one push per finished step. Pages: the owner's hand step |
+| 2 | A `mock` list, neutral "not ready yet" sections, no 2040 numbers until steps 8 and 9 are real | **Done** (`f645659`): 36 real 10 m sections with no numbers, `future: null`, both named in `mock`; no MOCK word left in the file |
+| 3 | Rename the third plan "Feed your soil" (keep the id); reword its why-text and the registry line | **Done** |
+| 4 | Keep FAO's larger root depths; show the gain as a range; explain it in the "unknown" tab | **Done**: wheat plan "about 8 to 22 more", lentil plan "about 4 to 14 more"; two "unknown" lines. Which runs make the range is the reviewer's reading (rules.yaml `plans.gain_range`): put to the owner |
+| 5 | A floor before any "thirsty" tip, no rice tips for now; the straw tip from the satellite's bare months | **Done**: floor 5 dry days a year in the crop's worst month (the number is the reviewer's: put to the owner); the current plan's straw tip now says November |
+| 6 | Export the current plan for both winter crops (rice then potato, rice then wheat on the best-fitting FAO window), both water cases and both rain versions; suggested plans compared with whichever is picked; a caveat line on winter timing | See the status below this table |
+| 7 | Scale the 92 Late days with the same monthly factors | **Done**: 3,287 days scaled; no harvest or dry-day number changed; `soil_kept` of the suggested plans 74 to 75; the Late months are now 1.64 x DHM's gauges (1.97 x before) |
+| 8 | One "unknown" line that the rain may still read high, keyed on the DHM-normal ratio | **Done**: shown at 1.25 x the nearest station's normal or more (the limit is the reviewer's: put to the owner); demo 1.35 x |
+| 9 | One weather event per year for the field on every tab; "drier than usual"; name the season of a one-season event | **Done**: `pipeline/plans/events.py` `field_year_events`; `event_season`; rule committed before its first run (`a8b9b45`). The seasons used are DHM's monsoon (June-September) and winter (December-February): the reviewer's reading, put to the owner. Known events with the new rule: valley floods 2 of 2, valley winter droughts 2 of 4, both negative controls still fail (VALIDATION 4.1) |
+| 10 | Keep the nearest soil cell; show the neighbourhood range; add the caveat line | **Caveat line done** ("The soil numbers come from 859 m away."); the neighbourhood range in the export: see below |
+| 11 | Keep 2001-2003 with the caveat; report trends for 2004-2025 beside 2001-2025 | **Done**: every trend carries `without_faulty_years`; none is significant without them (VALIDATION 3.17) |
+| 12 | "Rice, then potato or wheat"; "bare ground on about 62 days" | Bare-ground wording **done**; the guess wording comes with answer 6 |
+| 13 | DHM table with a notice; GSOD notice; "not covered by MIT" in LICENSE | **Done** (`6476cc2`) |
+| 14 | Extend `scan_history.py` and `.gitignore` now, the website key allowed by SHA-256 only | **Done** (`6476cc2`), tests first |
+| 15 | The owner reviews the English and the Nepali by Sunday 10:00; the marks stay until then | Marks kept. New texts to review are listed in SI_LOG |
+| 16 | Export `site/data/words.json` | **Done** (`f645659`) |
+| 17 | `irrigated` required on every replay year | **Done** (`f645659`) |
+| 18 | Show the groundwater confidence as "the regional trend is clear", never as certainty about the field | **Done** in the words (screen 3 `water_wide`, `water_not_yours`) and in the note for the UI |
+| 19 | The owner confirms where the temperature sensor sits; `live.json` with a UTC offset and git-ignored | Git-ignore **done**; the UTC offset comes with the probe step |
+| 20 | Approve both readings | **Done** in `rules.yaml` |
+| 21 | Commit each new rule locally before its first run | **In force** since `a8b9b45` |
+
+---
+
 ## Phase 2: what was fixed (2026-11-13, tests first; 871 tests before, 898 after)
 
 No scientific method, rule, threshold or exported result was changed. `demo.json` changed in two `sources` rows and in

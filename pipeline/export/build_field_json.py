@@ -65,10 +65,18 @@ def replay_rows(replay, doc=None):
     irr = {y["year"]: y for y in replay.get("irrigated_years") or []}
     if sorted(irr) != [y["year"] for y in replay["years"]]:
         raise ValueError("the irrigated case must cover the same years as the field's own case (owner's go, 2026-11-12)")
-    return [{"year": y["year"], "harvest": int(round(y["harvest"])), "dry_days": int(y["dry_days"]),
-             "event": replay["events"][str(y["year"])],
-             "irrigated": {"harvest": int(round(irr[y["year"]]["harvest"])), "dry_days": int(irr[y["year"]]["dry_days"])}}
-            for y in replay["years"] if y["year"] in keep]
+    seasons = replay.get("event_seasons") or {}            # owner's answer 9 (2026-11-13): "dry winter", "dry monsoon"
+    rows = []
+    for y in replay["years"]:
+        if y["year"] not in keep:
+            continue
+        row = {"year": y["year"], "harvest": int(round(y["harvest"])), "dry_days": int(y["dry_days"]),
+               "event": replay["events"][str(y["year"])]}
+        if row["event"] == "drought" and str(y["year"]) in seasons:
+            row["event_season"] = seasons[str(y["year"])]
+        row["irrigated"] = {"harvest": int(round(irr[y["year"]]["harvest"])), "dry_days": int(irr[y["year"]]["dry_days"])}
+        rows.append(row)
+    return rows
 
 
 def with_uncorrected(rows, rows_unc):
@@ -79,8 +87,9 @@ def with_uncorrected(rows, rows_unc):
         raise ValueError("the uncorrected run must cover the same years")
     out = []
     for r in rows:
-        u = {k: unc[r["year"]][k] for k in ("harvest", "dry_days", "event", "irrigated")}
-        out.append({**r, "uncorrected_rain": u} if any(u[k] != r[k] for k in u) else dict(r))
+        u = {k: unc[r["year"]][k] for k in ("harvest", "dry_days", "event", "event_season", "irrigated") if k in unc[r["year"]]}
+        differs = any(u.get(k) != r.get(k) for k in ("harvest", "dry_days", "event", "event_season", "irrigated"))
+        out.append({**r, "uncorrected_rain": u} if differs else dict(r))
     return out
 
 
@@ -90,6 +99,15 @@ def apply_replay(doc, replay, plan_id="current"):
     out = copy.deepcopy(doc)
     out["field"]["water_source"] = replay["labels"].get("water_source") or "unknown"
     out["replay"][plan_id] = rows
+    # the event belongs to the field's year, not to a plan (owner's answer 9, 2026-11-13): the other plans' same years take it
+    by_year = {r["year"]: r for r in rows}
+    for pid, other in out["replay"].items():
+        for y in other if pid != plan_id else []:
+            if y["year"] in by_year:
+                y["event"] = by_year[y["year"]]["event"]
+                y.pop("event_season", None)
+                if "event_season" in by_year[y["year"]]:
+                    y["event_season"] = by_year[y["year"]]["event_season"]
     errs = validate_field(out)
     if errs:
         raise ValueError(f"field file would break the contract: {errs}")
@@ -111,25 +129,27 @@ def method_from_seasons(seasons):
             "methods": methods}
 
 
-def apply_method(doc, seasons):
-    """Return a copy of `doc` with method.season_detection from the step-6b comparison; it must validate."""
+def apply_method(doc, seasons, check=True):
+    """Return a copy of `doc` with method.season_detection from the step-6b comparison; it must validate (check=False
+    when a later step of the same export replaces the rest of the file and validates the whole)."""
     out = copy.deepcopy(doc)
     out.setdefault("method", {})["season_detection"] = method_from_seasons(seasons)
-    errs = validate_field(out)
+    errs = validate_field(out) if check else []
     if errs:
         raise ValueError(f"field file would break the contract: {errs}")
     return out
 
 
-def apply_diary(doc, diary):
-    """Return a copy of `doc` with the real diary (data/checks/<field>/diary.json 'export', step 6c); it must validate."""
+def apply_diary(doc, diary, check=True):
+    """Return a copy of `doc` with the real diary (data/checks/<field>/diary.json 'export', step 6c); it must validate
+    (check=False as for apply_method)."""
     d = diary["export"]
     if not d.get("months") or len(d["months"]) != 12:
         raise ValueError("the diary needs twelve months")
     out = copy.deepcopy(doc)
     out["diary"] = {"shift_days": d["shift_days"], "bare_days": int(d["bare_days"]), "guess": list(d["guess"]),
                     "groundwater": dict(d["groundwater"]), "months": [dict(m) for m in d["months"]]}
-    errs = validate_field(out)
+    errs = validate_field(out) if check else []
     if errs:
         raise ValueError(f"field file would break the contract: {errs}")
     return out
@@ -179,8 +199,8 @@ def sources_block(soil_distance_m=None):
     says that no number shown uses it (bare days, cover months, the guess and the method page are HLS years only)."""
     soil_where = (f"; nearest cell with values, {soil_distance_m:.0f} m from the field" if soil_distance_m else "")
     return [
-        {"name": "GPM IMERG", "product": "V07 Final daily (Late for Oct-Dec 2025); Final days from 2017 scaled back to "
-         "its own 2001-2016 level (the rain gauges behind it stopped reporting here)", "resolution": "0.1 deg (about 10 km)",
+        {"name": "GPM IMERG", "product": "V07 Final daily (Late for Oct-Dec 2025); days from 2017 scaled back, month by "
+         "month, to its own 2001-2016 level (the rain gauges behind it stopped reporting here)", "resolution": "0.1 deg (about 10 km)",
          "years": "2001-2025", "type": "satellite"},
         {"name": "NASA POWER", "product": "Daily API v2.10.3 (MERRA-2 weather, CERES sunshine); temperatures corrected "
          "to Kathmandu Airport", "resolution": "0.5 x 0.625 deg (about 55 km)", "years": "2001-2025", "type": "model"},
@@ -281,7 +301,8 @@ def apply_plans(doc, plans, plans_unc, lib, words, ctx):
                 p["score_uncorrected_rain"] = u
         info[r] = {**p, "stability": e["stability"], "pest_break": e["pest_break"],
                    "needs_water_window": e["needs_water_window"], "windows": _window_notes(e["plan"], lib),
-                   "thirsty": e["replay"].get("thirsty", {})}
+                   "thirsty": e["replay"].get("thirsty", {}), "gain_range": e.get("gain_range"),
+                   "cover_days": round(e["score"]["cover"] / 100.0 * 365)}
         contract.append(p)
     c = {**ctx, "diary": out["diary"], "replay": replay,
          "plan_sources": [s for s in out["sources"] if s["name"] in PLAN_SOURCES]}
@@ -310,12 +331,13 @@ def main(argv=None):
     try:
         doc = json.loads(dest.read_text())
         doc.setdefault("method", {"season_detection": None})
+        plans_path = REPO / "data" / "checks" / a.field / "plans.json"
+        whole = not plans_path.exists()      # with plans.json the last step replaces plans and replays and validates the whole
         if seasons_path.exists():
-            doc = apply_method(doc, json.loads(seasons_path.read_text()))
+            doc = apply_method(doc, json.loads(seasons_path.read_text()), check=whole)
         diary_path = REPO / "data" / "checks" / a.field / "diary.json"
         if diary_path.exists():
-            doc = apply_diary(doc, json.loads(diary_path.read_text()))
-        plans_path = REPO / "data" / "checks" / a.field / "plans.json"
+            doc = apply_diary(doc, json.loads(diary_path.read_text()), check=whole)
         if plans_path.exists():
             doc = export_step7(doc, a.field, json.loads(plans_path.read_text()))
         else:
@@ -360,7 +382,17 @@ def export_step7(doc, field_id, plans):
     out["method"]["choices"] = stated_choices(yaml.safe_load((REPO / "config" / "rules.yaml").read_text()))
     ratio = rain_check["break_correction"]["twin_rain_vs_station_all_shared_months"]["ratio"]
     station_less = 1 - 1 / ratio                                  # share less rain at the station than in the twin
-    ctx = {"water_source_unknown": field.get("water_source") is None, "placeholder": bool(field.get("placeholder")),
+    import pandas as pd
+    wx = pd.read_parquet(REPO / "data" / "clean" / field_id / "weather.parquet")
+    twin_mm = float(wx.groupby(pd.DatetimeIndex(wx["date"]).year)["rain_mm"].sum().mean())
+    normal_mm = float(rain_check["normals_mm"]["Bhaktapur"]["annual"])
+    soil_far = (isinstance(soil_loc, dict) and soil_loc.get("distance_m") is not None
+                and float(soil_loc["distance_m"]) > float(rules["soilgrids"]["nearest_cell_step_m"]))
+    ctx = {"tips": rules["tips"], "rain_reads_high": twin_mm / normal_mm >= rules["gpm_series"]["level_caveat_ratio"],
+           "rain_level": {"twin_mm_per_year": round(twin_mm, 1), "station_normal_mm": round(normal_mm, 1),
+                          "ratio": round(twin_mm / normal_mm, 2)},
+           "soil_distance_m": int(round(float(soil_loc["distance_m"]))) if soil_far else None,
+           "water_source_unknown": field.get("water_source") is None, "placeholder": bool(field.get("placeholder")),
            "station_rain_lower": 0.25 <= station_less <= 0.40, "rain_corrected": bool(rain_break.get("applied")),
            "rain_fix_year": int(rain_break["from"][:4]) if rain_break.get("applied") else None,
            "legume_option": ex.legume_option(plans["plans"], rules["plans"]["suggested_must_include"], lib)}

@@ -96,7 +96,33 @@ def conditions(plan, current, ctx, lib):
         held.add("bad_years_better")
     if plan["id"] == "cover_gap" and "has_legume" not in held and ctx.get("legume_option"):
         held.add("legume_option")
+    # owner's answer 4 to REVIEW_2 (2026-11-13): the harvest gain as a range over FAO's root-depth ranges
+    lo, hi = gain_bounds(plan)
+    if plan["id"] != "current" and lo is not None:
+        held.add("has_gain_range")
+        if lo >= 1 and hi > lo:
+            held.add("harvest_gain_range")
+        elif lo >= 1:
+            held.add("harvest_gain_single")
+        elif hi >= 1:
+            held.add("harvest_gain_maybe")
+    elif "harvest_better" in held:
+        held.add("harvest_gain_single")
+    if plan.get("cover_days") is not None and current.get("cover_days") is not None and plan["cover_days"] > current["cover_days"]:
+        held.add("cover_days_more")
+    if ctx.get("rain_reads_high"):
+        held.add("rain_reads_high")                           # owner's answer 8
+    if ctx.get("soil_distance_m"):
+        held.add("soil_cell_far")                             # owner's answer 10
     return held
+
+
+def gain_bounds(plan):
+    """(low, high) rounded harvest gain over the current plan from the plan's gain_range, or (None, None)."""
+    gr = plan.get("gain_range")
+    if not gr:
+        return None, None
+    return int(round(gr["low"])), int(round(gr["high"]))
 
 
 def values(plan, current, ctx, lib, names):
@@ -134,19 +160,44 @@ def values(plan, current, ctx, lib, names):
         v["water_crop"] = crop_name(water[0])
     if ctx.get("legume_option"):
         v["option_legume"] = crop_name(ctx["legume_option"])
+    lo, hi = gain_bounds(plan)
+    if lo is not None:
+        v["gain_low"], v["gain_high"] = lo, hi
+        if lo == hi:
+            v["harvest_gain"] = lo
+    if plan.get("cover_days") is not None and current.get("cover_days") is not None:
+        v["cover_days_gain"] = int(plan["cover_days"] - current["cover_days"])
+    if ctx.get("soil_distance_m"):
+        v["soil_distance"] = int(ctx["soil_distance_m"])
     return v
 
 
+def straw_month(plan, diary):
+    """The month for the straw tip, or None (rules.yaml tips.straw_months; owner's answer 5 to REVIEW_2, 2026-11-13):
+    the satellite's bare months (diary.months[].cover == 'bare'), the first of them for the current plan; for a
+    suggested plan the first of them in which the plan's own calendar is bare too."""
+    sat = [i + 1 for i, m in enumerate(diary.get("months", [])) if m.get("cover") == "bare"]
+    if plan["id"] != "current":
+        own = set(bare_months(plan["crops"]))
+        sat = [m for m in sat if m in own]
+    return sat[0] if sat else None
+
+
 def tips(plan, ctx, names, templates):
-    """[(en, ne)]: per crop the month it is most often thirsty (rain-fed replay), then the first month the plan
-    leaves bare (straw). The slope tip waits for build step 8."""
+    """[(en, ne)]: per crop the month it is most often thirsty in the rain-fed replay, if that is often enough
+    (rules.yaml tips: a floor of dry days a year, and no rice tip for now), then the straw tip for a month the
+    satellite shows bare. The slope tip waits for build step 8."""
     by_id = {t["id"]: t for t in templates}
+    rule = ctx.get("tips") or {}
+    floor, skip = rule.get("thirsty_min_dry_days_per_year", 0), set(rule.get("thirsty_skip_crops", []))
     out = []
     for c, t in plan.get("thirsty", {}).items():
+        if c in skip or t.get("dry_days_per_year", floor) < floor:
+            continue
         vals = {"crop": names["crop_names"][c], "month": names["months"][MONTHS[t["month"] - 1]]}
         out.append((capitalize_sentences(fill(by_id["tip_thirsty"], vals, "en")), fill(by_id["tip_thirsty"], vals, "ne")))
-    bare = bare_months(plan["crops"])
-    if bare:
+    bare = [straw_month(plan, ctx["diary"])]
+    if bare[0]:
         vals = {"month": names["months"][MONTHS[bare[0] - 1]]}
         out.append((capitalize_sentences(fill(by_id["tip_straw"], vals, "en")), fill(by_id["tip_straw"], vals, "ne")))
     return out

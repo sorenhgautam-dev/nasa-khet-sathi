@@ -90,6 +90,17 @@ def validate_field(doc, final=False):
             u = y.get("uncorrected_rain")
             if u and all(u.get(k) == y.get(k) for k in ("harvest", "dry_days", "event", "irrigated")):
                 errors.append(f"replay/{key}/{y['year']}: uncorrected_rain is given but changes nothing")
+    # owner's answer 9 to REVIEW_2 (2026-11-13): one weather event per year for the field, the same on every plan
+    by_year = {}
+    for key, years in doc["replay"].items():
+        for y in years:
+            for tag, row in (("", y), (" (uncorrected rain)", y.get("uncorrected_rain"))):
+                if row and "event_season" in row and row["event"] != "drought":
+                    errors.append(f"replay/{key}/{y['year']}{tag}: event_season is only for a drought")
+            by_year.setdefault(y["year"], set()).add((y["event"], y.get("event_season")))
+    differ = sorted(y for y, v in by_year.items() if len(v) > 1)
+    if differ:
+        errors.append(f"replay: a year must carry the same event (and season) on every plan; they differ in {differ}")
     for p in doc["plans"]:
         u = p.get("score_uncorrected_rain")
         if u and u == p["score"]:

@@ -58,15 +58,20 @@ site/
 - Section polygons are `[lon, lat]` and the ring is not closed. Leaflet wants `[lat, lon]`: swap them.
 - Harvest is always a percentage of what the field could grow. Never show tonnes.
 
-## 4. Changes still coming (each will be in CONTRACT_CHANGES.md as it lands)
+## 4. Landed on 13 November, 17:15
 
-- The third plan is renamed "Feed your soil" (its id stays `safest`).
-- One weather event per year for the field, the same on every plan, with the season it comes from ("dry winter").
+- The third plan is called "Feed your soil" (its id stays `safest`).
+- `event` is the field's weather for the year: the same on every plan. A drought from one season carries
+  `event_season` (`"winter"` or `"monsoon"`): say "A dry winter" / "A dry rainy season" (words.json, screen 7).
+- A plan can have one tip only. Do not lay the screen out for exactly three.
+
+## 5. Changes still coming (each will be in CONTRACT_CHANGES.md as it lands)
+
 - The farmer confirms the winter crop on screen 3 ("rice, then potato or wheat"). The file will hold the current
   plan's results for both answers, so the site only switches between saved results.
 - A "less sure" signal for the months where our two ways of reading the satellite disagree.
 
-## 5. Site rules we promised the judges (from CLAUDE.md)
+## 6. Site rules we promised the judges (from CLAUDE.md)
 
 Ten screens, one action each. Sentences of eight words or fewer. Pictures before words; never colour alone.
 Buttons at least 48 px. Designed at 360 px wide. First screen under 300 KB. Plain HTML, CSS and JavaScript;

@@ -25,18 +25,18 @@
     "when": [
      "plan_is_cover_gap"
     ],
-    "en": "Your field is empty {bare_days} days a year.",
-    "ne": "तपाईंको खेत वर्षमा {bare_days} दिन खाली हुन्छ।",
+    "en": "The ground is bare about {bare_days} days yearly.",
+    "ne": "वर्षमा करिब {bare_days} दिन जमिन खाली रहन्छ।",
     "ne_review": "needs native-speaker review"
    },
    {
     "id": "why_gap_fill",
     "when": [
      "plan_is_cover_gap",
-     "new_crop"
+     "cover_days_more"
     ],
-    "en": "{new_crop} can grow in that empty time.",
-    "ne": "त्यो खाली समयमा {new_crop} लगाउन सकिन्छ।",
+    "en": "This plan grows crops {cover_days_gain} more days.",
+    "ne": "यो योजनामा {cover_days_gain} दिन बढी बाली हुन्छ।",
     "ne_review": "needs native-speaker review"
    },
    {
@@ -71,23 +71,12 @@
    {
     "id": "why_safest",
     "when": [
-     "plan_is_safest",
-     "bad_years_better"
-    ],
-    "en": "Bad years hurt it less than now.",
-    "ne": "खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ।",
-    "ne_review": "needs native-speaker review",
-    "basis": "rules.yaml plans.third_plan_rule (owner's decision 5): chosen for its 10th-percentile year, which beats the current plan's"
-   },
-   {
-    "id": "why_safest_cover",
-    "when": [
      "plan_is_safest"
     ],
-    "en": "The ground stays covered as much as now.",
-    "ne": "जमिन अहिले जत्तिकै ढाकिएर रहन्छ।",
+    "en": "This plan is here to feed your soil.",
+    "ne": "यो योजना माटोलाई मलिलो बनाउन हो।",
     "ne_review": "needs native-speaker review",
-    "basis": "rules.yaml plans.third_plan_rule: only plans keeping at least today's cover"
+    "basis": "rules.yaml plans.third_plan_rule (owner's decision 5): chosen for its 10th-percentile year, which beats the current plan's"
    },
    {
     "id": "why_legume",
@@ -98,6 +87,16 @@
     "ne": "{legume_crop}ले अर्को बालीका लागि माटोमा मल थप्छ।",
     "ne_review": "needs native-speaker review",
     "basis": "crop_explainers.nitrogen_fixing claims 2-3"
+   },
+   {
+    "id": "why_safest_bad_years",
+    "when": [
+     "plan_is_safest",
+     "bad_years_better"
+    ],
+    "en": "Bad years hurt it less than now.",
+    "ne": "खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ।",
+    "ne_review": "needs native-speaker review"
    },
    {
     "id": "why_water_falling",
@@ -163,8 +162,8 @@
     "when": [
      "always"
     ],
-    "en": "Very dry years: {drought_years} of {year_count}.",
-    "ne": "खडेरी परेका वर्ष: {year_count} मध्ये {drought_years}।",
+    "en": "Drier than usual: {drought_years} of {year_count} years.",
+    "ne": "सामान्यभन्दा सुक्खा: {year_count} मध्ये {drought_years} वर्ष।",
     "ne_review": "needs native-speaker review"
    },
    {
@@ -200,10 +199,28 @@
    {
     "id": "ben_harvest",
     "when": [
-     "harvest_better"
+     "harvest_gain_single"
     ],
     "en": "Harvest: about {harvest_gain} more, out of 100.",
     "ne": "उब्जनी: १०० मा करिब {harvest_gain} बढी।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ben_harvest_range",
+    "when": [
+     "harvest_gain_range"
+    ],
+    "en": "Harvest: about {gain_low} to {gain_high} more.",
+    "ne": "उब्जनी: करिब {gain_low} देखि {gain_high} बढी।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "ben_harvest_maybe",
+    "when": [
+     "harvest_gain_maybe"
+    ],
+    "en": "Harvest: up to {gain_high} more, maybe none.",
+    "ne": "उब्जनी: {gain_high} सम्म बढी, वा उस्तै।",
     "ne_review": "needs native-speaker review"
    },
    {
@@ -295,6 +312,15 @@
     "basis": "CLAUDE.md 'Sections': most sections share one 250 m SoilGrids cell"
    },
    {
+    "id": "unk_soil_far",
+    "when": [
+     "soil_cell_far"
+    ],
+    "en": "The soil numbers come from {soil_distance} m away.",
+    "ne": "माटोको नाप {soil_distance} मिटर परको हो।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
     "id": "unk_dates",
     "when": [
      "always"
@@ -303,6 +329,24 @@
     "ne": "रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्।",
     "ne_review": "needs native-speaker review",
     "basis": "METHOD_NOTES.md item 9"
+   },
+   {
+    "id": "unk_roots",
+    "when": [
+     "has_gain_range"
+    ],
+    "en": "We don't know how deep roots reach here.",
+    "ne": "यहाँ जरा कति गहिरो पुग्छ, थाहा छैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "unk_roots_range",
+    "when": [
+     "has_gain_range"
+    ],
+    "en": "So the harvest gain is a range.",
+    "ne": "त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ।",
+    "ne_review": "needs native-speaker review"
    },
    {
     "id": "unk_ky",
@@ -433,6 +477,15 @@
     "ne": "यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ।",
     "ne_review": "needs native-speaker review",
     "basis": "rules.yaml gpm_series.correction: by construction it removes any real change across 2017"
+   },
+   {
+    "id": "unk_rain_high",
+    "when": [
+     "rain_reads_high"
+    ],
+    "en": "Our rain may still read too high.",
+    "ne": "हाम्रो वर्षाको नाप अझै बढी हुन सक्छ।",
+    "ne_review": "needs native-speaker review"
    },
    {
     "id": "unk_area_water",

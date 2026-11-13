@@ -74,7 +74,7 @@ def main(argv=None):
     from pipeline.fetch.rules import load_rules
     G = load_rules()["gpm_series"]
     gdf = pd.read_parquet(clean / "gpm.parquet")
-    final_only = pd.Series(np.where(gdf["product"].isin(G["correction_products"]), gdf["rain_mm"], np.nan),
+    final_only = pd.Series(np.where(gdf["product"].isin(G.get("correction_factor_products", G["correction_products"])), gdf["rain_mm"], np.nan),
                            index=pd.DatetimeIndex(gdf["date"]))
     st_months = rc.complete_month_totals(station)
     hold = rc.holdout_break_correction(rc.complete_month_totals(final_only), st_months,

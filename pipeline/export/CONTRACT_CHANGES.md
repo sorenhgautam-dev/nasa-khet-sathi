@@ -4,6 +4,21 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-13 (Friday, 17:15): one weather event per year; "Feed your soil"; the gain as a range; new tips (owner's answers 3, 4, 5, 7, 8, 9)
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `replay.<plan>[].event` | computed from each plan's own crop seasons; the same year could differ between plans (7 of 24 years) | **the field's weather for that calendar year, the same on every plan** (drought: a dry monsoon or a dry winter; flood: the year's wettest day; drought first). Demo: flood 2002, 2004, 2024; drought 2006, 2009, 2013, 2015, 2023, 2025 | You may show the event once per year, whatever plan is open |
+| `replay.<plan>[].event_season` (new, optional) | did not exist | `"winter"` or `"monsoon"`, **only with `event: "drought"` and only when the drought comes from that one season** (2006 winter; 2013 and 2015 monsoon). Absent when both seasons were dry (2009, 2023, 2025). Also inside `uncorrected_rain` | Say "A dry winter" / "A dry rainy season" (words.json, screen 7 `labels.event_season`) instead of the drought words when it is there |
+| `plans[2].name` (id `safest`) | "Safest in bad years" | **"Feed your soil"** (rice then lentil does not do best in bad years; rice then wheat does). The id stays `safest` | Use the name from the file; Nepali name in words.json screen 8 `labels.plan.items.safest` |
+| `plans[].tabs.benefits` | "Harvest: about 18 more, out of 100." | "Harvest: about 8 to 22 more." (a range over how deep roots may reach); the "unknown" tab says why | Nothing: the text comes filled |
+| `plans[].tabs.evidence` | "Very dry years: 7 of 24." | "Drier than usual: 6 of 24 years." | Nothing |
+| `plans[].tabs.unknown` | | new lines: the soil numbers come from 859 m away; the harvest gain is a range; our rain may still read too high | Nothing |
+| `plans[].tips` / `tips_ne` | a rice tip resting on almost no dry days; "straw in March" from the plan calendar | no rice tip; a "thirsty" tip only for a crop short of water on 5 or more days a year in its worst month; the straw tip names a month the satellite shows bare (November for the current plan) and is left out where a suggested plan grows a crop then. **A plan may now have one tip only** | Do not assume three tips |
+| `plans[].score.soil_kept` | 74 / 74 / 74 | 74 / 75 / 75 (the 92 IMERG Late days of Oct-Dec 2025 are scaled too) | Nothing |
+| `sources[0].product` (GPM) | "Final days from 2017 scaled back ..." | "days from 2017 scaled back, month by month, ..." | Nothing |
+| words.json | | screen 3: "The ground is bare about {bare_days} days yearly." (it counts bare ground, not days without a crop); two lines saying the water trend is about the wide area, not the farmer's well (`water_wide`, shown when `diary.groundwater.confidence` is at least 0.95; `water_not_yours`); screen 7: `labels.event.items.drought` is now "A drier year than usual"; `labels.event_season` | Never show `diary.groundwater.confidence` as certainty about the field |
+
 ## 2026-11-13 (Friday, 16:00): no made-up numbers any more; `mock` list; `irrigated` required; `words.json` (owner's answers 2, 16, 17)
 
 | What | Before | Now | What the UI must do |
