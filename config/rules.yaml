@@ -101,6 +101,30 @@ paddy_rice:
     value: "irrigated paddy only: refilled to field capacity at the start of every season day, booked as irrigation (pond_supply_mm is the paddy part); rain-fed paddy is the ordinary bucket with rice's Zr and p, no outside water"
     source: "Owner, 2026-11-12 (REVIEW_NOTES H1, L1; owner-approved 2026-11-12 (owner's batch decisions, item 6)): FAO-56 has no paddy balance. Replaces the rain-fed rule 'ponded until the first 10-day dry spell under 1 mm' (owner-approved at the step-4 review), which supplied 120-203 mm a season of unsourced water. Documentation only: no code reads this key"
 
+paddy_rainfed:                    # proposal 2c (called 4c in the owner's queue): written and committed BEFORE the what-if run
+  # Sources opened 2026-11-14 by a research sub-agent (quotes in SI_LOG). pipeline/twin/season.py paddy_transplant, paddy_outcome.
+  status:
+    value: "PROPOSED, awaiting the owner"
+    source: "Brief for 2c (2026-11-13): propose, show the what-if, wait for the owner's yes. notes/proposal_2c_rainfed_rice.md"
+  apply:
+    value: false
+    source: "Off until the owner says yes; scripts/run_replay.py and run_plans.py take --paddy-rainfed proposal for the what-if (data/checks/<field>/rainfed_rice_proposal/)"
+  rule:
+    value: "a RAIN-FED paddy is transplanted on the first day, on or after its planned day, by which the rain since prep_days before the planned day (the nursery's sowing) reaches prep_mm (soaking and puddling); later than max_delay_days after the planned day the season fails: harvest 0 (the field is left fallow or the seedlings are lost). A late paddy is simulated from its actual day as the same plain bucket; a later crop that would overlap moves to the day after it ends. No extra loss per day of delay. Irrigated paddy is unchanged"
+    source: "Structure of the rain-fed transplanting rules in Balwinder-Singh et al. 2019, Field Crops Research 239:92-103, sec. 2.3.2 (APSIM, Bihar: seedlings 'at least 21 days old', transplanting when 'surface water ponding exceeded 50 mm', no crop 'if these conditions were not met by 15 August') and Han, Montes, Hussain & Krupnik 2024, Climatic Change 177:77 (DSSAT, Bangladesh: transplanting when a 'threshold ponding water depth (30 mm) was reached by rainfall'). A rain total stands in for the ponding depth because the twin has no pond for rain-fed paddy (METHOD_NOTES 2). Claude's reading, fixed before the run; put to the owner"
+  prep_mm:
+    value: 150
+    source: "Bouman, Barker, Humphreys, Tuong et al. 2007, 'Rice: feeding the billions', ch. 14 of Water for Food, Water for Life (IWMI/Earthscan), Box 14.2, p. 524: land preparation water 'as low as 100-150 mm ... when the time lag between soaking and transplanting is only a few days' (the upper end, since a rain-fed farmer cannot time the rain); Sri Lanka Department of Agriculture (RRDI), land preparation: '~150 mm' for low-humic-gley soils. Sensitivity: 100 (Bouman's lower end) and 200 mm (FAO Training Manual 4, Irrigation Scheduling, sec. 4.4: 'the amount of water needed to saturate the root zone is 200 mm')"
+  prep_days:
+    value: 21
+    source: "Seedling age at transplanting: 'at least 21 days old' (Balwinder-Singh et al. 2019; Han et al. 2024); the Khumaltar trial transplanted '22 days old seedling' (Chaulagain et al. 2022, Agronomy Journal of Nepal 6(1):87-94). Land preparation is counted from the nursery's sowing, 21 days before the planned transplanting"
+  max_delay_days:
+    value: 30
+    source: "Chaulagain et al. 2022 (Khumaltar, Kathmandu valley, 1,360 m, 2019-2020): transplanting about 16 days later (2 to 18 July) cut yield 32 % and about 30 days later (1 August) 85 %, with 'merely a few filled grains per panicle due to a lower temperature and less soil moisture in October'. So 30 days late is counted as a failed season. Sensitivity: 20 days (rain-fed farmers also use 40-day seedlings, Adhikari, Mehera & Haefele 2013, Am. J. Plant Sci. 4(12C):146-155: 40 - 21 = about 20 days of waiting) and 40 days"
+  sensitivity:
+    value: {prep_mm: [100, 200], max_delay_days: [20, 40]}
+    source: "Declared with the rule, before the run: each value at the ends of its sourced range above; reported only, never used to choose"
+
 bare_soil:
   kc:
     value: 0.3
@@ -645,7 +669,7 @@ future:                           # build step 9 (pipeline/fetch/nexgddp.py, pip
     source: "Integrator's step-9 brief, 2026-11-13: pr, tasmax and tasmin only; humidity, wind and sunshine stay as observed"
   humidity:
     value: "relative humidity held: ea_kpa is rebuilt as weather.py builds it, POWER's RH2M / 100 x (e0(tmax_c_power + dTmax) + e0(tmin_c_power + dTmin)) / 2 (FAO-56 eq. 19 with POWER's own temperatures, shifted by the same monthly changes), capped at e0 of the shifted tmin_c; et0_mm uses it with the shifted corrected temperatures, and et0_rh_held_mm is rebuilt as in weather.py. So the vapour pressure rises with warming and the Kc climate adjustment's RHmin (FAO-56 eq. 63 from ea_kpa and tmax_c) stays about the same"
-    source: "Claude's choice, 2026-11-14, fixed before the first download: climate models keep near-surface relative humidity roughly constant as they warm while the vapour pressure rises with temperature (Held & Soden 2006, J. Climate 19, 5686-5699, doi:10.1175/JCLI3990.1; TODO-VERIFY, not opened); holding ea instead would add the whole warming to the vapour-pressure deficit. Over land, relative humidity falls a little in projections (Byrne & O'Gorman 2016, J. Climate 29, 9045-9061; TODO-VERIFY, not opened), so holding it is on the low side for ET0's rise (said in the 'unknown' tab). NEX-GDDP's own hurs is not used (three variables)"
+    source: "Claude's choice, 2026-11-14, fixed before the first download: climate models keep near-surface relative humidity roughly constant as they warm while the vapour pressure rises with temperature (Held & Soden 2006, J. Climate 19, 5686-5699, doi:10.1175/JCLI3990.1, p. 5687: 'climate models tend to maintain a fixed tropospheric relative humidity as they warm'; verified 2026-11-14); holding ea instead would add the whole warming to the vapour-pressure deficit. Over land, relative humidity falls in projections (Byrne & O'Gorman 2016, J. Climate 29, 9045-9061, doi:10.1175/JCLI-D-16-0351.1: it 'tends to increase slightly over oceans but decrease substantially over land'; verified 2026-11-14; corrected from 'a little' after the source was opened, the value unchanged), so holding it is on the low side for ET0's rise (said in the 'unknown' tab). NEX-GDDP's own hurs is not used (three variables)"
   rain_ratio_window_months:
     value: 3
     source: "Claude's choice, 2026-11-14, fixed before the first download: each month's rain ratio = the mean daily pr over the three calendar months centred on it (December, January and February for January), future over historical, because a dry month's own ratio rests on a few mm of model rain and is noisy. No cap on the ratio; the largest one is reported"
