@@ -3,6 +3,11 @@
 Every dataset, library and use of SI (AI) goes here the moment it is used (CLAUDE.md rule 10).
 Citation texts in quotes are copied verbatim from the official pages named (opened 2026-11-11).
 
+## Hosting
+
+The site is served by **Vercel** (vercel.com) as static files from `site/` (owner, 2026-11-13): no build step, no
+server functions, no environment variables. GitHub Pages is not used.
+
 ## Data and metadata services
 
 Rows marked *metadata* were used only to check names, versions and units. Data that entered the

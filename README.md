@@ -53,7 +53,12 @@ everything heavy runs here, on our laptops, before we publish:
 - the downloads, the twin and the scoring run once per field, ahead of time;
 - the website (`site/`) is plain files: HTML, CSS, JavaScript and the JSON this pipeline writes (today `site/`
   holds only the JSON; the screens are a teammate's work and are not in this repository yet);
-- the site needs no server, no login and no key, and it never calls an AI service.
+- the site needs no server, no login and no key, and it never calls an AI service;
+- it is hosted on Vercel as plain files: Vercel serves the `site/` folder as it is, with no build step, no server
+  functions and no environment variables. Every path in the site is relative, so it works at the site's root or in
+  any folder. `scripts/check_site.py` checks this.
+
+Live site: **(address to be added when the owner sends it)**.
 
 Fields are prepared ahead of time, and `site/data/index.json` lists them (today one: the demo field; fields
 abroad are build step 11). A field drawn outside every
@@ -109,6 +114,7 @@ python3.12 -m venv .venv
    .venv/bin/python -m pipeline.export.validate
    .venv/bin/python -m pipeline.export.build_words         # the site's words: site/data/words.json
    .venv/bin/python -m pipeline.export.validate --final    # before freezing: fails on any made-up number
+   .venv/bin/python scripts/check_site.py --final          # the site is plain files with relative paths
    ```
 
 Every download writes a "data card" in `data/cards/<id>/`: the product, version, units, fill values removed

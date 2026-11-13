@@ -15,11 +15,17 @@ site/
     words.json
 ```
 
-- GitHub publishes the `site/` folder, as it is, on every push to `main` (`.github/workflows/pages.yml`). There is
-  no build step on GitHub. If you use a bundler, commit its **built output** into `site/`.
-- The live address is **https://sorenhgautam-dev.github.io/data-test-game/**, so the site does not sit at the
-  root of the domain. **Every path must be relative**: `fetch('data/index.json')`, `src="img/x.svg"`. A path that
-  starts with `/` breaks on the live site.
+- **Hosting is Vercel** (changed on 13 November; GitHub Pages is no longer used). Vercel serves the `site/` folder
+  as it is on every push (Root Directory `site/`, **no build step**). If you use a bundler, commit its **built
+  output** into `site/`; do not put a `package.json` in `site/`.
+- The live address is **(address to be added when the owner sends it)**. The site sits at the root of that address.
+- **Every path must still be relative**: `fetch('data/index.json')`, `src="img/x.svg"`, `url(../img/bg.svg)`. Never
+  start a path with `/`. Relative paths work at the root, in a folder and when you open a preview address.
+- **Fully static.** No Vercel functions (no `api/` folder, no `middleware.js`), no environment variables
+  (`process.env`, `import.meta.env`), no files that need compiling (`.ts`, `.jsx`, `.vue`, `.scss`). Plain `.html`,
+  `.js`, `.css` and images only.
+- Check before you hand over: `python3 scripts/check_site.py` from the repository root lists anything that breaks
+  these rules.
 - File names are case-sensitive on the live site (`Demo.json` is not `demo.json`).
 - No server, no login, no key, no call to any outside service (map tiles are fine). Never call an AI service.
 - Test it the way a judge sees it: `cd site && python3 -m http.server 8000`, open `http://localhost:8000/` on

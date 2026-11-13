@@ -15,6 +15,13 @@ Several fields are prepared in advance (the demo field in Nepal plus a few abroa
 JSON file and an index file lists them, so a judge anywhere can open the live site and explore a
 prepared field while our laptop is switched off.
 
+**Hosting (owner, 2026-11-13):** the site is hosted on **Vercel**, connected to the repository, with Root Directory
+`site/` and **no build step**: Vercel serves the files in `site/` as they are. Live address: **(address to be added when the owner sends it)**. The site stays
+fully static: **no Vercel functions** (no `api/` folder, no middleware), **no environment variables**, no `package.json`
+in `site/`. **Every path in the site is relative** (`fetch('data/index.json')`, never `/data/...`), so it works at the
+site's root and in any folder. `scripts/check_site.py` checks all of this (tests in `tests/test_site_static.py`). GitHub
+Pages is no longer used: its workflow was removed on 2026-11-13.
+
 **Demo field (owner, 2026-11-12):** 27.67 N, 85.43 E is Bhaktapur's old city, not farmland, so it is
 only the centre of a **fetch box** of about 5 km each way (`fetch_box` in `config/fields/demo.yaml`;
 every dataset is fetched for the box, so a nearby real field needs no re-download). The field itself
@@ -95,7 +102,6 @@ khet-sathi/
   METHOD_NOTES.md       # the twin's stated assumptions (method page, "unknown" tab), who approved each
   README.md             # plain-words overview, how to run a new field, credits (polished at step 11)
   LICENSE               # MIT, for the code; data and texts keep their own licences (CREDITS.md)
-  .github/workflows/pages.yml   # publishes site/ to GitHub Pages (Pages cannot serve site/ directly)
   requirements.txt
   config/
     fields/             # one YAML per prepared field (demo.yaml first): id, name, lat, lon, polygon,
@@ -119,7 +125,8 @@ khet-sathi/
     checks/             # validation-layer statistics: climate.py, crosscheck.py (incl. day alignment), spikes.py
     export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py, build_words.py,
                         # CONTRACT_CHANGES.md (what changed for the UI, and when)
-  scripts/              # backup.sh, make_review_pack.py, scan_history.py; the runners run_checks.py, run_replay.py,
+  scripts/              # backup.sh, make_review_pack.py, scan_history.py, check_site.py (the site stays static and
+                        # its paths relative: Vercel hosting); the runners run_checks.py, run_replay.py,
                         # run_diary.py, run_plans.py, run_rain_check.py; checks run_smap_check.py, run_dhm_bulletin_check.py
   robot/
     probe.py            # parse the probe's USB serial lines (pure)
@@ -523,7 +530,8 @@ Global judges only ever see the project page, the 30-second video, the public re
 **live site**, opened on their own device between submission and January, with nothing running on
 our side and nothing changeable after submission. Local judges also see the live probe demo.
 
-1. The site must work fully from static files, on a phone, on mobile data, with no keys. The live
+1. The site must work fully from static files, on a phone, on mobile data, with no keys. It is hosted on Vercel
+   as plain files (see "Hosting": no functions, no environment variables, no build step, relative paths only). The live
    probe (step 10b) is an extra: if Firebase is unreachable, every screen still works.
 2. **Prepared fields:** export at least the Nepal demo field plus two or three abroad (for example
    Guatemala, Kenya, USA) through the same pipeline with no code changes. That is the proof the
@@ -617,8 +625,8 @@ our side and nothing changeable after submission. Local judges also see the live
     (gitignored) until 10b is built; the database is still locked (an unsigned read and write were both
     refused, 2026-11-12). The web config is public by Firebase's design, but `scan_history.py` flags
     `apiKey`. **Keys (owner, approved in advance, 2026-11-12):** two API keys, both restricted to the
-    Identity Toolkit API and the Token Service API only: the website's key, also restricted to the GitHub
-    Pages address; and a separate key for the probe, with no website restriction (the probe is not a
+    Identity Toolkit API and the Token Service API only: the website's key, also restricted to the live site's
+    address (the Vercel address since 2026-11-13; it was to be the GitHub Pages address); and a separate key for the probe, with no website restriction (the probe is not a
     browser). `scan_history.py` lets through the website's key **by its exact value only**, nothing else (built 2026-11-13, owner's answer 14: the
     script holds the key's SHA-256, never the key, and scans the working tree as well as the history; REVIEW_2 H7).
     The probe's key is therefore never in the repository (it is entered on the probe, or kept in a
@@ -648,13 +656,18 @@ used) before going public: deleting the file in a new commit is not enough.
 **The final commit, done by the owner** (start at least 30 minutes before the local deadline):
 1. Check `.gitignore` one last time.
 2. Commit everything and push to GitHub.
-3. Run `scripts/scan_history.py` (above) and read its report. Only if it is clean: make the repository
-   public and turn on GitHub Pages (Settings > Pages > Source: **GitHub Actions**; the workflow
-   `.github/workflows/pages.yml` publishes `site/` on every push to `main`, owner review of d34fa93).
-4. Open the live link on a phone that has never opened it, and check that a prepared field loads.
+3. Run `scripts/scan_history.py` (above), `python -m pipeline.export.validate --final` and
+   `scripts/check_site.py --final`, and read their reports. Only if all three are clean: push. **Vercel** publishes
+   `site/` from the repository on that push (owner, 2026-11-13: Root Directory `site/`, no build step, no functions, no
+   environment variables; no GitHub Pages). In the Vercel project check once: Framework Preset "Other", Build Command
+   and Install Command empty, no Environment Variables, and that the newest deployment is the Production one.
+4. Open the live address, **(address to be added when the owner sends it)**, on a phone that has never opened it, on mobile data and without
+   being signed in to Vercel, and check that a prepared field loads.
 5. Paste the live link and repository link into the Space Apps project page and submit.
 
-After submission, change nothing until the Global Winners are announced in January.
+After submission, change nothing until the Global Winners are announced in January. **Every push to the connected
+branch redeploys the live site, so after submission nothing is pushed to it** (or automatic deployments are switched off in
+the Vercel project).
 
 ## Out of scope
 
