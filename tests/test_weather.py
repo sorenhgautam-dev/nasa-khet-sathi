@@ -349,7 +349,7 @@ def _gpm_stepped(data):
 
 def test_final_rain_from_2017_is_scaled_back_and_the_uncorrected_rain_is_kept(tmp_path):
     """Factors 2/4 = 0.5 per month (February (56 + 57) / 2 / 112 over 2015-2016 vs 2017-2022: 0.504...), from Final
-    days only; the Late days (Oct-Dec 2022) are left as they are."""
+    days only; the Late days (Oct-Dec 2022) are scaled with the same factors (owner's answer 7, 2026-11-13)."""
     data = _inputs(tmp_path)
     _gpm_stepped(data)
     out = w.build(FIELD, data_dir=data, rules=load_rules())
@@ -357,10 +357,28 @@ def test_final_rain_from_2017_is_scaled_back_and_the_uncorrected_rain_is_kept(tm
     s = df.set_index("date")
     assert s.loc["2016-12-31", "rain_mm"] == 2.0 and s.loc["2017-07-01", "rain_mm"] == pytest.approx(2.0)
     assert s.loc["2017-07-01", "rain_uncorrected_mm"] == 4.0 and bool(s.loc["2017-07-01", "rain_break_corrected"])
-    assert s.loc["2022-11-01", "rain_mm"] == 4.0 and not bool(s.loc["2022-11-01", "rain_break_corrected"])
+    assert s.loc["2022-11-01", "rain_mm"] == pytest.approx(2.0) and bool(s.loc["2022-11-01", "rain_break_corrected"])
+    assert s.loc["2022-11-01", "rain_uncorrected_mm"] == 4.0
     b = card["corrections"]["rain_break"]
-    assert b["applied"] and b["factors_by_month"]["Jul"] == 0.5 and b["days_not_scaled_after_start"] == {"final": 0, "late": 92}
+    assert b["applied"] and b["factors_by_month"]["Jul"] == 0.5 and b["days_not_scaled_after_start"] == {"final": 0, "late": 0}
+    assert b["products"] == ["final", "late"] and b["factor_products"] == ["final"]
     assert "rain_uncorrected_mm" in card["source"] and "rain_break_corrected" in card["resolution"]
+
+
+def test_late_days_are_scaled_but_never_set_a_factor(tmp_path):
+    """Owner's answer 7: the Late days take the factors fitted on Final months. Here the Late days hold 8 mm a day;
+    November's factor stays 0.5 (Final Novembers only), so a Late November day becomes 4 mm."""
+    data = _inputs(tmp_path)
+    _gpm_stepped(data)
+    path = data / "clean" / "demo" / "gpm.parquet"
+    gpm = pd.read_parquet(path)
+    gpm.loc[gpm["product"] == "late", "rain_mm"] = 8.0
+    gpm.to_parquet(path, index=False)
+    out = w.build(FIELD, data_dir=data, rules=load_rules())
+    df, card = pd.read_parquet(out["table"]), json.loads(out["card"].read_text())
+    s = df.set_index("date")
+    assert card["corrections"]["rain_break"]["factors_by_month"]["Nov"] == 0.5
+    assert s.loc["2022-11-01", "rain_mm"] == pytest.approx(4.0) and s.loc["2022-11-01", "rain_uncorrected_mm"] == 8.0
 
 
 def test_a_field_without_a_rain_check_finding_is_not_corrected(tmp_path):

@@ -162,6 +162,15 @@ replay:                           # build step 5 (pipeline/plans/simulate.py, sc
     source: "Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 2), for the TEMPORARY station-rain dry run only (never exported): a year is used only if the station has rain on at least 90% of its days; missing days are filled from POWER and flagged"
 
 events:                           # replay.<plan>[].event (build step 5); sources opened 2026-11-12 by a research sub-agent
+  scope:
+    value: "one weather event per calendar year for the field, the same on every plan: from the field's rain alone, never from a plan's crop seasons"
+    source: "Owner, 2026-11-13 (answer 9 to REVIEW_2 M4): one weather event per year for the field on every tab (events computed from each plan's crop seasons differed between plans in 7 of 24 years). Fixed and committed before its first run (owner's answer 21)"
+  seasons:
+    value: {monsoon: [6, 7, 8, 9], winter: [12, 1, 2]}
+    source: "DHM's seasons, as in its seasonal summaries (monsoon June to September; winter December to February, counted in the year of its January and February; a winter with a month missing from the record is left out). Drought (drought_decile_max) is judged on each season's rain total over the record's seasons; where a year's drought comes from one season the export says which (replay year event_season: 'winter' or 'monsoon'; owner's answer 9: 'dry winter'). Claude's reading of the owner's answer, fixed and committed before its first run; put to the owner"
+  flood_day:
+    value: "the calendar year's wettest day (ETCCDI Rx1day), in deciles flood_decile_min..10 of the record's years"
+    source: "Owner's answer 9 (one event per year for the field): the wettest day of the calendar year, no longer of a plan's crop-season days, which is ETCCDI's own annual Rx1day (etccdi.pacificclimate.org list of 27 indices). Classes and deciles as before (flood_decile_min). Claude's reading, fixed and committed before its first run; put to the owner"
   drought_decile_max:
     value: 2
     source: "Rainfall deciles (Gibbs & Maher 1967, Bureau of Meteorology Bulletin No. 48; cited by WMO & GWP 2016, Handbook of Drought Indicators and Indices, WMO-No. 1173, pp. 11-12). Classes from Hayes, 'Drought Indices', National Drought Mitigation Center (archived 2009-05-10, https://webarchive.library.unt.edu/eot2008/20090510055327id_/http://www.drought.unl.edu/whatis/indices.htm): 'deciles 1-2: lowest 20% much below normal'. Applied to each crop's season rain over the replay record, decile = ceil(10 x rank / n) with average ranks for ties. The method wants a long record (Australia uses 100 years); 25 seasons is short. Calling 'much below normal' a drought: Claude's choice, owner-approved 2026-11-12 (owner's batch decisions, item 17)"
@@ -222,12 +231,18 @@ gpm_series:                       # rain check B (Friday): is the 2017 jump real
   break_evidence:
     value: {gauge_weight_before_pct: [96, 98], gauge_weight_after_pct: [56, 72], gpcc_stations_before: 50, gpcc_stations_after: 1}
     source: "data/cards/<field>/gauge_evidence.json `summary` (pipeline/fetch/gauge_evidence.py, 2026-11-13, REVIEW_2 M6: all 297 months of 2001-01 to 2025-09 fetched; before that the numbers had been read by hand as 96-97%, and 17 of the 192 months before 2017 are in fact 98%). VALIDATION 3.9b: GPM_3IMERGM V07 gaugeRelativeWeighting at the field's cell and in the 3x3 cells around it (96-98% in every month of 2001-2016; yearly means 56-72% from January 2017) and GPCC Full Data Monthly V2022 stations in the field's 1-degree box (about 50 a month in 2011-2016, about 1 in 2017-2020), read by a research sub-agent (quotes in SI_LOG); shown on the method page"
+  correction_factor_products:
+    value: [final]
+    source: "Owner, 2026-11-13 (answer 7): 'the same monthly factors', that is, the factors fitted on IMERG Final months (mean complete-month total over the reference years / its mean from correction_from to the last Final day). Late days never set a factor"
+  level_caveat_ratio:
+    value: 1.25
+    source: "Owner, 2026-11-13 (answer 8 to REVIEW_2 H4): one 'unknown' line that the rain may still read high, keyed on the ratio of the twin's mean yearly rain to DHM's 1991-2020 normal of the nearest station. The limit 1.25 is Claude's choice, fixed before its first run (the lower edge of the 25 to 40 percent band that keyed the station lines, owner-approved 2026-11-12); put to the owner. A field without such a normal gets no line"
   correction_fields:
     value: [demo]
-    source: "Owner, 2026-11-13 (decision 1) is about this field: 'the rain gauges behind NASA's correction disappeared around this field in January 2017'. Claude's reading: a field abroad (build step 11) is corrected only after its own rain check B finds the same break, since gauge networks differ by country"
+    source: "Owner, 2026-11-13 (decision 1) is about this field: 'the rain gauges behind NASA's correction disappeared around this field in January 2017'. Claude's reading, owner-approved 2026-11-13 (answer 20 to REVIEW_2): a field abroad (build step 11) is corrected only after its own rain check B finds the same break, since gauge networks differ by country"
   correction_products:
-    value: [final]
-    source: "Claude's reading, fixed 2026-11-13 before the Late check (IMERG Late 2014-2019) was read: only IMERG Final days are scaled, and only they set the factors. The 92 IMERG Late days (Oct-Dec 2025, D1) are left as they are, because Late uses a climatological gauge calibration, not the monthly gauges that vanished, so the 2017 loss cannot reach it; the Late check tests that. POWER-filled days (none on the demo field) are another source and are not scaled either. If the Late check shows Late stepping up in 2017 as Final does, this is put back to the owner. Late check (2026-11-13, VALIDATION 3.9b): Late does not step with Final (1.13 against 1.62), but it is wetter than gauge-adjusted Final in 2014-2016 (Final/Late 0.64-0.85) and about equal to Final from 2017 (1.00-1.13): Late sits at the un-gauged level, so whether to scale the 92 Late days too is put to the owner"
+    value: [final, late]
+    source: "Owner, 2026-11-13 (answer 7 to REVIEW_2 H4): scale the 92 IMERG Late days (Oct-Dec 2025) with the same monthly factors; owner-approved 2026-11-13. The factors are still set by IMERG Final months only (correction_factor_products). Reason: the Late check and DHM's own 2025 gauges show Late at the un-gauged, too-wet level (October 2025: 427.7 mm against 204.8 / 210.5 / 197.7 mm at three gauges; VALIDATION 3.9b, 3.9c). History: Claude's reading, fixed 2026-11-13 before the Late check (IMERG Late 2014-2019) was read: only IMERG Final days are scaled, and only they set the factors. The 92 IMERG Late days (Oct-Dec 2025, D1) are left as they are, because Late uses a climatological gauge calibration, not the monthly gauges that vanished, so the 2017 loss cannot reach it; the Late check tests that. POWER-filled days (none on the demo field) are another source and are not scaled either. If the Late check shows Late stepping up in 2017 as Final does, this is put back to the owner. Late check (2026-11-13, VALIDATION 3.9b): Late does not step with Final (1.13 against 1.62), but it is wetter than gauge-adjusted Final in 2014-2016 (Final/Late 0.64-0.85) and about equal to Final from 2017 (1.00-1.13): Late sits at the un-gauged level, so whether to scale the 92 Late days too is put to the owner"
 
 monsoon_onset:                    # diary, build step 6a (pipeline/diary/onset.py); rain = the twin's GPM rain
   # Owner, 2026-11-12: the rule is kept as set in CLAUDE.md, with no tuning to the results, although it fails
@@ -355,7 +370,7 @@ trends:                           # diary, build step 6c (pipeline/diary/trends.
     source: "Claude's rule, owner-approved 2026-11-13, set AFTER seeing that 21 of 25 onsets fall on 15-17 May (honest outputs, golden rule 11): an onset pinned at the search start cannot move earlier, so its trend cannot show a shift and shift_days is exported as null ('can't tell')"
   shift_days_span:
     value: "last year - first year"
-    source: "schema.json diary.shift_days: 'Sen's slope x record length'; Claude's reading: the change from the first to the last year, slope x (last - first)"
+    source: "schema.json diary.shift_days: 'Sen's slope x record length'; Claude's reading, owner-approved 2026-11-13 (answer 20 to REVIEW_2): the change from the first to the last year, slope x (last - first)"
 
 months:                           # diary.months[], build step 6c (pipeline/diary/months.py). Fixed before it was run.
   terciles:
@@ -397,13 +412,30 @@ plans:                            # build step 7 (pipeline/plans/generate.py, sc
     source: "Claude's choice, owner-approved 2026-11-13 (CLAUDE.md 'the best cover the gap plan'; decision 6), fixed before the first run; chosen among rice plans (owner, decision 4). If it is rice then wheat, the plan is flagged: FAO's wheat window here is for irrigated wheat (decision 4)"
   third_plan_rule:
     value: "'Safest in bad years': among the rice plans of the Pareto set that grow other crops than the current and the cover-the-gap plan and keep at least today's cover, the best 10th-percentile year (ties: higher mean harvest). If no Pareto plan qualifies, every rice plan is looked at. The cover-the-gap plan, too, grows other crops than the current plan"
-    source: "Owner, 2026-11-13 (decision 5): option A, best in bad years among plans that keep at least today's cover, named 'Safest in bad years' (not 'follow the shift', since shift_days cannot be measured; revisit only if step 9's 2040 projections finish). The fallback to every rice plan is Claude's, fixed before the run. 'Other crops' was added by Claude AFTER the first run, which picked rice then wheat again with rice sown on 1 June instead of 15 June: the same rotation, while CLAUDE.md and the challenge ask for at least three rotations. Put to the owner"
+    source: "Owner, 2026-11-13 (decision 5): option A, best in bad years among plans that keep at least today's cover, named 'Safest in bad years' (not 'follow the shift', since shift_days cannot be measured; revisit only if step 9's 2040 projections finish). The fallback to every rice plan is Claude's, fixed before the run. 'Other crops' was added by Claude AFTER the first run, which picked rice then wheat again with rice sown on 1 June instead of 15 June: the same rotation, while CLAUDE.md and the challenge ask for at least three rotations. Owner-approved 2026-11-13 (answer 3 to REVIEW_2: the plan stays as chosen and is renamed 'Feed your soil')"
   plan_names:
-    value: {current: "What you do now", cover_gap: "Fill the empty months", safest: "Safest in bad years"}
-    source: "Owner, 2026-11-13 (decision 5): 'Safest in bad years'. 'What you do now' and 'Fill the empty months' are the names the site was built with (pipeline/export/mock.py, build step 1). Plan ids current, cover_gap (owner approved 2026-11-12, choice 4) and safest (replaces follow_shift, owner's decision 5)"
+    value: {current: "What you do now", cover_gap: "Fill the empty months", safest: "Feed your soil"}
+    source: "Owner, 2026-11-13 (answer 3 to REVIEW_2 H2): the third plan is renamed 'Feed your soil' (its id stays `safest`), because rice then wheat does better in bad years (10th-percentile year 83.8 against 75.6) and what the plan gives is a pulse crop that feeds the soil and breaks the pest cycle. Before: owner, 2026-11-13 (decision 5): 'Safest in bad years'. 'What you do now' and 'Fill the empty months' are the names the site was built with (pipeline/export/mock.py, build step 1). Plan ids current, cover_gap (owner approved 2026-11-12, choice 4) and safest (replaces follow_shift, owner's decision 5)"
+  gain_range:
+    value: "the harvest gain of a suggested plan over the current plan is shown as a range: both plans are replayed with each of their crops at the smaller and at the larger root depth of its FAO-56 Table 22 range (config/crops.json zr_range_m), every combination, a crop having the same depth in both plans; the smallest and the largest gain are shown, rounded"
+    source: "Owner, 2026-11-13 (answer 4 to REVIEW_2 H2): keep FAO's larger root depths for the scores; show the harvest gain as a range and explain it in the 'unknown' tab. Which runs make the range is Claude's reading, fixed and committed before its first run; put to the owner"
+  current_options:
+    value: "the current plan is exported once for each rotation in the field's current_rotation_options (config/fields/<id>.yaml), each with both water cases and both rain versions; the suggested plans stay as chosen and are compared with whichever the farmer picks. The first option is the default (the field's current_rotation, default windows, sown at the middle). In another option, a crop that the default does not grow is sown on the date (start, middle or end of a calendar window the twin can simulate, not overlapping the option's other crops) whose simulated season lies closest to the satellite's season of the same slot: the median over the HLS years of the days between green-up (sowing + initial stage against the detected start) plus the days between season ends; ties go to the later date"
+    source: "Owner, 2026-11-13 (answer 6 to REVIEW_2 H3): the app asks the farmer to confirm the winter crop; precompute every answer (rice then potato, and rice then wheat with wheat on the FAO Hill-zone window that best fits the satellite's winter season). The distance is Claude's reading of 'best fits', fixed and committed before its first run; put to the owner"
   pareto_keys:
     value: ["harvest", "stability", "water", "cover", "soil_kept", "pest_break", "nitrogen"]
     source: "CLAUDE.md 'Plans' steps 3-4: harvest, stability (10th percentile year), water, cover, soil_kept, pest-cycle breaks, nitrogen"
+
+tips:                             # plans[].tips (pipeline/plans/explain.py); owner's answer 5 to REVIEW_2 H3, 2026-11-13
+  thirsty_min_dry_days_per_year:
+    value: 5
+    source: "Owner, 2026-11-13 (answer 5): a floor before any 'thirsty' tip. The number is Claude's choice, fixed and committed before its first run: the tip is shown only when, in the month the crop is most often short of water, that happens on at least 5 days a year on average over the rain-fed replay. Put to the owner"
+  thirsty_skip_crops:
+    value: [rice]
+    source: "Owner, 2026-11-13 (answer 5): drop the rice tips for now (the model's rain-fed rice almost never runs short of water: METHOD_NOTES 36)"
+  straw_months:
+    value: "the satellite's bare months (diary.months[].cover == 'bare'): for the current plan the first of them; for a suggested plan the first of them in which that plan's own calendar also leaves the ground bare; no such month, no tip"
+    source: "Owner, 2026-11-13 (answer 5): the straw tip from the satellite's bare months. The rule for a suggested plan is Claude's reading (a plan that grows a crop in a month does not need straw then), fixed and committed before its first run; put to the owner"
 
 erosion:                          # plans' soil_kept (build step 7; pipeline/plans/score.py). Relative RUSLE: K, LS, P cancel on one field
   # Sourced values found 2026-11-13 by a research sub-agent; Claude checked the C rows and the model in the saved texts.

@@ -21,7 +21,8 @@ def _daily(per_day_by_period, start="2015-01-01", end="2018-12-31"):
 def test_the_rules():
     G = load_rules()["gpm_series"]
     assert G["correction_reference_years"] == [2001, 2016] and G["correction_from"] == "2017-01-01"
-    assert G["correction_products"] == ["final"]
+    assert G["correction_products"] == ["final", "late"]            # owner's answer 7 to REVIEW_2, 2026-11-13
+    assert G["correction_factor_products"] == ["final"]             # Late days never set a factor
 
 
 def test_complete_month_totals_skip_months_with_a_missing_day():

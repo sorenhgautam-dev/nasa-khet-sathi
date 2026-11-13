@@ -28,6 +28,7 @@ bbox: [85.379227, 27.625034, 85.480773, 27.714966]       # index.json prepared a
 elevation_m: 1325.0                 # NASADEM_HGT v001 mean over the PLACEHOLDER polygon (4 pixels, 1324-1326 m; slope 1.6 deg mean; data/clean/demo/nasadem_field.json, 2026-11-12). POWER cell: 1269.39 m
 water_source: null                  # TODO(owner): one of rain-only, canal, well, irrigated. Unknown: both cases are run
 current_rotation: [rice, potato]    # PLACEHOLDER (owner, 2026-11-12): rice in the monsoon, then potato in winter (the field shows vegetable beds)
+current_rotation_options: [[rice, potato], [rice, wheat]]  # PLACEHOLDER (owner, 2026-11-13, answer 6 to REVIEW_2): the season timing cannot tell potato from wheat, so the app asks the farmer and the export holds both; the first is the default
 current_rotation_source: "PLACEHOLDER (owner, 2026-11-12): rice in the monsoon, then potato in winter, sown on the FAO Crop Calendar Nepal Hill-zone default windows; the real rotation comes from the farmer"
 validation_station: NP000444540        # NOAA GHCN-Daily KATHMANDU AIRPORT (validation; temperature correction A). About 7.4 km west of the placeholder field (great-circle, from the station's 27.700 N 85.367 E in ghcnd-stations.txt, DATA_AUDIT 1.11). Every record is GHCN S-flag 'S' (synoptic-derived: use with caution)
 correction_label: Kathmandu-valley correction  # decision A: POWER temperature corrected from validation_station

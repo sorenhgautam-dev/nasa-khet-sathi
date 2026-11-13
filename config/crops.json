@@ -18,6 +18,10 @@
     "end": 0.75
    },
    "zr_m": 1.0,
+   "zr_range_m": [
+    0.5,
+    1.0
+   ],
    "p": 0.2,
    "ky": 1.0,
    "ky_assumed": true,
@@ -68,7 +72,8 @@
     "p": "FAO-56 Table 22, Rice 0.20, footnote 4 'of saturation'. Our bucket applies it to TAW between field capacity and wilting point: a simplification; owner-approved 2026-11-12 (owner's batch decisions, item 7)",
     "ky": "ASSUMED, not published: owner decision 2026-11-12 (step-4 review item 4) - neutral Ky 1.0 assumed (harvest falls in step with water shortage), labelled 'assumed' wherever it is used. Sensitivity runs use Ky 0.8 and 1.2 (config/rules.yaml ky_assumed). Why assumed: no seasonal Ky for rice in FAO-56 Table 24, FAO-66 Tables 1-2 or the FAO crop-information pages; FAO-33 itself could not be opened. A peer-reviewed seasonal rice Ky replaces it, with its citation, if one is found. Search for a published value continues: TODO-VERIFY",
     "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Rice (Summer Season). Default window 2 (sow 1 Jun-15 Jul): Claude's choice, owner-approved 2026-11-12, step-4 review item 5",
-    "height_m": "FAO-56 Table 12, Rice: maximum crop height 1 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)"
+    "height_m": "FAO-56 Table 12, Rice: maximum crop height 1 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)",
+    "zr_range_m": "FAO-56 Table 22 (https://www.fao.org/4/x0490e/x0490e0e.htm, read again 2026-11-13): 'Rice 0.5-1.0' m. Used only for the harvest-gain range (rules.yaml plans.gain_range; owner's answer 4, 2026-11-13); zr_m stays the larger value"
    },
    "stages_fao56": {
     "ini": 30,
@@ -94,6 +99,10 @@
     "end": 0.4
    },
    "zr_m": 1.5,
+   "zr_range_m": [
+    1.0,
+    1.5
+   ],
    "p": 0.55,
    "ky": 1.15,
    "ky_assumed": false,
@@ -132,7 +141,8 @@
     "p": "FAO-56 Table 22, Spring Wheat 0.55",
     "ky": "FAO-56 Table 24 and FAO-66 Table 1 (from FAO-33): Spring wheat 1.15",
     "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Wheat, bread",
-    "height_m": "FAO-56 Table 12, Wheat, spring: maximum crop height 1 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)"
+    "height_m": "FAO-56 Table 12, Wheat, spring: maximum crop height 1 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)",
+    "zr_range_m": "FAO-56 Table 22 (https://www.fao.org/4/x0490e/x0490e0e.htm, read again 2026-11-13): 'Spring Wheat 1.0-1.5' m. Used only for the harvest-gain range (rules.yaml plans.gain_range; owner's answer 4, 2026-11-13); zr_m stays the larger value"
    },
    "stages_fao56": {
     "ini": 15,
@@ -158,6 +168,10 @@
     "end": 0.35
    },
    "zr_m": 1.7,
+   "zr_range_m": [
+    1.0,
+    1.7
+   ],
    "p": 0.55,
    "ky": 1.25,
    "ky_assumed": false,
@@ -197,7 +211,8 @@
     "p": "FAO-56 Table 22, Maize 0.55",
     "ky": "FAO-56 Table 24 and FAO-66 Table 1: Maize 1.25",
     "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), listed as 'Corn, sweet' (id 0113 = Maize in FAO's Nepal list). Khumaltar trial sowed maize 8-9 May (Chaulagain et al. 2025, doi:10.3126/ajn.v9i1.91446). Default window: Claude's choice, owner-approved 2026-11-12, step-4 review item 5",
-    "height_m": "FAO-56 Table 12, Maize, field (grain): maximum crop height 2 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)"
+    "height_m": "FAO-56 Table 12, Maize, field (grain): maximum crop height 2 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)",
+    "zr_range_m": "FAO-56 Table 22 (https://www.fao.org/4/x0490e/x0490e0e.htm, read again 2026-11-13): 'Maize, Field (grain) 1.0-1.7' m. Used only for the harvest-gain range (rules.yaml plans.gain_range; owner's answer 4, 2026-11-13); zr_m stays the larger value"
    },
    "stages_fao56": {
     "ini": 30,
@@ -223,6 +238,10 @@
     "end": 0.75
    },
    "zr_m": 0.6,
+   "zr_range_m": [
+    0.4,
+    0.6
+   ],
    "p": 0.35,
    "ky": 1.1,
    "ky_assumed": false,
@@ -273,7 +292,8 @@
     "p": "FAO-56 Table 22, Potato 0.35",
     "ky": "FAO-56 Table 24 and FAO-66 Table 1: Potato 1.1 (the FAO crop-information page table says 0.85 but its own figure says 1.1)",
     "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Potato. Default window: Claude's choice, owner-approved 2026-11-12, step-4 review item 5",
-    "height_m": "FAO-56 Table 12, Potato: maximum crop height 0.6 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)"
+    "height_m": "FAO-56 Table 12, Potato: maximum crop height 0.6 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)",
+    "zr_range_m": "FAO-56 Table 22 (https://www.fao.org/4/x0490e/x0490e0e.htm, read again 2026-11-13): 'Potato 0.4-0.6' m. Used only for the harvest-gain range (rules.yaml plans.gain_range; owner's answer 4, 2026-11-13); zr_m stays the larger value"
    },
    "height_m": 0.6
   },
@@ -293,6 +313,10 @@
     "end": 0.3
    },
    "zr_m": 0.8,
+   "zr_range_m": [
+    0.6,
+    0.8
+   ],
    "p": 0.5,
    "ky": 1.0,
    "ky_assumed": true,
@@ -321,7 +345,8 @@
     "p": "FAO-56 Table 22, Lentil 0.50",
     "ky": "ASSUMED, not published: owner decision 2026-11-12 (step-4 review item 4) - neutral Ky 1.0 assumed (harvest falls in step with water shortage), labelled 'assumed' wherever it is used. Sensitivity runs use Ky 0.8 and 1.2 (config/rules.yaml ky_assumed). Why assumed: no seasonal Ky for lentil in FAO-56 Table 24, FAO-66 or the FAO crop-information pages. Search for a published value continues: TODO-VERIFY",
     "calendar": "FAO Crop Calendar, Nepal, 'B. Hill Agro-ecological Zone' (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12), Lentil (Winter)",
-    "height_m": "FAO-56 Table 12, Lentil: maximum crop height 0.5 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)"
+    "height_m": "FAO-56 Table 12, Lentil: maximum crop height 0.5 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)",
+    "zr_range_m": "FAO-56 Table 22 (https://www.fao.org/4/x0490e/x0490e0e.htm, read again 2026-11-13): 'Lentil 0.6-0.8' m. Used only for the harvest-gain range (rules.yaml plans.gain_range; owner's answer 4, 2026-11-13); zr_m stays the larger value"
    },
    "stages_fao56": {
     "ini": 25,
@@ -453,6 +478,10 @@
     "end": 0.3
    },
    "zr_m": 2.0,
+   "zr_range_m": [
+    1.0,
+    2.0
+   ],
    "p": 0.55,
    "ky": 1.0,
    "ky_assumed": true,
@@ -481,7 +510,8 @@
     "p": "FAO-56 Table 22, Millet 0.55",
     "ky": "ASSUMED, not published: owner decision 2026-11-12 (step-4 review item 4) - neutral Ky 1.0 assumed (harvest falls in step with water shortage), labelled 'assumed' wherever it is used. Sensitivity runs use Ky 0.8 and 1.2 (config/rules.yaml ky_assumed). Why assumed: no seasonal Ky for millet in FAO-56 Table 24 or FAO-66 (only sorghum 0.9 is listed). Search for a published value continues: TODO-VERIFY",
     "calendar": "Chaulagain, B., Bhattarai, R. K., Timalsina, H. P., Neupane, R., Kaduwal, S. (2025). Agronomy Journal of Nepal 9, 172-179, doi:10.3126/ajn.v9i1.91446 (NARC Khumaltar, Lalitpur, 1360 m). The FAO Hill-zone finger-millet entry (sow Oct-Dec) contradicts this and FAO GIEWS, so it is not used",
-    "height_m": "FAO-56 Table 12, Millet (Table 12 has no finger millet; the Millet row, as for its Kc): maximum crop height 1.5 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)"
+    "height_m": "FAO-56 Table 12, Millet (Table 12 has no finger millet; the Millet row, as for its Kc): maximum crop height 1.5 m (https://www.fao.org/4/x0490e/x0490e0b.htm, read 2026-11-12). Used as h in the eq. 62/65 climate adjustment of Kc mid and Kc end, as FAO-56 Example 27 does (REVIEW_NOTES M7)",
+    "zr_range_m": "FAO-56 Table 22 (https://www.fao.org/4/x0490e/x0490e0e.htm, read again 2026-11-13): 'Millet 1.0-2.0' m. Used only for the harvest-gain range (rules.yaml plans.gain_range; owner's answer 4, 2026-11-13); zr_m stays the larger value"
    },
    "stages_fao56": {
     "ini": 15,
