@@ -487,3 +487,48 @@ erosion:                          # plans' soil_kept (build step 7; pipeline/pla
   month_amplitude:
     value: 0.5412
     source: "Same model: the seasonal multiplier 1 + 0.5412 cos(pi j / 6 - 7 pi / 6), largest in July"
+
+future:                           # build step 9 (pipeline/fetch/nexgddp.py, pipeline/future/, scripts/run_future.py)
+  # Written and committed BEFORE the first NEX-GDDP-CMIP6 download (2026-11-14, 00:30 Nepal time).
+  method:
+    value: "delta change: per model and scenario, the monthly change at the field's NEX-GDDP-CMIP6 cell between the historical and the future period is applied to the observed 2001-2025 weather (data/clean/<field>/weather.parquet) and the twin is rerun. tasmax's change (future minus historical monthly mean, deg C) is added to tmax_c and tmax_c_power; tasmin's change to tmin_c, tmin_frost_c and tmin_c_power; pr's change (a ratio, rain_ratio_window_months) multiplies rain_mm and rain_uncorrected_mm. Humidity (rh_pct), wind (ws2m_ms) and sunshine (rs_mj_m2_day) stay as observed. ET0 is recomputed with pipeline/twin/et0.py exactly as pipeline/fetch/weather.py builds it, with the humidity rule below. A day whose shifted tmin_c or tmin_frost_c lies above its shifted tmax_c, or whose scaled rain leaves 0-500 mm, stops the run (golden rule 12c; never clipped)"
+    source: "CLAUDE.md 'Future' (owner-approved method): 'compute monthly changes between 1995-2014 and 2026-2040 (temperature as a difference, rainfall as a ratio) and apply them to the observed 2001-2025 weather. Run the twin; report the spread across models as a range'. Only pr, tasmax and tasmin change (integrator's step-9 brief, 2026-11-13); the rest of the weather stays as observed, said on the method page"
+  periods:
+    value: {historical: [1995, 2014], future: [2026, 2040]}
+    source: "CLAUDE.md 'Future': 'between 1995-2014 and 2026-2040'. 1995-2014 is the last 20 years of the CMIP6 historical experiment and the IPCC AR6 recent-past baseline"
+  scenarios:
+    value: [ssp245, ssp585]
+    source: "CLAUDE.md 'Future': 'two scenarios (SSP2-4.5 and SSP5-8.5)'"
+  variables:
+    value: [pr, tasmax, tasmin]
+    source: "Integrator's step-9 brief, 2026-11-13: pr, tasmax and tasmin only; humidity, wind and sunshine stay as observed"
+  humidity:
+    value: "relative humidity held: ea_kpa is rebuilt as weather.py builds it, POWER's RH2M / 100 x (e0(tmax_c_power + dTmax) + e0(tmin_c_power + dTmin)) / 2 (FAO-56 eq. 19 with POWER's own temperatures, shifted by the same monthly changes), capped at e0 of the shifted tmin_c; et0_mm uses it with the shifted corrected temperatures, and et0_rh_held_mm is rebuilt as in weather.py. So the vapour pressure rises with warming and the Kc climate adjustment's RHmin (FAO-56 eq. 63 from ea_kpa and tmax_c) stays about the same"
+    source: "Claude's choice, 2026-11-14, fixed before the first download: climate models keep near-surface relative humidity roughly constant as they warm while the vapour pressure rises with temperature (Held & Soden 2006, J. Climate 19, 5686-5699, doi:10.1175/JCLI3990.1; TODO-VERIFY, not opened); holding ea instead would add the whole warming to the vapour-pressure deficit. Over land, relative humidity falls a little in projections (Byrne & O'Gorman 2016, J. Climate 29, 9045-9061; TODO-VERIFY, not opened), so holding it is on the low side for ET0's rise (said in the 'unknown' tab). NEX-GDDP's own hurs is not used (three variables)"
+  rain_ratio_window_months:
+    value: 3
+    source: "Claude's choice, 2026-11-14, fixed before the first download: each month's rain ratio = the mean daily pr over the three calendar months centred on it (December, January and February for January), future over historical, because a dry month's own ratio rests on a few mm of model rain and is noisy. No cap on the ratio; the largest one is reported"
+  models:
+    value: "every model directory of the NEX-GDDP-CMIP6 THREDDS catalogue (ds.nccs.nasa.gov, AMES/NEX/GDDP-CMIP6) that offers pr, tasmax and tasmin for every year of both periods in historical, ssp245 and ssp585, with the one variant folder NEX-GDDP provides in each experiment (a model with two variant folders in an experiment is left out and reported). GFDL-CM4_gr2 is left out: it is GFDL-CM4 again, downscaled from that model's second output grid, so it would count one model twice. The outlook uses every model complete when run_future.py runs and lists them"
+    source: "Integrator's step-9 brief, 2026-11-13 ('every NEX-GDDP-CMIP6 model that offers pr, tasmax and tasmin for historical, ssp245 and ssp585 (one variant per model, as NEX-GDDP provides it)'; 'the outlook uses every model complete at run time and lists them'). Leaving out GFDL-CM4_gr2 is Claude's choice, fixed before the first download"
+  fetch_order_seed:
+    value: 2026
+    source: "Integrator's step-9 brief, 2026-11-13: models are fetched in a random order fixed by seed 2026 (numpy.random.default_rng(2026).permutation of the sorted model names), so that if time runs short the complete models are a random sample, not a choice"
+  min_models:
+    value: 5
+    source: "Integrator's step-9 brief, 2026-11-13: at least 5 complete models; with fewer, no outlook is written (future stays in the export's mock list)"
+  cell:
+    value: "the NEX-GDDP-CMIP6 0.25 deg grid cell nearest the field centre (cell centres at odd multiples of 0.125 deg), requested at its centre; the server's returned grid point must be that centre. Raw files are cached by cell (data/raw/nexgddp/<cell>/), so fields in the same cell share them"
+    source: "Integrator's step-9 brief, 2026-11-13"
+  file_version:
+    value: "where a year has a v1.x and a _v2.0 file side by side, the _v2.0 file; the file used is recorded for every year"
+    source: "DATA_AUDIT 1.9: 'The bucket holds v1.0 and _v2.0 files side by side: step 9 chooses v2.0 and records it'"
+  calendar:
+    value: "each model's own calendar (standard, noleap or 360_day, from the file's time:calendar): only monthly means are used, and days are never matched between calendars"
+    source: "Integrator's step-9 brief, 2026-11-13"
+  outputs:
+    value: "per plan (the three shown and every current-plan option) and per model x scenario run: the mean rain-fed harvest over the replay's complete years, with the same functions and years as scripts/run_plans.py evaluate() (plans.generate.plan_dates, plans.simulate.replay with bare_soil.kc and kc_climate.apply, plans.score.complete). harvest = the median over all model-scenario runs; harvest_low and harvest_high = the lowest and the highest run (the full spread). Per scenario also the median change in yearly dry days (rain-fed) and in the irrigated run's irrigation_mm. Each plan's baseline (no change, the observed weather) comes from the same code. Both rain versions: corrected (the default) and uncorrected (pipeline/twin/inputs.with_rain)"
+    source: "Integrator's step-9 brief, 2026-11-13 (CLAUDE.md 'Future': 'report the spread across models as a range'; contract: harvest_low <= harvest <= harvest_high)"
+  slider_grid:
+    value: {rain_factor: [1.0, 0.9, 0.8, 0.7], warming_c: [0.0, 0.5, 1.0, 1.5, 2.0]}
+    source: "CLAUDE.md 'Slider scenarios': 'precompute a grid (rain x 1.0, 0.9, 0.8, 0.7; warming +0, +0.5, +1, +1.5, +2 C) for the three plans'. Applied to the observed weather as the deltas are: every day's rain times the factor, the warming added to every temperature (Tmax and Tmin alike), ET0 rebuilt with relative humidity held"
