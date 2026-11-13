@@ -85,6 +85,10 @@ soilgrids:
     value: {radius_m: 2000, depth_m: 1.0}
     source: "Owner, 2026-11-13 (answer 10 to REVIEW_2 M5): keep the nearest soil cell and show the neighbourhood range. Shown: the water the soil holds for plants (field capacity minus wilting point) in the top metre, at the cell used and over every SoilGrids cell with values within 2 km of the field. The radius and the depth are Claude's choices; they are the ones REVIEW_2's check had already used on 2026-11-13 (so not fixed before a first look); put to the owner. A description only: the twin still uses the nearest cell"
 
+  neighbourhood_median_soil:      # owner's queue item 4d (2026-11-14): a check run, the twin keeps the nearest cell
+    value: "for each SoilGrids depth layer, the median field capacity (wv0033) and the median wilting point (wv1500), and the median sand and clay, over the cells with a prediction within neighbourhood.radius_m of the field (the same cells as the neighbourhood summary in the soilgrids card), read offline from the cached WCS maps; the twin is run with this profile beside the nearest cell's, and the two are shown as a range"
+    source: "Owner, 2026-11-14 (queue item 4d): 'Run the current plan and the two suggested plans with the soil of the nearest SoilGrids cell (today) and with the neighbourhood median ... Show the results as a range'. Per-layer medians instead of the cell with the median water held: Claude's choice, fixed and committed before the first run (no tie between the 28th and 29th of 56 cells; each layer stays a value SoilGrids predicts nearby). Put to the owner"
+
 curve_numbers:                    # SCS-CN for the bucket's runoff (twin/runoff.py)
   hydrologic_soil_group:
     value: C
