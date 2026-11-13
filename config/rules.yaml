@@ -529,6 +529,34 @@ onset_accumulation:               # a second, threshold-free onset measure besid
     value: {2001: "06-03", 2002: "06-15", 2003: "06-16", 2004: "06-09", 2005: "06-20", 2006: "06-01", 2007: "06-07", 2008: "06-10", 2009: "06-23", 2010: "06-17", 2011: "06-15", 2012: "06-16", 2013: "06-14", 2014: "06-20", 2015: "06-13", 2016: "06-15", 2017: "06-12", 2018: "06-08", 2019: "06-20", 2020: "06-12", 2021: "06-11", 2022: "06-05", 2023: "06-14", 2024: "06-10"}
     source: "DHM Climate Division, 'Monsoon Onset and Withdrawal date information', Table 1, p. 3 (monsoon entering eastern Nepal; copied 2026-11-14). For information only, not part of the verdict (a regional entry date, not this cell): the year-by-year agreement (Spearman rank correlation, median difference in days) of each variant with DHM over 2001-2024, and DHM's own 2001-2024 trend by the same test"
 
+monsoon_onset_dhm:                # owner, 2026-11-14: DHM's official onset dates are the record of a monsoon shift (pipeline/diary/onset_dhm.py, scripts/run_onset_dhm.py)
+  # Committed 2026-11-14 BEFORE its first run. Fixes the answer, not the method: no further onset definition is tried.
+  # monsoon_onset and onset_accumulation stay as they are, with their failed checks recorded (VALIDATION 4.1d, 4.1e, 3.22).
+  record:
+    value: {file: "config/dhm_onset_dates.csv", years: [2001, 2024]}
+    source: "Owner, 2026-11-14 (answer to the onset result): 'DHM's official onset dates for 2001-2024 become the record of whether the monsoon has shifted', credited to DHM. DHM Climate Division, 'Monsoon Onset and Withdrawal date information' (1968-2024), Table 1, p. 3, copied into config/dhm_onset_dates.csv with config/dhm_onset_dates.NOTICE.md (the owner's pattern of answer 13, 2026-11-13). 2001-2024 are the years the twin's weather and DHM's table share"
+  shift_days:
+    value: "Sen's slope of the onset's calendar day (non-leap year: 15 June = 166 in every year) on the year, times (last - first), with its 95% range (scipy theilslopes at 1 - trends.alpha) and the Mann-Kendall p (pymannkendall.original_test), as pipeline/diary/trends.py mk_sen and over_record. 'No clear shift' when the range includes 0 or p >= trends.alpha; otherwise earlier (slope < 0) or later"
+    source: "Owner, 2026-11-14: 'Sen's slope x (years - 1), with its range, Mann-Kendall as in pipeline/diary/trends.py'. The 'no clear shift' wording rule is Claude's reading, fixed before the run; put to the owner"
+  caveat:
+    value: "DHM's date is the day the monsoon enters Nepal in the east. It reaches Kathmandu a few days later."
+    source: "Owner, 2026-11-14 ('DHM's date is the monsoon's entry into Nepal (eastern Nepal); it reaches Kathmandu a few days later'). DHM, p. 1: 'monsoon entered into eastern Nepal'; about two days later in Kathmandu: monsoon_onset.climatology_check"
+  start_window:
+    value: {percentiles: [25, 75], method: "numpy.percentile (linear, Hyndman & Fan type 7) of the calendar days of the record's years, each end rounded to the nearest day"}
+    source: "Owner, 2026-11-14: 'the usual start window: the middle half of the years, i.e. the 25th-75th percentile dates'. The percentile method and the rounding are Claude's choice, fixed before the run; put to the owner"
+  late_after:
+    value: "06-20"
+    source: "Owner's threshold, 2026-11-14 ('after 20 June', the owner's example). Claude's reading, fixed before the run; put to the owner: late = DHM's onset strictly after 20 June; years with the onset on 20 June itself are listed beside, not counted. Share = late years / years in the record"
+  cross_check:
+    value: "Noska & Misra 2016's onset, the record-mean variant exactly as onset_accumulation.definition and variants.climatological, on rain without the 2017 break: (a) CHIRPS v3.0 daily rnl at the field's cell (data/clean/<field>/chirps.parquet rain_mm, UTC days), 2001-2025, Dbar = its own 2001-2025 mean; (b) the twin's GPM rain for 2001-2016 only (before the correction starts; identical to GPM as published), Dbar = its own 2001-2016 mean. A record agrees with DHM ('no clear shift') when BOTH its Sen's slope 95% range includes 0 AND that range overlaps DHM's 2001-2024 slope range (days per year). Reported beside it, not part of the test: median date, years at a window edge (onset_accumulation.edge_days), Spearman correlation with DHM over shared years"
+    source: "Owner, 2026-11-14 (item 3): 'Report whether each agrees with DHM: no clear shift ... Declare the agreement test before running (e.g. a trend range that includes 0, or overlapping trend ranges)'. Using both conditions is Claude's choice, fixed before the run; put to the owner. CHIRPS is daily at the cell (data/cards/<field>/chirps.json), so nothing is downloaded"
+  words_rule:
+    value: "'Three independent records agree' only when DHM shows no clear shift and both cross-checks agree with it; otherwise the words say plainly which record does not agree. The how-we-know text adds that CHIRPS and GPM blend rain-gauge data and may share gauges with DHM's network"
+    source: "Owner, 2026-11-14 (item 3): 'If they all agree, the words are \"three independent records agree\". If not, say so plainly.' The shared-gauges clause is Claude's, for honesty (IMERG Final is gauge-adjusted with GPCC, rules.yaml gpm_series.break_evidence; CHIRPS blends station data), fixed before the run; put to the owner"
+  bs_dates:
+    value: {month_starts_on_day: 15, mark: "तिर"}
+    source: "Claude's choice, fixed before the run; put to the owner. Nepali dates show Bikram Sambat first with the Gregorian date beside (owner, 2026-11-12; pipeline/words/screens.json months: each BS month begins about the middle of the Gregorian month, with TODO-VERIFY on the start days). A Gregorian date is turned into an approximate BS date by taking each BS month to start on the 15th (Jestha 1 about 15 May, Asar 1 about 15 June), marked 'तिर' (about). BS months start on a slightly different day each year, so the BS day can be off by one or two; a native speaker reviews every Nepali line"
+
 greenness:                        # diary, build step 6a (pipeline/diary/greenness.py)
   min_clear_fraction:
     value: 0.75
