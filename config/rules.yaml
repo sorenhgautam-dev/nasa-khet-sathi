@@ -310,6 +310,25 @@ gpm_series:                       # rain check B (Friday): is the 2017 jump real
   correction_products:
     value: [final, late]
     source: "Owner, 2026-11-13 (answer 7 to REVIEW_2 H4): scale the 92 IMERG Late days (Oct-Dec 2025) with the same monthly factors; owner-approved 2026-11-13. The factors are still set by IMERG Final months only (correction_factor_products). Reason: the Late check and DHM's own 2025 gauges show Late at the un-gauged, too-wet level (October 2025: 427.7 mm against 204.8 / 210.5 / 197.7 mm at three gauges; VALIDATION 3.9b, 3.9c). History: Claude's reading, fixed 2026-11-13 before the Late check (IMERG Late 2014-2019) was read: only IMERG Final days are scaled, and only they set the factors. The 92 IMERG Late days (Oct-Dec 2025, D1) are left as they are, because Late uses a climatological gauge calibration, not the monthly gauges that vanished, so the 2017 loss cannot reach it; the Late check tests that. POWER-filled days (none on the demo field) are another source and are not scaled either. If the Late check shows Late stepping up in 2017 as Final does, this is put back to the owner. Late check (2026-11-13, VALIDATION 3.9b): Late does not step with Final (1.13 against 1.62), but it is wetter than gauge-adjusted Final in 2014-2016 (Final/Late 0.64-0.85) and about equal to Final from 2017 (1.00-1.13): Late sits at the un-gauged level, so whether to scale the 92 Late days too is put to the owner"
+  break_test:                     # build step 11: does a field's OWN rain check B find the break? (pipeline/checks/rain_check.py break_test)
+    rule:
+      value: "The break is found only when all three hold. (1) Cause, gauge input lost: the yearly mean of IMERG's monthly gauge weight at the field's 0.1 deg cell (GPM_3IMERGM V07 gaugeRelativeWeighting; years with at least min_months_per_year months) falls in some year Y, after at least min_years_before such years, by at least gauge_drop_pct_points below the mean of all the years before Y, and stays that far below that mean in every later year. (2) GPM steps against an independent product: Pettitt's test on the yearly ratio GPM / CHIRPS v3.0 rnl at the field's cells (complete years, 2001-2025) gives p below pettitt_p_max, and the first changed year (change_after + 1) is within change_year_tolerance years of Y. (3) The reference does not step then: Pettitt's test on CHIRPS's own yearly totals gives p at or above pettitt_p_max, or a first changed year outside that window. Without the gauge-weight series or CHIRPS the break is not found. Reported, never required: Pettitt on GPM's yearly totals and on GPM / POWER, GPCC's station counts in the field's 1-degree box (to 2020), and the step (mean GPM / CHIRPS from Y over the mean before Y). A field whose own test finds the break is put to the owner for gpm_series.correction_fields, with the correction from 1 January of Y; until the owner's go nothing is corrected"
+      source: "Claude's choice, 2026-11-14, fixed before any rain data of the field abroad existed (brief for build step 11; REVIEW_2 H6). It asks for the independent lines of evidence of VALIDATION 3.9b (demo): the cause (the gauge weight), and a step seen against an independent product that does not itself step. Test: Pettitt 1979 (Applied Statistics 28:126-135), the change-point test rain check B already uses (pipeline/checks/rain_check.py pettitt, with its usual p approximation). GPM / POWER is reported, not required: POWER's rain is a model field that varies on its own (demo: p 0.10, VALIDATION 3.9b)"
+    gauge_drop_pct_points:
+      value: 20
+      source: "Claude's choice, 2026-11-14: a fifth of the estimate passing from the gauge analysis to the satellite estimate, far above the spread of a gauged cell (demo 2001-2016: every month 96-98%). No published threshold found: the IMERG V07 Technical Documentation defines the variable, not a limit"
+    min_months_per_year:
+      value: 6
+      source: "Claude's choice, 2026-11-14: a year's mean gauge weight needs at least half its months (IMERG Final ends in September 2025, so 2025 has 9)"
+    min_years_before:
+      value: 5
+      source: "Claude's choice, 2026-11-14: at least five earlier years set the gauged level"
+    pettitt_p_max:
+      value: 0.05
+      source: "The conventional 5% significance level, as rain check B reads Pettitt's p (VALIDATION 3.9b); Pettitt 1979's approximation p = 2 exp(-6 K^2 / (n^3 + n^2))"
+    change_year_tolerance:
+      value: 1
+      source: "Claude's choice, 2026-11-14: yearly totals place a change at a year boundary, so a loss that starts during year Y may show first in Y or Y + 1 (and Pettitt's split can fall a year early)"
 
 monsoon_onset:                    # diary, build step 6a (pipeline/diary/onset.py); rain = the twin's GPM rain
   # Owner, 2026-11-12: the rule is kept as set in CLAUDE.md, with no tuning to the results, although it fails
