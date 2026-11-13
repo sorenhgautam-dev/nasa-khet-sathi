@@ -101,6 +101,27 @@ paddy_rice:
     value: "irrigated paddy only: refilled to field capacity at the start of every season day, booked as irrigation (pond_supply_mm is the paddy part); rain-fed paddy is the ordinary bucket with rice's Zr and p, no outside water"
     source: "Owner, 2026-11-12 (REVIEW_NOTES H1, L1; owner-approved 2026-11-12 (owner's batch decisions, item 6)): FAO-56 has no paddy balance. Replaces the rain-fed rule 'ponded until the first 10-day dry spell under 1 mm' (owner-approved at the step-4 review), which supplied 120-203 mm a season of unsourced water. Documentation only: no code reads this key"
 
+season_dates:                     # item 4a (owner's queue, 2026-11-14): the farmer's sowing dates from the satellite's seasons
+  # Written and committed BEFORE its first run. pipeline/twin/season.py plan_from_seasons; scripts/run_replay.py --season-dates.
+  apply:
+    value: false
+    source: "Owner's queue item 4a, 2026-11-14: behind a switch until the integrator or the owner turns it on; scripts/run_replay.py takes --season-dates hls for the check (data/checks/<field>/seasons_from_hls/)"
+  seasons:
+    value: "the chosen season method's seasons with source 'hls' (data/checks/<field>/diary_seasons.json chosen.seasons_by_year; 2014-2025 on the demo field); each in its slot by its peak month (rotation_guess: monsoon June-November, winter December-May). MODIS-year seasons are not used"
+    source: "Owner's queue item 4a: 'Drive each year's sowing and harvest in the twin from the HLS seasons detected for that year (2014-2025) ... with source hls'. Slots: rules.yaml rotation_guess (pipeline/diary/guess.py SLOTS)"
+  match:
+    value: "a crop of the farmer's plan (the current rotation and the current options; suggested plans keep their calendars) takes, in each year, the detected season of its own slot (the slot of its calendar season's middle day) whose peak falls in the year its calendar season ends; a year with no such season keeps the calendar date"
+    source: "Owner's queue item 4a: 'Keep the calendar defaults for years with no detected season'. Year of a season = the year it is harvested (rules.yaml replay.year_of_season); suggested plans are the twin's alternatives, not what the satellite sees. Claude's reading, fixed before the first run; put to the owner"
+  sowing:
+    value: "sowing = the detected season's start minus the crop's initial stage (crops.json stages_days.ini): the threshold method's start (20 % up the rise) is read as green-up, the end of FAO-56's initial stage"
+    source: "FAO-56 Chapter 6: the initial stage runs from 'planting date to approximately 10% ground cover'; the same reading as rules.yaml rotation_guess ('green-up window (sowing + initial stage)'), owner-approved 2026-11-13"
+  length:
+    value: "the crop keeps its own season length (crops.json stages_days); the detected end is not used, and the difference between the detected season's length and the crop's is reported. A season longer than the crop leaves days the satellite sees green and the twin bare; a shorter one the reverse"
+    source: "Claude's choice, fixed before the first run: the crop's stages, Kc curve and Ky stay those of the crop library (FAO-56 Table 11 lengths scaled to the FAO calendar, METHOD_NOTES 9); NDVI above the season threshold also counts weeds, residue and a second flush (REVIEW_NOTES M11), so stretching the crop to it would change the crop, not its dates. Put to the owner"
+  overlaps:
+    value: "crops are taken in the order of their new sowing days; a crop that would start before the previous one ends starts the day after it ends; a season pushed past the end of the weather record is dropped (its year is then incomplete and not scored)"
+    source: "Claude's choice, fixed before the first run: the same hand-over as proposal 2c (paddy_rainfed) and crops.json's no-overlap rule (twin/season.py _segments refuses overlaps)"
+
 paddy_rainfed:                    # proposal 2c (called 4c in the owner's queue): written and committed BEFORE the what-if run
   # Sources opened 2026-11-14 by a research sub-agent (quotes in SI_LOG). pipeline/twin/season.py paddy_transplant, paddy_outcome.
   status:
