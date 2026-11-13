@@ -895,3 +895,106 @@ sample_fields:                    # Local Impact 4b (pipeline/area/samples.py, s
   label:
     value: "config/fields/sample_<n>.yaml: placeholder true, sample true, name 'Bhaktapur sample field <n> (PLACEHOLDER)', the demo's placeholder rotations, water_source null, the demo's fetch_box, bbox, validation_station and correction_label"
     source: "Owner's brief (4b) and owner's 8b (2026-11-14, via the integrator): each is labelled a sample and listed in index.json (the integrator writes index.json)"
+
+validation_checks:                # independent checks of the twin (owner's group 3a-3c and GLDAS, 2026-11-14): pipeline/checks/, scripts/run_validation_checks.py. Written and committed BEFORE the first run of any of them; only data AVAILABILITY was looked at first (ECOSTRESS overpass counts at the field pixel, FAOSTAT items, GLDAS variables), no outcome statistic. Checks only: nothing here changes an export.
+  common:
+    correlation:
+      value: "Pearson and Spearman correlation, each with a 95% percentile bootstrap interval: 10,000 resamples, seed 0 (numpy default_rng). Per-season and per-year checks resample the seasons or years; monthly checks resample whole calendar years (12-month blocks), so a year's autocorrelated months stay together"
+      source: "Owner's brief (2026-11-13, night): 'the correlation (Pearson and Spearman) with a bootstrap CI (fixed seed) and n'. Percentile interval and year blocks: Efron & Tibshirani 1993, An Introduction to the Bootstrap, ch. 13 (percentile interval) and sec. 8.6 (blocks for dependent data); the counts and the seed are Claude's choices"
+    detectable_r:
+      value: "with each result, the smallest |r| its n can tell from zero at the 5% level, two-sided: r = t / sqrt(n - 2 + t^2), t the 97.5% point of Student's t with n - 2 degrees of freedom"
+      source: "The usual t test of a Pearson correlation (t = r sqrt(n - 2) / sqrt(1 - r^2)) solved for r; owner's brief: 'say plainly what n allows'"
+    degenerate_twin:
+      value: "a twin series is not testable when more than half of its values are one and the same value (e.g. ETa/ETc = 1.000 when the crop never runs short): reported as 'not testable', with no correlation"
+      source: "Claude's choice, fixed before the first run: a correlation with a near-constant series measures its one or two odd seasons, not agreement (METHOD_NOTES 36: the twin's rain-fed rice is 100% in 22 of 25 seasons)"
+    rain_versions:
+      value: [corrected, uncorrected]
+      source: "Owner's decision 1 (2026-11-13): every rain-based result is also run on GPM as published; the twin's results for each come from data/checks/<field>/replay.json and rain_uncorrected/replay.json"
+    twin_consistency:
+      value: "where daily twin values are needed the twin is rerun in memory with the calls of scripts/run_replay.py and run_plans.py; its per-season ETa, ETc and harvest must equal replay.json (and the rice-then-wheat option's yearly harvest must equal plans.json current_options) within 1e-6, else the run stops"
+      source: "Claude's choice, fixed before the first run: another agent may switch on a new bare-soil evaporation later (rules.yaml bare_soil); this keeps a stale or mismatched twin from giving numbers silently (golden rule 12c in spirit). Rerun the replay and plans first, then this check"
+    agree_band_r:
+      value: 0.3
+      source: "Cohen 1988, Statistical Power Analysis for the Behavioral Sciences, 2nd ed., sec. 3.2: r = 0.1 small, 0.3 medium, 0.5 large. Used for the monthly checks (GLDAS): 'holds up' needs the interval's lower bound above a medium correlation, since with 300 months any correlation above about 0.1 differs from zero"
+  ecostress:
+    clean_pixel:
+      value: "the one 70 m pixel whose centre lies in the field (row 39, col 90 of the box grid, EPSG:32645): 37% of it is field, 50% of the field is in it. The area-weighted mean of the 4 pixels touching the field is kept beside it as a sensitivity"
+      source: "DATA_AUDIT 1.8 trap 5 (REVIEW_2 L11): one pixel centre in the field; shares computed on a 1 m sub-grid of the field polygon (Claude, 2026-11-14)"
+    clean_lst_qc:
+      value: "an LST pixel is kept only where QC bits 1-0 are 00 (pixel produced, best quality); 01 (degraded) and 11 (not produced) are dropped, as is QC 65535"
+      source: "ECOL2 User Guide V3, Table 6 (DATA_AUDIT 1.8, verified): bits 1&0 00 = produced, 01 = produced but degraded, 11 = not produced. Best quality only is Claude's choice, fixed before the first run: every LST outside the physical range below in the box (V002) carries bits 01"
+    clean_cloud:
+      value: "cloud = 1 is dropped in both versions; QC and cloud count only beside a valid value (rules.yaml ecostress.qc_needs_valid_value)"
+      source: "DATA_AUDIT 1.8 traps 1-2: V002 already blanks LST under cloud (0 of 5.06 million valid pixels have cloud = 1), V003 does not (10.6%), so the mixed series applies the cloud layer to both"
+    clean_lst_range_c:
+      value: [-98.0, 70.7]
+      source: "Hard limit after masking (golden rule 12c with decision D2: fail loudly; values outside rule 12's -30 to 50 C but inside this range are counted as range_warnings): the coldest land surface temperature measured from space, about -98 C (Scambos et al. 2018, Geophys. Res. Lett. 45, 6124-6133, doi:10.1029/2018GL078133) and the hottest, 70.7 C (Mildrexler, Zhao & Running 2011, Bull. Amer. Meteor. Soc. 92(7), 855-860; MODIS, Lut Desert, 2005; both read 2026-11-14). The cached range 14.6 K to 1,305.8 K (DATA_AUDIT 1.8 trap 3) is not physical"
+    clean_esi:
+      value: "ESI kept where it is 0 to 1 (outside: fail loudly), cloud = 0, and the same overpass (version, orbit, scene) has a kept (best-quality, cloud-free) LST at the pixel"
+      source: "ESI range 0 to 1: ECOSTRESS Tiled User Guide V2, Table 11 (DATA_AUDIT 1.8). ESI comes from the PT-JPL evapotranspiration, which is driven by the overpass's LST; the ESI files carry no QC layer, so the LST pixel's QC is the only quality information: Claude's choice, fixed before the first run"
+    clean_iteration:
+      value: "one granule per overpass (product, version, orbit, scene): the latest build, then the highest product iteration (the last two fields of the file name, e.g. _0712_02)"
+      source: "DATA_AUDIT 1.8 trap 4: 119 LSTE overpasses have two or three iterations and 111 of the first pairs differ. Claude's choice, fixed before the first run: a later production of the same overpass replaces the earlier one"
+    clean_date:
+      value: "the overpass's local date: the UTC time in the file name + 05:45"
+      source: "DATA_AUDIT 1.8: time stamps read as UTC (TODO-VERIFY there); Nepal is UTC+05:45. Only the season a date falls in matters here"
+    statistic:
+      value: "per crop season of the field's current rotation (the twin's own dates in replay.json; slot monsoon = rice, winter = potato), the mean ESI of the kept overpasses inside it, as its difference from the slot's mean over the qualifying seasons, against the twin's ETa/ETc of the same season; Spearman (primary) and Pearson, per slot, both rain versions"
+      source: "Owner's brief (3a): the seasonal ESI anomaly against the twin's ETa/ETc anomaly for the current rotation. ESI (actual over potential ET, PT-JPL, model-based from the satellite's LST) and ETa/ETc are both ratios of water used to water needed. Claude's reading, fixed before the first run"
+    min_overpasses_per_season:
+      value: 3
+      source: "Claude's choice, fixed before the first run: a season's mean from fewer than 3 clear overpasses is one or two days, not a season"
+    min_seasons:
+      value: 6
+      source: "Claude's choice, fixed before the first run: with 6 seasons a correlation must exceed about 0.81 to differ from zero (detectable_r); ECOSTRESS covers at most 8 monsoons (2018-2025) and 7 winters"
+    holds_up:
+      value: "Spearman rho above 0 with the 95% bootstrap interval's lower bound above 0, in both rain versions, in a slot with at least min_seasons seasons of at least min_overpasses_per_season kept overpasses, and the twin series not degenerate"
+      source: "Owner's brief (3a): pre-declare minimum seasons, minimum clear overpasses, the statistic, the CI and the threshold. Claude's choices, fixed before the first run"
+    secondary:
+      value: "overpass days: each kept ESI against the twin's daily Ks (ETa/ETc that day, current rotation, rain-fed, bare days included) on its local date; Spearman with a year-block bootstrap, raw (seasonal cycle included: it shows only that both see the dry season) and as anomalies from each calendar month's mean. Descriptive; it does not decide the diary line"
+      source: "Claude's choice, fixed before the first run: uses every clear overpass, not only seasons with 3 or more"
+    diary_line:
+      value: "only if the check holds up in at least one slot: one line of at most 8 words about crop thirst seen from the Space Station, with its uncertainty wording, proposed to the owner; this check never writes to an export"
+      source: "Owner's brief (3a)"
+  twin_vs_hls:
+    pairing:
+      value: "monsoon: the twin's rice season of year Y with the HLS monsoon season whose peak is in Y; winter: the twin's winter crop harvested in Y with the HLS winter season whose peak is in Y (slots by pipeline/diary/guess.slot_of). HLS years only (2014-2025, the chosen season method in diary_seasons.json); the anomaly is a season's peak NDVI minus its slot's mean peak"
+      source: "Owner's brief (3b; VALIDATION 4.2). The same target as field memory (rules.yaml field_memory.target). Claude's pairing, fixed before the first run. Caveat (VALIDATION 4.2, METHOD_NOTES 40): the placeholder potato runs 30 Oct to 21 Feb, the satellite's winter season about 7 Jan to 18 May"
+    primary:
+      value: "per slot, the twin's season ETa/ETc against the peak NDVI anomaly; expected sign positive (less water shortfall, greener)"
+      source: "Owner's brief (3b): ETa/ETc, dry days, harvest_pct per season. Claude's choice of the primary, fixed before the first run"
+    secondary:
+      value: "dry days (expected negative); harvest_pct (expected positive; FAO-33 makes it a straight-line function of ETa/ETc within one crop, so its ranks are the same unless clamped at 0); the winter slot again with the rice-then-wheat option (wheat sown 15 Nov, nearer the satellite's season; plans.json current_options)"
+      source: "Owner's brief (3b). Descriptive; they do not decide the result"
+    min_seasons:
+      value: 8
+      source: "Claude's choice, fixed before the first run: about two thirds of the 12 HLS years"
+    holds_up:
+      value: "the primary's Spearman interval (95%) excludes 0 on the expected side in both rain versions"
+      source: "Claude's choice, fixed before the first run"
+  faostat:
+    crops:
+      value: {rice: "twin rice, current rotation (FAOSTAT item 27)", potato: "twin potato, current rotation (item 116, read from the same bulk file for this check)", wheat: "twin wheat of the rice-then-wheat option (item 15)"}
+      source: "Owner's brief (3c): rice, wheat, maize, and potato if the bulk file has it (it has Nepal potato, item 116, 2000-2024). Maize is in no current rotation, so it is not compared"
+    year_pairing:
+      value: "FAOSTAT year Y with the twin season harvested in year Y (the twin's season year, rules.yaml replay.year_of_season); years 2002-2024"
+      source: "Claude's reading, TODO-VERIFY in FAOSTAT's QCL methodology: FAOSTAT credits a crop to the calendar year of its harvest (Nepal's wheat 2016, harvested after the 2015/16 winter drought, is 2,329 kg/ha after 2,591 in 2015; DATA_AUDIT 1.12)"
+    detrend:
+      value: "first differences: this year's value minus last year's, for the national yield (kg/ha) and the twin's harvest %"
+      source: "Owner's brief (3c): pre-declare the detrending (e.g. first differences). National yields rise steadily (Nepal rice 2,675 to 4,192 kg/ha, 2001-2024); first differences remove that without a fitted trend. Claude's choice, fixed before the first run"
+    statistic:
+      value: "Pearson and Spearman of the first differences, bootstrap over the differences (common.correlation), and the share of years in which both go the same way"
+      source: "Claude's choice, fixed before the first run"
+    holds_up:
+      value: "the Spearman interval (95%) of a crop's first differences excludes 0 on the positive side, in both rain versions, with the twin series not degenerate"
+      source: "Claude's choice, fixed before the first run. A national yield mixes the plains, irrigation, seed and fertiliser; one 60 m placeholder field's weather is a small part of it"
+  gldas:
+    pairs:
+      value: {soil: "the twin's root-zone wetness 1 - Dr/TAW (current rotation, rain-fed, monthly mean) against GLDAS soil moisture 0-100 cm (m3/m3)", et: "the twin's ETa (current rotation, rain-fed, monthly total) against GLDAS Evap (monthly total)", pet: "the twin's ET0 (monthly total) against GLDAS PotEvap (monthly total; rain-independent, reported once)"}
+      source: "Owner, 2026-11-14 (via the integrator): GLDAS as one more independent check of the twin's soil moisture and evapotranspiration over 2001-2025, monthly anomalies and correlation with CIs, both rain versions. GLDAS_NOAH025_M v2.1, the 0.25-degree cell holding the field (pipeline/fetch/gldas.py). Noah's PotEvap is the closest GLDAS variable to ET0, not ET0"
+    anomaly:
+      value: "monthly values minus each calendar month's own mean over 2001-2025 (300 months), as in the SMAP check (VALIDATION 4.2b); also June-September and October-May separately, and the step at 2017 in standard deviations"
+      source: "scripts/run_smap_check.py's method, kept the same so the two checks compare; Claude's choice, fixed before the first run"
+    holds_up:
+      value: "Pearson r of the monthly anomalies with its 95% year-block bootstrap interval's lower bound above common.agree_band_r (0.3), in both rain versions"
+      source: "Claude's choice, fixed before the first run (common.agree_band_r: Cohen 1988)"
