@@ -305,36 +305,78 @@ probe:                            # build step 10 (robot/bridge.py); the probe i
       value: "on a day after as_of the prior is the as_of state (x unchanged) with P = min(prior_var + q_var_per_day x whole days since as_of, p0_var); sure from that P and the as_of day's P0"
       source: "Claude's choice, 2026-11-14 (added before the first run): POWER's solar input arrives about ten days late, so on the demo day the twin's state is days old. Its variance grows by Q a day (the rule above), capped here at P0, what the calendar alone tells, because no weather of those days is known. Keeping x is the simplest forecast (persistence); its drift is not modelled"
     r:
-      value: "R (twin wetness points squared) = R_probe x (b x 100 / (theta_fc - theta_wp))^2; R_probe = the sample variance (n - 1) of the five repeat-cup readings in probe percent, at least 1/12; b = the calibration slope (m3/m3 per probe percent); theta_fc and theta_wp of the root zone as in calibration.theta_to_wetness"
-      source: "CLAUDE.md 'Probe fusion' (R is the probe's error variance from repeated readings) and probe.repeat_spread_max_pct (owner-approved 2026-11-12). The floor of 1/12 is Claude's choice, 2026-11-14: the probe prints whole percents (the sketch's int moisturePercent), so five equal readings would give R = 0 and a probe trusted completely; a rounding error spread evenly over one step has variance step^2 / 12. R leaves out the calibration error and the depth mismatch (the probe's blade samples the top few cm, the twin's root zone is 0.4-1.5 m deep), so the update trusts the probe more than it should: the calibration residual is reported beside it, not used"
-    one_session_one_measurement:
-      value: {median_of_last_readings: 5}
-      source: "Claude's choice, 2026-11-14: lines 2 s apart from one insertion share their insertion and calibration error, so stacking them as independent readings would drive sure to about 1 within a minute. So each fusable line updates the section from the twin's prior (wetness_pct, prior_var) with z = the median of the session's last 5 fusable readings, converted; one session (one bridge run, one section) counts once, like one re-insertion in the repeat test that sets R"
-    not_fused_readings_pct:
-      value: [0, 100]
-      source: "Claude's choice, 2026-11-14: the sketch limits moisture to 0-100 (constrain), so a printed 0 or 100 may be a cut-off value (METHOD_NOTES 22); such a line is shown and logged but never fused"
+      value: "sure is computed only after the bench test, with the R it produces; until then sure is null. R (twin wetness points squared) = R_probe (probe.bench.r, probe percent squared) x (b / (theta_fc - theta_wp))^2, b = the bench fit's slope in water-% points per probe % at the reading, theta_fc and theta_wp the twin state's root-zone values"
+      source: "Owner's probe brief, 2026-11-14 ('the Kalman sure is computed only after the bench test, using the R that the bench test produces'); CLAUDE.md 'Probe fusion' (R from repeated readings). Replaces the five-repeat-cup R committed in 6ca9bd1 (never run). The conversion is the chain rule through water % -> theta -> wetness (FAO-56 eqs. 82, 85). R is the probe's repeatability only: it leaves out the fit's own error and the depth mismatch (the probe senses the top few cm, the twin's root zone is 0.4-1.5 m), so sure after a reading is too high"
+    one_part_one_measurement:
+      value: "a part's settled reading (the median of its probe.measure_lines lines) is one measurement: the part is updated once from the twin's prior (wetness_pct, prior_var aged by age_after_as_of); a part measured again starts from the twin again; an off-scale or not-steady reading is never fused"
+      source: "Owner's probe brief, 2026-11-14 (fix 1: settle, then measure; one number per part). Replaces one_session_one_measurement and not_fused_readings_pct committed in 6ca9bd1 (never run): lines 2 s apart from one insertion share their error, so they are not stacked"
+    z:
+      value: "z = 100 x (water_pct / 100 - theta_wp) / (theta_fc - theta_wp), theta_fc and theta_wp the twin state's root-zone values"
+      source: "FAO-56 eqs. 82 and 85 for an evenly wet root zone: 1 - Dr/TAW = (theta - theta_wp) / (theta_fc - theta_wp). Claude's reading, 2026-11-14: the probe's few cm stand for the whole root zone (stated)"
     z_outside_bucket:
       value: "a converted reading below 0 (drier than wilting point) or above 100 (wetter than field capacity) is set to 0 or 100 for the update; the log keeps the value before and a flag z_limited"
       source: "Claude's choice, 2026-11-14: the bucket holds no water above field capacity (FAO-56 eq. 88 drains it the same day) and none below wilting point (eq. 86), so the twin cannot take a value outside 0-100"
-  calibration:
-    cup_reading:
-      value: {skip_first_lines: 5}
-      source: "Claude's choice, 2026-11-14: a cup's reading is the median of its good lines after the first 5 (10 s for the probe to settle); the median, because one odd line must not move it"
-    theta_of_cup:
-      value: "theta_v = water_g / (dry_soil_g + water_g) x (filled_cup_g - empty_cup_g) / cup_volume_ml (water 1 g per ml); the air-dried soil's own water is not counted"
-      source: "Claude's choice, 2026-11-14 (CLAUDE.md: z is converted to volumetric water through the day's calibration): a weighed mixture packed to the cup's mark holds the mixture's water fraction of the packed mass. Air-dried soil keeps a few percent of water by volume, so every theta_v (and the probe's wetness) is low by that much: stated, not corrected"
+  settle_lines:
+    value: 20
+    source: "Owner's probe brief, 2026-11-14 (fix 1): per part, discard the first 20 good lines (40 s at the sketch's 2-second lines) while the probe settles. The bench log reports how long settling really takes (probe.bench.settling)"
+  measure_lines:
+    value: 10
+    source: "Owner's probe brief, 2026-11-14 (fix 1): then take the next 10 good lines (20 s); a part's reading is their median moisture and median temperature, with their spread (max - min) and n. Steady when the moisture spread is at most repeat_spread_max_pct; otherwise 'test_again' and no number"
+  temp_spread_max_c:
+    value: 0.5
+    source: "Owner's probe brief, 2026-11-14 (fix 1: 'for example a spread of at most 0.5 C over the 10 lines'); the DS18B20's stated accuracy is +/-0.5 C from -10 to +85 C (Maxim / Analog Devices DS18B20 datasheet; cited from memory, not opened tonight). A part whose temperatures spread wider gets temp null ('not steady'); its moisture still counts. 'Check wiring' lines give no temperature and still give moisture"
+  off_scale_pct:
+    value: [0, 100]
+    source: "Owner's probe brief, 2026-11-14 (fix 1): the sketch limits moisture to 0..100 (constrain), so a median of 0 or 100 is 'off the scale': shown as that, never as a real value (no water_pct, no band, not fused)"
+  same_band_pct:
+    value: 3
+    source: "Claude's choice, 2026-11-14 (fix 4: without a calibration the site shows only 'drier / wetter than the other parts'): a part is 'drier' or 'wetter' than the median of the other measured parts when it differs by more than repeat_spread_max_pct (3 points, owner-approved), otherwise 'about the same'"
+  probe_depth_m:
+    value: 0.10
+    source: "Claude's choice, 2026-11-14: the probe's blade senses about the top 10 cm (a capacitive blade about 10 cm long; not measured on this probe, the owner may give the real length). Used only to pick the SoilGrids layers for the band"
+  band:
+    value: "theta = water_pct / 100; theta_fc and theta_wp = SoilGrids water at 33 and 1500 kPa, depth-weighted over 0..probe_depth_m (data/clean/<field>/soilgrids.parquet); theta_raw = theta_fc - p x (theta_fc - theta_wp), p = crops.json p (FAO-56 Table 22) of the crop in the ground on the twin state's day. 'needs water' below theta_raw, 'good' from theta_raw to theta_fc, 'too wet' above theta_fc; no calibration or bare ground: no band"
+    source: "Owner's probe brief, 2026-11-14 (fix 4): needs water below the point where that crop starts to suffer, good between that and field capacity, too wet above field capacity. FAO-56 ch. 8, eqs. 82-84: stress starts (Ks < 1) when depletion passes RAW = p x TAW, i.e. theta below theta_fc - p (theta_fc - theta_wp); field capacity is the water held at 33 kPa, wilting point at 1500 kPa. The top layers (where the probe reads) and the table p, not the day's ETc-adjusted p, are Claude's reading; bare ground has no crop to suffer (Claude's choice). Caveats shown: the soil cell is 859 m from the field; the reading is for the top few cm, not the root zone"
+  bench:                          # fix 3: the bench test (robot/bench.py, scripts/run_probe_bench.py). Fixed before any bench data exists
+    water_pct:
+      value: "a cup's true water % = water_added_g / cup_volume_ml x 100 (1 g of water = 1 ml)"
+      source: "Owner's probe brief, 2026-11-14 (fix 3c). Water added only: the sun-dried soil's own few percent are not counted (stated)"
+    push_ins:
+      value: 3
+      source: "Owner's probe brief, 2026-11-14 (fix 3): 3 push-ins per cup, Enter between, each settled and measured as in the field (settle_lines, measure_lines)"
+    cup_value:
+      value: "the median of the cup's steady, on-scale push-in medians"
+      source: "Claude's choice, 2026-11-14: one odd push-in must not move a cup"
+    exclude_cups:
+      value: "a cup is left out of the fit and the order test (and listed with the reason) when its notes say water pooled on top or the soil could not be packed to the line (notes containing 'pool' or 'pack'), when water_added_g / cup_volume_ml exceeds its pore space 1 - (dry_soil_g / cup_volume_ml) / 2.65, when its value is off the scale (0 or 100), or when no push-in is steady"
+      source: "Owner's probe brief, 2026-11-14 (fix 3: excluded by a rule written down before fitting; soil can't hold more water than its pore space). 2.65 g/cm3 is the usual particle density of mineral soil (standard soil-physics value, e.g. Hillel, Introduction to Environmental Soil Physics; cited from memory, not opened tonight). The note words are Claude's choice"
+    r:
+      value: "R_probe (probe percent squared) = the pooled variance of the steady push-in medians about their own cup's mean (sum of squared deviations over the cups used / sum over those cups of (push-ins - 1)), at least 1/12"
+      source: "Owner's probe brief, 2026-11-14 (fix 3a: the variance of the repeats is the probe's error R, for the Kalman). Pooling over cups is Claude's reading; the 1/12 floor is the rounding to whole percents (a rounding error spread evenly over one step has variance step^2 / 12)"
+    steady:
+      value: "every push-in's spread (max - min of its measured lines) at most repeat_spread_max_pct; the spread between a cup's push-in medians is reported beside it"
+      source: "Owner's probe brief, 2026-11-14 (fix 3a; VALIDATION 5.2): the spread within each push-in (rule <= 3) and between the 3 push-ins"
+    order:
+      value: "the values of the cups used, in order of water_added_g, must rise strictly; Spearman's rho is reported"
+      source: "Owner's probe brief, 2026-11-14 (fix 3b; VALIDATION 5.3): pass only if strictly increasing"
     fit:
-      value: "theta_v = a + b x probe percent, least squares through the dry, damp and wet cups"
-      source: "Claude's choice, 2026-11-14: three soil cups allow a straight line and one degree of freedom for its residual; capacitive probes are not linear over the whole range, so the line is trusted only between the dry and the wet cup (readings outside are still converted, and flagged)"
-    usable_when:
-      value: "the five repeats pass probe.repeat_spread_max_pct (VALIDATION 5.2), dry < damp < wet in probe percent (5.3) and the slope b is positive; otherwise calibration.json says usable: false and the bridge does not fuse"
-      source: "Claude's choice, 2026-11-14: a calibration that fails its own checks must not reach the site"
-    air_water_check_pct:
-      value: {air_max: 3, water_min: 97}
-      source: "Claude's choice, 2026-11-14 (VALIDATION 5.1): the probe maps its own raw reading to 0 % in air and 100 % in water (the sketch's DRY_VALUE 2467 and WET_VALUE 660), so air should read 0 to 3 and water 97 to 100 (within the owner-approved repeat spread of 3 points). Recorded, not blocking: the soil cups, not air and water, make the calibration"
-    theta_to_wetness:
-      value: "wetness = 100 x (theta_v - theta_wp) / (theta_fc - theta_wp), theta_fc and theta_wp the depth-weighted means of the SoilGrids layers (data/clean/<field>/soilgrids.parquet) over the twin state's root zone 0..Zr"
-      source: "FAO-56 eqs. 82 and 85 for a root zone of even wetness: 1 - Dr/TAW = (theta - theta_wp) / (theta_fc - theta_wp). Using the root zone's mean is Claude's choice, 2026-11-14, so the probe and the twin share one scale; the probe's few cm stand for the whole root zone (stated)"
+      value: "water % = a + b x probe %, least squares over the cups used; a quadratic is used instead only if there are at least 5 cups and its leave-one-cup-out mean absolute error is at least 1.0 water-% point lower than the line's; the residuals of both are reported"
+      source: "Owner's probe brief, 2026-11-14 (fix 3c): a straight line by default; decide before looking at the data when a curve would be used. The 1.0-point margin and the 5-cup minimum are Claude's choices, fixed before any bench data"
+    error:
+      value: "leave one cup out: refit without the cup and predict it; the mean absolute error in water-% points (MAE) is the 'give or take'"
+      source: "Owner's probe brief, 2026-11-14 (fix 3c): the score is never on the cups it was fitted on (VALIDATION 5.1)"
+    min_cups:
+      value: 4
+      source: "Claude's choice, 2026-11-14: a line scored by leaving one cup out needs at least 4 cups, so that each refit has 3"
+    ice_c:
+      value: {expected: 0.0, tolerance: 0.5}
+      source: "Owner's probe brief, 2026-11-14 (fix 3d): the ice-water cup should read 0 C within about 0.5 C (DS18B20 datasheet, +/-0.5 C from -10 to +85 C; cited from memory, not opened tonight)"
+    settling:
+      value: "per push-in, the settling time = the time from its first good line to the first line from which every later line of the push-in stays within repeat_spread_max_pct of its measured median"
+      source: "Owner's probe brief, 2026-11-14 (fix 1: use the bench log to report how long settling really takes). The definition is Claude's choice"
+    real_only:
+      value: "config/probe_calibration.yaml is written only from push-ins read from a real serial port, with every proof run; a log from the fake probe, stdin or a pseudo-terminal gives a labelled rehearsal result and no calibration file"
+      source: "Owner's probe brief, 2026-11-14 (fix 3: no such file until real bench data exists); golden rule: no made-up number is exported"
   live:
     stale_after_s:
       value: 10
@@ -342,6 +384,9 @@ probe:                            # build step 10 (robot/bridge.py); the probe i
     reconnect_every_s:
       value: 2
       source: "Claude's choice, 2026-11-14 (REVIEW_2 L7): after a pulled cable the bridge says so in plain words, marks live.json stale and tries to reopen the port every 2 s (the probe's own line interval) until it is back or Ctrl-C"
+    state_writes:
+      value: "live.json is written when a part starts settling, when it starts measuring and when it is done or test_again, never with a number taken while the probe settles; every raw line still goes to the log (data/probe/<field>/readings_<date>.jsonl)"
+      source: "Owner's probe brief, 2026-11-14 (fix 2): write live.json only with the final median for a part, not every line; keep logging every raw line"
     replay_sources:
       value: ["serial"]
       source: "Golden rule: no made-up number is ever exported (owner, 2026-11-13). Only sessions read from a real serial port may enter site/data/probe_log.json; sessions from robot/fake_probe.py, stdin or a pseudo-terminal are refused, and those sources may not write under site/data/ at all"
