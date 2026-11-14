@@ -245,7 +245,7 @@ def test_the_sources_say_what_each_dataset_is_really_used_for():
     that is not the field's own."""
     from pipeline.export.build_field_json import sources_block
     s = {x["name"]: x for x in sources_block(soil_distance_m=859.3)}
-    assert "no number shown uses it" in s["MODIS Terra"]["product"]
+    assert "no plan number uses it" in s["MODIS Terra"]["product"] and "Field Pulse" in s["MODIS Terra"]["product"]
     soil = s["ISRIC SoilGrids"]["product"]
     assert "field capacity" in soil and "wilting point" in soil and "texture" not in soil
     assert "859 m from the field" in soil
@@ -438,3 +438,11 @@ def test_smap_is_a_source_when_its_card_exists():
     rows = {x["name"]: x for x in sources_block(field=DEMO_FIELD, cards={**DEMO_CARDS, "smap": {"date_range": ["2015-03-31", "2025-12-31"]}})}
     assert rows["NASA SMAP L4"]["years"] == "2015-2025" and rows["NASA SMAP L4"]["type"] == "model"
     assert "NASA SMAP L4" not in {x["name"] for x in sources_block(field=DEMO_FIELD, cards=DEMO_CARDS)}
+
+
+def test_the_gpm_row_names_the_gauge_tuning_for_a_tuned_field():
+    """TRACEABILITY N3: the tuned rain's gauge factors are named where the rain is credited."""
+    from pipeline.export.build_field_json import DEMO_CARDS, DEMO_FIELD, sources_block
+    tuned = {x["name"]: x for x in sources_block(field={**DEMO_FIELD, "id": "demo"}, cards=DEMO_CARDS)}["GPM IMERG"]["product"]
+    plain = {x["name"]: x for x in sources_block(field={**DEMO_FIELD, "id": "elsewhere"}, cards=DEMO_CARDS)}["GPM IMERG"]["product"]
+    assert "rain gauges" in tuned and "x1.053" in tuned and "x1.053" not in plain

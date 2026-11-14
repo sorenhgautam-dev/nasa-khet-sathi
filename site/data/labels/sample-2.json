@@ -291,10 +291,10 @@
    "scorecard": "cover_months"
   },
   "monsoon_shift": {
-   "sure": "verified",
-   "status": "VERIFIED",
-   "k": 24,
-   "n": 24,
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
    "scale": "region",
    "rain_corrected": false,
    "sources": [
@@ -302,7 +302,7 @@
     "chirps",
     "gpm"
    ],
-   "scorecard": "monsoon_start"
+   "scorecard": null
   },
   "plan_harvest": {
    "sure": "estimate",
@@ -344,8 +344,7 @@
    "sources": [
     "gpm",
     "power",
-    "soilgrids",
-    "grace"
+    "soilgrids"
    ],
    "scorecard": "plan_scores"
   },

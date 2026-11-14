@@ -3,7 +3,7 @@
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
 - Screens, and the words shared by many screens (screens.json, 451 texts): 428 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
-- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 94 texts): 85 needs native-speaker review; 9 reviewed by Pratik and Vision, 2026-11-14.
+- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 93 texts): 85 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
 
@@ -388,7 +388,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 #### Tab: Why this? / किन यो?
 
-*Nepali: 12 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: needs native-speaker review.*
 
 | English | नेपाली |
 | --- | --- |
@@ -402,8 +402,7 @@ This page is made from the word files in this folder; change those, not this pag
 | This plan is here to feed your soil. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | यो योजना माटोलाई मलिलो बनाउन हो। |
 | {legume_crop} feeds the soil for the next crop. *(if the plan has lentil or another crop that feeds the soil)* | {legume_crop}ले अर्को बालीका लागि माटोमा मल थप्छ। |
 | Bad years hurt it less than now. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if bad years hurt this plan less than the current one)* | खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। |
-| Stored water in this area is falling. *(if stored water in the area is falling; if the water score beats the current plan)* | यस क्षेत्रमा जम्मा भएको पानी घट्दै छ। |
-| This plan needs less water. *(if stored water in the area is falling; if the water score beats the current plan)* | यो योजनालाई कम पानी चाहिन्छ। |
+| This plan needs less water. *(if the water score beats the current plan)* | यो योजनालाई कम पानी चाहिन्छ। |
 | It did well when we replayed your field. *(if nothing else applies)* | खेतका पुराना वर्ष दोहोर्‍याएर हेर्दा यो राम्रो देखियो। |
 
 #### Tab: How do we know? / हामीलाई कसरी थाहा भयो?

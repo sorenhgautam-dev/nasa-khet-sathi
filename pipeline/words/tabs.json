@@ -99,19 +99,8 @@
     "ne_review": "needs native-speaker review"
    },
    {
-    "id": "why_water_falling",
-    "when": [
-     "groundwater_falling",
-     "water_better"
-    ],
-    "en": "Stored water in this area is falling.",
-    "ne": "यस क्षेत्रमा जम्मा भएको पानी घट्दै छ।",
-    "ne_review": "reviewed by Pratik and Vision, 2026-11-14"
-   },
-   {
     "id": "why_less_water",
     "when": [
-     "groundwater_falling",
      "water_better"
     ],
     "en": "This plan needs less water.",

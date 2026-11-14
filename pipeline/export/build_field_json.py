@@ -252,6 +252,11 @@ def sources_block(soil_distance_m=None, soil_around=None, field=None, cards=None
     if rb.get("applied"):
         gpm_product += (f"; days from {str(rb['from'])[:4]} scaled back, month by month, to its own "
                         f"{rb['reference_years'][0]}-{rb['reference_years'][1]} level (the rain gauges behind it stopped reporting here)")
+    from pipeline.fetch.rules import load_rules
+    gc = load_rules()["gpm_series"]["gauge_calibration"]
+    if gc["apply"] and field.get("id") in gc["fields"]:          # the tuned rain (owner's decision 1, 2026-11-14)
+        gpm_product += (f"; then matched to nearby rain gauges (x{gc['factors']['jjas']} June-September, "
+                        f"x{gc['factors']['other']} other months)")
     sid = field.get("validation_station")
     st_name, st_lat, st_lon = STATIONS.get(sid, (sid, None, None)) if sid else (None, None, None)
     st_name = field.get("validation_station_name") or st_name
@@ -279,8 +284,8 @@ def sources_block(soil_distance_m=None, soil_around=None, field=None, cards=None
     rows.append({"name": "Harmonized Landsat Sentinel-2", "product": "HLS-VI v2.0 greenness (NDVI)", "resolution": "30 m",
                  "years": "2013-2025", "type": "satellite"})
     if "modis" in cards:
-        rows.append({"name": "MODIS Terra", "product": "MOD13Q1 v061 greenness (NDVI), before HLS: compared with HLS only; "
-                     "no number shown uses it", "resolution": "250 m", "years": "2001-2013", "type": "satellite"})
+        rows.append({"name": "MODIS Terra", "product": "MOD13Q1 v061 greenness (NDVI), before HLS: the older, coarser line in Field Pulse; "
+                     "no plan number uses it", "resolution": "250 m", "years": "2001-2013", "type": "satellite"})
     rows += [
         {"name": "GRACE and GRACE-FO", "product": "JPL mascon CRI RL06.3 v04: water stored across the region",
          "resolution": "about 300 km", "years": _years(cards.get("grace"), "2002-2026"), "type": "satellite"},
