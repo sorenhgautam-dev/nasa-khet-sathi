@@ -1683,6 +1683,626 @@
   "screens.what_to_grow.texts.other_choices": {
    "en": "Other choices",
    "hi": "दूसरे विकल्प"
+  },
+  "screens.home.texts.q_1": {
+   "en": "What can I grow",
+   "hi": "खाली महीनों में"
+  },
+  "screens.home.texts.q_2": {
+   "en": "in my empty months?",
+   "hi": "मैं क्या उगा सकता हूँ?"
+  },
+  "screens.home.texts.q_3": {
+   "en": "Without risking the harvest I depend on?",
+   "hi": "जिस फ़सल पर निर्भर हूँ, उसे जोखिम बिना?"
+  },
+  "screens.home.texts.four_ways": {
+   "en": "Four ways to find out:",
+   "hi": "पता लगाने के चार तरीके:"
+  },
+  "shared.buttons.more": {
+   "en": "More",
+   "hi": "और"
+  },
+  "screens.your_plan.texts.lab_title": {
+   "en": "How sure, and how close",
+   "hi": "कितना पक्का, कितना पास"
+  },
+  "screens.your_plan.texts.lab_verified": {
+   "en": "Verified",
+   "hi": "जाँचा गया"
+  },
+  "screens.your_plan.texts.lab_estimate": {
+   "en": "Estimate",
+   "hi": "अनुमान"
+  },
+  "screens.your_plan.texts.lab_field": {
+   "en": "Your field",
+   "hi": "आपका खेत"
+  },
+  "screens.your_plan.texts.lab_neighbourhood": {
+   "en": "Around your field",
+   "hi": "आपके खेत के आस-पास"
+  },
+  "screens.your_plan.texts.lab_valley": {
+   "en": "Your valley",
+   "hi": "आपकी घाटी"
+  },
+  "screens.your_plan.texts.lab_region": {
+   "en": "Your region",
+   "hi": "आपका क्षेत्र"
+  },
+  "screens.your_plan.texts.lab_verified_why": {
+   "en": "Verified: checked against real measurements.",
+   "hi": "जाँचा गया: असली माप से मिलाया गया।"
+  },
+  "screens.your_plan.texts.lab_estimate_why": {
+   "en": "Estimate: worked out by computer. Not checked against your field yet.",
+   "hi": "अनुमान: कंप्यूटर से निकाला गया। अभी आपके खेत से नहीं जाँचा गया।"
+  },
+  "screens.your_plan.texts.lab_field_why": {
+   "en": "Your field: from 30 m squares or finer.",
+   "hi": "आपका खेत: 30 मीटर या छोटे खानों से।"
+  },
+  "screens.your_plan.texts.lab_neighbourhood_why": {
+   "en": "Around your field: squares 250 m–1 km.",
+   "hi": "आस-पास: 250 मीटर से 1 किमी के खाने।"
+  },
+  "screens.your_plan.texts.lab_valley_why": {
+   "en": "Your valley: a map about 10 km wide.",
+   "hi": "आपकी घाटी: लगभग 10 किमी चौड़े नक्शे से।"
+  },
+  "screens.your_plan.texts.lab_region_why": {
+   "en": "Your region: a map 50 km or wider.",
+   "hi": "क्षेत्र: 50 किमी या ज़्यादा चौड़ा नक्शा।"
+  },
+  "screens.your_plan.texts.lab_checks": {
+   "en": "Checks within range:",
+   "hi": "सही निकली जाँचें:"
+  },
+  "screens.your_plan.texts.lab_rain": {
+   "en": "Rain fix",
+   "hi": "बारिश सुधार"
+  },
+  "screens.your_plan.texts.lab_rain_why": {
+   "en": "This number uses our fixed rain record.",
+   "hi": "यह अंक हमारे सुधारे बारिश रिकॉर्ड से है।"
+  },
+  "screens.your_plan.texts.mm": {
+   "en": "mm",
+   "hi": "मिमी"
+  },
+  "screens.last_years.texts.replay_name": {
+   "en": "{year_count}-Year Replay",
+   "hi": "{year_count} साल का दोहराव"
+  },
+  "screens.last_years.texts.replay_short": {
+   "en": "Replay",
+   "hi": "दोहराव"
+  },
+  "screens.last_years.texts.replay_sub": {
+   "en": "Your plan in every past year.",
+   "hi": "हर पुराने साल में आपकी योजना।"
+  },
+  "screens.from_space.texts.pulse_name": {
+   "en": "Field Pulse",
+   "hi": "खेत की नब्ज़"
+  },
+  "screens.from_space.texts.pulse_sub": {
+   "en": "Your field's green, season by season.",
+   "hi": "मौसम दर मौसम आपके खेत की हरियाली।"
+  },
+  "screens.check_soil.texts.trial_name": {
+   "en": "Safe Trial",
+   "hi": "सुरक्षित परीक्षण"
+  },
+  "screens.check_soil.texts.trial_sub": {
+   "en": "Try a new plan on one quarter.",
+   "hi": "एक चौथाई खेत पर नई योजना आज़माएँ।"
+  },
+  "screens.your_plan.texts.check_name": {
+   "en": "Record Check-up",
+   "hi": "रिकॉर्ड जाँच"
+  },
+  "screens.your_plan.texts.check_sub": {
+   "en": "How we checked your rain record.",
+   "hi": "हमने आपका बारिश रिकॉर्ड कैसे जाँचा।"
+  },
+  "screens.check_soil.texts.trial_h1": {
+   "en": "Safe",
+   "hi": "सुरक्षित"
+  },
+  "screens.check_soil.texts.trial_h2": {
+   "en": "Trial",
+   "hi": "परीक्षण"
+  },
+  "screens.check_soil.texts.trial_pick_plan": {
+   "en": "Pick a plan to try",
+   "hi": "आज़माने के लिए योजना चुनें"
+  },
+  "screens.check_soil.texts.trial_pick_part": {
+   "en": "Pick one quarter of your field",
+   "hi": "अपने खेत का एक चौथाई चुनें"
+  },
+  "screens.check_soil.texts.trial_this": {
+   "en": "Trial",
+   "hi": "परीक्षण"
+  },
+  "screens.check_soil.texts.trial_as_now": {
+   "en": "As now",
+   "hi": "अभी जैसा"
+  },
+  "screens.check_soil.texts.trial_rest": {
+   "en": "The rest of your field stays as now.",
+   "hi": "बाकी खेत अभी जैसा ही रहेगा।"
+  },
+  "screens.check_soil.texts.trial_spots": {
+   "en": "Where the soil stick reads",
+   "hi": "मिट्टी की छड़ी कहाँ मापती है"
+  },
+  "screens.check_soil.texts.trial_spot_one": {
+   "en": "One spot in your trial quarter.",
+   "hi": "परीक्षण वाले हिस्से में एक जगह।"
+  },
+  "screens.check_soil.texts.trial_spot_three": {
+   "en": "Three spots in the rest, to compare.",
+   "hi": "तुलना के लिए बाकी में तीन जगह।"
+  },
+  "screens.check_soil.texts.trial_start": {
+   "en": "Start my trial",
+   "hi": "मेरा परीक्षण शुरू करें"
+  },
+  "screens.check_soil.texts.trial_started": {
+   "en": "Trial started:",
+   "hi": "परीक्षण शुरू हुआ:"
+  },
+  "screens.check_soil.texts.trial_saved": {
+   "en": "Saved on this phone only.",
+   "hi": "सिर्फ़ इसी फ़ोन में रखा गया।"
+  },
+  "screens.check_soil.texts.trial_compare": {
+   "en": "After harvest, we compare",
+   "hi": "कटाई के बाद हम तुलना करेंगे"
+  },
+  "screens.check_soil.texts.trial_vs_rest": {
+   "en": "Your trial quarter against the rest.",
+   "hi": "परीक्षण वाला हिस्सा बाकी खेत से।"
+  },
+  "screens.check_soil.texts.trial_vs_replay": {
+   "en": "Your trial against the Replay's guess.",
+   "hi": "परीक्षण दोहराव के अनुमान से।"
+  },
+  "screens.check_soil.texts.trial_after": {
+   "en": "Results come only after the season.",
+   "hi": "नतीजे मौसम के बाद ही आएँगे।"
+  },
+  "screens.check_soil.texts.trial_no_numbers": {
+   "en": "Until then, we show no new numbers.",
+   "hi": "तब तक हम कोई नया अंक नहीं दिखाते।"
+  },
+  "screens.check_soil.texts.trial_diary": {
+   "en": "A photo each week",
+   "hi": "हर हफ़्ते एक फ़ोटो"
+  },
+  "screens.check_soil.texts.trial_photo_phone": {
+   "en": "Photos stay on this phone only.",
+   "hi": "फ़ोटो सिर्फ़ इसी फ़ोन में रहती हैं।"
+  },
+  "screens.check_soil.texts.trial_photo_add": {
+   "en": "Add this week's photo",
+   "hi": "इस हफ़्ते की फ़ोटो जोड़ें"
+  },
+  "screens.check_soil.texts.trial_week": {
+   "en": "Week",
+   "hi": "हफ़्ता"
+  },
+  "screens.check_soil.texts.trial_photo_none": {
+   "en": "No photos yet.",
+   "hi": "अभी कोई फ़ोटो नहीं।"
+  },
+  "screens.check_soil.texts.trial_remove": {
+   "en": "Remove",
+   "hi": "हटाएँ"
+  },
+  "screens.check_soil.texts.trial_photo_cannot": {
+   "en": "This phone cannot keep photos here.",
+   "hi": "यह फ़ोन यहाँ फ़ोटो नहीं रख सकता।"
+  },
+  "screens.check_soil.texts.recorded_on": {
+   "en": "Recorded on",
+   "hi": "दर्ज करने की तारीख़:"
+  },
+  "screens.last_years.texts.replay_h1": {
+   "en": "{year_count}-Year",
+   "hi": "{year_count} साल का"
+  },
+  "screens.last_years.texts.replay_h2": {
+   "en": "Replay",
+   "hi": "दोहराव"
+  },
+  "screens.last_years.texts.replay_intro": {
+   "en": "Your coming months, tried in every past year.",
+   "hi": "आने वाले महीने, हर पुराने साल में परखे।"
+  },
+  "screens.last_years.texts.res_worked": {
+   "en": "Worked",
+   "hi": "अच्छा रहा"
+  },
+  "screens.last_years.texts.res_struggled": {
+   "en": "Struggled",
+   "hi": "मुश्किल रही"
+  },
+  "screens.last_years.texts.res_failed": {
+   "en": "Failed",
+   "hi": "बिगड़ गई"
+  },
+  "screens.last_years.texts.res_none": {
+   "en": "No crop",
+   "hi": "फ़सल नहीं"
+  },
+  "screens.last_years.texts.start_q": {
+   "en": "How wet is your soil now?",
+   "hi": "अभी आपकी मिट्टी कितनी गीली है?"
+  },
+  "screens.last_years.texts.start_dry": {
+   "en": "Dry",
+   "hi": "सूखी"
+  },
+  "screens.last_years.texts.start_medium": {
+   "en": "Medium",
+   "hi": "मध्यम"
+  },
+  "screens.last_years.texts.start_wet": {
+   "en": "Wet",
+   "hi": "गीली"
+  },
+  "screens.last_years.texts.start_stick": {
+   "en": "Your soil stick reading picked this.",
+   "hi": "मिट्टी की छड़ी के माप ने यह चुना।"
+  },
+  "screens.last_years.texts.start_twin": {
+   "en": "Picked from our computer's guess, as of",
+   "hi": "हमारे कंप्यूटर के अनुमान से चुना, तारीख़:"
+  },
+  "screens.last_years.texts.in_ground": {
+   "en": "already in the ground",
+   "hi": "पहले से खेत में"
+  },
+  "screens.last_years.texts.enso_now": {
+   "en": "This year:",
+   "hi": "इस साल:"
+  },
+  "screens.last_years.texts.enso_then": {
+   "en": "That year:",
+   "hi": "उस साल:"
+  },
+  "screens.last_years.texts.enso_el_nino": {
+   "en": "El Niño",
+   "hi": "एल नीनो"
+  },
+  "screens.last_years.texts.enso_la_nina": {
+   "en": "La Niña",
+   "hi": "ला नीना"
+  },
+  "screens.last_years.texts.enso_neutral": {
+   "en": "neither El Niño nor La Niña",
+   "hi": "न एल नीनो, न ला नीना"
+  },
+  "screens.last_years.texts.enso_same": {
+   "en": "Ringed years were the same",
+   "hi": "घेरे वाले साल भी ऐसे ही थे"
+  },
+  "screens.last_years.texts.need_met": {
+   "en": "Water the crop got:",
+   "hi": "फ़सल को मिला पानी:"
+  },
+  "screens.last_years.texts.every_estimate": {
+   "en": "Every square is an estimate.",
+   "hi": "हर खाना एक अनुमान है।"
+  },
+  "screens.last_years.texts.rain_marked": {
+   "en": "Marked squares change with the rain count.",
+   "hi": "निशान वाले खाने बारिश की गिनती से बदलें।"
+  },
+  "screens.last_years.texts.tap_square": {
+   "en": "Tap a square to see why.",
+   "hi": "क्यों, यह देखने के लिए खाना दबाएँ।"
+  },
+  "screens.last_years.texts.why_dry_spell": {
+   "en": "Longest dry spell for the crop:",
+   "hi": "फ़सल का सबसे लंबा सूखा दौर:"
+  },
+  "screens.last_years.texts.dry_in_row": {
+   "en": "Days in a row:",
+   "hi": "लगातार दिन:"
+  },
+  "screens.last_years.texts.dry_from": {
+   "en": "Starting in:",
+   "hi": "शुरू होने का महीना:"
+  },
+  "screens.last_years.texts.why_no_crop": {
+   "en": "No crop in the field these months.",
+   "hi": "इन महीनों में खेत में फ़सल नहीं।"
+  },
+  "screens.last_years.texts.why_no_dry_days": {
+   "en": "The crop never ran short of water.",
+   "hi": "फ़सल को कभी पानी कम नहीं पड़ा।"
+  },
+  "screens.last_years.texts.dry_days": {
+   "en": "Days short of water:",
+   "hi": "पानी की कमी वाले दिन:"
+  },
+  "screens.last_years.texts.rain_in_window": {
+   "en": "Rain in these months:",
+   "hi": "इन महीनों की बारिश:"
+  },
+  "screens.last_years.texts.rain_changes": {
+   "en": "Other rain counts say:",
+   "hi": "बारिश की दूसरी गिनतियाँ कहती हैं:"
+  },
+  "screens.from_space.texts.pulse_h1": {
+   "en": "Field",
+   "hi": "खेत की"
+  },
+  "screens.from_space.texts.pulse_h2": {
+   "en": "Pulse",
+   "hi": "नब्ज़"
+  },
+  "screens.from_space.texts.pulse_line": {
+   "en": "High means green crop. Low means bare.",
+   "hi": "ऊपर मतलब हरी फ़सल। नीचे मतलब खाली।"
+  },
+  "screens.from_space.texts.pulse_new": {
+   "en": "Sharper pictures (solid line)",
+   "hi": "साफ़ तस्वीरें (सीधी रेखा)"
+  },
+  "screens.from_space.texts.pulse_old": {
+   "en": "Older, coarser pictures (dashed line)",
+   "hi": "पुरानी, धुंधली तस्वीरें (टूटी रेखा)"
+  },
+  "screens.from_space.texts.pulse_bare": {
+   "en": "Below the dotted line: bare ground.",
+   "hi": "बिंदु वाली रेखा के नीचे: खाली ज़मीन।"
+  },
+  "screens.from_space.texts.your_seasons": {
+   "en": "Your crop seasons",
+   "hi": "आपकी फ़सल के मौसम"
+  },
+  "screens.from_space.texts.slot_monsoon": {
+   "en": "monsoon crop",
+   "hi": "बरसात की फ़सल"
+  },
+  "screens.from_space.texts.slot_winter": {
+   "en": "winter crop",
+   "hi": "सर्दी की फ़सल"
+  },
+  "screens.from_space.texts.planting": {
+   "en": "Planting:",
+   "hi": "बुआई:"
+  },
+  "screens.from_space.texts.harvest": {
+   "en": "Harvest:",
+   "hi": "कटाई:"
+  },
+  "screens.from_space.texts.dates_right": {
+   "en": "Are these months right?",
+   "hi": "क्या ये महीने सही हैं?"
+  },
+  "screens.from_space.texts.fix_dates": {
+   "en": "Fix the months",
+   "hi": "महीने ठीक करें"
+  },
+  "screens.from_space.texts.save_dates": {
+   "en": "Save",
+   "hi": "सहेजें"
+  },
+  "screens.from_space.texts.you_said": {
+   "en": "You said:",
+   "hi": "आपने कहा:"
+  },
+  "screens.from_space.texts.you_said_yes": {
+   "en": "You said these are right.",
+   "hi": "आपने कहा ये सही हैं।"
+  },
+  "screens.from_space.texts.nearby_title": {
+   "en": "Fields around you",
+   "hi": "आपके आस-पास के खेत"
+  },
+  "screens.from_space.texts.nearby_totals": {
+   "en": "Only totals: no single field is shown.",
+   "hi": "सिर्फ़ कुल: कोई एक खेत नहीं दिखाया।"
+  },
+  "screens.from_space.texts.nearby_bare": {
+   "en": "Days with bare ground a year, nearby:",
+   "hi": "आस-पास, साल में खाली दिन:"
+  },
+  "screens.from_space.texts.yours_bare": {
+   "en": "Your field: days with bare ground a year:",
+   "hi": "आपका खेत, साल में खाली दिन:"
+  },
+  "screens.from_space.texts.nearby_two": {
+   "en": "Nearby fields with two crops a year:",
+   "hi": "साल में दो फ़सल वाले पास के खेत:"
+  },
+  "screens.from_space.texts.nearby_long_bare": {
+   "en": "Nearby fields bare over 60 days:",
+   "hi": "60 दिन से ज़्यादा खाली पास के खेत:"
+  },
+  "screens.your_plan.texts.check_h1": {
+   "en": "Record",
+   "hi": "रिकॉर्ड"
+  },
+  "screens.your_plan.texts.check_h2": {
+   "en": "Check-up",
+   "hi": "जाँच"
+  },
+  "screens.your_plan.texts.check_what": {
+   "en": "We checked this field's rain record.",
+   "hi": "हमने इस खेत का बारिश रिकॉर्ड जाँचा।"
+  },
+  "screens.your_plan.texts.check_auto": {
+   "en": "Every field runs this check by itself.",
+   "hi": "यह जाँच हर खेत में अपने-आप चलती है।"
+  },
+  "screens.your_plan.texts.check_found": {
+   "en": "From {rain_fix_year}, the rain map was made differently.",
+   "hi": "{rain_fix_year} से बारिश का नक्शा अलग तरह बना।"
+  },
+  "screens.your_plan.texts.check_none": {
+   "en": "No change found. We use the rain as published.",
+   "hi": "कोई बदलाव नहीं मिला। हम प्रकाशित बारिश लेते हैं।"
+  },
+  "screens.your_plan.texts.check_how": {
+   "en": "How we can tell",
+   "hi": "हमें कैसे पता चला"
+  },
+  "screens.your_plan.texts.check_gauge_share": {
+   "en": "Share of rain gauges inside the rain map:",
+   "hi": "बारिश के नक्शे में वर्षामापी का हिस्सा:"
+  },
+  "screens.your_plan.texts.check_before": {
+   "en": "Before {rain_fix_year}:",
+   "hi": "{rain_fix_year} से पहले:"
+  },
+  "screens.your_plan.texts.check_from": {
+   "en": "From {rain_fix_year}:",
+   "hi": "{rain_fix_year} से:"
+  },
+  "screens.your_plan.texts.check_gauges_near": {
+   "en": "Rain gauges counted near this field:",
+   "hi": "इस खेत के पास गिने गए वर्षामापी:"
+  },
+  "screens.your_plan.texts.check_other_map": {
+   "en": "Another rain map, CHIRPS, stayed steady.",
+   "hi": "दूसरा बारिश नक्शा, CHIRPS, स्थिर रहा।"
+  },
+  "screens.your_plan.texts.check_jump": {
+   "en": "Ours jumped, compared with it:",
+   "hi": "उसकी तुलना में हमारा उछला:"
+  },
+  "screens.your_plan.texts.check_late": {
+   "en": "A version made without gauges jumped less.",
+   "hi": "वर्षामापी के बिना बना रूप कम उछला।"
+  },
+  "screens.your_plan.texts.check_late_jump": {
+   "en": "Without gauges:",
+   "hi": "वर्षामापी के बिना:"
+  },
+  "screens.your_plan.texts.check_final_jump": {
+   "en": "With gauges:",
+   "hi": "वर्षामापी के साथ:"
+  },
+  "screens.your_plan.texts.check_office": {
+   "en": "Nepal's weather office, usual rain a year:",
+   "hi": "नेपाल का मौसम दफ़्तर, साल की आम बारिश:"
+  },
+  "screens.your_plan.texts.check_office_times": {
+   "en": "The rain map, compared with it:",
+   "hi": "उसकी तुलना में बारिश का नक्शा:"
+  },
+  "screens.your_plan.texts.check_ours": {
+   "en": "Our fixed rain:",
+   "hi": "हमारी सुधारी बारिश:"
+  },
+  "screens.your_plan.texts.check_fix_title": {
+   "en": "What we did",
+   "hi": "हमने क्या किया"
+  },
+  "screens.your_plan.texts.check_fix": {
+   "en": "From {rain_fix_year}, rain is scaled back each month.",
+   "hi": "{rain_fix_year} से हर महीने की बारिश घटाकर मिलाई।"
+  },
+  "screens.your_plan.texts.check_ref": {
+   "en": "To match these years:",
+   "hi": "इन सालों से मिलाने के लिए:"
+  },
+  "screens.your_plan.texts.check_gauge_fix": {
+   "en": "Then we matched it to rain gauges.",
+   "hi": "फिर हमने इसे वर्षामापी से मिलाया।"
+  },
+  "screens.your_plan.texts.check_monsoon": {
+   "en": "Monsoon months:",
+   "hi": "बरसात के महीने:"
+  },
+  "screens.your_plan.texts.check_other_months": {
+   "en": "Other months:",
+   "hi": "बाकी महीने:"
+  },
+  "screens.your_plan.texts.check_versions": {
+   "en": "Rain a year, counted different ways",
+   "hi": "साल की बारिश, अलग तरीकों से गिनी"
+  },
+  "screens.your_plan.texts.ver_tuned": {
+   "en": "Fixed, then matched to gauges",
+   "hi": "सुधारी, फिर वर्षामापी से मिलाई"
+  },
+  "screens.your_plan.texts.ver_untuned": {
+   "en": "Fixed only",
+   "hi": "सिर्फ़ सुधारी"
+  },
+  "screens.your_plan.texts.ver_dhm": {
+   "en": "Like the nearby town's usual rain",
+   "hi": "पास के कस्बे की आम बारिश जैसी"
+  },
+  "screens.your_plan.texts.ver_uncorrected": {
+   "en": "As published",
+   "hi": "जैसी प्रकाशित हुई"
+  },
+  "screens.your_plan.texts.check_yearly": {
+   "en": "Rain each year",
+   "hi": "हर साल की बारिश"
+  },
+  "screens.your_plan.texts.line_gpm": {
+   "en": "Rain map, as published",
+   "hi": "बारिश का नक्शा, जैसा प्रकाशित"
+  },
+  "screens.your_plan.texts.line_twin": {
+   "en": "Our fixed rain",
+   "hi": "हमारी सुधारी बारिश"
+  },
+  "screens.your_plan.texts.line_chirps": {
+   "en": "Another rain map (CHIRPS)",
+   "hi": "दूसरा बारिश नक्शा (CHIRPS)"
+  },
+  "screens.your_plan.texts.check_marked": {
+   "en": "Numbers with this mark use our fixed rain.",
+   "hi": "इस निशान वाले अंक सुधारी बारिश से हैं।"
+  },
+  "screens.check_soil.texts.practice": {
+   "en": "Practice soil stick",
+   "hi": "अभ्यास वाली मिट्टी की छड़ी"
+  },
+  "screens.your_plan.texts.version": {
+   "en": "Version",
+   "hi": "संस्करण"
+  },
+  "screens.your_plan.texts.version_checked": {
+   "en": "checked",
+   "hi": "जाँचा गया"
+  },
+  "screens.your_plan.texts.version_unsaved": {
+   "en": "with changes not yet saved",
+   "hi": "बिना सहेजे बदलावों के साथ"
+  },
+  "screens.last_years.texts.if_water": {
+   "en": "If you can water: dry spells stop mattering.",
+   "hi": "पानी दे सकें, तो सूखे से फ़र्क नहीं।"
+  },
+  "screens.last_years.texts.why_dry_spell_ok": {
+   "en": "It worked, despite a dry spell:",
+   "hi": "सूखे दौर के बावजूद अच्छा रहा:"
+  },
+  "screens.last_years.texts.enso_like_now": {
+   "en": "Like now",
+   "hi": "अभी जैसा"
+  },
+  "screens.last_years.texts.start_none": {
+   "en": "No soil reading yet. We start at:",
+   "hi": "अभी मिट्टी का माप नहीं। हम यहाँ से शुरू करते हैं:"
+  },
+  "screens.last_years.texts.calendar_note": {
+   "en": "Dates follow the usual crop calendar, not yours.",
+   "hi": "तारीख़ें आम फ़सल कैलेंडर से हैं, आपकी नहीं।"
   }
  }
 }

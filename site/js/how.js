@@ -18,12 +18,21 @@
   function fv(v) { if (v == null || isNaN(v)) return ''; var a = Math.abs(v); return digits(a >= 10 ? Math.round(v) : a >= 1 ? +v.toFixed(2) : +v.toPrecision(2)); }
 
   K.how = function (F) {
+    // the version stamp (data/version.json, written by scripts/final_check.py); nothing when it is not there
+    var version = h('p', { class: 'small' });
+    K.getJSON('data/version.json').then(function (v) {
+      if (!v || !v.commit_short) return;
+      version.textContent = T('your_plan.version') + ' ' + v.commit_short + (v.checked_on ? ', ' + T('your_plan.version_checked') + ' ' + K.fmtDate(v.checked_on) : '') +
+        (v.uncommitted_changes ? ' (' + T('your_plan.version_unsaved') + ')' : '');
+    });
     var root = h('div', { class: 'how' });
     var toc = h('nav', { class: 'prio', 'aria-label': T('btn.how_we_know') });
     root.append(h('div', { class: 'row wrap' }, K.isPlaceholder(F.field.name) ? K.sampleChip() : null, h('span', { class: 'small' }, F.field.name)), toc);
     var storyBox = h('div', { style: 'display:flex;flex-direction:column;gap:16px' });
     var areaBox = h('div'), nr = h('div');
-    var mine = [replay(F), future(F), method(F), areaBox, helped(), section('sources', T('your_plan.sources_title'), K.sourcesList(F)), glossary(), nr];
+    var mine = [replay(F), future(F), method(F), areaBox, helped(), section('sources', T('your_plan.sources_title'), [K.sourcesList(F), version,
+      // the acknowledgement NASA GIBS asks for, beside the map pictures (NASA HLS, NASA Blue Marble); kept in its own words
+      h('p', { class: 'small', lang: 'en' }, 'We acknowledge the use of imagery provided by services from NASA\u2019s Global Imagery Browse Services (GIBS), part of NASA\u2019s Earth Science Data and Information System (ESDIS).')]), glossary(), nr];
     root.append(storyBox);
     mine.forEach(function (x) { root.append(x); });
     function addToc(id, title) { toc.append(h('a', { class: 'btn3', href: '#/how/' + id, style: 'min-height:40px;font-size:13px' }, title)); }
@@ -131,7 +140,7 @@
         cases.length > 1 ? T('last_years.water_unknown') + ' ' + T('last_years.both_shown') : null,
         cases.indexOf('irrigated') >= 0 ? T('what_to_grow.water_never_out') : null,
         T('what_to_grow.range_why') + (K.hasDhm(F) ? ' ' + T('what_to_grow.range_town') : '')], 'sub'));
-      box.append(K.srcs(F, ['twin', 'gpm', 'power', 'soil']));
+      box.append(K.srcs(F, ['twin', 'gpm', 'power', 'soil'], 'harvest_years'), h('div', { class: 'srcs' }, K.labs('replay_dry_days'), K.labs('replay_event')));
     }
     plans.forEach(function (p) {
       chips.append(h('button', { type: 'button', class: 'choice', 'data-id': p.id, onclick: function () { pid = p.id; S.howPlan = p.id; draw(); } }, K.planName(p)));
@@ -180,7 +189,7 @@
       h('p', { class: 'lead' }, T('field_future.by_year', { future_year: yr }) + (fu.period ? ' (' + digits(fu.period) + ')' : '')),
       dials,
       K.lines(PL(fu.words).concat([T('field_future.many_guesses'), T('field_future.nobody_knows')]), 'sub'),
-      K.srcs(F, ['nex', 'twin'])]);
+      K.srcs(F, ['nex', 'twin'], 'outlook_2040')]);
   }
 
   // ---------------- the farmland around the sample field (area/<id>.json) ----------------
@@ -239,7 +248,9 @@
       var cards = (g.charts || []).filter(function (id) { return byId[id] && !done[id]; }).map(function (id) { done[id] = 1; return chartCard(F, byId[id]); });
       if (!cards.length) return;
       var title = g.title ? P(g.title) : T('your_plan.story_title');
-      out.push({ id: 's-' + g.id, title: title, el: section('s-' + g.id, title, cards) });
+      // each story section's numbers carry the labels of its output (story.json has no output ids: matched by section id)
+      var oid = { rain: 'rain_months', seasons: 'season_dates', groundwater: 'groundwater', probe: 'probe_water', area: 'nearby_fields', future: 'outlook_2040' }[g.id];
+      out.push({ id: 's-' + g.id, title: title, el: section('s-' + g.id, title, [oid ? K.labs(oid) : null].concat(cards)) });
     });
     if ((st.compliance || []).length) {          // owner's item 4: verified, estimate or not yet checkable
       var t0 = T('your_plan.report_card'), pct = function (x) { return digits(Math.round(x * 100)) + '%'; };

@@ -1219,3 +1219,24 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   - whether a 30 m picture is acceptable at the field map's zoom;
   - the wording of `docs/PROBE_RECORDING.md` for the team;
   - whether the replay should show `place`.
+
+## 2026-11-14: the four features on the site (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- **What SI did:** rebuilt Home around the farmer's question and the four features (25-Year Replay, Field Pulse, Safe
+  Trial, the record check-up), with the older screens behind a small "More"; wrote `site/js/features.js` (loaded when a
+  feature is first opened) from `site/data/{replay,pulse,checkup}/<id>.json`; put the two labels (how sure, how close)
+  and a "rain fix" mark linking to the check-up beside the numbers, from `site/data/labels/<id>.json` (How we know's story
+  sections matched to output ids by section id); Safe Trial keeps the farmer's choice in localStorage and the weekly
+  photos in IndexedDB on the phone (shrunk to 1024 px; nothing is uploaded); Field Pulse keeps the farmer's own season
+  months on the phone. Wired the launch agent's self-hosted fonts (`site/fonts/fonts.css`, after the first screen,
+  `font-display: optional`), the NASA basemap pictures in place of OpenStreetMap tiles (max zoom 16, kept inside the
+  picture), the version stamp on How we know, the GIBS acknowledgement, and the probe log's "recorded on" date and place.
+- **Words added (drafted by SI):** about 160 screen texts (English, Nepali marked "needs native-speaker review", drafts
+  in hi, bn, es, fr and sw). "Data Check-up" is named "Record Check-up" on screen: "data" (and Nepali डाटा) is a word the
+  site never shows (glossary `never_on_screens`).
+- **Checked by SI:** the word tests, `check_site.py --final`, `validate --final`, the full suite, final_check's
+  outside-request scan (none), screenshots at 360, 390 (English and Nepali) and 1440 px, the not-ready state with a
+  missing file, a trial with a saved photo, and a scratchpad probe log (deleted after) for "recorded on" and the start.
+- **For a person to review:** all new Nepali and the drafts; the Replay wording for a rain-fed season that fails (the
+  coordinator's notes: "If you can't water", "If you can water: dry spells stop mattering", "worked, despite a dry
+  spell"); `font-display: optional` (no layout jump, but a slow first visit shows system fonts).

@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 296 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 451 texts): 428 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 94 texts): 85 needs native-speaker review; 9 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -16,7 +16,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 1. Khet Sathi / खेत साथी
 
-*Nepali: needs native-speaker review.*
+*Nepali: 20 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -37,10 +37,14 @@ This page is made from the word files in this folder; change those, not this pag
 | What these months usually bring. | यी महिनामा प्रायः के हुन्छ। |
 | We read NASA records, {source_years}. | हामी नासाका अभिलेख पढ्छौं, {source_years}। |
 | Fields we have looked at | हामीले हेरेका खेत |
+| What can I grow | खाली महिनामा |
+| in my empty months? | म के लगाउन सक्छु? |
+| Without risking the harvest I depend on? | भर परेको बालीलाई जोखिममा नपारी? |
+| Four ways to find out: | पत्ता लगाउने चार तरिका: |
 
 ### 2. Where is your field? / तपाईंको खेत कहाँ छ?
 
-*Nepali: needs native-speaker review.*
+*Nepali: 22 needs native-speaker review; 2 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -73,7 +77,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 3. We looked at your field from space / हामीले अन्तरिक्षबाट तपाईंको खेत हेरेका छौं
 
-*Nepali: needs native-speaker review.*
+*Nepali: 59 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -102,6 +106,30 @@ This page is made from the word files in this folder; change those, not this pag
 | We may show too many freezing nights. *(if some months have freezing nights)* | तुषारो पर्ने रात हामीले बढी देखाएका हुन सक्छौं। |
 | We are less sure about this month. | यो महिनाबारे हामी कम पक्का छौं। |
 | Usually: | प्रायः: |
+| Field Pulse | खेतको नाडी |
+| Your field's green, season by season. | सिजनैपिच्छे तपाईंको खेतको हरियाली। |
+| Field | खेतको |
+| Pulse | नाडी |
+| High means green crop. Low means bare. | माथि भए हरियो बाली। तल भए खाली। |
+| Sharper pictures (solid line) | प्रस्ट तस्बिर (सिधा रेखा) |
+| Older, coarser pictures (dashed line) | पुराना, धमिला तस्बिर (टुटेको रेखा) |
+| Below the dotted line: bare ground. | थोप्ले रेखामुनि: खाली जमिन। |
+| Your crop seasons | तपाईंका बाली सिजन |
+| monsoon crop | बर्खे बाली |
+| winter crop | हिउँदे बाली |
+| Planting: | रोपाइँ: |
+| Harvest: | कटनी: |
+| Are these months right? | यी महिना ठीक छन्? |
+| Fix the months | महिना सच्याउनुहोस् |
+| Save | राख्नुहोस् |
+| You said: | तपाईंले भन्नुभयो: |
+| You said these are right. | तपाईंले यी ठीक भन्नुभयो। |
+| Fields around you | तपाईं वरिपरिका खेत |
+| Only totals: no single field is shown. | जम्मा मात्र: कुनै एक खेत देखाइँदैन। |
+| Days with bare ground a year, nearby: | नजिकका खेत, वर्षमा खाली दिन: |
+| Your field: days with bare ground a year: | तपाईंको खेत, वर्षमा खाली दिन: |
+| Nearby fields with two crops a year: | वर्षमा दुई बाली हुने नजिकका खेत: |
+| Nearby fields bare over 60 days: | ६० दिनभन्दा बढी खाली नजिकका खेत: |
 | *Calendar: rain each month* | |
 | Little rain | थोरै पानी |
 | Some rain | मध्यम पानी |
@@ -139,7 +167,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 5. How is each part? / हरेक भाग कस्तो छ?
 
-*Nepali: needs native-speaker review.*
+*Nepali: 14 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -166,7 +194,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 6. Let's check the soil / माटो जाँचौं
 
-*Nepali: needs native-speaker review.*
+*Nepali: 60 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -204,6 +232,35 @@ This page is made from the word files in this folder; change those, not this pag
 | give or take | थपघट |
 | What do you | तपाईं के |
 | want to see? | हेर्न चाहनुहुन्छ? |
+| Safe Trial | सुरक्षित परीक्षण |
+| Try a new plan on one quarter. | एक चौथाइ खेतमा नयाँ योजना जाँच्नुहोस्। |
+| Safe | सुरक्षित |
+| Trial | परीक्षण |
+| Pick a plan to try | जाँच्ने योजना छान्नुहोस् |
+| Pick one quarter of your field | खेतको एक चौथाइ भाग छान्नुहोस् |
+| Trial | परीक्षण |
+| As now | अहिलेजस्तै |
+| The rest of your field stays as now. | बाँकी खेत अहिलेजस्तै रहन्छ। |
+| Where the soil stick reads | माटो जाँच्ने यन्त्रले कहाँ नाप्छ |
+| One spot in your trial quarter. | परीक्षण भागमा एउटा ठाउँ। |
+| Three spots in the rest, to compare. | तुलना गर्न बाँकी भागमा तीन ठाउँ। |
+| Start my trial | मेरो परीक्षण सुरु गर्नुहोस् |
+| Trial started: | परीक्षण सुरु भयो: |
+| Saved on this phone only. | यही फोनमा मात्र राखियो। |
+| After harvest, we compare | बाली काटेपछि हामी तुलना गर्छौं |
+| Your trial quarter against the rest. | परीक्षण भाग बाँकी खेतसँग। |
+| Your trial against the Replay's guess. | परीक्षण दोहोर्‍याइको अनुमानसँग। |
+| Results come only after the season. | नतिजा सिजन सकिएपछि मात्र आउँछ। |
+| Until then, we show no new numbers. | त्यतिन्जेल हामी नयाँ अङ्क देखाउँदैनौं। |
+| A photo each week | हरेक हप्ता एउटा फोटो |
+| Photos stay on this phone only. | फोटो यही फोनमा मात्र रहन्छन्। |
+| Add this week's photo | यो हप्ताको फोटो थप्नुहोस् |
+| Week | हप्ता |
+| No photos yet. | अहिलेसम्म फोटो छैन। |
+| Remove | हटाउनुहोस् |
+| This phone cannot keep photos here. | यो फोनले यहाँ फोटो राख्न सक्दैन। |
+| Recorded on | नापिएको मिति: |
+| Practice soil stick | अभ्यासको माटो जाँच्ने यन्त्र |
 
 ### 7. Your field's last {year_count} years / तपाईंको खेतका पछिल्ला {year_count} वर्ष
 
@@ -222,6 +279,46 @@ This page is made from the word files in this folder; change those, not this pag
 | Play | चलाउनुहोस् |
 | Pause | रोक्नुहोस् |
 | Which plan? | कुन योजना? |
+| {year_count}-Year Replay | {year_count} वर्षको दोहोर्‍याइ |
+| Replay | दोहोर्‍याइ |
+| Your plan in every past year. | हरेक पुरानो वर्षमा तपाईंको योजना। |
+| {year_count}-Year | {year_count} वर्षको |
+| Replay | दोहोर्‍याइ |
+| Your coming months, tried in every past year. | आउने महिना, हरेक पुरानो वर्षमा जाँचिएको। |
+| Worked | राम्रो भयो |
+| Struggled | गाह्रो भयो |
+| Failed | बिग्रियो |
+| No crop | बाली छैन |
+| How wet is your soil now? | अहिले माटो कति ओसिलो छ? |
+| Dry | सुक्खा |
+| Medium | मध्यम |
+| Wet | भिजेको |
+| Your soil stick reading picked this. | माटो जाँच्ने यन्त्रको नापले यो छान्यो। |
+| Picked from our computer's guess, as of | हाम्रो कम्प्युटरको अनुमानबाट छानिएको, मिति: |
+| already in the ground | पहिले नै खेतमा |
+| This year: | यो वर्ष: |
+| That year: | त्यो वर्ष: |
+| El Niño | एल निनो |
+| La Niña | ला निना |
+| neither El Niño nor La Niña | न एल निनो, न ला निना |
+| Ringed years were the same | घेरा लगाइएका वर्ष उस्तै थिए |
+| Water the crop got: | बालीले पाएको पानी: |
+| Every square is an estimate. | हरेक कोठा अनुमान हो। |
+| Marked squares change with the rain count. | चिन्ह भएका कोठा वर्षा गनाइसँग फेरिन्छन्। |
+| Tap a square to see why. | किन भनेर हेर्न कोठामा थिच्नुहोस्। |
+| Longest dry spell for the crop: | बालीको सबैभन्दा लामो सुक्खा समय: |
+| Days in a row: | लगातार दिन: |
+| Starting in: | सुरु भएको महिना: |
+| No crop in the field these months. | यी महिनामा खेतमा बाली थिएन। |
+| The crop never ran short of water. | बालीलाई कहिल्यै पानी कम भएन। |
+| Days short of water: | पानी कम भएका दिन: |
+| Rain in these months: | यी महिनाको वर्षा: |
+| Other rain counts say: | अरू वर्षा गनाइ भन्छन्: |
+| If you can water: dry spells stop mattering. | पानी लगाउन सके: सुक्खा समयले फरक पार्दैन। |
+| It worked, despite a dry spell: | सुक्खा समय हुँदा पनि राम्रो भयो: |
+| Like now | अहिलेजस्तै |
+| No soil reading yet. We start at: | अझै माटोको नाप छैन। हामी यहाँबाट सुरु गर्छौं: |
+| Dates follow the usual crop calendar, not yours. | मिति सामान्य बाली पात्रोअनुसार हो, तपाईंको होइन। |
 | *What the weather did that year. It is about the field, so it is the same on every plan (owner, 2026-11-13)* | |
 | A normal year | सामान्य वर्ष |
 | A drier year than usual | सामान्यभन्दा सुक्खा वर्ष |
@@ -235,7 +332,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 8. What should I grow? / म के लगाऊँ?
 
-*Nepali: needs native-speaker review.*
+*Nepali: 44 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -258,7 +355,7 @@ This page is made from the word files in this folder; change those, not this pag
 | About the same as now | अहिलेजस्तै |
 | This assumes water never runs out. | पानी कहिल्यै सकिँदैन भन्ने मानेर। |
 | See the last {year_count} years | पछिल्ला {year_count} वर्ष हेर्नुहोस् |
-| Counting rain several ways gives a range. | वर्षा धेरै तरिकाले गन्दा दायरा आउँछ। |
+| Counting rain several ways gives a range. | वर्षा धेरै तरिकाले नाप्दा दायरा आउँछ। |
 | One matches the nearby town's usual rain. | एउटा नजिकको सहरको सामान्य वर्षासँग मिल्छ। |
 | One choice for these months | यी महिनाका लागि एउटा विकल्प |
 | First | पहिले |
@@ -404,7 +501,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 9. Your field in {future_year} / {future_year}मा तपाईंको खेत
 
-*Nepali: needs native-speaker review.*
+*Nepali: 8 needs native-speaker review; 2 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -421,7 +518,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 10. Your plan / तपाईंको योजना
 
-*Nepali: needs native-speaker review.*
+*Nepali: 96 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -467,6 +564,63 @@ This page is made from the word files in this folder; change those, not this pag
 | How we worked it out | हामीले कसरी निकाल्यौं |
 | What the records show | अभिलेखले के देखाउँछन् |
 | To read more | थप पढ्न |
+| How sure, and how close | कति पक्का, कति नजिक |
+| Verified | जाँचिएको |
+| Estimate | अनुमान |
+| Your field | तपाईंको खेत |
+| Around your field | तपाईंको खेत वरिपरि |
+| Your valley | तपाईंको उपत्यका |
+| Your region | तपाईंको क्षेत्र |
+| Verified: checked against real measurements. | जाँचिएको: साँचो नापसँग दाँजेर हेरिएको। |
+| Estimate: worked out by computer. Not checked against your field yet. | अनुमान: कम्प्युटरले निकालेको। तपाईंको खेतसँग अझै दाँजिएको छैन। |
+| Your field: from 30 m squares or finer. | तपाईंको खेत: ३० मिटर वा साना कोठाबाट। |
+| Around your field: squares 250 m–1 km. | खेत वरिपरि: २५० मिटरदेखि १ किलोमिटरसम्मका कोठा। |
+| Your valley: a map about 10 km wide. | तपाईंको उपत्यका: करिब १० किलोमिटर चौडा नक्साबाट। |
+| Your region: a map 50 km or wider. | तपाईंको क्षेत्र: ५० किलोमिटर वा बढी चौडा नक्साबाट। |
+| Checks within range: | मिलेका जाँच: |
+| Rain fix | वर्षा सुधार |
+| This number uses our fixed rain record. | यो अङ्कमा हाम्रो सुधारिएको वर्षा अभिलेख छ। |
+| mm | मिमि |
+| Record Check-up | अभिलेख जाँच |
+| How we checked your rain record. | हामीले तपाईंको वर्षा अभिलेख कसरी जाँच्यौं। |
+| Record | अभिलेख |
+| Check-up | जाँच |
+| We checked this field's rain record. | हामीले यो खेतको वर्षा अभिलेख जाँच्यौं। |
+| Every field runs this check by itself. | हरेक खेतमा यो जाँच आफैँ चल्छ। |
+| From {rain_fix_year}, the rain map was made differently. | {rain_fix_year} देखि वर्षाको नक्सा फरक तरिकाले बन्यो। |
+| No change found. We use the rain as published. | कुनै फरक भेटिएन। प्रकाशित वर्षा नै प्रयोग गर्छौं। |
+| How we can tell | हामीले कसरी थाहा पायौं |
+| Share of rain gauges inside the rain map: | वर्षाको नक्सामा वर्षा मापकको हिस्सा: |
+| Before {rain_fix_year}: | {rain_fix_year} अघि: |
+| From {rain_fix_year}: | {rain_fix_year} देखि: |
+| Rain gauges counted near this field: | यो खेत नजिक गनिएका वर्षा मापक: |
+| Another rain map, CHIRPS, stayed steady. | अर्को वर्षा नक्सा, CHIRPS, स्थिर रह्यो। |
+| Ours jumped, compared with it: | त्यससँग दाँज्दा हाम्रो उफ्रियो: |
+| A version made without gauges jumped less. | मापकबिना बनेको संस्करण कम उफ्रियो। |
+| Without gauges: | मापकबिना: |
+| With gauges: | मापकसहित: |
+| Nepal's weather office, usual rain a year: | नेपालको मौसम कार्यालय, वर्षको सामान्य वर्षा: |
+| The rain map, compared with it: | त्यससँग दाँज्दा वर्षाको नक्सा: |
+| Our fixed rain: | हाम्रो सुधारिएको वर्षा: |
+| What we did | हामीले के गर्‍यौं |
+| From {rain_fix_year}, rain is scaled back each month. | {rain_fix_year} देखि हरेक महिनाको वर्षा घटाएर मिलाइयो। |
+| To match these years: | यी वर्षसँग मिलाउन: |
+| Then we matched it to rain gauges. | त्यसपछि वर्षा मापकसँग मिलायौं। |
+| Monsoon months: | बर्खा महिना: |
+| Other months: | अरू महिना: |
+| Rain a year, counted different ways | वर्षको वर्षा, फरक तरिकाले गनिएको |
+| Fixed, then matched to gauges | सुधारेर मापकसँग मिलाइएको |
+| Fixed only | सुधार मात्र |
+| Like the nearby town's usual rain | नजिकको सहरको सामान्य वर्षाजस्तै |
+| As published | प्रकाशितजस्तै |
+| Rain each year | हरेक वर्षको वर्षा |
+| Rain map, as published | वर्षाको नक्सा, प्रकाशितजस्तै |
+| Our fixed rain | हाम्रो सुधारिएको वर्षा |
+| Another rain map (CHIRPS) | अर्को वर्षा नक्सा (CHIRPS) |
+| Numbers with this mark use our fixed rain. | यो चिन्ह भएका अङ्कमा सुधारिएको वर्षा छ। |
+| Version | संस्करण |
+| checked | जाँचिएको मिति |
+| with changes not yet saved | नराखिएका परिवर्तनसहित |
 
 ## Method page
 
@@ -509,7 +663,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: needs native-speaker review.*
+*Nepali: 40 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -527,6 +681,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Language | भाषा |
 | Read more | थप पढ्नुहोस् |
 | Source: | स्रोत: |
+| More | थप |
 | *Crop names* | |
 | rice | धान |
 | wheat | गहुँ |

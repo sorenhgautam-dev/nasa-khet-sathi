@@ -1683,6 +1683,626 @@
   "screens.what_to_grow.texts.other_choices": {
    "en": "Other choices",
    "es": "Otras opciones"
+  },
+  "screens.home.texts.q_1": {
+   "en": "What can I grow",
+   "es": "¿Qué puedo sembrar"
+  },
+  "screens.home.texts.q_2": {
+   "en": "in my empty months?",
+   "es": "en mis meses vacíos?"
+  },
+  "screens.home.texts.q_3": {
+   "en": "Without risking the harvest I depend on?",
+   "es": "¿Sin arriesgar la cosecha de la que vivo?"
+  },
+  "screens.home.texts.four_ways": {
+   "en": "Four ways to find out:",
+   "es": "Cuatro formas de saberlo:"
+  },
+  "shared.buttons.more": {
+   "en": "More",
+   "es": "Más"
+  },
+  "screens.your_plan.texts.lab_title": {
+   "en": "How sure, and how close",
+   "es": "Qué tan seguro y qué tan cerca"
+  },
+  "screens.your_plan.texts.lab_verified": {
+   "en": "Verified",
+   "es": "Comprobado"
+  },
+  "screens.your_plan.texts.lab_estimate": {
+   "en": "Estimate",
+   "es": "Estimación"
+  },
+  "screens.your_plan.texts.lab_field": {
+   "en": "Your field",
+   "es": "Su campo"
+  },
+  "screens.your_plan.texts.lab_neighbourhood": {
+   "en": "Around your field",
+   "es": "Alrededor de su campo"
+  },
+  "screens.your_plan.texts.lab_valley": {
+   "en": "Your valley",
+   "es": "Su valle"
+  },
+  "screens.your_plan.texts.lab_region": {
+   "en": "Your region",
+   "es": "Su región"
+  },
+  "screens.your_plan.texts.lab_verified_why": {
+   "en": "Verified: checked against real measurements.",
+   "es": "Comprobado: contrastado con medidas reales."
+  },
+  "screens.your_plan.texts.lab_estimate_why": {
+   "en": "Estimate: worked out by computer. Not checked against your field yet.",
+   "es": "Estimación: calculada por computadora. Aún sin comprobar en su campo."
+  },
+  "screens.your_plan.texts.lab_field_why": {
+   "en": "Your field: from 30 m squares or finer.",
+   "es": "Su campo: cuadros de 30 m o menos."
+  },
+  "screens.your_plan.texts.lab_neighbourhood_why": {
+   "en": "Around your field: squares 250 m–1 km.",
+   "es": "Alrededor: cuadros de 250 m a 1 km."
+  },
+  "screens.your_plan.texts.lab_valley_why": {
+   "en": "Your valley: a map about 10 km wide.",
+   "es": "Su valle: mapa de unos 10 km."
+  },
+  "screens.your_plan.texts.lab_region_why": {
+   "en": "Your region: a map 50 km or wider.",
+   "es": "Su región: mapa de 50 km o más."
+  },
+  "screens.your_plan.texts.lab_checks": {
+   "en": "Checks within range:",
+   "es": "Pruebas dentro del margen:"
+  },
+  "screens.your_plan.texts.lab_rain": {
+   "en": "Rain fix",
+   "es": "Lluvia corregida"
+  },
+  "screens.your_plan.texts.lab_rain_why": {
+   "en": "This number uses our fixed rain record.",
+   "es": "Este número usa nuestra lluvia corregida."
+  },
+  "screens.your_plan.texts.mm": {
+   "en": "mm",
+   "es": "mm"
+  },
+  "screens.last_years.texts.replay_name": {
+   "en": "{year_count}-Year Replay",
+   "es": "Repetición de {year_count} años"
+  },
+  "screens.last_years.texts.replay_short": {
+   "en": "Replay",
+   "es": "Repetición"
+  },
+  "screens.last_years.texts.replay_sub": {
+   "en": "Your plan in every past year.",
+   "es": "Su plan en cada año pasado."
+  },
+  "screens.from_space.texts.pulse_name": {
+   "en": "Field Pulse",
+   "es": "Pulso del campo"
+  },
+  "screens.from_space.texts.pulse_sub": {
+   "en": "Your field's green, season by season.",
+   "es": "El verde de su campo, temporada a temporada."
+  },
+  "screens.check_soil.texts.trial_name": {
+   "en": "Safe Trial",
+   "es": "Prueba segura"
+  },
+  "screens.check_soil.texts.trial_sub": {
+   "en": "Try a new plan on one quarter.",
+   "es": "Pruebe un plan nuevo en un cuarto."
+  },
+  "screens.your_plan.texts.check_name": {
+   "en": "Record Check-up",
+   "es": "Revisión del registro"
+  },
+  "screens.your_plan.texts.check_sub": {
+   "en": "How we checked your rain record.",
+   "es": "Cómo revisamos su registro de lluvia."
+  },
+  "screens.check_soil.texts.trial_h1": {
+   "en": "Safe",
+   "es": "Prueba"
+  },
+  "screens.check_soil.texts.trial_h2": {
+   "en": "Trial",
+   "es": "segura"
+  },
+  "screens.check_soil.texts.trial_pick_plan": {
+   "en": "Pick a plan to try",
+   "es": "Elija un plan para probar"
+  },
+  "screens.check_soil.texts.trial_pick_part": {
+   "en": "Pick one quarter of your field",
+   "es": "Elija un cuarto de su campo"
+  },
+  "screens.check_soil.texts.trial_this": {
+   "en": "Trial",
+   "es": "Prueba"
+  },
+  "screens.check_soil.texts.trial_as_now": {
+   "en": "As now",
+   "es": "Como ahora"
+  },
+  "screens.check_soil.texts.trial_rest": {
+   "en": "The rest of your field stays as now.",
+   "es": "El resto del campo sigue igual."
+  },
+  "screens.check_soil.texts.trial_spots": {
+   "en": "Where the soil stick reads",
+   "es": "Dónde mide la varilla"
+  },
+  "screens.check_soil.texts.trial_spot_one": {
+   "en": "One spot in your trial quarter.",
+   "es": "Un punto en su cuarto de prueba."
+  },
+  "screens.check_soil.texts.trial_spot_three": {
+   "en": "Three spots in the rest, to compare.",
+   "es": "Tres puntos en el resto, para comparar."
+  },
+  "screens.check_soil.texts.trial_start": {
+   "en": "Start my trial",
+   "es": "Empezar mi prueba"
+  },
+  "screens.check_soil.texts.trial_started": {
+   "en": "Trial started:",
+   "es": "Prueba iniciada:"
+  },
+  "screens.check_soil.texts.trial_saved": {
+   "en": "Saved on this phone only.",
+   "es": "Guardado solo en este teléfono."
+  },
+  "screens.check_soil.texts.trial_compare": {
+   "en": "After harvest, we compare",
+   "es": "Tras la cosecha, comparamos"
+  },
+  "screens.check_soil.texts.trial_vs_rest": {
+   "en": "Your trial quarter against the rest.",
+   "es": "Su cuarto de prueba contra el resto."
+  },
+  "screens.check_soil.texts.trial_vs_replay": {
+   "en": "Your trial against the Replay's guess.",
+   "es": "Su prueba contra lo que dijo la Repetición."
+  },
+  "screens.check_soil.texts.trial_after": {
+   "en": "Results come only after the season.",
+   "es": "Los resultados llegan después de la temporada."
+  },
+  "screens.check_soil.texts.trial_no_numbers": {
+   "en": "Until then, we show no new numbers.",
+   "es": "Hasta entonces, no mostramos números nuevos."
+  },
+  "screens.check_soil.texts.trial_diary": {
+   "en": "A photo each week",
+   "es": "Una foto cada semana"
+  },
+  "screens.check_soil.texts.trial_photo_phone": {
+   "en": "Photos stay on this phone only.",
+   "es": "Las fotos se quedan en este teléfono."
+  },
+  "screens.check_soil.texts.trial_photo_add": {
+   "en": "Add this week's photo",
+   "es": "Añadir la foto de esta semana"
+  },
+  "screens.check_soil.texts.trial_week": {
+   "en": "Week",
+   "es": "Semana"
+  },
+  "screens.check_soil.texts.trial_photo_none": {
+   "en": "No photos yet.",
+   "es": "Aún no hay fotos."
+  },
+  "screens.check_soil.texts.trial_remove": {
+   "en": "Remove",
+   "es": "Quitar"
+  },
+  "screens.check_soil.texts.trial_photo_cannot": {
+   "en": "This phone cannot keep photos here.",
+   "es": "Este teléfono no puede guardar fotos aquí."
+  },
+  "screens.check_soil.texts.recorded_on": {
+   "en": "Recorded on",
+   "es": "Medido el"
+  },
+  "screens.last_years.texts.replay_h1": {
+   "en": "{year_count}-Year",
+   "es": "{year_count} años"
+  },
+  "screens.last_years.texts.replay_h2": {
+   "en": "Replay",
+   "es": "Repetición"
+  },
+  "screens.last_years.texts.replay_intro": {
+   "en": "Your coming months, tried in every past year.",
+   "es": "Sus próximos meses, probados en cada año pasado."
+  },
+  "screens.last_years.texts.res_worked": {
+   "en": "Worked",
+   "es": "Funcionó"
+  },
+  "screens.last_years.texts.res_struggled": {
+   "en": "Struggled",
+   "es": "Le costó"
+  },
+  "screens.last_years.texts.res_failed": {
+   "en": "Failed",
+   "es": "Falló"
+  },
+  "screens.last_years.texts.res_none": {
+   "en": "No crop",
+   "es": "Sin cultivo"
+  },
+  "screens.last_years.texts.start_q": {
+   "en": "How wet is your soil now?",
+   "es": "¿Qué tan húmeda está su tierra ahora?"
+  },
+  "screens.last_years.texts.start_dry": {
+   "en": "Dry",
+   "es": "Seca"
+  },
+  "screens.last_years.texts.start_medium": {
+   "en": "Medium",
+   "es": "Media"
+  },
+  "screens.last_years.texts.start_wet": {
+   "en": "Wet",
+   "es": "Mojada"
+  },
+  "screens.last_years.texts.start_stick": {
+   "en": "Your soil stick reading picked this.",
+   "es": "Lo eligió la lectura de su varilla."
+  },
+  "screens.last_years.texts.start_twin": {
+   "en": "Picked from our computer's guess, as of",
+   "es": "Elegido por la estimación de la computadora, al"
+  },
+  "screens.last_years.texts.in_ground": {
+   "en": "already in the ground",
+   "es": "ya sembrado"
+  },
+  "screens.last_years.texts.enso_now": {
+   "en": "This year:",
+   "es": "Este año:"
+  },
+  "screens.last_years.texts.enso_then": {
+   "en": "That year:",
+   "es": "Ese año:"
+  },
+  "screens.last_years.texts.enso_el_nino": {
+   "en": "El Niño",
+   "es": "El Niño"
+  },
+  "screens.last_years.texts.enso_la_nina": {
+   "en": "La Niña",
+   "es": "La Niña"
+  },
+  "screens.last_years.texts.enso_neutral": {
+   "en": "neither El Niño nor La Niña",
+   "es": "ni El Niño ni La Niña"
+  },
+  "screens.last_years.texts.enso_same": {
+   "en": "Ringed years were the same",
+   "es": "Los años con aro fueron iguales"
+  },
+  "screens.last_years.texts.need_met": {
+   "en": "Water the crop got:",
+   "es": "Agua que recibió el cultivo:"
+  },
+  "screens.last_years.texts.every_estimate": {
+   "en": "Every square is an estimate.",
+   "es": "Cada cuadro es una estimación."
+  },
+  "screens.last_years.texts.rain_marked": {
+   "en": "Marked squares change with the rain count.",
+   "es": "Los cuadros marcados cambian según la lluvia contada."
+  },
+  "screens.last_years.texts.tap_square": {
+   "en": "Tap a square to see why.",
+   "es": "Toque un cuadro para ver por qué."
+  },
+  "screens.last_years.texts.why_dry_spell": {
+   "en": "Longest dry spell for the crop:",
+   "es": "La racha seca más larga del cultivo:"
+  },
+  "screens.last_years.texts.dry_in_row": {
+   "en": "Days in a row:",
+   "es": "Días seguidos:"
+  },
+  "screens.last_years.texts.dry_from": {
+   "en": "Starting in:",
+   "es": "Empezó en:"
+  },
+  "screens.last_years.texts.why_no_crop": {
+   "en": "No crop in the field these months.",
+   "es": "Sin cultivo en el campo estos meses."
+  },
+  "screens.last_years.texts.why_no_dry_days": {
+   "en": "The crop never ran short of water.",
+   "es": "Al cultivo nunca le faltó agua."
+  },
+  "screens.last_years.texts.dry_days": {
+   "en": "Days short of water:",
+   "es": "Días con falta de agua:"
+  },
+  "screens.last_years.texts.rain_in_window": {
+   "en": "Rain in these months:",
+   "es": "Lluvia en estos meses:"
+  },
+  "screens.last_years.texts.rain_changes": {
+   "en": "Other rain counts say:",
+   "es": "Otras cuentas de lluvia dicen:"
+  },
+  "screens.from_space.texts.pulse_h1": {
+   "en": "Field",
+   "es": "Pulso del"
+  },
+  "screens.from_space.texts.pulse_h2": {
+   "en": "Pulse",
+   "es": "campo"
+  },
+  "screens.from_space.texts.pulse_line": {
+   "en": "High means green crop. Low means bare.",
+   "es": "Arriba: cultivo verde. Abajo: tierra desnuda."
+  },
+  "screens.from_space.texts.pulse_new": {
+   "en": "Sharper pictures (solid line)",
+   "es": "Fotos más nítidas (línea continua)"
+  },
+  "screens.from_space.texts.pulse_old": {
+   "en": "Older, coarser pictures (dashed line)",
+   "es": "Fotos antiguas, menos nítidas (línea discontinua)"
+  },
+  "screens.from_space.texts.pulse_bare": {
+   "en": "Below the dotted line: bare ground.",
+   "es": "Bajo la línea de puntos: tierra desnuda."
+  },
+  "screens.from_space.texts.your_seasons": {
+   "en": "Your crop seasons",
+   "es": "Sus temporadas de cultivo"
+  },
+  "screens.from_space.texts.slot_monsoon": {
+   "en": "monsoon crop",
+   "es": "cultivo del monzón"
+  },
+  "screens.from_space.texts.slot_winter": {
+   "en": "winter crop",
+   "es": "cultivo de invierno"
+  },
+  "screens.from_space.texts.planting": {
+   "en": "Planting:",
+   "es": "Siembra:"
+  },
+  "screens.from_space.texts.harvest": {
+   "en": "Harvest:",
+   "es": "Cosecha:"
+  },
+  "screens.from_space.texts.dates_right": {
+   "en": "Are these months right?",
+   "es": "¿Son correctos estos meses?"
+  },
+  "screens.from_space.texts.fix_dates": {
+   "en": "Fix the months",
+   "es": "Corregir los meses"
+  },
+  "screens.from_space.texts.save_dates": {
+   "en": "Save",
+   "es": "Guardar"
+  },
+  "screens.from_space.texts.you_said": {
+   "en": "You said:",
+   "es": "Usted dijo:"
+  },
+  "screens.from_space.texts.you_said_yes": {
+   "en": "You said these are right.",
+   "es": "Usted dijo que son correctos."
+  },
+  "screens.from_space.texts.nearby_title": {
+   "en": "Fields around you",
+   "es": "Campos a su alrededor"
+  },
+  "screens.from_space.texts.nearby_totals": {
+   "en": "Only totals: no single field is shown.",
+   "es": "Solo totales: ningún campo por separado."
+  },
+  "screens.from_space.texts.nearby_bare": {
+   "en": "Days with bare ground a year, nearby:",
+   "es": "Días sin cultivo al año, cerca:"
+  },
+  "screens.from_space.texts.yours_bare": {
+   "en": "Your field: days with bare ground a year:",
+   "es": "Su campo, días sin cultivo al año:"
+  },
+  "screens.from_space.texts.nearby_two": {
+   "en": "Nearby fields with two crops a year:",
+   "es": "Campos cercanos con dos cultivos al año:"
+  },
+  "screens.from_space.texts.nearby_long_bare": {
+   "en": "Nearby fields bare over 60 days:",
+   "es": "Campos cercanos sin cultivo más de 60 días:"
+  },
+  "screens.your_plan.texts.check_h1": {
+   "en": "Record",
+   "es": "Revisión del"
+  },
+  "screens.your_plan.texts.check_h2": {
+   "en": "Check-up",
+   "es": "registro"
+  },
+  "screens.your_plan.texts.check_what": {
+   "en": "We checked this field's rain record.",
+   "es": "Revisamos el registro de lluvia de este campo."
+  },
+  "screens.your_plan.texts.check_auto": {
+   "en": "Every field runs this check by itself.",
+   "es": "Cada campo hace esta revisión solo."
+  },
+  "screens.your_plan.texts.check_found": {
+   "en": "From {rain_fix_year}, the rain map was made differently.",
+   "es": "Desde {rain_fix_year}, el mapa de lluvia cambió."
+  },
+  "screens.your_plan.texts.check_none": {
+   "en": "No change found. We use the rain as published.",
+   "es": "Sin cambios. Usamos la lluvia tal como se publicó."
+  },
+  "screens.your_plan.texts.check_how": {
+   "en": "How we can tell",
+   "es": "Cómo lo sabemos"
+  },
+  "screens.your_plan.texts.check_gauge_share": {
+   "en": "Share of rain gauges inside the rain map:",
+   "es": "Parte de pluviómetros en el mapa de lluvia:"
+  },
+  "screens.your_plan.texts.check_before": {
+   "en": "Before {rain_fix_year}:",
+   "es": "Antes de {rain_fix_year}:"
+  },
+  "screens.your_plan.texts.check_from": {
+   "en": "From {rain_fix_year}:",
+   "es": "Desde {rain_fix_year}:"
+  },
+  "screens.your_plan.texts.check_gauges_near": {
+   "en": "Rain gauges counted near this field:",
+   "es": "Pluviómetros contados cerca del campo:"
+  },
+  "screens.your_plan.texts.check_other_map": {
+   "en": "Another rain map, CHIRPS, stayed steady.",
+   "es": "Otro mapa de lluvia, CHIRPS, siguió estable."
+  },
+  "screens.your_plan.texts.check_jump": {
+   "en": "Ours jumped, compared with it:",
+   "es": "El nuestro saltó, comparado con ese:"
+  },
+  "screens.your_plan.texts.check_late": {
+   "en": "A version made without gauges jumped less.",
+   "es": "Una versión sin pluviómetros saltó menos."
+  },
+  "screens.your_plan.texts.check_late_jump": {
+   "en": "Without gauges:",
+   "es": "Sin pluviómetros:"
+  },
+  "screens.your_plan.texts.check_final_jump": {
+   "en": "With gauges:",
+   "es": "Con pluviómetros:"
+  },
+  "screens.your_plan.texts.check_office": {
+   "en": "Nepal's weather office, usual rain a year:",
+   "es": "Oficina del tiempo de Nepal, lluvia anual normal:"
+  },
+  "screens.your_plan.texts.check_office_times": {
+   "en": "The rain map, compared with it:",
+   "es": "El mapa de lluvia, comparado con eso:"
+  },
+  "screens.your_plan.texts.check_ours": {
+   "en": "Our fixed rain:",
+   "es": "Nuestra lluvia corregida:"
+  },
+  "screens.your_plan.texts.check_fix_title": {
+   "en": "What we did",
+   "es": "Lo que hicimos"
+  },
+  "screens.your_plan.texts.check_fix": {
+   "en": "From {rain_fix_year}, rain is scaled back each month.",
+   "es": "Desde {rain_fix_year}, la lluvia se reduce cada mes."
+  },
+  "screens.your_plan.texts.check_ref": {
+   "en": "To match these years:",
+   "es": "Para igualar estos años:"
+  },
+  "screens.your_plan.texts.check_gauge_fix": {
+   "en": "Then we matched it to rain gauges.",
+   "es": "Luego la ajustamos a los pluviómetros."
+  },
+  "screens.your_plan.texts.check_monsoon": {
+   "en": "Monsoon months:",
+   "es": "Meses del monzón:"
+  },
+  "screens.your_plan.texts.check_other_months": {
+   "en": "Other months:",
+   "es": "Otros meses:"
+  },
+  "screens.your_plan.texts.check_versions": {
+   "en": "Rain a year, counted different ways",
+   "es": "Lluvia al año, contada de varias formas"
+  },
+  "screens.your_plan.texts.ver_tuned": {
+   "en": "Fixed, then matched to gauges",
+   "es": "Corregida y ajustada a pluviómetros"
+  },
+  "screens.your_plan.texts.ver_untuned": {
+   "en": "Fixed only",
+   "es": "Solo corregida"
+  },
+  "screens.your_plan.texts.ver_dhm": {
+   "en": "Like the nearby town's usual rain",
+   "es": "Como la lluvia normal del pueblo cercano"
+  },
+  "screens.your_plan.texts.ver_uncorrected": {
+   "en": "As published",
+   "es": "Tal como se publicó"
+  },
+  "screens.your_plan.texts.check_yearly": {
+   "en": "Rain each year",
+   "es": "Lluvia de cada año"
+  },
+  "screens.your_plan.texts.line_gpm": {
+   "en": "Rain map, as published",
+   "es": "Mapa de lluvia, tal como se publicó"
+  },
+  "screens.your_plan.texts.line_twin": {
+   "en": "Our fixed rain",
+   "es": "Nuestra lluvia corregida"
+  },
+  "screens.your_plan.texts.line_chirps": {
+   "en": "Another rain map (CHIRPS)",
+   "es": "Otro mapa de lluvia (CHIRPS)"
+  },
+  "screens.your_plan.texts.check_marked": {
+   "en": "Numbers with this mark use our fixed rain.",
+   "es": "Los números con esta marca usan lluvia corregida."
+  },
+  "screens.check_soil.texts.practice": {
+   "en": "Practice soil stick",
+   "es": "Varilla de práctica"
+  },
+  "screens.your_plan.texts.version": {
+   "en": "Version",
+   "es": "Versión"
+  },
+  "screens.your_plan.texts.version_checked": {
+   "en": "checked",
+   "es": "revisada el"
+  },
+  "screens.your_plan.texts.version_unsaved": {
+   "en": "with changes not yet saved",
+   "es": "con cambios sin guardar"
+  },
+  "screens.last_years.texts.if_water": {
+   "en": "If you can water: dry spells stop mattering.",
+   "es": "Si puede regar: las rachas secas no importan."
+  },
+  "screens.last_years.texts.why_dry_spell_ok": {
+   "en": "It worked, despite a dry spell:",
+   "es": "Funcionó, a pesar de una racha seca:"
+  },
+  "screens.last_years.texts.enso_like_now": {
+   "en": "Like now",
+   "es": "Como ahora"
+  },
+  "screens.last_years.texts.start_none": {
+   "en": "No soil reading yet. We start at:",
+   "es": "Aún sin lectura del suelo. Empezamos en:"
+  },
+  "screens.last_years.texts.calendar_note": {
+   "en": "Dates follow the usual crop calendar, not yours.",
+   "es": "Fechas del calendario usual, no las suyas."
   }
  }
 }

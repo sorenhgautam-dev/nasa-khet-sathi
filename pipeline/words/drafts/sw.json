@@ -1683,6 +1683,626 @@
   "screens.what_to_grow.texts.other_choices": {
    "en": "Other choices",
    "sw": "Machaguo mengine"
+  },
+  "screens.home.texts.q_1": {
+   "en": "What can I grow",
+   "sw": "Nipande nini"
+  },
+  "screens.home.texts.q_2": {
+   "en": "in my empty months?",
+   "sw": "katika miezi mitupu?"
+  },
+  "screens.home.texts.q_3": {
+   "en": "Without risking the harvest I depend on?",
+   "sw": "Bila kuhatarisha mavuno ninayotegemea?"
+  },
+  "screens.home.texts.four_ways": {
+   "en": "Four ways to find out:",
+   "sw": "Njia nne za kujua:"
+  },
+  "shared.buttons.more": {
+   "en": "More",
+   "sw": "Zaidi"
+  },
+  "screens.your_plan.texts.lab_title": {
+   "en": "How sure, and how close",
+   "sw": "Uhakika na ukaribu"
+  },
+  "screens.your_plan.texts.lab_verified": {
+   "en": "Verified",
+   "sw": "Imethibitishwa"
+  },
+  "screens.your_plan.texts.lab_estimate": {
+   "en": "Estimate",
+   "sw": "Makadirio"
+  },
+  "screens.your_plan.texts.lab_field": {
+   "en": "Your field",
+   "sw": "Shamba lako"
+  },
+  "screens.your_plan.texts.lab_neighbourhood": {
+   "en": "Around your field",
+   "sw": "Karibu na shamba lako"
+  },
+  "screens.your_plan.texts.lab_valley": {
+   "en": "Your valley",
+   "sw": "Bonde lako"
+  },
+  "screens.your_plan.texts.lab_region": {
+   "en": "Your region",
+   "sw": "Kanda yako"
+  },
+  "screens.your_plan.texts.lab_verified_why": {
+   "en": "Verified: checked against real measurements.",
+   "sw": "Imethibitishwa: imelinganishwa na vipimo halisi."
+  },
+  "screens.your_plan.texts.lab_estimate_why": {
+   "en": "Estimate: worked out by computer. Not checked against your field yet.",
+   "sw": "Makadirio: yamekokotolewa na kompyuta. Bado hayajakaguliwa shambani kwako."
+  },
+  "screens.your_plan.texts.lab_field_why": {
+   "en": "Your field: from 30 m squares or finer.",
+   "sw": "Shamba lako: miraba ya mita 30 au chini."
+  },
+  "screens.your_plan.texts.lab_neighbourhood_why": {
+   "en": "Around your field: squares 250 m–1 km.",
+   "sw": "Karibu: miraba ya mita 250 hadi km 1."
+  },
+  "screens.your_plan.texts.lab_valley_why": {
+   "en": "Your valley: a map about 10 km wide.",
+   "sw": "Bonde lako: ramani ya karibu km 10."
+  },
+  "screens.your_plan.texts.lab_region_why": {
+   "en": "Your region: a map 50 km or wider.",
+   "sw": "Kanda yako: ramani ya km 50 au zaidi."
+  },
+  "screens.your_plan.texts.lab_checks": {
+   "en": "Checks within range:",
+   "sw": "Ukaguzi uliolingana:"
+  },
+  "screens.your_plan.texts.lab_rain": {
+   "en": "Rain fix",
+   "sw": "Mvua iliyorekebishwa"
+  },
+  "screens.your_plan.texts.lab_rain_why": {
+   "en": "This number uses our fixed rain record.",
+   "sw": "Namba hii inatumia rekodi yetu ya mvua iliyorekebishwa."
+  },
+  "screens.your_plan.texts.mm": {
+   "en": "mm",
+   "sw": "mm"
+  },
+  "screens.last_years.texts.replay_name": {
+   "en": "{year_count}-Year Replay",
+   "sw": "Marudio ya miaka {year_count}"
+  },
+  "screens.last_years.texts.replay_short": {
+   "en": "Replay",
+   "sw": "Marudio"
+  },
+  "screens.last_years.texts.replay_sub": {
+   "en": "Your plan in every past year.",
+   "sw": "Mpango wako katika kila mwaka uliopita."
+  },
+  "screens.from_space.texts.pulse_name": {
+   "en": "Field Pulse",
+   "sw": "Mapigo ya shamba"
+  },
+  "screens.from_space.texts.pulse_sub": {
+   "en": "Your field's green, season by season.",
+   "sw": "Kijani cha shamba lako, msimu kwa msimu."
+  },
+  "screens.check_soil.texts.trial_name": {
+   "en": "Safe Trial",
+   "sw": "Jaribio salama"
+  },
+  "screens.check_soil.texts.trial_sub": {
+   "en": "Try a new plan on one quarter.",
+   "sw": "Jaribu mpango mpya kwenye robo moja."
+  },
+  "screens.your_plan.texts.check_name": {
+   "en": "Record Check-up",
+   "sw": "Ukaguzi wa kumbukumbu"
+  },
+  "screens.your_plan.texts.check_sub": {
+   "en": "How we checked your rain record.",
+   "sw": "Jinsi tulivyokagua kumbukumbu ya mvua yako."
+  },
+  "screens.check_soil.texts.trial_h1": {
+   "en": "Safe",
+   "sw": "Jaribio"
+  },
+  "screens.check_soil.texts.trial_h2": {
+   "en": "Trial",
+   "sw": "salama"
+  },
+  "screens.check_soil.texts.trial_pick_plan": {
+   "en": "Pick a plan to try",
+   "sw": "Chagua mpango wa kujaribu"
+  },
+  "screens.check_soil.texts.trial_pick_part": {
+   "en": "Pick one quarter of your field",
+   "sw": "Chagua robo moja ya shamba lako"
+  },
+  "screens.check_soil.texts.trial_this": {
+   "en": "Trial",
+   "sw": "Jaribio"
+  },
+  "screens.check_soil.texts.trial_as_now": {
+   "en": "As now",
+   "sw": "Kama sasa"
+  },
+  "screens.check_soil.texts.trial_rest": {
+   "en": "The rest of your field stays as now.",
+   "sw": "Sehemu nyingine ya shamba inabaki kama ilivyo."
+  },
+  "screens.check_soil.texts.trial_spots": {
+   "en": "Where the soil stick reads",
+   "sw": "Mahali kijiti cha udongo kinapima"
+  },
+  "screens.check_soil.texts.trial_spot_one": {
+   "en": "One spot in your trial quarter.",
+   "sw": "Sehemu moja kwenye robo ya jaribio."
+  },
+  "screens.check_soil.texts.trial_spot_three": {
+   "en": "Three spots in the rest, to compare.",
+   "sw": "Sehemu tatu kwingine, kwa kulinganisha."
+  },
+  "screens.check_soil.texts.trial_start": {
+   "en": "Start my trial",
+   "sw": "Anza jaribio langu"
+  },
+  "screens.check_soil.texts.trial_started": {
+   "en": "Trial started:",
+   "sw": "Jaribio lilianza:"
+  },
+  "screens.check_soil.texts.trial_saved": {
+   "en": "Saved on this phone only.",
+   "sw": "Imehifadhiwa kwenye simu hii tu."
+  },
+  "screens.check_soil.texts.trial_compare": {
+   "en": "After harvest, we compare",
+   "sw": "Baada ya mavuno, tunalinganisha"
+  },
+  "screens.check_soil.texts.trial_vs_rest": {
+   "en": "Your trial quarter against the rest.",
+   "sw": "Robo ya jaribio dhidi ya sehemu nyingine."
+  },
+  "screens.check_soil.texts.trial_vs_replay": {
+   "en": "Your trial against the Replay's guess.",
+   "sw": "Jaribio lako dhidi ya makadirio ya Marudio."
+  },
+  "screens.check_soil.texts.trial_after": {
+   "en": "Results come only after the season.",
+   "sw": "Matokeo yanakuja baada ya msimu tu."
+  },
+  "screens.check_soil.texts.trial_no_numbers": {
+   "en": "Until then, we show no new numbers.",
+   "sw": "Hadi wakati huo, hatuonyeshi namba mpya."
+  },
+  "screens.check_soil.texts.trial_diary": {
+   "en": "A photo each week",
+   "sw": "Picha moja kila wiki"
+  },
+  "screens.check_soil.texts.trial_photo_phone": {
+   "en": "Photos stay on this phone only.",
+   "sw": "Picha zinabaki kwenye simu hii tu."
+  },
+  "screens.check_soil.texts.trial_photo_add": {
+   "en": "Add this week's photo",
+   "sw": "Ongeza picha ya wiki hii"
+  },
+  "screens.check_soil.texts.trial_week": {
+   "en": "Week",
+   "sw": "Wiki"
+  },
+  "screens.check_soil.texts.trial_photo_none": {
+   "en": "No photos yet.",
+   "sw": "Bado hakuna picha."
+  },
+  "screens.check_soil.texts.trial_remove": {
+   "en": "Remove",
+   "sw": "Ondoa"
+  },
+  "screens.check_soil.texts.trial_photo_cannot": {
+   "en": "This phone cannot keep photos here.",
+   "sw": "Simu hii haiwezi kuhifadhi picha hapa."
+  },
+  "screens.check_soil.texts.recorded_on": {
+   "en": "Recorded on",
+   "sw": "Ilipimwa tarehe"
+  },
+  "screens.last_years.texts.replay_h1": {
+   "en": "{year_count}-Year",
+   "sw": "Miaka {year_count}"
+  },
+  "screens.last_years.texts.replay_h2": {
+   "en": "Replay",
+   "sw": "Marudio"
+  },
+  "screens.last_years.texts.replay_intro": {
+   "en": "Your coming months, tried in every past year.",
+   "sw": "Miezi yako ijayo, imejaribiwa kila mwaka uliopita."
+  },
+  "screens.last_years.texts.res_worked": {
+   "en": "Worked",
+   "sw": "Ilifaulu"
+  },
+  "screens.last_years.texts.res_struggled": {
+   "en": "Struggled",
+   "sw": "Ilitatizika"
+  },
+  "screens.last_years.texts.res_failed": {
+   "en": "Failed",
+   "sw": "Ilishindwa"
+  },
+  "screens.last_years.texts.res_none": {
+   "en": "No crop",
+   "sw": "Hakuna zao"
+  },
+  "screens.last_years.texts.start_q": {
+   "en": "How wet is your soil now?",
+   "sw": "Udongo wako una unyevu kiasi gani sasa?"
+  },
+  "screens.last_years.texts.start_dry": {
+   "en": "Dry",
+   "sw": "Kavu"
+  },
+  "screens.last_years.texts.start_medium": {
+   "en": "Medium",
+   "sw": "Wastani"
+  },
+  "screens.last_years.texts.start_wet": {
+   "en": "Wet",
+   "sw": "Mbichi"
+  },
+  "screens.last_years.texts.start_stick": {
+   "en": "Your soil stick reading picked this.",
+   "sw": "Kipimo cha kijiti chako kimechagua hiki."
+  },
+  "screens.last_years.texts.start_twin": {
+   "en": "Picked from our computer's guess, as of",
+   "sw": "Imechaguliwa kwa makadirio ya kompyuta, tarehe"
+  },
+  "screens.last_years.texts.in_ground": {
+   "en": "already in the ground",
+   "sw": "tayari shambani"
+  },
+  "screens.last_years.texts.enso_now": {
+   "en": "This year:",
+   "sw": "Mwaka huu:"
+  },
+  "screens.last_years.texts.enso_then": {
+   "en": "That year:",
+   "sw": "Mwaka ule:"
+  },
+  "screens.last_years.texts.enso_el_nino": {
+   "en": "El Niño",
+   "sw": "El Niño"
+  },
+  "screens.last_years.texts.enso_la_nina": {
+   "en": "La Niña",
+   "sw": "La Niña"
+  },
+  "screens.last_years.texts.enso_neutral": {
+   "en": "neither El Niño nor La Niña",
+   "sw": "si El Niño wala La Niña"
+  },
+  "screens.last_years.texts.enso_same": {
+   "en": "Ringed years were the same",
+   "sw": "Miaka iliyozungushiwa ilikuwa hivyo pia"
+  },
+  "screens.last_years.texts.need_met": {
+   "en": "Water the crop got:",
+   "sw": "Maji ambayo zao lilipata:"
+  },
+  "screens.last_years.texts.every_estimate": {
+   "en": "Every square is an estimate.",
+   "sw": "Kila mraba ni makadirio."
+  },
+  "screens.last_years.texts.rain_marked": {
+   "en": "Marked squares change with the rain count.",
+   "sw": "Miraba yenye alama hubadilika na hesabu ya mvua."
+  },
+  "screens.last_years.texts.tap_square": {
+   "en": "Tap a square to see why.",
+   "sw": "Gusa mraba kuona sababu."
+  },
+  "screens.last_years.texts.why_dry_spell": {
+   "en": "Longest dry spell for the crop:",
+   "sw": "Kipindi kirefu zaidi cha ukavu:"
+  },
+  "screens.last_years.texts.dry_in_row": {
+   "en": "Days in a row:",
+   "sw": "Siku mfululizo:"
+  },
+  "screens.last_years.texts.dry_from": {
+   "en": "Starting in:",
+   "sw": "Ilianza:"
+  },
+  "screens.last_years.texts.why_no_crop": {
+   "en": "No crop in the field these months.",
+   "sw": "Hakuna zao shambani miezi hii."
+  },
+  "screens.last_years.texts.why_no_dry_days": {
+   "en": "The crop never ran short of water.",
+   "sw": "Zao halikukosa maji kamwe."
+  },
+  "screens.last_years.texts.dry_days": {
+   "en": "Days short of water:",
+   "sw": "Siku za kukosa maji:"
+  },
+  "screens.last_years.texts.rain_in_window": {
+   "en": "Rain in these months:",
+   "sw": "Mvua ya miezi hii:"
+  },
+  "screens.last_years.texts.rain_changes": {
+   "en": "Other rain counts say:",
+   "sw": "Hesabu nyingine za mvua zinasema:"
+  },
+  "screens.from_space.texts.pulse_h1": {
+   "en": "Field",
+   "sw": "Mapigo ya"
+  },
+  "screens.from_space.texts.pulse_h2": {
+   "en": "Pulse",
+   "sw": "shamba"
+  },
+  "screens.from_space.texts.pulse_line": {
+   "en": "High means green crop. Low means bare.",
+   "sw": "Juu ni zao la kijani. Chini ni tupu."
+  },
+  "screens.from_space.texts.pulse_new": {
+   "en": "Sharper pictures (solid line)",
+   "sw": "Picha safi zaidi (mstari mzima)"
+  },
+  "screens.from_space.texts.pulse_old": {
+   "en": "Older, coarser pictures (dashed line)",
+   "sw": "Picha za zamani, zisizo safi (mstari wa vipande)"
+  },
+  "screens.from_space.texts.pulse_bare": {
+   "en": "Below the dotted line: bare ground.",
+   "sw": "Chini ya mstari wa nukta: ardhi tupu."
+  },
+  "screens.from_space.texts.your_seasons": {
+   "en": "Your crop seasons",
+   "sw": "Misimu yako ya mazao"
+  },
+  "screens.from_space.texts.slot_monsoon": {
+   "en": "monsoon crop",
+   "sw": "zao la masika"
+  },
+  "screens.from_space.texts.slot_winter": {
+   "en": "winter crop",
+   "sw": "zao la baridi"
+  },
+  "screens.from_space.texts.planting": {
+   "en": "Planting:",
+   "sw": "Kupanda:"
+  },
+  "screens.from_space.texts.harvest": {
+   "en": "Harvest:",
+   "sw": "Mavuno:"
+  },
+  "screens.from_space.texts.dates_right": {
+   "en": "Are these months right?",
+   "sw": "Je, miezi hii ni sahihi?"
+  },
+  "screens.from_space.texts.fix_dates": {
+   "en": "Fix the months",
+   "sw": "Rekebisha miezi"
+  },
+  "screens.from_space.texts.save_dates": {
+   "en": "Save",
+   "sw": "Hifadhi"
+  },
+  "screens.from_space.texts.you_said": {
+   "en": "You said:",
+   "sw": "Ulisema:"
+  },
+  "screens.from_space.texts.you_said_yes": {
+   "en": "You said these are right.",
+   "sw": "Ulisema haya ni sahihi."
+  },
+  "screens.from_space.texts.nearby_title": {
+   "en": "Fields around you",
+   "sw": "Mashamba yanayokuzunguka"
+  },
+  "screens.from_space.texts.nearby_totals": {
+   "en": "Only totals: no single field is shown.",
+   "sw": "Jumla tu: hakuna shamba moja linaloonyeshwa."
+  },
+  "screens.from_space.texts.nearby_bare": {
+   "en": "Days with bare ground a year, nearby:",
+   "sw": "Siku tupu kwa mwaka, karibu:"
+  },
+  "screens.from_space.texts.yours_bare": {
+   "en": "Your field: days with bare ground a year:",
+   "sw": "Shamba lako, siku tupu kwa mwaka:"
+  },
+  "screens.from_space.texts.nearby_two": {
+   "en": "Nearby fields with two crops a year:",
+   "sw": "Mashamba ya karibu yenye mazao mawili kwa mwaka:"
+  },
+  "screens.from_space.texts.nearby_long_bare": {
+   "en": "Nearby fields bare over 60 days:",
+   "sw": "Mashamba ya karibu matupu zaidi ya siku 60:"
+  },
+  "screens.your_plan.texts.check_h1": {
+   "en": "Record",
+   "sw": "Ukaguzi wa"
+  },
+  "screens.your_plan.texts.check_h2": {
+   "en": "Check-up",
+   "sw": "kumbukumbu"
+  },
+  "screens.your_plan.texts.check_what": {
+   "en": "We checked this field's rain record.",
+   "sw": "Tulikagua kumbukumbu ya mvua ya shamba hili."
+  },
+  "screens.your_plan.texts.check_auto": {
+   "en": "Every field runs this check by itself.",
+   "sw": "Kila shamba hufanya ukaguzi huu lenyewe."
+  },
+  "screens.your_plan.texts.check_found": {
+   "en": "From {rain_fix_year}, the rain map was made differently.",
+   "sw": "Tangu {rain_fix_year}, ramani ya mvua ilitengenezwa tofauti."
+  },
+  "screens.your_plan.texts.check_none": {
+   "en": "No change found. We use the rain as published.",
+   "sw": "Hakuna mabadiliko. Tunatumia mvua kama ilivyochapishwa."
+  },
+  "screens.your_plan.texts.check_how": {
+   "en": "How we can tell",
+   "sw": "Jinsi tunavyojua"
+  },
+  "screens.your_plan.texts.check_gauge_share": {
+   "en": "Share of rain gauges inside the rain map:",
+   "sw": "Sehemu ya vipimo vya mvua ndani ya ramani:"
+  },
+  "screens.your_plan.texts.check_before": {
+   "en": "Before {rain_fix_year}:",
+   "sw": "Kabla ya {rain_fix_year}:"
+  },
+  "screens.your_plan.texts.check_from": {
+   "en": "From {rain_fix_year}:",
+   "sw": "Tangu {rain_fix_year}:"
+  },
+  "screens.your_plan.texts.check_gauges_near": {
+   "en": "Rain gauges counted near this field:",
+   "sw": "Vipimo vya mvua vilivyohesabiwa karibu:"
+  },
+  "screens.your_plan.texts.check_other_map": {
+   "en": "Another rain map, CHIRPS, stayed steady.",
+   "sw": "Ramani nyingine ya mvua, CHIRPS, ilibaki thabiti."
+  },
+  "screens.your_plan.texts.check_jump": {
+   "en": "Ours jumped, compared with it:",
+   "sw": "Yetu iliruka, ikilinganishwa nayo:"
+  },
+  "screens.your_plan.texts.check_late": {
+   "en": "A version made without gauges jumped less.",
+   "sw": "Toleo lisilo na vipimo liliruka kidogo."
+  },
+  "screens.your_plan.texts.check_late_jump": {
+   "en": "Without gauges:",
+   "sw": "Bila vipimo:"
+  },
+  "screens.your_plan.texts.check_final_jump": {
+   "en": "With gauges:",
+   "sw": "Pamoja na vipimo:"
+  },
+  "screens.your_plan.texts.check_office": {
+   "en": "Nepal's weather office, usual rain a year:",
+   "sw": "Ofisi ya hewa ya Nepal, mvua ya kawaida:"
+  },
+  "screens.your_plan.texts.check_office_times": {
+   "en": "The rain map, compared with it:",
+   "sw": "Ramani ya mvua, ikilinganishwa nayo:"
+  },
+  "screens.your_plan.texts.check_ours": {
+   "en": "Our fixed rain:",
+   "sw": "Mvua yetu iliyorekebishwa:"
+  },
+  "screens.your_plan.texts.check_fix_title": {
+   "en": "What we did",
+   "sw": "Tulichofanya"
+  },
+  "screens.your_plan.texts.check_fix": {
+   "en": "From {rain_fix_year}, rain is scaled back each month.",
+   "sw": "Tangu {rain_fix_year}, mvua inapunguzwa kila mwezi."
+  },
+  "screens.your_plan.texts.check_ref": {
+   "en": "To match these years:",
+   "sw": "Ili ilingane na miaka hii:"
+  },
+  "screens.your_plan.texts.check_gauge_fix": {
+   "en": "Then we matched it to rain gauges.",
+   "sw": "Kisha tuliilinganisha na vipimo vya mvua."
+  },
+  "screens.your_plan.texts.check_monsoon": {
+   "en": "Monsoon months:",
+   "sw": "Miezi ya masika:"
+  },
+  "screens.your_plan.texts.check_other_months": {
+   "en": "Other months:",
+   "sw": "Miezi mingine:"
+  },
+  "screens.your_plan.texts.check_versions": {
+   "en": "Rain a year, counted different ways",
+   "sw": "Mvua kwa mwaka, kwa hesabu tofauti"
+  },
+  "screens.your_plan.texts.ver_tuned": {
+   "en": "Fixed, then matched to gauges",
+   "sw": "Imerekebishwa, kisha kulinganishwa na vipimo"
+  },
+  "screens.your_plan.texts.ver_untuned": {
+   "en": "Fixed only",
+   "sw": "Imerekebishwa tu"
+  },
+  "screens.your_plan.texts.ver_dhm": {
+   "en": "Like the nearby town's usual rain",
+   "sw": "Kama mvua ya kawaida ya mji jirani"
+  },
+  "screens.your_plan.texts.ver_uncorrected": {
+   "en": "As published",
+   "sw": "Kama ilivyochapishwa"
+  },
+  "screens.your_plan.texts.check_yearly": {
+   "en": "Rain each year",
+   "sw": "Mvua ya kila mwaka"
+  },
+  "screens.your_plan.texts.line_gpm": {
+   "en": "Rain map, as published",
+   "sw": "Ramani ya mvua, kama ilivyochapishwa"
+  },
+  "screens.your_plan.texts.line_twin": {
+   "en": "Our fixed rain",
+   "sw": "Mvua yetu iliyorekebishwa"
+  },
+  "screens.your_plan.texts.line_chirps": {
+   "en": "Another rain map (CHIRPS)",
+   "sw": "Ramani nyingine ya mvua (CHIRPS)"
+  },
+  "screens.your_plan.texts.check_marked": {
+   "en": "Numbers with this mark use our fixed rain.",
+   "sw": "Namba zenye alama hii zinatumia mvua iliyorekebishwa."
+  },
+  "screens.check_soil.texts.practice": {
+   "en": "Practice soil stick",
+   "sw": "Kijiti cha mazoezi"
+  },
+  "screens.your_plan.texts.version": {
+   "en": "Version",
+   "sw": "Toleo"
+  },
+  "screens.your_plan.texts.version_checked": {
+   "en": "checked",
+   "sw": "imekaguliwa"
+  },
+  "screens.your_plan.texts.version_unsaved": {
+   "en": "with changes not yet saved",
+   "sw": "na mabadiliko yasiyohifadhiwa"
+  },
+  "screens.last_years.texts.if_water": {
+   "en": "If you can water: dry spells stop mattering.",
+   "sw": "Ukiweza kumwagilia: ukavu hauna shida tena."
+  },
+  "screens.last_years.texts.why_dry_spell_ok": {
+   "en": "It worked, despite a dry spell:",
+   "sw": "Ilifaulu, licha ya kipindi cha ukavu:"
+  },
+  "screens.last_years.texts.enso_like_now": {
+   "en": "Like now",
+   "sw": "Kama sasa"
+  },
+  "screens.last_years.texts.start_none": {
+   "en": "No soil reading yet. We start at:",
+   "sw": "Bado hakuna kipimo cha udongo. Tunaanzia:"
+  },
+  "screens.last_years.texts.calendar_note": {
+   "en": "Dates follow the usual crop calendar, not yours.",
+   "sw": "Tarehe zinafuata kalenda ya kawaida, si yako."
   }
  }
 }

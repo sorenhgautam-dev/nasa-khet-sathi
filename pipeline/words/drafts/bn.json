@@ -1683,6 +1683,626 @@
   "screens.what_to_grow.texts.other_choices": {
    "en": "Other choices",
    "bn": "অন্য বিকল্প"
+  },
+  "screens.home.texts.q_1": {
+   "en": "What can I grow",
+   "bn": "খালি মাসগুলোতে"
+  },
+  "screens.home.texts.q_2": {
+   "en": "in my empty months?",
+   "bn": "আমি কী ফলাতে পারি?"
+  },
+  "screens.home.texts.q_3": {
+   "en": "Without risking the harvest I depend on?",
+   "bn": "ভরসার ফসলের ঝুঁকি না নিয়ে?"
+  },
+  "screens.home.texts.four_ways": {
+   "en": "Four ways to find out:",
+   "bn": "জানার চারটি উপায়:"
+  },
+  "shared.buttons.more": {
+   "en": "More",
+   "bn": "আরও"
+  },
+  "screens.your_plan.texts.lab_title": {
+   "en": "How sure, and how close",
+   "bn": "কতটা নিশ্চিত, কতটা কাছে"
+  },
+  "screens.your_plan.texts.lab_verified": {
+   "en": "Verified",
+   "bn": "যাচাই করা"
+  },
+  "screens.your_plan.texts.lab_estimate": {
+   "en": "Estimate",
+   "bn": "অনুমান"
+  },
+  "screens.your_plan.texts.lab_field": {
+   "en": "Your field",
+   "bn": "আপনার জমি"
+  },
+  "screens.your_plan.texts.lab_neighbourhood": {
+   "en": "Around your field",
+   "bn": "আপনার জমির আশেপাশে"
+  },
+  "screens.your_plan.texts.lab_valley": {
+   "en": "Your valley",
+   "bn": "আপনার উপত্যকা"
+  },
+  "screens.your_plan.texts.lab_region": {
+   "en": "Your region",
+   "bn": "আপনার অঞ্চল"
+  },
+  "screens.your_plan.texts.lab_verified_why": {
+   "en": "Verified: checked against real measurements.",
+   "bn": "যাচাই করা: আসল মাপের সঙ্গে মেলানো।"
+  },
+  "screens.your_plan.texts.lab_estimate_why": {
+   "en": "Estimate: worked out by computer. Not checked against your field yet.",
+   "bn": "অনুমান: কম্পিউটারে হিসাব করা। এখনও আপনার জমিতে যাচাই হয়নি।"
+  },
+  "screens.your_plan.texts.lab_field_why": {
+   "en": "Your field: from 30 m squares or finer.",
+   "bn": "আপনার জমি: 30 মিটার বা ছোট ঘর থেকে।"
+  },
+  "screens.your_plan.texts.lab_neighbourhood_why": {
+   "en": "Around your field: squares 250 m–1 km.",
+   "bn": "জমির আশেপাশে: 250 মিটার থেকে 1 কিমি ঘর।"
+  },
+  "screens.your_plan.texts.lab_valley_why": {
+   "en": "Your valley: a map about 10 km wide.",
+   "bn": "আপনার উপত্যকা: প্রায় 10 কিমি চওড়া মানচিত্র থেকে।"
+  },
+  "screens.your_plan.texts.lab_region_why": {
+   "en": "Your region: a map 50 km or wider.",
+   "bn": "অঞ্চল: 50 কিমি বা বেশি চওড়া মানচিত্র।"
+  },
+  "screens.your_plan.texts.lab_checks": {
+   "en": "Checks within range:",
+   "bn": "মিলে যাওয়া যাচাই:"
+  },
+  "screens.your_plan.texts.lab_rain": {
+   "en": "Rain fix",
+   "bn": "বৃষ্টি সংশোধন"
+  },
+  "screens.your_plan.texts.lab_rain_why": {
+   "en": "This number uses our fixed rain record.",
+   "bn": "এই সংখ্যায় আমাদের সংশোধিত বৃষ্টির রেকর্ড আছে।"
+  },
+  "screens.your_plan.texts.mm": {
+   "en": "mm",
+   "bn": "মিমি"
+  },
+  "screens.last_years.texts.replay_name": {
+   "en": "{year_count}-Year Replay",
+   "bn": "{year_count} বছরের পুনরাবৃত্তি"
+  },
+  "screens.last_years.texts.replay_short": {
+   "en": "Replay",
+   "bn": "পুনরাবৃত্তি"
+  },
+  "screens.last_years.texts.replay_sub": {
+   "en": "Your plan in every past year.",
+   "bn": "প্রতিটি পুরোনো বছরে আপনার পরিকল্পনা।"
+  },
+  "screens.from_space.texts.pulse_name": {
+   "en": "Field Pulse",
+   "bn": "জমির নাড়ি"
+  },
+  "screens.from_space.texts.pulse_sub": {
+   "en": "Your field's green, season by season.",
+   "bn": "মৌসুমে মৌসুমে আপনার জমির সবুজ।"
+  },
+  "screens.check_soil.texts.trial_name": {
+   "en": "Safe Trial",
+   "bn": "নিরাপদ পরীক্ষা"
+  },
+  "screens.check_soil.texts.trial_sub": {
+   "en": "Try a new plan on one quarter.",
+   "bn": "এক চতুর্থাংশ জমিতে নতুন পরিকল্পনা চেষ্টা করুন।"
+  },
+  "screens.your_plan.texts.check_name": {
+   "en": "Record Check-up",
+   "bn": "রেকর্ড পরীক্ষা"
+  },
+  "screens.your_plan.texts.check_sub": {
+   "en": "How we checked your rain record.",
+   "bn": "আমরা আপনার বৃষ্টির রেকর্ড কীভাবে দেখেছি।"
+  },
+  "screens.check_soil.texts.trial_h1": {
+   "en": "Safe",
+   "bn": "নিরাপদ"
+  },
+  "screens.check_soil.texts.trial_h2": {
+   "en": "Trial",
+   "bn": "পরীক্ষা"
+  },
+  "screens.check_soil.texts.trial_pick_plan": {
+   "en": "Pick a plan to try",
+   "bn": "চেষ্টা করার পরিকল্পনা বাছুন"
+  },
+  "screens.check_soil.texts.trial_pick_part": {
+   "en": "Pick one quarter of your field",
+   "bn": "জমির এক চতুর্থাংশ বাছুন"
+  },
+  "screens.check_soil.texts.trial_this": {
+   "en": "Trial",
+   "bn": "পরীক্ষা"
+  },
+  "screens.check_soil.texts.trial_as_now": {
+   "en": "As now",
+   "bn": "এখনকার মতো"
+  },
+  "screens.check_soil.texts.trial_rest": {
+   "en": "The rest of your field stays as now.",
+   "bn": "বাকি জমি এখনকার মতোই থাকবে।"
+  },
+  "screens.check_soil.texts.trial_spots": {
+   "en": "Where the soil stick reads",
+   "bn": "মাটির কাঠি কোথায় মাপে"
+  },
+  "screens.check_soil.texts.trial_spot_one": {
+   "en": "One spot in your trial quarter.",
+   "bn": "পরীক্ষার ভাগে একটি জায়গা।"
+  },
+  "screens.check_soil.texts.trial_spot_three": {
+   "en": "Three spots in the rest, to compare.",
+   "bn": "তুলনার জন্য বাকিতে তিনটি জায়গা।"
+  },
+  "screens.check_soil.texts.trial_start": {
+   "en": "Start my trial",
+   "bn": "আমার পরীক্ষা শুরু করুন"
+  },
+  "screens.check_soil.texts.trial_started": {
+   "en": "Trial started:",
+   "bn": "পরীক্ষা শুরু হলো:"
+  },
+  "screens.check_soil.texts.trial_saved": {
+   "en": "Saved on this phone only.",
+   "bn": "শুধু এই ফোনে রাখা হলো।"
+  },
+  "screens.check_soil.texts.trial_compare": {
+   "en": "After harvest, we compare",
+   "bn": "ফসল কাটার পরে আমরা তুলনা করি"
+  },
+  "screens.check_soil.texts.trial_vs_rest": {
+   "en": "Your trial quarter against the rest.",
+   "bn": "পরীক্ষার ভাগ বাকি জমির সঙ্গে।"
+  },
+  "screens.check_soil.texts.trial_vs_replay": {
+   "en": "Your trial against the Replay's guess.",
+   "bn": "পরীক্ষা পুনরাবৃত্তির অনুমানের সঙ্গে।"
+  },
+  "screens.check_soil.texts.trial_after": {
+   "en": "Results come only after the season.",
+   "bn": "ফলাফল শুধু মৌসুমের পরে আসবে।"
+  },
+  "screens.check_soil.texts.trial_no_numbers": {
+   "en": "Until then, we show no new numbers.",
+   "bn": "ততদিন আমরা নতুন সংখ্যা দেখাই না।"
+  },
+  "screens.check_soil.texts.trial_diary": {
+   "en": "A photo each week",
+   "bn": "প্রতি সপ্তাহে একটি ছবি"
+  },
+  "screens.check_soil.texts.trial_photo_phone": {
+   "en": "Photos stay on this phone only.",
+   "bn": "ছবি শুধু এই ফোনেই থাকে।"
+  },
+  "screens.check_soil.texts.trial_photo_add": {
+   "en": "Add this week's photo",
+   "bn": "এই সপ্তাহের ছবি যোগ করুন"
+  },
+  "screens.check_soil.texts.trial_week": {
+   "en": "Week",
+   "bn": "সপ্তাহ"
+  },
+  "screens.check_soil.texts.trial_photo_none": {
+   "en": "No photos yet.",
+   "bn": "এখনও কোনো ছবি নেই।"
+  },
+  "screens.check_soil.texts.trial_remove": {
+   "en": "Remove",
+   "bn": "সরান"
+  },
+  "screens.check_soil.texts.trial_photo_cannot": {
+   "en": "This phone cannot keep photos here.",
+   "bn": "এই ফোন এখানে ছবি রাখতে পারে না।"
+  },
+  "screens.check_soil.texts.recorded_on": {
+   "en": "Recorded on",
+   "bn": "মাপার তারিখ:"
+  },
+  "screens.last_years.texts.replay_h1": {
+   "en": "{year_count}-Year",
+   "bn": "{year_count} বছরের"
+  },
+  "screens.last_years.texts.replay_h2": {
+   "en": "Replay",
+   "bn": "পুনরাবৃত্তি"
+  },
+  "screens.last_years.texts.replay_intro": {
+   "en": "Your coming months, tried in every past year.",
+   "bn": "আসন্ন মাসগুলো, প্রতিটি পুরোনো বছরে যাচাই করা।"
+  },
+  "screens.last_years.texts.res_worked": {
+   "en": "Worked",
+   "bn": "ভালো হয়েছে"
+  },
+  "screens.last_years.texts.res_struggled": {
+   "en": "Struggled",
+   "bn": "কষ্ট হয়েছে"
+  },
+  "screens.last_years.texts.res_failed": {
+   "en": "Failed",
+   "bn": "নষ্ট হয়েছে"
+  },
+  "screens.last_years.texts.res_none": {
+   "en": "No crop",
+   "bn": "ফসল নেই"
+  },
+  "screens.last_years.texts.start_q": {
+   "en": "How wet is your soil now?",
+   "bn": "এখন আপনার মাটি কতটা ভেজা?"
+  },
+  "screens.last_years.texts.start_dry": {
+   "en": "Dry",
+   "bn": "শুকনো"
+  },
+  "screens.last_years.texts.start_medium": {
+   "en": "Medium",
+   "bn": "মাঝারি"
+  },
+  "screens.last_years.texts.start_wet": {
+   "en": "Wet",
+   "bn": "ভেজা"
+  },
+  "screens.last_years.texts.start_stick": {
+   "en": "Your soil stick reading picked this.",
+   "bn": "মাটির কাঠির মাপ এটি বেছেছে।"
+  },
+  "screens.last_years.texts.start_twin": {
+   "en": "Picked from our computer's guess, as of",
+   "bn": "আমাদের কম্পিউটারের অনুমান থেকে বাছা, তারিখ:"
+  },
+  "screens.last_years.texts.in_ground": {
+   "en": "already in the ground",
+   "bn": "আগে থেকেই জমিতে"
+  },
+  "screens.last_years.texts.enso_now": {
+   "en": "This year:",
+   "bn": "এই বছর:"
+  },
+  "screens.last_years.texts.enso_then": {
+   "en": "That year:",
+   "bn": "সেই বছর:"
+  },
+  "screens.last_years.texts.enso_el_nino": {
+   "en": "El Niño",
+   "bn": "এল নিনো"
+  },
+  "screens.last_years.texts.enso_la_nina": {
+   "en": "La Niña",
+   "bn": "লা নিনা"
+  },
+  "screens.last_years.texts.enso_neutral": {
+   "en": "neither El Niño nor La Niña",
+   "bn": "এল নিনো বা লা নিনা কোনোটাই নয়"
+  },
+  "screens.last_years.texts.enso_same": {
+   "en": "Ringed years were the same",
+   "bn": "ঘেরা বছরগুলোও একই রকম ছিল"
+  },
+  "screens.last_years.texts.need_met": {
+   "en": "Water the crop got:",
+   "bn": "ফসল যে পানি পেয়েছে:"
+  },
+  "screens.last_years.texts.every_estimate": {
+   "en": "Every square is an estimate.",
+   "bn": "প্রতিটি ঘর একটি অনুমান।"
+  },
+  "screens.last_years.texts.rain_marked": {
+   "en": "Marked squares change with the rain count.",
+   "bn": "চিহ্নিত ঘর বৃষ্টির হিসাবে বদলায়।"
+  },
+  "screens.last_years.texts.tap_square": {
+   "en": "Tap a square to see why.",
+   "bn": "কেন, তা দেখতে একটি ঘরে চাপুন।"
+  },
+  "screens.last_years.texts.why_dry_spell": {
+   "en": "Longest dry spell for the crop:",
+   "bn": "ফসলের সবচেয়ে লম্বা শুকনো সময়:"
+  },
+  "screens.last_years.texts.dry_in_row": {
+   "en": "Days in a row:",
+   "bn": "টানা দিন:"
+  },
+  "screens.last_years.texts.dry_from": {
+   "en": "Starting in:",
+   "bn": "শুরুর মাস:"
+  },
+  "screens.last_years.texts.why_no_crop": {
+   "en": "No crop in the field these months.",
+   "bn": "এই মাসগুলোতে জমিতে ফসল নেই।"
+  },
+  "screens.last_years.texts.why_no_dry_days": {
+   "en": "The crop never ran short of water.",
+   "bn": "ফসলের কখনো পানির অভাব হয়নি।"
+  },
+  "screens.last_years.texts.dry_days": {
+   "en": "Days short of water:",
+   "bn": "পানির অভাবের দিন:"
+  },
+  "screens.last_years.texts.rain_in_window": {
+   "en": "Rain in these months:",
+   "bn": "এই মাসগুলোর বৃষ্টি:"
+  },
+  "screens.last_years.texts.rain_changes": {
+   "en": "Other rain counts say:",
+   "bn": "অন্য বৃষ্টির হিসাব বলে:"
+  },
+  "screens.from_space.texts.pulse_h1": {
+   "en": "Field",
+   "bn": "জমির"
+  },
+  "screens.from_space.texts.pulse_h2": {
+   "en": "Pulse",
+   "bn": "নাড়ি"
+  },
+  "screens.from_space.texts.pulse_line": {
+   "en": "High means green crop. Low means bare.",
+   "bn": "উঁচু মানে সবুজ ফসল। নিচু মানে খালি।"
+  },
+  "screens.from_space.texts.pulse_new": {
+   "en": "Sharper pictures (solid line)",
+   "bn": "স্পষ্ট ছবি (টানা রেখা)"
+  },
+  "screens.from_space.texts.pulse_old": {
+   "en": "Older, coarser pictures (dashed line)",
+   "bn": "পুরোনো, ঝাপসা ছবি (ভাঙা রেখা)"
+  },
+  "screens.from_space.texts.pulse_bare": {
+   "en": "Below the dotted line: bare ground.",
+   "bn": "বিন্দু রেখার নিচে: খালি জমি।"
+  },
+  "screens.from_space.texts.your_seasons": {
+   "en": "Your crop seasons",
+   "bn": "আপনার ফসলের মৌসুম"
+  },
+  "screens.from_space.texts.slot_monsoon": {
+   "en": "monsoon crop",
+   "bn": "বর্ষার ফসল"
+  },
+  "screens.from_space.texts.slot_winter": {
+   "en": "winter crop",
+   "bn": "শীতের ফসল"
+  },
+  "screens.from_space.texts.planting": {
+   "en": "Planting:",
+   "bn": "রোপণ:"
+  },
+  "screens.from_space.texts.harvest": {
+   "en": "Harvest:",
+   "bn": "কাটা:"
+  },
+  "screens.from_space.texts.dates_right": {
+   "en": "Are these months right?",
+   "bn": "এই মাসগুলো কি ঠিক?"
+  },
+  "screens.from_space.texts.fix_dates": {
+   "en": "Fix the months",
+   "bn": "মাস ঠিক করুন"
+  },
+  "screens.from_space.texts.save_dates": {
+   "en": "Save",
+   "bn": "রাখুন"
+  },
+  "screens.from_space.texts.you_said": {
+   "en": "You said:",
+   "bn": "আপনি বলেছেন:"
+  },
+  "screens.from_space.texts.you_said_yes": {
+   "en": "You said these are right.",
+   "bn": "আপনি বলেছেন এগুলো ঠিক।"
+  },
+  "screens.from_space.texts.nearby_title": {
+   "en": "Fields around you",
+   "bn": "আপনার আশেপাশের জমি"
+  },
+  "screens.from_space.texts.nearby_totals": {
+   "en": "Only totals: no single field is shown.",
+   "bn": "শুধু মোট: কোনো একক জমি দেখানো হয় না।"
+  },
+  "screens.from_space.texts.nearby_bare": {
+   "en": "Days with bare ground a year, nearby:",
+   "bn": "আশেপাশে, বছরে খালি দিন:"
+  },
+  "screens.from_space.texts.yours_bare": {
+   "en": "Your field: days with bare ground a year:",
+   "bn": "আপনার জমি, বছরে খালি দিন:"
+  },
+  "screens.from_space.texts.nearby_two": {
+   "en": "Nearby fields with two crops a year:",
+   "bn": "বছরে দুই ফসলের কাছের জমি:"
+  },
+  "screens.from_space.texts.nearby_long_bare": {
+   "en": "Nearby fields bare over 60 days:",
+   "bn": "60 দিনের বেশি খালি কাছের জমি:"
+  },
+  "screens.your_plan.texts.check_h1": {
+   "en": "Record",
+   "bn": "রেকর্ড"
+  },
+  "screens.your_plan.texts.check_h2": {
+   "en": "Check-up",
+   "bn": "পরীক্ষা"
+  },
+  "screens.your_plan.texts.check_what": {
+   "en": "We checked this field's rain record.",
+   "bn": "আমরা এই জমির বৃষ্টির রেকর্ড দেখেছি।"
+  },
+  "screens.your_plan.texts.check_auto": {
+   "en": "Every field runs this check by itself.",
+   "bn": "প্রতিটি জমিতে এই পরীক্ষা নিজে চলে।"
+  },
+  "screens.your_plan.texts.check_found": {
+   "en": "From {rain_fix_year}, the rain map was made differently.",
+   "bn": "{rain_fix_year} থেকে বৃষ্টির মানচিত্র অন্যভাবে তৈরি হয়।"
+  },
+  "screens.your_plan.texts.check_none": {
+   "en": "No change found. We use the rain as published.",
+   "bn": "কোনো পরিবর্তন নেই। আমরা প্রকাশিত বৃষ্টি নিই।"
+  },
+  "screens.your_plan.texts.check_how": {
+   "en": "How we can tell",
+   "bn": "আমরা কীভাবে বুঝলাম"
+  },
+  "screens.your_plan.texts.check_gauge_share": {
+   "en": "Share of rain gauges inside the rain map:",
+   "bn": "বৃষ্টির মানচিত্রে বৃষ্টিমাপকের ভাগ:"
+  },
+  "screens.your_plan.texts.check_before": {
+   "en": "Before {rain_fix_year}:",
+   "bn": "{rain_fix_year} এর আগে:"
+  },
+  "screens.your_plan.texts.check_from": {
+   "en": "From {rain_fix_year}:",
+   "bn": "{rain_fix_year} থেকে:"
+  },
+  "screens.your_plan.texts.check_gauges_near": {
+   "en": "Rain gauges counted near this field:",
+   "bn": "এই জমির কাছে গোনা বৃষ্টিমাপক:"
+  },
+  "screens.your_plan.texts.check_other_map": {
+   "en": "Another rain map, CHIRPS, stayed steady.",
+   "bn": "আরেকটি বৃষ্টির মানচিত্র, CHIRPS, স্থির ছিল।"
+  },
+  "screens.your_plan.texts.check_jump": {
+   "en": "Ours jumped, compared with it:",
+   "bn": "তার তুলনায় আমাদেরটা লাফিয়েছে:"
+  },
+  "screens.your_plan.texts.check_late": {
+   "en": "A version made without gauges jumped less.",
+   "bn": "মাপক ছাড়া তৈরি সংস্করণ কম লাফিয়েছে।"
+  },
+  "screens.your_plan.texts.check_late_jump": {
+   "en": "Without gauges:",
+   "bn": "মাপক ছাড়া:"
+  },
+  "screens.your_plan.texts.check_final_jump": {
+   "en": "With gauges:",
+   "bn": "মাপকসহ:"
+  },
+  "screens.your_plan.texts.check_office": {
+   "en": "Nepal's weather office, usual rain a year:",
+   "bn": "নেপালের আবহাওয়া অফিস, বছরের সাধারণ বৃষ্টি:"
+  },
+  "screens.your_plan.texts.check_office_times": {
+   "en": "The rain map, compared with it:",
+   "bn": "তার তুলনায় বৃষ্টির মানচিত্র:"
+  },
+  "screens.your_plan.texts.check_ours": {
+   "en": "Our fixed rain:",
+   "bn": "আমাদের সংশোধিত বৃষ্টি:"
+  },
+  "screens.your_plan.texts.check_fix_title": {
+   "en": "What we did",
+   "bn": "আমরা কী করেছি"
+  },
+  "screens.your_plan.texts.check_fix": {
+   "en": "From {rain_fix_year}, rain is scaled back each month.",
+   "bn": "{rain_fix_year} থেকে প্রতি মাসের বৃষ্টি কমিয়ে মেলানো।"
+  },
+  "screens.your_plan.texts.check_ref": {
+   "en": "To match these years:",
+   "bn": "এই বছরগুলোর সঙ্গে মেলাতে:"
+  },
+  "screens.your_plan.texts.check_gauge_fix": {
+   "en": "Then we matched it to rain gauges.",
+   "bn": "তারপর বৃষ্টিমাপকের সঙ্গে মিলিয়েছি।"
+  },
+  "screens.your_plan.texts.check_monsoon": {
+   "en": "Monsoon months:",
+   "bn": "বর্ষার মাস:"
+  },
+  "screens.your_plan.texts.check_other_months": {
+   "en": "Other months:",
+   "bn": "অন্য মাস:"
+  },
+  "screens.your_plan.texts.check_versions": {
+   "en": "Rain a year, counted different ways",
+   "bn": "বছরের বৃষ্টি, নানা ভাবে গোনা"
+  },
+  "screens.your_plan.texts.ver_tuned": {
+   "en": "Fixed, then matched to gauges",
+   "bn": "সংশোধিত, তারপর মাপকের সঙ্গে মেলানো"
+  },
+  "screens.your_plan.texts.ver_untuned": {
+   "en": "Fixed only",
+   "bn": "শুধু সংশোধিত"
+  },
+  "screens.your_plan.texts.ver_dhm": {
+   "en": "Like the nearby town's usual rain",
+   "bn": "কাছের শহরের সাধারণ বৃষ্টির মতো"
+  },
+  "screens.your_plan.texts.ver_uncorrected": {
+   "en": "As published",
+   "bn": "যেমন প্রকাশিত"
+  },
+  "screens.your_plan.texts.check_yearly": {
+   "en": "Rain each year",
+   "bn": "প্রতি বছরের বৃষ্টি"
+  },
+  "screens.your_plan.texts.line_gpm": {
+   "en": "Rain map, as published",
+   "bn": "বৃষ্টির মানচিত্র, যেমন প্রকাশিত"
+  },
+  "screens.your_plan.texts.line_twin": {
+   "en": "Our fixed rain",
+   "bn": "আমাদের সংশোধিত বৃষ্টি"
+  },
+  "screens.your_plan.texts.line_chirps": {
+   "en": "Another rain map (CHIRPS)",
+   "bn": "আরেকটি বৃষ্টির মানচিত্র (CHIRPS)"
+  },
+  "screens.your_plan.texts.check_marked": {
+   "en": "Numbers with this mark use our fixed rain.",
+   "bn": "এই চিহ্নের সংখ্যায় সংশোধিত বৃষ্টি আছে।"
+  },
+  "screens.check_soil.texts.practice": {
+   "en": "Practice soil stick",
+   "bn": "অনুশীলনের মাটির কাঠি"
+  },
+  "screens.your_plan.texts.version": {
+   "en": "Version",
+   "bn": "সংস্করণ"
+  },
+  "screens.your_plan.texts.version_checked": {
+   "en": "checked",
+   "bn": "যাচাই হয়েছে"
+  },
+  "screens.your_plan.texts.version_unsaved": {
+   "en": "with changes not yet saved",
+   "bn": "না-রাখা পরিবর্তনসহ"
+  },
+  "screens.last_years.texts.if_water": {
+   "en": "If you can water: dry spells stop mattering.",
+   "bn": "পানি দিতে পারলে: শুকনো সময় আর সমস্যা নয়।"
+  },
+  "screens.last_years.texts.why_dry_spell_ok": {
+   "en": "It worked, despite a dry spell:",
+   "bn": "শুকনো সময় সত্ত্বেও ভালো হয়েছে:"
+  },
+  "screens.last_years.texts.enso_like_now": {
+   "en": "Like now",
+   "bn": "এখনকার মতো"
+  },
+  "screens.last_years.texts.start_none": {
+   "en": "No soil reading yet. We start at:",
+   "bn": "এখনও মাটির মাপ নেই। আমরা শুরু করি:"
+  },
+  "screens.last_years.texts.calendar_note": {
+   "en": "Dates follow the usual crop calendar, not yours.",
+   "bn": "তারিখ সাধারণ ফসল পঞ্জিকা অনুযায়ী, আপনার নয়।"
   }
  }
 }

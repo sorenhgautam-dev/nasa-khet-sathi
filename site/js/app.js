@@ -6,12 +6,13 @@
   'use strict';
   var D = document, W = window;
   var RM = !!(W.matchMedia && W.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  var STEPS = ['home', 'photo', 'parts', 'soil', 'choose', 'today', 'next'];
-  var ROUTES = STEPS.concat(['how', 'plan']);
+  var FEATURES = ['replay', 'pulse', 'trial', 'checkup'];   // the four features on Home (owner, 2026-11-14)
+  var ROUTES = ['home', 'photo', 'parts', 'soil', 'choose', 'today', 'next', 'how', 'plan'].concat(FEATURES);
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   // sun x, sun y, tint, sunset, road progress (the phone prototype P0, per step)
   var SKY = { home: [30, 300, 0, 0, 0], photo: [79, 197, 0, 0, 0.16], parts: [131, 119, 0, 0, 0.33], soil: [183, 81, 0.05, 0.1, 0.5],
-    choose: [236, 96, 0.15, 0.3, 0.66], today: [288, 159, 0.4, 0.65, 0.84], next: [325, 223, 0.65, 0.95, 1], how: [325, 223, 0.5, 0.8, 1] };
+    choose: [236, 96, 0.15, 0.3, 0.66], today: [288, 159, 0.4, 0.65, 0.84], next: [325, 223, 0.65, 0.95, 1], how: [325, 223, 0.5, 0.8, 1],
+    replay: [131, 119, 0, 0, 0.25], pulse: [183, 81, 0.05, 0.1, 0.5], trial: [236, 96, 0.15, 0.3, 0.75], checkup: [288, 159, 0.3, 0.5, 1] };
   var S = { lang: 'ne', words: null, index: null, fid: null, field: null, fieldP: null, winter: null, water: null, prio: null,
     timers: [], cur: null, arg: null, prev: null, sheetFor: null };
 
@@ -87,7 +88,12 @@
     pin: '<path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
     book: '<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M4 21V5"/>',
     redo: '<path d="M3 12a9 9 0 0115-6.7L21 8"/><path d="M21 3v5h-5"/>', low: '<path d="M3 20h18"/><path d="M6 20l6-9 6 9"/><path d="M12 4v3"/>',
-    shirt: '<path d="M3 21h18"/>'
+    shirt: '<path d="M3 21h18"/>', wave: '<path d="M2 9c2.5-2 4.5-2 7 0s4.5 2 7 0 4.5-2 6 0M2 15c2.5-2 4.5-2 7 0s4.5 2 7 0 4.5-2 6 0"/>', shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+    near: '<circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="12" r="8" stroke-dasharray="3 3"/>', valley: '<path d="M2 19l6-10 4 6 3-4 7 8z"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>', pulse: '<path d="M3 12h4l2.5-6 4 12 2.5-6H21"/>',
+    quarter: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/><path d="M5 5h6v6H5z" fill="currentColor" stroke="none"/>',
+    check: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9z"/><path d="M9 13l2 2 4-4"/>',
+    camera: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>'
   };
   function I(name, size, sw) { return ic(P_[name] || P_.info, size, sw); }
   var KIND_ICON = { satellite: 'sat', model: 'pc', station: 'mast', probe: 'stick' };
@@ -186,7 +192,8 @@
   // ---------------- the field file ----------------
   function fieldReady() {
     if (S.fieldP) return S.fieldP;
-    S.fieldP = getJSON('data/fields/' + encodeURIComponent(S.fid) + '.json').then(function (f) { S.field = f; return f; });
+    var id = encodeURIComponent(S.fid);
+    S.fieldP = Promise.all([getJSON('data/fields/' + id + '.json'), getJSON('data/labels/' + id + '.json')]).then(function (r) { S.field = r[0]; S.labels = r[1]; return r[0]; });
     return S.fieldP;
   }
   function mocked(F, block) { return (F.mock || []).indexOf(block) >= 0; }
@@ -259,7 +266,7 @@
 
   // ---------------- sources: a small tag next to each number ----------------
   var SRC = { gpm: /^GPM/i, power: /^NASA POWER/i, station: /station/i, hls: /Harmonized Landsat|^HLS/i, grace: /GRACE/i, soil: /SoilGrids/i,
-    dem: /NASADEM/i, twin: /twin/i, dhm: /^DHM/i, nex: /NEX-GDDP/i };
+    dem: /NASADEM/i, smap: /SMAP/i, twin: /twin/i, dhm: /^DHM/i, nex: /NEX-GDDP/i };
   function srcObj(F, key) { return (F.sources || []).filter(function (s) { return SRC[key] && SRC[key].test(s.name); })[0]; }
   function srcTag(F, key) {
     var s = typeof key === 'string' ? srcObj(F, key) : key;
@@ -268,7 +275,39 @@
     return h('button', { type: 'button', class: 'src', title: s.name + ' · ' + s.resolution + ' · ' + s.years,
       onclick: function (e) { e.stopPropagation(); openSources(s.name); } }, svg(I(KIND_ICON[s.type] || 'info', 12, 2.2)), short + ' · ' + digits(s.years));
   }
-  function srcs(F, keys) { return h('div', { class: 'srcs' }, keys.map(function (k) { return srcTag(F, k); })); }
+  function srcs(F, keys, oid) { return h('div', { class: 'srcs' }, oid ? labs(oid) : null, keys.map(function (k) { return srcTag(F, k); })); }
+
+  // ---------------- two labels on every number: how sure, how close (data/labels/<id>.json, by output id) ----------------
+  // Pictures plus words, never colour alone; a tap explains. A third mark sends numbers made with the fixed rain to the Check-up.
+  var SURE_IC = { verified: 'shield', estimate: 'pc' }, SCALE_IC = { field: 'pin', neighbourhood: 'near', valley: 'valley', region: 'globe' };
+  function labOf(oid, own) { return own || (S.labels && S.labels.outputs && S.labels.outputs[oid]) || null; }
+  function scaleName(sc) { var x = S.labels && S.labels.scales && S.labels.scales[sc]; return x && x[S.lang] ? x[S.lang] : T('your_plan.lab_' + sc); }
+  function labs(oid, own) {
+    var l = labOf(oid, own); if (!l) return null;
+    function b(cls, icon, word) { return h('button', { type: 'button', class: 'lab ' + cls, onclick: function (e) { e.stopPropagation(); openLabel(l); } }, svg(I(icon, 12, 2.4)), word); }
+    return h('span', { class: 'labs' }, l.sure ? b(l.sure, SURE_IC[l.sure] || 'info', T('your_plan.lab_' + l.sure)) : null,
+      l.scale ? b('scale', SCALE_IC[l.scale] || 'pin', scaleName(l.scale)) : null, l.rain_corrected ? rainMark() : null);
+  }
+  function labRows(rows) { return h('div', { class: 'col', style: 'gap:6px' }, rows.map(function (r) { var l = labs(r[1]); return l ? h('div', { class: 'labrow' }, r[0] === 'face' ? svg(faceSvg('green', 18)) : svg(I(r[0], 16)), l) : null; })); }
+  function monthLabs() { return labRows([['rain', 'rain_month_words'], ['soil', 'soil_month_words'], ['therm', 'heat_month_words'], ['snow', 'frost_month_words'], ['sprout', 'cover_months']]); }
+  function rainMark() {
+    return h('button', { type: 'button', class: 'lab rain', title: T('your_plan.lab_rain_why'), onclick: function (e) { e.stopPropagation(); go('checkup'); } }, svg(I('drop', 12, 2.4)), T('your_plan.lab_rain'));
+  }
+  function openLabel(l) {
+    function build() {
+      var panel = openSheet(build), sc = S.labels && S.labels.scales && S.labels.scales[l.scale];
+      add(panel, [sheetBar(T('your_plan.lab_title')), h('div', { class: 'col', style: 'gap:12px;margin-top:8px' },
+        l.sure ? h('div', { class: 'card' }, h('p', { class: 'lead', style: 'margin:0' }, svg(I(SURE_IC[l.sure] || 'info', 18)), ' ', T('your_plan.lab_' + l.sure)),
+          lines(sentences(T('your_plan.lab_' + l.sure + '_why')), 'sub'),
+          l.n ? h('p', { class: 'small', style: 'margin:0' }, T('your_plan.lab_checks') + ' ' + num(l.k) + ' / ' + num(l.n)) : null) : null,
+        l.scale ? h('div', { class: 'card' }, h('p', { class: 'lead', style: 'margin:0' }, svg(I(SCALE_IC[l.scale] || 'pin', 18)), ' ', scaleName(l.scale)),
+          lines([T('your_plan.lab_' + l.scale + '_why')], 'sub'), sc && sc.about && S.lang === 'en' ? h('p', { class: 'small', style: 'margin:0' }, sc.about) : null) : null,
+        l.rain_corrected ? h('div', { class: 'card' }, h('p', { class: 'lead', style: 'margin:0' }, svg(I('drop', 18)), ' ', T('your_plan.lab_rain')),
+          lines([T('your_plan.lab_rain_why')], 'sub'), btn3(T('your_plan.check_name'), function () { closeSheet(); go('checkup'); }, 'check')) : null)]);
+      panel.focus();
+    }
+    build();
+  }
 
   // ---------------- shared pieces ----------------
   function bigTitle(a, b) { return h('h1', { class: 'big' }, h('span', null, a), b ? h('span', { class: 'b' }, b) : null); }
@@ -384,7 +423,7 @@
   }
   function goBack() {
     if (S.prev && S.prev !== S.cur && W.history.length > 1) { W.history.back(); return; }
-    var back = { photo: 'home', parts: 'photo', soil: 'parts', choose: 'soil', today: 'choose', next: 'choose', how: 'home' };
+    var back = { photo: 'home', parts: 'photo', soil: 'parts', choose: 'soil', today: 'choose', next: 'choose' };
     go(back[S.cur] || 'home');
   }
   function setLang(l) {
@@ -441,64 +480,53 @@
   }
 
   // ---------------- 1 home ----------------
+  // the four features, each with its icon (owner, 2026-11-14: the home screen introduces exactly these)
+  var FEAT = { replay: ['redo', 'last_years.replay_name', 'last_years.replay_sub'], pulse: ['pulse', 'from_space.pulse_name', 'from_space.pulse_sub'],
+    trial: ['quarter', 'check_soil.trial_name', 'check_soil.trial_sub'], checkup: ['check', 'your_plan.check_name', 'your_plan.check_sub'] };
+  function featName(k) { return k === 'replay' && S.years == null ? T('last_years.replay_short') : T(FEAT[k][1], { year_count: S.years }); }
+  // a feature's file, site/data/<kind>/<field id>.json (null while it is not there: the screen says "not ready yet")
+  function featData(kind) { return getJSON('data/' + kind + '/' + encodeURIComponent(S.fid) + '.json'); }
+  function replayYears() {
+    return featData('replay').then(function (R) { S.years = R ? R.year_count : null; return R; });
+  }
   SCREENS.home = function () {
     var ix = (S.index && S.index.fields) || [];
     var f0 = ix.filter(function (f) { return f.id === S.fid; })[0] || ix[0];
     var sample = f0 && isPlaceholder(f0.name);
-    var cap = h('div', { 'aria-live': 'polite' }), sel = -1, cards = [];
-    var CAPS = [['home.intro', 'home.you_decide'], ['check_soil.wide_close', 'check_soil.together'], ['home.card_months_sub', 'home.records_years']];
-    function showCap() {
-      var c = CAPS[sel + 1]; cap.textContent = '';
-      var sub = c[1];
-      if (sub === 'home.records_years') {
-        var gpm = S.field && srcObj(S.field, 'gpm');
-        sub = gpm ? T(sub, { source_years: gpm.years }) : '';
-        if (!S.field) fieldReady().then(function () { if (cap.isConnected && sel === 1) showCap(); });
-      } else sub = T(sub);
-      cap.append(h('div', { class: 'caption' }, h('p', { class: 'lead' }, T(c[0])), sub ? h('p', { class: 'sub' }, sub) : null));
-    }
-    function pick(i) { sel = sel === i ? -1 : i; cards.forEach(function (c, j) { c.setAttribute('aria-pressed', String(j === sel)); }); showCap(); }
-    cards = [
-      h('button', { type: 'button', class: 'hcard', 'aria-pressed': 'false', onclick: function () { pick(0); } },
-        h('span', { class: 'tag' }, svg(I('stick', 18)), T('home.card_today_tag')), h('span', { class: 'big' }, T('home.card_today_big')), h('span', { class: 'lbl' }, T('home.card_today_sub'))),
-      h('button', { type: 'button', class: 'hcard', 'aria-pressed': 'false', onclick: function () { pick(1); } },
-        h('span', { class: 'tag b' }, svg(I('sat', 18)), T('home.card_months_tag')), h('span', { class: 'big' }, T('home.card_months_big')), h('span', { class: 'lbl' }, T('home.card_months_sub')))
-    ];
-    showCap();
     var island = h('div', { class: 'island' },
       [[-30, 208, 190, 70, 7, -1, 1], [90, 232, 190, 64, 8, -3, 1], [200, 206, 190, 72, 6.5, -2, 1], [-40, 150, 120, 52, 9, -4, -1], [270, 120, 120, 50, 8.5, -1.5, -1],
         [40, 20, 110, 40, 10, -5, -1], [20, 250, 130, 50, 7.5, -0.5, 1], [190, 252, 140, 50, 8, -2, 1]].map(function (p) {
         return h('span', { class: 'puff', 'aria-hidden': 'true', style: 'left:' + (p[0] / 3.42) + '%;top:' + (p[1] / 2.89) + '%;width:' + (p[2] / 3.42) + '%;height:' + p[3] + 'px;z-index:' + p[6] + ';animation-duration:' + p[4] + 's;animation-delay:' + p[5] + 's' });
       }),
       h('img', { src: 'img/farm.webp', alt: '', width: '342', height: '289', decoding: 'async', fetchpriority: 'high' }));
-    var floats = h('div', { class: 'floats', 'aria-hidden': 'true' },
-      [['stick', '#14301E', '#C8E05A', 'home.card_today_tag', 'home.card_today_sub', 'left:2%;top:8%'],
-        ['sat', '#E3EEDC', '#2E5A2A', 'home.card_months_tag', 'home.card_months_big', 'right:0;top:22%;animation-delay:.8s'],
-        ['pin', '#FFF3C9', '#6B4B00', 'btn.sample_field', 'home.sample_note', 'left:0;bottom:12%;animation-delay:1.4s']].map(function (f) {
-        if (f[2] === '#6B4B00' && !sample) return null;
-        return h('div', { class: 'fl', style: f[5] }, h('span', { class: 'ic', style: 'background:' + f[1] + ';color:' + f[2] }, svg(I(f[0], 20))),
-          h('span', null, h('span', { class: 'tg' }, T(f[3])), h('br'), h('span', { class: 'tx' }, T(f[4]))));
-      }));
-    var list = null;
-    if (ix.length) {
-      list = h('details', { class: 'prepared' }, h('summary', null, T('home.prepared_title')),
-        ix.map(function (f) {
-          return h('button', { type: 'button', class: 'pf', onclick: function () { chooseField(f.id); go('photo'); } },
-            h('span', null, h('b', null, f.name), h('br'), h('span', { class: 'small' }, f.country)), isPlaceholder(f.name) ? sampleChip() : svg(I('arrow', 18)));
-        }));
-    }
+    var feats = h('div', { class: 'feats' }, FEATURES.map(function (k, i) {
+      return h('button', { type: 'button', class: 'feat', style: 'animation-delay:' + (150 + i * 90) + 'ms', onclick: function () { go(k); } },
+        h('span', { class: 'fi' }, svg(I(FEAT[k][0], 22))), h('span', { class: 'fn' }, featName(k)), h('span', { class: 'fs' }, T(FEAT[k][2])),
+        h('span', { class: 'fa' }, svg(I('arrow', 18, 2.6))));
+    }));
+    var more = h('details', { class: 'more' }, h('summary', null, T('btn.more')),
+      h('div', { class: 'morelist' }, [['photo', 'pin', T('where.photo_h1') + ' ' + T('where.photo_h2')], ['soil', 'stick', L(scr('check_soil').title)],
+        ['today', 'leaf', T('each_part.today_h1') + ' ' + T('each_part.today_h2')], ['next', 'sat', T('what_to_grow.next_h1') + ' ' + T('what_to_grow.next_h2')],
+        ['how', 'book', T('btn.how_we_know')]].map(function (m) { return btn3(m[2], function () { go(m[0]); }, m[1]); }),
+        ix.length > 1 ? h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink);margin-top:6px' }, T('home.prepared_title')) : null,
+        ix.length > 1 ? ix.map(function (f) {
+          return h('button', { type: 'button', class: 'pf', 'aria-pressed': String(f.id === S.fid), onclick: function () { chooseField(f.id); rerender(); } },
+            h('span', null, h('b', null, f.name), h('br'), h('span', { class: 'small' }, f.country)), f.id === S.fid ? svg(I('tick', 18, 2.6)) : null);
+        }) : null));
+    if (S.years == null) (W.requestIdleCallback || setTimeout)(function () {   // the year count, from the Replay's own file, after the first paint
+      replayYears().then(function () { var n = feats.querySelector('.fn'); if (n && S.years != null) n.textContent = featName('replay'); });
+    });
     return screen('home', {
-      head: [bigTitle(T('home.hero_1'), T('home.hero_2')), sample ? sampleChip() : null],
-      scene: [island, floats],
-      body: [h('div', { class: 'homecards' }, cards), cap],
-      cta: [cta(T('home.try_sample'), function () { go('photo'); }, { sweep: true }),
-        sample ? h('p', { class: 'small', style: 'margin:0;text-align:center' }, T('home.sample_note')) : null,
-        btn3(T('btn.how_we_know'), function () { go('how'); }, 'book'), list]
+      head: [bigTitle(T('home.q_1'), T('home.q_2')), h('p', { class: 'lead' }, T('home.q_3')), sample ? sampleChip() : null],
+      scene: island,
+      body: [h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('home.four_ways')), feats],
+      cta: [cta(T('home.try_sample'), function () { go('replay'); }, { sweep: true }),
+        sample ? h('p', { class: 'small', style: 'margin:0;text-align:center' }, T('home.sample_note')) : null, more]
     });
   };
   function chooseField(id) {
     if (id === S.fid) return;
-    S.fid = id; S.field = null; S.fieldP = null; S.winter = null; store.set('fid', id); store.set('winter', null);
+    S.fid = id; S.field = null; S.fieldP = null; S.labels = null; S.winter = null; S.years = null; store.set('fid', id); store.set('winter', null);
   }
 
   // ---------------- 2 your field from above (map; the farmer's winter crop; what space shows) ----------------
@@ -521,9 +549,19 @@
     });
     return S.leafP;
   }
-  function osm(L, m) {
-    if (m.attributionControl) m.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(m);
+  // the map's picture: NASA basemap images kept in site/data/basemap/ (no tile server at runtime). The field's own box
+  // first; the whole world (a coarse picture) only when asked, e.g. when the farmer marks a field elsewhere.
+  function osm(L, m, world) {
+    if (m.attributionControl) m.attributionControl.setPrefix('Leaflet');
+    m.getContainer().style.background = '#C9D6BE';
+    ['world'].concat(world === 'only' ? [] : [S.fid]).forEach(function (id, i) {
+      if (id === 'world' && !world) return;
+      getJSON('data/basemap/' + encodeURIComponent(id) + '.json').then(function (b) {
+        if (!b || !b.image || !b.bounds) return;
+        var o = L.imageOverlay(b.image, b.bounds, { attribution: b.attribution || '', interactive: false }).addTo(m);
+        if (i === 0) o.bringToBack();
+      });
+    });
   }
   function winterQuestion(F, after) {
     var co = F.current_options;
@@ -573,12 +611,14 @@
           var hl = hull(pts).map(function (p) { return [p[1], p[0]]; });
           L.polygon(hl, { color: '#14301E', weight: 7, opacity: .35, fill: false, interactive: false }).addTo(map);
           var outline = L.polygon(hl, { color: '#C8E05A', weight: 4, fillColor: '#C8E05A', fillOpacity: .12, interactive: false }).addTo(map);
-          map.fitBounds(outline.getBounds(), { padding: [70, 70], maxZoom: 17 });
+          map.fitBounds(outline.getBounds(), { padding: [70, 70], maxZoom: 16 });
+          getJSON('data/basemap/' + encodeURIComponent(S.fid) + '.json').then(function (b) { if (b && b.bounds && !draw) map.setMaxBounds(L.latLngBounds(b.bounds).pad(0.1)); });
         } else map.setView([F.field.lat, F.field.lon], 17);
       }).catch(function () { var m = mbox.querySelector('.msg'); if (m) m.append(h('p', null, T('btn.not_ready'))); });
       function startDraw() {
         if (!map) return;
         if (draw) { draw.layer.remove(); }
+        if (!draw) { osm(Lf, map, 'only'); map.setMaxBounds(null); }   // the world picture, so a field outside the box still shows something
         draw = { pts: [], layer: Lf.layerGroup().addTo(map) };
         msg.textContent = '';
         drawbar.hidden = false; drawbar.textContent = '';
@@ -605,16 +645,16 @@
       mbox.append(drawbar);
       var D_ = F.diary, gw = D_.groundwater || {};
       var facts = h('div', null,
-        fact('soil', [T('from_space.bare', { bare_days: D_.bare_days }), T('from_space.bare_why')], srcs(F, ['hls'])),
-        D_.shift_note ? fact('rain', PL(D_.shift_note), srcs(F, [D_.shift_source || 'dhm'])) : null,
-        gw.direction ? fact('drop', [T('from_space.water_' + gw.direction), gw.confidence >= 0.95 ? T('from_space.water_wide') : null, T('from_space.water_not_yours')], srcs(F, ['grace'])) : null);
+        fact('soil', [T('from_space.bare', { bare_days: D_.bare_days }), T('from_space.bare_why')], srcs(F, ['hls'], 'bare_days')),
+        D_.shift_note ? fact('rain', PL(D_.shift_note), srcs(F, [D_.shift_source || 'dhm'], 'monsoon_shift')) : null,
+        gw.direction ? fact('drop', [T('from_space.water_' + gw.direction), gw.confidence >= 0.95 ? T('from_space.water_wide') : null, T('from_space.water_not_yours')], srcs(F, ['grace'], 'groundwater')) : null);
       return screen('photo', {
         head: [stepsBar(1), bigTitle(T('where.photo_h1'), T('where.photo_h2'))],
         scene: mbox,
         body: [msg,
           h('div', { class: 'card soft' }, sample ? h('p', { class: 'lead' }, T('home.sample_note')) : null,
             lines([T('where.map_not_photo'), T('where.line_is_field'), T('where.photo_later')], 'sub')),
-          h('div', { class: 'card' }, h('h2', { class: 'h2' }, L(scr('from_space').title)), winterQuestion(F), facts)],
+          h('div', { class: 'card' }, h('h2', { class: 'h2' }, L(scr('from_space').title)), winterQuestion(F), labs('rotation_guess'), facts)],
         cta: [btn2(T('where.draw_own'), startDraw, 'pin'), cta(T('where.make_parts'), function () { go('parts'); })]
       });
     });
@@ -721,10 +761,13 @@
         if (!cards.isConnected) return;
         var lv = res[0], log = res[1];
         if (lv) {
+          if (lv.source === 'fake_probe') status.before(h('span', { class: 'chip sample' }, svg(I('stick', 14)), T('check_soil.practice')));
           liveStatus(lv); drawCards(fromLive(lv), lv);
           every(function () { getJSON('data/live.json', true).then(function (x) { if (x && cards.isConnected) { liveStatus(x); drawCards(fromLive(x), x); } }); }, 2000);
         } else if (log && log.sessions && log.sessions.length) {
           var sess = log.sessions[log.sessions.length - 1];
+          status.append(h('p', { class: 'lead', style: 'margin:0 0 8px' }, svg(I('stick', 18)), ' ', T('check_soil.recorded_on') + ' ' +
+            (log.recorded_on || []).map(fmtDate).join(', ') + (log.place ? ' · ' + log.place : '')), h('p', { class: 'small', style: 'margin:0 0 8px' }, T('check_soil.prototype')));
           status.append(btn2(T('check_soil.replay_check'), function () {
             var shown = {}; drawCards({}, null);
             sess.parts.forEach(function (p, i) {
@@ -743,7 +786,7 @@
       return screen('soil', {
         head: [stepsBar(3), bigTitle(L(scr('check_soil').title)), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: [box, h('div', { style: 'height:10px' }), robotCap],
-        body: [honest, status, cards, h('p', { class: 'small', style: 'margin:0' }, svg(I('fog', 16)), ' ', T('each_part.fog'), ' ', T('check_soil.clears'))],
+        body: [honest, status, cards, labRows([['stick', 'probe_water'], ['drop', 'part_soil_water']]), h('p', { class: 'small', style: 'margin:0' }, svg(I('fog', 16)), ' ', T('each_part.fog'), ' ', T('check_soil.clears'))],
         cta: cta(T('btn.next'), function () { go('choose'); })
       });
     });
@@ -755,8 +798,7 @@
   function monthShort(key) { if (S.lang === 'ne') return monthName(key, true); var n = monthName(key); return /^(en|es|fr|sw)$/.test(S.lang) ? n.slice(0, 3) : n; }
   SCREENS.choose = function () {
     var a = h('button', { type: 'button', class: 'bigcard light', onclick: function () { go('today'); } },
-      h('div', { class: 'row', style: 'justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('pc', 16)), T('kind.model')),
-        h('span', { 'aria-hidden': 'true' }, pics(80, 'basket', 22))),
+      h('div', { class: 'row', style: 'justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('pc', 16)), T('kind.model'))),
       h('div', { class: 'grow' }),
       h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between' },
         h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('each_part.today_h1') + ' ' + T('each_part.today_h2')), h('span', { class: 's' }, T('home.card_today_sub'))),
@@ -809,7 +851,8 @@
       return screen('today', {
         head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: fieldBox(F, 'status'),
-        body: [h('div', { class: 'row wrap' }, F.field.status_date ? h('span', { class: 'chip' }, T('each_part.as_of') + ' ' + fmtDate(F.field.status_date)) : null, srcs(F, ['twin'])),
+        body: [h('div', { class: 'row wrap' }, F.field.status_date ? h('span', { class: 'chip' }, T('each_part.as_of') + ' ' + fmtDate(F.field.status_date)) : null, srcs(F, ['twin', 'smap'])),
+          labRows([['face', 'part_status'], ['drop', 'part_wetness'], ['fog', 'part_sure'], ['leaf', 'part_greener'], ['low', 'part_low_ground']]),
           cards,
           h('div', { class: 'card soft' }, lines([T('each_part.faces'), T('each_part.fog'), T('each_part.one_soil'), T('parts.stick_tells')], 'sub'))],
         cta: cta(T('what_to_grow.next_h1') + ' ' + T('what_to_grow.next_h2'), function () { go('next'); })
@@ -846,9 +889,9 @@
       ns ? h('span', { class: 'small', style: 'color:var(--ink)' }, h('b', null, T('what_to_grow.next_to_plant')), ' ',
         T('your_plan.plant_in', { crop: crop(ns.c.crop), sow_month: monthName(MONTHS[ns.d.getMonth()]) })) : null,
       h('div', { class: 'score' }, h('span', { class: 'lbl' }, T('lbl.what_to_grow.score.harvest')), pics(p.score.harvest, 'basket', 16),
-        h('span', { class: 'num' }, rng(hr[0], hr[1]), ' ', h('small', null, T('btn.out_of_100'))), isCur ? null : vsChip(vsNow(p, cur, 'harvest'))),
+        h('span', { class: 'num' }, rng(hr[0], hr[1]), ' ', h('small', null, T('btn.out_of_100'))), isCur ? null : vsChip(vsNow(p, cur, 'harvest')), labs('plan_harvest')),
       h('div', { class: 'score' }, h('span', { class: 'lbl' }, T('lbl.what_to_grow.score.water')), pics(p.score.water, 'drop', 18),
-        h('span', { class: 'num', style: 'font-size:20px' }, rng(wr[0], wr[1]), ' ', h('small', null, T('btn.out_of_100')))),
+        h('span', { class: 'num', style: 'font-size:20px' }, rng(wr[0], wr[1]), ' ', h('small', null, T('btn.out_of_100'))), labs('plan_water')),
       srcs(F, ['twin']));
   }
   // the choices in the order shown: the current one, then the others (by the farmer's priority, when given)
@@ -884,7 +927,7 @@
       var monsoon = keys.some(function (k) { return k === 'Jun' || k === 'Jul'; }) && F.diary.monsoon_start;
       var frost = (F.diary.months || []).some(function (m) { return keys.indexOf(m.m) >= 0 && m.frost !== 'none'; });
       var monthCard = h('div', { class: 'card', style: 'animation:ks-reveal 800ms var(--ease) 100ms both;padding:4px 16px' }, months,
-        monsoon ? h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('rain', 20))), h('div', { class: 'grow' }, lines(PL(F.diary.monsoon_start.words)), srcs(F, [F.diary.shift_source || 'dhm']))) : null);
+        monsoon ? h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('rain', 20))), h('div', { class: 'grow' }, lines(PL(F.diary.monsoon_start.words)), srcs(F, [F.diary.shift_source || 'dhm'], 'monsoon_start'))) : null);
       var plansBox = h('div', { style: 'display:flex;flex-direction:column;gap:12px' });
       function drawPlans() {
         var o = orderedPlans(F);
@@ -896,7 +939,7 @@
       return screen('next', {
         head: [bigTitle(T('what_to_grow.next_h1'), T(span)), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: [spanTabs(n), h('p', { class: 'sub', style: 'font-weight:600;color:var(--ink);margin-bottom:8px' }, T('home.card_months_sub')), monthCard,
-          h('div', { style: 'height:8px' }), srcs(F, ['gpm', 'power', 'hls', 'twin']),
+          h('div', { style: 'height:8px' }), srcs(F, ['gpm', 'power', 'station', 'soil', 'hls', 'twin']), monthLabs(),
           h('p', { class: 'small' }, frost ? T('from_space.frost_note') + ' ' : '', T('from_space.months_note'))],
         body: [h('h2', { class: 'h2' }, T('what_to_grow.choices_title')), h('p', { class: 'sub' }, T('what_to_grow.tap_choice')),
           h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('what_to_grow.priority_q')), prio,
@@ -946,8 +989,8 @@
     }));
     var weather = h('div', { class: 'card', style: 'display:flex;flex-direction:column;gap:10px;animation:ks-reveal 800ms var(--ease) 100ms both' },
       h('h3', { class: 'h3' }, T('home.card_months_sub')), tiles,
-      monsoon ? h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('rain', 20))), h('div', { class: 'grow' }, lines(PL(F.diary.monsoon_start.words)), srcs(F, [F.diary.shift_source || 'dhm']))) : null,
-      srcs(F, ['gpm', 'power', 'hls', 'twin']),
+      monsoon ? h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('rain', 20))), h('div', { class: 'grow' }, lines(PL(F.diary.monsoon_start.words)), srcs(F, [F.diary.shift_source || 'dhm'], 'monsoon_start'))) : null,
+      srcs(F, ['gpm', 'power', 'station', 'soil', 'hls', 'twin']), monthLabs(),
       h('p', { class: 'small', style: 'margin:0' }, frost ? T('from_space.frost_note') + ' ' : '', T('from_space.months_note')));
 
     var choiceBox = h('div', { class: 'sixbox' }), fieldCard = h('div', { class: 'card', style: 'display:flex;flex-direction:column;gap:10px' }), otherBox = h('div', { class: 'sixbox' });
@@ -976,7 +1019,7 @@
           h('div', { class: 'score' }, h('span', { class: 'lbl' }, T('lbl.what_to_grow.score.water')), pics(pick.score.water, 'drop', 18),
             h('span', { class: 'num', style: 'font-size:20px' }, rng(wr[0], wr[1]), ' ', h('small', null, T('btn.out_of_100')))),
           h('span', { class: 'row', style: 'justify-content:space-between;font-weight:700;font-size:14px' }, T('what_to_grow.tap_choice'), svg(I('arrow', 20, 2.6)))),
-        srcs(F, ['twin', 'gpm', 'power'])]);
+        srcs(F, ['twin', 'gpm', 'power'], 'plan_harvest')]);
       // the field month by month: now, and with this choice
       var rows = pick === o.cur ? [[T('what_to_grow.now_short'), o.cur]] : [[T('what_to_grow.now_short'), o.cur], [T('what_to_grow.this_choice'), pick]];
       var seen = [];
@@ -1003,7 +1046,7 @@
       var empties = rows.map(function (r) { return r[0] + ' ' + num(keys.filter(function (k) { return !mainCrop(monthRuns(r[1], k)); }).length); }).join(' · ');
       fieldCard.textContent = '';
       add(fieldCard, [h('h3', { class: 'h3' }, T('what_to_grow.field_6')), grid, legend,
-        h('p', { style: 'margin:0;font-weight:700;font-size:14px' }, T('what_to_grow.empty_months') + ' ' + empties), srcs(F, ['twin', 'hls'])]);
+        h('p', { style: 'margin:0;font-weight:700;font-size:14px' }, T('what_to_grow.empty_months') + ' ' + empties), srcs(F, ['twin', 'hls'], 'plan_months')]);
       // the other choices
       otherBox.textContent = '';
       add(otherBox, [h('h2', { class: 'h3' }, T('what_to_grow.other_choices')),
@@ -1071,7 +1114,7 @@
           var r = scoreRange(p, k);
           return h('div', { class: 'score' }, h('span', { class: 'lbl' }, T('lbl.what_to_grow.score.' + k)), kind ? pics(p.score[k], kind, kind === 'drop' ? 18 : 16) : null,
             h('span', { class: 'num', style: 'font-size:22px' }, rng(r[0], r[1]), ' ', h('small', null, T('btn.out_of_100'))),
-            k === 'harvest' && p.id !== 'current' ? vsChip(vsNow(p, cur, k)) : null);
+            k === 'harvest' && p.id !== 'current' ? vsChip(vsNow(p, cur, k)) : null, labs('plan_' + k));
         }
         // both water cases, while the field's water is unknown
         var cases = waterCases(F), rep = p.replay || [];
@@ -1090,7 +1133,7 @@
           return h('div', { class: 'card', style: 'flex:1 1 180px;border:1.5px solid var(--line)' },
             h('p', { class: 'small', style: 'margin:0 0 4px;font-weight:700;color:var(--ink)' }, svg(I(c === 'rain_fed' ? 'rain' : 'drop', 16)), ' ', T('lbl.last_years.water_case.' + c)),
             val == null ? h('span', null, T('btn.not_ready')) : h('span', { class: 'num' }, val, ' ', h('small', null, T('btn.out_of_100'))),
-            c === 'irrigated' ? h('p', { class: 'small', style: 'margin:4px 0 0' }, T('what_to_grow.water_never_out')) : null);
+            c === 'irrigated' ? h('p', { class: 'small', style: 'margin:4px 0 0' }, T('what_to_grow.water_never_out')) : null, labs(c === 'irrigated' ? 'plan_harvest_watered' : 'plan_harvest'));
         }));
         var cropRows = h('ul', { class: 'tips' }, p.crops.map(function (c) {
           return h('li', null, h('span', { class: 'k' }, svg(I('sprout', 16))), h('span', null,
@@ -1113,14 +1156,14 @@
           isPlaceholder(F.field.name) ? sampleChip() : null,
           h('div', { style: 'display:flex;flex-direction:column;gap:14px;margin-top:10px' },
             p.id === 'current' && F.current_options ? h('div', { class: 'card' }, winterQuestion(F, function () { build(true); })) : null,
-            h('div', { class: 'card' }, h('h3', { class: 'h3' }, T('your_plan.what_when')), cropRows, h('p', { class: 'small', style: 'margin:0' }, T('your_plan.months_note'))),
+            h('div', { class: 'card' }, h('h3', { class: 'h3' }, T('your_plan.what_when')), cropRows, h('p', { class: 'small', style: 'margin:0' }, T('your_plan.months_note')), labs('plan_months')),
             h('div', { class: 'card', style: 'display:flex;flex-direction:column;gap:10px' }, scoreRow('harvest', 'basket'), scoreRow('water', 'drop'), scoreRow('cover'), scoreRow('soil_kept'),
               h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.range_why'), hasDhm(F) ? ' ' + T('what_to_grow.range_town') : ''), srcs(F, ['twin', 'gpm', 'power', 'soil'])),
             h('div', { class: 'card', style: 'display:flex;flex-direction:column;gap:10px' }, waterQ, caseRows),
             tabBtns, tabBox,
             tips.length ? h('div', { class: 'card' }, h('h3', { class: 'h3' }, T('what_to_grow.tips_title')),
               h('ul', { class: 'tips' }, tips.map(function (t, i) { return h('li', null, h('span', { class: 'k' }, num(i + 1)), h('span', null, t)); })),
-              h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note'))) : null,
+              h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note')), labs('plan_tips')) : null,
             explain,
             btn3(T('what_to_grow.see_years', { year_count: rep.length }), function () { S.howPlan = p.id; go('how/replay'); }, 'book'),
             h('p', { class: 'note' }, T('your_plan.know_best'), ' ', T('your_plan.advisor')))
@@ -1168,6 +1211,21 @@
   };
   SCREENS.how.scrollTo = function (id) { var el = D.getElementById('how-' + id); if (el) el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); };
 
+  // ---------------- the four features (js/features.js, loaded when first opened) ----------------
+  function loadScript(src) { return new Promise(function (res) { var s = h('script', { src: src }); s.onload = res; s.onerror = res; D.head.append(s); }); }
+  FEATURES.forEach(function (k) {
+    SCREENS[k] = function (arg) {
+      var box = h('section', { class: 'scr scr-' + k }, h('div', { class: 's-head' }, bigTitle(featName(k))), h('div', { class: 's-body' }, loading()));
+      S.featP = S.featP || loadScript('js/features.js');
+      Promise.all([S.featP, fieldReady(), k === 'trial' ? null : featData(k)]).then(function (r) {
+        if (!box.isConnected) return;
+        var built = W.KS.feat && r[1] ? W.KS.feat[k](r[1], r[2], arg) : null;
+        box.replaceWith(built || screen(k, { head: bigTitle(featName(k)), body: notReady() }));
+      });
+      return box;
+    };
+  });
+
   // ---------------- start ----------------
   function grass() {
     var g = $('#sky .grass'), out = '', seed = 7;
@@ -1186,9 +1244,8 @@
       sky.append(h('span', { class: 'puff', style: 'left:' + (p[0] / 3.9) + '%;top:' + p[1] + 'px;width:' + p[2] + 'px;height:' + p[3] + 'px;animation-duration:' + p[4] + 's;animation-delay:' + p[5] + 's' }));
     });
   }
-  function loadFonts() {
-    D.head.append(h('link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&family=Inter:wght@400;500;600;700&family=Mukta:wght@400;700&display=swap' }));
-  }
+  // self-hosted fonts (fonts/fonts.css), after the first screen so it stays small; no request leaves the site
+  function loadFonts() { D.head.append(h('link', { rel: 'stylesheet', href: 'fonts/fonts.css' })); }
   function init() {
     grass();
     S.winter = store.get('winter'); S.water = store.get('water');
@@ -1218,6 +1275,8 @@
     srcTag: srcTag, srcs: srcs, srcObj: srcObj, effPlans: effPlans, planName: planName, alts: alts, yearRange: yearRange, hasDhm: hasDhm, scoreRange: scoreRange,
     waterCases: waterCases, pics: pics, basketSvg: basketSvg, getJSON: getJSON, loadLeaflet: loadLeaflet, osm: osm, go: go, notReady: notReady, loading: loading,
     sampleChip: sampleChip, isPlaceholder: isPlaceholder, sourcesList: sourcesList, mocked: mocked, fogLayer: fogLayer, langInfo: langInfo, monthName: monthName,
-    MONTHS: MONTHS, RM: RM, later: later, sentences: sentences, btn3: btn3, vsChip: vsChip };
+    MONTHS: MONTHS, RM: RM, later: later, sentences: sentences, btn3: btn3, vsChip: vsChip,
+    btn2: btn2, cta: cta, screen: screen, labs: labs, rainMark: rainMark, closeSheet: closeSheet, bigTitle: bigTitle, store: store, fmtDate: fmtDate, geom: geom, fieldBox: fieldBox, orderedPlans: orderedPlans,
+    cropsLine: cropsLine, monthShort: monthShort, featName: featName, fogTag: fogTag, openSheet: openSheet, sheetBar: sheetBar, every: every, uid: function () { return ++uid; } };
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 })();

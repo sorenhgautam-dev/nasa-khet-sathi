@@ -37,6 +37,9 @@ server functions, no environment variables. GitHub Pages is not used.
 - **Design update (2026-11-14):** our UI teammate's frosted-glass cards, warmer sun colour and the new "Next 6 months"
   screen (`design/screens/Future6.dc.html`, `W8_Future6.dc.html`), built into the site by SI (see SI_LOG.md, 2026-11-14,
   "frosted glass and the 6-month view").
+- **The four features (2026-11-14):** Home, the 25-Year Replay, Field Pulse, Safe Trial and the record check-up, and the
+  two labels on every number, built by SI in the same design style (no new design files; see SI_LOG.md, 2026-11-14, "the
+  four features on the site"). The Safe Trial keeps its photos on the phone only (IndexedDB).
 
 ## Data and metadata services
 
