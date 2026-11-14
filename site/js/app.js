@@ -9,12 +9,15 @@
   // the UI teammate's seven steps are the app (owner, 2026-11-14 evening); the features live inside them and on "How we know"
   var STEPS = ['home', 'photo', 'parts', 'soil', 'choose', 'today', 'next'];
   // weather: "Weather ahead", the Choose screen's extra choice (owner, 2026-11-14 evening)
-  var ROUTES = STEPS.concat(['weather', 'how', 'plan', 'trial']);
+  var ROUTES = STEPS.concat(['weather', 'how', 'plan', 'trial', 'story']);
+  // the farmer's flow: 'steps' (the seven screens) or 'story' (one long page told as the farmer scrolls, js/story.js; owner,
+  // 2026-11-15: built beside the steps, and the home page only once it passes every check). #/story opens it either way.
+  var FLOW = 'steps';
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   // sun x, sun y, tint, sunset, road progress (the phone prototype P0, per step)
   var SKY = { home: [30, 300, 0, 0, 0], photo: [79, 197, 0, 0, 0.16], parts: [131, 119, 0, 0, 0.33], soil: [183, 81, 0.05, 0.1, 0.5],
     choose: [236, 96, 0.15, 0.3, 0.66], today: [288, 159, 0.4, 0.65, 0.84], next: [325, 223, 0.65, 0.95, 1], weather: [325, 223, 0.65, 0.95, 1],
-    how: [325, 223, 0.5, 0.8, 1] };
+    how: [325, 223, 0.5, 0.8, 1], story: [30, 300, 0, 0, 0] };
   var S = { lang: 'ne', words: null, index: null, fid: null, field: null, fieldP: null, winter: null, water: null, prio: null,
     timers: [], cur: null, arg: null, prev: null, sheetFor: null };
 
@@ -431,7 +434,7 @@
   function renderTop(r) {
     var top = $('#top'); top.textContent = '';
     var left = h('div', { class: 'left' });
-    if (r === 'home') left.append(h('span', { class: 'logo', 'aria-hidden': 'true' }, svg(ic(P_.leaf, 22, 2.2))));
+    if (r === 'home' || r === 'story') left.append(h('span', { class: 'logo', 'aria-hidden': 'true' }, svg(ic(P_.leaf, 22, 2.2))));
     else left.append(h('button', { type: 'button', class: 'round', 'aria-label': T('btn.back'), onclick: goBack }, svg(I('back', 22, 2.4))));
     left.append(h('span', { class: 'brand' }, L(scr('home').title)));
     var langs = h('div', { class: 'langs', role: 'group', 'aria-label': T('btn.language') });
@@ -467,7 +470,8 @@
   function go(r) { location.hash = '#/' + r; }
   function parse() {
     var p = (location.hash || '').replace(/^#\/?/, '').split('/');
-    return { r: ROUTES.indexOf(p[0]) >= 0 ? p[0] : 'home', a: p[1] ? decodeURIComponent(p[1]) : null };
+    var r = ROUTES.indexOf(p[0]) >= 0 ? p[0] : 'home';
+    return { r: r === 'home' && FLOW === 'story' ? 'story' : r, a: p[1] ? decodeURIComponent(p[1]) : null };
   }
   function setSky(r) {
     var v = SKY[r] || SKY.next, s = $('#sky');
@@ -651,7 +655,7 @@
   }
   // the crops we think the farmer grows, as a question (owner, 2026-11-14 evening): "We think you grow rice, then potato.
   // Is that right?" Yes keeps our guess; the other rotation is the second button. The answer stays on the phone.
-  function guessCard(F, box) {
+  function guessCard(F, box, after) {
     featData('simple').then(function (sd) {
       if (!sd || !sd.guess || !box.isConnected) return;
       var co = F.current_options, opts = (co && co.options) || [], def = co ? co['default'] : null;
@@ -661,7 +665,7 @@
           h('div', { class: 'row wrap', role: 'group', 'aria-label': T('farm.guess_ask') }, (opts.length ? opts : [{ id: null }]).map(function (o) {
             var label = !o.id || o.id === def ? T('from_space.yes') : cap(o.crops.map(function (c) { return crop(c.crop); }).join(', ' + T('join.then') + ' '));
             return h('button', { type: 'button', class: 'choice', 'aria-pressed': String(!!o.id && S.winter === o.id), onclick: function () {
-              if (o.id) { S.winter = o.id; store.set('winter', o.id); } draw();
+              if (o.id) { S.winter = o.id; store.set('winter', o.id); } draw(); if (after) after();
             } }, label);
           })),
           opts.length > 1 ? h('p', { class: 'small', style: 'margin:0' }, svg(I('sat', 14)), ' ', T('from_space.guess_cannot_tell')) : null]);
@@ -703,7 +707,7 @@
       var sample = isPlaceholder(F.field.name) && !F._drone, dr = F._drone;
       var mapEl = h('div', { style: 'position:absolute;inset:0' });
       var mbox = h('div', { class: 'mapbox photo' }, h('div', { class: 'msg' }, svg(DRONE), h('span', { class: 'yf' }, T('where.your_farm')), h('span', { class: 'hint' }, T('where.photo_later'))), mapEl,
-        sample ? h('div', { class: 'mapnote' }, sampleChip()) : null, dr ? h('div', { class: 'mapnote' }, fieldChip(F)) : null);
+        sample ? h('div', { class: 'mapnote' }, sampleChip()) : null);
       var drawbar = h('div', { class: 'drawbar', hidden: true }), msg = h('div', { 'aria-live': 'polite' });
       var map = null, Lf = null, draw = null;
       loadLeaflet().then(function (L) {
@@ -763,7 +767,7 @@
       var guess = h('div', { class: 'card guess', hidden: true });
       guessCard(F, guess);
       return screen('photo', {
-        head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2'))],
+        head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2')), dr ? fieldChip(F) : null],
         scene: mbox,
         body: [msg, leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('where.split_next'))), guess, rests,
           dr ? lines([T('your_plan.drone_sat')], 'sub') : null, dr ? h('p', { class: 'small', lang: 'en' }, dr.credit) : null],
@@ -819,6 +823,62 @@
     });
   }
   function anyTested(pd) { return !!pd && Object.keys(pd.parts).some(function (k) { return pd.parts[k].state === 'done'; }); }
+  // ---------------- space guesses, the ground checks: fog on each part (owner, 2026-11-15) ----------------
+  // How sure we are of a part's soil water, out of 100. Before the stick: the twin alone (field.sections[].sure, or the
+  // recorded or live reading's own "before"). After: the Kalman update robot/bridge.py made with that reading (only once
+  // the bench test gave the stick's error; rules.yaml probe.kalman.r). A test away from the field (garden, bowls) never
+  // changes the field's number, and no number means the fog stays: nothing is guessed.
+  function sureOf(F, pd, sid) {
+    var sec = mocked(F, 'field.sections') ? null : (F.field.sections || []).filter(function (s) { return s.id === sid; })[0];
+    var out = { before: sec && typeof sec.sure === 'number' ? sec.sure : null, after: null }, ok = pd && !pd.test, r = ok && pd.parts[sid];
+    // the update's own "before" once a reading exists: the twin aged to the reading's day (rec: every recorded part)
+    var rb = ok && pd.kind === 'log' ? (r && r.before) || (pd.rec && pd.rec[sid] && pd.rec[sid].before) : ok && pd.kind === 'live' ? pd.live && pd.live.prior : null;
+    if (rb && rb.sure != null) out.before = rb.sure;
+    if (r && r.state === 'done') out.after = pd.kind === 'log' ? (r.after ? r.after.sure : null) : pd.kind === 'live' && r.sure != null ? r.sure : null;
+    return out;
+  }
+  function fogOpacity(s) { return (0.85 * (1 - Math.max(0, Math.min(1, s == null ? 0 : s)))).toFixed(2); }
+  // the fog over every part of a field box and its number; .set(pd) clears each part the stick has checked to its new
+  // number (a gentle fade and count; under reduced motion the before and after numbers only); .note(pd) says why not
+  function fogParts(box, F) {
+    var G = box._g, roomy = G.length <= 6, tpl = T('story.sure_n'), at = tpl.indexOf('{sure_pct}'), fogs = {};
+    function label(v) { return at < 0 ? num(v) : [tpl.slice(0, at), h('b', { class: 'fn' }, num(v)), tpl.slice(at + 10)]; }
+    G.forEach(function (g) {
+      var s0 = sureOf(F, null, g.s.id).before, svgPart = g.q.namespaceURI === SVGNS, f = { s0: s0, now: s0 };
+      if (s0 == null) return;
+      if (svgPart) { g.q.style.fill = 'rgba(250,247,240,' + fogOpacity(s0) + ')'; f.q = g.q; fogs[g.s.id] = f; return; }
+      f.el = h('span', { class: 'sfog', style: 'left:' + g.l + '%;top:' + g.t + '%;width:' + (g.r - g.l) + '%;height:' + (g.b - g.t) + '%;--fog:' + fogOpacity(s0) });
+      f.lab = h('span', { class: 'flab' + (roomy ? '' : ' small') }, roomy ? h('span', { class: 'fq' }, T('story.how_sure')) : null, h('span', { class: 'fv' }, label(Math.round(s0 * 100))), h('span', { class: 'fb' }));
+      f.el.append(f.lab); box.append(f.el); fogs[g.s.id] = f;
+    });
+    // a part not checked yet takes the update's own "before" at once (no animation); a checked one clears to its "after"
+    function set(pd) {
+      Object.keys(fogs).forEach(function (sid) {
+        var f = fogs[sid], s = sureOf(F, pd, sid), a = s.after, to = a != null ? a : s.before;
+        if (to == null || to === f.now) return;
+        var b = Math.round((s.before == null ? f.s0 : s.before) * 100), n = Math.round(to * 100);
+        f.now = to;
+        if (f.q) { f.q.style.fill = 'rgba(250,247,240,' + fogOpacity(to) + ')'; return; }
+        var fv = f.lab.querySelector('.fv'), fb = f.lab.querySelector('.fb');
+        function show(v) { fv.textContent = ''; add(fv, label(v)); }
+        if (a == null) {   // no fade: the style is read once with the transition off
+          f.el.classList.add('still'); f.el.style.setProperty('--fog', fogOpacity(to)); W.getComputedStyle(f.el, '::before').opacity; f.el.classList.remove('still'); show(n); return;
+        }
+        f.el.style.setProperty('--fog', fogOpacity(a)); f.el.classList.add('clear');
+        fb.textContent = T('story.sure_before') + ': ' + num(b);
+        if (RM) { show(n); return; }
+        var t0 = Date.now();
+        (function tick() { var k = Math.min(1, (Date.now() - t0) / 1400); show(Math.round(b + (n - b) * k)); if (k < 1 && fv.isConnected) W.requestAnimationFrame(tick); })();
+      });
+    }
+    // one line under the field when a checked part keeps its fog: a test away from the field, or no bench test yet
+    function note(pd) {
+      if (!Object.keys(fogs).length || !anyTested(pd)) return null;
+      if (pd.test) return T('story.fog_test');
+      return Object.keys(pd.parts).some(function (k) { return fogs[k] && pd.parts[k].state === 'done' && sureOf(F, pd, k).after == null; }) ? T('story.sure_wait') : null;
+    }
+    return { set: set, note: note, any: Object.keys(fogs).length > 0 };
+  }
   // one part's word from its reading: the probe's band (good, needs water, too wet) once the bench calibration exists,
   // else only drier or wetter than the other parts; "not tested yet" without a reading
   function partWord(r) {
@@ -849,7 +909,7 @@
   function practiceBanner(pd) { return pd && pd.practice ? h('div', { class: 'practice-banner', role: 'alert' }, svg(I('warn', 26, 3)), h('span', null, T('check_soil.practice'))) : null; }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
-      var box = fieldBox(F, 'robot'), G = box._g;
+      var box = fieldBox(F, 'robot'), G = box._g, fog = fogParts(box, F), fnote = h('p', { class: 'small fognote' }), liveNow = null;
       var route = D.createElementNS('http://www.w3.org/2000/svg', 'svg');
       route.setAttribute('class', 'route'); route.setAttribute('viewBox', '0 0 100 100'); route.setAttribute('preserveAspectRatio', 'none');
       box.append(route);
@@ -894,6 +954,8 @@
           g.q.style[prop] = done ? 'rgba(200,224,90,' + (prop === 'fill' ? '.45' : '.28') + ')' : g.q.dataset.bg;   // the design's tested quarter
           if (g.num) { g.num.classList.toggle('ok', done); g.num.textContent = done ? '' : digits(g.n); if (done) g.num.append(svg(I('tick', 16, 3.2))); }
         });
+        var now = { kind: pd ? pd.kind : 'none', test: pd && pd.test, live: liveNow, parts: shown, rec: pd && pd.parts };
+        fog.set(now); fnote.textContent = fog.note(now) || '';
       }
       function drawCta(active) {
         ctaBox.textContent = '';
@@ -918,7 +980,7 @@
       }
       var lastSec = null;
       function fromLive(lv) {
-        shown = liveParts(lv); drawRows(lv.section);
+        shown = liveParts(lv); liveNow = lv; drawRows(lv.section);
         var g = G.filter(function (x) { return x.s.id === lv.section; })[0];
         if (g && lv.section !== lastSec) { lastSec = lv.section; moveTo(g); }
         if (lv.state === 'done' && g) ring.hidden = true;
@@ -946,9 +1008,9 @@
       });
       var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub')), tbox = h('div');
       return screen('soil', {
-        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), fieldChip(F), pbox],
+        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), fieldChip(F), fog.any ? h('p', { class: 'fogline' }, T('story.fog_line')) : null, pbox],
         scene: box,
-        body: [rows, info, tbox, honest],
+        body: [rows, fnote, info, tbox, honest],
         cta: ctaBox
       });
     });
@@ -1437,6 +1499,18 @@
   };
   SCREENS.how.scrollTo = function (id) { var el = D.getElementById('how-' + id); if (el) el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); };
 
+  // ---------------- the farmer's flow as one long page (js/story.js and css/story.css, loaded when first opened) ----------------
+  SCREENS.story = function (arg, keep) {
+    var box = h('div', { class: 'story' }, loading());
+    S.storyP = S.storyP || Promise.all([loadScript('js/story.js'),
+      new Promise(function (res) { var l = h('link', { rel: 'stylesheet', href: 'css/story.css' }); l.onload = l.onerror = res; D.head.append(l); })]);
+    Promise.all([S.storyP, fieldReady()]).then(function (r) {
+      if (!box.isConnected) return;
+      box.replaceWith(r[1] && W.KS.story ? W.KS.story(r[1], keep) : screen('story', { body: notReady() }));
+    });
+    return box;
+  };
+
   // ---------------- start ----------------
   function grass() {
     var g = $('#sky .grass'), out = '', seed = 7;
@@ -1491,6 +1565,12 @@
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
-    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy };
+    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy,
+    // for the long page (js/story.js): the same pieces the seven screens use, so its results are theirs
+    fieldReady: fieldReady, fieldChip: fieldChip, setLang: setLang, setSky: setSky, hull: hull, guessCard: guessCard, farmPlans: farmPlans,
+    winterCrop: winterCrop, startState: startState, addedCrop: addedCrop, farmPlanName: farmPlanName, wordLine: wordLine, tryBtn: tryBtn,
+    noteBox: noteBox, patchLine: patchLine, dotEl: dotEl, anyTested: anyTested, recordedLine: recordedLine, practiceBanner: practiceBanner,
+    bowlLines: bowlLines, liveParts: liveParts, isReal: isReal, isPractice: isPractice, canWater: canWater, blockIcon: blockIcon,
+    cropOn: cropOn, CUM: CUM, cap: cap, ROBOT: ROBOT, sureOf: sureOf, fogParts: fogParts };
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 })();

@@ -36,7 +36,7 @@ polygon:                            # the package's field_outline_lonlat: 14 poi
 # (pipeline/fetch/worldcover.box_around). The package suggests [85.491219, 27.572717, 85.592601, 27.663154]: within 30 m.
 fetch_box: [85.491162, 27.572969, 85.592658, 27.662901]
 bbox: [85.491162, 27.572969, 85.592658, 27.662901]       # index.json prepared area = the fetch box
-elevation_m: null                   # TODO: NASADEM mean over the outline once fetched (data/clean/dhulikhel/nasadem_field.json)
+elevation_m: 1467.0                 # NASADEM_HGT v001 over the outline (1 pixel centre inside it: 1467 m; slope 6.4 deg; data/clean/dhulikhel/nasadem_field.json, 2026-11-15)
 water_source: null                  # TODO(farmer): unknown, so both cases are run (rain-fed and irrigated)
 current_rotation: [rice, potato]    # PLACEHOLDER: no farmer's answers yet; the demo's placeholder (FAO Crop Calendar Nepal Hill-zone windows)
 current_rotation_options: [[rice, potato], [rice, wheat]]  # PLACEHOLDER: as on the demo field, the farmer answers on screen

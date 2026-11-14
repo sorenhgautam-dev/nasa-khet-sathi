@@ -56,10 +56,12 @@ def build_index(configs, data_dir):
     return {"fields": fields, "areas": areas, **({"drone_previews": previews} if previews else {})}
 
 
-def all_configs(config_dir=REPO / "config" / "fields"):
+def all_configs(config_dir=REPO / "config" / "fields", main=None):
     from pipeline.fetch.fields import load_field
+    from pipeline.fetch.rules import load_rules
+    main = main or load_rules()["site_main_field"]                 # the field the site opens first ("Try our demo field")
     ids = sorted(p.stem for p in Path(config_dir).glob("*.yaml"))
-    order = sorted(ids, key=lambda i: (i != "demo", i))           # the demo first ("Try our demo field")
+    order = sorted(ids, key=lambda i: (i != main, i != "demo", i))
     return [load_field(i, config_dir) for i in order]
 
 
