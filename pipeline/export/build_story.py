@@ -295,7 +295,7 @@ def chart_gauge_weight(gauge):
         [SRC_IMERG_M], "line",
         x=axis_x(T("Year", "वर्ष"), "year"),
         y=axis_y(T("Share set by rain gauges", "मापकले मिलाएको भाग"), "%"),
-        series=[S(T("Field's cell, mean of the year", "खेतको कोठा, वर्षको औसत"), "main",
+        series=[S(T("Field's cell, mean of the year", "खेत पर्ने ग्रिड कोठा, वर्षको औसत"), "main",
                   [[y, v["mean"]] for y, v in sorted(w.items())]),
                 S(T("Lowest to highest month", "सबैभन्दा कम देखि बढी महिना"), "range",
                   [[y, [v["low"], v["high"]]] for y, v in sorted(w.items())])],
@@ -422,7 +422,7 @@ def chart_seasons(greenness, diary_seasons, first_year=2014, last_year=2025):
     n = last_year - first_year + 1
     two = sum(1 for y in range(first_year, last_year + 1) if per_year.get(y) == 2)
     if two == n:
-        c1 = (f"Two green seasons in each of {n} years.", f"{n} वर्षै हरेक वर्ष दुई हरिया याम।")
+        c1 = (f"Two green seasons in each of {n} years.", f"{n} वटै वर्षमा, हरेक वर्ष दुई हरिया याम।")
     else:
         c1 = (f"{two} of {n} years had two green seasons.", f"{n} मध्ये {two} वर्ष दुई हरिया याम।")
     label = {"monsoon": T("Rainy-season crop", "बर्खे बाली"), "winter": T("Winter crop", "हिउँदे बाली")}
@@ -445,7 +445,7 @@ def chart_cover_sure(months, month_words):
     name_ne = month_words[low["m"]]["ne"]
     name_en = month_words[low["m"]]["en"]
     cap = T(f"We are least sure about {name_en}. The two methods differ most then.",
-            f"{name_ne} बारे हामी सबैभन्दा कम निश्चित छौं। त्यतिबेला दुई तरिका सबैभन्दा धेरै फरक पर्छन्।")
+            f"{name_ne} महिनाबारे हामी सबैभन्दा कम निश्चित छौं। त्यतिबेला दुई तरिका सबैभन्दा धेरै फरक पर्छन्।")
     return chart(
         "cover_sure", "seasons", T("How sure we are, month by month", "महिनैपिच्छे हामी कति निश्चित छौं"), cap,
         [SRC_HLS, "The threshold method against the SI season detective (a random forest), HLS years 2014-2025"],
@@ -457,7 +457,7 @@ def chart_cover_sure(months, month_words):
         rows=[{"m": m["m"], "cover": m["cover"], "cover_sure": m["cover_sure"]} for m in months])
 
 
-EVENT_CATS = [cat("none", "No event", "केही छैन"), cat("drought", "Dry", "सुक्खा"), cat("flood", "Flood", "बाढी")]
+EVENT_CATS = [cat("none", "No event", "कुनै घटना छैन"), cat("drought", "Dry", "सुक्खा"), cat("flood", "Flood", "बाढी")]
 
 
 def chart_events(replay, known):
@@ -469,7 +469,7 @@ def chart_events(replay, known):
     ne = [f"उपत्यकाका {nf} मध्ये {kf} बाढी भेट्टायो", f"उपत्यकाका {nd} मध्ये {kd} सुक्खा याम भेट्टायो"]
     if failed:
         en.append(f"It called {failed} normal or wet {'monsoon' if failed == 1 else 'monsoons'} dry.")
-        ne.append(f"सामान्य वा भिजेका {failed} बर्खालाई सुक्खा भन्यो")
+        ne.append(f"सामान्य वा बढी पानीका {failed} बर्खालाई सुक्खा भन्यो")
     records = sorted(((r["year"], rec["category"]) for r in rows for rec in r["records"]))
     return chart(
         "events", "checks", T("Floods and dry years: our model against records", "बाढी र सुक्खा वर्ष: मोडेल र अभिलेख"),
@@ -512,7 +512,7 @@ def chart_dhm_2025(rain_vs_dhm):
     late_twin = data["imerg_late_months"]["twin_rain"]["ratio"]
     if late_twin > SAME_LEVEL[1]:
         en.append(f"{late_en}: still too wet.")
-        ne.append(f"{late_ne}: अझै धेरै भिजेको")
+        ne.append(f"{late_ne}: अझै धेरै बढी वर्षा")
     rows = [{"months": cid, **{k: data[cid][k]["ratio"] for k in names}} for cid in ("imerg_final_months",
                                                                                     "imerg_late_months")]
     return chart(
@@ -578,7 +578,7 @@ def chart_other_checks(smap, gldas, hls, fao, eco):
         en.append("Rice cannot be tested: it never runs short.")
         ne.append("धान जाँच्न मिल्दैन: यसमा पानी कहिल्यै कम हुँदैन")
     return chart(
-        "other_checks", "checks", T("Does the model move with other data?", "मोडेल अरू तथ्याङ्कसँगै चल्छ?"),
+        "other_checks", "checks", T("Does the model move with other data?", "मोडेल अरू तथ्याङ्कसँग मेल खान्छ?"),
         T(" ".join(en), "। ".join(ne) + "।"),
         ["NASA SMAP L4 root-zone soil moisture SPL4SMGP v008, 9 km, 2015-2025 (model-assisted)",
          "NASA GLDAS-2.1 Noah GLDAS_NOAH025_M, 0.25°, monthly, 2001-2025 (model-based)",
@@ -676,7 +676,7 @@ def chart_area(area_site, area_check, field):
     return chart(
         "area_map", "area", T("Farmland around the field, seen from space", "अन्तरिक्षबाट देखिएको खेत वरिपरिको खेतीयोग्य जमिन"),
         T(f"About {fmt(ha)} hectares of farmland around it. Colours show bare days and crop seasons.",
-          f"यसको वरिपरि करिब {fmt(ha)} हेक्टर खेतीयोग्य जमिन। रङले बाँझो दिन र बाली याम देखाउँछ।"),
+          f"यसको वरिपरि करिब {fmt(ha)} हेक्टर खेतीयोग्य जमिन। रङले खाली दिन र बाली याम देखाउँछ।"),
         [f"{s['name']}: {s['product']}, {s['resolution']}, {s['years']}" for s in area_site["sources"]], "map",
         rows=rows, link=f"data/area/{field}.json",
         note=T("A sample area: no pixel is a known farm.", "नमुना क्षेत्र: कुनै पिक्सेल चिनिएको खेत होइन।"))
@@ -810,7 +810,7 @@ def chart_ai_words(words, field_json):
     return chart(
         "ai_words", "computer", T("Words drafted by a computer, checked by people", "कम्प्युटरले लेखेका, मानिसले जाँच्ने शब्द"),
         T(f"A computer drafted these words. {reviewed} of {pairs} Nepali texts checked so far.",
-          f"यी शब्द कम्प्युटरले लेखेको हो। अहिलेसम्म {pairs} मध्ये {reviewed} नेपाली पाठ जाँचिएका।"),
+          f"यी शब्द कम्प्युटरले लेखेका हुन्। अहिलेसम्म {pairs} मध्ये {reviewed} नेपाली पाठ जाँचिएका छन्।"),
         ["Khet Sathi texts drafted by SI (Claude) in pipeline/words/, with the review mark of every Nepali text in "
          "site/data/words.json; SI_LOG.md records what a person reviewed"], "table", rows=rows)
 
@@ -824,7 +824,7 @@ COMPLIANCE = {
     "rain_months": (("Rain on the field", "खेतमा परेको वर्षा"),
                     ["We checked our rain against Nepal's rain gauges.", "It was within 19% in {k} of {n} months."],
                     ["हामीले हाम्रो वर्षा नेपालका वर्षा मापकसँग जाँच्यौं", "{n} मध्ये {k} महिना १९% भित्र मिल्यो"]),
-    "rain_month_words": (("Rainy and dry months", "वर्षा हुने र सुख्खा महिना"),
+    "rain_month_words": (("Rainy and dry months", "वर्षा हुने र सुक्खा महिना"),
                          ["They match Nepal's weather office.", "{k} of {n} months match."],
                          ["नेपालको मौसम कार्यालयसँग मिल्छन्", "{n} मध्ये {k} महिना मिल्छन्"]),
     "heat_month_words": (("Warm and cool months", "तातो र चिसो महिना"),
@@ -833,10 +833,10 @@ COMPLIANCE = {
     "frost_month_words": (("Frost months", "तुषारो पर्ने महिना"),
                           ["Not checked yet.", "We need night temperatures from Bhaktapur."],
                           ["अझै जाँचिएको छैन", "भक्तपुरको रातको तापक्रम चाहिन्छ"]),
-    "soil_month_words": (("Dry and wet soil months", "सुख्खा र ओसिलो माटोका महिना"),
+    "soil_month_words": (("Dry and wet soil months", "सुक्खा र ओसिलो माटोका महिना"),
                          ["Checked only against computer models.", "No measured soil yet."],
                          ["कम्प्युटर मोडेलसँग मात्र जाँचिएको", "माटो अझै नापिएको छैन"]),
-    "cover_months": (("Bare and growing months", "बाँझो र बाली भएका महिना"),
+    "cover_months": (("Bare and growing months", "खाली र बाली भएका महिना"),
                      ["Waiting for the farmer's calendar."], ["किसानको बाली पात्रो पर्खिरहेका छौं"]),
     "season_dates": (("Planting and harvest dates", "रोप्ने र काट्ने मिति"),
                      ["Waiting for the farmer's dates."], ["किसानका मिति पर्खिरहेका छौं"]),
@@ -845,12 +845,12 @@ COMPLIANCE = {
     "flood_years": (("Flood years", "बाढी आएका वर्ष"),
                     ["Found {k} of {n} valley floods.", "{fa} of {fan} flags had no recorded flood.",
                      "We knew these floods before setting the rule."],
-                    ["उपत्यकाका {n} मध्ये {k} बाढी भेटियो", "{fan} संकेतमध्ये {fa} मा बाढीको अभिलेख छैन",
+                    ["उपत्यकाका {n} मध्ये {k} बाढी भेटियो", "{fan} सङ्केतमध्ये {fa} मा बाढीको अभिलेख छैन",
                      "नियम बनाउनुअघि नै यी बाढी थाहा थिए"]),
-    "drought_years": (("Dry years", "सुख्खा वर्ष"),
+    "drought_years": (("Dry years", "सुक्खा वर्ष"),
                       ["Found {k} of {n} valley dry seasons.", "{fa} of {fan} flags were not dry seasons.",
                        "The rule was chosen after seeing some of them."],
-                      ["उपत्यकाका {n} मध्ये {k} सुख्खा याम भेटियो", "{fan} संकेतमध्ये {fa} सुख्खा याम थिएनन्",
+                      ["उपत्यकाका {n} मध्ये {k} सुक्खा याम भेटियो", "{fan} सङ्केतमध्ये {fa} सुक्खा याम थिएनन्",
                        "केही देखिसकेपछि नियम छानिएको हो"]),
     "harvest_years": (("Good and bad harvest years", "राम्रो र नराम्रो उब्जनीका वर्ष"),
                       ["Waiting for the farmer's best and worst years."], ["किसानका राम्रा र नराम्रा वर्ष पर्खिरहेका छौं"]),
@@ -859,7 +859,7 @@ COMPLIANCE = {
                                       "No field has tried it yet."],
                                      ["{n} कम्प्युटर गणनामध्ये {k} मा अहिलेको योजनाभन्दा राम्रो",
                                       "सबै गणनाले एउटै बाली मोडेल प्रयोग गर्छन्", "कुनै खेतमा अझै परीक्षण भएको छैन"]),
-    "plan_safest_beats_current": (("'Feed your soil' grows more", "'माटोलाई मल' ले बढी उब्जाउँछ"),
+    "plan_safest_beats_current": (("'Feed your soil' grows more", "'माटोलाई मलिलो बनाउने' ले बढी उब्जाउँछ"),
                                   ["It beats today's plan in {k} of {n} computer runs.", "All runs use our one crop model.",
                                    "No field has tried it yet."],
                                   ["{n} कम्प्युटर गणनामध्ये {k} मा अहिलेको योजनाभन्दा राम्रो",
@@ -871,12 +871,12 @@ COMPLIANCE = {
                     ["Needs well records from the valley."], ["उपत्यकाका इनारको अभिलेख चाहिन्छ"]),
     "part_soil_water": (("How wet each part is", "हरेक भाग कति ओसिलो छ"),
                         ["Waiting for soil readings at the field."], ["खेतमा माटोको नाप पर्खिरहेका छौं"]),
-    "probe_water": (("The soil stick's reading", "माटो जाँच्ने छडीको नाप"),
+    "probe_water": (("The soil stick's reading", "माटो जाँच्ने यन्त्रको नाप"),
                     ["Waiting for the soil test in cups."], ["कपमा माटो परीक्षण पर्खिरहेका छौं"]),
     "outlook_2040": (("Harvest by 2040", "२०४० सम्मको उब्जनी"),
                      ["A look ahead from many climate models.", "It can only be checked in 2040."],
                      ["धेरै जलवायु मोडेलबाट अगाडिको अनुमान", "यो २०४० मा मात्र जाँच्न सकिन्छ"]),
-    "plan_scores": (("Water, cover and soil scores", "पानी, ढाकन र माटोका अंक"),
+    "plan_scores": (("Water, cover and soil scores", "पानी, ढाकिएको जमिन र माटोका अङ्क"),
                     ["Worked out by computer.", "Nothing measured yet."], ["कम्प्युटरले निकालेको", "अझै केही नापिएको छैन"]),
 }
 
@@ -915,10 +915,10 @@ def report_card(ctx):
                      ["3.6", "3.10", "3.15", "3.18", "3.23", "4.2c"]))
     # bare days
     bd, lo, hi = ctx["bare_days"], ctx["bare_lo"], ctx["bare_hi"]
-    out.append(_line("bare_days", T("Days the field lies bare", "खेत बाँझो रहने दिन"), "low",
+    out.append(_line("bare_days", T("Days the field lies bare", "खेत खाली रहने दिन"), "low",
                      [f"This field: about {bd} bare days a year.", "Our bare line is not tuned yet.",
                       f"Nudged a little, nearby fields read {lo}-{hi} days.", "Older satellite years are not comparable."],
-                     [f"यो खेत: वर्षमा करिब {bd} दिन बाँझो", "बाँझो छुट्याउने रेखा अझै मिलाइएको छैन",
+                     [f"यो खेत: वर्षमा करिब {bd} दिन खाली", "खाली छुट्याउने रेखा अझै मिलाइएको छैन",
                       f"अलिकति सार्दा नजिकका खेत {lo}–{hi} दिन देखिन्छन्", "पुराना भू-उपग्रह वर्ष तुलना गर्न मिल्दैन"],
                      ["3.10", "3.23"]))
     # rain
@@ -931,7 +931,7 @@ def report_card(ctx):
           f"हामीले २०२५ का {nf + nl} महिना मापकसँग जाँच्यौं", f"{nf} महिना मापकको {fmt(rf, 2)} गुणा थिए"]
     if rl > SAME_LEVEL[1]:
         en.append(f"The last {nl} still read too wet.")
-        ne.append(f"अन्तिम {nl} महिना अझै धेरै भिजेका थिए")
+        ne.append(f"अन्तिम {nl} महिना अझै धेरै बढी वर्षा देखाउँथे")
     en.append(f"Yearly rain: {fmt(lvl, 2)} times the town's usual.")
     ne.append(f"वार्षिक वर्षा सहरको सामान्यको {fmt(lvl, 2)} गुणा")
     out.append(_line("rain", T("Rain on the field", "खेतमा परेको वर्षा"), conf, en, ne,
@@ -971,7 +971,7 @@ def report_card(ctx):
     ne = [f"उपत्यकाका {nf} मध्ये {kf} बाढी भेट्टायो"]
     if m:
         en.append(f"It also flagged {m} unrecorded flood {'year' if m == 1 else 'years'}.")
-        ne.append(f"अभिलेख नभएका {m} वर्ष पनि बाढी भन्यो")
+        ne.append(f"बाढीको अभिलेख नभएको {m} वर्षलाई पनि बाढी भन्यो")
     en.append("We knew these floods before setting the rule.")
     ne.append("नियम बनाउनुअघि यी बाढी हामीलाई थाहा थिए")
     out.append(_line("floods", T("Flood years", "बाढीका वर्ष"), "medium" if nf and kf == nf else "low", en, ne,
@@ -982,9 +982,9 @@ def report_card(ctx):
     ne = [f"उपत्यकाका {nd} मध्ये {kd} सुक्खा याम भेट्टायो"]
     if failed:
         en.append(f"It called {failed} normal or wet {'monsoon' if failed == 1 else 'monsoons'} dry.")
-        ne.append(f"सामान्य वा भिजेका {failed} बर्खालाई सुक्खा भन्यो")
+        ne.append(f"सामान्य वा बढी पानीका {failed} बर्खालाई सुक्खा भन्यो")
     en.append("The rain fix cannot reorder the years.")
-    ne.append("वर्षा सच्याउँदा वर्षहरूको क्रम मिल्दैन")
+    ne.append("वर्षा सच्याउँदा वर्षहरूको क्रम फेरिँदैन")
     good = nd and kd / nd >= 0.75 and failed == 0
     out.append(_line("dry_years", T("Dry years", "सुक्खा वर्ष"), "medium" if good else "low", en, ne,
                      ["4.1", "3.9b", "3.9d"]))
@@ -1072,7 +1072,7 @@ SATELLITES = [
      "refs": ["3.9", "3.9b", "3.9c", "3.9d"]},
     {"id": "landsat", "mission": "Landsat 8 and Landsat 9 (NASA/USGS)", "instrument": "OLI and OLI-2",
      "dataset": "HLS-VI v2.0, HLSL30_VI (30 m)", "kind": "satellite",
-     "job": T("Greenness: seasons, bare days and crop cover.", "हरियाली: बाली याम, बाँझो दिन र बालीको ढकान।"),
+     "job": T("Greenness: seasons, bare days and crop cover.", "हरियाली: बाली याम, खाली दिन, ढाकिएको जमिन।"),
      "checked": T("Three season methods agree. It matches MODIS.", "तीन तरिका मिल्छन्। मोडिससँग मिल्छ।"),
      "refs": ["3.6", "3.10", "3.15", "3.23"]},
     {"id": "sentinel2", "mission": "Sentinel-2 (ESA Copernicus)", "instrument": "MSI",
@@ -1083,7 +1083,7 @@ SATELLITES = [
     {"id": "modis", "mission": "Terra (NASA)", "instrument": "MODIS", "dataset": "MOD13Q1 v061 NDVI (250 m, 16 days)",
      "kind": "satellite",
      "job": T("Older greenness, compared with HLS only.", "पुरानो हरियाली, HLS सँग तुलना मात्र।"),
-     "checked": T("Agrees with HLS. It misses short bare spells.", "HLS सँग मिल्छ। छोटो बाँझो समय छुटाउँछ।"),
+     "checked": T("Agrees with HLS. It misses short bare spells.", "HLS सँग मिल्छ। छोटो खाली समय छुटाउँछ।"),
      "refs": ["3.10"]},
     {"id": "smap", "mission": "SMAP (NASA)", "instrument": "L-band radiometer (its radar failed in 2015)",
      "dataset": "SPL4SMGP v008 (L4 root zone, model-assisted, 9 km); SPL3SMP_E v006 (L3)", "kind": "satellite",
@@ -1102,13 +1102,13 @@ SATELLITES = [
      "instrument": "PHyTIR thermal infrared radiometer",
      "dataset": "ECO_L2T_LSTE and ECO_L4T_ESI, V003 first, V002 where V003 lacks a pass (70 m)", "kind": "satellite",
      "job": T("A check on crop water stress.", "बालीको पानी तनावको जाँच।"),
-     "checked": T("Too few clear passes to decide.", "निर्णय गर्न पर्याप्त सफा पास छैनन्।"),
+     "checked": T("Too few clear passes to decide.", "निर्णय गर्न बादलरहित तस्बिर पर्याप्त छैनन्।"),
      "refs": ["4.2e"]},
     {"id": "srtm", "mission": "SRTM on Space Shuttle Endeavour (NASA/NGA, 2000)", "instrument": "C-band radar interferometry",
      "dataset": "NASADEM_HGT v001 (SRTM reprocessed, 30 m)", "kind": "satellite",
      "job": T("Field height and slope; low ground.", "खेतको उचाइ र भिरालोपन; होचो जमिन।"),
      "checked": T("Low ground is below its error. We say can't tell.",
-                  "होचो जमिन यसको त्रुटिभन्दा सानो। थाहा छैन भन्छौं।"),
+                  "जमिनको होचोपन यसको त्रुटिभन्दा सानो छ। त्यसैले 'भन्न सकिँदैन' भन्छौं।"),
      "refs": ["3.20"]},
     {"id": "ceres", "mission": "CERES on Terra, Aqua, Suomi NPP and NOAA-20 (NASA), via NASA POWER",
      "instrument": "CERES broadband radiometers (with geostationary imagers in SYN1deg)",
@@ -1165,7 +1165,7 @@ RESOURCES = [
     {"name": "SRTM", "status": "used",
      "how": T("Field height and slope, through NASADEM.", "खेतको उचाइ र भिरालोपन, NASADEM बाट।")},
     {"name": "ECOSTRESS", "status": "used",
-     "how": T("A check on crop stress. Too few clear passes.", "बालीको तनावको जाँच। सफा पास धेरै कम।")},
+     "how": T("A check on crop stress. Too few clear passes.", "बालीको तनावको जाँच। बादलरहित तस्बिर धेरै कम।")},
     {"name": "USDA Ag Data Commons", "status": "not used",
      "how": T("Its data cover the United States, not Nepal.", "यसको तथ्याङ्क अमेरिकाको हो, नेपालको होइन।")},
     {"name": "Web Soil Survey", "status": "equivalent", "instead": "ISRIC SoilGrids 2.0 (250 m, world)",
@@ -1371,7 +1371,7 @@ def build_story(inp, generated):
         "compliance": compliance(inp.get("scorecard")),
         "compliance_note": T("Verified means right at least 92 times in 100, on 10 or more checks. "
                              "The range shows how sure that number is.",
-                             "प्रमाणित भनेको कम्तीमा १० जाँचमा १०० मा ९२ पटक सही। दायराले त्यो अंक कति पक्का छ देखाउँछ।"),
+                             "प्रमाणित भनेको कम्तीमा १० जाँचमा १०० मा ९२ पटक सही। दायराले त्यो अङ्क कति पक्का छ देखाउँछ।"),
         "satellites": SATELLITES, "resources": RESOURCES,
     }
 

@@ -105,7 +105,7 @@
      "water_better"
     ],
     "en": "Stored water in this area is falling.",
-    "ne": "यस क्षेत्रमा जम्मा पानी घट्दै छ।",
+    "ne": "यस क्षेत्रमा जम्मा भएको पानी घट्दै छ।",
     "ne_review": "needs native-speaker review"
    },
    {
@@ -124,7 +124,7 @@
      "fallback"
     ],
     "en": "It did well when we replayed your field.",
-    "ne": "तपाईंको खेत फेरि चलाएर हेर्दा यो राम्रो देखियो।",
+    "ne": "खेतका पुराना वर्ष दोहोर्‍याएर हेर्दा यो राम्रो देखियो।",
     "ne_review": "needs native-speaker review"
    }
   ],
@@ -135,7 +135,7 @@
      "always"
     ],
     "en": "We replayed the weather from {year_first} to {year_last}.",
-    "ne": "{year_first} देखि {year_last} सम्मको मौसम फेरि चलायौं।",
+    "ne": "{year_first} देखि {year_last} सम्मको मौसम दोहोर्‍याएर हेर्‍यौं।",
     "ne_review": "needs native-speaker review"
    },
    {
@@ -383,7 +383,7 @@
      "has_rice"
     ],
     "en": "If you can water, rice stands in water.",
-    "ne": "पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ।",
+    "ne": "पानी लगाउन सक्नुहुन्छ भने धान पानीमा रहन्छ।",
     "ne_review": "needs native-speaker review",
     "basis": "CLAUDE.md 'Rice' as implemented (REVIEW_NOTES H1): only the watered case keeps a pond"
    },
@@ -463,7 +463,7 @@
      "rain_corrected"
     ],
     "en": "Near here, those gauge reports stopped in {rain_fix_year}.",
-    "ne": "यहाँ नजिक ती मापकका खबर {rain_fix_year} मा रोकिए।",
+    "ne": "यहाँ नजिकका मापकबाट {rain_fix_year} देखि नाप आएनन्।",
     "ne_review": "needs native-speaker review",
     "basis": "GPCC stations in the field's 1-degree box: about 50 a month to about 1 from January 2017 (VALIDATION 3.9b)"
    },
@@ -512,7 +512,7 @@
      "always"
     ],
     "en": "Stored water is measured for a wide area.",
-    "ne": "जम्मा पानी ठूलो क्षेत्रको नापिएको हो।",
+    "ne": "जम्मा भएको पानी ठूलो क्षेत्रभरिको नाप हो।",
     "ne_review": "needs native-speaker review",
     "basis": "rules.yaml groundwater.caveat (owner: say it in every explanation)"
    },
@@ -687,7 +687,7 @@
     "steep_part"
    ],
    "en": "On part {section}, plant across the slope.",
-   "ne": "भाग {section}मा भिरालोको तेर्सो लाइनमा रोप्नुहोस्।",
+   "ne": "भाग {section}मा भिरालोमा तेर्सो हार बनाएर लगाउनुहोस्।",
    "ne_review": "needs native-speaker review",
    "basis": "CLAUDE.md 'Tips' (contour planting); a sourced slope threshold is still needed (step 8)"
   }
@@ -709,7 +709,7 @@
      "always"
     ],
     "en": "Around this field, gauge reports stopped in {rain_fix_year}.",
-    "ne": "यो खेत वरिपरि मापकका खबर {rain_fix_year} मा रोकिए।",
+    "ne": "यो खेत वरिपरि {rain_fix_year} देखि मापकका नाप आएनन्।",
     "ne_review": "needs native-speaker review"
    },
    {
@@ -718,7 +718,7 @@
      "always"
     ],
     "en": "Before, the gauges set almost all of it.",
-    "ne": "पहिले, धेरैजसो नाप मापकले नै मिलाउँथे।",
+    "ne": "पहिले, वर्षाको नाप लगभग सबै मापकबाटै आउँथ्यो।",
     "ne_review": "needs native-speaker review"
    },
    {
@@ -763,7 +763,7 @@
      "always"
     ],
     "en": "We scaled each month from {rain_fix_year} back down.",
-    "ne": "हामीले {rain_fix_year} देखि हरेक महिना घटायौं।",
+    "ne": "हामीले {rain_fix_year} देखिको हरेक महिनाको वर्षा घटायौं।",
     "ne_review": "needs native-speaker review"
    },
    {

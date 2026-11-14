@@ -174,13 +174,14 @@ def read_xlsx(path):
     return [dict(zip(HEADER, r)) for r in table[1:] if any(r)]
 
 
-def apply_review(sheet_rows, name, day, words_dir=HERE):
+def apply_review(sheet_rows, name, day, words_dir=HERE, mark_reviewed=True):
     """Mark 'yes' texts reviewed, replace corrected ones (placeholders must match the English), write the word files
-    back. Returns counts and the rows to apply by hand (texts made in code)."""
+    back. Returns counts and the rows to apply by hand (texts made in code) or set aside (the English changed since the
+    sheet was made). mark_reviewed=False applies corrections but leaves every review mark as it is."""
     mark = f"reviewed by {name}, {day}"
     words = {f: _load(words_dir, f) for f in FILES}
     index = {k: n for k, _, n in _word_nodes(words)}
-    out = {"marked": 0, "corrected": 0, "unanswered": 0, "said_no_without_fix": [], "by_hand": []}
+    out = {"marked": 0, "corrected": 0, "unanswered": 0, "said_no_without_fix": [], "by_hand": [], "stale": []}
     for r in sheet_rows:
         rid, ok, fix = r["id"].strip(), r[HEADER[4]].strip().lower(), r[HEADER[5]].strip()
         if not rid or not (ok or fix):
@@ -189,14 +190,17 @@ def apply_review(sheet_rows, name, day, words_dir=HERE):
         node = index.get(rid)
         if node is None:
             out["by_hand"].append(r)
+        elif r[HEADER[2]].strip() and r[HEADER[2]].strip() != node["en"].strip():
+            out["stale"].append(r)
         elif fix:
             need, got = sorted(set(PLACEHOLDER.findall(node["en"]))), sorted(set(PLACEHOLDER.findall(fix)))
             if need != got:
                 raise ValueError(f"{rid}: the corrected Nepali must keep the placeholders {need}, it has {got}")
-            node["ne"], node["ne_review"] = fix, mark
+            node["ne"] = fix
+            node["ne_review"] = mark if mark_reviewed else node["ne_review"]
             out["corrected"] += 1
         elif ok == "yes":
-            node["ne_review"] = mark
+            node["ne_review"] = mark if mark_reviewed else node["ne_review"]
             out["marked"] += 1
         else:
             out["said_no_without_fix"].append(rid)
@@ -210,17 +214,19 @@ def main(argv=None):
     ap.add_argument("--apply", help="the filled-in spreadsheet")
     ap.add_argument("--name")
     ap.add_argument("--date")
+    ap.add_argument("--no-mark", action="store_true", help="apply corrections without marking anything reviewed")
     a = ap.parse_args(argv)
     if not a.apply:
         r = rows()
         write_xlsx(r)
         print(f"wrote {OUT} ({len(r)} texts)")
         return 0
-    out = apply_review(read_xlsx(a.apply), a.name, a.date)
+    out = apply_review(read_xlsx(a.apply), a.name, a.date, mark_reviewed=not a.no_mark)
     print(json.dumps({k: v if isinstance(v, int) else len(v) for k, v in out.items()}),
           "\nnext: python -m pipeline.export.build_words; python -m pipeline.words.preview; re-export the fields")
-    for r in out["by_hand"]:
-        print("BY HAND:", r["id"], "->", r[HEADER[5]] or r[HEADER[4]], r[HEADER[6]])
+    for kind in ("by_hand", "stale"):
+        for r in out[kind]:
+            print(kind.upper(), r["id"], "->", r[HEADER[5]] or r[HEADER[4]], "|", r[HEADER[6]])
     return 0
 
 

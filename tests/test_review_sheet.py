@@ -65,3 +65,20 @@ def test_unchanged_files_are_written_back_byte_for_byte(tmp_path):
     before = {f: (d / f"{f}.json").read_bytes() for f in rs.FILES}
     rs.apply_review([], "Test Reviewer", "2026-11-15", words_dir=d)
     assert {f: (d / f"{f}.json").read_bytes() for f in rs.FILES} == before
+
+
+def test_a_correction_to_an_english_text_that_changed_is_set_aside(tmp_path):
+    d = _copy_words(tmp_path)
+    sheet = [dict(zip(HEADER, ["screens.what_to_grow.texts.next_h2", "", "Three months (old English)", "३ महिना", "",
+                               "तीन महिना", ""]))]
+    out = rs.apply_review(sheet, "Test Reviewer", "2026-11-15", words_dir=d)
+    assert out["corrected"] == 0 and len(out["stale"]) == 1
+
+
+def test_corrections_can_be_applied_without_marking_them_reviewed(tmp_path):
+    d = _copy_words(tmp_path)
+    sheet = [dict(zip(HEADER, ["screens.what_to_grow.texts.next_h2", "", "3 months", "३ महिना", "", "तीन महिना", ""]))]
+    rs.apply_review(sheet, "Test Reviewer", "2026-11-15", words_dir=d, mark_reviewed=False)
+    s = json.loads((d / "screens.json").read_text())
+    node = {t["id"]: t for sc in s["screens"] if sc["id"] == "what_to_grow" for t in sc["texts"]}["next_h2"]
+    assert node["ne"] == "तीन महिना" and node["ne_review"] == "needs native-speaker review"

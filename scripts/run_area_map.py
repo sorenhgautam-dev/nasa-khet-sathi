@@ -25,6 +25,7 @@ from pipeline.diary import greenness as gr  # noqa: E402
 from pipeline.diary import ndvi as nd  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
+from pipeline.export.build_story import _DEVANAGARI as NE_DIGITS  # noqa: E402
 
 END = "2025-12-31"
 
@@ -108,18 +109,18 @@ def site_json(field, A, out, site_dir):
     no_data = {"code": -1, "colour": K["no_data_colour"], "en": "Not enough clear pictures", "ne": "सफा तस्बिर पुगेनन्"}
     common_en = ["Seen from space, 2014 to 2025.", "Each square is 30 metres.", "Space sees green, not which crop.",
                  "No colour: not farmland on the map.", "Your own field may differ."]
-    common_ne = ["अन्तरिक्षबाट हेरिएको, 2014 देखि 2025।", "हरेक कोठा 30 मिटरको।", "भू-उपग्रहले हरियो देख्छ, कुन बाली होइन।",
-                 "रङ नभएको ठाउँ: नक्सामा खेत होइन।", "तपाईंको आफ्नै खेत फरक हुन सक्छ।"]
+    common_ne = [s.translate(NE_DIGITS) for s in ["अन्तरिक्षबाट हेरिएको, 2014 देखि 2025।", "हरेक कोठा 30 मिटरको।", "भू-उपग्रहले हरियो देख्छ, कुन बाली होइन।",
+                 "रङ नभएको ठाउँ: नक्सामा खेत होइन।", "तपाईंको आफ्नै खेत फरक हुन सक्छ।"]]
     mb, lb, ts = n["median_bare_days"], n["share_long_bare"], n["share_two_seasons"]
     nums = [{"id": "median_bare_days", "value": round(mb["value"]), "low": round(mb["low"]), "high": round(mb["high"]), "unit": "days a year",
              "en": [f"A typical field here is bare {round(mb['value'])} days.", f"Could be {round(mb['low'])} to {round(mb['high'])} days."],
-             "ne": [f"यहाँको सामान्य खेत वर्षमा {round(mb['value'])} दिन बाँझो।", f"{round(mb['low'])} देखि {round(mb['high'])} दिन हुन सक्छ।"]},
+             "ne": [s.translate(NE_DIGITS) for s in [f"यहाँको सामान्य खेत वर्षमा {round(mb['value'])} दिन खाली रहन्छ।", f"{round(mb['low'])} देखि {round(mb['high'])} दिन हुन सक्छ।"]]},
             {"id": "share_long_bare", "value": r3(lb["value"]), "low": r3(lb["low"]), "high": r3(lb["high"]), "unit": "share of cropland",
              "en": [f"{_in10(lb['value'])} in 10 fields: bare over two months.", f"Could be {_in10(lb['low'])} to {_in10(lb['high'])} in 10."],
-             "ne": [f"10 मध्ये {_in10(lb['value'])} खेत दुई महिनाभन्दा बढी बाँझो।", f"10 मध्ये {_in10(lb['low'])} देखि {_in10(lb['high'])} हुन सक्छ।"]},
+             "ne": [s.translate(NE_DIGITS) for s in [f"10 मध्ये {_in10(lb['value'])} खेत दुई महिनाभन्दा बढी खाली।", f"10 मध्ये {_in10(lb['low'])} देखि {_in10(lb['high'])} हुन सक्छ।"]]},
             {"id": "share_two_seasons", "value": r3(ts["value"]), "low": r3(ts["low"]), "high": r3(ts["high"]), "unit": "share of cropland",
              "en": [f"{_in10(ts['value'])} in 10 fields: two crops a year.", f"Could be {_in10(ts['low'])} to {_in10(ts['high'])} in 10."],
-             "ne": [f"10 मध्ये {_in10(ts['value'])} खेतमा वर्षमा दुई बाली।", f"10 मध्ये {_in10(ts['low'])} देखि {_in10(ts['high'])} हुन सक्छ।"]}]
+             "ne": [s.translate(NE_DIGITS) for s in [f"10 मध्ये {_in10(ts['value'])} खेतमा वर्षमा दुई बाली।", f"10 मध्ये {_in10(ts['low'])} देखि {_in10(ts['high'])} हुन सक्छ।"]]}]
     doc = {"id": field["id"], "placeholder": True,
            "note": "Map of the farmland around the PLACEHOLDER demo field (its fetch box). Proposal: not yet in the contract.",
            "bounds": [[box[1], box[0]], [box[3], box[2]]], "bbox": box,
@@ -127,7 +128,7 @@ def site_json(field, A, out, site_dir):
                      "height": out["pngs"]["bare_days"]["height"], "ground_pixel_m": A["render"]["ground_pixel_m"],
                      "css": "image-rendering: pixelated (the classes must not blur into new colours)", "transparent": "not cropland"},
            "layers": [{"id": "bare_days", "image": out["pngs"]["bare_days"]["file"], "bytes": out["pngs"]["bare_days"]["bytes"],
-                       "title": {"en": "Days of bare ground each year", "ne": "हरेक वर्ष जमिन बाँझो रहने दिन"},
+                       "title": {"en": "Days of bare ground each year", "ne": "हरेक वर्ष जमिन खाली रहने दिन"},
                        "classes": bare_cls, "no_data": no_data, "legend": {"en": common_en, "ne": common_ne}},
                       {"id": "seasons", "image": out["pngs"]["seasons"]["file"], "bytes": out["pngs"]["seasons"]["bytes"],
                        "title": {"en": "Crops grown each year", "ne": "हरेक वर्ष लगाइने बाली"},

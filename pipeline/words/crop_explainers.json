@@ -86,7 +86,7 @@
     },
     {
      "en": "Here, lentil is sown mid-October to mid-November.",
-     "ne": "यहाँ मसुर अक्टोबरको मध्यदेखि नोभेम्बरको मध्यसम्म छरिन्छ।",
+     "ne": "यहाँ मसुर कात्तिकमा छरिन्छ (मध्य अक्टोबर–मध्य नोभेम्बर)।",
      "ne_review": "needs native-speaker review",
      "source": {
       "publisher": "FAO",
@@ -115,7 +115,7 @@
    "claims": [
     {
      "en": "Rain does not hit covered soil hard.",
-     "ne": "ढाकिएको माटोमा पानीका थोपाले चोट गर्दैनन्।",
+     "ne": "ढाकिएको माटोमा पानीका थोपाले चोट पुर्‍याउँदैनन्।",
      "ne_review": "needs native-speaker review",
      "source": {
       "publisher": "FAO",
@@ -171,7 +171,7 @@
     },
     {
      "en": "Lentil and mustard grow here in winter.",
-     "ne": "मसुर र तोरी यहाँ जाडोमा हुर्कन्छन्।",
+     "ne": "मसुर र तोरी यहाँ हिउँदमा हुर्कन्छन्।",
      "ne_review": "needs native-speaker review",
      "source": {
       "publisher": "FAO",
@@ -215,7 +215,7 @@
     },
     {
      "en": "They bring back food washed deep down.",
-     "ne": "तल बगेर गएको खाना तिनले फेरि माथि ल्याउँछन्।",
+     "ne": "तल बगेर गएको मल तिनले फेरि माथि ल्याउँछन्।",
      "ne_review": "needs native-speaker review",
      "source": {
       "publisher": "FAO",
@@ -315,7 +315,7 @@
     },
     {
      "en": "But other millets need a little less water.",
-     "ne": "तर चिनो, कागुनोलाई यसभन्दा अलि कम पानी चाहिन्छ।",
+     "ne": "तर अरू कोदोजस्ता बालीलाई अलि कम पानी चाहिन्छ।",
      "ne_review": "needs native-speaker review",
      "source": {
       "publisher": "FAO",
