@@ -3260,6 +3260,22 @@
    "en": "For judges: how we know",
    "fr": "Pour le jury : comment nous savons"
   },
+  "shared.farm.behind_title": {
+   "en": "Behind the scenes: your field, seen by NASA",
+   "fr": "En coulisses: votre champ, vu par la NASA"
+  },
+  "shared.farm.tag_rain": {
+   "en": "NASA rain, {year_count} years",
+   "fr": "Pluie de la NASA, {year_count} ans"
+  },
+  "shared.farm.tag_weather": {
+   "en": "NASA weather, {year_count} years",
+   "fr": "Météo de la NASA, {year_count} ans"
+  },
+  "shared.farm.tag_space": {
+   "en": "NASA pictures, {year_count} years",
+   "fr": "Images de la NASA, {year_count} ans"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "fr": "janvier–février"

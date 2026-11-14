@@ -222,6 +222,14 @@ cold), never on the farmer screens, which show no numbers. Words: `words.json` s
   else as before (`hc_weeks`, `hc_years`, squares, around 2040). `left_out` now names the 8-35 C pollen figure; keep
   `hc_left_out`.
 
+## 6l. Landed on 15 November (Sunday), night: Behind the scenes (for judges)
+
+A new file, `data/behind.json` (demo field), and `js/behind.js`. Nothing else changed. The section "Behind the scenes:
+your field, seen by NASA" sits below Home's first screen (it loads only when scrolled to) and first on How we know. It
+shows six counted numbers, the flow line, one card per NASA mission (charts from `story.json`, drawn by `how.js`'s
+`K.how.plot`) and the pixel-size picture. Farmer answers show a small tag (`farm.tag_rain`, `tag_weather`, `tag_space`,
+filled with `year_count`); a tap opens the matching card in a sheet. Details: CONTRACT_CHANGES.md, 2026-11-15.
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

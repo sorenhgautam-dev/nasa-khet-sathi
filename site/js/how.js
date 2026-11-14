@@ -60,11 +60,13 @@
       h('p', { class: 'small', lang: 'en' }, 'We acknowledge the use of imagery provided by services from NASA\u2019s Global Imagery Browse Services (GIBS), part of NASA\u2019s Earth Science Data and Information System (ESDIS).')]), glossary(), nr];
     // the labels and the evidence that left the farmer's screens first, then the chapters of story.json
     mine.splice(1, 0, storyBox);
+    var bh = K.behindBox(); mine.unshift(bh);   // first for judges: "Behind the scenes: your field, seen by NASA" (js/behind.js)
     mine.forEach(function (x) { root.append(x); });
     function addToc(id, title) { toc.append(h('a', { class: 'btn3', href: '#/how/' + id, style: 'min-height:40px;font-size:13px' }, title)); }
     K.getJSON('data/story.json').then(function (st) {
       if (!storyBox.isConnected) return;
       var hasArea = false;
+      if (bh.isConnected) addToc('behind', T('farm.behind_title'));   // gone when there is none for this field
       J.forEach(function (j) { addToc(j[0], j[1]); });
       if (st) {
         story(F, st).forEach(function (x) { storyBox.append(x.el); addToc(x.id, x.title); });
@@ -642,4 +644,5 @@
     });
     return el;
   }
+  K.how.plot = function (c) { return c.kind === 'bars' ? bars(c) : line(c); };   // one chart alone, for js/behind.js
 })();

@@ -4257,6 +4257,26 @@
     "en": "For judges: how we know",
     "ne": "निर्णायकका लागि: हामीलाई कसरी थाहा भयो",
     "ne_review": "needs native-speaker review"
+   },
+   "behind_title": {
+    "en": "Behind the scenes: your field, seen by NASA",
+    "ne": "पर्दा पछाडि: नासाले देखेको तपाईंको खेत",
+    "ne_review": "needs native-speaker review"
+   },
+   "tag_rain": {
+    "en": "NASA rain, {year_count} years",
+    "ne": "नासाको वर्षा, {year_count} वर्ष",
+    "ne_review": "needs native-speaker review"
+   },
+   "tag_weather": {
+    "en": "NASA weather, {year_count} years",
+    "ne": "नासाको मौसम, {year_count} वर्ष",
+    "ne_review": "needs native-speaker review"
+   },
+   "tag_space": {
+    "en": "NASA pictures, {year_count} years",
+    "ne": "नासाका तस्बिर, {year_count} वर्ष",
+    "ne_review": "needs native-speaker review"
    }
   },
   "bs_months": {

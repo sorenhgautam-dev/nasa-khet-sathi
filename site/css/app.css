@@ -708,3 +708,55 @@ details.why { background: rgba(255,255,255,.6); }
 .icons { gap: 2px; }
 .plan .go .ico { color: var(--lime); }
 .bigcard.light .go .ico { color: var(--lime); }
+
+/* ---------------- Behind the scenes: your field, seen by NASA (js/behind.js; owner, 2026-11-15) ---------------- */
+/* Home keeps the first screen to itself (its own height, as before); the section starts just below and loads only when it is scrolled to */
+#app > .scr-home { min-height: calc(100vh - 106px); min-height: calc(100dvh - 106px); }
+.behindbox { display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 12px; }
+#app > .behindbox { margin-top: 60px; padding: 16px; border-radius: 24px; background: rgba(255,255,255,.62); border: 1px solid var(--glass-line);
+  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+.diving + .behindbox, .leaving + .behindbox { opacity: 0; transition: opacity 300ms ease; }
+.behind { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.bnums { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.bnum { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 12px 14px; border-radius: 20px; background: var(--ink); color: #fff;
+  animation: ks-reveal 700ms var(--ease) both; }
+.bnum b { font-family: var(--f-head); font-weight: 900; font-size: 32px; line-height: 1.05; letter-spacing: -0.03em; color: var(--lime); }
+.bnum .bl { font-weight: 700; font-size: 15px; line-height: 1.25; }
+.bnum .small { color: #D5E3D2; }
+.bnum .srcs { margin-top: 4px; }
+.bnum .src { border-radius: 12px; text-align: left; }
+.bnum .src, .best .src { background: rgba(255,255,255,.12); color: var(--lime-2); border-color: rgba(255,255,255,.2); }
+.srcs.nasa { margin-top: 2px; }
+.bflow { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.bflow li { display: inline-flex; align-items: center; gap: 6px; color: var(--brown); }
+.bflow li span:not(.ico) { padding: 8px 14px; border-radius: 999px; background: #fff; border: 1.5px solid var(--ink); color: var(--ink); font-weight: 700; font-size: 15px; }
+.bflow li span.last { background: var(--lime); }
+.bcards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.bcard { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 14px; border-radius: 20px; background: rgba(255,255,255,.72); border: 1px solid var(--line-2); }
+.bhead { display: flex; align-items: center; gap: 10px; }
+.bhead .ic { width: 40px; height: 40px; border-radius: 12px; background: var(--ink); color: var(--lime); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.bplot { margin: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.bplot figcaption { font-weight: 700; color: var(--brown-2); }
+.behind svg.plot { display: block; width: 100%; height: auto; max-width: 560px; }
+.behind svg.plot text { font-family: var(--f-body); font-size: 12.5px; fill: var(--muted); }
+.bpix { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.bpixf { margin: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.bpixf .lines li { font-size: 13px; line-height: 1.3; }
+svg.pix { display: block; width: 100%; height: auto; border-radius: 14px; background: #EEF3E4; border: 1px solid var(--line); }
+svg.pix .ps { fill: rgba(47,110,153,.10); stroke: #14301E; stroke-width: 2; }
+svg.pix .pg { stroke: #14301E; stroke-width: 1; stroke-dasharray: 3 3; }
+svg.pix .pf { fill: #C8E05A; stroke: #5E8A3A; stroke-width: 1.5; }
+svg.pix .pi { fill: #9A5426; stroke: #fff; stroke-width: 1; }
+svg.pix circle.pf { stroke: #14301E; }
+@media (min-width: 720px) {
+  .bnums { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  #app > .scr-home { min-height: calc(100vh - 180px); }
+  #app > .behindbox { margin-top: 64px; padding: 24px; }
+  .bnums { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .bcards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .how .bcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .how .bnums { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

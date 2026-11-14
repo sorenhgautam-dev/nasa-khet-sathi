@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 709 texts): 686 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 713 texts): 690 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -792,7 +792,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 174 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 178 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -967,6 +967,10 @@ This page is made from the word files in this folder; change those, not this pag
 | Failed | असफल भयो |
 | Works most often: | धेरैपटक सफल: |
 | For judges: how we know | निर्णायकका लागि: हामीलाई कसरी थाहा भयो |
+| Behind the scenes: your field, seen by NASA | पर्दा पछाडि: नासाले देखेको तपाईंको खेत |
+| NASA rain, {year_count} years | नासाको वर्षा, {year_count} वर्ष |
+| NASA weather, {year_count} years | नासाको मौसम, {year_count} वर्ष |
+| NASA pictures, {year_count} years | नासाका तस्बिर, {year_count} वर्ष |
 | *Bikram Sambat months (English and Nepali)* | |
 | Magh | माघ |
 | Falgun | फागुन |

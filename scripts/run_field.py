@@ -62,6 +62,7 @@ STEPS = [   # (name, command after the interpreter, which fields); --field <id> 
     ("labels", ["-m", "pipeline.export.build_labels"], CORE),         # after verification: this run's scorecard
     ("simple", ["-m", "pipeline.export.build_simple"], CORE),         # the three farmer cards, from the replay and pulse files
     ("story", ["-m", "pipeline.export.build_story"], SITE),
+    ("behind", ["-m", "pipeline.export.build_behind"], SITE),         # "Behind the scenes" (2026-11-15): counts and cards, after the story's charts
     ("validate", ["-m", "pipeline.export.validate", "--final"], SITE),
     ("site_check", ["scripts/check_site.py", "--final"], SITE),
 ]
