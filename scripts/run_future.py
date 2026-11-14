@@ -34,6 +34,7 @@ from pipeline.future import runs as ru  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
+from scripts.common import dhm_rain  # noqa: E402
 
 VERSIONS = ("corrected", "uncorrected", "dhm")   # dhm: owner's decision 4b (2026-11-14), the range's dry edge
 ROLES = ("current", "cover_gap", "safest")
@@ -180,12 +181,7 @@ def main(argv=None):
 
     plans_out, grid = {pid: {} for pid in specs}, {}
     for v in VERSIONS:
-        if v == "dhm":
-            sys.path.insert(0, str(REPO / "scripts"))
-            from run_plans import dhm_rain
-            wv = with_rain(w, v, dhm=dhm_rain(rules))
-        else:
-            wv = with_rain(w, v)
+        wv = with_rain(w, v, dhm=dhm_rain(rules) if v == "dhm" else None)
         base = {pid: ru.plan_run(sp, wv, lib, soil, cn, rules) for pid, sp in specs.items()}
         runs = {pid: [] for pid in specs}
         for (m, s), ch in changes.items():

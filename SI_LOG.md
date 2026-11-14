@@ -1084,3 +1084,9 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   have won instead (38 against 36 of 83); reported, not used.
 - **For a person to review:** the winner (gauge-calibrated, 40 of 83 against corrected 38 of 83), the 2026 result, and
   January 2026 (IMERG Late 130 mm at the field's cell against 2-3 mm at the gauges).
+
+## 2026-11-14: line-cutting pass (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- One command, `scripts/run_field.py --field <id>`, runs every build step in order from the cached data; shared helpers in `scripts/common.py`; duplicated helpers removed from run_replay and run_plans. Proved byte-identical against a SHA-256 manifest and in a fresh copy of the tracked files (demo, about 20 min); the only differences were method.choices from newer rules.yaml entries, plus metadata. Moved review_pack out of the root (to the backups folder). Net code lines +45 (the runner costs about 100): the pass made the build reproducible with one command, not smaller.
+- **For a person to review:** the runner's step order and the scripts left out of the chain (run_season, run_dhm_bulletin_check, the probe scripts, pick_sample_fields, plot_pixels).
+

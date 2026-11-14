@@ -92,30 +92,19 @@ python3.12 -m venv .venv
    .venv/bin/python -m pipeline.fetch.ghcn --field <id>                # only if a station is named
    ```
 
-3. **Build the daily weather** the twin reads, check the rain, then run the **replay**, the **diary** and the
-   **plans**. Where the rain was corrected, the rain-based steps run a second time on the rain as published:
+   `scripts/fetch_field.py --field <id>` runs the downloads a field abroad needs in one go, resumably (no MODIS, SMAP
+   or ECOSTRESS: nothing shown abroad uses them).
+
+3. **Build everything else with one command**, from the downloaded files only: the daily weather, the rain check,
+   the diary, the replay, the plans (on each rain version), the 2040 outlook, the checks, then the website's files
+   and their checks (`validate --final`, `check_site.py --final`):
 
    ```sh
-   .venv/bin/python -m pipeline.fetch.weather --field <id>
-   .venv/bin/python scripts/run_checks.py --field <id>
-   .venv/bin/python scripts/run_rain_check.py --field <id>             # is there a break in the rain record?
-   .venv/bin/python scripts/run_replay.py --field <id>
-   .venv/bin/python scripts/run_diary.py --field <id>                  # onset, greenness, seasons, calendar
-   .venv/bin/python scripts/run_plans.py --field <id>                  # about two minutes
-   .venv/bin/python scripts/run_replay.py --field <id> --rain uncorrected
-   .venv/bin/python scripts/run_diary.py --field <id> --steps onset,diary --rain uncorrected
-   .venv/bin/python scripts/run_plans.py --field <id> --rain uncorrected
+   .venv/bin/python scripts/run_field.py --field <id>                  # about 20 minutes for the demo
+   .venv/bin/python scripts/run_field.py --field <id> --list           # the steps; --from <step> resumes, --only <step> picks
    ```
 
-4. **Export and check** the website file:
-
-   ```sh
-   .venv/bin/python -m pipeline.export.build_field_json --field <id>
-   .venv/bin/python -m pipeline.export.validate
-   .venv/bin/python -m pipeline.export.build_words         # the site's words: site/data/words.json
-   .venv/bin/python -m pipeline.export.validate --final    # before freezing: fails on any made-up number
-   .venv/bin/python scripts/check_site.py --final          # the site is plain files with relative paths
-   ```
+   It stops at the first step that fails. Each step is one script in `scripts/` (or module), which can also run alone.
 
 Every download writes a "data card" in `data/cards/<id>/`: the product, version, units, fill values removed
 and pixels over the field. Every export must match `pipeline/export/schema.json`.
@@ -127,9 +116,10 @@ sources list): that is build step 11, see [REVIEW_2.md](REVIEW_2.md), H6.*
 
 Optional checks, each with its own data card: `pipeline.fetch.chirps` and `pipeline.fetch.gpm_late` (a second and
 third look at the rain), `pipeline.fetch.gauge_evidence` (how many rain gauges stand behind GPM's rain),
-`pipeline.fetch.smap` with `scripts/run_smap_check.py` (soil moisture), `scripts/run_dhm_bulletin_check.py`
-(Nepal's own gauges, if you have their monthly bulletins), and `scripts/run_memory.py` (does a small learned
-correction beat the physics twin on years it has not seen? On the demo field it does not, and we say so).
+`pipeline.fetch.smap` (soil moisture, compared by the runner's `smap_check` step), `scripts/run_dhm_bulletin_check.py`
+(Nepal's own gauges, if you have their monthly bulletins; run alone), and the runner's `memory` step,
+`scripts/run_memory.py` (does a small learned correction beat the physics twin on years it has not seen? On the demo
+field it does not, and we say so).
 
 ## Credits
 

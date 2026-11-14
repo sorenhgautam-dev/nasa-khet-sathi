@@ -5,9 +5,9 @@ rules.yaml validation_checks, committed before the first run: fe3223a).
                                                       [--only ecostress hls faostat gldas]
 
 Re-runnable on the final twin: rerun scripts/run_replay.py (both rain versions) and scripts/run_plans.py first. Where
-daily values are needed the twin is rerun in memory with run_replay's and run_plans' own helpers (bare-soil setting,
-rain-fed paddy rule, season dates), and the run STOPS unless those reruns reproduce replay.json's seasons and the
-rice-then-wheat option's years in plans.json (rules.yaml validation_checks.common.twin_consistency).
+daily values are needed the twin is rerun in memory with the runners' own switches (pipeline/plans/twin_options.py:
+bare-soil setting, rain-fed paddy rule, season dates), and the run STOPS unless those reruns reproduce replay.json's
+seasons and the rice-then-wheat option's years in plans.json (rules.yaml validation_checks.common.twin_consistency).
 
 Inputs: data/clean/<field>/ecostress.parquet (pipeline.fetch.ecostress), gldas.parquet (pipeline.fetch.gldas),
 faostat_yields.parquet and the FAOSTAT bulk file (potato), weather, soil; data/checks/<field>/replay.json, plans.json,
@@ -16,7 +16,6 @@ faostat_check.json and gldas_check.json. Checks only: nothing here changes an ex
 """
 import argparse
 import csv
-import importlib.util
 import io
 import json
 import sys
@@ -43,13 +42,6 @@ from pipeline.twin.inputs import with_rain  # noqa: E402
 
 RULE_COMMIT = "fe3223a"
 TOL = 1e-6
-
-
-def _script(name):
-    spec = importlib.util.spec_from_file_location(f"_vc_{name}", REPO / "scripts" / f"{name}.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
 
 
 class TwinMismatch(RuntimeError):
@@ -229,7 +221,7 @@ def main(argv=None):
             res["gldas"][v] = check_gldas(twin, w, gl, R, with_pet=(v == versions[0]))
     base = {"field": field["name"], "rule": "rules.yaml validation_checks (committed before the first run)", "rule_commit": RULE_COMMIT,
             "rain_versions": versions, "rotation": "current rotation (PLACEHOLDER) rain-fed; the rice-then-wheat option where named",
-            "bare_soil": str(_script("run_replay").bare_setting(rules, soil))[:200]}
+            "bare_soil": str(to.bare_setting(rules, soil))[:200]}
     files = {"ecostress": "ecostress_check.json", "hls": "twin_vs_hls.json", "faostat": "faostat_check.json", "gldas": "gldas_check.json"}
     notes = {"ecostress": "ESI (actual / potential ET, PT-JPL, model-based from the overpass's LST) at the one 70 m pixel whose centre lies "
                           "in the field (37% of it is field); esi_touching = the field-area-weighted mean of the 4 touching pixels. "

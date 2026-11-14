@@ -33,50 +33,13 @@ from pipeline.plans import events as ev  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin.inputs import covered_year_runs, with_rain  # noqa: E402
-
-
-def dhm_rain(rules):
-    """Item 4b (rules.yaml gpm_series.dhm_scaling): DHM Bhaktapur's (index 1052) 1991-2020 monthly normals and the fit years,
-    for --rain dhm."""
-    n = pd.read_csv(REPO / "config" / "dhm_normals_1991_2020.csv", dtype={"month": str})
-    n = n[(n["index"] == 1052) & (n["variable"] == "precip_mm") & (n["month"] != "annual")]
-    if len(n) != 12:
-        raise ValueError("config/dhm_normals_1991_2020.csv: Bhaktapur needs 12 monthly precip_mm normals")
-    return {"normals_mm": {int(m): float(v) for m, v in zip(n["month"], n["value"])},
-            "years": rules["gpm_series"]["dhm_scaling"]["years"]}
-
-
-RAIN_DIRS = {"corrected": "", "uncorrected": "rain_uncorrected", "dhm": "rain_dhm"}
-
-def bare_setting(rules, soil):
-    """The twin's bare-soil argument (pipeline/plans/twin_options.py; rules.yaml bare_soil)."""
-    return to.bare_setting(rules, soil)
-
-
-def paddy_rule(rules):
-    """The rain-fed paddy rule when rules.yaml paddy_rainfed is on (or forced), else None (pipeline/plans/twin_options.py)."""
-    return to.paddy_rule(rules)
-
-
-def rainfed_replay(w, crops, lib, soil, cn, kw, rules, farmer=False, seasons=None):
-    """The rain-fed replay with every switch (pipeline/plans/twin_options.replay); kw may hold a calendar 'plan'."""
-    return to.replay(w, crops, lib, soil, cn, rules, irrigated=False, plan=kw.get("plan"), farmer=farmer, seasons=seasons)
+from scripts.common import RAIN_DIRS, add_switches, dhm_rain, set_switches, switch_labels, write_json  # noqa: E402
 
 
 def _case(res):
     return {"years": res["years"], "partial_years": res["partial_years"],
             "seasons": [{k: v for k, v in s.items()} for s in res["seasons"]],
             "max_balance_residual_mm": max(abs(s["balance_residual_mm"]) for s in res["segments"].values())}
-
-
-def hls_seasons(path):
-    """Item 4a: the chosen season method's seasons with source 'hls' (data/checks/<field>/diary_seasons.json)."""
-    return to.hls_seasons(json.loads(Path(path).read_text()))
-
-
-def season_dates_on(rules):
-    """Item 4a (rules.yaml season_dates): on when --season-dates hls asks for it or the switch is on."""
-    return to.season_dates_on(rules)
 
 
 def run(weather, rotation, lib, soil, cn, rules, plan=None, seasons=None):
@@ -103,22 +66,12 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--field", default="demo")
     ap.add_argument("--temporary-station-rain", action="store_true")
-    ap.add_argument("--rain", choices=("corrected", "uncorrected", "dhm"), default="corrected")
-    ap.add_argument("--bare-soil", choices=("rules", "kc", "fao56"), default="rules",
-                    help="bare-soil evaporation: as rules.yaml bare_soil.apply says (default), the constant Kc, or FAO-56's "
-                         "surface layer (build step 2a)")
+    ap.add_argument("--rain", choices=tuple(RAIN_DIRS), default="corrected")
     ap.add_argument("--out-dir", default=None, help="write here instead of data/checks/<field>/ (a check run)")
-    ap.add_argument("--paddy-rainfed", choices=("rules", "off", "proposal"), default="rules",
-                    help="rain-fed rice: as rules.yaml paddy_rainfed.apply says (default), the plain bucket, or the "
-                         "transplanting rule whatever apply says (item 4c)")
-    ap.add_argument("--season-dates", choices=("rules", "calendar", "hls"), default="rules",
-                    help="sowing of the field's rotation: as rules.yaml season_dates.apply says (default), the "
-                         "calendar, or the satellite's seasons (item 4a)")
+    add_switches(ap)
     a = ap.parse_args(argv)
     field, rules, lib, data = load_field(a.field), load_rules(), load_crops(), REPO / "data"
-    rules.setdefault("season_dates", {})["force"] = a.season_dates
-    rules["bare_soil"]["force"] = a.bare_soil
-    rules.setdefault("paddy_rainfed", {})["force"] = a.paddy_rainfed
+    set_switches(rules, a)
     clean = data / "clean" / field["id"]
     w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain, dhm=dhm_rain(rules) if a.rain == "dhm" else None)
     base = (REPO / a.out_dir) if a.out_dir else data / "checks" / field["id"]
@@ -154,11 +107,7 @@ def main(argv=None):
               "ky": "crops with no published Ky use the owner-assumed 1.0; ky_sensitivity re-scores them at "
                     f"{rules['ky_assumed']['sensitivity']}"}
 
-    if isinstance(bare_setting(rules, soil), dict):          # build step 2a; the default output stays as it was
-        labels["bare_soil"] = f"FAO-56 surface layer (eqs. 71-79; rules.yaml bare_soil): {bare_setting(rules, soil)}"
-    if paddy_rule(rules):                                     # item 4c (owner's decision 2026-11-14)
-        labels["paddy_rainfed"] = ("rain-fed transplanting rule (rules.yaml paddy_rainfed; calendar-dated paddy seasons only): "
-                                   + str({k: v for k, v in paddy_rule(rules).items() if k not in ("force", "status")}))
+    labels.update(switch_labels(rules, soil))                 # builds 2a and 4c; nothing while the switches are off
     if not a.temporary_station_rain:
         problems = sim.rain_record_problems(w)
         if problems:
@@ -166,8 +115,8 @@ def main(argv=None):
                   + "; ".join(problems) + ". Nothing written. Dry run: --temporary-station-rain")
             return 2
         seasons, sj = None, data / "checks" / field["id"] / "diary_seasons.json"
-        if season_dates_on(rules) and sj.exists():          # item 4a; the default output stays as it was
-            seasons = hls_seasons(sj)
+        if to.season_dates_on(rules) and sj.exists():       # item 4a; the default output stays as it was
+            seasons = to.hls_seasons(json.loads(sj.read_text()))
             labels["season_dates"] = (f"rules.yaml season_dates (item 4a; apply {rules['season_dates'].get('apply')}): the field's "
                                       "rotation sown from the satellite's seasons in the HLS years, the calendar otherwise")
         cases = run(w, rotation, lib, soil, cn, rules, seasons=seasons)
@@ -209,8 +158,7 @@ def main(argv=None):
                             "filled_mm": float(win.loc[win["rain_filled"], "rain_mm"].sum()), **cases})
         out = {"labels": labels, "windows": windows}
         path = base / "replay_station_dryrun.json"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(out, indent=1, default=str) + "\n")
+    write_json(path, out)
     print(f"rotation: {rotation} ({rot_label})\nrain: {labels['rain_source']}")
     for win in out.get("windows", [{"years": "2001-2025", **out}]):
         if "skipped" in win:

@@ -29,19 +29,12 @@ from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.plans import twin_options as to  # noqa: E402
-from pipeline.twin import evaporation as evap  # noqa: E402
 from pipeline.twin import kalman as kf  # noqa: E402
 from pipeline.twin import season  # noqa: E402
 from pipeline.twin import soil_water as sw  # noqa: E402
 from pipeline.twin.crops import rhmin_pct, season_length  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
 from robot.calibrate import depth_theta as root_zone_theta  # noqa: E402
-
-
-def bare_setting(rules, soil):
-    """The twin's bare-soil argument, exactly as scripts/run_plans.py passes it (build step 2a; rules.yaml bare_soil: the
-    constant Kc while apply is off, FAO-56's surface layer when it is on), so the state follows the switch."""
-    return evap.bare_soil_setting(rules["bare_soil"], soil, rules["bare_soil"].get("force", "rules"))
 
 
 def run_to_as_of(w, specs, lib, soil, cn, rules, irrigated, seasons=None):
@@ -54,7 +47,7 @@ def run_to_as_of(w, specs, lib, soil, cn, rules, irrigated, seasons=None):
     plan, _, _ = to.dated_plan(plan, lib, rules, w, irrigated, farmer=True, seasons=seasons, last_day=max(last, w["date"].max()))
     w = w.assign(u2_ms=w["ws2m_ms"].to_numpy(), rhmin_pct=np.asarray(rhmin_pct(w["ea_kpa"], w["tmax_c"]), dtype=float))
     daily, _ = season.simulate(w[["date", "et0_mm", "rain_mm", "u2_ms", "rhmin_pct"]], plan, lib, soil, cn,
-                               bare_setting(rules, soil), irrigated, kc_climate=rules["kc_climate"]["apply"])
+                               to.bare_setting(rules, soil), irrigated, kc_climate=rules["kc_climate"]["apply"])
     return daily, plan
 
 

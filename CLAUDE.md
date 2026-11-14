@@ -126,8 +126,10 @@ khet-sathi/
     export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py, build_words.py,
                         # CONTRACT_CHANGES.md (what changed for the UI, and when)
   scripts/              # backup.sh, make_review_pack.py, scan_history.py, check_site.py (the site stays static and
-                        # its paths relative: Vercel hosting); the runners run_checks.py, run_replay.py,
-                        # run_diary.py, run_plans.py, run_rain_check.py; checks run_smap_check.py, run_dhm_bulletin_check.py
+                        # its paths relative: Vercel hosting); run_field.py, the one command that runs every build
+                        # step in order from the cached data/ (fetch_field.py downloads); the steps it runs: run_checks.py,
+                        # run_replay.py, run_diary.py, run_plans.py, run_rain_check.py, run_smap_check.py and the
+                        # other run_*.py (shared helpers in common.py); run_dhm_bulletin_check.py runs alone
   robot/
     probe.py            # parse the probe's USB serial lines (pure)
     bridge.py           # read the probe over USB serial, write site/data/live.json (live demo only)
