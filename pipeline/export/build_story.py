@@ -817,6 +817,84 @@ def chart_ai_words(words, field_json):
 
 # --- report card -----------------------------------------------------------------------------------------------------
 
+STATUS_WORDS = {"VERIFIED": T("Verified", "प्रमाणित"), "ESTIMATE": T("Estimate", "अनुमान"),
+                "NOT YET VERIFIABLE": T("Not yet checkable", "अझै जाँच्न मिल्दैन")}
+# owner's item 4 (2026-11-14): what we measured, with its number; the yardsticks are rules.yaml verification
+COMPLIANCE = {
+    "rain_months": (("Rain on the field", "खेतमा परेको वर्षा"),
+                    ["We checked our rain against Nepal's rain gauges.", "It was within 19% in {k} of {n} months."],
+                    ["हामीले हाम्रो वर्षा नेपालका वर्षा मापकसँग जाँच्यौं", "{n} मध्ये {k} महिना १९% भित्र मिल्यो"]),
+    "rain_month_words": (("Rainy and dry months", "वर्षा हुने र सुख्खा महिना"),
+                         ["They match Nepal's weather office.", "{k} of {n} months match."],
+                         ["नेपालको मौसम कार्यालयसँग मिल्छन्", "{n} मध्ये {k} महिना मिल्छन्"]),
+    "heat_month_words": (("Warm and cool months", "तातो र चिसो महिना"),
+                         ["They match Nepal's weather office.", "{k} of {n} months match."],
+                         ["नेपालको मौसम कार्यालयसँग मिल्छन्", "{n} मध्ये {k} महिना मिल्छन्"]),
+    "frost_month_words": (("Frost months", "तुषारो पर्ने महिना"),
+                          ["Not checked yet.", "We need night temperatures from Bhaktapur."],
+                          ["अझै जाँचिएको छैन", "भक्तपुरको रातको तापक्रम चाहिन्छ"]),
+    "soil_month_words": (("Dry and wet soil months", "सुख्खा र ओसिलो माटोका महिना"),
+                         ["Checked only against computer models.", "No measured soil yet."],
+                         ["कम्प्युटर मोडेलसँग मात्र जाँचिएको", "माटो अझै नापिएको छैन"]),
+    "cover_months": (("Bare and growing months", "बाँझो र बाली भएका महिना"),
+                     ["Waiting for the farmer's calendar."], ["किसानको बाली पात्रो पर्खिरहेका छौं"]),
+    "season_dates": (("Planting and harvest dates", "रोप्ने र काट्ने मिति"),
+                     ["Waiting for the farmer's dates."], ["किसानका मिति पर्खिरहेका छौं"]),
+    "rotation_guess": (("Our guess of your crops", "तपाईंका बालीको हाम्रो अनुमान"),
+                       ["Needs answers from at least 10 farmers."], ["कम्तीमा १० किसानको उत्तर चाहिन्छ"]),
+    "flood_years": (("Flood years", "बाढी आएका वर्ष"),
+                    ["Found {k} of {n} valley floods.", "{fa} of {fan} flags had no recorded flood.",
+                     "We knew these floods before setting the rule."],
+                    ["उपत्यकाका {n} मध्ये {k} बाढी भेटियो", "{fan} संकेतमध्ये {fa} मा बाढीको अभिलेख छैन",
+                     "नियम बनाउनुअघि नै यी बाढी थाहा थिए"]),
+    "drought_years": (("Dry years", "सुख्खा वर्ष"),
+                      ["Found {k} of {n} valley dry seasons.", "{fa} of {fan} flags were not dry seasons.",
+                       "The rule was chosen after seeing some of them."],
+                      ["उपत्यकाका {n} मध्ये {k} सुख्खा याम भेटियो", "{fan} संकेतमध्ये {fa} सुख्खा याम थिएनन्",
+                       "केही देखिसकेपछि नियम छानिएको हो"]),
+    "harvest_years": (("Good and bad harvest years", "राम्रो र नराम्रो उब्जनीका वर्ष"),
+                      ["Waiting for the farmer's best and worst years."], ["किसानका राम्रा र नराम्रा वर्ष पर्खिरहेका छौं"]),
+    "plan_cover_gap_beats_current": (("'Fill the empty months' grows more", "'खाली महिनामा पनि बाली' ले बढी उब्जाउँछ"),
+                                     ["It beats today's plan in {k} of {n} computer runs.", "All runs use our one crop model.",
+                                      "No field has tried it yet."],
+                                     ["{n} कम्प्युटर गणनामध्ये {k} मा अहिलेको योजनाभन्दा राम्रो",
+                                      "सबै गणनाले एउटै बाली मोडेल प्रयोग गर्छन्", "कुनै खेतमा अझै परीक्षण भएको छैन"]),
+    "plan_safest_beats_current": (("'Feed your soil' grows more", "'माटोलाई मल' ले बढी उब्जाउँछ"),
+                                  ["It beats today's plan in {k} of {n} computer runs.", "All runs use our one crop model.",
+                                   "No field has tried it yet."],
+                                  ["{n} कम्प्युटर गणनामध्ये {k} मा अहिलेको योजनाभन्दा राम्रो",
+                                   "सबै गणनाले एउटै बाली मोडेल प्रयोग गर्छन्", "कुनै खेतमा अझै परीक्षण भएको छैन"]),
+    "monsoon_start": (("When the monsoon starts", "मनसुन कहिले सुरु हुन्छ"),
+                      ["These are Nepal's weather office's own dates.", "We checked our copy twice: {k} of {n} match."],
+                      ["यी नेपालको मौसम कार्यालयकै मिति हुन्", "हाम्रो प्रतिलिपि दुई पटक जाँच्यौं: {n} मध्ये {k} मिल्छन्"]),
+    "groundwater": (("Water under the ground", "जमिनमुनिको पानी"),
+                    ["Needs well records from the valley."], ["उपत्यकाका इनारको अभिलेख चाहिन्छ"]),
+    "part_soil_water": (("How wet each part is", "हरेक भाग कति ओसिलो छ"),
+                        ["Waiting for soil readings at the field."], ["खेतमा माटोको नाप पर्खिरहेका छौं"]),
+    "probe_water": (("The soil stick's reading", "माटो जाँच्ने छडीको नाप"),
+                    ["Waiting for the soil test in cups."], ["कपमा माटो परीक्षण पर्खिरहेका छौं"]),
+    "outlook_2040": (("Harvest by 2040", "२०४० सम्मको उब्जनी"),
+                     ["A look ahead from many climate models.", "It can only be checked in 2040."],
+                     ["धेरै जलवायु मोडेलबाट अगाडिको अनुमान", "यो २०४० मा मात्र जाँच्न सकिन्छ"]),
+    "plan_scores": (("Water, cover and soil scores", "पानी, ढाकन र माटोका अंक"),
+                    ["Worked out by computer.", "Nothing measured yet."], ["कम्प्युटरले निकालेको", "अझै केही नापिएको छैन"]),
+}
+
+
+def compliance(card):
+    """The compliance table (owner's item 4): one line per shown output from data/checks/<field>/scorecard.json."""
+    out = []
+    for cid, c in (card or {}).items():
+        (thing_en, thing_ne), en, ne = COMPLIANCE[cid]
+        vals = {"k": c["k"], "n": c["n"], "fa": c.get("false_alarms", 0), "fan": c.get("flagged_seasons", 0)}
+        show = (lambda xs: [x.format(**vals) for x in xs]) if c["n"] else (lambda xs: [x for x in xs if "{" not in x])
+        out.append({"id": cid, "thing": T(thing_en, thing_ne), "status": c["status"], "status_words": STATUS_WORDS[c["status"]],
+                    "k": c["k"], "n": c["n"], "share": c["share"], "ci95": c["ci95"], "independent": c["independent"],
+                    "said": T(" ".join(show(en)), "। ".join(show(ne)) + "।")})
+    order = {"VERIFIED": 0, "ESTIMATE": 1, "NOT YET VERIFIABLE": 2}
+    return sorted(out, key=lambda r: order[r["status"]])
+
+
 def _line(cid, thing, confidence, en, ne, refs):
     return {"id": cid, "thing": thing, "confidence": confidence,
             "why": T(" ".join(en), "। ".join(ne) + "।"), "refs": refs}
@@ -1168,7 +1246,7 @@ def input_paths(field):
         "future": f"{k}/future.json", "area_check": f"{k}/area_map.json",
         "field_json": f"site/data/fields/{field}.json", "area_site": f"site/data/area/{field}.json",
         "words": "site/data/words.json", "field_config": f"config/fields/{field}.yaml",
-        "bench": "data/checks/probe/bench.json",
+        "bench": "data/checks/probe/bench.json", "scorecard": f"{k}/scorecard.json",
     }
 
 
@@ -1179,7 +1257,7 @@ def load_inputs(repo, field):
     out = {"field": field, "paths": paths}
     for key, rel in paths.items():
         p = repo / rel
-        if key == "bench":
+        if key in ("bench", "scorecard"):
             out[key] = json.loads(p.read_text()) if p.exists() else None
             continue
         if not p.exists():
@@ -1252,6 +1330,7 @@ def build_story(inp, generated):
         "season_methods": [p["field_json"]],
         "field_memory": [p["memory"]],
         "ai_words": [p["words"], p["field_json"], "SI_LOG.md"],
+        "compliance": [p["scorecard"], "config/rules.yaml"],
         "report_card": [p["field_json"], p["diary_seasons"], p["area_check"], p["rain_vs_dhm"], p["weather"],
                         p["normals"], p["fao"], p["known_events"], p["future"], "VALIDATION.md"] + bench_used[:1],
         "satellites": ["DATA_AUDIT.md", "CREDITS.md", "VALIDATION.md"],
@@ -1289,6 +1368,10 @@ def build_story(inp, generated):
         "generated": generated, "field": field, "placeholder": ctx["placeholder"], "ne_review": NE_REVIEW,
         "sections": [{"id": sid, "title": title, "charts": ids} for sid, title, ids in SECTIONS],
         "inputs": inputs, "charts": charts, "report_card": report_card(ctx),
+        "compliance": compliance(inp.get("scorecard")),
+        "compliance_note": T("Verified means right at least 92 times in 100, on 10 or more checks. "
+                             "The range shows how sure that number is.",
+                             "प्रमाणित भनेको कम्तीमा १० जाँचमा १०० मा ९२ पटक सही। दायराले त्यो अंक कति पक्का छ देखाउँछ।"),
         "satellites": SATELLITES, "resources": RESOURCES,
     }
 

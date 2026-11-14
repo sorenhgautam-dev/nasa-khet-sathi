@@ -61,7 +61,7 @@ def events(field, kind):
     controls = [(y, "drought", season(c["id"])) for c in ev["negative_controls"] for y in c["years"]]
     hits, alarms = v.events_skill(flags, valley, listed, controls)
     return hits, {"valley_events": [list(e) for e in valley], "flagged_years": sorted(flags),
-                  "false_alarms": f"{sum(alarms)} of {len(alarms)} flagged seasons"}
+                  "false_alarms": sum(alarms), "flagged_seasons": len(alarms)}
 
 
 def plans_robust(fid, plan, versions):
@@ -73,6 +73,36 @@ def plans_robust(fid, plan, versions):
                 for k in ("current", plan)}
         out += v.beats(runs[plan], runs["current"])
     return out, {"runs": len(out), "rain_versions": versions}
+
+
+ONSET_PDF = ROOT / "data/raw/dhm_onset/monsoon_onset_and_withdrawal_dates_english3.pdf"
+
+
+def second_read_onset(fid):
+    """Read DHM's onset table (Table 1, p. 3; config/dhm_onset_dates.NOTICE.md) a second way, with pdftotext and a
+    regular expression, and compare every date with config/dhm_onset_dates.csv."""
+    import re
+    import subprocess
+    txt = subprocess.run(["pdftotext", "-f", "3", "-l", "3", "-layout", str(ONSET_PDF), "-"], capture_output=True,
+                         text=True, check=True).stdout
+    mon = {m: i for i, m in enumerate(["May", "June", "July", "August", "September", "October"], 5)}
+    pdf = {int(y): (f"{y}-{mon[m]:02d}-{int(d):02d}", f"{y}-{mon[wm]:02d}-{int(wd):02d}" if wd else "")
+           for y, d, m, wd, wm in re.findall(r"\b((?:19|20)\d\d)\s+(\d{1,2})-(May|June|July)\s+(?:(\d{1,2})-(September|October)|--)", txt)}
+    ours = {int(r["year"]): (r["onset"], r["withdrawal"]) for r in csv.DictReader(open(ROOT / "config/dhm_onset_dates.csv"))}
+    mism = [[y, list(ours[y]), list(pdf.get(y, ()))] for y in sorted(ours) if pdf.get(y) != ours[y]]
+    span = [y for y in ours if 2001 <= y <= 2024]
+    rec = {"what": "second reading of DHM's onset table by pdftotext and a regular expression, against config/dhm_onset_dates.csv",
+           "document": ONSET_PDF.name, "years_compared": len(ours), "all_equal": not mism, "mismatches": mism,
+           "onset_compared_2001_2024": len(span), "onset_equal_2001_2024": sum(pdf.get(y, ("",))[0] == ours[y][0] for y in span)}
+    (ROOT / "data/checks" / fid / "onset_dhm_second_read.json").write_text(json.dumps(rec, indent=1) + "\n")
+
+
+def onset_copy(fid):
+    r = _json(ROOT / "data/checks" / fid / "onset_dhm_second_read.json")
+    if not r:
+        return [], {}
+    k, n = r["onset_equal_2001_2024"], r["onset_compared_2001_2024"]
+    return [True] * k + [False] * (n - k), {"years": "2001-2024", "all_57_years_equal": r["all_equal"]}
 
 
 def score_all(fid):
@@ -92,6 +122,9 @@ def score_all(fid):
     put("heat_month_words", *month_words(field, "heat", "Bhaktapur", "tmax_c", ("none", "some", "high")))
     put("flood_years", *events(field, "flood"))
     put("drought_years", *events(field, "drought"))
+    if ONSET_PDF.exists():
+        second_read_onset(fid)
+    put("monsoon_start", *onset_copy(fid))
     for p in ("cover_gap", "safest"):
         put(f"plan_{p}_beats_current", *plans_robust(fid, p, outs[f"plan_{p}_beats_current"]["rain_versions"]))
     for key in outs:                       # outputs whose test data have not arrived score as no cases yet

@@ -132,6 +132,43 @@ normals.
 | --- | --- | --- | --- |
 | 6.1 | Someone new reaches "Your plan" in two or three minutes unaided (manual) | **NOT YET POSSIBLE**: no UI here | UI teammate |
 
+## Compliance table (owner's accuracy programme, 2026-11-14)
+
+Every output the site shows, scored on locked test data against the yardstick written and committed before any score
+(`rules.yaml verification`, commit `fee6817`): **VERIFIED** = an independent reference, at least 10 cases and at least
+92% within tolerance (the point estimate counts); **ESTIMATE** = tested below 92%, or tested only against a reference
+that is not independent, or a projection; **NOT YET VERIFIABLE** = no independent reference data yet, or fewer than 10
+cases (the data that would verify it are named). The interval is the 95% Wilson score interval. Built by
+`scripts/run_verification.py` (`data/checks/demo/scorecard.json`); the same lines, in English and Nepali, are
+`compliance` in `site/data/story.json` and the "How sure are we?" section of the "How we know" page, which replaces the
+report card below there. **The rain months are scored on the DHM bulletin months collected so far; the table is rebuilt
+when the collection is complete.** What each easy pass shows: the month words test the shape of the year (which months
+are wetter or warmer), not any single year; the onset row tests our copy of DHM's own record (a second reading by a
+different method, all 57 years equal), not a method of ours. The plan rows are robustness (every run shares our crop
+model), so they cannot be VERIFIED.
+
+| Output | What we measured | n | Share [95% CI] | Status | Reference (independent?) | What would verify it |
+| --- | --- | --- | --- | --- | --- | --- |
+| Rain behind the month words, dry days and events | monthly rain, the twin's corrected rain against the mean of the valley gauges, within 19% | 20 | 65% [43%, 82%] | **ESTIMATE** | DHM monthly gauge bulletins: Bhaktapur, Changu Narayan, Kathmandu Airport (yes) | more bulletin months |
+| The rain word of each month (low, medium, high) | the month's word equals the tercile of DHM's Bhaktapur normal for that month | 12 | 100% [76%, 100%] | **VERIFIED** | DHM 1991-2020 normals, Bhaktapur (yes) | - |
+| The heat word of each month (none, some, high) | the month's word equals the tercile of DHM's Bhaktapur normal daytime temperature | 12 | 100% [76%, 100%] | **VERIFIED** | DHM 1991-2020 normals, Bhaktapur (yes) | - |
+| Flood years in the replay | valley floods found (hit rate); false alarms beside it | 2 | 100% [34%, 100%] | **ESTIMATE** | sourced valley floods (known_events.yaml) (no) | more sourced valley flood years |
+| Dry years in the replay | valley dry seasons found (hit rate); false alarms beside it, a dry flag in a season DHM's gauges show was normal counting as one | 4 | 50% [15%, 85%] | **ESTIMATE** | sourced valley droughts and DHM's negative controls (known_events.yaml) (no) | more sourced valley drought seasons |
+| When the monsoon usually starts, and whether it has shifted | our copy of DHM's onset dates, 2001-2024, equal to DHM's table on a second reading | 24 | 100% [86%, 100%] | **VERIFIED** | DHM's own table (the record itself) (yes) | a second reading of DHM's table |
+| 'Fill the empty months' grows more than today's plan | share of runs (today and 46 climate runs, two rain versions) in which its harvest beats today's plan | 94 | 100% [96%, 100%] | **ESTIMATE** | our own runs: the same crop model (no) | harvests measured on fields that tried it |
+| 'Feed your soil' grows more than today's plan | share of runs (today and 46 climate runs, two rain versions) in which its harvest beats today's plan | 94 | 100% [96%, 100%] | **ESTIMATE** | our own runs: the same crop model (no) | harvests measured on fields that tried it |
+| The frost word of each month | the month's frost word against the coldest nights measured at or near the field | 0 | - | **NOT YET VERIFIABLE** | none yet: DHM's normals give only monthly mean night temperatures (yes) | DHM's daily night temperatures at Bhaktapur, or a thermometer at the field |
+| The soil word of each month (dry, medium, wet) | against measured soil water | 0 | - | **ESTIMATE** | none measured; SMAP L4 and GLDAS are models (VALIDATION 4.2b, 4.2d) (no) | weighed soil samples or a calibrated probe through a year |
+| Which months the field is bare or growing | each month bare or not, satellite against the farmer's normal year | 0 | - | **NOT YET VERIFIABLE** | the farmer's calendar (yes) | the farmer's answers |
+| When each crop is sown and harvested | the satellite's season start and end dates within 10 days of the farmer's dates, per crop and year | 0 | - | **NOT YET VERIFIABLE** | the farmer's dates for recent years (yes) | the farmer's dates for 3 recent years |
+| Our guess of the crops (rice, then potato or wheat) | guess equals the farmer's rotation, per field | 0 | - | **NOT YET VERIFIABLE** | farmers' answers (yes) | at least 10 fields whose farmers told us their rotation |
+| Each year's harvest in the replay (baskets) | the farmer's 3 worst years in our lowest third and 3 best in our highest third; year-to-year direction against district yields | 0 | - | **NOT YET VERIFIABLE** | the farmer's best and worst years; MoALD district yields if found (yes) | the farmer's answers; Bhaktapur district yields |
+| Water under the ground is falling | the regional trend's direction against well levels | 0 | - | **NOT YET VERIFIABLE** | none yet (yes) | well-level records for the Kathmandu valley (Groundwater Resources Development Board) |
+| How wet each part is today | the twin's soil water before a reading within 0.04 m3/m3 of the weighed or calibrated value | 0 | - | **NOT YET VERIFIABLE** | weighed soil samples or the calibrated probe at the field (yes) | probe readings and weighed samples at the field |
+| The soil probe's water reading | each push-in, calibrated on the other cups, within 0.04 m3/m3 (4 water-% points) of the weighed water | 0 | - | **NOT YET VERIFIABLE** | the team's weighed cups (yes) | the team's cup test |
+| Harvest by 2040 | cannot be checked before 2040; its climate change lies inside published CMIP6 ranges for Nepal (VALIDATION 4.7) | 0 | - | **ESTIMATE** | a consistency check only (no) | time |
+| The water, cover and soil-kept scores | model indices with no measured counterpart | 0 | - | **ESTIMATE** | none (no) | measured water use and soil loss on the field |
+
 ## Accuracy report card (owner's item 5e, 2026-11-14)
 
 How sure we are of each thing the site shows, in plain words, from the checks above (the last column cites their rows).

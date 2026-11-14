@@ -43,6 +43,22 @@
         }
       }
     },
+    "compliance_note": {"$ref": "#/$defs/text"},
+    "compliance": {
+      "type": "array", "description": "owner's item 4 (2026-11-14): each shown output's status against its yardstick (rules.yaml verification), from data/checks/<field>/scorecard.json; empty when no scorecard exists",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "thing", "status", "status_words", "k", "n", "share", "ci95", "independent", "said"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1}, "thing": {"$ref": "#/$defs/text"},
+          "status": {"enum": ["VERIFIED", "ESTIMATE", "NOT YET VERIFIABLE"]}, "status_words": {"$ref": "#/$defs/text"},
+          "k": {"type": "integer", "minimum": 0}, "n": {"type": "integer", "minimum": 0},
+          "share": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+          "ci95": {"type": ["array", "null"], "items": {"type": "number", "minimum": 0, "maximum": 1}},
+          "independent": {"type": "boolean"}, "said": {"$ref": "#/$defs/text"}
+        }
+      }
+    },
     "satellites": {
       "type": "array", "minItems": 1,
       "items": {

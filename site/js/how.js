@@ -239,7 +239,15 @@
       var title = g.title ? P(g.title) : T('your_plan.story_title');
       out.push({ id: 's-' + g.id, title: title, el: section('s-' + g.id, title, cards) });
     });
-    if ((st.report_card || []).length) {
+    if ((st.compliance || []).length) {          // owner's item 4: verified, estimate or not yet checkable
+      var t0 = T('your_plan.report_card'), pct = function (x) { return digits(Math.round(x * 100)) + '%'; };
+      out.push({ id: 'report', title: t0, el: section('report', t0, [st.compliance_note ? said(P(st.compliance_note)) : null].concat(st.compliance.map(function (r) {
+        var ic = { VERIFIED: 'tick', ESTIMATE: 'warn' }[r.status] || 'fog';
+        return h('div', { class: 'fact' }, h('span', { class: 'ic', style: 'background:#F7F1E4' }, svg(I(ic, 20))),
+          h('div', { class: 'grow' }, h('b', null, P(r.thing)), ' ', h('span', { class: 'chip', style: 'margin-left:4px' }, P(r.status_words)),
+            said(P(r.said)), r.n ? h('p', { class: 'small', style: 'margin:2px 0 0' }, pct(r.share) + ' (' + pct(r.ci95[0]) + '–' + pct(r.ci95[1]) + ')') : null));
+      }))) });
+    } else if ((st.report_card || []).length) {
       var t1 = T('your_plan.report_card');
       out.push({ id: 'report', title: t1, el: section('report', t1, st.report_card.map(function (r) {
         var lvl = { high: 3, medium: 2, low: 1 }[r.confidence] || 0;
