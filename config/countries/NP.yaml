@@ -1,0 +1,83 @@
+# Country profile: Nepal (owner's item 3, 2026-11-14: "global core, local plug-ins ... Nepal first").
+# Every setting is {value, source}, as in config/rules.yaml; pipeline/fetch/profiles.py loads it (tests/test_profiles.py).
+# A setting this file leaves out comes from config/countries/default.yaml. Sources opened on 2026-11-14 are in
+# notes/SOURCES_CHECK.md (section numbers below). `read_by` says where the code reads the setting: "this profile" when the
+# code reads it here; otherwise the profile points at the place that still holds it (moved later; owner's stop rule).
+
+country:
+  value: {iso2: NP, names: [Nepal]}
+  source: "ISO 3166-1 alpha-2 code NP, as the FAO Crop Calendar API names Nepal (api-cropcalendar.apps.fao.org/api/v1/countries/NP, crops.json calendar sources). `names` matches config/fields/*.yaml `country: Nepal`"
+
+language:
+  value: {first: ne, also: [en], read_by: "pipeline/words (texts *_ne) and site/js (not moved: another agent's files)"}
+  source: "CLAUDE.md, Site rules (owner): 'Nepali first, English one tap away. Text only: no speaker buttons and no audio (owner, 2026-11-12)'"
+
+calendar_system:
+  value: {first: bikram_sambat, also: [gregorian], gregorian_beside: true, read_by: "pipeline/words/screens.json months, pipeline/diary/onset_dhm.py, site/js (not moved)"}
+  source: "CLAUDE.md, Site rules (owner, 2026-11-12): 'Months in Nepali are Bikram Sambat first, with the approximate Gregorian months beside them in Devanagari, e.g. बैशाख (अप्रिल–मे), and a note that they don't line up exactly'"
+
+area_units:
+  value: {unit: hectare, symbol: ha, local_unit: null, local_unit_note: "ropani: no sourced conversion, so none is shown", read_by: "pipeline/export/build_story.py 'hectares' (not moved)"}
+  source: "notes/SOURCES_CHECK.md 10a: '1 ropani = 508.72 m2' NOT FOUND (no government or academic source opened; the National Statistics Office site refused twice); 74 ft x 74 ft gives 508.737 m2, so 508.72 and 508.74 rest on different definitions. Hectare as config/countries/default.yaml"
+
+rain_classes:
+  value:
+    hours: 24
+    classes:
+      - {id: light, en: "Light rain", ne: "हल्का वर्षा", min_mm: 0, below_mm: 10}
+      - {id: moderate, en: "Moderate rain", ne: "मध्यम वर्षा", min_mm: 10, below_mm: 50}
+      - {id: heavy, en: "Heavy rain", ne: "भारी वर्षा", min_mm: 50, below_mm: 100}
+      - {id: very_heavy, en: "Very heavy rain", ne: "धेरै भारी वर्षा", min_mm: 100, below_mm: 200}
+      - {id: extremely_heavy, en: "Extremely heavy rain", ne: "अति भारी वर्षा", min_mm: 200, below_mm: null}
+    read_by: "not read by the pipeline yet: for the rain-risk feature (another agent's files)"
+  source: "DHM, Meteorological Forecasting Division, 'Terms used in Weather Forecasting in Nepal', http://dhm.gov.np/mfd/api/image/forecast-terminology/ (one-page PDF, read 2026-11-14; notes/SOURCES_CHECK.md 1, CONFIRMED): table 'Rain intensity based on total accumulated rainfall during 24 hrs': light 'less than 10 mm'; moderate '10 mm or more but less than 50 mm'; heavy '50 mm or more but less than 100 mm'; very heavy '100 mm or more but less than 200 mm'; extremely heavy '200 mm or more'. Every lower bound inclusive. The page does not say which 24 hours"
+
+dry_day:
+  value: {below_mm: 1.0, read_by: "rules.yaml trends.dry_day_mm (ETCCDI's, the same 1 mm; not moved)"}
+  source: "DHM, Update of Climate Change Study of Nepal, Final Report, August 2024, Table 6 p.16 (notes/SOURCES_CHECK.md 2a, CONFIRMED WITH CONDITIONS): CDD 'Maximum number of consecutive days with RR < 1mm'; p.17 'a wet day w (RR ≥ 1.0mm)'. 'Dry day' is not defined by name: below 1 mm is the complement of DHM's wet day"
+
+dry_spell:
+  value: {kind: CDD, definition: "the longest run of consecutive days with rain under 1 mm in the period", national_baseline_days: 51, baseline_years: [1981, 2010], fixed_length_spell: null, read_by: "pipeline/diary/trends.py longest_dry_spell (the same definition; not moved)"}
+  source: "DHM 2024 (as dry_day), Table 6 p.16: 'Consecutive dry days (CDD, days) | Maximum length of dry spell | Maximum number of consecutive days with RR < 1mm'; Table 14 p.39: national CDD baseline (1981-2010) 51 days (notes/SOURCES_CHECK.md 2a, 2b). A dry spell of '8 or more dry days' was NOT FOUND in the report (2b), so Nepal has no fixed-length dry spell here: fixed_length_spell is null"
+
+drought_seasons:
+  value: {seasons: {monsoon: [6, 7, 8, 9], winter: [12, 1, 2]}, wet_day_mm: null, read_by: "this profile (pipeline/fetch/profiles.events_rules; scripts/run_replay.py, scripts/run_plans.py)"}
+  source: "Moved from config/rules.yaml events.seasons (equal values, tests/test_profiles.py): 'DHM's seasons, as in its seasonal summaries (monsoon June to September; winter December to February, counted in the year of its January and February; a winter with a month missing from the record is left out)'. Claude's reading of the owner's answer 9 (2026-11-13), committed before its first run"
+
+monsoon_onset:
+  value: {rule: "config/rules.yaml monsoon_onset", reference: "config/dhm_onset_dates.csv (DHM, 1968-2024)", read_by: "scripts/run_diary.py (the rule from rules.yaml; this profile says it applies)"}
+  source: "CLAUDE.md 'Field diary', Monsoon onset (owner): 'search from 15 May ... Sanity check: DHM's normal onset is 13 June in eastern Nepal, about two days later in Kathmandu' (owner-approved 2026-11-13); DHM Climate Division, 'Monsoon Onset and Withdrawal date information' (1968-2024), as in rules.yaml monsoon_onset_dhm"
+
+gauges:
+  value:
+    station: {network: "NOAA GHCN-Daily", config_key: validation_station, example: "NP000444540 Kathmandu Airport"}
+    normals: {by: "DHM Climate Division", file: config/dhm_normals_1991_2020.csv, config_key: rain_check}
+    bulletins: {by: "DHM Climate Division monthly bulletins", file: "data/clean/<field>/dhm_bulletin_months.csv"}
+    onset_dates: {by: "DHM Climate Division", file: config/dhm_onset_dates.csv}
+    gauge_counts: {by: "GPCC Full Data Monthly V2022 and IMERG gaugeRelativeWeighting", module: pipeline/fetch/gauge_evidence.py}
+    read_by: "scripts/run_rain_check.py (DEMO_RAIN_CHECK and the field's `rain_check`), scripts/run_replay.py and run_plans.py (--rain dhm), scripts/run_verification.py (not moved)"
+  source: "config/dhm_normals_1991_2020.NOTICE.md and config/dhm_onset_dates.NOTICE.md (DHM tables as transcribed); config/fields/demo.yaml validation_station (NOAA GHCN-Daily v3.35, ghcnd-stations.txt); CREDITS.md and DATA_AUDIT.md (GPCC V2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100)"
+
+crop_calendar:
+  value: {provider: "FAO Crop Calendar", country: NP, aez: "002", aez_name: "B. Hill Agro-ecological Zone", windows: crops.json, read_by: "this profile (pipeline/fetch/cropslib.load_crops: 'crops.json' keeps the library's own windows)"}
+  source: "config/crops.json calendar sources: 'FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (districts incl. Kathmandu, Lalitpur, Bhaktapur; 1000-2000 m), lastUpdated 26/02/2021, https://api-cropcalendar.apps.fao.org/api/v1/countries/NP/cropCalendar?language=en&aez=002 (read 2026-11-12)', the windows transcribed by hand with the corrections of REVIEW_NOTES H4 (finger millet from Chaulagain et al. 2025)"
+
+fertiliser_notes:
+  value:
+    notes:
+      - id: shortage_at_planting
+        en: "Fertiliser can be short when paddy planting begins: buy it early."
+        fact: "Nepal requires around 250,000 tonnes of fertiliser during the paddy plantation season alone; farmers say they have suffered for years from shortages at paddy planting"
+        where: "Terai and inner-Terai districts quoted (Nepalgunj, Bardiya, Rautahat, Rampur, West Nawalparasi, Kailali), not Bhaktapur; the monsoon paddy season"
+        cited: "The Kathmandu Post, Post National Bureau, 'Farmers scramble for fertiliser as paddy planting season begins amid shortages', 26 May 2026 (notes/SOURCES_CHECK.md 5, CONFIRMED)"
+      - id: urea_bag
+        en: "Urea is sold in 50 kg bags."
+        bag_kg: 50
+        prices_npr: {salt_trading_july_2026: 847, cooperatives_may_2026: 894.5}
+        cited: "BankingNews, 16 Jul 2026: 'Rs. 847 per 50 kg bag of urea'; The Kathmandu Post, 26 May 2026: 'Rs894.50 per 50-kg sack of urea' (notes/SOURCES_CHECK.md 6, CONFIRMED; the price differs between the two, the bag size does not)"
+    read_by: "not read by the pipeline yet: for the fertiliser-saver feature (another agent's files)"
+  source: "notes/SOURCES_CHECK.md 5 and 6 (owner's item 3: 'the fertiliser notes from SOURCES_CHECK 5 and 6'). The English lines are Claude's drafts of the facts, not reviewed"
+
+scorecard:
+  value: {kind: verification, yardsticks: "config/rules.yaml verification (DHM gauges and normals, DHM onset dates, config/known_events.yaml)", read_by: "scripts/run_verification.py, pipeline/export/build_labels.py (a sample takes its source field's scorecard: `sample_of`)"}
+  source: "config/rules.yaml verification (owner's accuracy and verification programme, 2026-11-14), written and committed before any score was computed"

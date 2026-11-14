@@ -1,0 +1,70 @@
+# Global defaults (owner's item 3, 2026-11-14): "Every setting gets a sourced global default for fields with no profile
+# (ETCCDI's under-1-mm dry day and standard rain indices, GHCN and GPCC gauges, FAO crop calendars by country, Gregorian
+# months, hectares)." Used by every field whose country has no file in config/countries/. Every setting is
+# {value, source}; pipeline/fetch/profiles.py refuses a default without one. Sources opened 2026-11-14 (quotes in SI_LOG.md,
+# "Country profiles and the deploy kit").
+
+country:
+  value: {iso2: null, names: []}
+  source: "No country: the global default (owner's item 3, 2026-11-14)"
+
+language:
+  value: {first: en, also: [], read_by: "pipeline/words (English texts) and site/js (not moved)"}
+  source: "Claude's choice, put to the owner: English, the site's second language (CLAUDE.md: 'Nepali first, English one tap away'), is the only language every screen word already has (site/data/words.json). A country adds its own language in its profile"
+
+calendar_system:
+  value: {first: gregorian, also: [], read_by: "site/js month names (not moved)"}
+  source: "Owner's item 3 (2026-11-14): 'Gregorian months'. IETF RFC 3339 (rfc-editor.org/rfc/rfc3339, opened 2026-11-14), Abstract: 'a profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar' (iso.org refused the request, HTTP 403)"
+
+area_units:
+  value: {unit: hectare, symbol: ha, local_unit: null, read_by: "pipeline/export/build_story.py 'hectares' (not moved)"}
+  source: "Owner's item 3 (2026-11-14): 'hectares'. BIPM, SI Brochure, 9th edition (text updated 2026), Table 8 'Non-SI units', printed p. 141 (bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf, opened 2026-11-14): 'hectare (b) ha 1 ha = 1 hm2 = 10^4 m2'; footnote (b): 'They are used to express land area'"
+
+rain_classes:
+  value:
+    hours: 24
+    classes:
+      - {id: dry, en: "Under 1 mm", min_mm: 0, below_mm: 1, index: "ETCCDI dry day (CDD: RR < 1mm)"}
+      - {id: wet, en: "1 to 10 mm", min_mm: 1, below_mm: 10, index: "ETCCDI wet day (RR >= 1mm)"}
+      - {id: r10mm, en: "10 mm or more", min_mm: 10, below_mm: 20, index: "ETCCDI R10mm (PRCP >= 10mm)"}
+      - {id: r20mm, en: "20 mm or more", min_mm: 20, below_mm: null, index: "ETCCDI R20mm (PRCP >= 20mm)"}
+    read_by: "not read by the pipeline yet: for the rain-risk feature (another agent's files)"
+  source: "ETCCDI, 'Climate Change Indices: Definitions of the 27 core indices', etccdi.pacificclimate.org/list_27_indices.shtml (opened 2026-11-14): CDD 'maximum number of consecutive days with RR < 1mm'; CWD 'consecutive days with RR >= 1mm'; R10mm 'Annual count of days when PRCP >= 10mm'; R20mm 'Annual count of days when PRCP >= 20mm'. The page gives these thresholds no names such as 'heavy', so the classes are named by their amounts only; the bands between the thresholds are Claude's reading, fixed before first use"
+
+dry_day:
+  value: {below_mm: 1.0, read_by: "rules.yaml trends.dry_day_mm (the same 1 mm; not moved)"}
+  source: "ETCCDI CDD, 'Maximum length of dry spell, maximum number of consecutive days with RR < 1mm : ... Count the largest number of consecutive days where: RRij < 1mm' (etccdi.pacificclimate.org/list_27_indices.shtml, opened 2026-11-14); the same rule as rules.yaml trends.dry_day_mm"
+
+dry_spell:
+  value: {kind: CDD, definition: "the longest run of consecutive days with rain under 1 mm in the period", fixed_length_spell: null, read_by: "pipeline/diary/trends.py longest_dry_spell (the same definition; not moved)"}
+  source: "ETCCDI CDD (as dry_day). ETCCDI defines the dry spell as the longest run, with no fixed length"
+
+drought_seasons:
+  value: {seasons: {year: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}, wet_day_mm: 1.0, read_by: "this profile (pipeline/fetch/profiles.events_rules; pipeline/plans/events.py)"}
+  source: "ETCCDI PRCPTOT, 'Annual total precipitation in wet days' (etccdi.pacificclimate.org/list_27_indices.shtml, opened 2026-11-14; its wet day is RR >= 1mm, as in SDII and R95pTOT on the same page): with no country's own seasons, a drought year is a calendar year whose PRCPTOT is in deciles 1-2 of the record's years (the decile classes of rules.yaml events.drought_decile_max, Gibbs & Maher 1967). One season, so no event_season is exported. Claude's reading of the owner's 'standard rain indices', fixed before its first run"
+
+monsoon_onset:
+  value: null
+  source: "No global onset rule: CLAUDE.md's onset rule (search from 15 May) and its sanity check (DHM's 13 June) are Nepal's. Without a country's own rule the onset trend is not exported (diary.shift_days null: 'can't tell'), never computed on another country's dates"
+
+gauges:
+  value:
+    station: {network: "NOAA GHCN-Daily", config_key: validation_station, note: "the nearest GHCN-Daily station, named by a person in the field config; checks only"}
+    normals: null
+    bulletins: null
+    onset_dates: null
+    gauge_counts: {by: "GPCC Full Data Monthly V2022 and IMERG gaugeRelativeWeighting", module: pipeline/fetch/gauge_evidence.py}
+    read_by: "scripts/run_rain_check.py (the station and the gauge counts; no normals), pipeline/fetch/ghcn.py, pipeline/fetch/gauge_evidence.py (not moved)"
+  source: "Owner's item 3 (2026-11-14): 'GHCN and GPCC gauges'. NOAA NCEI GHCNd page (ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily, opened 2026-11-14): 'GHCNd contains records from more than 100,000 stations in 180 countries and territories'; cite Menne et al. 2012 (NCEI metadata page; no licence stated). DWD, GPCC Full Data Monthly Product Version 2022 (opendata.dwd.de/climate_environment/GPCC/html/fulldata-monthly_v2022_doi_download.html, opened 2026-11-14): 'Monthly Land-Surface Precipitation from Rain-Gauges', latitude -90 to 90, 'January 1891 until December 2020', doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data under CC BY 4.0 (DWD legal notice)"
+
+crop_calendar:
+  value: {provider: "FAO Crop Calendar", country: "the field's (config fao_crop_calendar.country)", aez: "the field's (config fao_crop_calendar.aez; a person picks it from the zone list, never guessed)", windows: fao_api, rule: "config/rules.yaml crop_calendar.zone_from_fao", read_by: "this profile (pipeline/fetch/cropcalendar.py; pipeline/fetch/cropslib.load_crops(field=...))"}
+  source: "Owner's item 3 (2026-11-14): 'FAO crop calendars by country'. FAO Crop Calendar, https://cropcalendar.apps.fao.org and its API api-cropcalendar.apps.fao.org/api/v1 (opened 2026-11-14: a plain request with no login or key; api/v1/countries lists 58 countries; api/v1/countries/<ISO2>/aez lists a country's zones with their administrative units). FAO's general terms (fao.org/contact-us/terms) ask for 'appropriate acknowledgement of FAO as the source'. A field in a country FAO does not list needs a country profile with its own calendar"
+
+fertiliser_notes:
+  value: {notes: [], read_by: "not read by the pipeline yet: for the fertiliser-saver feature (another agent's files)"}
+  source: "No sourced fertiliser note holds for every country: none is shown without a country profile (owner's rule: 'Use ONLY the sourced facts')"
+
+scorecard:
+  value: null
+  source: "No yardsticks without a country's own gauges, normals or event list: every label says NOT YET VERIFIABLE (pipeline/export/build_labels.py with no scorecard), never another field's scorecard (owner's item 3: the field abroad 'must NOT borrow the demo's scorecard')"
