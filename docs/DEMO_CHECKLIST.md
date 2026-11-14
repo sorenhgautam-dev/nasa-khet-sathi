@@ -35,7 +35,7 @@ record is in `docs/PROBE_RECORDING.md`.
 | --- | --- |
 | "cable was pulled" | Plug it back in. The bridge tries again every 2 s and starts that part again. |
 | The phone cannot open the address | Check both are on the same hotspot. Open `http://localhost:8000/#/soil` on the laptop and show that screen instead. |
-| The probe does not work at all | Run the backup, `scripts/demo_probe.py --fake`, and show the laptop's terminal. **Say out loud that it is the practice probe with made-up numbers.** The phone shows only real readings (owner, 2026-11-14 night), so it stays at "Not tested yet". |
+| The probe does not work at all | Run the backup, `scripts/demo_probe.py --fake`. The phone shows a big "Practice: made-up numbers" banner (only on the hotspot, never on the public site). **Say it out loud too.** |
 | A part keeps saying "not steady" | Push the probe in firmly, wait, and test again. Or type `n` to go on and say so. |
 
 ## After

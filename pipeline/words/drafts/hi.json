@@ -1912,6 +1912,10 @@
    "en": "Recorded on",
    "hi": "दर्ज करने की तारीख़:"
   },
+  "screens.check_soil.texts.garden_on": {
+   "en": "A garden test of our probe, recorded on",
+   "hi": "हमारे यंत्र की बगीचे में जाँच, दर्ज करने की तारीख़:"
+  },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",
    "hi": "{year_count} साल का"
@@ -2269,8 +2273,8 @@
    "hi": "इस निशान वाले अंक सुधारी बारिश से हैं।"
   },
   "screens.check_soil.texts.practice": {
-   "en": "Practice soil stick",
-   "hi": "अभ्यास वाली मिट्टी की छड़ी"
+   "en": "Practice: made-up numbers",
+   "hi": "अभ्यास: बनावटी आँकड़े"
   },
   "screens.your_plan.texts.version": {
    "en": "Version",

@@ -739,7 +739,8 @@
   // ---------------- 4 the soil test, part by part (design: Robot, W4_Robot) ----------------
   // The walk is the real one: live.json during the in-person demo, else the recorded walk (probe_log.json); with neither,
   // every part says "not tested yet". Only readings from a real serial port are shown (robot/bridge.py is_real), each with
-  // its date: a practice run with the fake probe, or any sample, shows nothing (owner, 2026-11-14 night). The robot is
+  // its date. A practice run with the fake probe shows only on this laptop or its hotspot, under a big "Practice: made-up
+  // numbers" banner, and a garden test is labelled so; neither is used for the field (rules.yaml probe.live). The robot is
   // drawn as the plan (Krishi Scout); the words say a person carries the prototype soil stick, so no sentence says a robot
   // tested anything.
   function liveParts(lv) {
@@ -749,14 +750,18 @@
     return m;
   }
   function isReal(src) { return /^serial:./.test(String(src || '')); }
+  function onHotspot() { return /^(localhost|(127|10)\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+|[\w-]+\.local)$/.test(location.hostname); }
+  function isPractice(lv) { return !!lv && lv.source === 'fake_probe' && onHotspot(); }
+  function forField(pd) { return !!pd && !pd.practice && !pd.garden; }   // readings that may stand for the field itself
   function probeData() {
     return Promise.all([getJSON('data/live.json', true), getJSON('data/probe_log.json')]).then(function (r) {
       var lv = r[0], log = r[1];
-      if (lv && isReal(lv.source) && (lv.section || (lv.parts || []).length)) return (S.probe = { kind: 'live', live: lv, parts: liveParts(lv) });
+      if (lv && (isReal(lv.source) || isPractice(lv)) && (lv.section || (lv.parts || []).length))
+        return (S.probe = { kind: 'live', live: lv, parts: liveParts(lv), practice: isPractice(lv) });
       var sess = log && (log.sessions || []).filter(function (x) { return isReal(x.source); }).pop();
       if (sess && sess.parts && sess.parts.length) {
         var m = {}; sess.parts.forEach(function (p) { m[p.section] = p; });
-        return (S.probe = { kind: 'log', log: log, sess: sess, parts: m });
+        return (S.probe = { kind: 'log', log: log, sess: sess, parts: m, garden: log.kind === 'garden_test' });
       }
       return (S.probe = { kind: 'none', parts: {} });
     });
@@ -774,11 +779,12 @@
     return { k: 'info', word: T('check_soil.tested') };
   }
   function recordedLine(pd) {
-    var days = !pd ? [] : pd.kind === 'log' ? pd.log.recorded_on || [] : pd.kind === 'live' && pd.live.time ? [String(pd.live.time).slice(0, 10)] : [];
+    var days = !pd || pd.practice ? [] : pd.kind === 'log' ? pd.log.recorded_on || [] : pd.kind === 'live' && pd.live.time ? [String(pd.live.time).slice(0, 10)] : [];
     if (!days.length) return null;
-    return h('p', { class: 'small', style: 'margin:0;font-weight:700;color:var(--ink)' }, svg(I('stick', 14)), ' ', T('check_soil.recorded_on') + ' ' +
+    return h('p', { class: 'small', style: 'margin:0;font-weight:700;color:var(--ink)' }, svg(I('stick', 14)), ' ', T(pd.garden ? 'check_soil.garden_on' : 'check_soil.recorded_on') + ' ' +
       days.map(fmtDate).join(', ') + (pd.kind === 'log' && pd.log.place ? ' · ' + pd.log.place : ''));
   }
+  function practiceBanner(pd) { return pd && pd.practice ? h('div', { class: 'practice-banner', role: 'alert' }, svg(I('warn', 26, 3)), h('span', null, T('check_soil.practice'))) : null; }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
       var box = fieldBox(F, 'robot'), G = box._g;
@@ -813,7 +819,7 @@
         robot.querySelector('.led').setAttribute('fill', happy ? '#5FBF6A' : '#E9A948');
       }
       var rows = h('div', { class: 'prows', 'aria-live': 'polite' }), info = h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:8px' });
-      var ctaBox = h('div', { class: 'ctarow' }), shown = {}, pd = null;
+      var ctaBox = h('div', { class: 'ctarow' }), shown = {}, pd = null, pbox = h('div');
       function drawRows(cur) {
         rows.textContent = '';
         G.forEach(function (g) {
@@ -855,7 +861,7 @@
         if (lv.state === 'done' && g) ring.hidden = true;
         var active = !lv.stale && (lv.state === 'settling' || lv.state === 'measuring');
         info.textContent = '';
-        add(info, recordedLine({ kind: 'live', live: lv }));
+        add(info, recordedLine({ kind: 'live', live: lv, practice: isPractice(lv) }));
         if (lv.stale) info.append(h('p', { class: 'lead', style: 'margin:0' }, svg(I('warn', 18, 3)), ' ', T('check_soil.not_connected')));
         else if (active) info.append(h('p', { class: 'sub', style: 'margin:0' }, T('check_soil.hold')));
         drawCta(active);
@@ -865,7 +871,8 @@
         pd = d;
         if (d.kind === 'live') {
           fromLive(d.live);
-          every(function () { getJSON('data/live.json', true).then(function (x) { if (x && rows.isConnected) fromLive(x); }); }, 2000);
+          add(pbox, practiceBanner(d));
+          every(function () { getJSON('data/live.json', true).then(function (x) { if (x && (isReal(x.source) || isPractice(x)) && rows.isConnected) fromLive(x); }); }, 2000);
         } else if (d.kind === 'log') {
           add(info, recordedLine(d));
           walk(d.sess.parts);
@@ -876,7 +883,7 @@
       });
       var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub'));
       return screen('soil', {
-        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
+        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null, pbox],
         scene: box,
         body: [rows, info, honest],
         cta: ctaBox
@@ -910,6 +917,7 @@
         });
       });
       probeData().then(function (pd) {
+        if (!forField(pd)) return;
         swatches.textContent = '';
         geom(F).forEach(function (g) { swatches.append(h('span', { class: 'sw4', style: 'background:' + DOT_COL[partWord(pd.parts[g.s.id]).k] })); });
         if (anyTested(pd)) { title.firstChild.textContent = T('check_soil.tested_h1'); title.lastChild.textContent = T('check_soil.tested_h2'); }
@@ -968,13 +976,13 @@
   }
   SCREENS.today = function () {
     return withField('today', function (F) {
-      var G = geom(F).sort(function (a, b) { return a.n - b.n; }), cards = h('div', { class: 'tcards lines1' }), more = h('div', { class: 'row wrap' }), mode = 'compare';
+      var G = geom(F).sort(function (a, b) { return a.n - b.n; }), cards = h('div', { class: 'tcards lines1' }), more = h('div', { class: 'row wrap' }), mode = 'compare', pbox = h('div');
       var last = null, drawn = 0;
       function draw(pd) {
         var key = JSON.stringify(pd.parts) + S.lang + mode;
         if (key === last) return;   // the live file is read again every few seconds: redraw only when a reading changed
         last = key; cards.classList.toggle('still', drawn++ > 1);
-        cards.textContent = ''; more.textContent = '';
+        cards.textContent = ''; more.textContent = ''; pbox.textContent = ''; add(pbox, practiceBanner(pd));
         G.forEach(function (g, i) {
           var x = patchLine(pd.parts[g.s.id], mode, g.n);
           cards.append(h('div', { class: 'tcard ' + x.k, style: 'animation-delay:' + (i * 110 + 100) + 'ms' }, dotEl(x.k), h('span', { class: 'word' }, x.text)));
@@ -989,7 +997,7 @@
         if (pd.kind === 'live') every(function () { probeData().then(function (x) { if (cards.isConnected) draw(x); }); }, 4000);
       });
       return screen('today', {
-        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
+        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), isPlaceholder(F.field.name) ? sampleChip() : null, pbox],
         scene: [cards, more],
         body: null,
         cta: cta(T('what_to_grow.see3'), function () { go('next/3'); })
@@ -1011,7 +1019,7 @@
   var START_OF = { 'needs water': 'dry', good: 'medium', 'too wet': 'wet' };
   function startState(pd, sd) {
     var n = {}, best = null;
-    if (sd.today && sd.today.mode === 'band') Object.keys(pd.parts).forEach(function (k) { var b = START_OF[pd.parts[k].band]; if (b) n[b] = (n[b] || 0) + 1; });
+    if (sd.today && sd.today.mode === 'band' && forField(pd)) Object.keys(pd.parts).forEach(function (k) { var b = START_OF[pd.parts[k].band]; if (b) n[b] = (n[b] || 0) + 1; });
     Object.keys(n).forEach(function (k) { if (!best || n[k] > n[best]) best = k; });
     return best || sd.start || 'medium';
   }
@@ -1403,7 +1411,7 @@
     sampleChip: sampleChip, isPlaceholder: isPlaceholder, sourcesList: sourcesList, mocked: mocked, fogLayer: fogLayer, langInfo: langInfo, monthName: monthName,
     MONTHS: MONTHS, RM: RM, later: later, sentences: sentences, btn3: btn3, vsChip: vsChip,
     btn2: btn2, cta: cta, screen: screen, labs: labs, rainMark: rainMark, closeSheet: closeSheet, bigTitle: bigTitle, store: store, fmtDate: fmtDate, geom: geom, fieldBox: fieldBox,
-    cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, partWord: partWord,
+    cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
     say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy };

@@ -1912,6 +1912,10 @@
    "en": "Recorded on",
    "sw": "Ilipimwa tarehe"
   },
+  "screens.check_soil.texts.garden_on": {
+   "en": "A garden test of our probe, recorded on",
+   "sw": "Jaribio la kifaa chetu bustanini, lilirekodiwa tarehe"
+  },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",
    "sw": "Miaka {year_count}"
@@ -2269,8 +2273,8 @@
    "sw": "Namba zenye alama hii zinatumia mvua iliyorekebishwa."
   },
   "screens.check_soil.texts.practice": {
-   "en": "Practice soil stick",
-   "sw": "Kijiti cha mazoezi"
+   "en": "Practice: made-up numbers",
+   "sw": "Mazoezi: namba za kubuni"
   },
   "screens.your_plan.texts.version": {
    "en": "Version",

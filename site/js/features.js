@@ -138,15 +138,15 @@
   function resWord(r) { return T('last_years.res_' + (r || 'none')); }
   function monthOf(mm) { return K.monthName(K.MONTHS[+mm - 1]); }
   function pair(label, value) { return h('p', { class: 'kv' }, h('span', null, label), ' ', h('b', null, value)); }
-  // the soil stick's latest band (live.json during the demo, else the recorded readings), or null
+  // the soil stick's latest band from the field's own real readings (live.json during the demo, else the recorded walk), or
+  // null; never a practice run or a garden test (rules.yaml probe.live)
   function stickBand() {
-    return Promise.all([K.getJSON('data/live.json', true), K.getJSON('data/probe_log.json')]).then(function (r) {
-      var lv = r[0], log = r[1], last = null;
-      var lp = lv && (lv.parts || []).filter(function (x) { return x && x.band; }).pop();
-      if (lv && (lv.band || lp)) return { band: lv.band || lp.band, time: lv.time };
-      var rd = log && (log.readings || (log.sessions || []).reduce(function (a, s) { return a.concat(s.parts || []); }, []));
-      (rd || []).forEach(function (x) { if (x && x.band) last = x; });
-      return last ? { band: last.band, time: last.time || last.date } : null;
+    return K.probeData().then(function (pd) {
+      var last = null;
+      if (!K.forField(pd)) return null;
+      if (pd.kind === 'live' && pd.live.band) return { band: pd.live.band, time: pd.live.time };
+      Object.keys(pd.parts).forEach(function (k) { var x = pd.parts[k]; if (x && x.band) last = x; });
+      return last ? { band: last.band, time: last.time || (pd.live && pd.live.time) } : null;
     });
   }
   function replay(F, R) {

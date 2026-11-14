@@ -4,6 +4,16 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, night): `probe_log.json` may say it is a garden test; practice readings only on the hotspot
+
+- `probe_log.json` gains an optional `kind: "garden_test"` (`scripts/build_probe_log.py --garden`; rules.yaml
+  `probe.live.garden_test`). Then the site labels the walk "A garden test of our probe, recorded on <date>"
+  (`check_soil.garden_on`), every part's `before` and `after` are null and `twin_date` is null, and its bands never set
+  the field's soil at the start. Files without `kind` are unchanged.
+- `live.json` from the fake probe (`source: "fake_probe"`) is shown only when the page is opened from this laptop or its
+  hotspot, under a big "Practice: made-up numbers" banner (`check_soil.practice`), and is never used for anything else
+  (rules.yaml `probe.live.practice_on_phone`). Real readings (`source: "serial:…"`) show with their date. No "Tested: n / N".
+
 ## 2026-11-14 (Saturday, evening): dry runs after sowing, two wheat-book checks (rainrisk and heatclock files; additions only)
 
 Rules committed before the first run (`8ade382`): `rain_risk.dry_spells`, `heat_clock.wheat_floret_*`, `wheat_flower_*`.

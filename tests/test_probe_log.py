@@ -105,6 +105,20 @@ def test_the_file_says_when_and_where_it_was_recorded(tmp_path):
     assert bpl.build([log], field="demo")["place"] is None
 
 
+def test_a_garden_test_is_labelled_so_and_never_updates_the_fields_twin(tmp_path):
+    """Owner's answer 4, 2026-11-14 night; rules.yaml probe.live.garden_test."""
+    log = tmp_path / "readings_2026-11-16.jsonl"
+    _session(log, "serial:COM3", "r")                 # with the bench calibration, so a normal walk has before and after
+    normal = bpl.build([log], field="demo")
+    assert normal["sessions"][0]["parts"][0]["after"] is not None and "kind" not in normal
+    doc = bpl.build([log], field="demo", garden=True)
+    Draft202012Validator(SCHEMA).validate(doc)
+    assert doc["kind"] == "garden_test" and doc["twin_date"] is None
+    assert doc["note"].startswith("A garden test of our probe, recorded on 16 November 2026")
+    assert all(p["before"] is None and p["after"] is None and p["wetness"] is not None for p in doc["sessions"][0]["parts"])
+    assert [p["relative"] for p in doc["sessions"][0]["parts"]] == [p["relative"] for p in normal["sessions"][0]["parts"]]
+
+
 def test_every_reading_keeps_its_date_and_time_settling_lines_included(tmp_path):
     log = tmp_path / "readings.jsonl"
     _session(log, "serial:COM3", "r")

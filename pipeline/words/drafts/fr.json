@@ -1912,6 +1912,10 @@
    "en": "Recorded on",
    "fr": "Mesuré le"
   },
+  "screens.check_soil.texts.garden_on": {
+   "en": "A garden test of our probe, recorded on",
+   "fr": "Test de notre sonde au jardin, enregistré le"
+  },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",
    "fr": "{year_count} ans"
@@ -2269,8 +2273,8 @@
    "fr": "Les nombres marqués ainsi utilisent la pluie corrigée."
   },
   "screens.check_soil.texts.practice": {
-   "en": "Practice soil stick",
-   "fr": "Tige d'entraînement"
+   "en": "Practice: made-up numbers",
+   "fr": "Exercice : chiffres inventés"
   },
   "screens.your_plan.texts.version": {
    "en": "Version",

@@ -1539,9 +1539,15 @@
      "ne_review": "needs native-speaker review"
     },
     {
+     "id": "garden_on",
+     "en": "A garden test of our probe, recorded on",
+     "ne": "हाम्रो यन्त्रको बगैंचामा गरिएको जाँच, नापिएको मिति:",
+     "ne_review": "needs native-speaker review"
+    },
+    {
      "id": "practice",
-     "en": "Practice soil stick",
-     "ne": "अभ्यासको माटो जाँच्ने यन्त्र",
+     "en": "Practice: made-up numbers",
+     "ne": "अभ्यास: नक्कली अङ्क",
      "ne_review": "needs native-speaker review"
     },
     {
