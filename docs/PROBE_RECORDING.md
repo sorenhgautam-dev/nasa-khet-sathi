@@ -176,8 +176,13 @@ recorded on <date>". It is not the demo field, so the twin is never updated with
 
 7. Send the zip as in step 5, or, on the main laptop, just tell the owner the start time and which one was watered.
 
-What we check: the watered patch or bowl should read "wetter than the other parts". If it does not, we say so; we never
-change a reading.
+What we check (rules.yaml `probe.live.watered_check`, fixed before the first test was scored): the watered patch or bowl
+must read more than twice the repeat error above every other one. The repeat error is how much the 10 measured lines of
+each bowl jitter, pooled over the four. Build it with `--watered s3 --watered-at 07:30` beside `--test`. The site then
+shows one plain line per bowl and the result. If it does not pass, we say so; we never change a reading.
+
+After a test walk, move `site/data/live.json` out of `site/data/` (for example into `data/probe/demo/`). The bridge
+leaves its last reading there, and the site on this laptop shows it before the recorded test, as "your farm".
 
 ## 5. What to send back, and how to name it
 

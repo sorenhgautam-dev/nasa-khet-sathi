@@ -1,0 +1,2212 @@
+{
+ "field": "demo",
+ "note": "Indoor test of our soil stick (4 bowls of soil), recorded on 14 November 2026: four bowls of the same soil, one watered, probed in order, 60 seconds each. Not the field shown here, and not live: the twin is not updated with this soil.",
+ "built": "2026-11-14T22:55:37+05:45",
+ "recorded_on": [
+  "2026-11-14"
+ ],
+ "place": null,
+ "twin_date": null,
+ "bench": null,
+ "skipped": [],
+ "sessions": [
+  {
+   "id": "2026-11-14T223723_serial",
+   "source": "serial:/dev/cu.usbserial-0001",
+   "start": "2026-11-14T22:40:25+05:45",
+   "end": "2026-11-14T22:50:45+05:45",
+   "parts": [
+    {
+     "section": "s1",
+     "time": "2026-11-14T22:40:25+05:45",
+     "state": "test_again",
+     "steady": false,
+     "off_scale": false,
+     "wetness": null,
+     "spread_pct": 68.0,
+     "n": 10,
+     "temp": 24.6,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": null,
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:39:26+05:45",
+       "moisture": 20.0,
+       "temp": 25.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:28+05:45",
+       "moisture": 20.0,
+       "temp": 25.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:30+05:45",
+       "moisture": 20.0,
+       "temp": 25.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:32+05:45",
+       "moisture": 20.0,
+       "temp": 25.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:34+05:45",
+       "moisture": 19.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:36+05:45",
+       "moisture": 19.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:38+05:45",
+       "moisture": 19.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:40+05:45",
+       "moisture": 19.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:42+05:45",
+       "moisture": 20.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:44+05:45",
+       "moisture": 19.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:46+05:45",
+       "moisture": 19.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:48+05:45",
+       "moisture": 19.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:50+05:45",
+       "moisture": 19.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:52+05:45",
+       "moisture": 19.0,
+       "temp": 25.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:54+05:45",
+       "moisture": 19.0,
+       "temp": 25.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:56+05:45",
+       "moisture": 19.0,
+       "temp": 25.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:39:58+05:45",
+       "moisture": 19.0,
+       "temp": 25.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:00+05:45",
+       "moisture": 19.0,
+       "temp": 25.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:02+05:45",
+       "moisture": 19.0,
+       "temp": 24.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:04+05:45",
+       "moisture": 18.0,
+       "temp": 24.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:06+05:45",
+       "moisture": 20.0,
+       "temp": 24.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:08+05:45",
+       "moisture": 18.0,
+       "temp": 24.7,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:10+05:45",
+       "moisture": 17.0,
+       "temp": 24.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:12+05:45",
+       "moisture": 17.0,
+       "temp": 24.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:14+05:45",
+       "moisture": 77.0,
+       "temp": 24.7,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:16+05:45",
+       "moisture": 85.0,
+       "temp": 24.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:18+05:45",
+       "moisture": 85.0,
+       "temp": 24.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:20+05:45",
+       "moisture": 83.0,
+       "temp": 24.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:22+05:45",
+       "moisture": 79.0,
+       "temp": 24.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:40:25+05:45",
+       "moisture": 84.0,
+       "temp": 24.6,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s1",
+     "time": "2026-11-14T22:41:25+05:45",
+     "state": "test_again",
+     "steady": false,
+     "off_scale": false,
+     "wetness": null,
+     "spread_pct": 13.0,
+     "n": 10,
+     "temp": null,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": null,
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:40:27+05:45",
+       "moisture": 83.0,
+       "temp": 24.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:29+05:45",
+       "moisture": 83.0,
+       "temp": 24.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:31+05:45",
+       "moisture": 80.0,
+       "temp": 24.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:33+05:45",
+       "moisture": 74.0,
+       "temp": 24.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:35+05:45",
+       "moisture": 77.0,
+       "temp": 24.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:37+05:45",
+       "moisture": 74.0,
+       "temp": 24.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:39+05:45",
+       "moisture": 66.0,
+       "temp": 24.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:41+05:45",
+       "moisture": 2.0,
+       "temp": 24.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:43+05:45",
+       "moisture": 72.0,
+       "temp": null,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:45+05:45",
+       "moisture": 63.0,
+       "temp": 25.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:47+05:45",
+       "moisture": 71.0,
+       "temp": 25.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:49+05:45",
+       "moisture": 58.0,
+       "temp": 25.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:51+05:45",
+       "moisture": 59.0,
+       "temp": 25.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:53+05:45",
+       "moisture": 72.0,
+       "temp": 25.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:55+05:45",
+       "moisture": 64.0,
+       "temp": 25.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:57+05:45",
+       "moisture": 70.0,
+       "temp": 26.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:40:59+05:45",
+       "moisture": 68.0,
+       "temp": 26.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:01+05:45",
+       "moisture": 68.0,
+       "temp": 26.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:03+05:45",
+       "moisture": 70.0,
+       "temp": 26.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:05+05:45",
+       "moisture": 58.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:07+05:45",
+       "moisture": 71.0,
+       "temp": 26.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:09+05:45",
+       "moisture": 71.0,
+       "temp": 27.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:11+05:45",
+       "moisture": 71.0,
+       "temp": 27.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:13+05:45",
+       "moisture": 68.0,
+       "temp": 27.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:15+05:45",
+       "moisture": 68.0,
+       "temp": 27.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:17+05:45",
+       "moisture": 71.0,
+       "temp": 27.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:19+05:45",
+       "moisture": 76.0,
+       "temp": 27.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:21+05:45",
+       "moisture": 78.0,
+       "temp": 27.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:23+05:45",
+       "moisture": 79.0,
+       "temp": 27.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:41:25+05:45",
+       "moisture": 81.0,
+       "temp": 27.7,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s1",
+     "time": "2026-11-14T22:42:26+05:45",
+     "state": "test_again",
+     "steady": false,
+     "off_scale": false,
+     "wetness": null,
+     "spread_pct": 77.0,
+     "n": 10,
+     "temp": 29.1,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": null,
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:41:27+05:45",
+       "moisture": 81.0,
+       "temp": 27.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:29+05:45",
+       "moisture": 81.0,
+       "temp": 27.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:31+05:45",
+       "moisture": 80.0,
+       "temp": 27.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:33+05:45",
+       "moisture": 80.0,
+       "temp": 27.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:36+05:45",
+       "moisture": 80.0,
+       "temp": 27.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:38+05:45",
+       "moisture": 85.0,
+       "temp": 28.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:40+05:45",
+       "moisture": 83.0,
+       "temp": 28.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:42+05:45",
+       "moisture": 84.0,
+       "temp": 28.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:44+05:45",
+       "moisture": 85.0,
+       "temp": 28.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:46+05:45",
+       "moisture": 84.0,
+       "temp": 28.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:48+05:45",
+       "moisture": 83.0,
+       "temp": 28.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:50+05:45",
+       "moisture": 83.0,
+       "temp": 28.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:52+05:45",
+       "moisture": 70.0,
+       "temp": 28.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:54+05:45",
+       "moisture": 81.0,
+       "temp": 28.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:56+05:45",
+       "moisture": 78.0,
+       "temp": 28.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:41:58+05:45",
+       "moisture": 81.0,
+       "temp": 28.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:00+05:45",
+       "moisture": 83.0,
+       "temp": 28.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:02+05:45",
+       "moisture": 82.0,
+       "temp": 29.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:04+05:45",
+       "moisture": 81.0,
+       "temp": 29.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:06+05:45",
+       "moisture": 80.0,
+       "temp": 29.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:08+05:45",
+       "moisture": 81.0,
+       "temp": 29.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:10+05:45",
+       "moisture": 11.0,
+       "temp": 29.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:12+05:45",
+       "moisture": 68.0,
+       "temp": 29.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:14+05:45",
+       "moisture": 78.0,
+       "temp": 29.0,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:16+05:45",
+       "moisture": 79.0,
+       "temp": 29.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:18+05:45",
+       "moisture": 5.0,
+       "temp": 29.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:20+05:45",
+       "moisture": 4.0,
+       "temp": 29.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:22+05:45",
+       "moisture": 6.0,
+       "temp": 29.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:24+05:45",
+       "moisture": 8.0,
+       "temp": 28.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:42:26+05:45",
+       "moisture": 10.0,
+       "temp": 28.8,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s1",
+     "time": "2026-11-14T22:43:41+05:45",
+     "state": "test_again",
+     "steady": false,
+     "off_scale": false,
+     "wetness": null,
+     "spread_pct": 4.0,
+     "n": 10,
+     "temp": 27.1,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": null,
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:42:28+05:45",
+       "moisture": 9.0,
+       "temp": 28.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:30+05:45",
+       "moisture": 10.0,
+       "temp": 28.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:32+05:45",
+       "moisture": 10.0,
+       "temp": 28.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:34+05:45",
+       "moisture": 11.0,
+       "temp": 28.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:36+05:45",
+       "moisture": 10.0,
+       "temp": 28.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:38+05:45",
+       "moisture": 10.0,
+       "temp": 28.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:40+05:45",
+       "moisture": 10.0,
+       "temp": 28.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:42+05:45",
+       "moisture": 10.0,
+       "temp": 28.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:45+05:45",
+       "moisture": 10.0,
+       "temp": 28.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:47+05:45",
+       "moisture": 10.0,
+       "temp": 28.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:49+05:45",
+       "moisture": 11.0,
+       "temp": 28.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:51+05:45",
+       "moisture": 10.0,
+       "temp": 28.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:53+05:45",
+       "moisture": 10.0,
+       "temp": 28.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:55+05:45",
+       "moisture": 10.0,
+       "temp": 27.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:57+05:45",
+       "moisture": 10.0,
+       "temp": 27.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:42:59+05:45",
+       "moisture": 9.0,
+       "temp": 27.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:00+05:45",
+       "moisture": 8.0,
+       "temp": 27.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:02+05:45",
+       "moisture": 8.0,
+       "temp": 27.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:04+05:45",
+       "moisture": 10.0,
+       "temp": 27.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:06+05:45",
+       "moisture": 8.0,
+       "temp": 27.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:08+05:45",
+       "moisture": 9.0,
+       "temp": 27.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:10+05:45",
+       "moisture": 9.0,
+       "temp": 27.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:12+05:45",
+       "moisture": 8.0,
+       "temp": 27.2,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:14+05:45",
+       "moisture": 8.0,
+       "temp": 27.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:16+05:45",
+       "moisture": 10.0,
+       "temp": 27.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:18+05:45",
+       "moisture": 12.0,
+       "temp": 27.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:20+05:45",
+       "moisture": 9.0,
+       "temp": 27.0,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:38+05:45",
+       "moisture": 9.0,
+       "temp": 27.0,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:39+05:45",
+       "moisture": 8.0,
+       "temp": 26.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:43:41+05:45",
+       "moisture": 9.0,
+       "temp": 26.9,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s1",
+     "time": "2026-11-14T22:44:40+05:45",
+     "state": "test_again",
+     "steady": false,
+     "off_scale": false,
+     "wetness": null,
+     "spread_pct": 10.0,
+     "n": 10,
+     "temp": 26.4,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": null,
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:43:43+05:45",
+       "moisture": 9.0,
+       "temp": 26.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:45+05:45",
+       "moisture": 9.0,
+       "temp": 26.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:47+05:45",
+       "moisture": 10.0,
+       "temp": 26.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:49+05:45",
+       "moisture": 9.0,
+       "temp": 26.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:51+05:45",
+       "moisture": 9.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:53+05:45",
+       "moisture": 10.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:55+05:45",
+       "moisture": 9.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:57+05:45",
+       "moisture": 10.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:43:59+05:45",
+       "moisture": 9.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:01+05:45",
+       "moisture": 9.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:03+05:45",
+       "moisture": 8.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:05+05:45",
+       "moisture": 8.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:07+05:45",
+       "moisture": 9.0,
+       "temp": 26.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:09+05:45",
+       "moisture": 8.0,
+       "temp": 26.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:11+05:45",
+       "moisture": 9.0,
+       "temp": 26.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:13+05:45",
+       "moisture": 9.0,
+       "temp": 26.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:16+05:45",
+       "moisture": 9.0,
+       "temp": 26.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:18+05:45",
+       "moisture": 9.0,
+       "temp": 26.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:20+05:45",
+       "moisture": 9.0,
+       "temp": 26.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:22+05:45",
+       "moisture": 9.0,
+       "temp": 26.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:23+05:45",
+       "moisture": 9.0,
+       "temp": 26.5,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:24+05:45",
+       "moisture": 9.0,
+       "temp": 26.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:26+05:45",
+       "moisture": 11.0,
+       "temp": 26.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:28+05:45",
+       "moisture": 11.0,
+       "temp": 26.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:30+05:45",
+       "moisture": 9.0,
+       "temp": 26.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:32+05:45",
+       "moisture": 9.0,
+       "temp": 26.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:34+05:45",
+       "moisture": 9.0,
+       "temp": 26.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:36+05:45",
+       "moisture": 7.0,
+       "temp": 26.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:38+05:45",
+       "moisture": 3.0,
+       "temp": 26.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:44:40+05:45",
+       "moisture": 1.0,
+       "temp": 26.3,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s1",
+     "time": "2026-11-14T22:45:40+05:45",
+     "state": "done",
+     "steady": true,
+     "off_scale": false,
+     "wetness": 1,
+     "spread_pct": 2.0,
+     "n": 10,
+     "temp": null,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": "drier",
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:44:42+05:45",
+       "moisture": 4.0,
+       "temp": 26.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:44+05:45",
+       "moisture": 2.0,
+       "temp": 26.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:46+05:45",
+       "moisture": 6.0,
+       "temp": 26.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:48+05:45",
+       "moisture": 7.0,
+       "temp": 26.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:50+05:45",
+       "moisture": 15.0,
+       "temp": 26.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:53+05:45",
+       "moisture": 7.0,
+       "temp": 26.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:55+05:45",
+       "moisture": 10.0,
+       "temp": 26.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:57+05:45",
+       "moisture": 2.0,
+       "temp": 26.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:44:59+05:45",
+       "moisture": 2.0,
+       "temp": 26.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:00+05:45",
+       "moisture": 2.0,
+       "temp": 26.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:02+05:45",
+       "moisture": 1.0,
+       "temp": 26.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:04+05:45",
+       "moisture": 2.0,
+       "temp": 26.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:06+05:45",
+       "moisture": 1.0,
+       "temp": 25.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:08+05:45",
+       "moisture": 1.0,
+       "temp": 25.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:10+05:45",
+       "moisture": 0.0,
+       "temp": 25.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:12+05:45",
+       "moisture": 1.0,
+       "temp": 25.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:14+05:45",
+       "moisture": 1.0,
+       "temp": 26.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:16+05:45",
+       "moisture": 1.0,
+       "temp": 27.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:18+05:45",
+       "moisture": 0.0,
+       "temp": 29.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:20+05:45",
+       "moisture": 1.0,
+       "temp": 29.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:22+05:45",
+       "moisture": 2.0,
+       "temp": 30.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:24+05:45",
+       "moisture": 1.0,
+       "temp": 30.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:26+05:45",
+       "moisture": 1.0,
+       "temp": 30.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:28+05:45",
+       "moisture": 1.0,
+       "temp": 31.0,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:30+05:45",
+       "moisture": 0.0,
+       "temp": 31.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:32+05:45",
+       "moisture": 1.0,
+       "temp": 31.2,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:34+05:45",
+       "moisture": 1.0,
+       "temp": 31.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:36+05:45",
+       "moisture": 1.0,
+       "temp": null,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:38+05:45",
+       "moisture": 1.0,
+       "temp": 31.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:45:40+05:45",
+       "moisture": 1.0,
+       "temp": 31.5,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s2",
+     "time": "2026-11-14T22:46:41+05:45",
+     "state": "test_again",
+     "steady": false,
+     "off_scale": false,
+     "wetness": null,
+     "spread_pct": 5.0,
+     "n": 10,
+     "temp": null,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": null,
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:45:42+05:45",
+       "moisture": 2.0,
+       "temp": 31.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:44+05:45",
+       "moisture": 1.0,
+       "temp": 31.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:46+05:45",
+       "moisture": 1.0,
+       "temp": 31.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:48+05:45",
+       "moisture": 0.0,
+       "temp": 31.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:50+05:45",
+       "moisture": 0.0,
+       "temp": 30.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:52+05:45",
+       "moisture": 1.0,
+       "temp": 30.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:54+05:45",
+       "moisture": 25.0,
+       "temp": 30.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:57+05:45",
+       "moisture": 32.0,
+       "temp": 29.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:45:59+05:45",
+       "moisture": 64.0,
+       "temp": 30.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:01+05:45",
+       "moisture": 28.0,
+       "temp": 30.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:03+05:45",
+       "moisture": 66.0,
+       "temp": 30.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:05+05:45",
+       "moisture": 65.0,
+       "temp": 30.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:07+05:45",
+       "moisture": 65.0,
+       "temp": 30.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:09+05:45",
+       "moisture": 67.0,
+       "temp": 32.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:11+05:45",
+       "moisture": 66.0,
+       "temp": 31.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:13+05:45",
+       "moisture": 64.0,
+       "temp": 30.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:15+05:45",
+       "moisture": 65.0,
+       "temp": 31.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:17+05:45",
+       "moisture": 66.0,
+       "temp": 30.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:19+05:45",
+       "moisture": 66.0,
+       "temp": 30.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:21+05:45",
+       "moisture": 66.0,
+       "temp": 30.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:23+05:45",
+       "moisture": 69.0,
+       "temp": 30.7,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:25+05:45",
+       "moisture": 68.0,
+       "temp": 30.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:27+05:45",
+       "moisture": 71.0,
+       "temp": 30.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:29+05:45",
+       "moisture": 68.0,
+       "temp": 31.0,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:31+05:45",
+       "moisture": 67.0,
+       "temp": null,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:33+05:45",
+       "moisture": 66.0,
+       "temp": 30.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:35+05:45",
+       "moisture": 67.0,
+       "temp": 30.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:37+05:45",
+       "moisture": 68.0,
+       "temp": 30.0,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:39+05:45",
+       "moisture": 66.0,
+       "temp": 30.2,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:46:41+05:45",
+       "moisture": 66.0,
+       "temp": 30.6,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s2",
+     "time": "2026-11-14T22:47:42+05:45",
+     "state": "test_again",
+     "steady": false,
+     "off_scale": false,
+     "wetness": null,
+     "spread_pct": 4.0,
+     "n": 10,
+     "temp": null,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": null,
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:46:43+05:45",
+       "moisture": 67.0,
+       "temp": 30.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:45+05:45",
+       "moisture": 68.0,
+       "temp": 30.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:47+05:45",
+       "moisture": 68.0,
+       "temp": 31.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:49+05:45",
+       "moisture": 68.0,
+       "temp": 31.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:51+05:45",
+       "moisture": 67.0,
+       "temp": 31.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:53+05:45",
+       "moisture": 67.0,
+       "temp": 31.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:55+05:45",
+       "moisture": 68.0,
+       "temp": 30.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:57+05:45",
+       "moisture": 66.0,
+       "temp": 31.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:46:59+05:45",
+       "moisture": 67.0,
+       "temp": 31.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:01+05:45",
+       "moisture": 67.0,
+       "temp": 31.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:03+05:45",
+       "moisture": 69.0,
+       "temp": 31.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:05+05:45",
+       "moisture": 65.0,
+       "temp": 31.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:08+05:45",
+       "moisture": 65.0,
+       "temp": 31.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:10+05:45",
+       "moisture": 66.0,
+       "temp": 32.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:12+05:45",
+       "moisture": 63.0,
+       "temp": 32.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:14+05:45",
+       "moisture": 65.0,
+       "temp": 32.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:16+05:45",
+       "moisture": 64.0,
+       "temp": 32.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:18+05:45",
+       "moisture": 64.0,
+       "temp": 32.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:20+05:45",
+       "moisture": 62.0,
+       "temp": 32.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:22+05:45",
+       "moisture": 63.0,
+       "temp": 32.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:24+05:45",
+       "moisture": 63.0,
+       "temp": 32.5,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:26+05:45",
+       "moisture": 63.0,
+       "temp": 32.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:28+05:45",
+       "moisture": 64.0,
+       "temp": 32.7,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:30+05:45",
+       "moisture": 64.0,
+       "temp": 32.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:32+05:45",
+       "moisture": 63.0,
+       "temp": 32.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:34+05:45",
+       "moisture": 65.0,
+       "temp": 33.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:36+05:45",
+       "moisture": 63.0,
+       "temp": 33.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:38+05:45",
+       "moisture": 63.0,
+       "temp": 33.2,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:40+05:45",
+       "moisture": 62.0,
+       "temp": 33.2,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:47:42+05:45",
+       "moisture": 61.0,
+       "temp": 33.3,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s2",
+     "time": "2026-11-14T22:48:43+05:45",
+     "state": "done",
+     "steady": true,
+     "off_scale": false,
+     "wetness": 3,
+     "spread_pct": 3.0,
+     "n": 10,
+     "temp": null,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": "drier",
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:47:44+05:45",
+       "moisture": 62.0,
+       "temp": 32.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:46+05:45",
+       "moisture": 3.0,
+       "temp": null,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:48+05:45",
+       "moisture": 1.0,
+       "temp": 30.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:50+05:45",
+       "moisture": 3.0,
+       "temp": 30.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:52+05:45",
+       "moisture": 3.0,
+       "temp": 30.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:54+05:45",
+       "moisture": 3.0,
+       "temp": 30.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:56+05:45",
+       "moisture": 5.0,
+       "temp": 29.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:47:58+05:45",
+       "moisture": 3.0,
+       "temp": 29.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:00+05:45",
+       "moisture": 2.0,
+       "temp": 29.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:02+05:45",
+       "moisture": 3.0,
+       "temp": 29.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:04+05:45",
+       "moisture": 5.0,
+       "temp": 29.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:06+05:45",
+       "moisture": 3.0,
+       "temp": 29.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:08+05:45",
+       "moisture": 3.0,
+       "temp": 28.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:10+05:45",
+       "moisture": 1.0,
+       "temp": 28.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:12+05:45",
+       "moisture": 3.0,
+       "temp": 28.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:14+05:45",
+       "moisture": 4.0,
+       "temp": 28.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:16+05:45",
+       "moisture": 4.0,
+       "temp": 28.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:19+05:45",
+       "moisture": 2.0,
+       "temp": 28.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:21+05:45",
+       "moisture": 4.0,
+       "temp": 28.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:23+05:45",
+       "moisture": 3.0,
+       "temp": 28.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:25+05:45",
+       "moisture": 4.0,
+       "temp": 27.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:27+05:45",
+       "moisture": 4.0,
+       "temp": 27.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:29+05:45",
+       "moisture": 3.0,
+       "temp": 27.7,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:31+05:45",
+       "moisture": 3.0,
+       "temp": 27.6,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:33+05:45",
+       "moisture": 3.0,
+       "temp": 27.5,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:35+05:45",
+       "moisture": 4.0,
+       "temp": 27.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:37+05:45",
+       "moisture": 2.0,
+       "temp": 27.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:39+05:45",
+       "moisture": 3.0,
+       "temp": 27.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:41+05:45",
+       "moisture": 3.0,
+       "temp": 27.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:48:43+05:45",
+       "moisture": 5.0,
+       "temp": 27.1,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s3",
+     "time": "2026-11-14T22:49:44+05:45",
+     "state": "done",
+     "steady": true,
+     "off_scale": false,
+     "wetness": 14,
+     "spread_pct": 2.0,
+     "n": 10,
+     "temp": 25.1,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": "wetter",
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:48:45+05:45",
+       "moisture": 3.0,
+       "temp": 27.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:47+05:45",
+       "moisture": 4.0,
+       "temp": 26.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:49+05:45",
+       "moisture": 3.0,
+       "temp": 26.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:51+05:45",
+       "moisture": 4.0,
+       "temp": 26.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:53+05:45",
+       "moisture": 2.0,
+       "temp": 26.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:55+05:45",
+       "moisture": 1.0,
+       "temp": 26.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:57+05:45",
+       "moisture": 40.0,
+       "temp": 26.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:48:59+05:45",
+       "moisture": 12.0,
+       "temp": 26.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:01+05:45",
+       "moisture": 28.0,
+       "temp": 26.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:03+05:45",
+       "moisture": 17.0,
+       "temp": 26.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:05+05:45",
+       "moisture": 17.0,
+       "temp": 26.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:07+05:45",
+       "moisture": 17.0,
+       "temp": 26.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:09+05:45",
+       "moisture": 16.0,
+       "temp": 25.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:11+05:45",
+       "moisture": 15.0,
+       "temp": 25.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:13+05:45",
+       "moisture": 16.0,
+       "temp": 25.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:15+05:45",
+       "moisture": 15.0,
+       "temp": 25.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:17+05:45",
+       "moisture": 15.0,
+       "temp": 25.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:19+05:45",
+       "moisture": 15.0,
+       "temp": 25.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:21+05:45",
+       "moisture": 15.0,
+       "temp": 25.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:23+05:45",
+       "moisture": 15.0,
+       "temp": 25.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:25+05:45",
+       "moisture": 15.0,
+       "temp": 25.4,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:28+05:45",
+       "moisture": 15.0,
+       "temp": 25.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:30+05:45",
+       "moisture": 15.0,
+       "temp": 25.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:32+05:45",
+       "moisture": 14.0,
+       "temp": 25.3,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:34+05:45",
+       "moisture": 14.0,
+       "temp": 25.2,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:36+05:45",
+       "moisture": 14.0,
+       "temp": 25.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:38+05:45",
+       "moisture": 13.0,
+       "temp": 25.1,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:40+05:45",
+       "moisture": 13.0,
+       "temp": 25.0,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:42+05:45",
+       "moisture": 13.0,
+       "temp": 24.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:49:44+05:45",
+       "moisture": 14.0,
+       "temp": 24.9,
+       "phase": "measure"
+      }
+     ]
+    },
+    {
+     "section": "s4",
+     "time": "2026-11-14T22:50:45+05:45",
+     "state": "done",
+     "steady": true,
+     "off_scale": false,
+     "wetness": 15,
+     "spread_pct": 3.0,
+     "n": 10,
+     "temp": 23.8,
+     "water_pct": null,
+     "give_or_take_pct": null,
+     "band": null,
+     "relative": "wetter",
+     "before": null,
+     "after": null,
+     "lines": [
+      {
+       "time": "2026-11-14T22:49:46+05:45",
+       "moisture": 15.0,
+       "temp": 24.9,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:48+05:45",
+       "moisture": 14.0,
+       "temp": 24.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:50+05:45",
+       "moisture": 15.0,
+       "temp": 24.8,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:52+05:45",
+       "moisture": 15.0,
+       "temp": 24.7,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:54+05:45",
+       "moisture": 14.0,
+       "temp": 24.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:56+05:45",
+       "moisture": 14.0,
+       "temp": 24.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:49:58+05:45",
+       "moisture": 15.0,
+       "temp": 24.6,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:00+05:45",
+       "moisture": 14.0,
+       "temp": 24.5,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:02+05:45",
+       "moisture": 14.0,
+       "temp": 24.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:04+05:45",
+       "moisture": 13.0,
+       "temp": 24.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:06+05:45",
+       "moisture": 15.0,
+       "temp": 24.4,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:08+05:45",
+       "moisture": 15.0,
+       "temp": 24.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:10+05:45",
+       "moisture": 15.0,
+       "temp": 24.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:12+05:45",
+       "moisture": 15.0,
+       "temp": 24.3,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:14+05:45",
+       "moisture": 14.0,
+       "temp": 24.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:16+05:45",
+       "moisture": 14.0,
+       "temp": 24.2,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:18+05:45",
+       "moisture": 15.0,
+       "temp": 24.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:20+05:45",
+       "moisture": 15.0,
+       "temp": 24.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:22+05:45",
+       "moisture": 14.0,
+       "temp": 24.1,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:24+05:45",
+       "moisture": 15.0,
+       "temp": 24.0,
+       "phase": "settle"
+      },
+      {
+       "time": "2026-11-14T22:50:26+05:45",
+       "moisture": 15.0,
+       "temp": 24.0,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:28+05:45",
+       "moisture": 15.0,
+       "temp": 23.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:30+05:45",
+       "moisture": 15.0,
+       "temp": 23.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:32+05:45",
+       "moisture": 15.0,
+       "temp": 23.9,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:34+05:45",
+       "moisture": 14.0,
+       "temp": 23.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:36+05:45",
+       "moisture": 15.0,
+       "temp": 23.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:39+05:45",
+       "moisture": 15.0,
+       "temp": 23.8,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:41+05:45",
+       "moisture": 14.0,
+       "temp": 23.7,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:43+05:45",
+       "moisture": 14.0,
+       "temp": 23.7,
+       "phase": "measure"
+      },
+      {
+       "time": "2026-11-14T22:50:45+05:45",
+       "moisture": 12.0,
+       "temp": 23.7,
+       "phase": "measure"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "kind": "indoor_test"
+}

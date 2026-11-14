@@ -4,6 +4,15 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, near midnight): the indoor test's per-bowl lines and watered-bowl check (`probe_log.json`, addition only)
+
+- `probe_log.json` `sessions[]` gains an optional `check` (only with `--test` and `--watered sN --watered-at HH:MM`):
+  `watered`, `watered_at`, `possible`, `passed`, `repeat_error_pct`, `needed_pct`, `margin_pct` (rules.yaml
+  `probe.live.watered_check`: more than 2 x the pooled repeat error above every other bowl). Files without it are unchanged.
+- The soil screen, for an indoor test, shows one plain line per bowl after the replay ("Bowl 1: drier than the others.",
+  `check_soil.bowl_drier`, `bowl_wetter`, `bowl_same`, `bowl_none`) and, with a `check`, "Bowl 3 got water. It read
+  clearly wetter." or "... It was not clearly wetter." (`bowl_watered_yes`, `bowl_watered_no`).
+
 ## 2026-11-14 (Saturday, late night): wording only, no number changed
 
 - `index.json` `fields[].note` (a field on the global defaults) now reads "A field on another continent, run by the same

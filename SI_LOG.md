@@ -1451,3 +1451,30 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   folder, on `farm.webp` and saved `design/island_options/island_upscaled.webp`. Screenshots of the home screen with
   each, next to the current one, phone and web.
 - **For a person to review:** the team chooses one; until then the site keeps `farm.webp`.
+
+## 2026-11-14 (Saturday, night): a sharper home island; the months on the Choose screen run downwards (Claude Opus 5.5 via Claude Code)
+
+- **Home island:** on the owner's "make the graphics better", the Real-ESRGAN enlargement of the teammate's island
+  (CREDITS.md "Site design") was sharpened a little and brightened with Pillow and replaced `site/img/farm.webp` (85 KB,
+  1080 px wide, was 40 KB). Same drawing, no new content.
+- **Months on the Choose screen:** on the owner's word ("the months are so cramped ... make it so that the weather ahead
+  and next 3 months and next 6 months are all scrollable with an indicator ... for both web and phone"), the month chips
+  on the three cards became a list that runs downwards. It shows three months; the rest scroll inside the card, with a
+  fade and a bouncing arrow while more are below. On the web the weather card's sun and cloud moved below the list.
+  Checked in screenshots, phone (390 px) and web (1440 px), English and Nepali.
+- **For a person to review:** that the list scrolls by finger on a real phone (iPhone and Android); the screenshots were taken
+  in Chrome on a laptop.
+
+## 2026-11-14 (Saturday, near midnight): the team's indoor test of the soil stick (Claude Opus 5.5 via Claude Code)
+
+- **What Claude did:** read the bridge's log of the real walk (`data/probe/demo/readings_2026-11-14.jsonl`, session
+  2026-11-14T223723_serial, port /dev/cu.usbserial-0001): it ended normally ("every part walked"), all four bowls steady.
+  Bowl 1 needed six tries and the board restarted 9 times during them; 26,987 broken half-lines arrived in 3 seconds and
+  the bridge refused every one. Built `site/data/probe_log.json` as the indoor test (`--test indoor`). Wrote the owner's
+  watered-bowl rule into `config/rules.yaml` (`probe.live.watered_check`, committed 0b34002) before the watered bowl was
+  known, then the check (`scripts/build_probe_log.py watered_check`, worked-number tests) and the soil screen's one line
+  per bowl (English and Nepali, the Nepali marked for native-speaker review; draft Hindi, Bengali, Spanish, French
+  and Swahili lines, unreviewed, like the other drafts). Moved the bridge's leftover
+  `site/data/live.json` into `data/probe/demo/`: on this laptop it made the site show the bowls as "your farm".
+- **For a person to review:** which bowl got water and when (the owner's message left them blank); the Nepali lines.
+

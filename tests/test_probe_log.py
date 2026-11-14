@@ -174,3 +174,40 @@ def test_the_schema_itself_refuses_a_fake_source():
     doc = {"field": "demo", "note": "x", "built": "t", "recorded_on": ["2026-11-16"], "place": None, "twin_date": None,
            "bench": None, "skipped": [], "sessions": [{"id": "a", "source": "fake_probe", "start": "t", "end": "t", "parts": []}]}
     assert list(Draft202012Validator(SCHEMA).iter_errors(doc))
+
+
+def _bowl(section, measured, state="done"):
+    return {"section": section, "state": state, "lines": [{"moisture": 50.0, "phase": "settle"}] * 20
+            + [{"moisture": float(v), "phase": "measure"} for v in measured]}
+
+
+def test_the_watered_bowl_check_with_worked_numbers():
+    """rules.yaml probe.live.watered_check (owner, 2026-11-14 night): more than 2 x the repeat error above every other bowl.
+    Each bowl alternates two values 2 points apart, so each variance is 1 and the pooled repeat error is 1: needed 2."""
+    bowls = [_bowl("s1", [9, 11] * 5), _bowl("s2", [1, 3] * 5), _bowl("s3", [1, 3] * 5), _bowl("s4", [7, 9] * 5)]
+    two = bpl.watered_check(bowls, "s1", "21:30", 2)     # medians 10, 2, 2, 8: the margin is 10 - 8 = 2, not MORE than 2
+    assert two == {"watered": "s1", "watered_at": "21:30", "possible": True, "passed": False, "repeat_error_pct": 1.0,
+                   "needed_pct": 2.0, "margin_pct": 2.0}
+    bowls[3] = _bowl("s4", [6, 8] * 5)                    # median 7: margin 3 > 2
+    assert bpl.watered_check(bowls, "s1", "21:30", 2)["passed"] is True
+    assert bpl.watered_check(bowls, "s4", "21:30", 2)["margin_pct"] == -3.0     # bowl 1 reads wetter: fails
+    flat = [_bowl("s1", [12] * 10), _bowl("s2", [3] * 10), _bowl("s3", [2, 4] * 5), _bowl("s4", [2, 4] * 5)]
+    c = bpl.watered_check(flat, "s1", "21:30", 2)          # pooled: sqrt((0 + 0 + 1 + 1) / 4) = 0.7071
+    assert (c["repeat_error_pct"], c["needed_pct"], c["margin_pct"], c["passed"]) == (0.71, 1.41, 9.0, True)
+    unsteady = bowls[:3] + [_bowl("s4", [6, 8] * 5, state="test_again")]
+    assert bpl.watered_check(unsteady, "s1", "21:30", 2)["possible"] is False   # a bowl with no steady reading
+    with pytest.raises(ValueError):
+        bpl.watered_check(bowls, "s9", "21:30", 2)
+
+
+def test_the_check_is_written_only_for_a_test_and_validates(tmp_path):
+    log = tmp_path / "readings_2026-11-16.jsonl"
+    _session(log, "serial:COM3", "r")
+    doc = bpl.build([log], field="demo", test="indoor", watered=("s1", "09:30"))
+    Draft202012Validator(SCHEMA).validate(doc)
+    assert doc["sessions"][0]["check"]["watered"] == "s1" and doc["sessions"][0]["check"]["possible"] is True
+    assert "check" not in bpl.build([log], field="demo", watered=("s1", "09:30"))["sessions"][0]
+    with pytest.raises(SystemExit):
+        bpl.main(["--logs", str(log), "--out", str(tmp_path / "p.json"), "--watered", "s1", "--watered-at", "09:30"])  # no --test
+    with pytest.raises(SystemExit):
+        bpl.main(["--logs", str(log), "--out", str(tmp_path / "p.json"), "--test", "indoor", "--watered", "s1"])   # no time

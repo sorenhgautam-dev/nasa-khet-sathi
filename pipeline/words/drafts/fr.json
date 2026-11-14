@@ -3311,6 +3311,30 @@
   "screens.what_to_grow.labels.plan.items.safest_bad_years": {
    "en": "Safest in bad years",
    "fr": "Le plus sûr les mauvaises années"
+  },
+  "screens.check_soil.texts.bowl_drier": {
+   "en": "Bowl {section}: drier than the others.",
+   "fr": "Bol {section} : plus sec que les autres."
+  },
+  "screens.check_soil.texts.bowl_wetter": {
+   "en": "Bowl {section}: wetter than the others.",
+   "fr": "Bol {section} : plus humide que les autres."
+  },
+  "screens.check_soil.texts.bowl_same": {
+   "en": "Bowl {section}: about the same as the others.",
+   "fr": "Bol {section} : à peu près pareil."
+  },
+  "screens.check_soil.texts.bowl_none": {
+   "en": "Bowl {section}: no steady reading.",
+   "fr": "Bol {section} : pas de mesure stable."
+  },
+  "screens.check_soil.texts.bowl_watered_yes": {
+   "en": "Bowl {section} got water. It read clearly wetter.",
+   "fr": "Le bol {section} a reçu de l'eau. Il est nettement plus humide."
+  },
+  "screens.check_soil.texts.bowl_watered_no": {
+   "en": "Bowl {section} got water. It was not clearly wetter.",
+   "fr": "Le bol {section} a reçu de l'eau. Il n'est pas nettement plus humide."
   }
  }
 }

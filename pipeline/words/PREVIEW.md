@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 703 texts): 680 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 709 texts): 686 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -232,7 +232,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 6. Let's check the soil / माटो जाँचौं
 
-*Nepali: 72 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 78 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -301,6 +301,12 @@ This page is made from the word files in this folder; change those, not this pag
 | Garden test of our soil stick, recorded on | हाम्रो यन्त्रको बगैंचामा गरिएको जाँच, नापिएको मिति: |
 | Indoor test of our soil stick. | हाम्रो यन्त्रको घरभित्र गरिएको जाँच। |
 | 4 bowls of soil, recorded on | माटोका ४ कचौरा, नापिएको मिति: |
+| Bowl {section}: drier than the others. | कचौरा {section}: अरूभन्दा सुक्खा। |
+| Bowl {section}: wetter than the others. | कचौरा {section}: अरूभन्दा ओसिलो। |
+| Bowl {section}: about the same as the others. | कचौरा {section}: अरूजस्तै। |
+| Bowl {section}: no steady reading. | कचौरा {section}: स्थिर नाप आएन। |
+| Bowl {section} got water. It read clearly wetter. | कचौरा {section} मा पानी हालियो। यो प्रस्टै ओसिलो देखियो। |
+| Bowl {section} got water. It was not clearly wetter. | कचौरा {section} मा पानी हालियो। यो प्रस्टै ओसिलो देखिएन। |
 | Practice: made-up numbers | अभ्यास: नक्कली अङ्क |
 | Your soil, | तपाईंको माटो, |
 | part by part | भाग भाग गरी |

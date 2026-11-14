@@ -3311,6 +3311,30 @@
   "screens.what_to_grow.labels.plan.items.safest_bad_years": {
    "en": "Safest in bad years",
    "es": "La más segura en años malos"
+  },
+  "screens.check_soil.texts.bowl_drier": {
+   "en": "Bowl {section}: drier than the others.",
+   "es": "Cuenco {section}: más seco que los demás."
+  },
+  "screens.check_soil.texts.bowl_wetter": {
+   "en": "Bowl {section}: wetter than the others.",
+   "es": "Cuenco {section}: más húmedo que los demás."
+  },
+  "screens.check_soil.texts.bowl_same": {
+   "en": "Bowl {section}: about the same as the others.",
+   "es": "Cuenco {section}: casi igual que los demás."
+  },
+  "screens.check_soil.texts.bowl_none": {
+   "en": "Bowl {section}: no steady reading.",
+   "es": "Cuenco {section}: sin lectura estable."
+  },
+  "screens.check_soil.texts.bowl_watered_yes": {
+   "en": "Bowl {section} got water. It read clearly wetter.",
+   "es": "El cuenco {section} recibió agua. Salió claramente más húmedo."
+  },
+  "screens.check_soil.texts.bowl_watered_no": {
+   "en": "Bowl {section} got water. It was not clearly wetter.",
+   "es": "El cuenco {section} recibió agua. No salió claramente más húmedo."
   }
  }
 }

@@ -790,6 +790,16 @@
     return h('p', { class: 'small', style: 'margin:0;font-weight:700;color:var(--ink)' }, svg(I('stick', 14)), ' ', (pd.test ? TEST_LABEL[pd.test] : ['recorded_on']).map(function (k) { return T('check_soil.' + k); }).join(' ') + ' ' +
       days.map(fmtDate).join(', ') + (pd.kind === 'log' && pd.log.place ? ' · ' + pd.log.place : ''));
   }
+  // an indoor test: one plain line per bowl, then the watered bowl's check (rules.yaml probe.live.watered_check)
+  function bowlLines(pd) {
+    if (!pd || pd.test !== 'indoor_test') return null;
+    var c = pd.sess.check, out = Object.keys(pd.parts).sort().map(function (s) {
+      var p = pd.parts[s], w = !p || p.state !== 'done' ? 'none' : { drier: 'drier', wetter: 'wetter' }[p.relative] || 'same';
+      return T('check_soil.bowl_' + w, { section: +s.slice(1) });
+    });
+    if (c && c.possible) out.push(T('check_soil.bowl_watered_' + (c.passed ? 'yes' : 'no'), { section: +c.watered.slice(1) }));
+    return lines(out, 'sub');
+  }
   function practiceBanner(pd) { return pd && pd.practice ? h('div', { class: 'practice-banner', role: 'alert' }, svg(I('warn', 26, 3)), h('span', null, T('check_soil.practice'))) : null; }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
@@ -846,10 +856,10 @@
       }
       // the recorded walk, part by part, at the pace of the design's animation (the readings are the recorded ones)
       function walk(parts) {
-        clearTimers(); shown = {}; [].slice.call(route.childNodes).forEach(function (n) { n.remove(); }); drawRows(); drawCta(true);
+        clearTimers(); shown = {}; [].slice.call(route.childNodes).forEach(function (n) { n.remove(); }); drawRows(); drawCta(true); tbox.textContent = '';
         var i = 0;
         function step() {
-          if (i >= parts.length) { rest(true); drawRows(); drawCta(false); return; }
+          if (i >= parts.length) { rest(true); drawRows(); drawCta(false); add(tbox, bowlLines(pd)); return; }
           var p = parts[i], g = G.filter(function (x) { return x.s.id === p.section; })[0];
           if (!g) { i++; step(); return; }
           moveTo(g, function () {
@@ -887,11 +897,11 @@
           drawCta(false);
         }
       });
-      var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub'));
+      var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub')), tbox = h('div');
       return screen('soil', {
         head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null, pbox],
         scene: box,
-        body: [rows, info, honest],
+        body: [rows, info, tbox, honest],
         cta: ctaBox
       });
     });
@@ -906,10 +916,21 @@
   // a month name short enough for a chip: Bikram Sambat in Nepali, three letters in Latin scripts (the How we know charts)
   function monthShort(key) { if (S.lang === 'ne') return monthName(key, true); var n = monthName(key); return /^(en|es|fr|sw)$/.test(S.lang) ? n.slice(0, 3) : n; }
   var DOT_COL = { none: '#E3D6BF', now: '#E9C77A', good: '#7FB24A', care: '#9A5426', info: '#C9A86A' };
+  // the months of a Choose card, one under the other (owner, 2026-11-14 night: the chips were cramped); past three rows the
+  // list scrolls inside the card, and a fade with a bouncing arrow shows there is more below (phone and web)
+  function monthList(keys) {
+    var list = h('div', { class: 'mlist' }, keys.map(function (m) { return h('span', null, chipName(m)); }));
+    var wrap = h('div', { class: 'mwrap', 'aria-hidden': 'true' }, list, h('span', { class: 'mhint' }, svg(ic(P_.arrow, 16, 2.6))));
+    function upd() { wrap.classList.toggle('more', list.scrollHeight - list.scrollTop - list.clientHeight > 2); }
+    list.addEventListener('scroll', upd, { passive: true });
+    if (W.ResizeObserver) new ResizeObserver(upd).observe(list);
+    if (W.MutationObserver) new MutationObserver(upd).observe(list, { childList: true });
+    wrap.list = list; return wrap;
+  }
   SCREENS.choose = function () {
     var title = h('h1', { class: 'big' }, h('span', null, T('check_soil.choose_h1')), h('span', { class: 'b' }, T('check_soil.choose_h2')));
     var swatches = h('div', { class: 'row', style: 'gap:6px', 'aria-hidden': 'true' });
-    var crops6 = h('div', { class: 'mstrip', 'aria-hidden': 'true' }, chipKeys(6).map(function (m) { return h('span', null, chipName(m)); }));
+    var m6 = monthList(chipKeys(6)), crops6 = m6.list;
     fieldReady().then(function (F) {
       if (!F) return;
       // the six month chips coloured by the suggestion's crops in the middle of each month (empty months stay plain)
@@ -940,9 +961,8 @@
     function monthsCard(n, cls, extra, sub) {
       return h('button', { type: 'button', class: 'bigcard ' + cls, onclick: function () { go('next/' + n); } }, extra,
         h('div', { class: 'row', style: 'position:relative;justify-content:space-between;flex-wrap:wrap;gap:8px' },
-          h('span', { class: 'chip' }, svg(I('sat', 16)), T('home.card_months_tag')),
-          n === 3 ? h('div', { class: 'row', style: 'gap:5px', 'aria-hidden': 'true' }, chipKeys(3).map(function (m) { return h('span', { class: 'mchip' }, chipName(m)); })) : null),
-        n === 6 ? crops6 : null,
+          h('span', { class: 'chip' }, svg(I('sat', 16)), T('home.card_months_tag'))),
+        n === 6 ? m6 : monthList(chipKeys(3)),
         h('div', { class: 'grow' }),
         h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between;position:relative' },
           h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('what_to_grow.next_h1') + ' ' + T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')),
@@ -1119,11 +1139,11 @@
   function blockIcon(u) { return u.frost !== 'none' ? 'snow' : RAIN_IC[u.rain] || 'cloud'; }
   // the Choose screen's extra card (shown only when the field file has the weather block: Nepal fields)
   function weatherCard(onShow) {
-    var strip = h('div', { class: 'mstrip', 'aria-hidden': 'true' });
+    var mw = monthList([]), strip = mw.list;
     var deco = svg('<svg width="170" height="130" viewBox="0 0 170 130"><circle cx="112" cy="46" r="26" fill="#F0AE4C" fill-opacity=".5"/><path d="M58 98a22 22 0 010-44 28 28 0 0153.8 6.7A19 19 0 01112 98z" fill="#FBF4EA" fill-opacity=".22"/></svg>', 'wdeco');
     var c = h('button', { type: 'button', class: 'bigcard brownc', hidden: true, onclick: function () { go('weather'); } }, deco,
       h('div', { class: 'row', style: 'position:relative;justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('sat', 16)), T('home.card_months_tag'))),
-      strip, h('div', { class: 'grow' }),
+      mw, h('div', { class: 'grow' }),
       h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between;position:relative' },
         h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('weather.title')), h('span', { class: 's' }, T('weather.choice_sub'))),
         h('span', { class: 'go' }, svg(ic(P_.arrow, 22, 2.6)))));

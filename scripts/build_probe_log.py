@@ -22,6 +22,8 @@ probe away from the field (rules.yaml probe.live.garden_test; docs/PROBE_RECORDI
 import argparse
 import json
 import os
+import re
+import statistics
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -74,7 +76,8 @@ def part_doc(rec, lines=()):
             "relative": None, "before": estimate(ev.get("before")), "after": estimate(ev.get("after")), "lines": list(lines)}
 
 
-def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None, only=None, settle_n=20, test=None):
+def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None, only=None, settle_n=20, test=None,
+          watered=None, times=2.0):
     from robot.calibrate import relative
     sessions, sources, twin_dates, buffers = {}, {}, [], {}
     for p in paths:
@@ -113,11 +116,31 @@ def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None
             others = [o["wetness"] for o in parts if o is not prt and o["wetness"] is not None]
             prt["relative"] = relative(prt["wetness"], others, same_band) if prt["wetness"] is not None else None
         out.append({"id": sid, "source": sources[sid], "start": parts[0]["time"], "end": parts[-1]["time"], "parts": parts})
+        if test and watered:   # the test's check (rules.yaml probe.live.watered_check)
+            out[-1]["check"] = watered_check(parts, watered[0], watered[1], times)
     dates = sorted({p["time"][:10] for s in out for p in s["parts"]})
     doc = {"field": field, "note": note_for(dates, place, test), "built": datetime.now().astimezone().isoformat(timespec="seconds"),
            "recorded_on": dates, "place": place, "twin_date": None if test or not twin_dates else twin_dates[-1], "bench": bench,
            "skipped": skipped, "sessions": out}
     return dict(doc, kind=f"{test}_test") if test else doc
+
+
+def watered_check(parts, watered, at, times):
+    """rules.yaml probe.live.watered_check: the watered bowl must read more than `times` x the repeat error above every
+    other bowl. A bowl's reading: the median of its steady attempt's measured lines; the repeat error: their standard
+    deviation, pooled over the bowls. Not possible while a bowl has no steady reading."""
+    sections = sorted({p["section"] for p in parts})
+    if watered not in sections:
+        raise ValueError(f"--watered {watered} is not a part of the walk ({', '.join(sections)})")
+    done = {p["section"]: [x["moisture"] for x in p["lines"] if x["phase"] == "measure"] for p in parts if p["state"] == "done"}
+    out = {"watered": watered, "watered_at": at, "possible": False, "passed": None, "repeat_error_pct": None,
+           "needed_pct": None, "margin_pct": None}
+    if set(done) != set(sections) or not all(done.values()):
+        return out
+    err = statistics.fmean(statistics.pvariance(v) for v in done.values()) ** 0.5
+    margin = statistics.median(done[watered]) - max(statistics.median(v) for s, v in done.items() if s != watered)
+    return dict(out, possible=True, passed=bool(margin > times * err), repeat_error_pct=round(err, 2),
+                needed_pct=round(times * err, 2), margin_pct=round(margin, 2))
 
 
 def bench_link(cal_path):
@@ -146,12 +169,19 @@ def main(argv=None):
     ap.add_argument("--session", action="append", help="publish only this session (repeat for more); default every real one")
     ap.add_argument("--place", default=None, help='where it was recorded, in plain words, e.g. "four pots of field soil at the event"')
     ap.add_argument("--test", choices=sorted(TESTS), help="the walk was a test of the probe: the garden mini-field or 4 bowls indoors")
+    ap.add_argument("--watered", help="with --test: the part that got water, e.g. s3 (bowl 3)")
+    ap.add_argument("--watered-at", help="with --watered: the local time the water went in, HH:MM")
     a = ap.parse_args(argv)
+    if (a.watered or a.watered_at) and not (a.test and a.watered and a.watered_at and re.fullmatch(r"s\d+", a.watered)
+                                             and re.fullmatch(r"([01]\d|2[0-3]):[0-5]\d", a.watered_at)):
+        ap.error("--watered sN and --watered-at HH:MM go together, with --test")
     rules = load_rules()["probe"]
     paths = [Path(p) for p in a.logs] if a.logs else sorted(Path(a.dir or REPO / "data" / "probe" / a.field).glob("readings_*.jsonl"))
     try:
         doc = build(paths, a.field, bench_link(a.calibration), tuple(rules["live"]["replay_sources"]), rules["same_band_pct"],
-                    place=a.place, only=a.session, settle_n=int(rules["settle_lines"]), test=a.test)
+                    place=a.place, only=a.session, settle_n=int(rules["settle_lines"]), test=a.test,
+                    watered=(a.watered, a.watered_at) if a.watered else None,
+                    times=float(rules["live"]["watered_check"]["times_repeat_error"]))
     except ValueError as e:
         print(f"NOT YET POSSIBLE: {e}; nothing written", file=sys.stderr)
         return 2
@@ -169,6 +199,8 @@ def main(argv=None):
     print(f"{len(doc['sessions'])} real session(s), {sum(len(s['parts']) for s in doc['sessions'])} parts -> {out}")
     for s in doc["sessions"]:   # the test's check: the watered patch or bowl should read wetter than the others
         print(f"  {s['id']}: " + ", ".join(f"{p['section']} {p['relative'] or p['state']}" for p in s["parts"]))
+        if s.get("check"):
+            print(f"  watered-bowl check: {json.dumps(s['check'])}")
     return 0
 
 

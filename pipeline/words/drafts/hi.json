@@ -3311,6 +3311,30 @@
   "screens.what_to_grow.labels.plan.items.safest_bad_years": {
    "en": "Safest in bad years",
    "hi": "बुरे वर्षों में सबसे सुरक्षित"
+  },
+  "screens.check_soil.texts.bowl_drier": {
+   "en": "Bowl {section}: drier than the others.",
+   "hi": "कटोरा {section}: बाकी से सूखा।"
+  },
+  "screens.check_soil.texts.bowl_wetter": {
+   "en": "Bowl {section}: wetter than the others.",
+   "hi": "कटोरा {section}: बाकी से गीला।"
+  },
+  "screens.check_soil.texts.bowl_same": {
+   "en": "Bowl {section}: about the same as the others.",
+   "hi": "कटोरा {section}: बाकी जैसा।"
+  },
+  "screens.check_soil.texts.bowl_none": {
+   "en": "Bowl {section}: no steady reading.",
+   "hi": "कटोरा {section}: स्थिर माप नहीं मिला।"
+  },
+  "screens.check_soil.texts.bowl_watered_yes": {
+   "en": "Bowl {section} got water. It read clearly wetter.",
+   "hi": "कटोरा {section} में पानी डाला। यह साफ़ गीला दिखा।"
+  },
+  "screens.check_soil.texts.bowl_watered_no": {
+   "en": "Bowl {section} got water. It was not clearly wetter.",
+   "hi": "कटोरा {section} में पानी डाला। यह साफ़ गीला नहीं दिखा।"
   }
  }
 }

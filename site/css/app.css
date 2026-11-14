@@ -388,10 +388,19 @@ label.btn2 { cursor: pointer; align-self: flex-start; }
 .bigcard.greenc .go { background: var(--glass); border: 1px solid var(--glass-line); color: var(--ink); }
 .bigcard.darkc .chip { background: rgba(200,224,90,.16); color: var(--lime-2); }
 .bigcard.greenc .chip { background: rgba(251,244,234,.16); color: #F3EAD8; }
-.bigcard .mchip { height: 28px; padding: 0 9px; border-radius: 10px; background: rgba(255,255,255,.1); display: inline-flex; align-items: center; font-weight: 700; font-size: 13px; white-space: nowrap; }
-.mstrip { position: relative; display: flex; gap: 4px; }
-.mstrip span { flex: 1; min-width: 0; height: 28px; border-radius: 8px; background: rgba(251,244,234,.18); display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 12px; overflow: hidden; white-space: nowrap; }
+.mwrap { position: relative; z-index: 1; max-width: 220px; }
+.mlist { display: flex; flex-direction: column; gap: 4px; max-height: 104px; overflow-y: auto; overscroll-behavior: contain;
+  scroll-snap-type: y proximity; scrollbar-width: none; }
+.mlist::-webkit-scrollbar { display: none; }
+.mlist span { flex: none; height: 30px; padding: 0 12px; border-radius: 9px; background: rgba(251,244,234,.18); display: flex;
+  align-items: center; font-weight: 800; font-size: 14px; white-space: nowrap; scroll-snap-align: start; }
+.mwrap.more .mlist { -webkit-mask-image: linear-gradient(#000 62%, transparent); mask-image: linear-gradient(#000 62%, transparent); }
+.mhint { position: absolute; left: 50%; bottom: -15px; width: 28px; height: 28px; margin-left: -14px; border-radius: 50%; display: none;
+  align-items: center; justify-content: center; background: #FBF4EA; color: var(--ink); box-shadow: 0 4px 10px -4px rgba(0,0,0,.4);
+  animation: ks-hint 1.4s ease-in-out infinite; pointer-events: none; }
+.mhint .ico { transform: rotate(90deg); }
+.mwrap.more .mhint { display: flex; }
+@keyframes ks-hint { 50% { transform: translateY(4px); } }
 .bigcard .orbit { position: absolute; right: -80px; top: -40px; pointer-events: none; }
 .bigcard .path6 { position: absolute; right: -30px; top: -34px; opacity: .16; pointer-events: none; }
 .bigcard .orbit g { transform-origin: 115px 115px; animation: ks-orbit 14s linear infinite; }
@@ -552,7 +561,7 @@ details.why { background: rgba(255,255,255,.6); }
 .bigcard.brownc .s { color: #F3E4D0; }
 .bigcard.brownc .chip { background: rgba(251,244,234,.18); color: #F7E7CF; }
 .bigcard.brownc .go { background: var(--cream); color: var(--ink); }
-.bigcard.brownc .mstrip span { background: rgba(251,244,234,.2); color: #fff; }
+.bigcard.brownc .mlist span { background: rgba(251,244,234,.2); color: #fff; }
 .bigcard .wdeco { position: absolute; right: -28px; top: -66px; pointer-events: none; }
 .wblocks { display: grid; gap: 12px; }
 .wblock { display: flex; align-items: flex-start; gap: 12px; animation: ks-reveal 700ms var(--ease) both; }
@@ -652,7 +661,7 @@ details.why { background: rgba(255,255,255,.6); }
   .choose { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .choose.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .choose.four .bigcard .t { font-size: 30px; }
-  .bigcard .wdeco { top: 110px; right: 6px; transform: scale(1.25); }
+  .bigcard .wdeco { top: 168px; right: -8px; }
   /* Weather ahead: the title and the line on top, the six months three by three; How we test each plan: the four steps in a row */
   .scr-weather { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "scene" "body" "cta"; grid-template-rows: none; align-content: start; }
   .scr-weather .s-scene { align-self: start; }

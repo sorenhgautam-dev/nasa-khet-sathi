@@ -2752,6 +2752,72 @@
      "sw": "Bakuli 4 za udongo, lilirekodiwa tarehe"
     },
     {
+     "id": "bowl_drier",
+     "en": "Bowl {section}: drier than the others.",
+     "ne": "कचौरा {section}: अरूभन्दा सुक्खा।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटोरा {section}: बाकी से सूखा।",
+     "bn": "বাটি {section}: অন্যগুলোর চেয়ে শুকনো।",
+     "es": "Cuenco {section}: más seco que los demás.",
+     "fr": "Bol {section} : plus sec que les autres.",
+     "sw": "Bakuli {section}: kavu kuliko mengine."
+    },
+    {
+     "id": "bowl_wetter",
+     "en": "Bowl {section}: wetter than the others.",
+     "ne": "कचौरा {section}: अरूभन्दा ओसिलो।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटोरा {section}: बाकी से गीला।",
+     "bn": "বাটি {section}: অন্যগুলোর চেয়ে ভেজা।",
+     "es": "Cuenco {section}: más húmedo que los demás.",
+     "fr": "Bol {section} : plus humide que les autres.",
+     "sw": "Bakuli {section}: lenye unyevu kuliko mengine."
+    },
+    {
+     "id": "bowl_same",
+     "en": "Bowl {section}: about the same as the others.",
+     "ne": "कचौरा {section}: अरूजस्तै।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटोरा {section}: बाकी जैसा।",
+     "bn": "বাটি {section}: অন্যগুলোর মতোই।",
+     "es": "Cuenco {section}: casi igual que los demás.",
+     "fr": "Bol {section} : à peu près pareil.",
+     "sw": "Bakuli {section}: sawa na mengine."
+    },
+    {
+     "id": "bowl_none",
+     "en": "Bowl {section}: no steady reading.",
+     "ne": "कचौरा {section}: स्थिर नाप आएन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटोरा {section}: स्थिर माप नहीं मिला।",
+     "bn": "বাটি {section}: স্থির মাপ পাওয়া যায়নি।",
+     "es": "Cuenco {section}: sin lectura estable.",
+     "fr": "Bol {section} : pas de mesure stable.",
+     "sw": "Bakuli {section}: hakuna kipimo thabiti."
+    },
+    {
+     "id": "bowl_watered_yes",
+     "en": "Bowl {section} got water. It read clearly wetter.",
+     "ne": "कचौरा {section} मा पानी हालियो। यो प्रस्टै ओसिलो देखियो।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटोरा {section} में पानी डाला। यह साफ़ गीला दिखा।",
+     "bn": "বাটি {section}-এ জল দেওয়া হয়েছিল। এটি স্পষ্ট ভেজা দেখাল।",
+     "es": "El cuenco {section} recibió agua. Salió claramente más húmedo.",
+     "fr": "Le bol {section} a reçu de l'eau. Il est nettement plus humide.",
+     "sw": "Bakuli {section} lilipata maji. Lilionyesha unyevu wazi."
+    },
+    {
+     "id": "bowl_watered_no",
+     "en": "Bowl {section} got water. It was not clearly wetter.",
+     "ne": "कचौरा {section} मा पानी हालियो। यो प्रस्टै ओसिलो देखिएन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटोरा {section} में पानी डाला। यह साफ़ गीला नहीं दिखा।",
+     "bn": "বাটি {section}-এ জল দেওয়া হয়েছিল। এটি স্পষ্ট ভেজা দেখায়নি।",
+     "es": "El cuenco {section} recibió agua. No salió claramente más húmedo.",
+     "fr": "Le bol {section} a reçu de l'eau. Il n'est pas nettement plus humide.",
+     "sw": "Bakuli {section} lilipata maji. Halikuonyesha unyevu wazi."
+    },
+    {
      "id": "practice",
      "en": "Practice: made-up numbers",
      "ne": "अभ्यास: नक्कली अङ्क",
