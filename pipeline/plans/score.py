@@ -106,7 +106,7 @@ def pick_safest(rows, exclude, min_cover):
     harvest) among the plans keeping at least min_cover (today's cover), other than those excluded."""
     pool = [r for r in rows if r["id"] not in exclude and r["cover"] >= min_cover]
     if not pool:
-        raise ValueError(f"no plan keeps at least today's cover ({min_cover}) besides {sorted(exclude)}")
+        raise ValueError(f"NOT READY: no third rotation (other crops than {sorted(exclude)}) keeps at least {min_cover} cover")
     return max(pool, key=lambda r: (r["stability"], r["harvest"]))
 
 
@@ -124,9 +124,11 @@ def choose_three(rows, current_id, keys, must_include):
     gap = pick_cover_gap([r for r in pool if r["id"] == current_id or not same_crops(r, cur)], current_id)
     # three different rotations (CLAUDE.md): no plan with the same crops as the current or the cover-the-gap plan
     exclude = {r["id"] for r in eligible if same_crops(r, cur) or same_crops(r, gap)}
-    src = "Pareto set"
+    src, min_cover = "Pareto set", cur["cover"]
     if not [r for r in front if r["id"] not in exclude and r["cover"] >= cur["cover"]]:
         src = "all rice plans"                     # no other Pareto plan keeps today's cover: widen to every rice plan
-    safe = pick_safest(front if src == "Pareto set" else eligible, exclude=exclude, min_cover=cur["cover"])
+        if not [r for r in eligible if r["id"] not in exclude and r["cover"] >= cur["cover"]]:
+            src, min_cover = "all rice plans, any cover", float("-inf")   # rules.yaml plans.third_plan_fallback
+    safe = pick_safest(front if src == "Pareto set" else eligible, exclude=exclude, min_cover=min_cover)
     return {"pareto": sorted(ids), "eligible": len(eligible), "current": current_id, "cover_gap": gap["id"],
             "safest": safe["id"], "safest_from": src}

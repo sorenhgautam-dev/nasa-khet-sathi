@@ -4,6 +4,83 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, evening): dry runs after sowing, two wheat-book checks (rainrisk and heatclock files; additions only)
+
+Rules committed before the first run (`8ade382`): `rain_risk.dry_spells`, `heat_clock.wheat_floret_*`, `wheat_flower_*`.
+`fields/<id>.json` is unchanged. In the two feature files no existing number changed (compared leaf by leaf on all five
+fields); only Why? lines (the old "left out" lines replaced, new lines inserted) and the `left_out` wording changed.
+
+- `rainrisk/<id>.json`: new top-level `dry_day_mm` (1); each crop row gains `dry_run` {`window` (sowing day to last day,
+  `stage` "season"), `years[]` {year, days}, `typical`, `worst[]` (3), `other_versions.{untuned,dhm,uncorrected}.typical`,
+  `typical_low`, `typical_high`}.
+- `heatclock/<id>.json`: every check gains `words` (its title's text id); four new rows after the first four (per wheat
+  sowing: `floret_formation` heat above 30 C, days 20-100; `flowering` frost below 0 C, days 90-110), each with
+  `sure: "estimate"`, `days_after_sowing`, `conditions`; `rule` may be `below_c`. Words: `rr_dry_usual`, `rr_dry_worst`,
+  `rr_dry_run` (placeholder `dry_run_days`), `hc_wheat_floret_formation_heat`, `hc_wheat_flowering_cold`, `hc_book`,
+  `hc_frost_caveat` (notes/ui_note.md 6j).
+
+## 2026-11-14 (Saturday, evening): Weather ahead, an optional `weather` block in the field file (addition only)
+
+Owner, 2026-11-14 evening: the team's weather spec, approved with four changes (rules: `config/rules.yaml` `weather_ahead`,
+committed `8ade382` before the first run). `scripts/run_weather.py --field <id>` (run_field step `weather_ahead`, right after
+`export`) adds `weather` to `site/data/fields/<id>.json`; nothing else in the file changes (checked: every other key is
+equal before and after on all five Nepal fields). Absent on fields outside Nepal (Bikram Sambat months): hide the choice.
+
+| What | Before | Now | What the UI must do |
+| --- | --- | --- | --- |
+| `weather` (optional) | did not exist | `{basis, made_by, years: 24, block_starts_on_day: 15, label, blocks[12], windows[], caveats{}, limits[{name, says}], sources[]}` | "Weather ahead", the third choice on Choose |
+| `weather.blocks[]` | | `{key, from, to, years: [first, last], usual: {rain: dry/some_rain/wet, temp: cold/mild/warm, frost: none/risk/high, rain_mm: {median, low, high, versions}, tmax_c, tmin_c}, dry_run: {typical, worst[{year, days}]}, dangers[], none_seen[]}`. `key` is the Gregorian month the block starts in ('Nov' = Mangsir, 15 Nov to 14 Dec) | Show the six blocks after the one holding today; Bikram Sambat name first |
+| `weather.blocks[].dangers[]` | | ranked, most years first: `{check, kind: cold/heat/dry_spell/big_rain, crop, sow, window, years, of, often: most/some, hit_years, change: more_common/about_same/less_common/cant_tell, change_basis, tip}`. The rules' "watered" list is this one without `kind` dry_spell | "Watch out": the first danger of the farmer's crop (else the first); skip dry_spell when they can water. "Do this": `tip`. The rest behind "Why?" |
+| `weather.blocks[].none_seen[]` | | the dangers tested and never seen (`years` 0) | Why?: "Not seen in these years. Good news." |
+
+No numbers on the block itself: the years, "is it changing", the rain range, temperatures, dry runs, caveats and sources
+go behind "Why?". Words: `words.json` `screens.shared.weather.*` (EN, NE needs review, drafts). `about_same` is shown as
+"No clear change." (not significant is not "the same").
+
+## 2026-11-14 (Saturday, evening): three small checks behind "How do we know?": rain at harvest, fertiliser saver, heat and cold (additions only)
+
+Three new files per prepared field, made by `pipeline/export/build_risks.py --kind <kind>` (rules: `config/rules.yaml`
+`rain_risk`, `fertiliser_saver`, `heat_clock`, committed before the first run). Each has its own schema in
+`pipeline/export/`, is checked by `validate --final` and `check_site.py` (no web address inside), and carries
+`labels` (refreshed by `build_labels`), `why` (`en` and `ne` lists: the Why? details; Nepali drafted by SI, needs review)
+and `sources` (`type` may now be `document`: a published text a rule comes from). No home cards (owner): the UI agent puts
+rain risk and the heat clock in the Replay card's details, and the fertiliser saver in the "Feed your soil" plan's details.
+
+| File | Schema | What it holds |
+| --- | --- | --- |
+| `data/rainrisk/<id>.json` | `rainrisk_schema.json` | Per plan and current option, per crop: the harvest weeks (`window`, FAO-56 late stage, MM-DD), one square per year 2002-2025 (`years[]`: `days` of 50 mm or more, `max_mm`), `count` (years with one), `other_versions` (untuned, dhm, uncorrected), `count_low` / `count_high` (show in Why? as a range), `good_news` (count 0) |
+| `data/fertiliser/<id>.json` | `fertiliser_schema.json` | For plan `safest`: `legume`, `next_crop`, `n_kg_ha` [23, 45], `urea_n_share` 0.466, `urea_kg_ha` [49, 97], `bags_ha` [1.0, 1.9], `bags_ha_whole` [1, 2], `area` "hectare" (per hectare only), `measured_uptake_kg_n_ha` 2.3; `applies` false (no numbers) when the plan has no legume |
+| `data/heatclock/<id>.json` | `heatclock_schema.json` | `checks[]` for wheat (grain filling, above 34 °C) and potato (whole season, 35 °C or more; 1 °C or less): `window`, `plans`, `today.years[]` (risky days per year), `years_with`, `mean_days`, `good_news`; `future` (NEX-GDDP, 23 models): per scenario `median`, `low`, `high`, `past_median` and each model's own `past` / `future` (mean days per season); `good_news` |
+
+- Words: 40 new texts in `pipeline/words/screens.json` (ids `rr_*`, `hc_*`, `risk_none`, `why_*` on `last_years`; `fs_*`
+  on `what_to_grow`), with placeholders `risk_years`, `risk_low`, `risk_high`, `per_season` (pass it as text, one
+  decimal), `bags_low`, `bags_high`, `next_crop`.
+- `fields/<id>.json`: no new field. The "Feed your soil" plan's `check` tab (and `compared.safest` in each current option)
+  has six new sentences on dhaincha (NARC's booklet, in its own words, then "Ask your agriculture office if it fits.").
+  `method.choices` lists the new rules. No number changed.
+- `labels/<id>.json`: four new output ids (`rainrisk_harvest`, `fertiliser_saver`, `heatclock_today`, `heatclock_2040`)
+  and a new source `literature` (scale region). `checkup/<id>.json` `depends_on_corrected_rain` gains `rainrisk_harvest`.
+
+## 2026-11-14 (Saturday, evening): a field on another continent in index.json (additions only)
+
+Owner's item 3 ("global, usable everywhere"). `fields/<id>.json` and every Nepal entry of `index.json` are unchanged.
+
+- **`index.json` `fields[]`** may carry two optional keys, only for a field built on the global defaults (no country
+  profile in `config/countries/`; written by `pipeline/export/build_index.py`):
+  - `profile`: always `"default"` when present.
+  - `note`: `{en, ne}`, one line for the field list, e.g. "A field on another continent. Built with the global
+    settings, not checked against local rain gauges yet." (the Nepali is Claude's draft, not reviewed).
+- The first such field is `ambohidratrimo` (Madagascar). Its labels say NOT YET VERIFIABLE (no country scorecard); its
+  replay's droughts are calendar years (no `event_season`).
+- **`fields/<id>.json` `method.season_detection` may be `null`** (schema: object or null): a field with no year of 90
+  clear satellite images (rules.yaml `season_detection.no_dense_years`) uses the threshold method with no held-out
+  comparison, so there is nothing to show. The site already skips it (`if (sd && sd.methods)`).
+- On such a field the third plan may keep **less cover than today** (rules.yaml `plans.third_plan_fallback`: no other
+  rotation keeps it); its `score.cover` is shown as computed. Nepal's fields never use it.
+- A third plan with no legume has `name` **"Safest in bad years"** (decision 5's name; rules.yaml
+  `plans.third_plan_name_no_legume`), not "Feed your soil". The site's `planName()` reads the words node
+  `lbl.what_to_grow.plan.safest` by id, so it needs a hook to show it (see the field's note in docs/DEPLOY_ANYWHERE.md).
+
 ## 2026-11-14 (Saturday, evening): launch files: map pictures, a version stamp, and the probe replay's date and lines (additions only)
 
 The owner wants no outside request at runtime. `fields/<id>.json` is unchanged.

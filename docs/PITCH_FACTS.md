@@ -207,3 +207,38 @@ around this field reached it. Our check found this and adjusted for it."
 - H1-H11 and F10-F14: rerun numbers, if the integrator reruns the pipeline.
 - I6: offline, once a service worker exists.
 - J1: rerun the test count.
+
+## N. Three small checks behind "How do we know?" (added 14 November, evening; rules committed before the first run)
+
+Files: `rr` = `site/data/rainrisk/demo.json`, `hc` = `site/data/heatclock/demo.json`, `fs` = `site/data/fertiliser/demo.json`.
+All three are labelled ESTIMATE (no yardstick row yet); rain is "valley", today's temperatures "valley", 2040 "region",
+the fertiliser range "region" (a published range from elsewhere).
+
+| ID | Say | Number | From |
+| --- | --- | --- | --- |
+| N1 | Heavy rain (50 mm or more in a day, DHM's class) fell in the rice harvest weeks in 8 of 24 years. | 8 of 24 (other rain records: 5 to 8) | `rr` `plans[current].crops[rice].count`, `count_low`, `count_high` |
+| N2 | The winter crops' harvest weeks had no heavy-rain day in 24 years: good news. | 0 of 24 (potato, wheat, lentil) | `rr` `plans[*].crops[*].count` |
+| N3 | No day above 34 °C while wheat grains fill, and none of 35 °C or more for potato, in 24 years; still none in the climate models around 2040. | 0 of 24; model medians 0.0 days a season | `hc` `checks[wheat_*_heat, potato_1030_heat]` |
+| N4 | Cold nights (1 °C or less) fell in the potato season in 17 of 24 years, about 3 a season; our night temperatures count too many. | 17 of 24; 3.0 a season | `hc` `checks[potato_1030_cold].today` |
+| N5 | In 22 of 23 climate models, the potato season has fewer such cold nights in 2026-2040 than in the same model's 1995-2014 (middle model: 28 down to about 20). | 22 of 23 (ssp245); medians 28.0 and 19.5 (ssp245), 20.2 (ssp585); lowest to highest 7.3 to 38.5 | `hc` `checks[potato_1030_cold].future.scenarios` |
+| N6 | After lentil, rice may need about 1 to 2 fewer 50 kg bags of urea per hectare; a wide, uncertain range from a thesis citing Quinn (2009), and one field study measured far less (2.3 kg N/ha). | 49-97 kg urea, 1.0-1.9 bags per hectare | `fs` `urea_kg_ha`, `bags_ha` |
+
+| N7 | After sowing, the longest run of dry days (under 1 mm, the weather office's measure) is usually about 6 weeks for the winter crops; the worst winters reached about 9-10 weeks. | potato 41 days typical (38-41 over the rain records); worst 2023 68, 2011 62, 2008 62 | `rr` `plans[current].crops[potato].dry_run` |
+| N8 | Frost (below 0 °C) around wheat flowering, for wheat sown 15 October: 5 of 24 years; none for wheat sown 15 November. Estimate: FAO's wheat book, our night temperatures. | 5 of 24 (2008, 2011, 2013, 2020, 2022); 0 of 24 | `hc` `checks[wheat_1015_flowering_cold, wheat_1115_flowering_cold].today` |
+| N9 | No day above 30 °C while wheat forms its florets, in 24 years. | 0 of 24 (both sowings) | `hc` `checks[wheat_*_floret_formation_heat].today` |
+
+## O. Weather ahead (added 14 November, evening; rules committed `8ade382` before the first run)
+
+File: `w` = `site/data/fields/demo.json` `weather`. ESTIMATE; "what usually happened here", never a forecast.
+
+| ID | Say | Number | From |
+| --- | --- | --- | --- |
+| O1 | For each of the next six Nepali months, the app says what usually happens, the one biggest danger and one tip, from 24 years of this field's records. Not a forecast. | 12 blocks, 24 years each | `w` `blocks` |
+| O2 | In Poush, cold nights (1 °C or less) reached potato in most years. | 15 of 24 | `w` `blocks[Dec].dangers[0]` |
+| O3 | Our month words match the weather office's normal rain for Bhaktapur in every month. | 12 of 12 calendar months (10 of 12 Nepali months) | VALIDATION 4.10 |
+| O4 | Big rain (20 mm or more) was on 5 of 6 known flood dates. | 5 of 6 | VALIDATION 4.10 |
+
+**Do not say:** an 8-day dry spell (no DHM source), that Weather ahead forecasts anything (it is past years), "heavy rain" for 20 mm (DHM's heavy starts at 50 mm), wheat flowering damage at 8-35 °C (FAO's rice text), any saving per
+ropani (no opened source), that dhaincha suits this field (only "ask your agriculture office"), or that cold nights will
+fall by a given number (the models are not corrected to the station; say "fewer in most models, compared with their own
+past").

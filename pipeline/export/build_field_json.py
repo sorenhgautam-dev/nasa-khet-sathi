@@ -116,8 +116,11 @@ def apply_replay(doc, replay, plan_id="current"):
 
 
 def method_from_seasons(seasons):
-    """The method page's season_detection block from data/checks/<field>/diary_seasons.json (step 6b)."""
+    """The method page's season_detection block from data/checks/<field>/diary_seasons.json (step 6b); None when the
+    comparison could not run (rules.yaml season_detection.no_dense_years: no HLS year with enough clear images)."""
     h, dd = seasons["held_out"], seasons["season_date_differences_days"]
+    if not h["years"]:
+        return None
     diffs = {"threshold": {"start": None, "peak": None, "end": None},
              "changepoint": dd["changepoint_vs_threshold"], "detective": dd["detective_vs_threshold"]}
     methods = []
@@ -621,7 +624,7 @@ def main(argv=None):
         return 1
     dest.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n")
     print(f"wrote the plans {[p['id'] for p in doc['plans']]} with their replays ({len(doc['replay']['current'])} years), "
-          f"the diary, the sources and the method page (season detection: {doc['method']['season_detection']['chosen']}"
+          f"the diary, the sources and the method page (season detection: {(doc['method']['season_detection'] or {}).get('chosen', 'threshold, no comparison')}"
           f"{'; rain correction' if 'rain_correction' in doc['method'] else ''}) into {dest}")
     return 0
 
@@ -630,10 +633,12 @@ def export_step7(doc, field_id, plans):
     """Build step 7's part of main: sources, method page, the three plans (and their uncorrected-rain ranges)."""
     from pipeline.fetch.cropslib import load_crops
     from pipeline.fetch.fields import load_field
+    from pipeline.fetch.profiles import profile_for
     from pipeline.fetch.rules import load_rules
     from pipeline.plans import explain as ex
     from pipeline.words import texts
-    field, rules, lib = load_field(field_id), load_rules(), load_crops()
+    field, rules = load_field(field_id), load_rules()
+    lib = load_crops(field=field)        # the field's country profile: Nepal's crops.json, else its FAO zone calendar
     checks = REPO / "data" / "checks" / field_id
     # owner's decision 4b (2026-11-14): the range's second edge is the rain scaled month by month to DHM Bhaktapur's
     # 1991-2020 normals (data/checks/<field>/rain_dhm/, rules.yaml gpm_series.dhm_scaling), no longer GPM as published
@@ -679,7 +684,8 @@ def export_step7(doc, field_id, plans):
            "water_source_unknown": field.get("water_source") is None, "placeholder": bool(field.get("placeholder")),
            "station_rain_lower": rain["station_rain_lower"], "rain_corrected": bool(rain_break.get("applied")),
            "rain_fix_year": int(rain_break["from"][:4]) if rain_break.get("applied") else None,
-           "legume_option": ex.legume_option(plans["plans"], rules["plans"]["suggested_must_include"], lib)}
+           "legume_option": ex.legume_option(plans["plans"], rules["plans"]["suggested_must_include"], lib),
+           "profile": profile_for(field)["_id"]}                  # owner's item 3: lines kept to one country's fields
     unt_path = checks / "rain_untuned" / "plans.json"          # the break-corrected rain without the gauge factors
     plans_unt = json.loads(unt_path.read_text()) if unt_path.exists() else None
     if plans_unt and plans_unt["labels"].get("rain_version") != "untuned":

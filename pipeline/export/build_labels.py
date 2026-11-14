@@ -1,6 +1,6 @@
 """Feature 1, two labels on every number (rules.yaml labels): how sure (verified or estimate, from this run's scorecard)
 and at what scale (field, neighbourhood, valley, region) -> site/data/labels/<field>.json. Also refreshes the `label`
-blocks inside site/data/{replay,pulse,checkup}/<field>.json, so every file shows the same scorecard.
+blocks inside site/data/{replay,pulse,checkup,rainrisk,fertiliser,heatclock}/<field>.json, so every file shows the same scorecard.
 
     .venv/bin/python -m pipeline.export.build_labels --field demo
 
@@ -30,6 +30,7 @@ SOURCES = {   # key: (name, resolution) as the site's sources name them
     "worldcover": ("ESA WorldCover 2021", "10 m"), "probe": ("Khet Sathi probe", "a few cm of one part"),
     "oni": ("NOAA CPC Oceanic Nino Index", "Nino-3.4 region of the Pacific"),
     "area_box": ("Area map of the fetch box", "about 10 x 10 km"),
+    "literature": ("Published studies (not measured on this field)", "studies elsewhere"),   # 2026-11-14 fertiliser_saver
 }
 
 
@@ -88,7 +89,8 @@ def build(fid, data=REPO / "data"):
 def refresh_blocks(fid, doc, site=REPO / "site" / "data"):
     """Put this run's label into the replay, pulse and check-up files (their `label`, and the pulse's `labels`)."""
     out = []
-    for kind, single in (("replay", "replay_window"), ("checkup", "checkup_rain"), ("pulse", None)):
+    for kind, single in (("replay", "replay_window"), ("checkup", "checkup_rain"), ("pulse", None), ("rainrisk", None),
+                         ("fertiliser", None), ("heatclock", None)):          # the last three: 2026-11-14 (build_risks.py)
         path = site / kind / f"{fid}.json"
         if not path.exists():
             continue

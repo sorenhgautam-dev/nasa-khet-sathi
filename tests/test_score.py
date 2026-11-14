@@ -127,3 +127,18 @@ def test_the_three_plans_grow_different_crops():
     keys = ["harvest", "stability", "water", "cover", "soil_kept", "pest_break", "nitrogen"]
     out = sc.choose_three(rows, "cur", keys, must_include="rice")
     assert out["cover_gap"] == "rice_wheat_15jun" and out["safest"] == "rice_lentil"
+
+
+def test_third_plan_fallback_when_no_other_rotation_keeps_todays_cover():
+    """rules.yaml plans.third_plan_fallback (2026-11-14, a field abroad): Madagascar's FAO zone calendar gives three rice
+    rotations only (scores as computed there from the calendar: cover 81.6, 85.8, 44.7), so the third plan is the best bad
+    year among the rotations left, whatever its cover. With two rotations only, there is no third plan: NOT READY."""
+    rows = [_row("cur", ["rice", "potato"], 60, 46, 81.6),
+            _row("rice_wheat", ["rice", "wheat"], 70, 55, 85.8),
+            _row("rice_alone", ["rice"], 91, 87, 44.7)]
+    keys = ["harvest", "stability", "water", "cover", "soil_kept", "pest_break", "nitrogen"]
+    out = sc.choose_three(rows, "cur", keys, must_include="rice")
+    assert out["cover_gap"] == "rice_wheat" and out["safest"] == "rice_alone"
+    assert out["safest_from"] == "all rice plans, any cover"
+    with pytest.raises(ValueError, match="NOT READY"):
+        sc.choose_three(rows[:2], "cur", keys, must_include="rice")

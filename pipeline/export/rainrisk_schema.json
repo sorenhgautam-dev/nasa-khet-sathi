@@ -1,0 +1,530 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Khet Sathi rain risk at harvest",
+ "description": "site/data/rainrisk/<field>.json (2026-11-14, rules.yaml rain_risk): per plan and crop, the past years with a day of 50 mm or more in its harvest weeks (FAO-56 late stage); and (rain_risk.dry_spells, 2026-11-14 evening) the longest run of days under dry_day_mm from sowing to the crop's last day (DHM's CDD, per crop season).",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "field",
+  "placeholder",
+  "made_by",
+  "labels",
+  "why",
+  "sources",
+  "years",
+  "year_count",
+  "threshold_mm",
+  "versions",
+  "day",
+  "plans",
+  "dry_day_mm"
+ ],
+ "properties": {
+  "field": {
+   "type": "string",
+   "minLength": 1
+  },
+  "placeholder": {
+   "type": "boolean"
+  },
+  "made_by": {
+   "type": "string"
+  },
+  "labels": {
+   "type": "object",
+   "additionalProperties": {
+    "$ref": "#/$defs/label"
+   }
+  },
+  "why": {
+   "$ref": "#/$defs/why"
+  },
+  "sources": {
+   "type": "array",
+   "items": {
+    "$ref": "#/$defs/source"
+   }
+  },
+  "years": {
+   "type": "array",
+   "items": {
+    "type": "integer",
+    "minimum": 1990,
+    "maximum": 2100
+   },
+   "minItems": 1
+  },
+  "year_count": {
+   "type": "integer",
+   "minimum": 1
+  },
+  "threshold_mm": {
+   "type": "number",
+   "exclusiveMinimum": 0
+  },
+  "versions": {
+   "type": "array",
+   "items": {
+    "enum": [
+     "central",
+     "untuned",
+     "dhm",
+     "uncorrected"
+    ]
+   }
+  },
+  "day": {
+   "type": "string"
+  },
+  "dry_day_mm": {
+   "type": "number",
+   "exclusiveMinimum": 0,
+   "description": "a dry day has less rain than this (rules.yaml trends.dry_day_mm; DHM's CDD: RR < 1 mm)"
+  },
+  "plans": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "role",
+     "crops"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "role": {
+      "enum": [
+       "current",
+       "suggested",
+       "current_option"
+      ]
+     },
+     "crops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "crop",
+        "sow",
+        "end",
+        "window",
+        "years",
+        "count",
+        "other_versions",
+        "count_low",
+        "count_high",
+        "good_news",
+        "dry_run"
+       ],
+       "properties": {
+        "crop": {
+         "type": "string"
+        },
+        "sow": {
+         "$ref": "#/$defs/mmdd"
+        },
+        "end": {
+         "$ref": "#/$defs/mmdd"
+        },
+        "window": {
+         "$ref": "#/$defs/window"
+        },
+        "years": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+           "year",
+           "days",
+           "max_mm"
+          ],
+          "properties": {
+           "year": {
+            "type": "integer",
+            "minimum": 1990,
+            "maximum": 2100
+           },
+           "days": {
+            "type": "integer",
+            "minimum": 0
+           },
+           "max_mm": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 500
+           }
+          }
+         },
+         "description": "one per year of `years`, central rain"
+        },
+        "count": {
+         "type": "integer",
+         "minimum": 0,
+         "description": "years with at least one heavy-rain day, central rain"
+        },
+        "other_versions": {
+         "type": "object",
+         "additionalProperties": false,
+         "required": [
+          "untuned",
+          "dhm",
+          "uncorrected"
+         ],
+         "properties": {
+          "untuned": {
+           "type": "object",
+           "additionalProperties": false,
+           "required": [
+            "count",
+            "heavy_years"
+           ],
+           "properties": {
+            "count": {
+             "type": "integer",
+             "minimum": 0
+            },
+            "heavy_years": {
+             "type": "array",
+             "items": {
+              "type": "integer",
+              "minimum": 1990,
+              "maximum": 2100
+             }
+            }
+           }
+          },
+          "dhm": {
+           "type": "object",
+           "additionalProperties": false,
+           "required": [
+            "count",
+            "heavy_years"
+           ],
+           "properties": {
+            "count": {
+             "type": "integer",
+             "minimum": 0
+            },
+            "heavy_years": {
+             "type": "array",
+             "items": {
+              "type": "integer",
+              "minimum": 1990,
+              "maximum": 2100
+             }
+            }
+           }
+          },
+          "uncorrected": {
+           "type": "object",
+           "additionalProperties": false,
+           "required": [
+            "count",
+            "heavy_years"
+           ],
+           "properties": {
+            "count": {
+             "type": "integer",
+             "minimum": 0
+            },
+            "heavy_years": {
+             "type": "array",
+             "items": {
+              "type": "integer",
+              "minimum": 1990,
+              "maximum": 2100
+             }
+            }
+           }
+          }
+         }
+        },
+        "count_low": {
+         "type": "integer",
+         "minimum": 0
+        },
+        "count_high": {
+         "type": "integer",
+         "minimum": 0
+        },
+        "good_news": {
+         "type": "boolean",
+         "description": "count is 0 (rules.yaml rain_risk.words)"
+        },
+        "dry_run": {
+         "type": "object",
+         "additionalProperties": false,
+         "description": "rules.yaml rain_risk.dry_spells: per year the longest run of days under dry_day_mm from the sowing day to the crop's last day (central rain); typical = the median, rounded half up; worst = the three longest (ties: the later year first); typical_low / typical_high = the lowest and highest typical over the four rain versions (for Why?)",
+         "required": [
+          "window",
+          "years",
+          "typical",
+          "worst",
+          "other_versions",
+          "typical_low",
+          "typical_high"
+         ],
+         "properties": {
+          "window": {
+           "$ref": "#/$defs/window"
+          },
+          "years": {
+           "type": "array",
+           "items": {
+            "$ref": "#/$defs/year_days"
+           }
+          },
+          "typical": {
+           "type": "integer",
+           "minimum": 0
+          },
+          "worst": {
+           "type": "array",
+           "maxItems": 3,
+           "items": {
+            "$ref": "#/$defs/year_days"
+           }
+          },
+          "other_versions": {
+           "type": "object",
+           "additionalProperties": false,
+           "required": [
+            "untuned",
+            "dhm",
+            "uncorrected"
+           ],
+           "properties": {
+            "untuned": {
+             "$ref": "#/$defs/typical"
+            },
+            "dhm": {
+             "$ref": "#/$defs/typical"
+            },
+            "uncorrected": {
+             "$ref": "#/$defs/typical"
+            }
+           }
+          },
+          "typical_low": {
+           "type": "integer",
+           "minimum": 0
+          },
+          "typical_high": {
+           "type": "integer",
+           "minimum": 0
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "$defs": {
+  "label": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "sure",
+    "status",
+    "k",
+    "n",
+    "scale",
+    "rain_corrected",
+    "sources",
+    "scorecard"
+   ],
+   "properties": {
+    "sure": {
+     "enum": [
+      "verified",
+      "estimate"
+     ],
+     "description": "verified only when status is VERIFIED"
+    },
+    "status": {
+     "enum": [
+      "VERIFIED",
+      "ESTIMATE",
+      "NOT YET VERIFIABLE"
+     ]
+    },
+    "k": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "n": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "scale": {
+     "enum": [
+      "field",
+      "neighbourhood",
+      "valley",
+      "region"
+     ]
+    },
+    "rain_corrected": {
+     "type": "boolean"
+    },
+    "sources": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "scorecard": {
+     "type": [
+      "string",
+      "null"
+     ]
+    }
+   }
+  },
+  "source": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "name",
+    "product",
+    "resolution",
+    "years",
+    "type"
+   ],
+   "properties": {
+    "name": {
+     "type": "string",
+     "minLength": 1
+    },
+    "product": {
+     "type": "string",
+     "minLength": 1
+    },
+    "resolution": {
+     "type": "string",
+     "minLength": 1
+    },
+    "years": {
+     "type": "string",
+     "minLength": 1
+    },
+    "type": {
+     "enum": [
+      "satellite",
+      "model",
+      "station",
+      "probe",
+      "document"
+     ],
+     "description": "Golden rule 8: model-based data is labelled model; 'document' is a published text a rule comes from (a definition, a range, a constant)."
+    }
+   }
+  },
+  "why": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "en",
+    "ne",
+    "ne_review",
+    "drafted_by"
+   ],
+   "properties": {
+    "en": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "minLength": 1
+     }
+    },
+    "ne": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "minLength": 1
+     }
+    },
+    "ne_review": {
+     "type": "string"
+    },
+    "drafted_by": {
+     "type": "string"
+    }
+   }
+  },
+  "mmdd": {
+   "type": "string",
+   "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+  },
+  "window": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "from",
+    "to",
+    "days"
+   ],
+   "properties": {
+    "from": {
+     "$ref": "#/$defs/mmdd"
+    },
+    "to": {
+     "$ref": "#/$defs/mmdd"
+    },
+    "days": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "stage": {
+     "enum": [
+      "late",
+      "season"
+     ]
+    }
+   }
+  },
+  "year_days": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "year",
+    "days"
+   ],
+   "properties": {
+    "year": {
+     "type": "integer",
+     "minimum": 1990,
+     "maximum": 2100
+    },
+    "days": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 366
+    }
+   }
+  },
+  "typical": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "typical"
+   ],
+   "properties": {
+    "typical": {
+     "type": "integer",
+     "minimum": 0
+    }
+   }
+  }
+ }
+}

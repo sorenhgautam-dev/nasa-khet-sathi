@@ -1,0 +1,590 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Khet Sathi heat and cold clock",
+ "description": "site/data/heatclock/<field>.json (2026-11-14, rules.yaml heat_clock): days too hot or too cold (FAO-66) in the sensitive weeks of wheat (grain filling) and potato (whole season), and (heat_clock.wheat_book_checks, 2026-11-14 evening) FAO's Bread Wheat checks: heat above 30 C in floret formation and frost below 0 C around flowering, each an estimate with its conditions; today and in the NEX-GDDP models around 2040.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "field",
+  "placeholder",
+  "made_by",
+  "labels",
+  "why",
+  "sources",
+  "years",
+  "year_count",
+  "left_out",
+  "checks"
+ ],
+ "properties": {
+  "field": {
+   "type": "string",
+   "minLength": 1
+  },
+  "placeholder": {
+   "type": "boolean"
+  },
+  "made_by": {
+   "type": "string"
+  },
+  "labels": {
+   "type": "object",
+   "additionalProperties": {
+    "$ref": "#/$defs/label"
+   }
+  },
+  "why": {
+   "$ref": "#/$defs/why"
+  },
+  "sources": {
+   "type": "array",
+   "items": {
+    "$ref": "#/$defs/source"
+   }
+  },
+  "years": {
+   "type": "array",
+   "items": {
+    "type": "integer",
+    "minimum": 1990,
+    "maximum": 2100
+   },
+   "minItems": 1
+  },
+  "year_count": {
+   "type": "integer",
+   "minimum": 1
+  },
+  "left_out": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "checks": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "crop",
+     "sow",
+     "end",
+     "kind",
+     "stage",
+     "window",
+     "temperature",
+     "column",
+     "rule",
+     "plans",
+     "today",
+     "future",
+     "words"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "crop": {
+      "enum": [
+       "wheat",
+       "potato"
+      ]
+     },
+     "sow": {
+      "$ref": "#/$defs/mmdd"
+     },
+     "end": {
+      "$ref": "#/$defs/mmdd"
+     },
+     "kind": {
+      "enum": [
+       "heat",
+       "cold"
+      ]
+     },
+     "stage": {
+      "enum": [
+       "grain_filling",
+       "season",
+       "floret_formation",
+       "flowering"
+      ]
+     },
+     "words": {
+      "type": "string",
+      "pattern": "^hc_[a-z_]+$",
+      "description": "the card's title: words.json screen last_years text id"
+     },
+     "sure": {
+      "enum": [
+       "estimate"
+      ],
+      "description": "the wheat-book rows (heat_clock.wheat_book_checks): always an estimate"
+     },
+     "days_after_sowing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "from",
+       "to"
+      ],
+      "properties": {
+       "from": {
+        "type": "integer",
+        "minimum": 0
+       },
+       "to": {
+        "type": "integer",
+        "minimum": 0
+       }
+      }
+     },
+     "conditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+       "type": "string",
+       "minLength": 1
+      }
+     },
+     "window": {
+      "$ref": "#/$defs/window"
+     },
+     "temperature": {
+      "enum": [
+       "daily maximum",
+       "daily minimum"
+      ]
+     },
+     "column": {
+      "enum": [
+       "tmax_c",
+       "tmin_frost_c"
+      ]
+     },
+     "rule": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+       "above_c": {
+        "type": "number"
+       },
+       "at_or_above_c": {
+        "type": "number"
+       },
+       "below_c": {
+        "type": "number"
+       },
+       "at_or_below_c": {
+        "type": "number"
+       }
+      }
+     },
+     "plans": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+       "type": "string"
+      }
+     },
+     "today": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "years",
+       "years_with",
+       "mean_days",
+       "good_news"
+      ],
+      "properties": {
+       "years": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "additionalProperties": false,
+         "required": [
+          "year",
+          "days"
+         ],
+         "properties": {
+          "year": {
+           "type": "integer",
+           "minimum": 1990,
+           "maximum": 2100
+          },
+          "days": {
+           "type": "integer",
+           "minimum": 0
+          }
+         }
+        }
+       },
+       "years_with": {
+        "type": "integer",
+        "minimum": 0
+       },
+       "mean_days": {
+        "type": "number",
+        "minimum": 0
+       },
+       "good_news": {
+        "type": "boolean"
+       }
+      }
+     },
+     "future": {
+      "oneOf": [
+       {
+        "type": "null"
+       },
+       {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "past",
+         "period",
+         "models",
+         "column",
+         "series_of",
+         "metric",
+         "scenarios",
+         "good_news"
+        ],
+        "properties": {
+         "past": {
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 1990,
+           "maximum": 2100
+          },
+          "minItems": 2,
+          "maxItems": 2
+         },
+         "period": {
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 1990,
+           "maximum": 2100
+          },
+          "minItems": 2,
+          "maxItems": 2
+         },
+         "models": {
+          "type": "integer",
+          "minimum": 1
+         },
+         "column": {
+          "enum": [
+           "tasmax_c",
+           "tasmin_c"
+          ]
+         },
+         "series_of": {
+          "type": "string"
+         },
+         "metric": {
+          "type": "string"
+         },
+         "scenarios": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+           "ssp245",
+           "ssp585"
+          ],
+          "properties": {
+           "ssp245": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+             "median",
+             "low",
+             "high",
+             "past_median",
+             "models"
+            ],
+            "properties": {
+             "median": {
+              "type": "number",
+              "minimum": 0
+             },
+             "low": {
+              "type": "number",
+              "minimum": 0
+             },
+             "high": {
+              "type": "number",
+              "minimum": 0
+             },
+             "past_median": {
+              "type": "number",
+              "minimum": 0
+             },
+             "models": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+               "type": "object",
+               "additionalProperties": false,
+               "required": [
+                "model",
+                "past",
+                "future"
+               ],
+               "properties": {
+                "model": {
+                 "type": "string"
+                },
+                "past": {
+                 "type": "number",
+                 "minimum": 0
+                },
+                "future": {
+                 "type": "number",
+                 "minimum": 0
+                }
+               }
+              }
+             }
+            }
+           },
+           "ssp585": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+             "median",
+             "low",
+             "high",
+             "past_median",
+             "models"
+            ],
+            "properties": {
+             "median": {
+              "type": "number",
+              "minimum": 0
+             },
+             "low": {
+              "type": "number",
+              "minimum": 0
+             },
+             "high": {
+              "type": "number",
+              "minimum": 0
+             },
+             "past_median": {
+              "type": "number",
+              "minimum": 0
+             },
+             "models": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+               "type": "object",
+               "additionalProperties": false,
+               "required": [
+                "model",
+                "past",
+                "future"
+               ],
+               "properties": {
+                "model": {
+                 "type": "string"
+                },
+                "past": {
+                 "type": "number",
+                 "minimum": 0
+                },
+                "future": {
+                 "type": "number",
+                 "minimum": 0
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "good_news": {
+          "type": "boolean",
+          "description": "every model's 2026-2040 mean below 1 day a season in both scenarios"
+         }
+        }
+       }
+      ]
+     }
+    }
+   }
+  }
+ },
+ "$defs": {
+  "label": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "sure",
+    "status",
+    "k",
+    "n",
+    "scale",
+    "rain_corrected",
+    "sources",
+    "scorecard"
+   ],
+   "properties": {
+    "sure": {
+     "enum": [
+      "verified",
+      "estimate"
+     ],
+     "description": "verified only when status is VERIFIED"
+    },
+    "status": {
+     "enum": [
+      "VERIFIED",
+      "ESTIMATE",
+      "NOT YET VERIFIABLE"
+     ]
+    },
+    "k": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "n": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "scale": {
+     "enum": [
+      "field",
+      "neighbourhood",
+      "valley",
+      "region"
+     ]
+    },
+    "rain_corrected": {
+     "type": "boolean"
+    },
+    "sources": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "scorecard": {
+     "type": [
+      "string",
+      "null"
+     ]
+    }
+   }
+  },
+  "source": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "name",
+    "product",
+    "resolution",
+    "years",
+    "type"
+   ],
+   "properties": {
+    "name": {
+     "type": "string",
+     "minLength": 1
+    },
+    "product": {
+     "type": "string",
+     "minLength": 1
+    },
+    "resolution": {
+     "type": "string",
+     "minLength": 1
+    },
+    "years": {
+     "type": "string",
+     "minLength": 1
+    },
+    "type": {
+     "enum": [
+      "satellite",
+      "model",
+      "station",
+      "probe",
+      "document"
+     ],
+     "description": "Golden rule 8: model-based data is labelled model; 'document' is a published text a rule comes from (a definition, a range, a constant)."
+    }
+   }
+  },
+  "why": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "en",
+    "ne",
+    "ne_review",
+    "drafted_by"
+   ],
+   "properties": {
+    "en": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "minLength": 1
+     }
+    },
+    "ne": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "minLength": 1
+     }
+    },
+    "ne_review": {
+     "type": "string"
+    },
+    "drafted_by": {
+     "type": "string"
+    }
+   }
+  },
+  "mmdd": {
+   "type": "string",
+   "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+  },
+  "window": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "from",
+    "to",
+    "days"
+   ],
+   "properties": {
+    "from": {
+     "$ref": "#/$defs/mmdd"
+    },
+    "to": {
+     "$ref": "#/$defs/mmdd"
+    },
+    "days": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "stage": {
+     "enum": [
+      "late"
+     ]
+    }
+   }
+  }
+ }
+}

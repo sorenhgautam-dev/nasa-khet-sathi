@@ -66,7 +66,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--field", default="demo")
     a = ap.parse_args(argv)
-    field, rules, lib = load_field(a.field), load_rules(), load_crops()
+    field, rules = load_field(a.field), load_rules()
+    lib = load_crops(field=field)        # the field's country profile (config/countries/)
     F = rules["field_memory"]
     df, rotation = dataset(field, rules, lib)
     res = fm.compare(df, physics="twin_shortfall", features=F["memory_features"], alpha=F["model"]["alpha"])

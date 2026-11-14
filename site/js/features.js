@@ -1,7 +1,10 @@
-/* Khet Sathi: the four features on Home (owner, 2026-11-14), loaded when one is first opened.
-   25-Year Replay (data/replay/<id>.json), Field Pulse (data/pulse/<id>.json), Safe Trial (no file: the farmer's own
-   trial, kept on the phone) and the record check-up (data/checkup/<id>.json). Every number comes from those files or
-   the field file; text goes on the page with textContent. Photos stay on the phone (IndexedDB). */
+/* Khet Sathi: the features inside the UI teammate's screens (owner, 2026-11-14 evening), loaded when first needed.
+   Safe Trial ("Try it in one part first", in the plan's sheet; no file: the farmer's own trial, kept on the phone), and
+   for the "How we know" page: the Replay's squares (data/replay/<id>.json), Field Pulse (data/pulse/<id>.json), the
+   record check-up (data/checkup/<id>.json), the farmer-card comparison (data/simple/<id>.json), rain at harvest
+   (data/rainrisk/<id>.json), heat and cold (data/heatclock/<id>.json) and the fertiliser saver (data/fertiliser/<id>.json).
+   Every number comes from those files or the field file; text goes on the page with textContent. Photos stay on the
+   phone (IndexedDB). */
 (function () {
   'use strict';
   var K = window.KS, S = K.S, h = K.h, add = K.add, svg = K.svg, I = K.I, T = K.T, L = K.L, P = K.P, PL = K.PL, num = K.num, digits = K.digits;
@@ -19,7 +22,7 @@
   function cap(s) { return /^(ne|hi|bn)$/.test(S.lang) ? s : s.charAt(0).toUpperCase() + s.slice(1); }
   function readJSON(k) { try { return JSON.parse(K.store.get(k) || 'null'); } catch (e) { return null; } }
 
-  // ---------------- 3 Safe Trial: one quarter of the field, the soil stick's four spots, a photo each week ----------------
+  // ---------------- Safe Trial ("Try it in one part first"): one quarter of the field, the stick's four spots, a photo each week ----------------
   // No new numbers: the results come after the season. Everything the farmer enters stays on this phone.
   var QUARTERS = [[0, 0], [50, 0], [0, 50], [50, 50]];   // left, top (%) of each quarter of the field's box
   function quarterNames(F) {
@@ -62,18 +65,13 @@
       img.src = url;
     });
   }
-  function trial(F) {
+  function trial(F, p) {
     var key = 'trial.' + S.fid, saved = readJSON(key) || {};
-    var o = K.orderedPlans(F), tries = o.rest.length ? o.rest : [o.cur];
-    var st = { plan: saved.plan || tries[0].id, quarter: saved.quarter != null ? saved.quarter : 0, start: saved.start || null };
+    var st = saved.plan === p.id ? { plan: p.id, quarter: saved.quarter != null ? saved.quarter : 0, start: saved.start || null } : { plan: p.id, quarter: 0, start: null };
     var names = quarterNames(F), body = h('div', { class: 'trial' });
     function save() { K.store.set(key, JSON.stringify(st)); }
     function draw() {
       body.textContent = '';
-      var planBtns = h('div', { class: 'col', role: 'group', 'aria-label': T('check_soil.trial_pick_plan') }, tries.map(function (p) {
-        return h('button', { type: 'button', class: 'choice wide', 'aria-pressed': String(st.plan === p.id), onclick: function () { st.plan = p.id; if (st.start) save(); draw(); } },
-          h('span', { style: 'display:flex;flex-direction:column;gap:2px;text-align:left' }, h('b', null, K.planName(p)), h('span', { class: 'small' }, K.cropsLine(p))));
-      }));
       // the field in four quarters, the trial quarter marked with a tick and a word, the stick's four spots
       var box = h('div', { class: 'qbox', role: 'group', 'aria-label': T('check_soil.trial_pick_part') }, QUARTERS.map(function (q, i) {
         var on = st.quarter === i;
@@ -83,9 +81,8 @@
           h('span', { class: 'spot' + (on ? ' t' : '') }, svg(I('stick', 16, 2.2))),
           h('span', { class: 'qw' }, on ? [svg(I('tick', 14, 3)), ' ', T('check_soil.trial_this')] : T('check_soil.trial_as_now')));
       }));
-      var p = tries.filter(function (x) { return x.id === st.plan; })[0] || tries[0];
       add(body, [
-        card('', stepH(T('check_soil.trial_pick_plan')), planBtns),
+        card('', h('p', { class: 'lead', style: 'margin:0' }, K.planName(p)), h('p', { class: 'sub' }, K.cropsLine(p))),
         card('', stepH(T('check_soil.trial_pick_part')), box, K.lines([T('check_soil.trial_rest')], 'sub')),
         card('', stepH(T('check_soil.trial_spots')), K.lines([T('check_soil.trial_spot_one'), T('check_soil.trial_spot_three')]),
           h('p', { class: 'small', style: 'margin:0' }, T('check_soil.prototype'))),
@@ -95,8 +92,6 @@
         st.start ? diary(st) : null,
         card('', stepH(T('check_soil.trial_compare')),
           h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('quarter', 20))), K.lines([T('check_soil.trial_vs_rest')])),
-          h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('redo', 20))), h('div', { class: 'grow' }, K.lines([T('check_soil.trial_vs_replay')]),
-            K.btn3(K.featName('replay'), function () { K.go('replay'); }, 'redo'))),
           h('p', { class: 'note', style: 'margin:0' }, T('check_soil.trial_after'), ' ', T('check_soil.trial_no_numbers')))
       ]);
     }
@@ -133,11 +128,7 @@
       return box;
     }
     draw();
-    return K.screen('trial', {
-      head: [K.bigTitle(T('check_soil.trial_h1'), T('check_soil.trial_h2')), h('p', { class: 'lead' }, T('check_soil.trial_sub')), sample(F)],
-      body: body,
-      cta: K.btn3(T('btn.how_we_know'), function () { K.go('how'); }, 'book')
-    });
+    return body;
   }
 
   // ---------------- 1 the Replay: each plan's coming months run through every past season ----------------
@@ -160,7 +151,6 @@
   }
   function replay(F, R) {
     if (!R || !R.plans || !R.windows || !R.windows.length) return null;
-    S.years = R.year_count;
     var cur = R.plans.filter(function (p) { return p.role === 'current'; })[0];
     var opt = S.winter && R.plans.filter(function (p) { return p.id === S.winter && p.role === 'current_option'; })[0];
     var plans = [opt || cur].concat(R.plans.filter(function (p) { return p.role === 'suggested'; })).filter(Boolean);
@@ -246,11 +236,8 @@
       var s = b && R.starts.filter(function (x) { return x.probe_band === b.band; })[0];
       if (s && st.by === 'default' && box.isConnected) { st.start = s.id; st.by = 'stick'; draw(); }
     });
-    return K.screen('replay', {
-      head: [K.bigTitle(T('last_years.replay_h1', { year_count: R.year_count }), T('last_years.replay_h2')), h('p', { class: 'lead' }, T('last_years.replay_intro')), sample(F)],
-      body: box,
-      cta: [K.btn3(K.featName('trial'), function () { K.go('trial'); }, 'quarter'), K.btn3(K.featName('checkup'), function () { K.go('checkup'); }, 'check')]
-    });
+    return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:12px' },
+      K.lines([T('last_years.replay_intro'), T('last_years.boxes_only'), T('last_years.scores_all_year')], 'sub'), box);
   }
 
   // ---------------- 2 Field Pulse: the greenness line, its seasons, the farmer's own dates, the fields nearby ----------------
@@ -280,59 +267,33 @@
     setTimeout(function () { wrap.scrollLeft = wrap.scrollWidth; }, 0);
     return wrap;
   }
-  function monthSelect(val, label) {
-    return h('label', { class: 'msel' }, h('span', { class: 'small' }, label), h('select', null, K.MONTHS.map(function (m) { var o = h('option', { value: m }, K.monthName(m)); if (m === val) o.selected = true; return o; })));
-  }
   function pulse(F, U) {
     if (!U || !U.curve) return null;
-    var key = 'pulse.' + S.fid, mine = readJSON(key) || {}, box = h('div', { class: 'col', style: 'gap:14px' }), fixing = null;
-    var lab = U.labels || {};
-    function draw() {
-      box.textContent = '';
-      var seasons = (U.typical || []).map(function (t) {
-        var m = mine[t.slot], sat = [K.MONTHS[+t.planting.slice(0, 2) - 1], K.MONTHS[+t.harvest.slice(0, 2) - 1]];
-        var c = h('div', { class: 'card col' }, h('p', { class: 'lead', style: 'margin:0' }, svg(I('sprout', 18)), ' ', cap(K.crop(t.crop)) + ' · ' + T('from_space.slot_' + t.slot)),
-          pair(T('from_space.planting'), T('btn.about') + ' ' + K.monthName(sat[0])), pair(T('from_space.harvest'), T('btn.about') + ' ' + K.monthName(sat[1])),
-          K.labs('pulse_typical', lab.pulse_typical));
-        if (fixing === t.slot) {
-          var a = monthSelect(m ? m.planting : sat[0], T('from_space.planting')), b = monthSelect(m ? m.harvest : sat[1], T('from_space.harvest'));
-          add(c, [h('div', { class: 'row wrap' }, a, b), K.btn2(T('from_space.save_dates'), function () {
-            mine[t.slot] = { planting: a.querySelector('select').value, harvest: b.querySelector('select').value, ok: false };
-            K.store.set(key, JSON.stringify(mine)); fixing = null; draw();
-          }, 'tick')]);
-        } else if (m) {
-          add(c, [h('p', { class: 'kv' }, svg(I('hand', 16)), ' ', m.ok ? T('from_space.you_said_yes') : T('from_space.you_said') + ' ' + K.monthName(m.planting) + ' → ' + K.monthName(m.harvest)),
-            h('p', { class: 'small', style: 'margin:0' }, T('check_soil.trial_saved')), K.btn3(T('from_space.fix_dates'), function () { fixing = t.slot; draw(); }, 'redo')]);
-        } else {
-          add(c, [h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('from_space.dates_right')), h('div', { class: 'row wrap' },
-            K.btn2(T('from_space.yes'), function () { mine[t.slot] = { planting: sat[0], harvest: sat[1], ok: true }; K.store.set(key, JSON.stringify(mine)); draw(); }, 'tick'),
-            K.btn3(T('from_space.fix_dates'), function () { fixing = t.slot; draw(); }, 'redo'))]);
-        }
-        return c;
-      });
-      var nb = U.nearby, near = nb ? h('div', { class: 'card col' }, h('h2', { class: 'h3' }, T('from_space.nearby_title')),
-        h('p', { class: 'small', style: 'margin:0' }, T('from_space.nearby_totals')),
-        nb.median_bare_days ? pair(T('from_space.nearby_bare'), T('btn.about') + ' ' + num(nb.median_bare_days.value) + ' (' + K.rng(nb.median_bare_days.low, nb.median_bare_days.high) + ')') : null,
-        nb.this_field && nb.this_field.mean_bare_days != null ? pair(T('from_space.yours_bare'), T('btn.about') + ' ' + num(nb.this_field.mean_bare_days)) : null,
-        nb.share_two_seasons ? pair(T('from_space.nearby_two'), num(nb.share_two_seasons.value * 100) + ' ' + T('btn.out_of_100') + ' (' + K.rng(nb.share_two_seasons.low * 100, nb.share_two_seasons.high * 100) + ')') : null,
-        nb.share_long_bare ? pair(T('from_space.nearby_long_bare'), num(nb.share_long_bare.value * 100) + ' ' + T('btn.out_of_100') + ' (' + K.rng(nb.share_long_bare.low * 100, nb.share_long_bare.high * 100) + ')') : null,
-        K.labs('nearby_fields', nb.label), srcList(F, (U.sources || []).slice(0, 1))) : null;
-      add(box, [
-        h('div', { class: 'card col' }, h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('from_space.pulse_line')),
-          heartbeat(U) || K.notReady(),
-          h('div', { class: 'legend' }, h('span', null, h('span', { class: 'sw', style: 'background:#14301E' }), T('from_space.pulse_new')), K.labs('pulse_hls', lab.pulse_hls)),
-          h('div', { class: 'legend' }, h('span', null, h('span', { class: 'sw dash' }), T('from_space.pulse_old')), K.labs('pulse_modis', lab.pulse_modis)),
-          U.bare_threshold != null ? h('p', { class: 'small', style: 'margin:0' }, h('span', { class: 'sw bare', 'aria-hidden': 'true' }), ' ', T('from_space.pulse_bare')) : null,
-          h('p', { class: 'small', style: 'margin:0' }, T('from_space.months_note')), srcList(F, U.sources)),
-        h('h2', { class: 'h3' }, T('from_space.your_seasons')), seasons, near
-      ]);
-    }
-    draw();
-    return K.screen('pulse', {
-      head: [K.bigTitle(T('from_space.pulse_h1'), T('from_space.pulse_h2')), h('p', { class: 'lead' }, T('from_space.pulse_sub')), sample(F)],
-      body: box,
-      cta: K.btn3(K.featName('replay'), function () { K.go('replay'); }, 'redo')
+    var lab = U.labels || {}, box = h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:12px' });
+    var seasons = (U.typical || []).map(function (t) {
+      return h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('sprout', 20))), h('div', { class: 'grow col', style: 'gap:4px' },
+        h('p', { class: 'lead', style: 'margin:0' }, cap(K.crop(t.crop)) + ' · ' + T('from_space.slot_' + t.slot)),
+        pair(T('from_space.planting'), T('btn.about') + ' ' + K.monthName(K.MONTHS[+t.planting.slice(0, 2) - 1])),
+        pair(T('from_space.harvest'), T('btn.about') + ' ' + K.monthName(K.MONTHS[+t.harvest.slice(0, 2) - 1])), K.labs('pulse_typical', lab.pulse_typical)));
     });
+    var nb = U.nearby, near = nb ? h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:6px' }, h('h3', { class: 'h3' }, T('from_space.nearby_title')),
+      h('p', { class: 'small', style: 'margin:0' }, T('from_space.nearby_totals')),
+      nb.median_bare_days ? pair(T('from_space.nearby_bare'), T('btn.about') + ' ' + num(nb.median_bare_days.value) + ' (' + K.rng(nb.median_bare_days.low, nb.median_bare_days.high) + ')') : null,
+      nb.this_field && nb.this_field.mean_bare_days != null ? pair(T('from_space.yours_bare'), T('btn.about') + ' ' + num(nb.this_field.mean_bare_days)) : null,
+      nb.share_two_seasons ? pair(T('from_space.nearby_two'), num(nb.share_two_seasons.value * 100) + ' ' + T('btn.out_of_100') + ' (' + K.rng(nb.share_two_seasons.low * 100, nb.share_two_seasons.high * 100) + ')') : null,
+      nb.share_long_bare ? pair(T('from_space.nearby_long_bare'), num(nb.share_long_bare.value * 100) + ' ' + T('btn.out_of_100') + ' (' + K.rng(nb.share_long_bare.low * 100, nb.share_long_bare.high * 100) + ')') : null,
+      K.labs('nearby_fields', nb.label), srcList(F, (U.sources || []).slice(0, 1))) : null;
+    add(box, [
+      K.lines([T('from_space.pulse_sub'), T('from_space.pulse_line')], 'sub'),
+      heartbeat(U) || K.notReady(),
+      h('div', { class: 'legend' }, h('span', null, h('span', { class: 'sw', style: 'background:#14301E' }), T('from_space.pulse_new')), K.labs('pulse_hls', lab.pulse_hls)),
+      h('div', { class: 'legend' }, h('span', null, h('span', { class: 'sw dash' }), T('from_space.pulse_old')), K.labs('pulse_modis', lab.pulse_modis)),
+      U.bare_threshold != null ? h('p', { class: 'small', style: 'margin:0' }, h('span', { class: 'sw bare', 'aria-hidden': 'true' }), ' ', T('from_space.pulse_bare')) : null,
+      K.lines([T('from_space.line_saw'), T('from_space.plans_calendar')], 'sub'),
+      h('p', { class: 'small', style: 'margin:0' }, T('from_space.months_note')), srcList(F, U.sources),
+      h('h3', { class: 'h3' }, T('from_space.your_seasons')), seasons, near
+    ]);
+    return box;
   }
 
   // ---------------- 4 the record check-up: how this field's rain record was checked, and fixed ----------------
@@ -402,12 +363,139 @@
       h('div', { class: 'card col' }, h('p', { style: 'margin:0' }, T('your_plan.check_marked')), h('div', null, K.rainMark())),
       srcList(F, C.sources)
     ];
-    return K.screen('checkup', {
-      head: [K.bigTitle(T('your_plan.check_h1'), T('your_plan.check_h2')), h('p', { class: 'lead' }, T('your_plan.check_sub')), sample(F)],
-      body: h('div', { class: 'col', style: 'gap:14px' }, body),
-      cta: K.btn3(K.featName('replay'), function () { K.go('replay'); }, 'redo')
-    });
+    return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:12px' }, h('p', { class: 'sub' }, T('your_plan.check_sub')), body);
   }
 
-  K.feat = { replay: replay, pulse: pulse, trial: trial, checkup: checkup };
+  // ---------------- for "How we know": the farmer-card comparison (data/simple/<id>.json) ----------------
+  var MOUTH = { better: 'M14 24q6 6 12 0', same: 'M14.5 25.5h11', worse: 'M14 28q6-6 12 0' }, FACEFILL = { better: '#DDEB9C', same: '#F3EAD8', worse: '#F4CDBE' };
+  function face3(k, size) {
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="' + FACEFILL[k] + '" stroke="#14301E" stroke-width="2"/>' +
+      '<circle cx="15" cy="16.5" r="2.1" fill="#14301E"/><circle cx="25" cy="16.5" r="2.1" fill="#14301E"/><path d="' + MOUTH[k] + '" stroke="#14301E" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>';
+  }
+  function faces(rc) {
+    var pt = rc.per_ten || {}, row = h('div', { class: 'faces10', 'aria-hidden': 'true' });
+    ['better', 'same', 'worse'].forEach(function (k) { for (var j = 0; j < (pt[k] || 0); j++) row.append(svg(face3(k, 22))); });
+    var c = rc.counts || {};
+    return [row, h('p', { class: 'small', style: 'margin:0' }, ['better', 'same', 'worse'].map(function (k, i) {
+      return [i ? ' · ' : '', svg(face3(k, 14)), ' ', T('home.face_' + k) + ': ' + num(c[k] || 0) + ' ' + T('last_years.cmp_winters')];
+    }), pt.better ? ' · ' + T('home.per_ten_pre') + ' ' + num(pt.better) + ' ' + T('home.per_ten_post') : null)];
+  }
+  function verdicts(F, sd) {
+    if (!sd || !sd.replay_card) return null;
+    var box = h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:12px' },
+      K.lines([T('last_years.cmp_ran', { year_count: sd.winters }), T('last_years.better_means'), T('last_years.better_not')], 'sub'));
+    Object.keys(sd.replay_card).forEach(function (w) {
+      var byWater = sd.replay_card[w];
+      box.append(card('', h('h3', { class: 'h3' }, cap(K.crop(w)) + ' → ' + cap(K.crop((byWater.water_no || byWater.water_yes || {}).crop || w))),
+        [['water_no', 'rain_fed', 'rain'], ['water_yes', 'irrigated', 'drop']].map(function (x) {
+          var rc = byWater[x[0]]; if (!rc) return null;
+          return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:6px' },
+            h('p', { class: 'small', style: 'margin:0;font-weight:700;color:var(--ink)' }, svg(I(x[2], 14)), ' ', T('lbl.last_years.water_case.' + x[1])),
+            h('p', { style: 'margin:0;font-weight:700' }, T('home.crop_winter', { crop: K.crop(rc.crop) }) + ' ' + T('home.verdict_' + rc.verdict)),
+            faces(rc), x[0] === 'water_yes' ? K.lines([T('last_years.water_yes_1'), T('last_years.water_yes_2')], 'small') : null);
+        })));
+    });
+    box.append(K.labs('replay_window', sd.label), srcList(F, sd.sources));
+    return box;
+  }
+
+  // ---------------- for "How we know": rain at harvest, heat and cold, the fertiliser saver ----------------
+  function mmdd(x) { var m = +x.slice(0, 2) - 1; return digits(+x.slice(3, 5)) + ' ' + (S.lang === 'ne' ? K.gregInNepali(K.MONTHS[m]) : K.monthName(K.MONTHS[m])); }
+  function why(list) { var l = PL(list); return l.length ? h('details', { class: 'why' }, h('summary', null, T('lbl.what_to_grow.tab.why')), K.lines(l, 'small')) : null; }
+  function planNames(ids) { return ids.map(function (id) { return K.planName({ id: /^(current|rice_)/.test(id) ? 'current' : id }); }).filter(function (x, i, a) { return a.indexOf(x) === i; }).join(' · '); }
+  function rainRisk(F, RR) {
+    if (!RR || !RR.plans) return null;
+    var seen = {}, rows = [];
+    RR.plans.forEach(function (p) {
+      (p.crops || []).forEach(function (c) {
+        var k = c.crop + c.window.from + c.window.to;
+        if (!seen[k]) { seen[k] = { c: c, plans: [] }; rows.push(seen[k]); }
+        seen[k].plans.push(p.id);
+      });
+    });
+    var detail = h('p', { class: 'small', style: 'margin:0', 'aria-live': 'polite' }, T('last_years.rr_tap'));
+    return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:12px' }, h('p', { class: 'sub' }, T('last_years.rr_lead')),
+      rows.map(function (r) {
+        var c = r.c, ov = c.other_versions || {}, dr = c.dry_run;
+        function dryOf(year) { var x = dr && (dr.years || []).filter(function (y) { return y.year === year; })[0]; return x ? ' · ' + T('last_years.rr_dry_run', { dry_run_days: x.days }) : ''; }
+        var strip = h('div', { class: 'ystrip' }, (c.years || []).map(function (y) {
+          var heavy = y.days > 0, differ = Object.keys(ov).some(function (v) { return (ov[v].heavy_years || []).indexOf(y.year) >= 0 !== heavy; });
+          return h('button', { type: 'button', class: 'yb' + (heavy ? ' heavy' : '') + (differ ? ' differ' : ''), 'aria-label': digits(y.year) + ': ' + T(heavy ? 'last_years.rr_sq_heavy' : 'last_years.rr_sq_none'),
+            onclick: function () { detail.textContent = digits(y.year) + ' · ' + T(heavy ? 'last_years.rr_sq_heavy' : 'last_years.rr_sq_none') + ' · ' + T('last_years.rr_days') + ' ' + num(y.days) + dryOf(y.year) + (differ ? ' · ' + T('last_years.rr_records_differ') : ''); } },
+            heavy ? svg(I('rain', 12, 2.4)) : null);
+        }));
+        return card('', h('h3', { class: 'h3' }, cap(K.crop(c.crop))), h('p', { class: 'small', style: 'margin:0' }, planNames(r.plans)),
+          pair(T('last_years.rr_weeks'), mmdd(c.window.from) + ' – ' + mmdd(c.window.to)),
+          h('p', { style: 'margin:0;font-weight:700' }, svg(I(c.good_news ? 'tick' : 'rain', 16, 2.4)), ' ', T('last_years.rr_count', { risk_years: c.count, year_count: RR.year_count })),
+          c.count_low != null && c.count_low !== c.count_high ? h('p', { class: 'small', style: 'margin:0' }, T('last_years.rr_range', { risk_low: c.count_low, risk_high: c.count_high })) : null,
+          c.good_news ? h('p', { class: 'small', style: 'margin:0' }, T('last_years.risk_none')) : null, strip,
+          // the longest run of dry days after sowing (DHM's measure; notes/ui_note.md 6j): the usual year, then the worst years
+          dr ? h('p', { style: 'margin:0;font-weight:600' }, svg(I('sun', 16, 2.4)), ' ', T('last_years.rr_dry_usual', { dry_run_days: dr.typical })) : null,
+          dr && (dr.worst || []).length ? h('p', { class: 'small', style: 'margin:0' }, T('last_years.rr_dry_worst') + ' ' +
+            dr.worst.map(function (x) { return digits(x.year) + ': ' + T('last_years.rr_dry_run', { dry_run_days: x.days }); }).join(' · ')) : null);
+      }), detail, h('p', { class: 'small', style: 'margin:0' }, T('last_years.rr_past_only')),
+      K.labs('rainrisk_harvest', (RR.labels || {}).rainrisk_harvest), why(RR.why), srcList(F, RR.sources));
+  }
+  function d1(x) { return String(Math.round(x * 10) / 10); }
+  function heatClock(F, HC) {
+    if (!HC || !HC.checks) return null;
+    return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:12px' }, h('p', { class: 'sub' }, T('last_years.hc_lead')),
+      HC.checks.map(function (c) {
+        var t = c.today || {}, fu = c.future || {}, sc = fu.scenarios || {}, title = c.words && K.node('last_years.' + c.words) ? T('last_years.' + c.words) : cap(K.crop(c.crop));
+        return card('', h('h3', { class: 'h3' }, title), h('p', { class: 'small', style: 'margin:0' }, planNames(c.plans || [])),
+          c.window ? pair(T('last_years.hc_weeks'), mmdd(c.window.from) + ' – ' + mmdd(c.window.to)) : null,
+          h('p', { style: 'margin:0;font-weight:700' }, svg(I(t.good_news ? 'tick' : 'therm', 16, 2.4)), ' ', T('last_years.hc_years', { risk_years: t.years_with, year_count: HC.year_count })),
+          c.kind === 'cold' ? h('p', { class: 'small', style: 'margin:0' }, T(c.stage === 'flowering' ? 'last_years.hc_frost_caveat' : 'last_years.hc_cold_caveat')) : null,
+          c.conditions ? h('p', { class: 'small', style: 'margin:0;font-weight:700' }, svg(I('book', 14)), ' ', T('last_years.hc_book')) : null,
+          K.labs('heatclock_today', (HC.labels || {}).heatclock_today),
+          c.conditions ? h('details', { class: 'why' }, h('summary', null, T('lbl.what_to_grow.tab.why')), h('ul', { class: 'lines small', lang: 'en' }, c.conditions.map(function (x) { return h('li', null, x); }))) : null,
+          h('p', { class: 'small', style: 'margin:6px 0 0;font-weight:700;color:var(--ink)' }, T('last_years.hc_2040')),
+          fu.good_news ? h('p', { class: 'small', style: 'margin:0' }, T('last_years.hc_rare_2040')) : null,
+          [['ssp245', 'hc_less'], ['ssp585', 'hc_more']].map(function (x) {
+            var v = sc[x[0]]; if (!v) return null;
+            return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:2px' }, h('p', { style: 'margin:0;font-weight:600' }, T('last_years.' + x[1]) + ' ' + T('last_years.hc_per_season', { per_season: d1(v.median) })),
+              h('p', { class: 'small', style: 'margin:0' }, T('last_years.hc_spread') + ' ' + digits(d1(v.low)) + '–' + digits(d1(v.high)) + ' · ' + T('last_years.hc_their_past') + ' ' + digits(d1(v.past_median))));
+          }), K.labs('heatclock_2040', (HC.labels || {}).heatclock_2040));
+      }), (HC.left_out || []).length ? h('p', { class: 'small', style: 'margin:0' }, T('last_years.hc_left_out')) : null, why(HC.why), srcList(F, HC.sources));
+  }
+  function fertiliser(F, FZ) {
+    if (!FZ || !FZ.applies) return null;
+    var b = FZ.bags_ha_whole || [];
+    return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:8px' }, h('p', { class: 'small', style: 'margin:0' }, K.planName({ id: FZ.plan })),
+      h('p', { class: 'lead', style: 'margin:0' }, T('what_to_grow.fs_lead', { next_crop: K.crop(FZ.next_crop), legume_crop: K.crop(FZ.legume) })),
+      b.length === 2 ? h('p', { style: 'margin:0;font-weight:700' }, T('what_to_grow.fs_saved', { bags_low: b[0], bags_high: b[1] })) : null,
+      K.lines([T('what_to_grow.fs_plot') + ' ' + T('what_to_grow.fs_size_why'), T('what_to_grow.fs_wide'), FZ.measured_uptake_kg_n_ha != null ? T('what_to_grow.fs_measured_less') : null,
+        T('what_to_grow.fs_short'), T('what_to_grow.fs_ask')], 'sub'),
+      K.labs('fertiliser_saver', (FZ.labels || {}).fertiliser_saver), why(FZ.why), srcList(F, FZ.sources));
+  }
+
+  // ---------------- for "How we know": the computer's guess for each part (the field twin), and the labels ----------------
+  function twinParts(F) {
+    var G = K.geom(F), mock = K.mocked(F, 'field.sections'), D_ = F.field;
+    return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:10px' },
+      K.lines([T('each_part.twin_why'), T('each_part.one_soil')], 'sub'),
+      h('div', { class: 'parts' }, G.map(function (g) {
+        var s = g.s, status = mock ? 'grey' : s.status;
+        return h('div', { class: 'part' }, h('div', { class: 'top' }, h('span', { class: 'name' }, T('each_part.part_name', { section: g.n })), svg(K.faceSvg(status, 36))),
+          h('span', { class: 'word' }, T('lbl.each_part.status.' + status)),
+          !mock && s.wetness != null ? h('span', null, T('each_part.how_wet', { wetness: s.wetness })) : h('span', null, T('btn.not_ready')),
+          h('span', { class: 'small' }, T('each_part.how_sure', { sure_pct: (s.sure || 0) * 100 })));
+      })),
+      D_.status_date ? h('p', { class: 'small', style: 'margin:0' }, T('each_part.as_of') + ' ' + K.fmtDate(D_.status_date)) : null,
+      h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:4px' }, ['part_status', 'part_wetness', 'part_sure'].map(function (o) { return K.labs(o); })),
+      K.srcs(F, ['twin', 'smap']));
+  }
+  function labelsList() {
+    var L_ = S.labels && S.labels.outputs; if (!L_) return null;
+    return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:8px' },
+      K.lines([T('your_plan.lab_estimate_why'), T('your_plan.lab_verified_why')], 'sub'),
+      K.lines(['field', 'neighbourhood', 'valley', 'region'].map(function (sc) { return T('your_plan.lab_' + sc + '_why'); }), 'small'),
+      h('div', { class: 'labtable' }, Object.keys(L_).map(function (id) {
+        var l = L_[id];
+        return h('div', { class: 'lr' }, h('span', { class: 'lid', lang: 'en' }, id.replace(/_/g, ' ')), K.labs(id),
+          l.n ? h('span', { class: 'small' }, T('your_plan.lab_checks') + ' ' + num(l.k) + ' / ' + num(l.n)) : null);
+      })));
+  }
+
+  K.feat = { replay: replay, pulse: pulse, trial: trial, checkup: checkup, verdicts: verdicts, rainRisk: rainRisk, heatClock: heatClock, fertiliser: fertiliser, twinParts: twinParts, labelsList: labelsList };
 })();

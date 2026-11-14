@@ -71,13 +71,47 @@ farmer says "here" or "this one", or gives up, or time runs out.
 - **No photos of people.** If the photo diary asks for a picture, photograph the ground. Delete it before the next
   farmer.
 
+## Three more screens: "what does this tell you?" (added 14 November, evening, before any session)
+
+These sit behind the cards' "How do we know?" buttons (rain at harvest and heat and cold under the Replay; the
+fertiliser saver under "Feed your soil"). For each, the helper opens the screen, hands over the phone and asks the same
+words. Not timed. Write down what the farmer says, quoted, without a name. Fix the answer keys from the live site before
+the first session, as above.
+
+### Task 4. Rain at harvest
+
+- **Show:** the rain-at-harvest squares for "What you do now" (rice, then potato).
+- **Ask:** "What does this tell you?" Then: "Is this about the coming year, or past years?"
+- **Answer key:** in some past years (today: 8 of 24) heavy rain fell when rice is cut; none when potato is dug; past
+  years, not a forecast.
+- **Success:** the farmer says, in their own words, that heavy rain at rice harvest happened in some past years, and
+  that it is about the past. Note whether they read a heavy-rain square as "my crop was lost" (it does not say that).
+
+### Task 5. Heat and cold
+
+- **Show:** the heat and cold screen, potato's cold card first.
+- **Ask:** "What does this tell you?" Then: "Is this a lot of cold nights, or a few?"
+- **Answer key:** cold nights in most past potato seasons (today: 17 of 24 years, about 3 a season); we may count too
+  many; no very hot days for wheat or potato.
+- **Success:** the farmer names cold nights for potato and no heat problem. Note whether they notice "our cold nights may
+  be too many", and how they read "around 2040".
+
+### Task 6. Fertiliser saver
+
+- **Show:** the fertiliser saver in "Feed your soil".
+- **Ask:** "What does this tell you?" Then: "For how much land?"
+- **Answer key:** after lentil, rice may need a little less urea (about 1 to 2 bags) on a big plot; it is a guess; ask
+  the agriculture office first. The land size is in "Why?" (one hectare).
+- **Success:** the farmer says less urea may be needed after lentil and that it is not certain. Note whether they find
+  the land size, and whether they think the bags are for their own field.
+
 ## What to record (per farmer, per task)
 
 | Column | What to write |
 | --- | --- |
 | Farmer | P1 to P5. Never a name |
 | About them (only if they agree) | grows rice: yes/no; uses a smartphone daily: yes/no; reads Nepali easily: yes/no |
-| Task | 1, 2 or 3 |
+| Task | 1 to 6 (4 to 6: not timed) |
 | Time | seconds, from the end of the reading to "here", giving up, or the limit |
 | Result | success / with one hint / failed / gave up |
 | Hints | how many, and what was said |

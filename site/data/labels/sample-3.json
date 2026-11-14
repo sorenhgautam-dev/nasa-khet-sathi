@@ -641,6 +641,58 @@
     "gpcc"
    ],
    "scorecard": null
+  },
+  "rainrisk_harvest": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "crop_calendar"
+   ],
+   "scorecard": null
+  },
+  "fertiliser_saver": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "literature"
+   ],
+   "scorecard": null
+  },
+  "heatclock_today": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": false,
+   "sources": [
+    "power",
+    "ghcn",
+    "crop_calendar"
+   ],
+   "scorecard": null
+  },
+  "heatclock_2040": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "nexgddp",
+    "crop_calendar"
+   ],
+   "scorecard": null
   }
  },
  "sources": {
@@ -698,6 +750,11 @@
    "name": "Harmonized Landsat Sentinel-2",
    "resolution": "30 m",
    "scale": "field"
+  },
+  "literature": {
+   "name": "Published studies (not measured on this field)",
+   "resolution": "studies elsewhere",
+   "scale": "region"
   },
   "modis": {
    "name": "MODIS Terra",

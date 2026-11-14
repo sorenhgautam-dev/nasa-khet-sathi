@@ -140,8 +140,10 @@ def validate_field(doc, final=False):
             if not lo <= mid <= hi:
                 errors.append(f"{name}: year {i} needs harvest_low <= harvest <= harvest_high")
     sd = doc["method"]["season_detection"]
-    by_id = {m["id"]: m for m in sd["methods"]}
-    if sorted(by_id) != ["changepoint", "detective", "threshold"]:
+    by_id = {m["id"]: m for m in sd["methods"]} if sd else {}
+    if sd is None:          # rules.yaml season_detection.no_dense_years: no year had enough clear images to compare
+        pass
+    elif sorted(by_id) != ["changepoint", "detective", "threshold"]:
         errors.append("method/season_detection/methods: needs threshold, changepoint and detective once each")
     else:
         for m in sd["methods"]:
@@ -216,13 +218,15 @@ def words_problems(doc):
 
 # The four features of the farmer's question (2026-11-14): site/data/<kind>/<field>.json, each with its own schema.
 FEATURES = {"labels": "labels_schema.json", "replay": "replay_schema.json", "pulse": "pulse_schema.json",
-            "checkup": "checkup_schema.json"}
+            "checkup": "checkup_schema.json", "simple": "simple_schema.json",
+            "rainrisk": "rainrisk_schema.json", "fertiliser": "fertiliser_schema.json", "heatclock": "heatclock_schema.json"}
 LABEL_IDS = ("rain_months", "rain_month_words", "heat_month_words", "frost_month_words", "soil_month_words", "cover_months",
              "season_dates", "rotation_guess", "flood_years", "drought_years", "harvest_years", "plan_cover_gap_beats_current",
              "plan_safest_beats_current", "monsoon_start", "groundwater", "part_soil_water", "probe_water", "outlook_2040",
              "plan_scores", "bare_days", "plan_harvest", "plan_water", "plan_cover", "plan_soil_kept", "replay_year",
              "part_wetness", "part_sure", "part_status", "pulse_hls", "pulse_modis", "nearby_fields", "replay_window",
-             "checkup_rain")       # the scorecard's 19 rows and the ids the brief asks for at least
+             "checkup_rain",       # the scorecard's 19 rows and the ids the brief asks for at least
+             "rainrisk_harvest", "fertiliser_saver", "heatclock_today", "heatclock_2040")   # build_risks.py, 2026-11-14
 
 
 def _labels_errors(doc, field_doc, labels_doc):
@@ -299,13 +303,127 @@ def _checkup_errors(doc, field_doc, labels_doc):
     return errors
 
 
+def _simple_errors(doc, field_doc, labels_doc):
+    """The farmer cards: the faces add up to 10 and the counts to the winters, for every answer."""
+    errors = []
+    for crop, c in doc["replay_card"].items():
+        for w, card in c.items():
+            if sum(card["per_ten"].values()) != 10:
+                errors.append(f"replay_card/{crop}/{w}: per_ten must add up to 10")
+            if sum(card["counts"].values()) != doc["winters"]:
+                errors.append(f"replay_card/{crop}/{w}: counts must add up to winters")
+    if set(doc["trial_card"]) != set(doc["replay_card"]) or doc["answers"]["default_winter"] not in doc["replay_card"]:
+        errors.append("answers, replay_card and trial_card must cover the same winter crops")
+    return errors
+
+
+def _risk_common(doc, label_ids):
+    """build_risks.py files (2026-11-14): their labels, and a Nepali line for every English Why? line."""
+    errors = [f"labels: {k} is missing" for k in label_ids if k not in doc["labels"]]
+    if len(doc["why"]["en"]) != len(doc["why"]["ne"]):
+        errors.append("why: one Nepali line per English line")
+    return errors
+
+
+def _plan_ids(field_doc):
+    return [p["id"] for p in field_doc["plans"]] + [o["id"] for o in (field_doc.get("current_options") or {}).get("options", [])]
+
+
+def _rainrisk_errors(doc, field_doc, labels_doc):
+    from pipeline.plans.risk import typical_worst
+    errors = _risk_common(doc, ["rainrisk_harvest"])
+    if len(doc["years"]) != doc["year_count"]:
+        errors.append("years: year_count of them")
+    if field_doc is not None:
+        if [p["id"] for p in doc["plans"]] != _plan_ids(field_doc):
+            errors.append(f"plans: must be the field file's plans and current options {_plan_ids(field_doc)}")
+        if doc["years"] != [y["year"] for y in field_doc["replay"]["current"]]:
+            errors.append("years: must be the replay's complete years")
+    for p in doc["plans"]:
+        for c in p["crops"]:
+            where = f"plans/{p['id']}/{c['crop']}"
+            if [y["year"] for y in c["years"]] != doc["years"]:
+                errors.append(f"{where}: one square per year, in order")
+            if c["count"] != sum(y["days"] > 0 for y in c["years"]):
+                errors.append(f"{where}: count does not count the years with a heavy-rain day")
+            if any(y["days"] and y["max_mm"] < doc["threshold_mm"] for y in c["years"]):
+                errors.append(f"{where}: a heavy-rain year's largest day is below the threshold")
+            counts = [c["count"]] + [v["count"] for v in c["other_versions"].values()]
+            if (c["count_low"], c["count_high"]) != (min(counts), max(counts)):
+                errors.append(f"{where}: count_low and count_high must be the lowest and highest count over the rain versions")
+            if any(v["count"] != len(v["heavy_years"]) or not set(v["heavy_years"]) <= set(doc["years"])
+                   for v in c["other_versions"].values()):
+                errors.append(f"{where}: other_versions counts must count their heavy_years")
+            if c["good_news"] != (c["count"] == 0):
+                errors.append(f"{where}: good_news exactly when count is 0")
+            d = c["dry_run"]          # rules.yaml rain_risk.dry_spells
+            if [y["year"] for y in d["years"]] != doc["years"] or (d["window"]["from"], d["window"]["to"]) != (c["sow"], c["end"]):
+                errors.append(f"{where}: dry_run needs one value per year, from the sowing day to the last day")
+            elif {k: d[k] for k in ("typical", "worst")} != typical_worst({y["year"]: y["days"] for y in d["years"]}):
+                errors.append(f"{where}: dry_run typical and worst must be the median (half up) and the three longest years")
+            typ = [d["typical"]] + [v["typical"] for v in d["other_versions"].values()]
+            if (d["typical_low"], d["typical_high"]) != (min(typ), max(typ)):
+                errors.append(f"{where}: dry_run typical_low and typical_high must span the four rain versions")
+    return errors
+
+
+def _fertiliser_errors(doc, field_doc, labels_doc):
+    errors = _risk_common(doc, ["fertiliser_saver"])
+    if field_doc is not None and not any(p["id"] == doc["plan"] for p in field_doc["plans"]):
+        errors.append(f"plan: the field file has no plan {doc['plan']}")
+    if doc["applies"]:
+        share, bag = doc["urea_n_share"], doc["bag_kg"]
+        for i in (0, 1):
+            u = doc["n_kg_ha"][i] / share
+            if (doc["urea_kg_ha"][i], doc["bags_ha"][i], doc["bags_ha_whole"][i]) != (round(u), round(u / bag, 1), round(u / bag)):
+                errors.append(f"urea_kg_ha / bags_ha [{i}]: not n_kg_ha / urea_n_share (and / bag_kg)")
+        if not doc["n_kg_ha"][0] <= doc["n_kg_ha"][1]:
+            errors.append("n_kg_ha: low first")
+        if field_doc is not None:
+            crops = [c["crop"] for p in field_doc["plans"] if p["id"] == doc["plan"] for c in p["crops"]]
+            if doc["legume"] not in crops or doc["next_crop"] not in crops:
+                errors.append(f"legume and next_crop must be crops of plan {doc['plan']}: {crops}")
+    return errors
+
+
+def _heatclock_errors(doc, field_doc, labels_doc):
+    errors = _risk_common(doc, ["heatclock_today", "heatclock_2040"])
+    if len(doc["years"]) != doc["year_count"]:
+        errors.append("years: year_count of them")
+    if d := _dupes([c["id"] for c in doc["checks"]]):
+        errors.append(f"checks: duplicate ids {d}")
+    known = set(_plan_ids(field_doc)) if field_doc is not None else None
+    for c in doc["checks"]:
+        t, where = c["today"], f"checks/{c['id']}"
+        if [y["year"] for y in t["years"]] != doc["years"]:
+            errors.append(f"{where}: one square per year, in order")
+        if t["years_with"] != sum(y["days"] > 0 for y in t["years"]) or t["good_news"] != (t["years_with"] == 0):
+            errors.append(f"{where}: years_with and good_news must follow the squares")
+        if abs(t["mean_days"] - sum(y["days"] for y in t["years"]) / len(t["years"])) > 0.006:
+            errors.append(f"{where}: mean_days is not the mean of the squares")
+        if known is not None and not set(c["plans"]) <= known:
+            errors.append(f"{where}: plans {sorted(set(c['plans']) - known)} are not in the field file")
+        f = c["future"]
+        if f is not None:
+            for s, v in f["scenarios"].items():
+                fut = [m["future"] for m in v["models"]]
+                if not (v["low"] == min(fut) <= v["median"] <= max(fut) == v["high"]) or len(fut) != f["models"]:
+                    errors.append(f"{where}/{s}: median, low and high must come from the models' own values")
+            if f["good_news"] != all(m["future"] < 1 for v in f["scenarios"].values() for m in v["models"]):
+                errors.append(f"{where}: future good_news exactly when every model is below 1 day a season")
+        if (c["stage"] in ("floret_formation", "flowering")) != all(k in c for k in ("sure", "conditions", "days_after_sowing")):
+            errors.append(f"{where}: the wheat-book rows, and only they, say 'estimate' and carry their conditions")
+    return errors
+
+
 def validate_feature(kind, doc, field_doc=None, labels_doc=None):
     """One feature file (FEATURES): its schema, then what a schema cannot say."""
     errors = _schema_errors(doc, FEATURES[kind])
     if errors:
         return errors
     return {"labels": _labels_errors, "replay": _replay_errors, "pulse": _pulse_errors,
-            "checkup": _checkup_errors}[kind](doc, field_doc, labels_doc)
+            "checkup": _checkup_errors, "simple": _simple_errors, "rainrisk": _rainrisk_errors,
+            "fertiliser": _fertiliser_errors, "heatclock": _heatclock_errors}[kind](doc, field_doc, labels_doc)
 
 
 def _inside(bbox, lon, lat):

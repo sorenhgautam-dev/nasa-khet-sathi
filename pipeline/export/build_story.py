@@ -1064,6 +1064,21 @@ def report_card(ctx):
                      ["हामी महिनाअनुसार जोखिम देखाउँछौं, सङ्ख्या होइन", "हाम्रा चिसा रात विमानस्थलभन्दा धेरै छन्",
                       "अभिलेख भएको तुषारो रात नै छुट्यो", "भक्तपुरका जाडोका रात अझ चिसा हुन्छन्"],
                      ["3.14", "4.1b", "4.1c", "3.11b"]))
+    # weather ahead (owner, 2026-11-14 evening): low while its dangers rest on the frost temperatures (the frost line above);
+    # the word was fixed after its checks were seen, so it takes the more cautious one (METHOD_NOTES 98)
+    wc = ctx.get("weather_ahead")
+    if wc:
+        k, fl = wc["rain_words"]["calendar_months"]["agree"], wc["floods"]
+        out.append(_line("weather_ahead", T("Weather ahead (each month)", "आउँदो मौसम (हरेक महिना)"), "low",
+                         [f"Rain words match DHM's normals: {k} of 12.",
+                          f"Big rain on {fl['hit']} of {fl['of']} flood dates.",
+                          "The dangers use our cold-night numbers.", "Those count too many cold nights.",
+                          "Past years only, not a forecast."],
+                         [f"वर्षाका शब्द DHM सँग मिल्छन्: १२ मध्ये {k}",
+                          f"बाढीका {fl['of']} मध्ये {fl['hit']} मितिमा ठूलो पानी",
+                          "खतराहरू हाम्रा चिसो रातका अङ्कमा आधारित छन्", "ती अङ्कले चिसो रात धेरै गन्छन्",
+                          "विगतका वर्ष मात्र, पूर्वानुमान होइन"],
+                         ["4.10", "3.14", "4.1c"]))
     # groundwater
     gw = ctx["groundwater"]
     s = fmt(abs(gw["trend_cm_per_year"]), 1)
@@ -1316,6 +1331,7 @@ def input_paths(field):
         "field_json": f"site/data/fields/{field}.json", "area_site": f"site/data/area/{field}.json",
         "words": "site/data/words.json", "field_config": f"config/fields/{field}.yaml",
         "bench": "data/checks/probe/bench.json", "scorecard": f"{k}/scorecard.json",
+        "weather_ahead": f"{k}/weather.json",
     }
 
 
@@ -1326,7 +1342,7 @@ def load_inputs(repo, field):
     out = {"field": field, "paths": paths}
     for key, rel in paths.items():
         p = repo / rel
-        if key in ("bench", "scorecard"):
+        if key in ("bench", "scorecard", "weather_ahead"):
             out[key] = json.loads(p.read_text()) if p.exists() else None
             continue
         if not p.exists():
@@ -1429,6 +1445,7 @@ def build_story(inp, generated):
         "shift_high": diary.get("shift_days_high"), "bench": inp["bench"],
         "n_models": len(fj["future"].get("models", [])), "plausible": inp["future"]["plausibility"]["all_inside"],
         "future_year": fj["future"]["years"][-1],
+        "weather_ahead": (inp.get("weather_ahead") or {}).get("checks"),
     }
     ys = yardsticks()
     order = [c["id"] for c in charts]

@@ -107,10 +107,14 @@ def usda_texture(sand_pct, silt_pct, clay_pct):
     return "clay"
 
 
-def rew_mm(texture, table_19):
-    """The midpoint of FAO-56 Table 19's REW range for the texture class (rules.yaml bare_soil.table_19_rew_mm)."""
+def rew_mm(texture, table_19, no_row=None):
+    """The midpoint of FAO-56 Table 19's REW range for the texture class (rules.yaml bare_soil.table_19_rew_mm); for a
+    class with no row, the midpoint of FAO-56's general range `no_row` (rules.yaml bare_soil.rew_no_row_mm, 5-12 mm)."""
     if texture not in table_19:
-        raise ValueError(f"FAO-56 Table 19 has no REW row for '{texture}': set REW for this field by hand")
+        if no_row is None:
+            raise ValueError(f"FAO-56 Table 19 has no REW row for '{texture}': set REW for this field by hand")
+        lo, hi = no_row
+        return (lo + hi) / 2.0
     lo, hi = table_19[texture]
     return (lo + hi) / 2.0
 
@@ -128,6 +132,10 @@ def bare_soil_setting(rules_bare, soil, method="rules"):
     sand, clay = float(top["sand_pct"]), float(top["clay_pct"])
     texture = usda_texture(sand, 100.0 - sand - clay, clay)
     ze = float(rules_bare["ze_m"])
-    return {"method": "fao56_surface_layer", "ze_m": ze, "tew_mm": float(tew_from_layers(soil, ze)),
-            "rew_mm": float(rew_mm(texture, rules_bare["table_19_rew_mm"])), "kc_max": float(rules_bare["kc_max"]),
-            "texture": texture, "top_layer_pct": {"sand": sand, "silt": round(100.0 - sand - clay, 1), "clay": clay}}
+    out = {"method": "fao56_surface_layer", "ze_m": ze, "tew_mm": float(tew_from_layers(soil, ze)),
+           "rew_mm": float(rew_mm(texture, rules_bare["table_19_rew_mm"], rules_bare.get("rew_no_row_mm"))),
+           "kc_max": float(rules_bare["kc_max"]),
+           "texture": texture, "top_layer_pct": {"sand": sand, "silt": round(100.0 - sand - clay, 1), "clay": clay}}
+    if texture not in rules_bare["table_19_rew_mm"]:     # only then, so a field with a Table 19 row is labelled as before
+        out["rew_from"] = "FAO-56 ch. 7 general range 5-12 mm (no Table 19 row for this texture; rules.yaml bare_soil.rew_no_row_mm)"
+    return out

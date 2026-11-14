@@ -188,7 +188,8 @@ def main(argv=None):
     ap.add_argument("--rain", choices=("both", "corrected", "uncorrected"), default="both")
     ap.add_argument("--only", nargs="+", choices=("ecostress", "hls", "faostat", "gldas"), default=["ecostress", "hls", "faostat", "gldas"])
     a = ap.parse_args(argv)
-    field, rules, lib = load_field(a.field), load_rules(), load_crops()
+    field, rules = load_field(a.field), load_rules()
+    lib = load_crops(field=field)        # the field's country profile (config/countries/)
     R = rules["validation_checks"]
     data = REPO / "data"
     clean, checks = data / "clean" / field["id"], data / "checks" / field["id"]

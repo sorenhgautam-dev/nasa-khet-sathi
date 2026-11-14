@@ -341,7 +341,7 @@
    "description": "Numbers for the site's method page (owner's go, 2026-11-13). Words come from pipeline/words at step 7.",
    "properties": {
     "season_detection": {
-     "type": "object",
+     "type": ["object", "null"],
      "additionalProperties": false,
      "required": [
       "chosen",
@@ -351,7 +351,7 @@
       "rule_methods_agree",
       "methods"
      ],
-     "description": "The three-way season-detection comparison (CLAUDE.md 'Field diary'; VALIDATION 3.15). No field-observed calendar exists, so scores show robustness to sparse data, not accuracy.",
+     "description": "The three-way season-detection comparison (CLAUDE.md 'Field diary'; VALIDATION 3.15). null: it could not run, no HLS year had enough clear images (rules.yaml season_detection.no_dense_years; owner's item 3, 2026-11-14). No field-observed calendar exists, so scores show robustness to sparse data, not accuracy.",
      "properties": {
       "chosen": {
        "enum": [
@@ -810,6 +810,433 @@
    },
    "description": "Blocks that are NOT computed yet (owner, 2026-11-13). They hold no numbers: sections are grey with null wetness and temp and sure 0; future is null. The site shows 'not ready yet' for each block named here. Absent or empty when everything is real."
   },
+  "weather": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "basis",
+   "years",
+   "block_starts_on_day",
+   "blocks",
+   "sources"
+  ],
+  "description": "Optional (owner, 2026-11-14 evening): Weather ahead, what usually happened on this field in each approximate Bikram Sambat month of its 24-year record, never a forecast (rules.yaml weather_ahead). Absent on fields outside Nepal.",
+  "properties": {
+   "basis": {
+    "type": "string",
+    "minLength": 1
+   },
+   "made_by": {
+    "type": "string"
+   },
+   "years": {
+    "type": "integer",
+    "minimum": 1
+   },
+   "block_starts_on_day": {
+    "type": "integer",
+    "minimum": 1,
+    "maximum": 28
+   },
+   "label": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "sure",
+     "scale"
+    ],
+    "properties": {
+     "sure": {
+      "const": "estimate"
+     },
+     "scale": {
+      "type": "string"
+     }
+    }
+   },
+   "blocks": {
+    "type": "array",
+    "minItems": 12,
+    "maxItems": 12,
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "key",
+      "from",
+      "to",
+      "years",
+      "usual",
+      "dry_run",
+      "dangers",
+      "none_seen"
+     ],
+     "properties": {
+      "key": {
+       "enum": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+       ],
+       "description": "The Gregorian month the block starts in (words.json months: 'Nov' = Mangsir, about 15 Nov to 14 Dec)."
+      },
+      "from": {
+       "$ref": "#/$defs/mmdd"
+      },
+      "to": {
+       "$ref": "#/$defs/mmdd"
+      },
+      "years": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 2,
+       "items": {
+        "type": "integer",
+        "minimum": 1900,
+        "maximum": 2100
+       }
+      },
+      "usual": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "rain",
+        "temp",
+        "frost",
+        "rain_mm",
+        "tmax_c",
+        "tmin_c"
+       ],
+       "properties": {
+        "rain": {
+         "enum": [
+          "dry",
+          "some_rain",
+          "wet"
+         ]
+        },
+        "temp": {
+         "enum": [
+          "cold",
+          "mild",
+          "warm"
+         ]
+        },
+        "frost": {
+         "enum": [
+          "none",
+          "risk",
+          "high"
+         ]
+        },
+        "rain_mm": {
+         "type": "object",
+         "additionalProperties": false,
+         "required": [
+          "median",
+          "low",
+          "high",
+          "versions"
+         ],
+         "properties": {
+          "median": {
+           "type": "number"
+          },
+          "low": {
+           "type": "number"
+          },
+          "high": {
+           "type": "number"
+          },
+          "versions": {
+           "type": "object",
+           "additionalProperties": {
+            "type": "number"
+           }
+          }
+         }
+        },
+        "tmax_c": {
+         "type": "number"
+        },
+        "tmin_c": {
+         "type": "number"
+        }
+       }
+      },
+      "dry_run": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "typical",
+        "worst"
+       ],
+       "properties": {
+        "typical": {
+         "type": "integer",
+         "minimum": 0
+        },
+        "worst": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+           "year",
+           "days"
+          ],
+          "properties": {
+           "year": {
+            "type": "integer",
+            "minimum": 1900,
+            "maximum": 2100
+           },
+           "days": {
+            "type": "integer",
+            "minimum": 0
+           }
+          }
+         }
+        }
+       }
+      },
+      "dangers": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "check",
+         "kind",
+         "crop",
+         "sow",
+         "window",
+         "years",
+         "of",
+         "often",
+         "hit_years",
+         "change",
+         "change_basis",
+         "tip"
+        ],
+        "properties": {
+         "check": {
+          "enum": [
+           "potato_cold",
+           "potato_heat",
+           "wheat_flower_frost",
+           "wheat_floret_heat",
+           "wheat_grain_heat",
+           "dry_spell",
+           "big_rain_sowing",
+           "big_rain_harvest"
+          ]
+         },
+         "kind": {
+          "enum": [
+           "cold",
+           "heat",
+           "dry_spell",
+           "big_rain"
+          ]
+         },
+         "crop": {
+          "type": "string",
+          "minLength": 1
+         },
+         "sow": {
+          "$ref": "#/$defs/mmdd"
+         },
+         "window": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+           "$ref": "#/$defs/mmdd"
+          }
+         },
+         "years": {
+          "type": "integer",
+          "minimum": 1
+         },
+         "of": {
+          "type": "integer",
+          "minimum": 1
+         },
+         "often": {
+          "enum": [
+           "most",
+           "some"
+          ]
+         },
+         "hit_years": {
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 1900,
+           "maximum": 2100
+          }
+         },
+         "change": {
+          "enum": [
+           "more_common",
+           "about_same",
+           "less_common",
+           "cant_tell"
+          ]
+         },
+         "change_basis": {
+          "type": "string"
+         },
+         "tip": {
+          "enum": [
+           "cold",
+           "heat",
+           "dry_spell",
+           "big_rain"
+          ]
+         }
+        }
+       },
+       "description": "Ranked: most years first (rules.yaml weather_ahead.rank). The watered list is this one without kind dry_spell."
+      },
+      "none_seen": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "check",
+         "kind",
+         "crop",
+         "sow",
+         "years",
+         "of"
+        ],
+        "properties": {
+         "check": {
+          "enum": [
+           "potato_cold",
+           "potato_heat",
+           "wheat_flower_frost",
+           "wheat_floret_heat",
+           "wheat_grain_heat",
+           "dry_spell",
+           "big_rain_sowing",
+           "big_rain_harvest"
+          ]
+         },
+         "kind": {
+          "enum": [
+           "cold",
+           "heat",
+           "dry_spell",
+           "big_rain"
+          ]
+         },
+         "crop": {
+          "type": "string"
+         },
+         "sow": {
+          "$ref": "#/$defs/mmdd"
+         },
+         "years": {
+          "const": 0
+         },
+         "of": {
+          "type": "integer",
+          "minimum": 1
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "windows": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "check",
+      "crop",
+      "sow",
+      "window"
+     ],
+     "properties": {
+      "check": {
+       "enum": [
+        "potato_cold",
+        "potato_heat",
+        "wheat_flower_frost",
+        "wheat_floret_heat",
+        "wheat_grain_heat",
+        "dry_spell",
+        "big_rain_sowing",
+        "big_rain_harvest"
+       ]
+      },
+      "crop": {
+       "type": "string"
+      },
+      "sow": {
+       "$ref": "#/$defs/mmdd"
+      },
+      "window": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 2,
+       "items": {
+        "$ref": "#/$defs/mmdd"
+       }
+      }
+     }
+    }
+   },
+   "caveats": {
+    "type": "object",
+    "additionalProperties": {
+     "type": "string"
+    }
+   },
+   "limits": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "name",
+      "says"
+     ],
+     "properties": {
+      "name": {
+       "type": "string"
+      },
+      "says": {
+       "type": "string"
+      }
+     }
+    }
+   },
+   "sources": {
+    "type": "array",
+    "minItems": 1,
+    "items": {
+     "$ref": "#/$defs/source"
+    }
+   }
+  }
+ },
   "current_options": {
    "type": "object",
    "additionalProperties": false,

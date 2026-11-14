@@ -64,7 +64,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--field", default="demo")
     a = ap.parse_args(argv)
-    field, rules, lib = load_field(a.field), load_rules(), load_crops()
+    field, rules = load_field(a.field), load_rules()
+    lib = load_crops(field=field)        # the field's country profile (config/countries/)
     K = rules["probe"]["kalman"]
     clean, checks = REPO / "data" / "clean" / field["id"], REPO / "data" / "checks" / field["id"]
     now_path = clean / "weather_now.parquet"

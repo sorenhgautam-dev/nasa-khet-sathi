@@ -190,6 +190,27 @@ check runs per field: in Madagascar it found no change and kept NASA's rain as p
 probe design; drafts in five more languages. *Not yet:* no field outside Nepal is on the site; the translations are
 unreviewed; the crop calendars are Nepal's.
 
+## Global, usable everywhere
+
+**Built and verified in Nepal; any organisation can set it up for any field on Earth with one command; better wherever
+a country adds its profile. Next step: a hosted service for instant check-ups.**
+
+**Global core, local plug-ins.** The twin, the plans and the site are the same everywhere. What is country-specific
+lives in one profile file per country, each setting with its source: rain classes, dry day and dry spell, drought
+seasons, rain gauges, crop-calendar zone, calendar, language, area units and fertiliser notes. Nepal's profile is the
+first. A country with no profile gets sourced global defaults: ETCCDI's dry day (under 1 mm) and rain indices, NOAA's
+GHCN-Daily and GPCC rain gauges, the FAO Crop Calendar for its zone, Gregorian months and hectares.
+
+**One command.** `scripts/make_site.py` takes a point, a size, a name and a country. It writes the field's settings
+(anything unknown is left as a question, never guessed), downloads the public data, runs every step and writes a folder
+of plain files to host free on GitHub Pages, Vercel or Netlify. It needs a free NASA Earthdata login. A new field takes
+about 3 to 4 hours, nearly all of it downloads (`docs/DEPLOY_ANYWHERE.md`).
+
+**A field on another continent.** A placeholder field in Madagascar's central highlands was built with the kit on the
+global defaults: its own rain check (no gauge change found, so NASA's rain is used as published), its own FAO crop
+calendar (rainy-season rice, then dry-season potato), and labels that say "not yet verifiable" wherever no local check
+exists. It never borrows Nepal's checks.
+
 ## How farmers would get this
 
 A phone link, Nepali first: no app, no account [I2], best used with a helper, an extension worker or co-operative
@@ -210,3 +231,19 @@ Every plan says "try it on one small part first" [E2]. The tool supports the far
 See `docs/VIDEO_SCRIPT.md`; every number there is in `docs/PITCH_FACTS.md`. Do not say: any probe accuracy, any El Niño
 number, "works offline" (not yet), "2 of 2 floods" as a blind test, or a single "percent verified" (PITCH_FACTS
 section K).
+
+## Three small checks on the plans (added 14 November, evening)
+
+Behind the "How do we know?" buttons, three checks answer the farmer's question with past years and published limits,
+each with its two labels and a "Why?" that names the source:
+
+- **Rain at harvest.** In how many of the last 24 years did a day of heavy rain (50 mm or more, the Nepal weather
+  office's class) fall in each crop's harvest weeks? Rice: 8 of 24 (5 to 8 with our other rain records). The winter
+  crops: none [N1, N2].
+- **Heat and cold at key times.** Days above 34 °C while wheat grains fill and 35 °C or more for potato (FAO's limits):
+  none in 24 years, and still rare in 23 climate models around 2040. Cold nights of 1 °C or less in the potato season:
+  17 of 24 years, which our night temperatures likely overcount; most models show fewer by 2040 than in their own past
+  [N3-N5].
+- **Fertiliser saver.** Rice after lentil may need about 1 to 2 fewer bags of urea per hectare, from a published range
+  that is wide and uncertain; the plan says to ask the local agriculture office first, and mentions dhaincha in the NARC
+  booklet's own words [N6].

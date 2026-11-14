@@ -1,0 +1,39 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Khet Sathi farmer cards",
+ "description": "site/data/simple/<field>.json (owner, 2026-11-14 evening; rules.yaml simple_cards): what the three farmer cards say, per answer to the two questions. Built from the field's Replay and Field Pulse files only.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["field", "placeholder", "made_by", "window", "start", "winters", "answers", "replay_card", "trial_card", "plan_lines", "pulse_card", "label", "sources"],
+ "$defs": {
+  "three": {"type": "object", "additionalProperties": false, "required": ["better", "same", "worse"],
+            "properties": {"better": {"type": "integer", "minimum": 0}, "same": {"type": "integer", "minimum": 0}, "worse": {"type": "integer", "minimum": 0}}},
+  "card": {"type": "object", "additionalProperties": false, "required": ["plan", "crop", "counts", "per_ten", "verdict"],
+           "properties": {"plan": {"enum": ["cover_gap", "safest"]}, "crop": {"type": "string", "minLength": 1},
+                          "counts": {"$ref": "#/$defs/three"}, "per_ten": {"$ref": "#/$defs/three"},
+                          "verdict": {"enum": ["better", "same", "worse", "mixed"]}}}
+ },
+ "properties": {
+  "field": {"type": "string", "minLength": 1},
+  "placeholder": {"type": "boolean"},
+  "made_by": {"type": "string"},
+  "window": {"enum": ["m3", "m6"]},
+  "start": {"enum": ["dry", "medium", "wet"]},
+  "winters": {"type": "integer", "minimum": 1},
+  "answers": {"type": "object", "additionalProperties": false, "required": ["winter", "default_winter"],
+              "properties": {"winter": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "default_winter": {"type": "string"}}},
+  "replay_card": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": false, "required": ["water_no", "water_yes"],
+                   "properties": {"water_no": {"$ref": "#/$defs/card"}, "water_yes": {"$ref": "#/$defs/card"}}}},
+  "trial_card": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": false, "required": ["plan", "crop"],
+                  "properties": {"plan": {"enum": ["cover_gap", "safest"]}, "crop": {"type": "string"}}}},
+  "plan_lines": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": false,
+                  "required": ["crop", "counts", "per_ten"], "properties": {"crop": {"type": "string"}, "counts": {"$ref": "#/$defs/three"}, "per_ten": {"$ref": "#/$defs/three"}}}}},
+  "pulse_card": {"type": "object", "additionalProperties": false, "required": ["growing", "source"],
+                 "properties": {"growing": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["crop", "from", "to"],
+                                 "properties": {"crop": {"type": "string"}, "from": {"type": "string", "pattern": "^[01][0-9]-[0-3][0-9]$"},
+                                                "to": {"type": "string", "pattern": "^[01][0-9]-[0-3][0-9]$"}}}},
+                                "source": {"type": "string"}}},
+  "label": {"type": "object"},
+  "sources": {"type": "array"}
+ }
+}

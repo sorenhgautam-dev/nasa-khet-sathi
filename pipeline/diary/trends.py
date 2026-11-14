@@ -76,6 +76,12 @@ def _calendar_day(index):
 
 def hot_days(tmax, base_years, pct, window_days):
     """{year: days with Tmax above the calendar-day pct-th percentile of the base years, window centred}."""
+    hot = hot_day_flags(tmax, base_years, pct, window_days)
+    return {int(y): int(hot[tmax.index.year == y].sum()) for y in sorted(set(tmax.index.year))}
+
+
+def hot_day_flags(tmax, base_years, pct, window_days):
+    """Day by day: Tmax above the calendar-day pct-th percentile of the base years, window centred (TX90p's test)."""
     cday = _calendar_day(tmax.index)
     v = tmax.to_numpy(float)
     base = (tmax.index.year >= base_years[0]) & (tmax.index.year <= base_years[1])
@@ -86,5 +92,4 @@ def hot_days(tmax, base_years, pct, window_days):
         dist = np.minimum(dist, 366 - dist)
         sel = base & (dist <= half) & np.isfinite(v)
         thr[c] = np.percentile(v[sel], pct)
-    hot = v > thr[cday]
-    return {int(y): int(hot[tmax.index.year == y].sum()) for y in sorted(set(tmax.index.year))}
+    return v > thr[cday]

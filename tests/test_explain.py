@@ -117,3 +117,23 @@ def test_legume_option_is_the_legume_of_the_best_rice_plan_with_one():
     rows = [{"crops": ["rice", "lentil"], "stability": 75, "harvest": 80}, {"crops": ["maize", "lentil"], "stability": 90, "harvest": 90},
             {"crops": ["rice", "wheat"], "stability": 84, "harvest": 90}]
     assert ex.legume_option(rows, "rice", LIB) == "lentil" and ex.legume_option(rows[2:], "rice", LIB) is None
+
+
+# ---------- a field abroad (owner's item 3, 2026-11-14) ----------
+
+def test_the_field_profile_is_a_condition_for_country_specific_lines():
+    """A field's country profile is held as profile_<id> (NP for Nepal, default without one), so a line written from a
+    country's own source (e.g. NARC's dhaincha booklet) can be kept to that country's fields."""
+    assert "profile_NP" in ex.conditions(SAFE, CUR, {**CTX, "profile": "NP"}, LIB)
+    held = ex.conditions(SAFE, CUR, {**CTX, "profile": "default"}, LIB)
+    assert "profile_default" in held and "profile_NP" not in held
+    assert not any(c.startswith("profile_") for c in ex.conditions(SAFE, CUR, CTX, LIB))
+
+
+def test_a_third_plan_without_a_legume_keeps_decision_5s_name():
+    """rules.yaml plans.third_plan_name_no_legume: 'Feed your soil' names a third plan with a pulse crop (Nepal's rice then
+    lentil); a third plan with none (Madagascar's rice alone) keeps 'Safest in bad years'."""
+    names = {"current": "What you do now", "cover_gap": "Fill the empty months", "safest": "Feed your soil"}
+    assert ex.plan_name("safest", ["rice", "lentil"], LIB, names, "Safest in bad years") == "Feed your soil"
+    assert ex.plan_name("safest", ["rice"], LIB, names, "Safest in bad years") == "Safest in bad years"
+    assert ex.plan_name("cover_gap", ["rice", "wheat"], LIB, names, "Safest in bad years") == "Fill the empty months"

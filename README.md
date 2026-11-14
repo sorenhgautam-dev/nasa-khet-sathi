@@ -110,9 +110,8 @@ Every download writes a "data card" in `data/cards/<id>/`: the product, version,
 and pixels over the field. Every export must match `pipeline/export/schema.json`.
 
 *Today the export fills in the replay, the diary, the plans, the sources and the method page for the demo field.
-The field's small parts and the 2040 outlook come in build steps 8 and 9. For a brand-new field the last step
-does not work yet without changes to the code (it starts from an existing site file and writes the demo field's
-sources list): that is build step 11, see [REVIEW_2.md](REVIEW_2.md), H6.*
+The field's small parts and the 2040 outlook come in build steps 8 and 9. A brand-new field now builds from its config
+alone (REVIEW_2 H6), and `scripts/make_site.py` runs every step for it (see "Global, usable everywhere" below).*
 
 Optional checks, each with its own data card: `pipeline.fetch.chirps` and `pipeline.fetch.gpm_late` (a second and
 third look at the rain), `pipeline.fetch.gauge_evidence` (how many rain gauges stand behind GPM's rain),
@@ -120,6 +119,31 @@ third look at the rain), `pipeline.fetch.gauge_evidence` (how many rain gauges s
 (Nepal's own gauges, if you have their monthly bulletins; run alone), and the runner's `memory` step,
 `scripts/run_memory.py` (does a small learned correction beat the physics twin on years it has not seen? On the demo
 field it does not, and we say so).
+
+## Global, usable everywhere
+
+**Built and verified in Nepal; any organisation can set it up for any field on Earth with one command; better wherever
+a country adds its profile. Next step: a hosted service for instant check-ups.**
+
+- **Global core, local plug-ins.** The twin, the plans and the site are the same everywhere. What is country-specific
+  (rain classes, dry day and dry spell, drought seasons, rain gauges, crop-calendar zone, calendar, language, area units,
+  fertiliser notes) lives in one profile file per country, each setting with its value and its source:
+  `config/countries/NP.yaml` for Nepal. A field in a country with no profile takes the sourced global defaults,
+  `config/countries/default.yaml`: ETCCDI's dry day (under 1 mm) and rain indices, NOAA GHCN-Daily and GPCC rain gauges,
+  the FAO Crop Calendar for the field's country and zone, Gregorian months and hectares.
+- **One command** (`scripts/make_site.py`; how to, logins and hosting in [docs/DEPLOY_ANYWHERE.md](docs/DEPLOY_ANYWHERE.md)):
+
+  ```sh
+  .venv/bin/python scripts/make_site.py --lat -18.834 --lon 47.437 --size-m 60 --name "A field" \
+      --country Madagascar --country-code MG --aez 004 --rotation rice,potato --out ../my-site --dry-run
+  ```
+
+  It writes the field's settings (anything unknown is left as a TODO, never guessed), downloads the public data, runs
+  every step, and writes a folder of plain files to host free on GitHub Pages, Vercel or Netlify. It needs a free NASA
+  Earthdata login and the GES DISC data agreement. A new field takes about 3 to 4 hours, nearly all of it downloads.
+- **A field on another continent.** `config/fields/ambohidratrimo.yaml`, a PLACEHOLDER square in Madagascar's central
+  highlands, was built with the kit on the global defaults: its own rain check (no gauge break, so NASA's rain is used as
+  published), its own FAO crop calendar, and labels that say NOT YET VERIFIABLE where no local check exists.
 
 ## Next steps (after the deadline)
 

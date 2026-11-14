@@ -140,7 +140,8 @@ def main(argv=None):
     ap.add_argument("--no-build", action="store_true", help="use the existing nexgddp_daily.parquet")
     a = ap.parse_args(argv)
     t0 = time.time()
-    field, rules, lib = load_field(a.field), load_rules(), load_crops()
+    field, rules = load_field(a.field), load_rules()
+    lib = load_crops(field=field)        # the field's country profile (config/countries/)
     F = rules["future"]
     clean, cards, out_dir = (REPO / "data" / d / field["id"] for d in ("clean", "cards", "checks"))
     w = pd.read_parquet(clean / "weather.parquet")

@@ -62,7 +62,7 @@ def _vercel_json_problems(name, text):
              "text": f"sets {bad}: the site has no functions, no environment variables and no build step"}] if bad else []
 
 
-FEATURE_DIRS = ("replay", "pulse", "checkup", "labels")
+FEATURE_DIRS = ("replay", "pulse", "checkup", "labels", "simple", "rainrisk", "fertiliser", "heatclock")   # last three: build_risks.py
 
 
 def data_link_problems(name, doc):

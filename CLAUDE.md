@@ -658,12 +658,15 @@ used) before going public: deleting the file in a new commit is not enough.
 **The final commit, done by the owner** (start at least 30 minutes before the local deadline):
 1. Check `.gitignore` one last time.
 2. Commit everything and push to GitHub.
-3. Run `scripts/scan_history.py` (above), `python -m pipeline.export.validate --final` and
-   `scripts/check_site.py --final`, and read their reports. Only if all three are clean: push. **Vercel** publishes
+3. Run `.venv/bin/python scripts/final_check.py` (2026-11-14: one command for the version stamp, the full test suite,
+   `pipeline.export.validate --final`, `scripts/check_site.py --final`, the no-outside-requests check and
+   `scripts/scan_history.py`), and read its report; commit the version stamp it writes. Only if its RESULT line passes:
+   push. **Vercel** publishes
    `site/` from the repository on that push (owner, 2026-11-13: Root Directory `site/`, no build step, no functions, no
    environment variables; no GitHub Pages). In the Vercel project check once: Framework Preset "Other", Build Command
    and Install Command empty, no Environment Variables, and that the newest deployment is the Production one.
-4. Open the live address, **(address to be added when the owner sends it)**, on a phone that has never opened it, on mobile data and without
+4. Run `.venv/bin/python scripts/final_check.py --live https://<live address>` (the live files must match the pushed
+   ones byte for byte). Open the live address, **(address to be added when the owner sends it)**, on a phone that has never opened it, on mobile data and without
    being signed in to Vercel, and check that a prepared field loads.
 5. Paste the live link and repository link into the Space Apps project page and submit.
 

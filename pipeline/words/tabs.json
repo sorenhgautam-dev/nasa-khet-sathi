@@ -573,6 +573,66 @@
     "ne_review": "needs native-speaker review"
    },
    {
+    "id": "chk_dhaincha",
+    "when": [
+     "plan_is_safest"
+    ],
+    "en": "Ask about dhaincha, grown before rice.",
+    "ne": "धानअघि ढैंचा लगाउने बारे सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml fertiliser_saver.check_tab; notes/SOURCES_CHECK.md 3: B.H. Adhikary, 'Green-Manuring for Increased Crop Production', NARC Publication Serial No. 0042-2013/14, January 2014, PDF p.5, https://doad.lumbini.gov.np/media/publications/Green_Manuring_booklet.pdf (opened 2026-11-14): 'Dhaincha is a popular green-manuring crop for rice and it is reported that nitrogen gain by green manured Dhaincha is equivalent to 50-100 kg of fertilizer N (Lacsina et al., 1987).' No 'per hectare' in the booklet, so none is added"
+   },
+   {
+    "id": "chk_dhaincha_narc",
+    "when": [
+     "plan_is_safest"
+    ],
+    "en": "NARC: “a popular green-manuring crop for rice”.",
+    "ne": "नार्क: ‘धानका लागि लोकप्रिय हरियो मल बाली’ (अनुवाद)।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml fertiliser_saver.check_tab; notes/SOURCES_CHECK.md 3: B.H. Adhikary, 'Green-Manuring for Increased Crop Production', NARC Publication Serial No. 0042-2013/14, January 2014, PDF p.5, https://doad.lumbini.gov.np/media/publications/Green_Manuring_booklet.pdf (opened 2026-11-14): 'Dhaincha is a popular green-manuring crop for rice and it is reported that nitrogen gain by green manured Dhaincha is equivalent to 50-100 kg of fertilizer N (Lacsina et al., 1987).' No 'per hectare' in the booklet, so none is added"
+   },
+   {
+    "id": "chk_dhaincha_gain",
+    "when": [
+     "plan_is_safest"
+    ],
+    "en": "Gain: “equivalent to 50-100 kg of fertilizer N”.",
+    "ne": "लाभ: ‘५०–१०० किलो रासायनिक मलको N बराबर’ (अनुवाद)।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml fertiliser_saver.check_tab; notes/SOURCES_CHECK.md 3: B.H. Adhikary, 'Green-Manuring for Increased Crop Production', NARC Publication Serial No. 0042-2013/14, January 2014, PDF p.5, https://doad.lumbini.gov.np/media/publications/Green_Manuring_booklet.pdf (opened 2026-11-14): 'Dhaincha is a popular green-manuring crop for rice and it is reported that nitrogen gain by green manured Dhaincha is equivalent to 50-100 kg of fertilizer N (Lacsina et al., 1987).' No 'per hectare' in the booklet, so none is added"
+   },
+   {
+    "id": "chk_dhaincha_cite",
+    "when": [
+     "plan_is_safest"
+    ],
+    "en": "The booklet cites Lacsina and others, 1987.",
+    "ne": "पुस्तिकाले लाक्सिना र अरू (१९८७) लाई उद्धृत गर्छ।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml fertiliser_saver.check_tab; notes/SOURCES_CHECK.md 3: B.H. Adhikary, 'Green-Manuring for Increased Crop Production', NARC Publication Serial No. 0042-2013/14, January 2014, PDF p.5, https://doad.lumbini.gov.np/media/publications/Green_Manuring_booklet.pdf (opened 2026-11-14): 'Dhaincha is a popular green-manuring crop for rice and it is reported that nitrogen gain by green manured Dhaincha is equivalent to 50-100 kg of fertilizer N (Lacsina et al., 1987).' No 'per hectare' in the booklet, so none is added"
+   },
+   {
+    "id": "chk_dhaincha_where",
+    "when": [
+     "plan_is_safest"
+    ],
+    "en": "Booklet: Adhikary, NARC 2014, Lumbini agriculture website.",
+    "ne": "पुस्तिका: अधिकारी, नार्क २०१४, लुम्बिनी कृषि वेबसाइट।",
+    "ne_review": "needs native-speaker review",
+    "basis": "rules.yaml fertiliser_saver.check_tab; notes/SOURCES_CHECK.md 3: B.H. Adhikary, 'Green-Manuring for Increased Crop Production', NARC Publication Serial No. 0042-2013/14, January 2014, PDF p.5, https://doad.lumbini.gov.np/media/publications/Green_Manuring_booklet.pdf (opened 2026-11-14): 'Dhaincha is a popular green-manuring crop for rice and it is reported that nitrogen gain by green manured Dhaincha is equivalent to 50-100 kg of fertilizer N (Lacsina et al., 1987).' No 'per hectare' in the booklet, so none is added"
+   },
+   {
+    "id": "chk_dhaincha_fit",
+    "when": [
+     "plan_is_safest"
+    ],
+    "en": "Ask your agriculture office if it fits.",
+    "ne": "यो यहाँ मिल्छ कि, कृषि कार्यालयलाई सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "basis": "Owner's brief, 2026-11-14: 'Then: ask the local agriculture office whether it fits. No claim that it fits.'"
+   },
+   {
     "id": "chk_option",
     "when": [
      "legume_option"

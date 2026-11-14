@@ -27,10 +27,37 @@
     });
     var root = h('div', { class: 'how' });
     var toc = h('nav', { class: 'prio', 'aria-label': T('btn.how_we_know') });
-    root.append(h('div', { class: 'row wrap' }, K.isPlaceholder(F.field.name) ? K.sampleChip() : null, h('span', { class: 'small' }, F.field.name)), toc);
+    root.append(h('div', { class: 'row wrap' }, K.isPlaceholder(F.field.name) ? K.sampleChip() : null, h('span', { class: 'small' }, F.field.name)),
+      // first, the four steps of how each plan is tested (the field twin explained; owner, 2026-11-14 evening)
+      K.btn2(T('twin.h1'), function () { K.go('twin'); }, 'pc'), toc);
     var storyBox = h('div', { style: 'display:flex;flex-direction:column;gap:16px' });
     var areaBox = h('div'), nr = h('div');
-    var mine = [replay(F), future(F), method(F), areaBox, helped(), section('sources', T('your_plan.sources_title'), [K.sourcesList(F), version,
+    // for judges: everything that is not on the farmer's seven screens (owner, 2026-11-14 evening), each from its own file
+    var judges = h('div', { style: 'display:flex;flex-direction:column;gap:16px' });
+    var J = [['fields', T('home.prepared_title'), null], ['compare', T('last_years.cmp_title'), 'simple'], ['squares', T('last_years.replay_name', { year_count: (K.effPlans(F)[0].replay || []).length }), 'replay'],
+      ['checkup', T('your_plan.check_name'), 'checkup'], ['rainrisk', T('last_years.rr_title'), 'rainrisk'], ['heatclock', T('last_years.hc_title'), 'heatclock'],
+      ['fertiliser', T('what_to_grow.fs_title'), 'fertiliser'], ['twin', T('each_part.twin_title'), null], ['pulse', T('from_space.pulse_name'), 'pulse'], ['labels', T('your_plan.lab_title'), null]];
+    var BUILD = { compare: 'verdicts', squares: 'replay', checkup: 'checkup', rainrisk: 'rainRisk', heatclock: 'heatClock', fertiliser: 'fertiliser', pulse: 'pulse' };
+    K.features().then(function () {
+      J.forEach(function (j) {
+        var sec = section(j[0], j[1], loadingEl()); judges.append(sec);
+        var body = sec.lastChild;
+        function put(el) { body.replaceWith(el || K.notReady()); }
+        if (j[0] === 'fields') { put(fieldsList()); return; }
+        if (j[0] === 'twin') { put(K.feat.twinParts(F)); return; }
+        if (j[0] === 'labels') { put(K.feat.labelsList()); return; }
+        K.featData(j[2]).then(function (d) { put(d ? K.feat[BUILD[j[0]]](F, d) : null); });
+      });
+    });
+    function loadingEl() { return h('div', null, K.loading()); }
+    function fieldsList() {
+      var ix = (S.index && S.index.fields) || [];
+      return h('div', { class: 'prepared', style: 'display:flex;flex-direction:column;gap:8px' }, ix.map(function (f) {
+        return h('button', { type: 'button', class: 'pf', 'aria-pressed': String(f.id === S.fid), onclick: function () { K.chooseField(f.id); K.go('photo'); } },
+          h('span', null, h('b', null, f.name), h('br'), h('span', { class: 'small' }, f.country)), f.id === S.fid ? K.svg(K.I('tick', 18, 2.6)) : K.svg(K.I('arrow', 18)));
+      }));
+    }
+    var mine = [judges, replay(F), future(F), method(F), areaBox, helped(), section('sources', T('your_plan.sources_title'), [K.sourcesList(F), version,
       // the acknowledgement NASA GIBS asks for, beside the map pictures (NASA HLS, NASA Blue Marble); kept in its own words
       h('p', { class: 'small', lang: 'en' }, 'We acknowledge the use of imagery provided by services from NASA\u2019s Global Imagery Browse Services (GIBS), part of NASA\u2019s Earth Science Data and Information System (ESDIS).')]), glossary(), nr];
     root.append(storyBox);
@@ -43,6 +70,7 @@
         story(F, st).forEach(function (x) { storyBox.append(x.el); addToc(x.id, x.title); });
         hasArea = (st.charts || []).some(function (c) { return c.kind === 'map' && c.link; });
       }
+      J.forEach(function (j) { addToc(j[0], j[1]); });
       [['replay', L(K.scr('last_years').title, { year_count: (K.effPlans(F)[0].replay || []).length })], ['future', T('your_plan.future_title')], ['method', T('your_plan.method_title')],
         ['sources', T('your_plan.sources_title')], ['notready', T('your_plan.not_ready_title')]].forEach(function (x) { addToc(x[0], x[1]); });
       if (!hasArea) K.getJSON('data/area/' + encodeURIComponent(S.fid) + '.json').then(function (a) { if (a && areaBox.isConnected) areaBox.append(section('area', T('your_plan.area_title'), area(F, a))); });

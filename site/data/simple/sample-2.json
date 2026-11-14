@@ -1,0 +1,199 @@
+{
+ "field": "sample-2",
+ "placeholder": true,
+ "made_by": "pipeline/export/build_simple.py (rules.yaml simple_cards)",
+ "window": "m6",
+ "start": "medium",
+ "winters": 24,
+ "answers": {
+  "winter": [
+   "potato",
+   "wheat"
+  ],
+  "default_winter": "potato"
+ },
+ "replay_card": {
+  "potato": {
+   "water_no": {
+    "plan": "cover_gap",
+    "crop": "wheat",
+    "counts": {
+     "better": 24,
+     "same": 0,
+     "worse": 0
+    },
+    "per_ten": {
+     "better": 10,
+     "same": 0,
+     "worse": 0
+    },
+    "verdict": "better"
+   },
+   "water_yes": {
+    "plan": "cover_gap",
+    "crop": "wheat",
+    "counts": {
+     "better": 0,
+     "same": 24,
+     "worse": 0
+    },
+    "per_ten": {
+     "better": 0,
+     "same": 10,
+     "worse": 0
+    },
+    "verdict": "same"
+   }
+  },
+  "wheat": {
+   "water_no": {
+    "plan": "safest",
+    "crop": "lentil",
+    "counts": {
+     "better": 0,
+     "same": 19,
+     "worse": 5
+    },
+    "per_ten": {
+     "better": 0,
+     "same": 8,
+     "worse": 2
+    },
+    "verdict": "same"
+   },
+   "water_yes": {
+    "plan": "safest",
+    "crop": "lentil",
+    "counts": {
+     "better": 0,
+     "same": 24,
+     "worse": 0
+    },
+    "per_ten": {
+     "better": 0,
+     "same": 10,
+     "worse": 0
+    },
+    "verdict": "same"
+   }
+  }
+ },
+ "trial_card": {
+  "potato": {
+   "plan": "cover_gap",
+   "crop": "wheat"
+  },
+  "wheat": {
+   "plan": "safest",
+   "crop": "lentil"
+  }
+ },
+ "plan_lines": {
+  "potato": {
+   "cover_gap": {
+    "crop": "wheat",
+    "counts": {
+     "better": 24,
+     "same": 0,
+     "worse": 0
+    },
+    "per_ten": {
+     "better": 10,
+     "same": 0,
+     "worse": 0
+    }
+   },
+   "safest": {
+    "crop": "lentil",
+    "counts": {
+     "better": 5,
+     "same": 19,
+     "worse": 0
+    },
+    "per_ten": {
+     "better": 2,
+     "same": 8,
+     "worse": 0
+    }
+   }
+  },
+  "wheat": {
+   "safest": {
+    "crop": "lentil",
+    "counts": {
+     "better": 0,
+     "same": 19,
+     "worse": 5
+    },
+    "per_ten": {
+     "better": 0,
+     "same": 8,
+     "worse": 2
+    }
+   }
+  }
+ },
+ "pulse_card": {
+  "growing": [
+   {
+    "crop": "rice",
+    "from": "05-25",
+    "to": "10-26"
+   },
+   {
+    "crop": "wheat",
+    "from": "11-22",
+    "to": "05-03"
+   }
+  ],
+  "source": "the satellite's typical crop months (site/data/pulse/<field>.json typical; HLS 30 m)"
+ },
+ "label": {
+  "sure": "estimate",
+  "scale": "valley"
+ },
+ "sources": [
+  {
+   "name": "GPM IMERG",
+   "product": "V07 Final daily (Late for Oct-Dec 2025); days from 2017 scaled back, month by month, to its own 2001-2016 level (the rain gauges behind it stopped reporting here)",
+   "resolution": "0.1 deg (about 10 km)",
+   "years": "2001-2025",
+   "type": "satellite"
+  },
+  {
+   "name": "NASA POWER",
+   "product": "Daily API v2.10.3 (MERRA-2 weather, CERES sunshine); temperatures corrected to Kathmandu Airport",
+   "resolution": "0.5 x 0.625 deg (about 55 km)",
+   "years": "2001-2025",
+   "type": "model"
+  },
+  {
+   "name": "Kathmandu Airport station",
+   "product": "NOAA GHCN-Daily NP000444540 (temperature correction, checks)",
+   "resolution": "one point, 11 km north-west",
+   "years": "2001-2025",
+   "type": "station"
+  },
+  {
+   "name": "ISRIC SoilGrids",
+   "product": "2.0: water the soil holds at field capacity and wilting point (machine-learning map). Water it holds for plants in the top 1 m: 167 mm; the 125 cells within 2 km of the field hold 145 to 180 mm",
+   "resolution": "250 m",
+   "years": "one map",
+   "type": "model"
+  },
+  {
+   "name": "Khet Sathi field twin",
+   "product": "FAO-56 soil water, FAO-33 harvest, from the data above",
+   "resolution": "the field",
+   "years": "2001-2025",
+   "type": "model"
+  },
+  {
+   "name": "NOAA CPC Oceanic Nino Index (ONI)",
+   "product": "ERSST.v5 sea-surface temperature anomalies, 3-month means; El Nino / La Nina highlight only",
+   "resolution": "Nino-3.4 region of the Pacific",
+   "years": "1950-2026",
+   "type": "model"
+  }
+ ]
+}

@@ -2303,6 +2303,738 @@
   "screens.last_years.texts.calendar_note": {
    "en": "Dates follow the usual crop calendar, not yours.",
    "hi": "तारीख़ें आम फ़सल कैलेंडर से हैं, आपकी नहीं।"
+  },
+  "screens.last_years.texts.rr_title": {
+   "en": "Rain at harvest",
+   "hi": "कटाई के समय बारिश"
+  },
+  "screens.last_years.texts.rr_lead": {
+   "en": "How often heavy rain fell near harvest.",
+   "hi": "कटाई के पास कितनी बार भारी बारिश हुई।"
+  },
+  "screens.last_years.texts.rr_weeks": {
+   "en": "Harvest weeks:",
+   "hi": "कटाई के हफ़्ते:"
+  },
+  "screens.last_years.texts.rr_count": {
+   "en": "Heavy rain at harvest: {risk_years} of {year_count} years.",
+   "hi": "कटाई पर भारी बारिश: {year_count} में {risk_years} साल।"
+  },
+  "screens.last_years.texts.risk_none": {
+   "en": "None in these years. Good news.",
+   "hi": "इन सालों में एक बार भी नहीं। अच्छी खबर।"
+  },
+  "screens.last_years.texts.rr_sq_heavy": {
+   "en": "Heavy rain",
+   "hi": "भारी बारिश"
+  },
+  "screens.last_years.texts.rr_sq_none": {
+   "en": "No heavy rain",
+   "hi": "भारी बारिश नहीं"
+  },
+  "screens.last_years.texts.rr_tap": {
+   "en": "Tap a year to see more.",
+   "hi": "और देखने के लिए साल दबाएँ।"
+  },
+  "screens.last_years.texts.rr_days": {
+   "en": "Heavy rain days:",
+   "hi": "भारी बारिश के दिन:"
+  },
+  "screens.last_years.texts.rr_records_differ": {
+   "en": "Other rain records disagree on this year.",
+   "hi": "दूसरे बारिश रिकॉर्ड इस साल अलग हैं।"
+  },
+  "screens.last_years.texts.rr_range": {
+   "en": "Other rain records: {risk_low} to {risk_high} years.",
+   "hi": "दूसरे बारिश रिकॉर्ड: {risk_low} से {risk_high} साल।"
+  },
+  "screens.last_years.texts.rr_dry_usual": {
+   "en": "Longest dry run after sowing: usually {dry_run_days} days.",
+   "hi": "बुआई बाद सबसे लंबा सूखा: अक्सर {dry_run_days} दिन।"
+  },
+  "screens.last_years.texts.rr_dry_worst": {
+   "en": "Worst years:",
+   "hi": "सबसे बुरे साल:"
+  },
+  "screens.last_years.texts.rr_dry_run": {
+   "en": "{dry_run_days} dry days in a row",
+   "hi": "लगातार {dry_run_days} सूखे दिन"
+  },
+  "screens.last_years.texts.rr_past_only": {
+   "en": "Past years only, not a forecast.",
+   "hi": "सिर्फ़ पिछले साल, भविष्यवाणी नहीं।"
+  },
+  "screens.last_years.texts.hc_title": {
+   "en": "Heat and cold",
+   "hi": "गर्मी और ठंड"
+  },
+  "screens.last_years.texts.hc_lead": {
+   "en": "Too hot or too cold, at key times.",
+   "hi": "ज़रूरी समय पर बहुत गर्मी या ठंड।"
+  },
+  "screens.last_years.texts.hc_wheat_heat": {
+   "en": "Too hot while wheat grains fill?",
+   "hi": "गेहूँ के दाने भरते समय बहुत गर्मी?"
+  },
+  "screens.last_years.texts.hc_potato_heat": {
+   "en": "Too hot for potato?",
+   "hi": "आलू के लिए बहुत गर्मी?"
+  },
+  "screens.last_years.texts.hc_potato_cold": {
+   "en": "Too cold for potato?",
+   "hi": "आलू के लिए बहुत ठंड?"
+  },
+  "screens.last_years.texts.hc_wheat_floret_formation_heat": {
+   "en": "Too hot while wheat flowers form?",
+   "hi": "गेहूँ के फूल बनते समय बहुत गर्मी?"
+  },
+  "screens.last_years.texts.hc_wheat_flowering_cold": {
+   "en": "Frost while wheat flowers?",
+   "hi": "गेहूँ फूलते समय पाला?"
+  },
+  "screens.last_years.texts.hc_book": {
+   "en": "From FAO's wheat book. An estimate.",
+   "hi": "FAO की गेहूँ किताब से। एक अनुमान।"
+  },
+  "screens.last_years.texts.hc_frost_caveat": {
+   "en": "Real frost nights may be more or fewer.",
+   "hi": "पाला ज़्यादा या कम हो सकता है।"
+  },
+  "screens.last_years.texts.hc_weeks": {
+   "en": "Weeks counted:",
+   "hi": "गिने गए हफ़्ते:"
+  },
+  "screens.last_years.texts.hc_years": {
+   "en": "Days like this: {risk_years} of {year_count} years.",
+   "hi": "ऐसे दिन: {year_count} में से {risk_years} साल।"
+  },
+  "screens.last_years.texts.hc_cold_caveat": {
+   "en": "Our cold nights may be too many.",
+   "hi": "हमारी ठंडी रातें शायद ज़्यादा गिनी गईं।"
+  },
+  "screens.last_years.texts.hc_2040": {
+   "en": "Around 2040",
+   "hi": "2040 के आसपास"
+  },
+  "screens.last_years.texts.hc_less": {
+   "en": "If the world warms less:",
+   "hi": "अगर दुनिया कम गर्म हो:"
+  },
+  "screens.last_years.texts.hc_more": {
+   "en": "If the world warms more:",
+   "hi": "अगर दुनिया ज़्यादा गर्म हो:"
+  },
+  "screens.last_years.texts.hc_per_season": {
+   "en": "About {per_season} days each season.",
+   "hi": "हर मौसम लगभग {per_season} दिन।"
+  },
+  "screens.last_years.texts.hc_their_past": {
+   "en": "Same computer guesses, past years:",
+   "hi": "वही कंप्यूटर अनुमान, पिछले साल:"
+  },
+  "screens.last_years.texts.hc_spread": {
+   "en": "Lowest to highest guess:",
+   "hi": "सबसे कम से सबसे ज़्यादा अनुमान:"
+  },
+  "screens.last_years.texts.hc_rare_2040": {
+   "en": "Still rare around 2040. Good news.",
+   "hi": "2040 के आसपास भी कम। अच्छी खबर।"
+  },
+  "screens.last_years.texts.hc_left_out": {
+   "en": "Rice and lentil: no checked limits yet.",
+   "hi": "धान और मसूर: अभी जाँची सीमा नहीं।"
+  },
+  "screens.last_years.texts.why_btn": {
+   "en": "Why?",
+   "hi": "क्यों?"
+  },
+  "screens.last_years.texts.why_title": {
+   "en": "Why we say this",
+   "hi": "हम ऐसा क्यों कहते हैं"
+  },
+  "screens.last_years.texts.why_sources": {
+   "en": "Where this comes from:",
+   "hi": "यह कहाँ से आया:"
+  },
+  "screens.what_to_grow.texts.fs_title": {
+   "en": "Fertiliser saver",
+   "hi": "खाद की बचत"
+  },
+  "screens.what_to_grow.texts.fs_lead": {
+   "en": "{next_crop} after {legume_crop} may need less urea.",
+   "hi": "{legume_crop} के बाद {next_crop}: शायद कम यूरिया।"
+  },
+  "screens.what_to_grow.texts.fs_saved": {
+   "en": "Maybe {bags_low} to {bags_high} fewer urea bags.",
+   "hi": "शायद {bags_low} से {bags_high} बोरी कम यूरिया।"
+  },
+  "screens.what_to_grow.texts.fs_plot": {
+   "en": "Counted for one big plot of land.",
+   "hi": "एक बड़े खेत के लिए गिना गया।"
+  },
+  "screens.what_to_grow.texts.fs_size_why": {
+   "en": "See its size under Why.",
+   "hi": "खेत का नाप ‘क्यों’ में देखें।"
+  },
+  "screens.what_to_grow.texts.fs_wide": {
+   "en": "This is a wide guess, not a promise.",
+   "hi": "यह मोटा अनुमान है, वादा नहीं।"
+  },
+  "screens.what_to_grow.texts.fs_measured_less": {
+   "en": "One field study found much less.",
+   "hi": "एक खेत अध्ययन में बहुत कम मिला।"
+  },
+  "screens.what_to_grow.texts.fs_short": {
+   "en": "Urea can be short at rice planting.",
+   "hi": "धान रोपाई में यूरिया की कमी संभव।"
+  },
+  "screens.what_to_grow.texts.fs_ask": {
+   "en": "Ask your agriculture office before using less.",
+   "hi": "कम करने से पहले कृषि दफ़्तर से पूछें।"
+  },
+  "screens.home.texts.crop_winter": {
+   "en": "{crop} this winter:",
+   "hi": "इस सर्दी {crop}:"
+  },
+  "screens.home.texts.verdict_better": {
+   "en": "better than what you grow now",
+   "hi": "अभी की फ़सल से बेहतर"
+  },
+  "screens.home.texts.verdict_same": {
+   "en": "about the same as now",
+   "hi": "अभी जैसा, लगभग बराबर"
+  },
+  "screens.home.texts.verdict_worse": {
+   "en": "worse than what you grow now",
+   "hi": "अभी की फ़सल से कमज़ोर"
+  },
+  "screens.home.texts.verdict_mixed": {
+   "en": "sometimes better, sometimes worse",
+   "hi": "कभी बेहतर, कभी कमज़ोर"
+  },
+  "screens.home.texts.face_better": {
+   "en": "Better",
+   "hi": "बेहतर"
+  },
+  "screens.home.texts.face_same": {
+   "en": "Same",
+   "hi": "बराबर"
+  },
+  "screens.home.texts.face_worse": {
+   "en": "Worse",
+   "hi": "कमज़ोर"
+  },
+  "screens.home.texts.per_ten_pre": {
+   "en": "about",
+   "hi": "लगभग"
+  },
+  "screens.home.texts.per_ten_post": {
+   "en": "of every 10 winters",
+   "hi": "बार, हर 10 सर्दियों में"
+  },
+  "screens.home.texts.rests_in": {
+   "en": "Your field rests in:",
+   "hi": "आपका खेत इन महीनों में खाली रहता है:"
+  },
+  "screens.home.texts.never_rests": {
+   "en": "Your field is green all year.",
+   "hi": "आपका खेत पूरे साल हरा रहता है।"
+  },
+  "screens.last_years.texts.cmp_title": {
+   "en": "How we compared",
+   "hi": "हमने कैसे तुलना की"
+  },
+  "screens.last_years.texts.cmp_ran": {
+   "en": "Both crops, in {year_count} past winters.",
+   "hi": "दोनों फ़सलें, {year_count} पुरानी सर्दियों में।"
+  },
+  "screens.last_years.texts.cmp_winters": {
+   "en": "winters",
+   "hi": "सर्दियाँ"
+  },
+  "screens.last_years.texts.better_means": {
+   "en": "Better means more water need met by rain.",
+   "hi": "बेहतर यानी ज़रूरी पानी बारिश से ज़्यादा मिले।"
+  },
+  "screens.last_years.texts.better_not": {
+   "en": "Not price, not labour, not taste.",
+   "hi": "दाम, मेहनत या स्वाद नहीं।"
+  },
+  "screens.last_years.texts.water_yes_1": {
+   "en": "With water, dry spells stop mattering.",
+   "hi": "पानी हो तो सूखे दिन मायने नहीं रखते।"
+  },
+  "screens.last_years.texts.water_yes_2": {
+   "en": "Our computer looks at water only.",
+   "hi": "हमारा कंप्यूटर सिर्फ़ पानी देखता है।"
+  },
+  "screens.last_years.texts.boxes_only": {
+   "en": "Boxes: the coming months only, rain only.",
+   "hi": "खाने: सिर्फ़ आने वाले महीने, सिर्फ़ बारिश।"
+  },
+  "screens.last_years.texts.scores_all_year": {
+   "en": "Plan scores count both crops, all year.",
+   "hi": "योजना के अंक: दोनों फ़सलें, पूरा साल।"
+  },
+  "screens.from_space.texts.plans_calendar": {
+   "en": "Our plans use the usual crop calendar.",
+   "hi": "हमारी योजनाएँ सामान्य फ़सल कैलेंडर लेती हैं।"
+  },
+  "screens.from_space.texts.line_saw": {
+   "en": "This line shows what we saw from space.",
+   "hi": "यह रेखा दिखाती है जो अंतरिक्ष से दिखा।"
+  },
+  "screens.home.texts.map_tag": {
+   "en": "NASA map",
+   "hi": "नासा नक्शा"
+  },
+  "screens.home.texts.map_sub": {
+   "en": "A top view of your farm",
+   "hi": "ऊपर से आपका खेत"
+  },
+  "screens.home.texts.what_to_grow": {
+   "en": "What to grow",
+   "hi": "क्या उगाएँ"
+  },
+  "screens.home.texts.farmer_first": {
+   "en": "Farmer first",
+   "hi": "किसान पहले"
+  },
+  "screens.home.texts.open_records": {
+   "en": "Uses open NASA records",
+   "hi": "नासा के खुले रिकॉर्ड इस्तेमाल करता है"
+  },
+  "screens.where.texts.sky_h1": {
+   "en": "Your farm",
+   "hi": "आपका खेत"
+  },
+  "screens.where.texts.sky_h2": {
+   "en": "from the sky",
+   "hi": "आसमान से"
+  },
+  "screens.where.texts.your_farm": {
+   "en": "Your farm",
+   "hi": "आपका खेत"
+  },
+  "screens.where.texts.is_this": {
+   "en": "Is this your farm?",
+   "hi": "क्या यह आपका खेत है?"
+  },
+  "screens.where.texts.split_next": {
+   "en": "Next, we split it into small parts.",
+   "hi": "अब हम इसे छोटे हिस्सों में बाँटेंगे।"
+  },
+  "screens.where.texts.yes_parts": {
+   "en": "Yes, make the parts",
+   "hi": "हाँ, हिस्से बनाएँ"
+  },
+  "screens.parts.texts.h1": {
+   "en": "Your farm,",
+   "hi": "आपका खेत,"
+  },
+  "screens.parts.texts.h2": {
+   "en": "in {section_count} parts",
+   "hi": "{section_count} हिस्सों में"
+  },
+  "screens.parts.texts.here": {
+   "en": "Here are the {section_count} parts.",
+   "hi": "ये {section_count} हिस्से हैं।"
+  },
+  "screens.parts.texts.middle": {
+   "en": "We test the middle of each part.",
+   "hi": "हम हर हिस्से के बीच में जाँचते हैं।"
+  },
+  "screens.parts.texts.start_test": {
+   "en": "Start the soil test",
+   "hi": "मिट्टी जाँच शुरू करें"
+  },
+  "screens.check_soil.texts.h1": {
+   "en": "Your soil,",
+   "hi": "आपकी मिट्टी,"
+  },
+  "screens.check_soil.texts.h2": {
+   "en": "part by part",
+   "hi": "हिस्सा दर हिस्सा"
+  },
+  "screens.check_soil.texts.not_tested": {
+   "en": "Not tested yet",
+   "hi": "अभी जाँच नहीं हुई"
+  },
+  "screens.check_soil.texts.tested": {
+   "en": "Tested",
+   "hi": "जाँच हुई"
+  },
+  "screens.check_soil.texts.again": {
+   "en": "Test again",
+   "hi": "फिर से जाँचें"
+  },
+  "screens.check_soil.texts.see_what": {
+   "en": "See what to do",
+   "hi": "देखें क्या करना है"
+  },
+  "screens.check_soil.texts.from_test": {
+   "en": "From the soil test",
+   "hi": "मिट्टी जाँच से"
+  },
+  "screens.check_soil.texts.tested_h1": {
+   "en": "Soil tested.",
+   "hi": "मिट्टी जाँची गई।"
+  },
+  "screens.check_soil.texts.tested_h2": {
+   "en": "What next?",
+   "hi": "अब क्या?"
+  },
+  "screens.each_part.texts.todo_h": {
+   "en": "What to do",
+   "hi": "क्या करें"
+  },
+  "screens.each_part.texts.do_water": {
+   "en": "Water part {section} today.",
+   "hi": "आज हिस्सा {section} में पानी दें।"
+  },
+  "screens.each_part.texts.do_drain": {
+   "en": "Let water drain from part {section}.",
+   "hi": "हिस्सा {section} से पानी निकालें।"
+  },
+  "screens.each_part.texts.do_test": {
+   "en": "Test the soil first.",
+   "hi": "पहले मिट्टी जाँचें।"
+  },
+  "screens.each_part.texts.do_relative": {
+   "en": "We can only say which parts are drier.",
+   "hi": "हम बस बता सकते हैं कौन सूखा है।"
+  },
+  "screens.each_part.texts.do_fine": {
+   "en": "The tested parts look fine today.",
+   "hi": "जाँचे गए हिस्से आज ठीक हैं।"
+  },
+  "screens.each_part.texts.twin_title": {
+   "en": "The computer's guess for each part",
+   "hi": "हर हिस्से का कंप्यूटर अनुमान"
+  },
+  "screens.each_part.texts.twin_why": {
+   "en": "This guess comes from weather, not the stick.",
+   "hi": "यह अनुमान मौसम से है, छड़ी से नहीं।"
+  },
+  "screens.what_to_grow.texts.sub3": {
+   "en": "Rain and cold ahead, and what to grow.",
+   "hi": "आने वाली बारिश और ठंड, और क्या उगाएँ।"
+  },
+  "screens.what_to_grow.texts.see3": {
+   "en": "See the next 3 months",
+   "hi": "अगले 3 महीने देखें"
+  },
+  "screens.what_to_grow.texts.our_pick": {
+   "en": "Our suggestion",
+   "hi": "हमारा सुझाव"
+  },
+  "screens.what_to_grow.texts.try_part": {
+   "en": "Try it in one part first",
+   "hi": "पहले एक हिस्से में आज़माएँ"
+  },
+  "screens.what_to_grow.texts.line_pre": {
+   "en": "Rain only: better in",
+   "hi": "सिर्फ़ बारिश: बेहतर,"
+  },
+  "screens.what_to_grow.texts.line_post": {
+   "en": "of 10 winters",
+   "hi": "बार, हर 10 सर्दियों में"
+  },
+  "screens.what_to_grow.texts.line_same": {
+   "en": "Rain only: about the same as now",
+   "hi": "सिर्फ़ बारिश: लगभग अभी जैसा"
+  },
+  "screens.what_to_grow.texts.line_worse": {
+   "en": "Rain only: worse than now",
+   "hi": "सिर्फ़ बारिश: अभी से कमज़ोर"
+  },
+  "shared.weather.title": {
+   "en": "Weather ahead",
+   "hi": "आने वाला मौसम"
+  },
+  "shared.weather.choice_sub": {
+   "en": "What each month usually brings.",
+   "hi": "हर महीना आमतौर पर क्या लाता है।"
+  },
+  "shared.weather.top": {
+   "en": "What usually happens here: {year_count} years of records.",
+   "hi": "यहाँ आम तौर पर: {year_count} वर्षों का रिकॉर्ड।"
+  },
+  "shared.weather.not_forecast": {
+   "en": "Not a forecast.",
+   "hi": "यह पूर्वानुमान नहीं है।"
+  },
+  "shared.weather.usually": {
+   "en": "Usually:",
+   "hi": "आमतौर पर:"
+  },
+  "shared.weather.rain_dry": {
+   "en": "dry",
+   "hi": "सूखा"
+  },
+  "shared.weather.rain_some_rain": {
+   "en": "some rain",
+   "hi": "थोड़ी बारिश"
+  },
+  "shared.weather.rain_wet": {
+   "en": "wet",
+   "hi": "गीला"
+  },
+  "shared.weather.temp_cold": {
+   "en": "cold",
+   "hi": "ठंडा"
+  },
+  "shared.weather.temp_mild": {
+   "en": "mild",
+   "hi": "हल्का"
+  },
+  "shared.weather.temp_warm": {
+   "en": "warm",
+   "hi": "गर्म"
+  },
+  "shared.weather.watch": {
+   "en": "Watch out:",
+   "hi": "सावधान:"
+  },
+  "shared.weather.potato_cold": {
+   "en": "Cold nights for {crop}.",
+   "hi": "{crop} के लिए ठंडी रातें।"
+  },
+  "shared.weather.potato_heat": {
+   "en": "Hot days for {crop}.",
+   "hi": "{crop} के लिए गर्म दिन।"
+  },
+  "shared.weather.wheat_flower_frost": {
+   "en": "Frost on {crop} flowers.",
+   "hi": "{crop} के फूलों पर पाला।"
+  },
+  "shared.weather.wheat_floret_heat": {
+   "en": "Heat before {crop} flowers.",
+   "hi": "{crop} में फूल आने से पहले गर्मी।"
+  },
+  "shared.weather.wheat_grain_heat": {
+   "en": "Heat while {crop} grain fills.",
+   "hi": "{crop} के दाने भरते समय गर्मी।"
+  },
+  "shared.weather.dry_spell": {
+   "en": "Weeks without rain for {crop}.",
+   "hi": "{crop} के लिए हफ़्तों तक बारिश नहीं।"
+  },
+  "shared.weather.big_rain_sowing": {
+   "en": "Big rain at {crop} sowing.",
+   "hi": "{crop} की बुवाई पर भारी बारिश।"
+  },
+  "shared.weather.big_rain_harvest": {
+   "en": "Big rain at {crop} harvest.",
+   "hi": "{crop} की कटाई पर भारी बारिश।"
+  },
+  "shared.weather.nothing": {
+   "en": "Nothing big in past years.",
+   "hi": "पिछले वर्षों में कोई बड़ा ख़तरा नहीं।"
+  },
+  "shared.weather.most": {
+   "en": "Most years.",
+   "hi": "ज़्यादातर वर्षों में।"
+  },
+  "shared.weather.some": {
+   "en": "Some years.",
+   "hi": "कुछ वर्षों में।"
+  },
+  "shared.weather.do": {
+   "en": "Do this:",
+   "hi": "यह करें:"
+  },
+  "shared.weather.tip_cold": {
+   "en": "Cover young plants on clear, cold nights.",
+   "hi": "साफ़, ठंडी रातों में छोटे पौधे ढकें।"
+  },
+  "shared.weather.tip_heat": {
+   "en": "Water in the evening on hot days.",
+   "hi": "गर्म दिनों में शाम को पानी दें।"
+  },
+  "shared.weather.tip_dry_spell": {
+   "en": "Water before flowering if no rain.",
+   "hi": "बारिश न हो, तो फूल से पहले सींचें।"
+  },
+  "shared.weather.tip_big_rain": {
+   "en": "Clear drains before the rains.",
+   "hi": "बारिश से पहले नालियाँ साफ़ करें।"
+  },
+  "shared.weather.tip_end": {
+   "en": "Check with your local expert.",
+   "hi": "अपने स्थानीय विशेषज्ञ से पूछें।"
+  },
+  "shared.weather.why": {
+   "en": "Why?",
+   "hi": "क्यों?"
+  },
+  "shared.weather.years": {
+   "en": "In {danger_years} of {year_count} past years.",
+   "hi": "पिछले {year_count} में से {danger_years} वर्षों में।"
+  },
+  "shared.weather.changing": {
+   "en": "Is it changing?",
+   "hi": "क्या यह बदल रहा है?"
+  },
+  "shared.weather.change_more_common": {
+   "en": "Happening more often.",
+   "hi": "अब ज़्यादा बार होता है।"
+  },
+  "shared.weather.change_less_common": {
+   "en": "Happening less often.",
+   "hi": "अब कम बार होता है।"
+  },
+  "shared.weather.change_about_same": {
+   "en": "No clear change.",
+   "hi": "कोई साफ़ बदलाव नहीं।"
+  },
+  "shared.weather.change_cant_tell": {
+   "en": "Can't tell yet.",
+   "hi": "अभी कह नहीं सकते।"
+  },
+  "shared.weather.none_seen": {
+   "en": "Not seen in these years. Good news.",
+   "hi": "इन वर्षों में नहीं दिखा। अच्छी ख़बर।"
+  },
+  "shared.weather.other_dangers": {
+   "en": "Other dangers",
+   "hi": "अन्य ख़तरे"
+  },
+  "shared.weather.rain_label": {
+   "en": "Rain in this month",
+   "hi": "इस महीने की बारिश"
+  },
+  "shared.weather.day_label": {
+   "en": "Day temperature",
+   "hi": "दिन का तापमान"
+  },
+  "shared.weather.night_label": {
+   "en": "Night temperature",
+   "hi": "रात का तापमान"
+  },
+  "shared.weather.dry_label": {
+   "en": "Longest run of dry days",
+   "hi": "लगातार सूखे दिन, सबसे लंबा"
+  },
+  "shared.weather.usual_year": {
+   "en": "usual year",
+   "hi": "सामान्य वर्ष"
+  },
+  "shared.weather.worst_years": {
+   "en": "worst years",
+   "hi": "सबसे बुरे वर्ष"
+  },
+  "shared.weather.frost_label": {
+   "en": "Frost",
+   "hi": "पाला"
+  },
+  "shared.weather.frost_none": {
+   "en": "no frost",
+   "hi": "पाला नहीं"
+  },
+  "shared.weather.frost_risk": {
+   "en": "frost possible",
+   "hi": "पाला संभव"
+  },
+  "shared.weather.frost_high": {
+   "en": "frost likely",
+   "hi": "पाला संभावित"
+  },
+  "shared.weather.frost_note1": {
+   "en": "Our cold nights may be too many.",
+   "hi": "हमारी ठंडी रातें ज़्यादा गिनी हो सकती हैं।"
+  },
+  "shared.weather.frost_note2": {
+   "en": "Bhaktapur's own nights are often colder.",
+   "hi": "भक्तपुर की रातें अक्सर और ठंडी होती हैं।"
+  },
+  "shared.weather.big_rain_note1": {
+   "en": "Big rain here means 20 mm a day.",
+   "hi": "यहाँ भारी बारिश यानी दिन में 20 मिमी।"
+  },
+  "shared.weather.big_rain_note2": {
+   "en": "The weather office calls 50 mm heavy.",
+   "hi": "मौसम विभाग 50 मिमी को भारी कहता है।"
+  },
+  "shared.weather.dry_note": {
+   "en": "A dry day has under 1 mm.",
+   "hi": "सूखे दिन में 1 मिमी से कम बारिश।"
+  },
+  "shared.weather.estimate": {
+   "en": "This is an estimate.",
+   "hi": "यह एक अनुमान है।"
+  },
+  "shared.weather.sources": {
+   "en": "Where this comes from",
+   "hi": "यह कहाँ से आया"
+  },
+  "shared.weather.days_word": {
+   "en": "days",
+   "hi": "दिन"
+  },
+  "shared.twin.h1": {
+   "en": "How we test each plan",
+   "hi": "हम हर योजना कैसे जाँचते हैं"
+  },
+  "shared.twin.h2": {
+   "en": "Four simple steps.",
+   "hi": "चार आसान कदम।"
+  },
+  "shared.twin.step1": {
+   "en": "NASA watched your area for {year_count} years.",
+   "hi": "नासा ने आपके इलाक़े को {year_count} वर्ष देखा।"
+  },
+  "shared.twin.step1_sub": {
+   "en": "Rain, heat and green.",
+   "hi": "बारिश, गर्मी और हरियाली।"
+  },
+  "shared.twin.step2": {
+   "en": "Our computer makes a copy of your field.",
+   "hi": "हमारा कंप्यूटर आपके खेत की नक़ल बनाता है।"
+  },
+  "shared.twin.step2_sub": {
+   "en": "Soil, crop and water.",
+   "hi": "मिट्टी, फ़सल और पानी।"
+  },
+  "shared.twin.step3": {
+   "en": "It tries each plan in every year.",
+   "hi": "यह हर योजना हर वर्ष आज़माता है।"
+  },
+  "shared.twin.step4": {
+   "en": "Your soil stick checks the soil today.",
+   "hi": "आपकी मिट्टी-छड़ी आज मिट्टी जाँचती है।"
+  },
+  "shared.twin.step4_sub": {
+   "en": "Then the app says what to do.",
+   "hi": "फिर ऐप बताता है क्या करें।"
+  },
+  "shared.twin.example_title": {
+   "en": "One real example",
+   "hi": "एक सच्चा उदाहरण"
+  },
+  "shared.twin.example_who": {
+   "en": "A {crop} farmer who cannot water.",
+   "hi": "{crop} किसान, जो पानी नहीं दे सकता।"
+  },
+  "shared.twin.example": {
+   "en": "{new_crop} did better in {count} of {year_count} winters.",
+   "hi": "{year_count} में {count} सर्दियों में {new_crop} बेहतर रहा।"
+  },
+  "shared.twin.better_means": {
+   "en": "Better means more of its water need met.",
+   "hi": "बेहतर यानी पानी की ज़रूरत ज़्यादा पूरी हुई।"
+  },
+  "shared.twin.past_not_promise": {
+   "en": "Past years, not a promise.",
+   "hi": "ये पिछले वर्ष हैं, वादा नहीं।"
+  },
+  "shared.twin.home_line": {
+   "en": "We tested each plan in {year_count} past years.",
+   "hi": "हमने हर योजना {year_count} पिछले वर्षों में जाँची।"
+  },
+  "shared.twin.open": {
+   "en": "See how",
+   "hi": "कैसे, देखें"
   }
  }
 }

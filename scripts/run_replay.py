@@ -28,6 +28,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 from pipeline.fetch.cropslib import load_crops  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
+from pipeline.fetch.profiles import events_rules  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import events as ev  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
@@ -70,7 +71,9 @@ def main(argv=None):
     ap.add_argument("--out-dir", default=None, help="write here instead of data/checks/<field>/ (a check run)")
     add_switches(ap)
     a = ap.parse_args(argv)
-    field, rules, lib, data = load_field(a.field), load_rules(), load_crops(), REPO / "data"
+    field, rules, data = load_field(a.field), load_rules(), REPO / "data"
+    lib = load_crops(field=field)              # the field's country profile: Nepal's crops.json, else its FAO zone calendar
+    rules["events"] = events_rules(field, rules)   # the profile's drought seasons (Nepal: DHM's, equal to rules.yaml events)
     set_switches(rules, a)
     clean = data / "clean" / field["id"]
     w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain, **rain_kw(rules, a.rain, field["id"]))

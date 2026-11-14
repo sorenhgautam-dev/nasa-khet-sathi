@@ -246,6 +246,193 @@
      "es": "Cuatro formas de saberlo:",
      "fr": "Quatre façons de le savoir :",
      "sw": "Njia nne za kujua:"
+    },
+    {
+     "id": "crop_winter",
+     "en": "{crop} this winter:",
+     "ne": "यो हिउँद {crop} लगाउँदा:",
+     "ne_review": "needs native-speaker review",
+     "hi": "इस सर्दी {crop}:",
+     "bn": "এই শীতে {crop}:",
+     "es": "{crop} este invierno:",
+     "fr": "{crop} cet hiver :",
+     "sw": "{crop} msimu huu wa baridi:"
+    },
+    {
+     "id": "verdict_better",
+     "en": "better than what you grow now",
+     "ne": "अहिलेको बालीभन्दा राम्रो",
+     "ne_review": "needs native-speaker review",
+     "hi": "अभी की फ़सल से बेहतर",
+     "bn": "এখনকার ফসলের চেয়ে ভালো",
+     "es": "mejor que lo que siembra ahora",
+     "fr": "mieux que ce que vous cultivez",
+     "sw": "bora kuliko unachopanda sasa"
+    },
+    {
+     "id": "verdict_same",
+     "en": "about the same as now",
+     "ne": "अहिलेको जस्तै, करिब उस्तै",
+     "ne_review": "needs native-speaker review",
+     "hi": "अभी जैसा, लगभग बराबर",
+     "bn": "এখনকার মতোই, প্রায় সমান",
+     "es": "más o menos igual que ahora",
+     "fr": "à peu près pareil qu'avant",
+     "sw": "karibu sawa na sasa"
+    },
+    {
+     "id": "verdict_worse",
+     "en": "worse than what you grow now",
+     "ne": "अहिलेको बालीभन्दा कमजोर",
+     "ne_review": "needs native-speaker review",
+     "hi": "अभी की फ़सल से कमज़ोर",
+     "bn": "এখনকার ফসলের চেয়ে খারাপ",
+     "es": "peor que lo que siembra ahora",
+     "fr": "moins bien que ce que vous cultivez",
+     "sw": "mbaya kuliko unachopanda sasa"
+    },
+    {
+     "id": "verdict_mixed",
+     "en": "sometimes better, sometimes worse",
+     "ne": "कहिले राम्रो, कहिले कमजोर",
+     "ne_review": "needs native-speaker review",
+     "hi": "कभी बेहतर, कभी कमज़ोर",
+     "bn": "কখনো ভালো, কখনো খারাপ",
+     "es": "a veces mejor, a veces peor",
+     "fr": "parfois mieux, parfois moins bien",
+     "sw": "wakati mwingine bora, wakati mwingine mbaya"
+    },
+    {
+     "id": "face_better",
+     "en": "Better",
+     "ne": "राम्रो",
+     "ne_review": "needs native-speaker review",
+     "hi": "बेहतर",
+     "bn": "ভালো",
+     "es": "Mejor",
+     "fr": "Mieux",
+     "sw": "Bora"
+    },
+    {
+     "id": "face_same",
+     "en": "Same",
+     "ne": "उस्तै",
+     "ne_review": "needs native-speaker review",
+     "hi": "बराबर",
+     "bn": "সমান",
+     "es": "Igual",
+     "fr": "Pareil",
+     "sw": "Sawa"
+    },
+    {
+     "id": "face_worse",
+     "en": "Worse",
+     "ne": "कमजोर",
+     "ne_review": "needs native-speaker review",
+     "hi": "कमज़ोर",
+     "bn": "খারাপ",
+     "es": "Peor",
+     "fr": "Moins bien",
+     "sw": "Mbaya"
+    },
+    {
+     "id": "per_ten_pre",
+     "en": "about",
+     "ne": "करिब",
+     "ne_review": "needs native-speaker review",
+     "hi": "लगभग",
+     "bn": "প্রায়",
+     "es": "unos",
+     "fr": "environ",
+     "sw": "takriban"
+    },
+    {
+     "id": "per_ten_post",
+     "en": "of every 10 winters",
+     "ne": "पटक, हरेक १० हिउँदमा",
+     "ne_review": "needs native-speaker review",
+     "hi": "बार, हर 10 सर्दियों में",
+     "bn": "বার, প্রতি 10 শীতে",
+     "es": "de cada 10 inviernos",
+     "fr": "hivers sur 10",
+     "sw": "kati ya kila baridi 10"
+    },
+    {
+     "id": "rests_in",
+     "en": "Your field rests in:",
+     "ne": "तपाईंको खेत यी महिना खाली रहन्छ:",
+     "ne_review": "needs native-speaker review",
+     "hi": "आपका खेत इन महीनों में खाली रहता है:",
+     "bn": "আপনার জমি এই মাসগুলোতে খালি থাকে:",
+     "es": "Su campo descansa en:",
+     "fr": "Votre champ se repose en :",
+     "sw": "Shamba lako hupumzika:"
+    },
+    {
+     "id": "never_rests",
+     "en": "Your field is green all year.",
+     "ne": "तपाईंको खेत वर्षभरि हरियो रहन्छ।",
+     "ne_review": "needs native-speaker review",
+     "hi": "आपका खेत पूरे साल हरा रहता है।",
+     "bn": "আপনার জমি সারা বছর সবুজ থাকে।",
+     "es": "Su campo está verde todo el año.",
+     "fr": "Votre champ est vert toute l'année.",
+     "sw": "Shamba lako ni kijani mwaka mzima."
+    },
+    {
+     "id": "map_tag",
+     "en": "NASA map",
+     "ne": "नासाको नक्सा",
+     "ne_review": "needs native-speaker review",
+     "hi": "नासा नक्शा",
+     "bn": "নাসার মানচিত্র",
+     "es": "Mapa de la NASA",
+     "fr": "Carte de la NASA",
+     "sw": "Ramani ya NASA"
+    },
+    {
+     "id": "map_sub",
+     "en": "A top view of your farm",
+     "ne": "माथिबाट तपाईंको खेत",
+     "ne_review": "needs native-speaker review",
+     "hi": "ऊपर से आपका खेत",
+     "bn": "ওপর থেকে আপনার খামার",
+     "es": "Su finca vista desde arriba",
+     "fr": "Votre ferme vue d'en haut",
+     "sw": "Shamba lako kutoka juu"
+    },
+    {
+     "id": "what_to_grow",
+     "en": "What to grow",
+     "ne": "के लगाउने",
+     "ne_review": "needs native-speaker review",
+     "hi": "क्या उगाएँ",
+     "bn": "কী চাষ করবেন",
+     "es": "Qué sembrar",
+     "fr": "Quoi cultiver",
+     "sw": "Nini cha kupanda"
+    },
+    {
+     "id": "farmer_first",
+     "en": "Farmer first",
+     "ne": "किसान पहिले",
+     "ne_review": "needs native-speaker review",
+     "hi": "किसान पहले",
+     "bn": "কৃষক আগে",
+     "es": "El agricultor primero",
+     "fr": "L'agriculteur d'abord",
+     "sw": "Mkulima kwanza"
+    },
+    {
+     "id": "open_records",
+     "en": "Uses open NASA records",
+     "ne": "नासाका खुला अभिलेख प्रयोग गर्छ",
+     "ne_review": "needs native-speaker review",
+     "hi": "नासा के खुले रिकॉर्ड इस्तेमाल करता है",
+     "bn": "নাসার খোলা রেকর্ড ব্যবহার করে",
+     "es": "Usa registros abiertos de la NASA",
+     "fr": "Utilise les relevés ouverts de la NASA",
+     "sw": "Hutumia kumbukumbu wazi za NASA"
     }
    ]
   },
@@ -430,6 +617,72 @@
      "es": "Mostrar las partes",
      "fr": "Montrer les parties",
      "sw": "Onyesha sehemu"
+    },
+    {
+     "id": "sky_h1",
+     "en": "Your farm",
+     "ne": "आकाशबाट",
+     "ne_review": "needs native-speaker review",
+     "hi": "आपका खेत",
+     "bn": "আপনার খামার",
+     "es": "Su finca",
+     "fr": "Votre ferme",
+     "sw": "Shamba lako"
+    },
+    {
+     "id": "sky_h2",
+     "en": "from the sky",
+     "ne": "तपाईंको खेत",
+     "ne_review": "needs native-speaker review",
+     "hi": "आसमान से",
+     "bn": "আকাশ থেকে",
+     "es": "desde el cielo",
+     "fr": "vue du ciel",
+     "sw": "kutoka angani"
+    },
+    {
+     "id": "your_farm",
+     "en": "Your farm",
+     "ne": "तपाईंको खेत",
+     "ne_review": "needs native-speaker review",
+     "hi": "आपका खेत",
+     "bn": "আপনার খামার",
+     "es": "Su finca",
+     "fr": "Votre ferme",
+     "sw": "Shamba lako"
+    },
+    {
+     "id": "is_this",
+     "en": "Is this your farm?",
+     "ne": "के यो तपाईंको खेत हो?",
+     "ne_review": "needs native-speaker review",
+     "hi": "क्या यह आपका खेत है?",
+     "bn": "এটা কি আপনার খামার?",
+     "es": "¿Es esta su finca?",
+     "fr": "Est-ce votre ferme ?",
+     "sw": "Je, hili ni shamba lako?"
+    },
+    {
+     "id": "split_next",
+     "en": "Next, we split it into small parts.",
+     "ne": "अब यसलाई साना भागमा बाँड्छौं।",
+     "ne_review": "needs native-speaker review",
+     "hi": "अब हम इसे छोटे हिस्सों में बाँटेंगे।",
+     "bn": "এবার আমরা এটিকে ছোট ভাগে ভাগ করব।",
+     "es": "Luego, la dividimos en partes pequeñas.",
+     "fr": "Ensuite, nous la divisons en petites parties.",
+     "sw": "Kisha, tunaligawa katika sehemu ndogo."
+    },
+    {
+     "id": "yes_parts",
+     "en": "Yes, make the parts",
+     "ne": "हो, भाग बनाउनुहोस्",
+     "ne_review": "needs native-speaker review",
+     "hi": "हाँ, हिस्से बनाएँ",
+     "bn": "হ্যাঁ, ভাগ করুন",
+     "es": "Sí, haga las partes",
+     "fr": "Oui, faites les parties",
+     "sw": "Ndiyo, tengeneza sehemu"
     }
    ],
    "labels": {
@@ -1115,6 +1368,28 @@
      "es": "Campos cercanos sin cultivo más de 60 días:",
      "fr": "Champs voisins nus plus de 60 jours :",
      "sw": "Mashamba ya karibu matupu zaidi ya siku 60:"
+    },
+    {
+     "id": "plans_calendar",
+     "en": "Our plans use the usual crop calendar.",
+     "ne": "हाम्रा योजनाले सामान्य बाली पात्रो प्रयोग गर्छन्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "हमारी योजनाएँ सामान्य फ़सल कैलेंडर लेती हैं।",
+     "bn": "আমাদের পরিকল্পনা সাধারণ ফসল ক্যালেন্ডার নেয়।",
+     "es": "Nuestros planes usan el calendario agrícola habitual.",
+     "fr": "Nos plans suivent le calendrier agricole habituel.",
+     "sw": "Mipango yetu hutumia kalenda ya kawaida ya mazao."
+    },
+    {
+     "id": "line_saw",
+     "en": "This line shows what we saw from space.",
+     "ne": "यो रेखाले अन्तरिक्षबाट देखिएको कुरा देखाउँछ।",
+     "ne_review": "needs native-speaker review",
+     "hi": "यह रेखा दिखाती है जो अंतरिक्ष से दिखा।",
+     "bn": "এই রেখা দেখায় মহাকাশ থেকে যা দেখা গেছে।",
+     "es": "Esta línea muestra lo visto desde el espacio.",
+     "fr": "Cette ligne montre ce que l'espace a vu.",
+     "sw": "Mstari huu unaonyesha tulichoona angani."
     }
    ],
    "labels": {
@@ -1383,6 +1658,61 @@
      "es": "Haciendo las partes…",
      "fr": "Création des parties…",
      "sw": "Tunatengeneza sehemu…"
+    },
+    {
+     "id": "h1",
+     "en": "Your farm,",
+     "ne": "तपाईंको खेत,",
+     "ne_review": "needs native-speaker review",
+     "hi": "आपका खेत,",
+     "bn": "আপনার খামার,",
+     "es": "Su finca,",
+     "fr": "Votre ferme,",
+     "sw": "Shamba lako,"
+    },
+    {
+     "id": "h2",
+     "en": "in {section_count} parts",
+     "ne": "{section_count} भागमा",
+     "ne_review": "needs native-speaker review",
+     "hi": "{section_count} हिस्सों में",
+     "bn": "{section_count} ভাগে",
+     "es": "en {section_count} partes",
+     "fr": "en {section_count} parties",
+     "sw": "katika sehemu {section_count}"
+    },
+    {
+     "id": "here",
+     "en": "Here are the {section_count} parts.",
+     "ne": "यी {section_count} भाग हुन्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "ये {section_count} हिस्से हैं।",
+     "bn": "এই হলো {section_count}টি ভাগ।",
+     "es": "Aquí están las {section_count} partes.",
+     "fr": "Voici les {section_count} parties.",
+     "sw": "Hizi ndizo sehemu {section_count}."
+    },
+    {
+     "id": "middle",
+     "en": "We test the middle of each part.",
+     "ne": "हरेक भागको बीचमा माटो जाँच्छौं।",
+     "ne_review": "needs native-speaker review",
+     "hi": "हम हर हिस्से के बीच में जाँचते हैं।",
+     "bn": "আমরা প্রতিটি ভাগের মাঝখানে পরীক্ষা করি।",
+     "es": "Probamos el centro de cada parte.",
+     "fr": "Nous testons le milieu de chaque partie.",
+     "sw": "Tunapima katikati ya kila sehemu."
+    },
+    {
+     "id": "start_test",
+     "en": "Start the soil test",
+     "ne": "माटो जाँच सुरु गर्नुहोस्",
+     "ne_review": "needs native-speaker review",
+     "hi": "मिट्टी जाँच शुरू करें",
+     "bn": "মাটি পরীক্ষা শুরু করুন",
+     "es": "Empezar la prueba del suelo",
+     "fr": "Commencer le test du sol",
+     "sw": "Anza kupima udongo"
     }
    ]
   },
@@ -1557,6 +1887,94 @@
      "es": "Todas las partes comparten tierra y tiempo.",
      "fr": "Un seul sol, un seul temps partout.",
      "sw": "Sehemu zote: udongo mmoja, hali ya hewa moja."
+    },
+    {
+     "id": "todo_h",
+     "en": "What to do",
+     "ne": "के गर्ने",
+     "ne_review": "needs native-speaker review",
+     "hi": "क्या करें",
+     "bn": "কী করবেন",
+     "es": "Qué hacer",
+     "fr": "Quoi faire",
+     "sw": "Cha kufanya"
+    },
+    {
+     "id": "do_water",
+     "en": "Water part {section} today.",
+     "ne": "आज भाग {section} मा पानी लगाउनुहोस्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "आज हिस्सा {section} में पानी दें।",
+     "bn": "আজ ভাগ {section}-এ পানি দিন।",
+     "es": "Riegue la parte {section} hoy.",
+     "fr": "Arrosez la partie {section} aujourd'hui.",
+     "sw": "Mwagilia sehemu {section} leo."
+    },
+    {
+     "id": "do_drain",
+     "en": "Let water drain from part {section}.",
+     "ne": "भाग {section} बाट पानी निकाल्नुहोस्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "हिस्सा {section} से पानी निकालें।",
+     "bn": "ভাগ {section} থেকে পানি বের করুন।",
+     "es": "Deje salir el agua de la parte {section}.",
+     "fr": "Laissez l'eau sortir de la partie {section}.",
+     "sw": "Toa maji kutoka sehemu {section}."
+    },
+    {
+     "id": "do_test",
+     "en": "Test the soil first.",
+     "ne": "पहिले माटो जाँच्नुहोस्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "पहले मिट्टी जाँचें।",
+     "bn": "আগে মাটি পরীক্ষা করুন।",
+     "es": "Primero pruebe el suelo.",
+     "fr": "Testez d'abord le sol.",
+     "sw": "Pima udongo kwanza."
+    },
+    {
+     "id": "do_relative",
+     "en": "We can only say which parts are drier.",
+     "ne": "कुन भाग सुख्खा छ, त्यति मात्र भन्छौं।",
+     "ne_review": "needs native-speaker review",
+     "hi": "हम बस बता सकते हैं कौन सूखा है।",
+     "bn": "কোন ভাগ বেশি শুকনো, শুধু তা বলতে পারি।",
+     "es": "Solo podemos decir qué partes están más secas.",
+     "fr": "Nous disons seulement quelles parties sont plus sèches.",
+     "sw": "Tunaweza kusema tu sehemu kavu zaidi."
+    },
+    {
+     "id": "do_fine",
+     "en": "The tested parts look fine today.",
+     "ne": "जाँचिएका भाग आज ठीक देखिन्छन्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "जाँचे गए हिस्से आज ठीक हैं।",
+     "bn": "পরীক্ষা করা ভাগগুলো আজ ঠিক আছে।",
+     "es": "Las partes probadas están bien hoy.",
+     "fr": "Les parties testées vont bien aujourd'hui.",
+     "sw": "Sehemu zilizopimwa ziko sawa leo."
+    },
+    {
+     "id": "twin_title",
+     "en": "The computer's guess for each part",
+     "ne": "हरेक भागको कम्प्युटर अनुमान",
+     "ne_review": "needs native-speaker review",
+     "hi": "हर हिस्से का कंप्यूटर अनुमान",
+     "bn": "প্রতিটি ভাগের কম্পিউটার অনুমান",
+     "es": "La estimación del ordenador por parte",
+     "fr": "L'estimation de l'ordinateur par partie",
+     "sw": "Makadirio ya kompyuta kwa kila sehemu"
+    },
+    {
+     "id": "twin_why",
+     "en": "This guess comes from weather, not the stick.",
+     "ne": "यो अनुमान मौसमबाट हो, यन्त्रबाट होइन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "यह अनुमान मौसम से है, छड़ी से नहीं।",
+     "bn": "এই অনুমান আবহাওয়া থেকে, কাঠি থেকে নয়।",
+     "es": "Esto sale del tiempo, no de la varilla.",
+     "fr": "Issu de la météo, pas de la tige.",
+     "sw": "Makadirio haya yanatoka hali ya hewa, si kijiti."
     }
    ],
    "labels": {
@@ -2310,6 +2728,105 @@
      "es": "Varilla de práctica",
      "fr": "Tige d'entraînement",
      "sw": "Kijiti cha mazoezi"
+    },
+    {
+     "id": "h1",
+     "en": "Your soil,",
+     "ne": "तपाईंको माटो,",
+     "ne_review": "needs native-speaker review",
+     "hi": "आपकी मिट्टी,",
+     "bn": "আপনার মাটি,",
+     "es": "Su suelo,",
+     "fr": "Votre sol,",
+     "sw": "Udongo wako,"
+    },
+    {
+     "id": "h2",
+     "en": "part by part",
+     "ne": "भाग भाग गरी",
+     "ne_review": "needs native-speaker review",
+     "hi": "हिस्सा दर हिस्सा",
+     "bn": "ভাগে ভাগে",
+     "es": "parte por parte",
+     "fr": "partie par partie",
+     "sw": "sehemu kwa sehemu"
+    },
+    {
+     "id": "not_tested",
+     "en": "Not tested yet",
+     "ne": "अझै जाँचिएको छैन",
+     "ne_review": "needs native-speaker review",
+     "hi": "अभी जाँच नहीं हुई",
+     "bn": "এখনো পরীক্ষা হয়নি",
+     "es": "Aún sin probar",
+     "fr": "Pas encore testé",
+     "sw": "Bado haijapimwa"
+    },
+    {
+     "id": "tested",
+     "en": "Tested",
+     "ne": "जाँचियो",
+     "ne_review": "needs native-speaker review",
+     "hi": "जाँच हुई",
+     "bn": "পরীক্ষা হয়েছে",
+     "es": "Probado",
+     "fr": "Testé",
+     "sw": "Imepimwa"
+    },
+    {
+     "id": "again",
+     "en": "Test again",
+     "ne": "फेरि जाँच्नुहोस्",
+     "ne_review": "needs native-speaker review",
+     "hi": "फिर से जाँचें",
+     "bn": "আবার পরীক্ষা করুন",
+     "es": "Probar de nuevo",
+     "fr": "Tester à nouveau",
+     "sw": "Pima tena"
+    },
+    {
+     "id": "see_what",
+     "en": "See what to do",
+     "ne": "के गर्ने हेर्नुहोस्",
+     "ne_review": "needs native-speaker review",
+     "hi": "देखें क्या करना है",
+     "bn": "কী করবেন দেখুন",
+     "es": "Ver qué hacer",
+     "fr": "Voir quoi faire",
+     "sw": "Ona cha kufanya"
+    },
+    {
+     "id": "from_test",
+     "en": "From the soil test",
+     "ne": "माटो जाँचबाट",
+     "ne_review": "needs native-speaker review",
+     "hi": "मिट्टी जाँच से",
+     "bn": "মাটি পরীক্ষা থেকে",
+     "es": "De la prueba del suelo",
+     "fr": "Du test du sol",
+     "sw": "Kutoka kipimo cha udongo"
+    },
+    {
+     "id": "tested_h1",
+     "en": "Soil tested.",
+     "ne": "माटो जाँचियो।",
+     "ne_review": "needs native-speaker review",
+     "hi": "मिट्टी जाँची गई।",
+     "bn": "মাটি পরীক্ষা হয়েছে।",
+     "es": "Suelo probado.",
+     "fr": "Sol testé.",
+     "sw": "Udongo umepimwa."
+    },
+    {
+     "id": "tested_h2",
+     "en": "What next?",
+     "ne": "अब के?",
+     "ne_review": "needs native-speaker review",
+     "hi": "अब क्या?",
+     "bn": "এরপর কী?",
+     "es": "¿Y ahora?",
+     "fr": "Et maintenant ?",
+     "sw": "Nini sasa?"
     }
    ]
   },
@@ -2891,6 +3408,523 @@
      "es": "Fechas del calendario usual, no las suyas.",
      "fr": "Dates du calendrier habituel, pas les vôtres.",
      "sw": "Tarehe zinafuata kalenda ya kawaida, si yako."
+    },
+    {
+     "id": "rr_title",
+     "en": "Rain at harvest",
+     "ne": "बाली काट्ने बेलाको पानी",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटाई के समय बारिश",
+     "bn": "ফসল কাটার সময় বৃষ্টি",
+     "es": "Lluvia en la cosecha",
+     "fr": "Pluie à la récolte",
+     "sw": "Mvua wakati wa mavuno"
+    },
+    {
+     "id": "rr_lead",
+     "en": "How often heavy rain fell near harvest.",
+     "ne": "बाली काट्ने बेला कति पटक भारी पानी पर्‍यो।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटाई के पास कितनी बार भारी बारिश हुई।",
+     "bn": "ফসল কাটার কাছে কতবার ভারী বৃষ্টি হয়েছে।",
+     "es": "Cuántas veces llovió fuerte cerca de la cosecha.",
+     "fr": "Combien de fortes pluies avant la récolte.",
+     "sw": "Mara ngapi mvua kubwa ilinyesha karibu na mavuno."
+    },
+    {
+     "id": "rr_weeks",
+     "en": "Harvest weeks:",
+     "ne": "बाली काट्ने हप्ता:",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटाई के हफ़्ते:",
+     "bn": "ফসল কাটার সপ্তাহ:",
+     "es": "Semanas de cosecha:",
+     "fr": "Semaines de récolte :",
+     "sw": "Wiki za mavuno:"
+    },
+    {
+     "id": "rr_count",
+     "en": "Heavy rain at harvest: {risk_years} of {year_count} years.",
+     "ne": "काट्ने बेला भारी पानी: {year_count} मध्ये {risk_years} वर्ष।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कटाई पर भारी बारिश: {year_count} में {risk_years} साल।",
+     "bn": "কাটার সময় ভারী বৃষ্টি: {year_count}-এর মধ্যে {risk_years} বছর।",
+     "es": "Lluvia fuerte en cosecha: {risk_years} de {year_count} años.",
+     "fr": "Forte pluie en récolte : {risk_years} ans sur {year_count}.",
+     "sw": "Mvua kubwa mavunoni: miaka {risk_years} kati ya {year_count}."
+    },
+    {
+     "id": "risk_none",
+     "en": "None in these years. Good news.",
+     "ne": "यी वर्षमा एक पटक पनि भएन। राम्रो खबर।",
+     "ne_review": "needs native-speaker review",
+     "hi": "इन सालों में एक बार भी नहीं। अच्छी खबर।",
+     "bn": "এই বছরগুলোতে একবারও হয়নি। ভালো খবর।",
+     "es": "Ninguna en estos años. Buena noticia.",
+     "fr": "Aucune ces années-là. Bonne nouvelle.",
+     "sw": "Hakuna katika miaka hii. Habari njema."
+    },
+    {
+     "id": "rr_sq_heavy",
+     "en": "Heavy rain",
+     "ne": "भारी पानी",
+     "ne_review": "needs native-speaker review",
+     "hi": "भारी बारिश",
+     "bn": "ভারী বৃষ্টি",
+     "es": "Lluvia fuerte",
+     "fr": "Forte pluie",
+     "sw": "Mvua kubwa"
+    },
+    {
+     "id": "rr_sq_none",
+     "en": "No heavy rain",
+     "ne": "भारी पानी परेन",
+     "ne_review": "needs native-speaker review",
+     "hi": "भारी बारिश नहीं",
+     "bn": "ভারী বৃষ্টি নেই",
+     "es": "Sin lluvia fuerte",
+     "fr": "Pas de forte pluie",
+     "sw": "Hakuna mvua kubwa"
+    },
+    {
+     "id": "rr_tap",
+     "en": "Tap a year to see more.",
+     "ne": "थप हेर्न एउटा वर्ष थिच्नुहोस्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "और देखने के लिए साल दबाएँ।",
+     "bn": "আরও দেখতে একটি বছর চাপুন।",
+     "es": "Toque un año para ver más.",
+     "fr": "Touchez une année pour en voir plus.",
+     "sw": "Gusa mwaka mmoja kuona zaidi."
+    },
+    {
+     "id": "rr_days",
+     "en": "Heavy rain days:",
+     "ne": "भारी पानी परेका दिन:",
+     "ne_review": "needs native-speaker review",
+     "hi": "भारी बारिश के दिन:",
+     "bn": "ভারী বৃষ্টির দিন:",
+     "es": "Días de lluvia fuerte:",
+     "fr": "Jours de forte pluie :",
+     "sw": "Siku za mvua kubwa:"
+    },
+    {
+     "id": "rr_records_differ",
+     "en": "Other rain records disagree on this year.",
+     "ne": "अरू वर्षा अभिलेख यो वर्षमा फरक छन्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "दूसरे बारिश रिकॉर्ड इस साल अलग हैं।",
+     "bn": "অন্য বৃষ্টির রেকর্ড এই বছরে আলাদা।",
+     "es": "Otros registros de lluvia difieren este año.",
+     "fr": "D'autres relevés de pluie diffèrent cette année.",
+     "sw": "Rekodi nyingine za mvua zinatofautiana mwaka huu."
+    },
+    {
+     "id": "rr_range",
+     "en": "Other rain records: {risk_low} to {risk_high} years.",
+     "ne": "अरू वर्षा अभिलेख: {risk_low} देखि {risk_high} वर्ष।",
+     "ne_review": "needs native-speaker review",
+     "hi": "दूसरे बारिश रिकॉर्ड: {risk_low} से {risk_high} साल।",
+     "bn": "অন্য বৃষ্টির রেকর্ড: {risk_low} থেকে {risk_high} বছর।",
+     "es": "Otros registros de lluvia: {risk_low} a {risk_high} años.",
+     "fr": "Autres relevés de pluie : {risk_low} à {risk_high} ans.",
+     "sw": "Rekodi nyingine za mvua: miaka {risk_low} hadi {risk_high}."
+    },
+    {
+     "id": "rr_dry_usual",
+     "en": "Longest dry run after sowing: usually {dry_run_days} days.",
+     "ne": "रोपेपछि सबैभन्दा लामो सुक्खा लहर: प्रायः {dry_run_days} दिन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "बुआई बाद सबसे लंबा सूखा: अक्सर {dry_run_days} दिन।",
+     "bn": "বোনার পর দীর্ঘতম শুকনো সময়: সাধারণত {dry_run_days} দিন।",
+     "es": "Mayor racha seca tras sembrar: normalmente {dry_run_days} días.",
+     "fr": "Plus longue sécheresse après semis : souvent {dry_run_days} jours.",
+     "sw": "Ukame mrefu baada ya kupanda: kawaida siku {dry_run_days}."
+    },
+    {
+     "id": "rr_dry_worst",
+     "en": "Worst years:",
+     "ne": "सबैभन्दा खराब वर्ष:",
+     "ne_review": "needs native-speaker review",
+     "hi": "सबसे बुरे साल:",
+     "bn": "সবচেয়ে খারাপ বছর:",
+     "es": "Peores años:",
+     "fr": "Pires années :",
+     "sw": "Miaka mibaya zaidi:"
+    },
+    {
+     "id": "rr_dry_run",
+     "en": "{dry_run_days} dry days in a row",
+     "ne": "लगातार {dry_run_days} सुक्खा दिन",
+     "ne_review": "needs native-speaker review",
+     "hi": "लगातार {dry_run_days} सूखे दिन",
+     "bn": "টানা {dry_run_days} শুকনো দিন",
+     "es": "{dry_run_days} días secos seguidos",
+     "fr": "{dry_run_days} jours secs d'affilée",
+     "sw": "siku {dry_run_days} kavu mfululizo"
+    },
+    {
+     "id": "rr_past_only",
+     "en": "Past years only, not a forecast.",
+     "ne": "विगतका वर्ष मात्र, पूर्वानुमान होइन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "सिर्फ़ पिछले साल, भविष्यवाणी नहीं।",
+     "bn": "শুধু আগের বছর, পূর্বাভাস নয়।",
+     "es": "Solo años pasados, no un pronóstico.",
+     "fr": "Années passées seulement, pas une prévision.",
+     "sw": "Miaka iliyopita tu, si utabiri."
+    },
+    {
+     "id": "hc_title",
+     "en": "Heat and cold",
+     "ne": "गर्मी र चिसो",
+     "ne_review": "needs native-speaker review",
+     "hi": "गर्मी और ठंड",
+     "bn": "গরম আর ঠান্ডা",
+     "es": "Calor y frío",
+     "fr": "Chaud et froid",
+     "sw": "Joto na baridi"
+    },
+    {
+     "id": "hc_lead",
+     "en": "Too hot or too cold, at key times.",
+     "ne": "मुख्य बेलामा धेरै गर्मी वा धेरै चिसो।",
+     "ne_review": "needs native-speaker review",
+     "hi": "ज़रूरी समय पर बहुत गर्मी या ठंड।",
+     "bn": "জরুরি সময়ে খুব গরম বা খুব ঠান্ডা।",
+     "es": "Demasiado calor o frío en momentos clave.",
+     "fr": "Trop chaud ou trop froid aux moments clés.",
+     "sw": "Joto kali au baridi kali wakati muhimu."
+    },
+    {
+     "id": "hc_wheat_heat",
+     "en": "Too hot while wheat grains fill?",
+     "ne": "गहुँको दाना भरिँदा धेरै गर्मी?",
+     "ne_review": "needs native-speaker review",
+     "hi": "गेहूँ के दाने भरते समय बहुत गर्मी?",
+     "bn": "গমের দানা ভরার সময় খুব গরম?",
+     "es": "¿Demasiado calor al llenarse el grano de trigo?",
+     "fr": "Trop chaud pendant le remplissage du blé ?",
+     "sw": "Joto kali wakati punje za ngano zinajaa?"
+    },
+    {
+     "id": "hc_potato_heat",
+     "en": "Too hot for potato?",
+     "ne": "आलुलाई धेरै गर्मी?",
+     "ne_review": "needs native-speaker review",
+     "hi": "आलू के लिए बहुत गर्मी?",
+     "bn": "আলুর জন্য খুব গরম?",
+     "es": "¿Demasiado calor para la papa?",
+     "fr": "Trop chaud pour la pomme de terre ?",
+     "sw": "Joto kali kwa viazi?"
+    },
+    {
+     "id": "hc_potato_cold",
+     "en": "Too cold for potato?",
+     "ne": "आलुलाई धेरै चिसो?",
+     "ne_review": "needs native-speaker review",
+     "hi": "आलू के लिए बहुत ठंड?",
+     "bn": "আলুর জন্য খুব ঠান্ডা?",
+     "es": "¿Demasiado frío para la papa?",
+     "fr": "Trop froid pour la pomme de terre ?",
+     "sw": "Baridi kali kwa viazi?"
+    },
+    {
+     "id": "hc_wheat_floret_formation_heat",
+     "en": "Too hot while wheat flowers form?",
+     "ne": "गहुँका फूल बन्दा धेरै गर्मी?",
+     "ne_review": "needs native-speaker review",
+     "hi": "गेहूँ के फूल बनते समय बहुत गर्मी?",
+     "bn": "গমের ফুল গড়ার সময় খুব গরম?",
+     "es": "¿Demasiado calor al formarse las flores del trigo?",
+     "fr": "Trop chaud quand le blé forme ses fleurs ?",
+     "sw": "Joto kali maua ya ngano yanapoundwa?"
+    },
+    {
+     "id": "hc_wheat_flowering_cold",
+     "en": "Frost while wheat flowers?",
+     "ne": "गहुँ फुल्दा तुषारो?",
+     "ne_review": "needs native-speaker review",
+     "hi": "गेहूँ फूलते समय पाला?",
+     "bn": "গমে ফুল আসার সময় হিম?",
+     "es": "¿Helada cuando florece el trigo?",
+     "fr": "Gel pendant la floraison du blé ?",
+     "sw": "Jalidi ngano inapochanua?"
+    },
+    {
+     "id": "hc_book",
+     "en": "From FAO's wheat book. An estimate.",
+     "ne": "FAO को गहुँ पुस्तकबाट। अनुमान मात्र।",
+     "ne_review": "needs native-speaker review",
+     "hi": "FAO की गेहूँ किताब से। एक अनुमान।",
+     "bn": "FAO-এর গম বই থেকে। একটি অনুমান।",
+     "es": "Del libro del trigo de la FAO. Una estimación.",
+     "fr": "Du livre de la FAO sur le blé. Une estimation.",
+     "sw": "Kutoka kitabu cha ngano cha FAO. Ni makadirio."
+    },
+    {
+     "id": "hc_frost_caveat",
+     "en": "Real frost nights may be more or fewer.",
+     "ne": "साँचो तुषारो रात बढी वा कम हुन सक्छन्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "पाला ज़्यादा या कम हो सकता है।",
+     "bn": "আসল হিমের রাত বেশি বা কম হতে পারে।",
+     "es": "Puede haber más o menos noches de helada.",
+     "fr": "Il peut geler plus ou moins souvent.",
+     "sw": "Usiku wa jalidi unaweza kuwa zaidi au pungufu."
+    },
+    {
+     "id": "hc_weeks",
+     "en": "Weeks counted:",
+     "ne": "गनिएका हप्ता:",
+     "ne_review": "needs native-speaker review",
+     "hi": "गिने गए हफ़्ते:",
+     "bn": "গোনা সপ্তাহ:",
+     "es": "Semanas contadas:",
+     "fr": "Semaines comptées :",
+     "sw": "Wiki zilizohesabiwa:"
+    },
+    {
+     "id": "hc_years",
+     "en": "Days like this: {risk_years} of {year_count} years.",
+     "ne": "यस्ता दिन: {year_count} मध्ये {risk_years} वर्ष।",
+     "ne_review": "needs native-speaker review",
+     "hi": "ऐसे दिन: {year_count} में से {risk_years} साल।",
+     "bn": "এমন দিন: {year_count}-এর মধ্যে {risk_years} বছর।",
+     "es": "Días así: {risk_years} de {year_count} años.",
+     "fr": "Jours comme ça : {risk_years} ans sur {year_count}.",
+     "sw": "Siku kama hizi: miaka {risk_years} kati ya {year_count}."
+    },
+    {
+     "id": "hc_cold_caveat",
+     "en": "Our cold nights may be too many.",
+     "ne": "हाम्रा चिसो रात धेरै गनिएका हुन सक्छन्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "हमारी ठंडी रातें शायद ज़्यादा गिनी गईं।",
+     "bn": "আমাদের ঠান্ডা রাত হয়তো বেশি গোনা।",
+     "es": "Quizá contamos demasiadas noches frías.",
+     "fr": "Nous comptons peut-être trop de nuits froides.",
+     "sw": "Huenda tumehesabu usiku baridi mwingi mno."
+    },
+    {
+     "id": "hc_2040",
+     "en": "Around 2040",
+     "ne": "सन् २०४० तिर",
+     "ne_review": "needs native-speaker review",
+     "hi": "2040 के आसपास",
+     "bn": "2040-এর কাছাকাছি",
+     "es": "Hacia 2040",
+     "fr": "Vers 2040",
+     "sw": "Karibu mwaka 2040"
+    },
+    {
+     "id": "hc_less",
+     "en": "If the world warms less:",
+     "ne": "संसार कम तातिए:",
+     "ne_review": "needs native-speaker review",
+     "hi": "अगर दुनिया कम गर्म हो:",
+     "bn": "পৃথিবী কম গরম হলে:",
+     "es": "Si el mundo se calienta menos:",
+     "fr": "Si le monde se réchauffe moins :",
+     "sw": "Dunia ikipata joto kidogo:"
+    },
+    {
+     "id": "hc_more",
+     "en": "If the world warms more:",
+     "ne": "संसार बढी तातिए:",
+     "ne_review": "needs native-speaker review",
+     "hi": "अगर दुनिया ज़्यादा गर्म हो:",
+     "bn": "পৃথিবী বেশি গরম হলে:",
+     "es": "Si el mundo se calienta más:",
+     "fr": "Si le monde se réchauffe plus :",
+     "sw": "Dunia ikipata joto zaidi:"
+    },
+    {
+     "id": "hc_per_season",
+     "en": "About {per_season} days each season.",
+     "ne": "हरेक सिजन करिब {per_season} दिन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "हर मौसम लगभग {per_season} दिन।",
+     "bn": "প্রতি মৌসুমে প্রায় {per_season} দিন।",
+     "es": "Unos {per_season} días por temporada.",
+     "fr": "Environ {per_season} jours par saison.",
+     "sw": "Takriban siku {per_season} kila msimu."
+    },
+    {
+     "id": "hc_their_past",
+     "en": "Same computer guesses, past years:",
+     "ne": "उही कम्प्युटर अनुमान, विगतका वर्ष:",
+     "ne_review": "needs native-speaker review",
+     "hi": "वही कंप्यूटर अनुमान, पिछले साल:",
+     "bn": "একই কম্পিউটার অনুমান, আগের বছর:",
+     "es": "Mismas estimaciones, años pasados:",
+     "fr": "Mêmes estimations, années passées :",
+     "sw": "Makadirio yale yale, miaka iliyopita:"
+    },
+    {
+     "id": "hc_spread",
+     "en": "Lowest to highest guess:",
+     "ne": "सबैभन्दा कमदेखि बढी अनुमान:",
+     "ne_review": "needs native-speaker review",
+     "hi": "सबसे कम से सबसे ज़्यादा अनुमान:",
+     "bn": "সবচেয়ে কম থেকে বেশি অনুমান:",
+     "es": "Estimación más baja y más alta:",
+     "fr": "Estimation la plus basse et la plus haute :",
+     "sw": "Makadirio ya chini hadi ya juu:"
+    },
+    {
+     "id": "hc_rare_2040",
+     "en": "Still rare around 2040. Good news.",
+     "ne": "सन् २०४० तिर पनि दुर्लभ। राम्रो खबर।",
+     "ne_review": "needs native-speaker review",
+     "hi": "2040 के आसपास भी कम। अच्छी खबर।",
+     "bn": "2040-এর কাছাকাছিও বিরল। ভালো খবর।",
+     "es": "Aún raro hacia 2040. Buena noticia.",
+     "fr": "Encore rare vers 2040. Bonne nouvelle.",
+     "sw": "Bado ni nadra karibu 2040. Habari njema."
+    },
+    {
+     "id": "hc_left_out",
+     "en": "Rice and lentil: no checked limits yet.",
+     "ne": "धान र मसुर: जाँचिएको सीमा अझै छैन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "धान और मसूर: अभी जाँची सीमा नहीं।",
+     "bn": "ধান আর মসুর: যাচাই করা সীমা এখনো নেই।",
+     "es": "Arroz y lenteja: aún sin límites comprobados.",
+     "fr": "Riz et lentille : pas encore de limite vérifiée.",
+     "sw": "Mpunga na dengu: bado hakuna mipaka iliyothibitishwa."
+    },
+    {
+     "id": "why_btn",
+     "en": "Why?",
+     "ne": "किन?",
+     "ne_review": "needs native-speaker review",
+     "hi": "क्यों?",
+     "bn": "কেন?",
+     "es": "¿Por qué?",
+     "fr": "Pourquoi ?",
+     "sw": "Kwa nini?"
+    },
+    {
+     "id": "why_title",
+     "en": "Why we say this",
+     "ne": "हामी किन यसो भन्छौं",
+     "ne_review": "needs native-speaker review",
+     "hi": "हम ऐसा क्यों कहते हैं",
+     "bn": "আমরা কেন এটা বলি",
+     "es": "Por qué decimos esto",
+     "fr": "Pourquoi nous disons cela",
+     "sw": "Kwa nini tunasema hivi"
+    },
+    {
+     "id": "why_sources",
+     "en": "Where this comes from:",
+     "ne": "यो कहाँबाट आयो:",
+     "ne_review": "needs native-speaker review",
+     "hi": "यह कहाँ से आया:",
+     "bn": "এটা কোথা থেকে এল:",
+     "es": "De dónde viene esto:",
+     "fr": "D'où cela vient :",
+     "sw": "Hii inatoka wapi:"
+    },
+    {
+     "id": "cmp_title",
+     "en": "How we compared",
+     "ne": "हामीले कसरी दाँज्यौं",
+     "ne_review": "needs native-speaker review",
+     "hi": "हमने कैसे तुलना की",
+     "bn": "আমরা কীভাবে তুলনা করেছি",
+     "es": "Cómo comparamos",
+     "fr": "Comment nous avons comparé",
+     "sw": "Tulivyolinganisha"
+    },
+    {
+     "id": "cmp_ran",
+     "en": "Both crops, in {year_count} past winters.",
+     "ne": "दुवै बाली, {year_count} पुराना हिउँदमा।",
+     "ne_review": "needs native-speaker review",
+     "hi": "दोनों फ़सलें, {year_count} पुरानी सर्दियों में।",
+     "bn": "দুই ফসল, {year_count} পুরোনো শীতে।",
+     "es": "Ambos cultivos, en {year_count} inviernos pasados.",
+     "fr": "Les deux cultures, sur {year_count} hivers passés.",
+     "sw": "Mazao yote, katika baridi {year_count} zilizopita."
+    },
+    {
+     "id": "cmp_winters",
+     "en": "winters",
+     "ne": "हिउँद",
+     "ne_review": "needs native-speaker review",
+     "hi": "सर्दियाँ",
+     "bn": "শীত",
+     "es": "inviernos",
+     "fr": "hivers",
+     "sw": "baridi"
+    },
+    {
+     "id": "better_means",
+     "en": "Better means more water need met by rain.",
+     "ne": "राम्रो भनेको: चाहिने पानी वर्षाले बढी पुग्नु।",
+     "ne_review": "needs native-speaker review",
+     "hi": "बेहतर यानी ज़रूरी पानी बारिश से ज़्यादा मिले।",
+     "bn": "ভালো মানে: দরকারি পানি বৃষ্টিতে বেশি মেটে।",
+     "es": "Mejor: la lluvia cubre más agua necesaria.",
+     "fr": "Mieux : la pluie couvre plus le besoin d'eau.",
+     "sw": "Bora: mvua inakidhi maji zaidi yanayohitajika."
+    },
+    {
+     "id": "better_not",
+     "en": "Not price, not labour, not taste.",
+     "ne": "मूल्य, श्रम वा स्वाद होइन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "दाम, मेहनत या स्वाद नहीं।",
+     "bn": "দাম, শ্রম বা স্বাদ নয়।",
+     "es": "No precio, no trabajo, no sabor.",
+     "fr": "Ni prix, ni travail, ni goût.",
+     "sw": "Si bei, si kazi, si ladha."
+    },
+    {
+     "id": "water_yes_1",
+     "en": "With water, dry spells stop mattering.",
+     "ne": "पानी लगाउन सके, सुक्खा समयले फरक पार्दैन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "पानी हो तो सूखे दिन मायने नहीं रखते।",
+     "bn": "পানি থাকলে শুকনো দিনে কিছু যায় আসে না।",
+     "es": "Con riego, las rachas secas no importan.",
+     "fr": "Avec de l'eau, les jours secs comptent peu.",
+     "sw": "Ukimwagilia, siku kavu hazijalishi."
+    },
+    {
+     "id": "water_yes_2",
+     "en": "Our computer looks at water only.",
+     "ne": "हाम्रो कम्प्युटरले पानी मात्र हेर्छ।",
+     "ne_review": "needs native-speaker review",
+     "hi": "हमारा कंप्यूटर सिर्फ़ पानी देखता है।",
+     "bn": "আমাদের কম্পিউটার শুধু পানি দেখে।",
+     "es": "Nuestro ordenador solo mira el agua.",
+     "fr": "Notre ordinateur ne regarde que l'eau.",
+     "sw": "Kompyuta yetu huangalia maji tu."
+    },
+    {
+     "id": "boxes_only",
+     "en": "Boxes: the coming months only, rain only.",
+     "ne": "कोठा: आउने महिना मात्र, वर्षा मात्र।",
+     "ne_review": "needs native-speaker review",
+     "hi": "खाने: सिर्फ़ आने वाले महीने, सिर्फ़ बारिश।",
+     "bn": "ঘর: শুধু আসছে মাস, শুধু বৃষ্টি।",
+     "es": "Cuadros: solo los próximos meses, solo lluvia.",
+     "fr": "Cases : les mois à venir, la pluie seule.",
+     "sw": "Visanduku: miezi ijayo tu, mvua tu."
+    },
+    {
+     "id": "scores_all_year",
+     "en": "Plan scores count both crops, all year.",
+     "ne": "योजनाको अङ्क: दुवै बाली, पूरा वर्ष।",
+     "ne_review": "needs native-speaker review",
+     "hi": "योजना के अंक: दोनों फ़सलें, पूरा साल।",
+     "bn": "পরিকল্পনার নম্বর: দুই ফসল, সারা বছর।",
+     "es": "El plan cuenta ambos cultivos, todo el año.",
+     "fr": "Le plan compte les deux cultures, toute l'année.",
+     "sw": "Alama za mpango: mazao yote, mwaka mzima."
     }
    ],
    "labels": {
@@ -3318,6 +4352,193 @@
      "es": "Otras opciones",
      "fr": "Autres choix",
      "sw": "Machaguo mengine"
+    },
+    {
+     "id": "fs_title",
+     "en": "Fertiliser saver",
+     "ne": "मल बचत",
+     "ne_review": "needs native-speaker review",
+     "hi": "खाद की बचत",
+     "bn": "সার সাশ্রয়",
+     "es": "Ahorro de fertilizante",
+     "fr": "Économie d'engrais",
+     "sw": "Kuokoa mbolea"
+    },
+    {
+     "id": "fs_lead",
+     "en": "{next_crop} after {legume_crop} may need less urea.",
+     "ne": "{legume_crop}पछिको {next_crop}लाई कम युरिया चाहिन सक्छ।",
+     "ne_review": "needs native-speaker review",
+     "hi": "{legume_crop} के बाद {next_crop}: शायद कम यूरिया।",
+     "bn": "{legume_crop}-এর পরে {next_crop}: হয়তো কম ইউরিয়া।",
+     "es": "{next_crop} tras {legume_crop} quizá necesite menos urea.",
+     "fr": "{next_crop} après {legume_crop} : peut-être moins d'urée.",
+     "sw": "{next_crop} baada ya {legume_crop} huenda ikahitaji urea kidogo."
+    },
+    {
+     "id": "fs_saved",
+     "en": "Maybe {bags_low} to {bags_high} fewer urea bags.",
+     "ne": "सायद {bags_low} देखि {bags_high} बोरा कम युरिया।",
+     "ne_review": "needs native-speaker review",
+     "hi": "शायद {bags_low} से {bags_high} बोरी कम यूरिया।",
+     "bn": "হয়তো {bags_low} থেকে {bags_high} বস্তা কম ইউরিয়া।",
+     "es": "Quizá {bags_low} a {bags_high} sacos menos de urea.",
+     "fr": "Peut-être {bags_low} à {bags_high} sacs d'urée en moins.",
+     "sw": "Huenda mifuko {bags_low} hadi {bags_high} ya urea pungufu."
+    },
+    {
+     "id": "fs_plot",
+     "en": "Counted for one big plot of land.",
+     "ne": "एउटा ठूलो जग्गाका लागि गनिएको।",
+     "ne_review": "needs native-speaker review",
+     "hi": "एक बड़े खेत के लिए गिना गया।",
+     "bn": "একটি বড় জমির জন্য গোনা।",
+     "es": "Contado para un terreno grande.",
+     "fr": "Compté pour une grande parcelle.",
+     "sw": "Imehesabiwa kwa shamba moja kubwa."
+    },
+    {
+     "id": "fs_size_why",
+     "en": "See its size under Why.",
+     "ne": "जग्गाको नाप ‘किन’ भित्र हेर्नुहोस्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "खेत का नाप ‘क्यों’ में देखें।",
+     "bn": "জমির মাপ ‘কেন’-তে দেখুন।",
+     "es": "Vea su tamaño en «Por qué».",
+     "fr": "Voir sa taille dans « Pourquoi ».",
+     "sw": "Ona ukubwa wake kwenye ‘Kwa nini’."
+    },
+    {
+     "id": "fs_wide",
+     "en": "This is a wide guess, not a promise.",
+     "ne": "यो फराकिलो अनुमान हो, वाचा होइन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "यह मोटा अनुमान है, वादा नहीं।",
+     "bn": "এটা মোটা অনুমান, প্রতিশ্রুতি নয়।",
+     "es": "Es una estimación amplia, no una promesa.",
+     "fr": "C'est une estimation large, pas une promesse.",
+     "sw": "Haya ni makadirio mapana, si ahadi."
+    },
+    {
+     "id": "fs_measured_less",
+     "en": "One field study found much less.",
+     "ne": "एउटा खेत-अध्ययनले धेरै कम भेट्यो।",
+     "ne_review": "needs native-speaker review",
+     "hi": "एक खेत अध्ययन में बहुत कम मिला।",
+     "bn": "একটি মাঠ-গবেষণায় অনেক কম পাওয়া গেছে।",
+     "es": "Un estudio de campo halló mucho menos.",
+     "fr": "Une étude de terrain a trouvé bien moins.",
+     "sw": "Utafiti mmoja wa shambani ulipata kidogo sana."
+    },
+    {
+     "id": "fs_short",
+     "en": "Urea can be short at rice planting.",
+     "ne": "धान रोप्ने बेला युरिया अभाव हुन सक्छ।",
+     "ne_review": "needs native-speaker review",
+     "hi": "धान रोपाई में यूरिया की कमी संभव।",
+     "bn": "ধান রোপণের সময় ইউরিয়ার অভাব হতে পারে।",
+     "es": "La urea puede escasear al plantar arroz.",
+     "fr": "L'urée peut manquer au repiquage du riz.",
+     "sw": "Urea inaweza kukosekana wakati wa kupanda mpunga."
+    },
+    {
+     "id": "fs_ask",
+     "en": "Ask your agriculture office before using less.",
+     "ne": "कम गर्नुअघि कृषि कार्यालयलाई सोध्नुहोस्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "कम करने से पहले कृषि दफ़्तर से पूछें।",
+     "bn": "কমানোর আগে কৃষি অফিসে জিজ্ঞেস করুন।",
+     "es": "Pregunte a su oficina agrícola antes de reducir.",
+     "fr": "Demandez au bureau agricole avant de réduire.",
+     "sw": "Uliza ofisi ya kilimo kabla ya kupunguza."
+    },
+    {
+     "id": "sub3",
+     "en": "Rain and cold ahead, and what to grow.",
+     "ne": "आउने वर्षा र जाडो, र के लगाउने।",
+     "ne_review": "needs native-speaker review",
+     "hi": "आने वाली बारिश और ठंड, और क्या उगाएँ।",
+     "bn": "সামনের বৃষ্টি আর শীত, আর কী চাষ করবেন।",
+     "es": "Lluvia y frío por venir, y qué sembrar.",
+     "fr": "Pluie et froid à venir, et quoi cultiver.",
+     "sw": "Mvua na baridi zijazo, na nini cha kupanda."
+    },
+    {
+     "id": "see3",
+     "en": "See the next 3 months",
+     "ne": "अर्को ३ महिना हेर्नुहोस्",
+     "ne_review": "needs native-speaker review",
+     "hi": "अगले 3 महीने देखें",
+     "bn": "পরের 3 মাস দেখুন",
+     "es": "Ver los próximos 3 meses",
+     "fr": "Voir les 3 prochains mois",
+     "sw": "Ona miezi 3 ijayo"
+    },
+    {
+     "id": "our_pick",
+     "en": "Our suggestion",
+     "ne": "हाम्रो सुझाव",
+     "ne_review": "needs native-speaker review",
+     "hi": "हमारा सुझाव",
+     "bn": "আমাদের পরামর্শ",
+     "es": "Nuestra sugerencia",
+     "fr": "Notre suggestion",
+     "sw": "Pendekezo letu"
+    },
+    {
+     "id": "try_part",
+     "en": "Try it in one part first",
+     "ne": "पहिले एक भागमा लगाएर हेर्नुहोस्",
+     "ne_review": "needs native-speaker review",
+     "hi": "पहले एक हिस्से में आज़माएँ",
+     "bn": "আগে এক ভাগে চেষ্টা করুন",
+     "es": "Pruébelo primero en una parte",
+     "fr": "Essayez d'abord sur une partie",
+     "sw": "Jaribu kwanza katika sehemu moja"
+    },
+    {
+     "id": "line_pre",
+     "en": "Rain only: better in",
+     "ne": "वर्षा मात्र: राम्रो,",
+     "ne_review": "needs native-speaker review",
+     "hi": "सिर्फ़ बारिश: बेहतर,",
+     "bn": "শুধু বৃষ্টি: ভালো,",
+     "es": "Solo lluvia: mejor en",
+     "fr": "Pluie seule : mieux",
+     "sw": "Mvua tu: bora mara"
+    },
+    {
+     "id": "line_post",
+     "en": "of 10 winters",
+     "ne": "पटक, हरेक १० हिउँदमा",
+     "ne_review": "needs native-speaker review",
+     "hi": "बार, हर 10 सर्दियों में",
+     "bn": "বার, প্রতি 10 শীতে",
+     "es": "de cada 10 inviernos",
+     "fr": "hivers sur 10",
+     "sw": "kati ya baridi 10"
+    },
+    {
+     "id": "line_same",
+     "en": "Rain only: about the same as now",
+     "ne": "वर्षा मात्र: अहिलेजस्तै, करिब उस्तै",
+     "ne_review": "needs native-speaker review",
+     "hi": "सिर्फ़ बारिश: लगभग अभी जैसा",
+     "bn": "শুধু বৃষ্টি: প্রায় এখনকার মতো",
+     "es": "Solo lluvia: más o menos igual",
+     "fr": "Pluie seule : à peu près pareil",
+     "sw": "Mvua tu: karibu sawa na sasa"
+    },
+    {
+     "id": "line_worse",
+     "en": "Rain only: worse than now",
+     "ne": "वर्षा मात्र: अहिलेभन्दा कमजोर",
+     "ne_review": "needs native-speaker review",
+     "hi": "सिर्फ़ बारिश: अभी से कमज़ोर",
+     "bn": "শুধু বৃষ্টি: এখনকার চেয়ে খারাপ",
+     "es": "Solo lluvia: peor que ahora",
+     "fr": "Pluie seule : moins bien qu'avant",
+     "sw": "Mvua tu: mbaya kuliko sasa"
     }
    ],
    "labels": {
@@ -5158,6 +6379,730 @@
     "es": "y",
     "fr": "et",
     "sw": "na"
+   }
+  },
+  "weather": {
+   "title": {
+    "en": "Weather ahead",
+    "ne": "आउँदो मौसम",
+    "ne_review": "needs native-speaker review",
+    "hi": "आने वाला मौसम",
+    "bn": "সামনের আবহাওয়া",
+    "es": "El tiempo que viene",
+    "fr": "La météo à venir",
+    "sw": "Hali ya hewa ijayo"
+   },
+   "choice_sub": {
+    "en": "What each month usually brings.",
+    "ne": "हरेक महिना प्रायः के हुन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हर महीना आमतौर पर क्या लाता है।",
+    "bn": "প্রতি মাসে সাধারণত কী হয়।",
+    "es": "Lo que suele traer cada mes.",
+    "fr": "Ce que chaque mois apporte d'habitude.",
+    "sw": "Kile kila mwezi huleta kwa kawaida."
+   },
+   "top": {
+    "en": "What usually happens here: {year_count} years of records.",
+    "ne": "यहाँ प्रायः के हुन्छ: {year_count} वर्षको अभिलेख।",
+    "ne_review": "needs native-speaker review",
+    "hi": "यहाँ आम तौर पर: {year_count} वर्षों का रिकॉर्ड।",
+    "bn": "এখানে সাধারণত কী হয়: {year_count} বছরের রেকর্ড।",
+    "es": "Lo habitual aquí: {year_count} años de registros.",
+    "fr": "L'habitude ici : {year_count} ans de relevés.",
+    "sw": "Kinachotokea kwa kawaida hapa: rekodi za miaka {year_count}."
+   },
+   "not_forecast": {
+    "en": "Not a forecast.",
+    "ne": "यो पूर्वानुमान होइन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "यह पूर्वानुमान नहीं है।",
+    "bn": "এটি পূর্বাভাস নয়।",
+    "es": "No es un pronóstico.",
+    "fr": "Ce n'est pas une prévision.",
+    "sw": "Huu si utabiri."
+   },
+   "usually": {
+    "en": "Usually:",
+    "ne": "प्रायः:",
+    "ne_review": "needs native-speaker review",
+    "hi": "आमतौर पर:",
+    "bn": "সাধারণত:",
+    "es": "Suele ser:",
+    "fr": "D'habitude :",
+    "sw": "Kwa kawaida:"
+   },
+   "rain_dry": {
+    "en": "dry",
+    "ne": "सुक्खा",
+    "ne_review": "needs native-speaker review",
+    "hi": "सूखा",
+    "bn": "শুকনো",
+    "es": "seco",
+    "fr": "sec",
+    "sw": "kavu"
+   },
+   "rain_some_rain": {
+    "en": "some rain",
+    "ne": "थोरै पानी",
+    "ne_review": "needs native-speaker review",
+    "hi": "थोड़ी बारिश",
+    "bn": "কিছু বৃষ্টি",
+    "es": "algo de lluvia",
+    "fr": "un peu de pluie",
+    "sw": "mvua kidogo"
+   },
+   "rain_wet": {
+    "en": "wet",
+    "ne": "धेरै पानी",
+    "ne_review": "needs native-speaker review",
+    "hi": "गीला",
+    "bn": "ভেজা",
+    "es": "húmedo",
+    "fr": "humide",
+    "sw": "mvua nyingi"
+   },
+   "temp_cold": {
+    "en": "cold",
+    "ne": "चिसो",
+    "ne_review": "needs native-speaker review",
+    "hi": "ठंडा",
+    "bn": "ঠান্ডা",
+    "es": "frío",
+    "fr": "froid",
+    "sw": "baridi"
+   },
+   "temp_mild": {
+    "en": "mild",
+    "ne": "न चिसो न तातो",
+    "ne_review": "needs native-speaker review",
+    "hi": "हल्का",
+    "bn": "মৃদু",
+    "es": "templado",
+    "fr": "doux",
+    "sw": "wastani"
+   },
+   "temp_warm": {
+    "en": "warm",
+    "ne": "तातो",
+    "ne_review": "needs native-speaker review",
+    "hi": "गर्म",
+    "bn": "গরম",
+    "es": "cálido",
+    "fr": "chaud",
+    "sw": "joto"
+   },
+   "watch": {
+    "en": "Watch out:",
+    "ne": "सावधान:",
+    "ne_review": "needs native-speaker review",
+    "hi": "सावधान:",
+    "bn": "সাবধান:",
+    "es": "Cuidado:",
+    "fr": "Attention :",
+    "sw": "Tahadhari:"
+   },
+   "potato_cold": {
+    "en": "Cold nights for {crop}.",
+    "ne": "{crop}लाई चिसो रात।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} के लिए ठंडी रातें।",
+    "bn": "{crop}-এর জন্য ঠান্ডা রাত।",
+    "es": "Noches frías para {crop}.",
+    "fr": "Nuits froides pour {crop}.",
+    "sw": "Usiku wa baridi kwa {crop}."
+   },
+   "potato_heat": {
+    "en": "Hot days for {crop}.",
+    "ne": "{crop}लाई तातो दिन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} के लिए गर्म दिन।",
+    "bn": "{crop}-এর জন্য গরম দিন।",
+    "es": "Días calurosos para {crop}.",
+    "fr": "Jours chauds pour {crop}.",
+    "sw": "Siku za joto kwa {crop}."
+   },
+   "wheat_flower_frost": {
+    "en": "Frost on {crop} flowers.",
+    "ne": "{crop}को फूलमा तुसारो।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} के फूलों पर पाला।",
+    "bn": "{crop}-এর ফুলে তুষারপাত।",
+    "es": "Helada en las flores de {crop}.",
+    "fr": "Gel sur les fleurs de {crop}.",
+    "sw": "Barafu kwenye maua ya {crop}."
+   },
+   "wheat_floret_heat": {
+    "en": "Heat before {crop} flowers.",
+    "ne": "{crop} फुल्नुअघि गर्मी।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} में फूल आने से पहले गर्मी।",
+    "bn": "{crop}-এ ফুল আসার আগে গরম।",
+    "es": "Calor antes de que florezca {crop}.",
+    "fr": "Chaleur avant la floraison de {crop}.",
+    "sw": "Joto kabla {crop} haijachanua."
+   },
+   "wheat_grain_heat": {
+    "en": "Heat while {crop} grain fills.",
+    "ne": "{crop}को दाना भरिँदा गर्मी।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} के दाने भरते समय गर्मी।",
+    "bn": "{crop}-এর দানা ভরার সময় গরম।",
+    "es": "Calor mientras se llena el grano de {crop}.",
+    "fr": "Chaleur quand le grain de {crop} se remplit.",
+    "sw": "Joto wakati nafaka ya {crop} inajaa."
+   },
+   "dry_spell": {
+    "en": "Weeks without rain for {crop}.",
+    "ne": "{crop}लाई हप्तौंसम्म पानी पर्दैन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} के लिए हफ़्तों तक बारिश नहीं।",
+    "bn": "{crop}-এর জন্য সপ্তাহের পর সপ্তাহ বৃষ্টি নেই।",
+    "es": "Semanas sin lluvia para {crop}.",
+    "fr": "Des semaines sans pluie pour {crop}.",
+    "sw": "Wiki bila mvua kwa {crop}."
+   },
+   "big_rain_sowing": {
+    "en": "Big rain at {crop} sowing.",
+    "ne": "{crop} लगाउँदा ठूलो पानी।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} की बुवाई पर भारी बारिश।",
+    "bn": "{crop} বোনার সময় বড় বৃষ্টি।",
+    "es": "Lluvia fuerte en la siembra de {crop}.",
+    "fr": "Grosse pluie au semis de {crop}.",
+    "sw": "Mvua kubwa wakati wa kupanda {crop}."
+   },
+   "big_rain_harvest": {
+    "en": "Big rain at {crop} harvest.",
+    "ne": "{crop} भित्र्याउँदा ठूलो पानी।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} की कटाई पर भारी बारिश।",
+    "bn": "{crop} কাটার সময় বড় বৃষ্টি।",
+    "es": "Lluvia fuerte en la cosecha de {crop}.",
+    "fr": "Grosse pluie à la récolte de {crop}.",
+    "sw": "Mvua kubwa wakati wa kuvuna {crop}."
+   },
+   "nothing": {
+    "en": "Nothing big in past years.",
+    "ne": "विगतका वर्षमा ठूलो खतरा देखिएन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "पिछले वर्षों में कोई बड़ा ख़तरा नहीं।",
+    "bn": "আগের বছরগুলোতে বড় বিপদ দেখা যায়নি।",
+    "es": "Nada grave en años pasados.",
+    "fr": "Rien de grave les années passées.",
+    "sw": "Hakuna hatari kubwa miaka iliyopita."
+   },
+   "most": {
+    "en": "Most years.",
+    "ne": "धेरैजसो वर्ष।",
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़्यादातर वर्षों में।",
+    "bn": "বেশিরভাগ বছরে।",
+    "es": "La mayoría de los años.",
+    "fr": "La plupart des années.",
+    "sw": "Miaka mingi."
+   },
+   "some": {
+    "en": "Some years.",
+    "ne": "कुनै कुनै वर्ष।",
+    "ne_review": "needs native-speaker review",
+    "hi": "कुछ वर्षों में।",
+    "bn": "কিছু বছরে।",
+    "es": "Algunos años.",
+    "fr": "Certaines années.",
+    "sw": "Baadhi ya miaka."
+   },
+   "do": {
+    "en": "Do this:",
+    "ne": "यो गर्नुहोस्:",
+    "ne_review": "needs native-speaker review",
+    "hi": "यह करें:",
+    "bn": "এটি করুন:",
+    "es": "Haga esto:",
+    "fr": "À faire :",
+    "sw": "Fanya hivi:"
+   },
+   "tip_cold": {
+    "en": "Cover young plants on clear, cold nights.",
+    "ne": "सफा, चिसो रातमा साना बिरुवा छोप्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "साफ़, ठंडी रातों में छोटे पौधे ढकें।",
+    "bn": "পরিষ্কার, ঠান্ডা রাতে ছোট চারা ঢেকে দিন।",
+    "es": "Cubra las plantas jóvenes en noches frías.",
+    "fr": "Couvrez les jeunes plants les nuits froides.",
+    "sw": "Funika mimea michanga usiku wa baridi."
+   },
+   "tip_heat": {
+    "en": "Water in the evening on hot days.",
+    "ne": "तातो दिनमा बेलुका पानी दिनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "गर्म दिनों में शाम को पानी दें।",
+    "bn": "গরম দিনে সন্ধ্যায় পানি দিন।",
+    "es": "Riegue por la tarde en días calurosos.",
+    "fr": "Arrosez le soir les jours chauds.",
+    "sw": "Mwagilia jioni siku za joto."
+   },
+   "tip_dry_spell": {
+    "en": "Water before flowering if no rain.",
+    "ne": "पानी नपरे फुल्नुअघि सिँचाइ गर्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "बारिश न हो, तो फूल से पहले सींचें।",
+    "bn": "বৃষ্টি না হলে ফুল আসার আগে পানি দিন।",
+    "es": "Riegue antes de la floración si no llueve.",
+    "fr": "Arrosez avant la floraison s'il ne pleut pas.",
+    "sw": "Mwagilia kabla ya kuchanua kama hakuna mvua."
+   },
+   "tip_big_rain": {
+    "en": "Clear drains before the rains.",
+    "ne": "पानी पर्नुअघि कुलो सफा गर्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "बारिश से पहले नालियाँ साफ़ करें।",
+    "bn": "বৃষ্টির আগে নালা পরিষ্কার করুন।",
+    "es": "Limpie los desagües antes de las lluvias.",
+    "fr": "Dégagez les rigoles avant les pluies.",
+    "sw": "Safisha mifereji kabla ya mvua."
+   },
+   "tip_end": {
+    "en": "Check with your local expert.",
+    "ne": "स्थानीय कृषि प्राविधिकसँग सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अपने स्थानीय विशेषज्ञ से पूछें।",
+    "bn": "আপনার স্থানীয় বিশেষজ্ঞকে জিজ্ঞেস করুন।",
+    "es": "Consulte a su experto local.",
+    "fr": "Demandez à votre conseiller local.",
+    "sw": "Muulize mtaalamu wa eneo lako."
+   },
+   "why": {
+    "en": "Why?",
+    "ne": "किन?",
+    "ne_review": "needs native-speaker review",
+    "hi": "क्यों?",
+    "bn": "কেন?",
+    "es": "¿Por qué?",
+    "fr": "Pourquoi ?",
+    "sw": "Kwa nini?"
+   },
+   "years": {
+    "en": "In {danger_years} of {year_count} past years.",
+    "ne": "विगतका {year_count} मध्ये {danger_years} वर्षमा।",
+    "ne_review": "needs native-speaker review",
+    "hi": "पिछले {year_count} में से {danger_years} वर्षों में।",
+    "bn": "আগের {year_count} বছরের {danger_years} বছরে।",
+    "es": "En {danger_years} de {year_count} años pasados.",
+    "fr": "Dans {danger_years} des {year_count} dernières années.",
+    "sw": "Katika miaka {danger_years} kati ya {year_count} iliyopita."
+   },
+   "changing": {
+    "en": "Is it changing?",
+    "ne": "के यो बदलिँदैछ?",
+    "ne_review": "needs native-speaker review",
+    "hi": "क्या यह बदल रहा है?",
+    "bn": "এটা কি বদলাচ্ছে?",
+    "es": "¿Está cambiando?",
+    "fr": "Est-ce que ça change ?",
+    "sw": "Je, inabadilika?"
+   },
+   "change_more_common": {
+    "en": "Happening more often.",
+    "ne": "धेरै पटक हुन थालेको छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अब ज़्यादा बार होता है।",
+    "bn": "এখন বেশি বার হচ্ছে।",
+    "es": "Pasa más a menudo.",
+    "fr": "Cela arrive plus souvent.",
+    "sw": "Inatokea mara nyingi zaidi."
+   },
+   "change_less_common": {
+    "en": "Happening less often.",
+    "ne": "कम पटक हुन थालेको छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अब कम बार होता है।",
+    "bn": "এখন কম বার হচ্ছে।",
+    "es": "Pasa menos a menudo.",
+    "fr": "Cela arrive moins souvent.",
+    "sw": "Inatokea mara chache zaidi."
+   },
+   "change_about_same": {
+    "en": "No clear change.",
+    "ne": "स्पष्ट फेरबदल छैन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "कोई साफ़ बदलाव नहीं।",
+    "bn": "স্পষ্ট কোনো পরিবর্তন নেই।",
+    "es": "Ningún cambio claro.",
+    "fr": "Pas de changement net.",
+    "sw": "Hakuna mabadiliko wazi."
+   },
+   "change_cant_tell": {
+    "en": "Can't tell yet.",
+    "ne": "अहिले भन्न सकिँदैन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अभी कह नहीं सकते।",
+    "bn": "এখনও বলা যায় না।",
+    "es": "Aún no se puede saber.",
+    "fr": "On ne peut pas encore dire.",
+    "sw": "Bado hatuwezi kusema."
+   },
+   "none_seen": {
+    "en": "Not seen in these years. Good news.",
+    "ne": "यी वर्षमा देखिएन। राम्रो खबर।",
+    "ne_review": "needs native-speaker review",
+    "hi": "इन वर्षों में नहीं दिखा। अच्छी ख़बर।",
+    "bn": "এই বছরগুলোতে দেখা যায়নি। ভালো খবর।",
+    "es": "No se vio en estos años. Buena noticia.",
+    "fr": "Pas vu ces années-là. Bonne nouvelle.",
+    "sw": "Haikuonekana miaka hii. Habari njema."
+   },
+   "other_dangers": {
+    "en": "Other dangers",
+    "ne": "अरू खतरा",
+    "ne_review": "needs native-speaker review",
+    "hi": "अन्य ख़तरे",
+    "bn": "অন্য বিপদ",
+    "es": "Otros peligros",
+    "fr": "Autres dangers",
+    "sw": "Hatari nyingine"
+   },
+   "rain_label": {
+    "en": "Rain in this month",
+    "ne": "यो महिनाको पानी",
+    "ne_review": "needs native-speaker review",
+    "hi": "इस महीने की बारिश",
+    "bn": "এই মাসের বৃষ্টি",
+    "es": "Lluvia de este mes",
+    "fr": "Pluie de ce mois",
+    "sw": "Mvua ya mwezi huu"
+   },
+   "day_label": {
+    "en": "Day temperature",
+    "ne": "दिउँसोको तापक्रम",
+    "ne_review": "needs native-speaker review",
+    "hi": "दिन का तापमान",
+    "bn": "দিনের তাপমাত্রা",
+    "es": "Temperatura de día",
+    "fr": "Température le jour",
+    "sw": "Joto la mchana"
+   },
+   "night_label": {
+    "en": "Night temperature",
+    "ne": "रातको तापक्रम",
+    "ne_review": "needs native-speaker review",
+    "hi": "रात का तापमान",
+    "bn": "রাতের তাপমাত্রা",
+    "es": "Temperatura de noche",
+    "fr": "Température la nuit",
+    "sw": "Joto la usiku"
+   },
+   "dry_label": {
+    "en": "Longest run of dry days",
+    "ne": "लगातार सुक्खा दिन, सबैभन्दा लामो",
+    "ne_review": "needs native-speaker review",
+    "hi": "लगातार सूखे दिन, सबसे लंबा",
+    "bn": "টানা শুকনো দিন, সবচেয়ে লম্বা",
+    "es": "Racha más larga de días secos",
+    "fr": "Plus longue suite de jours secs",
+    "sw": "Siku kavu mfululizo, ndefu zaidi"
+   },
+   "usual_year": {
+    "en": "usual year",
+    "ne": "सामान्य वर्ष",
+    "ne_review": "needs native-speaker review",
+    "hi": "सामान्य वर्ष",
+    "bn": "সাধারণ বছর",
+    "es": "año normal",
+    "fr": "année habituelle",
+    "sw": "mwaka wa kawaida"
+   },
+   "worst_years": {
+    "en": "worst years",
+    "ne": "सबैभन्दा खराब वर्ष",
+    "ne_review": "needs native-speaker review",
+    "hi": "सबसे बुरे वर्ष",
+    "bn": "সবচেয়ে খারাপ বছর",
+    "es": "peores años",
+    "fr": "pires années",
+    "sw": "miaka mibaya zaidi"
+   },
+   "frost_label": {
+    "en": "Frost",
+    "ne": "तुसारो",
+    "ne_review": "needs native-speaker review",
+    "hi": "पाला",
+    "bn": "তুষারপাত",
+    "es": "Helada",
+    "fr": "Gel",
+    "sw": "Barafu"
+   },
+   "frost_none": {
+    "en": "no frost",
+    "ne": "तुसारो छैन",
+    "ne_review": "needs native-speaker review",
+    "hi": "पाला नहीं",
+    "bn": "তুষারপাত নেই",
+    "es": "sin helada",
+    "fr": "pas de gel",
+    "sw": "hakuna barafu"
+   },
+   "frost_risk": {
+    "en": "frost possible",
+    "ne": "तुसारो पर्न सक्छ",
+    "ne_review": "needs native-speaker review",
+    "hi": "पाला संभव",
+    "bn": "তুষারপাত হতে পারে",
+    "es": "helada posible",
+    "fr": "gel possible",
+    "sw": "barafu inawezekana"
+   },
+   "frost_high": {
+    "en": "frost likely",
+    "ne": "तुसारो पर्ने सम्भावना धेरै",
+    "ne_review": "needs native-speaker review",
+    "hi": "पाला संभावित",
+    "bn": "তুষারপাতের সম্ভাবনা বেশি",
+    "es": "helada probable",
+    "fr": "gel probable",
+    "sw": "barafu ina uwezekano mkubwa"
+   },
+   "frost_note1": {
+    "en": "Our cold nights may be too many.",
+    "ne": "हाम्रा चिसो रात धेरै गनिएका हुन सक्छन्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हमारी ठंडी रातें ज़्यादा गिनी हो सकती हैं।",
+    "bn": "আমাদের ঠান্ডা রাত বেশি গোনা হতে পারে।",
+    "es": "Quizá contamos demasiadas noches frías.",
+    "fr": "Nous comptons peut-être trop de nuits froides.",
+    "sw": "Huenda tunahesabu usiku wa baridi mwingi mno."
+   },
+   "frost_note2": {
+    "en": "Bhaktapur's own nights are often colder.",
+    "ne": "भक्तपुरका आफ्नै रात प्रायः अझ चिसो हुन्छन्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "भक्तपुर की रातें अक्सर और ठंडी होती हैं।",
+    "bn": "ভক্তপুরের নিজের রাত প্রায়ই আরও ঠান্ডা।",
+    "es": "Las noches de Bhaktapur suelen ser más frías.",
+    "fr": "Les nuits de Bhaktapur sont souvent plus froides.",
+    "sw": "Usiku wa Bhaktapur mara nyingi ni baridi zaidi."
+   },
+   "big_rain_note1": {
+    "en": "Big rain here means 20 mm a day.",
+    "ne": "यहाँ ठूलो पानी भनेको दिनमा २० मिमि।",
+    "ne_review": "needs native-speaker review",
+    "hi": "यहाँ भारी बारिश यानी दिन में 20 मिमी।",
+    "bn": "এখানে বড় বৃষ্টি মানে দিনে 20 মিমি।",
+    "es": "Aquí lluvia fuerte es 20 mm al día.",
+    "fr": "Ici, grosse pluie = 20 mm par jour.",
+    "sw": "Hapa mvua kubwa ni mm 20 kwa siku."
+   },
+   "big_rain_note2": {
+    "en": "The weather office calls 50 mm heavy.",
+    "ne": "मौसम कार्यालयले ५० मिमिलाई भारी भन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मौसम विभाग 50 मिमी को भारी कहता है।",
+    "bn": "আবহাওয়া অফিস 50 মিমিকে ভারী বলে।",
+    "es": "Meteorología llama fuerte a 50 mm.",
+    "fr": "La météo dit forte pluie dès 50 mm.",
+    "sw": "Idara ya hewa huita mm 50 nzito."
+   },
+   "dry_note": {
+    "en": "A dry day has under 1 mm.",
+    "ne": "सुक्खा दिनमा १ मिमिभन्दा कम पानी।",
+    "ne_review": "needs native-speaker review",
+    "hi": "सूखे दिन में 1 मिमी से कम बारिश।",
+    "bn": "শুকনো দিনে 1 মিমির কম বৃষ্টি।",
+    "es": "Un día seco tiene menos de 1 mm.",
+    "fr": "Un jour sec a moins de 1 mm.",
+    "sw": "Siku kavu ina chini ya mm 1."
+   },
+   "estimate": {
+    "en": "This is an estimate.",
+    "ne": "यो अनुमान हो।",
+    "ne_review": "needs native-speaker review",
+    "hi": "यह एक अनुमान है।",
+    "bn": "এটি একটি অনুমান।",
+    "es": "Es una estimación.",
+    "fr": "C'est une estimation.",
+    "sw": "Hii ni makadirio."
+   },
+   "sources": {
+    "en": "Where this comes from",
+    "ne": "यो कहाँबाट आयो",
+    "ne_review": "needs native-speaker review",
+    "hi": "यह कहाँ से आया",
+    "bn": "এটি কোথা থেকে এল",
+    "es": "De dónde viene esto",
+    "fr": "D'où cela vient",
+    "sw": "Hii imetoka wapi"
+   },
+   "days_word": {
+    "en": "days",
+    "ne": "दिन",
+    "ne_review": "needs native-speaker review",
+    "hi": "दिन",
+    "bn": "দিন",
+    "es": "días",
+    "fr": "jours",
+    "sw": "siku"
+   }
+  },
+  "twin": {
+   "h1": {
+    "en": "How we test each plan",
+    "ne": "हामी हरेक योजना कसरी जाँच्छौं",
+    "ne_review": "needs native-speaker review",
+    "hi": "हम हर योजना कैसे जाँचते हैं",
+    "bn": "আমরা প্রতিটি পরিকল্পনা কীভাবে যাচাই করি",
+    "es": "Cómo probamos cada plan",
+    "fr": "Comment nous testons chaque plan",
+    "sw": "Jinsi tunavyopima kila mpango"
+   },
+   "h2": {
+    "en": "Four simple steps.",
+    "ne": "चारवटा सजिला चरण।",
+    "ne_review": "needs native-speaker review",
+    "hi": "चार आसान कदम।",
+    "bn": "চারটি সহজ ধাপ।",
+    "es": "Cuatro pasos sencillos.",
+    "fr": "Quatre étapes simples.",
+    "sw": "Hatua nne rahisi."
+   },
+   "step1": {
+    "en": "NASA watched your area for {year_count} years.",
+    "ne": "नासाले तपाईंको क्षेत्र {year_count} वर्ष हेर्‍यो।",
+    "ne_review": "needs native-speaker review",
+    "hi": "नासा ने आपके इलाक़े को {year_count} वर्ष देखा।",
+    "bn": "নাসা আপনার এলাকা {year_count} বছর দেখেছে।",
+    "es": "La NASA observó su zona {year_count} años.",
+    "fr": "La NASA a observé votre région {year_count} ans.",
+    "sw": "NASA ilitazama eneo lako miaka {year_count}."
+   },
+   "step1_sub": {
+    "en": "Rain, heat and green.",
+    "ne": "पानी, गर्मी र हरियाली।",
+    "ne_review": "needs native-speaker review",
+    "hi": "बारिश, गर्मी और हरियाली।",
+    "bn": "বৃষ্টি, গরম আর সবুজ।",
+    "es": "Lluvia, calor y verdor.",
+    "fr": "Pluie, chaleur et verdure.",
+    "sw": "Mvua, joto na kijani."
+   },
+   "step2": {
+    "en": "Our computer makes a copy of your field.",
+    "ne": "हाम्रो कम्प्युटरले तपाईंको खेतको नक्कल बनाउँछ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हमारा कंप्यूटर आपके खेत की नक़ल बनाता है।",
+    "bn": "আমাদের কম্পিউটার আপনার খেতের একটি নকল বানায়।",
+    "es": "Nuestro ordenador hace una copia de su campo.",
+    "fr": "Notre ordinateur fait une copie de votre champ.",
+    "sw": "Kompyuta yetu inatengeneza nakala ya shamba lako."
+   },
+   "step2_sub": {
+    "en": "Soil, crop and water.",
+    "ne": "माटो, बाली र पानी।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी, फ़सल और पानी।",
+    "bn": "মাটি, ফসল আর পানি।",
+    "es": "Suelo, cultivo y agua.",
+    "fr": "Sol, culture et eau.",
+    "sw": "Udongo, zao na maji."
+   },
+   "step3": {
+    "en": "It tries each plan in every year.",
+    "ne": "यसले हरेक योजना हरेक वर्षमा चलाउँछ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "यह हर योजना हर वर्ष आज़माता है।",
+    "bn": "এটি প্রতিটি পরিকল্পনা প্রতি বছরে চালায়।",
+    "es": "Prueba cada plan en cada año.",
+    "fr": "Il essaie chaque plan pour chaque année.",
+    "sw": "Inajaribu kila mpango katika kila mwaka."
+   },
+   "step4": {
+    "en": "Your soil stick checks the soil today.",
+    "ne": "तपाईंको माटो-छडीले आज माटो जाँच्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "आपकी मिट्टी-छड़ी आज मिट्टी जाँचती है।",
+    "bn": "আপনার মাটি-কাঠি আজ মাটি যাচাই করে।",
+    "es": "Su varilla de suelo revisa el suelo hoy.",
+    "fr": "Votre tige de sol vérifie le sol aujourd'hui.",
+    "sw": "Kijiti chako cha udongo kinapima udongo leo."
+   },
+   "step4_sub": {
+    "en": "Then the app says what to do.",
+    "ne": "अनि एपले के गर्ने भन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर ऐप बताता है क्या करें।",
+    "bn": "তারপর অ্যাপ বলে কী করতে হবে।",
+    "es": "Luego la app dice qué hacer.",
+    "fr": "Puis l'appli dit quoi faire.",
+    "sw": "Kisha programu inakuambia la kufanya."
+   },
+   "example_title": {
+    "en": "One real example",
+    "ne": "एउटा साँचो उदाहरण",
+    "ne_review": "needs native-speaker review",
+    "hi": "एक सच्चा उदाहरण",
+    "bn": "একটি সত্যিকারের উদাহরণ",
+    "es": "Un ejemplo real",
+    "fr": "Un exemple réel",
+    "sw": "Mfano mmoja halisi"
+   },
+   "example_who": {
+    "en": "A {crop} farmer who cannot water.",
+    "ne": "पानी दिन नसक्ने {crop} किसान।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} किसान, जो पानी नहीं दे सकता।",
+    "bn": "{crop} চাষি, যিনি পানি দিতে পারেন না।",
+    "es": "Un agricultor de {crop} que no puede regar.",
+    "fr": "Un cultivateur de {crop} sans arrosage.",
+    "sw": "Mkulima wa {crop} asiyeweza kumwagilia."
+   },
+   "example": {
+    "en": "{new_crop} did better in {count} of {year_count} winters.",
+    "ne": "{year_count} मध्ये {count} जाडोमा {new_crop} राम्रो भयो।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{year_count} में {count} सर्दियों में {new_crop} बेहतर रहा।",
+    "bn": "{year_count}টির মধ্যে {count}টি শীতে {new_crop} ভালো ছিল।",
+    "es": "{new_crop} fue mejor en {count} de {year_count} inviernos.",
+    "fr": "{new_crop} a fait mieux {count} hivers sur {year_count}.",
+    "sw": "{new_crop} ilikuwa bora baridi {count} kati ya {year_count}."
+   },
+   "better_means": {
+    "en": "Better means more of its water need met.",
+    "ne": "राम्रो भनेको चाहिने पानी बढी पुग्यो।",
+    "ne_review": "needs native-speaker review",
+    "hi": "बेहतर यानी पानी की ज़रूरत ज़्यादा पूरी हुई।",
+    "bn": "ভালো মানে পানির চাহিদা বেশি মিটেছে।",
+    "es": "Mejor significa más agua de la que necesita.",
+    "fr": "Mieux = plus de son besoin en eau couvert.",
+    "sw": "Bora ni kupata maji zaidi inayohitaji."
+   },
+   "past_not_promise": {
+    "en": "Past years, not a promise.",
+    "ne": "विगतका वर्ष हुन्, वाचा होइन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "ये पिछले वर्ष हैं, वादा नहीं।",
+    "bn": "এগুলো আগের বছর, প্রতিশ্রুতি নয়।",
+    "es": "Son años pasados, no una promesa.",
+    "fr": "Ce sont des années passées, pas une promesse.",
+    "sw": "Ni miaka iliyopita, si ahadi."
+   },
+   "home_line": {
+    "en": "We tested each plan in {year_count} past years.",
+    "ne": "हामीले हरेक योजना {year_count} वर्षको मौसममा जाँच्यौं।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हमने हर योजना {year_count} पिछले वर्षों में जाँची।",
+    "bn": "আমরা প্রতিটি পরিকল্পনা আগের {year_count} বছরে যাচাই করেছি।",
+    "es": "Probamos cada plan en {year_count} años pasados.",
+    "fr": "Chaque plan testé sur {year_count} années passées.",
+    "sw": "Tulipima kila mpango katika miaka {year_count} iliyopita."
+   },
+   "open": {
+    "en": "See how",
+    "ne": "कसरी, हेर्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "कैसे, देखें",
+    "bn": "কীভাবে, দেখুন",
+    "es": "Ver cómo",
+    "fr": "Voir comment",
+    "sw": "Ona jinsi"
    }
   }
  },

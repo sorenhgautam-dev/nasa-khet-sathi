@@ -1240,3 +1240,120 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **For a person to review:** all new Nepali and the drafts; the Replay wording for a rain-fed season that fails (the
   coordinator's notes: "If you can't water", "If you can water: dry spells stop mattering", "worked, despite a dry
   spell"); `font-display: optional` (no layout jump, but a slow first visit shows system fonts).
+
+## 2026-11-14 (Saturday evening): rain at harvest, the fertiliser saver, the heat and cold clock (Claude Opus 5.5 via Claude Code, session 9f5addf3, a sub-agent)
+
+- **What SI did:** wrote the three rule blocks (`config/rules.yaml` `rain_risk`, `fertiliser_saver`, `heat_clock`) and the
+  four label entries from the owner's sourced facts (`notes/SOURCES_CHECK.md`), committed alone before the first run
+  (c46d3ae; the near-zero wording in 85ad2a3, also before the first run). Then, tests first: `pipeline/plans/risk.py`
+  (windows, season years, heavy-rain years, risky days, per-model means, urea arithmetic), `pipeline/export/build_risks.py`,
+  three schemas, validator checks, `check_site.py` folders, three `run_field.py` steps, the label refresh. Exported all
+  five fields; only the "Feed your soil" plan's check tab text, `method.choices`, the labels' four new ids and the
+  check-up's `depends_on_corrected_rain` changed in existing files (compared key by key with a copy taken before).
+- **Words drafted by SI:** 40 screen texts (English, Nepali marked "needs native-speaker review", drafts in hi, bn, es,
+  fr, sw), seven placeholders in `fill_registry.json`, six dhaincha lines in `tabs.json` (the booklet's English words
+  quoted; the Nepali is a translation, marked), and the Why? texts inside each file (English and Nepali, marked).
+- **Opened by SI:** FAO-56 chapter 6 on fao.org (three reads; the late season "is usually marked by senescence of
+  leaves"; no "start of maturity to harvest" sentence was found there, so none is quoted). Every other fact is the
+  owner's checked list.
+- **Left out, with reasons:** the 8-day dry spell (NOT FOUND in DHM), wheat flowering (the 8-35 °C sentence is FAO's rice
+  text), rice and lentil heat limits (none checked), a ropani figure (no opened source), the screens themselves (owner:
+  another agent rebuilds the farmer screens; no home cards).
+- **For a person to review:** all new Nepali and the drafts; the grain-filling window (FAO-56's late stage, which may miss
+  the first days of grain filling); "Counted for one big plot of land" as the main-screen stand-in for "per hectare".
+
+## 2026-11-14 (Saturday evening): the seven steps as the app (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- **What SI did:** on the owner's change of direction ("my UI teammate's design is the app"), removed the four-features
+  home and the three-card idea, and rebuilt `site/js/app.js` on the teammate's seven screens (`design/screens/`, phone and
+  web): Home (Main, W1), the field from the sky with NASA's map and one Field Pulse line ("Your field rests in …", from
+  `site/data/simple/<id>.json` pulse_card), the four parts, the soil test (the robot drawing kept as the plan; the walk
+  and the part states come only from `live.json` or `probe_log.json`, and with neither every part says "Not tested yet";
+  the words say a person carries the prototype stick), Choose, Today (each part's word from the probe's band, or only
+  drier / wetter before the bench calibration; "give or take" only with the calibration), Next 3 and 6 months (the
+  usual months from `diary.months`, then our three plans in his option style, each suggested plan with one line from
+  `plan_lines` and a "Try it in one part first" button that opens the Safe Trial in the plan's sheet). Everything else
+  moved to "How we know" for judges (`site/js/how.js`, `site/js/features.js`): the prepared fields, the farmer-card
+  comparison, the Replay's squares, the Record Check-up, rain at harvest, heat and cold, the fertiliser saver (rendered
+  from their own files with the pipeline agent's `rr_*`, `hc_*`, `fs_*` words), the computer's guess per part, Field
+  Pulse (read-only) and the labels of every number. No result was changed; nothing new is computed except which
+  months are mostly outside the growing periods and which plan has the most better-than-now winters (ordering only).
+- **Words drafted by SI:** 41 screen texts (English; Nepali marked "needs native-speaker review"; drafts in hi, bn, es,
+  fr, sw), each 8 words or fewer; 14 unused texts of the cancelled three-card pass removed. Every difference from the
+  teammate's wording, with the reason, is in `docs/DESIGN_WORDING_CHANGES.md`.
+- **Tooling, not shipped:** a 60-line stand-in for the design tool's runtime (`{{…}}`, `sc-if`, `sc-for`) in the
+  scratchpad, only to render the design files locally and compare them with the site.
+- **For a person to review:** the teammate checks the screenshots against his boards; a native speaker checks the new
+  Nepali (and the drafts); the owner checks the honest robot wording, the "Our suggestion" order (most better winters
+  first) and the "Try it in one part first" sheet.
+
+## 2026-11-14 (Saturday evening): Weather ahead and How we test each plan (Claude Opus 5.5 via Claude Code, session 9f5addf3)
+
+- **What SI did:** wrote the rules (`config/rules.yaml` `weather_ahead`, committed `8ade382` before the first run; the
+  wheat-book limits re-opened in the FAO chapter and quoted), the tests (`tests/test_weather_ahead.py`), the code
+  (`pipeline/diary/weather_ahead.py`, `scripts/run_weather.py`, `hot_day_flags` split out of `trends.hot_days` with the
+  same results), the schema block, the checks (VALIDATION 4.10) and the report-card line.
+- **Words drafted by SI:** 72 texts in `screens.json` `shared.weather` and `shared.twin` (English; Nepali marked "needs
+  native-speaker review"; drafts in hi, bn, es, fr, sw), each sentence 8 words or fewer. The four tips are the team's
+  examples; every tip ends "Check with your local expert." The report-card line (EN and NE) in `build_story.py`.
+- **For a person to review:** the tips (advice, not numbers), all new Nepali, the drafts, and the choices the rules
+  mark as Claude's (blocks starting on the 15th, "attach" when half a window or half a block overlaps, "biggest" =
+  most years, the middle words "some rain" and "mild"). Put to the owner: big rain at rice sowing (24 of 24 years) is a
+  danger by the spec's list, though a paddy is planted in standing water.
+
+## 2026-11-14 (Saturday evening): dry runs after sowing and the wheat-book checks (Claude Opus 5.5 via Claude Code, session 9f5addf3, a sub-agent)
+
+- **What SI did:** implemented the rules committed before any run in 8ade382 (`rules.yaml` `rain_risk.dry_spells`,
+  `heat_clock.wheat_floret_*`, `wheat_flower_*`, `wheat_book_checks`), tests first in `tests/test_risk.py` (hand-counted
+  dry runs cut at both ends, 1 mm not dry, the median rounded half up, ties later year first, days 20-100 and 90-110
+  after a 15 Oct or 15 Nov sowing): `pipeline/plans/risk.py` (`longest_dry_runs`, `typical_worst`, `window_days`, days
+  after sowing, `below_c`), `pipeline/export/build_risks.py`, both schemas, two validator checks. Re-exported the five
+  fields; compared leaf by leaf with copies taken before: no existing number changed (only the replaced "left out" Why?
+  lines, the `left_out` wording and the Why? line positions moved).
+- **Words drafted by SI:** seven screen texts (`rr_dry_usual`, `rr_dry_worst`, `rr_dry_run`,
+  `hc_wheat_floret_formation_heat`, `hc_wheat_flowering_cold`, `hc_book`, `hc_frost_caveat`; Nepali marked "needs
+  native-speaker review"; drafts in hi, bn, es, fr, sw), the placeholder `dry_run_days`, and the new Why? lines inside
+  the two files (English and Nepali, marked), and the `conditions` of each wheat-book row (English).
+- **For a person to review:** all new Nepali and the drafts; the wording "Real frost nights may be more or fewer" (our
+  frost nights overcount against the airport, Bhaktapur's normals are colder: the two point opposite ways).
+
+
+## 2026-11-14 (Saturday evening): global, usable everywhere: country profiles, the deploy-anywhere kit, a field in Madagascar (Claude Opus 5.5 via Claude Code, session 9f5addf3, a sub-agent)
+
+- **What SI did:** wrote `config/countries/NP.yaml` and `default.yaml` (each setting with value and source; committed
+  before first use, 2f2d98c), `pipeline/fetch/profiles.py`, `pipeline/fetch/cropcalendar.py` (FAO Crop Calendar API to
+  sowing windows), `scripts/make_site.py` (the one-command kit) and `docs/DEPLOY_ANYWHERE.md`; routed the drought seasons,
+  the onset switch, the crop calendar, the check-up's DHM rows and the index note through the profile; five rules
+  committed before their first run (`crop_calendar.zone_from_fao`, `bare_soil.rew_no_row_mm`,
+  `season_detection.no_dense_years`, `plans.third_plan_fallback`, `plans.third_plan_name_no_legume`). Tests first
+  (`tests/test_profiles.py`, `tests/test_make_site.py`, new cases in test_evaporation, test_score, test_explain,
+  test_field_abroad).
+- **Checked by SI:** Nepal's five fields rerun in a copy of the repository, every data file byte for byte (VALIDATION
+  3.25); a fresh clone with a new virtual environment from `requirements.txt`.
+- **Opened by SI (2026-11-14):** ETCCDI's 27 indices page, NOAA's GHCNd page, GPCC V2022's DOI page and DWD's licence,
+  the FAO Crop Calendar API (Nepal zone 002, Madagascar's zones), the BIPM SI Brochure (Table 8), RFC 3339, FAO-56
+  chapter 7, Earthdata Login and GES DISC pages, earthaccess 0.19.0's `login` (installed copy), GitHub Pages, Vercel and
+  Netlify pages. iso.org refused the request (403), so ISO 8601 is quoted through RFC 3339.
+- **Words drafted by SI:** the index note for a field on the global defaults (English; the Nepali is a draft, not
+  reviewed), the README and project-page sections, DEPLOY_ANYWHERE.md.
+- **For a person to review:** the five rules above (all marked "put to the owner"); the Nepali note; whether the third
+  plan of a field abroad (rice alone, less cover than today) should be shown.
+
+## 2026-11-14 (Saturday evening): Weather ahead and How we test each plan on the site (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- **What SI did:** built the screens for the coordinator's words and data, in the teammate's styles (`site/js/app.js`,
+  `site/css/app.css`): a fourth card on Choose ("Weather ahead", shown only when `fields/<id>.json` has `weather`); the
+  Weather ahead screen (the six blocks after the one holding today; per block "Usually:", one "Watch out:" danger chosen
+  by the rule in `rules.yaml` weather_ahead.rank, "Do this:" with its tip; no numbers on the block) and its Why? sheet
+  (years, "Is it changing?", the other dangers and those never seen, rain, temperatures, dry runs, frost, the labels and
+  the sources); the page "How we test each plan" (four steps with pictures drawn in the file, and one example read from
+  `site/data/simple/<id>.json` replay_card); one line on Home and a button on How we know to it. On How we know, the
+  heat clock now titles each card from its `words` key and shows the wheat-book rows' note and conditions, and rain at
+  harvest shows each crop's longest dry run after sowing (usual year, then the worst years). Nothing is computed on the
+  page except which six blocks follow today and which danger is the farmer's own crop.
+- **Choices made by SI, for a person to check:** each danger and crop is shown once (the file lists each sowing day
+  apart, ranked most years first, so the first is kept, and a "not seen" line is dropped when the same danger was seen
+  for another sowing); in English a block is named by the two months it spans ("November–December"), since the English
+  month words are Gregorian; a month with no danger shows "Nothing big in past years." and no "Do this:" line; "dry
+  day" is defined under every dry-run card.
+- **Words:** none added by SI (all from `shared.weather`, `shared.twin` and the `rr_dry_*`, `hc_*` texts).

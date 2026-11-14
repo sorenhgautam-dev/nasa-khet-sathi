@@ -2303,6 +2303,738 @@
   "screens.last_years.texts.calendar_note": {
    "en": "Dates follow the usual crop calendar, not yours.",
    "es": "Fechas del calendario usual, no las suyas."
+  },
+  "screens.last_years.texts.rr_title": {
+   "en": "Rain at harvest",
+   "es": "Lluvia en la cosecha"
+  },
+  "screens.last_years.texts.rr_lead": {
+   "en": "How often heavy rain fell near harvest.",
+   "es": "Cuántas veces llovió fuerte cerca de la cosecha."
+  },
+  "screens.last_years.texts.rr_weeks": {
+   "en": "Harvest weeks:",
+   "es": "Semanas de cosecha:"
+  },
+  "screens.last_years.texts.rr_count": {
+   "en": "Heavy rain at harvest: {risk_years} of {year_count} years.",
+   "es": "Lluvia fuerte en cosecha: {risk_years} de {year_count} años."
+  },
+  "screens.last_years.texts.risk_none": {
+   "en": "None in these years. Good news.",
+   "es": "Ninguna en estos años. Buena noticia."
+  },
+  "screens.last_years.texts.rr_sq_heavy": {
+   "en": "Heavy rain",
+   "es": "Lluvia fuerte"
+  },
+  "screens.last_years.texts.rr_sq_none": {
+   "en": "No heavy rain",
+   "es": "Sin lluvia fuerte"
+  },
+  "screens.last_years.texts.rr_tap": {
+   "en": "Tap a year to see more.",
+   "es": "Toque un año para ver más."
+  },
+  "screens.last_years.texts.rr_days": {
+   "en": "Heavy rain days:",
+   "es": "Días de lluvia fuerte:"
+  },
+  "screens.last_years.texts.rr_records_differ": {
+   "en": "Other rain records disagree on this year.",
+   "es": "Otros registros de lluvia difieren este año."
+  },
+  "screens.last_years.texts.rr_range": {
+   "en": "Other rain records: {risk_low} to {risk_high} years.",
+   "es": "Otros registros de lluvia: {risk_low} a {risk_high} años."
+  },
+  "screens.last_years.texts.rr_dry_usual": {
+   "en": "Longest dry run after sowing: usually {dry_run_days} days.",
+   "es": "Mayor racha seca tras sembrar: normalmente {dry_run_days} días."
+  },
+  "screens.last_years.texts.rr_dry_worst": {
+   "en": "Worst years:",
+   "es": "Peores años:"
+  },
+  "screens.last_years.texts.rr_dry_run": {
+   "en": "{dry_run_days} dry days in a row",
+   "es": "{dry_run_days} días secos seguidos"
+  },
+  "screens.last_years.texts.rr_past_only": {
+   "en": "Past years only, not a forecast.",
+   "es": "Solo años pasados, no un pronóstico."
+  },
+  "screens.last_years.texts.hc_title": {
+   "en": "Heat and cold",
+   "es": "Calor y frío"
+  },
+  "screens.last_years.texts.hc_lead": {
+   "en": "Too hot or too cold, at key times.",
+   "es": "Demasiado calor o frío en momentos clave."
+  },
+  "screens.last_years.texts.hc_wheat_heat": {
+   "en": "Too hot while wheat grains fill?",
+   "es": "¿Demasiado calor al llenarse el grano de trigo?"
+  },
+  "screens.last_years.texts.hc_potato_heat": {
+   "en": "Too hot for potato?",
+   "es": "¿Demasiado calor para la papa?"
+  },
+  "screens.last_years.texts.hc_potato_cold": {
+   "en": "Too cold for potato?",
+   "es": "¿Demasiado frío para la papa?"
+  },
+  "screens.last_years.texts.hc_wheat_floret_formation_heat": {
+   "en": "Too hot while wheat flowers form?",
+   "es": "¿Demasiado calor al formarse las flores del trigo?"
+  },
+  "screens.last_years.texts.hc_wheat_flowering_cold": {
+   "en": "Frost while wheat flowers?",
+   "es": "¿Helada cuando florece el trigo?"
+  },
+  "screens.last_years.texts.hc_book": {
+   "en": "From FAO's wheat book. An estimate.",
+   "es": "Del libro del trigo de la FAO. Una estimación."
+  },
+  "screens.last_years.texts.hc_frost_caveat": {
+   "en": "Real frost nights may be more or fewer.",
+   "es": "Puede haber más o menos noches de helada."
+  },
+  "screens.last_years.texts.hc_weeks": {
+   "en": "Weeks counted:",
+   "es": "Semanas contadas:"
+  },
+  "screens.last_years.texts.hc_years": {
+   "en": "Days like this: {risk_years} of {year_count} years.",
+   "es": "Días así: {risk_years} de {year_count} años."
+  },
+  "screens.last_years.texts.hc_cold_caveat": {
+   "en": "Our cold nights may be too many.",
+   "es": "Quizá contamos demasiadas noches frías."
+  },
+  "screens.last_years.texts.hc_2040": {
+   "en": "Around 2040",
+   "es": "Hacia 2040"
+  },
+  "screens.last_years.texts.hc_less": {
+   "en": "If the world warms less:",
+   "es": "Si el mundo se calienta menos:"
+  },
+  "screens.last_years.texts.hc_more": {
+   "en": "If the world warms more:",
+   "es": "Si el mundo se calienta más:"
+  },
+  "screens.last_years.texts.hc_per_season": {
+   "en": "About {per_season} days each season.",
+   "es": "Unos {per_season} días por temporada."
+  },
+  "screens.last_years.texts.hc_their_past": {
+   "en": "Same computer guesses, past years:",
+   "es": "Mismas estimaciones, años pasados:"
+  },
+  "screens.last_years.texts.hc_spread": {
+   "en": "Lowest to highest guess:",
+   "es": "Estimación más baja y más alta:"
+  },
+  "screens.last_years.texts.hc_rare_2040": {
+   "en": "Still rare around 2040. Good news.",
+   "es": "Aún raro hacia 2040. Buena noticia."
+  },
+  "screens.last_years.texts.hc_left_out": {
+   "en": "Rice and lentil: no checked limits yet.",
+   "es": "Arroz y lenteja: aún sin límites comprobados."
+  },
+  "screens.last_years.texts.why_btn": {
+   "en": "Why?",
+   "es": "¿Por qué?"
+  },
+  "screens.last_years.texts.why_title": {
+   "en": "Why we say this",
+   "es": "Por qué decimos esto"
+  },
+  "screens.last_years.texts.why_sources": {
+   "en": "Where this comes from:",
+   "es": "De dónde viene esto:"
+  },
+  "screens.what_to_grow.texts.fs_title": {
+   "en": "Fertiliser saver",
+   "es": "Ahorro de fertilizante"
+  },
+  "screens.what_to_grow.texts.fs_lead": {
+   "en": "{next_crop} after {legume_crop} may need less urea.",
+   "es": "{next_crop} tras {legume_crop} quizá necesite menos urea."
+  },
+  "screens.what_to_grow.texts.fs_saved": {
+   "en": "Maybe {bags_low} to {bags_high} fewer urea bags.",
+   "es": "Quizá {bags_low} a {bags_high} sacos menos de urea."
+  },
+  "screens.what_to_grow.texts.fs_plot": {
+   "en": "Counted for one big plot of land.",
+   "es": "Contado para un terreno grande."
+  },
+  "screens.what_to_grow.texts.fs_size_why": {
+   "en": "See its size under Why.",
+   "es": "Vea su tamaño en «Por qué»."
+  },
+  "screens.what_to_grow.texts.fs_wide": {
+   "en": "This is a wide guess, not a promise.",
+   "es": "Es una estimación amplia, no una promesa."
+  },
+  "screens.what_to_grow.texts.fs_measured_less": {
+   "en": "One field study found much less.",
+   "es": "Un estudio de campo halló mucho menos."
+  },
+  "screens.what_to_grow.texts.fs_short": {
+   "en": "Urea can be short at rice planting.",
+   "es": "La urea puede escasear al plantar arroz."
+  },
+  "screens.what_to_grow.texts.fs_ask": {
+   "en": "Ask your agriculture office before using less.",
+   "es": "Pregunte a su oficina agrícola antes de reducir."
+  },
+  "screens.home.texts.crop_winter": {
+   "en": "{crop} this winter:",
+   "es": "{crop} este invierno:"
+  },
+  "screens.home.texts.verdict_better": {
+   "en": "better than what you grow now",
+   "es": "mejor que lo que siembra ahora"
+  },
+  "screens.home.texts.verdict_same": {
+   "en": "about the same as now",
+   "es": "más o menos igual que ahora"
+  },
+  "screens.home.texts.verdict_worse": {
+   "en": "worse than what you grow now",
+   "es": "peor que lo que siembra ahora"
+  },
+  "screens.home.texts.verdict_mixed": {
+   "en": "sometimes better, sometimes worse",
+   "es": "a veces mejor, a veces peor"
+  },
+  "screens.home.texts.face_better": {
+   "en": "Better",
+   "es": "Mejor"
+  },
+  "screens.home.texts.face_same": {
+   "en": "Same",
+   "es": "Igual"
+  },
+  "screens.home.texts.face_worse": {
+   "en": "Worse",
+   "es": "Peor"
+  },
+  "screens.home.texts.per_ten_pre": {
+   "en": "about",
+   "es": "unos"
+  },
+  "screens.home.texts.per_ten_post": {
+   "en": "of every 10 winters",
+   "es": "de cada 10 inviernos"
+  },
+  "screens.home.texts.rests_in": {
+   "en": "Your field rests in:",
+   "es": "Su campo descansa en:"
+  },
+  "screens.home.texts.never_rests": {
+   "en": "Your field is green all year.",
+   "es": "Su campo está verde todo el año."
+  },
+  "screens.last_years.texts.cmp_title": {
+   "en": "How we compared",
+   "es": "Cómo comparamos"
+  },
+  "screens.last_years.texts.cmp_ran": {
+   "en": "Both crops, in {year_count} past winters.",
+   "es": "Ambos cultivos, en {year_count} inviernos pasados."
+  },
+  "screens.last_years.texts.cmp_winters": {
+   "en": "winters",
+   "es": "inviernos"
+  },
+  "screens.last_years.texts.better_means": {
+   "en": "Better means more water need met by rain.",
+   "es": "Mejor: la lluvia cubre más agua necesaria."
+  },
+  "screens.last_years.texts.better_not": {
+   "en": "Not price, not labour, not taste.",
+   "es": "No precio, no trabajo, no sabor."
+  },
+  "screens.last_years.texts.water_yes_1": {
+   "en": "With water, dry spells stop mattering.",
+   "es": "Con riego, las rachas secas no importan."
+  },
+  "screens.last_years.texts.water_yes_2": {
+   "en": "Our computer looks at water only.",
+   "es": "Nuestro ordenador solo mira el agua."
+  },
+  "screens.last_years.texts.boxes_only": {
+   "en": "Boxes: the coming months only, rain only.",
+   "es": "Cuadros: solo los próximos meses, solo lluvia."
+  },
+  "screens.last_years.texts.scores_all_year": {
+   "en": "Plan scores count both crops, all year.",
+   "es": "El plan cuenta ambos cultivos, todo el año."
+  },
+  "screens.from_space.texts.plans_calendar": {
+   "en": "Our plans use the usual crop calendar.",
+   "es": "Nuestros planes usan el calendario agrícola habitual."
+  },
+  "screens.from_space.texts.line_saw": {
+   "en": "This line shows what we saw from space.",
+   "es": "Esta línea muestra lo visto desde el espacio."
+  },
+  "screens.home.texts.map_tag": {
+   "en": "NASA map",
+   "es": "Mapa de la NASA"
+  },
+  "screens.home.texts.map_sub": {
+   "en": "A top view of your farm",
+   "es": "Su finca vista desde arriba"
+  },
+  "screens.home.texts.what_to_grow": {
+   "en": "What to grow",
+   "es": "Qué sembrar"
+  },
+  "screens.home.texts.farmer_first": {
+   "en": "Farmer first",
+   "es": "El agricultor primero"
+  },
+  "screens.home.texts.open_records": {
+   "en": "Uses open NASA records",
+   "es": "Usa registros abiertos de la NASA"
+  },
+  "screens.where.texts.sky_h1": {
+   "en": "Your farm",
+   "es": "Su finca"
+  },
+  "screens.where.texts.sky_h2": {
+   "en": "from the sky",
+   "es": "desde el cielo"
+  },
+  "screens.where.texts.your_farm": {
+   "en": "Your farm",
+   "es": "Su finca"
+  },
+  "screens.where.texts.is_this": {
+   "en": "Is this your farm?",
+   "es": "¿Es esta su finca?"
+  },
+  "screens.where.texts.split_next": {
+   "en": "Next, we split it into small parts.",
+   "es": "Luego, la dividimos en partes pequeñas."
+  },
+  "screens.where.texts.yes_parts": {
+   "en": "Yes, make the parts",
+   "es": "Sí, haga las partes"
+  },
+  "screens.parts.texts.h1": {
+   "en": "Your farm,",
+   "es": "Su finca,"
+  },
+  "screens.parts.texts.h2": {
+   "en": "in {section_count} parts",
+   "es": "en {section_count} partes"
+  },
+  "screens.parts.texts.here": {
+   "en": "Here are the {section_count} parts.",
+   "es": "Aquí están las {section_count} partes."
+  },
+  "screens.parts.texts.middle": {
+   "en": "We test the middle of each part.",
+   "es": "Probamos el centro de cada parte."
+  },
+  "screens.parts.texts.start_test": {
+   "en": "Start the soil test",
+   "es": "Empezar la prueba del suelo"
+  },
+  "screens.check_soil.texts.h1": {
+   "en": "Your soil,",
+   "es": "Su suelo,"
+  },
+  "screens.check_soil.texts.h2": {
+   "en": "part by part",
+   "es": "parte por parte"
+  },
+  "screens.check_soil.texts.not_tested": {
+   "en": "Not tested yet",
+   "es": "Aún sin probar"
+  },
+  "screens.check_soil.texts.tested": {
+   "en": "Tested",
+   "es": "Probado"
+  },
+  "screens.check_soil.texts.again": {
+   "en": "Test again",
+   "es": "Probar de nuevo"
+  },
+  "screens.check_soil.texts.see_what": {
+   "en": "See what to do",
+   "es": "Ver qué hacer"
+  },
+  "screens.check_soil.texts.from_test": {
+   "en": "From the soil test",
+   "es": "De la prueba del suelo"
+  },
+  "screens.check_soil.texts.tested_h1": {
+   "en": "Soil tested.",
+   "es": "Suelo probado."
+  },
+  "screens.check_soil.texts.tested_h2": {
+   "en": "What next?",
+   "es": "¿Y ahora?"
+  },
+  "screens.each_part.texts.todo_h": {
+   "en": "What to do",
+   "es": "Qué hacer"
+  },
+  "screens.each_part.texts.do_water": {
+   "en": "Water part {section} today.",
+   "es": "Riegue la parte {section} hoy."
+  },
+  "screens.each_part.texts.do_drain": {
+   "en": "Let water drain from part {section}.",
+   "es": "Deje salir el agua de la parte {section}."
+  },
+  "screens.each_part.texts.do_test": {
+   "en": "Test the soil first.",
+   "es": "Primero pruebe el suelo."
+  },
+  "screens.each_part.texts.do_relative": {
+   "en": "We can only say which parts are drier.",
+   "es": "Solo podemos decir qué partes están más secas."
+  },
+  "screens.each_part.texts.do_fine": {
+   "en": "The tested parts look fine today.",
+   "es": "Las partes probadas están bien hoy."
+  },
+  "screens.each_part.texts.twin_title": {
+   "en": "The computer's guess for each part",
+   "es": "La estimación del ordenador por parte"
+  },
+  "screens.each_part.texts.twin_why": {
+   "en": "This guess comes from weather, not the stick.",
+   "es": "Esto sale del tiempo, no de la varilla."
+  },
+  "screens.what_to_grow.texts.sub3": {
+   "en": "Rain and cold ahead, and what to grow.",
+   "es": "Lluvia y frío por venir, y qué sembrar."
+  },
+  "screens.what_to_grow.texts.see3": {
+   "en": "See the next 3 months",
+   "es": "Ver los próximos 3 meses"
+  },
+  "screens.what_to_grow.texts.our_pick": {
+   "en": "Our suggestion",
+   "es": "Nuestra sugerencia"
+  },
+  "screens.what_to_grow.texts.try_part": {
+   "en": "Try it in one part first",
+   "es": "Pruébelo primero en una parte"
+  },
+  "screens.what_to_grow.texts.line_pre": {
+   "en": "Rain only: better in",
+   "es": "Solo lluvia: mejor en"
+  },
+  "screens.what_to_grow.texts.line_post": {
+   "en": "of 10 winters",
+   "es": "de cada 10 inviernos"
+  },
+  "screens.what_to_grow.texts.line_same": {
+   "en": "Rain only: about the same as now",
+   "es": "Solo lluvia: más o menos igual"
+  },
+  "screens.what_to_grow.texts.line_worse": {
+   "en": "Rain only: worse than now",
+   "es": "Solo lluvia: peor que ahora"
+  },
+  "shared.weather.title": {
+   "en": "Weather ahead",
+   "es": "El tiempo que viene"
+  },
+  "shared.weather.choice_sub": {
+   "en": "What each month usually brings.",
+   "es": "Lo que suele traer cada mes."
+  },
+  "shared.weather.top": {
+   "en": "What usually happens here: {year_count} years of records.",
+   "es": "Lo habitual aquí: {year_count} años de registros."
+  },
+  "shared.weather.not_forecast": {
+   "en": "Not a forecast.",
+   "es": "No es un pronóstico."
+  },
+  "shared.weather.usually": {
+   "en": "Usually:",
+   "es": "Suele ser:"
+  },
+  "shared.weather.rain_dry": {
+   "en": "dry",
+   "es": "seco"
+  },
+  "shared.weather.rain_some_rain": {
+   "en": "some rain",
+   "es": "algo de lluvia"
+  },
+  "shared.weather.rain_wet": {
+   "en": "wet",
+   "es": "húmedo"
+  },
+  "shared.weather.temp_cold": {
+   "en": "cold",
+   "es": "frío"
+  },
+  "shared.weather.temp_mild": {
+   "en": "mild",
+   "es": "templado"
+  },
+  "shared.weather.temp_warm": {
+   "en": "warm",
+   "es": "cálido"
+  },
+  "shared.weather.watch": {
+   "en": "Watch out:",
+   "es": "Cuidado:"
+  },
+  "shared.weather.potato_cold": {
+   "en": "Cold nights for {crop}.",
+   "es": "Noches frías para {crop}."
+  },
+  "shared.weather.potato_heat": {
+   "en": "Hot days for {crop}.",
+   "es": "Días calurosos para {crop}."
+  },
+  "shared.weather.wheat_flower_frost": {
+   "en": "Frost on {crop} flowers.",
+   "es": "Helada en las flores de {crop}."
+  },
+  "shared.weather.wheat_floret_heat": {
+   "en": "Heat before {crop} flowers.",
+   "es": "Calor antes de que florezca {crop}."
+  },
+  "shared.weather.wheat_grain_heat": {
+   "en": "Heat while {crop} grain fills.",
+   "es": "Calor mientras se llena el grano de {crop}."
+  },
+  "shared.weather.dry_spell": {
+   "en": "Weeks without rain for {crop}.",
+   "es": "Semanas sin lluvia para {crop}."
+  },
+  "shared.weather.big_rain_sowing": {
+   "en": "Big rain at {crop} sowing.",
+   "es": "Lluvia fuerte en la siembra de {crop}."
+  },
+  "shared.weather.big_rain_harvest": {
+   "en": "Big rain at {crop} harvest.",
+   "es": "Lluvia fuerte en la cosecha de {crop}."
+  },
+  "shared.weather.nothing": {
+   "en": "Nothing big in past years.",
+   "es": "Nada grave en años pasados."
+  },
+  "shared.weather.most": {
+   "en": "Most years.",
+   "es": "La mayoría de los años."
+  },
+  "shared.weather.some": {
+   "en": "Some years.",
+   "es": "Algunos años."
+  },
+  "shared.weather.do": {
+   "en": "Do this:",
+   "es": "Haga esto:"
+  },
+  "shared.weather.tip_cold": {
+   "en": "Cover young plants on clear, cold nights.",
+   "es": "Cubra las plantas jóvenes en noches frías."
+  },
+  "shared.weather.tip_heat": {
+   "en": "Water in the evening on hot days.",
+   "es": "Riegue por la tarde en días calurosos."
+  },
+  "shared.weather.tip_dry_spell": {
+   "en": "Water before flowering if no rain.",
+   "es": "Riegue antes de la floración si no llueve."
+  },
+  "shared.weather.tip_big_rain": {
+   "en": "Clear drains before the rains.",
+   "es": "Limpie los desagües antes de las lluvias."
+  },
+  "shared.weather.tip_end": {
+   "en": "Check with your local expert.",
+   "es": "Consulte a su experto local."
+  },
+  "shared.weather.why": {
+   "en": "Why?",
+   "es": "¿Por qué?"
+  },
+  "shared.weather.years": {
+   "en": "In {danger_years} of {year_count} past years.",
+   "es": "En {danger_years} de {year_count} años pasados."
+  },
+  "shared.weather.changing": {
+   "en": "Is it changing?",
+   "es": "¿Está cambiando?"
+  },
+  "shared.weather.change_more_common": {
+   "en": "Happening more often.",
+   "es": "Pasa más a menudo."
+  },
+  "shared.weather.change_less_common": {
+   "en": "Happening less often.",
+   "es": "Pasa menos a menudo."
+  },
+  "shared.weather.change_about_same": {
+   "en": "No clear change.",
+   "es": "Ningún cambio claro."
+  },
+  "shared.weather.change_cant_tell": {
+   "en": "Can't tell yet.",
+   "es": "Aún no se puede saber."
+  },
+  "shared.weather.none_seen": {
+   "en": "Not seen in these years. Good news.",
+   "es": "No se vio en estos años. Buena noticia."
+  },
+  "shared.weather.other_dangers": {
+   "en": "Other dangers",
+   "es": "Otros peligros"
+  },
+  "shared.weather.rain_label": {
+   "en": "Rain in this month",
+   "es": "Lluvia de este mes"
+  },
+  "shared.weather.day_label": {
+   "en": "Day temperature",
+   "es": "Temperatura de día"
+  },
+  "shared.weather.night_label": {
+   "en": "Night temperature",
+   "es": "Temperatura de noche"
+  },
+  "shared.weather.dry_label": {
+   "en": "Longest run of dry days",
+   "es": "Racha más larga de días secos"
+  },
+  "shared.weather.usual_year": {
+   "en": "usual year",
+   "es": "año normal"
+  },
+  "shared.weather.worst_years": {
+   "en": "worst years",
+   "es": "peores años"
+  },
+  "shared.weather.frost_label": {
+   "en": "Frost",
+   "es": "Helada"
+  },
+  "shared.weather.frost_none": {
+   "en": "no frost",
+   "es": "sin helada"
+  },
+  "shared.weather.frost_risk": {
+   "en": "frost possible",
+   "es": "helada posible"
+  },
+  "shared.weather.frost_high": {
+   "en": "frost likely",
+   "es": "helada probable"
+  },
+  "shared.weather.frost_note1": {
+   "en": "Our cold nights may be too many.",
+   "es": "Quizá contamos demasiadas noches frías."
+  },
+  "shared.weather.frost_note2": {
+   "en": "Bhaktapur's own nights are often colder.",
+   "es": "Las noches de Bhaktapur suelen ser más frías."
+  },
+  "shared.weather.big_rain_note1": {
+   "en": "Big rain here means 20 mm a day.",
+   "es": "Aquí lluvia fuerte es 20 mm al día."
+  },
+  "shared.weather.big_rain_note2": {
+   "en": "The weather office calls 50 mm heavy.",
+   "es": "Meteorología llama fuerte a 50 mm."
+  },
+  "shared.weather.dry_note": {
+   "en": "A dry day has under 1 mm.",
+   "es": "Un día seco tiene menos de 1 mm."
+  },
+  "shared.weather.estimate": {
+   "en": "This is an estimate.",
+   "es": "Es una estimación."
+  },
+  "shared.weather.sources": {
+   "en": "Where this comes from",
+   "es": "De dónde viene esto"
+  },
+  "shared.weather.days_word": {
+   "en": "days",
+   "es": "días"
+  },
+  "shared.twin.h1": {
+   "en": "How we test each plan",
+   "es": "Cómo probamos cada plan"
+  },
+  "shared.twin.h2": {
+   "en": "Four simple steps.",
+   "es": "Cuatro pasos sencillos."
+  },
+  "shared.twin.step1": {
+   "en": "NASA watched your area for {year_count} years.",
+   "es": "La NASA observó su zona {year_count} años."
+  },
+  "shared.twin.step1_sub": {
+   "en": "Rain, heat and green.",
+   "es": "Lluvia, calor y verdor."
+  },
+  "shared.twin.step2": {
+   "en": "Our computer makes a copy of your field.",
+   "es": "Nuestro ordenador hace una copia de su campo."
+  },
+  "shared.twin.step2_sub": {
+   "en": "Soil, crop and water.",
+   "es": "Suelo, cultivo y agua."
+  },
+  "shared.twin.step3": {
+   "en": "It tries each plan in every year.",
+   "es": "Prueba cada plan en cada año."
+  },
+  "shared.twin.step4": {
+   "en": "Your soil stick checks the soil today.",
+   "es": "Su varilla de suelo revisa el suelo hoy."
+  },
+  "shared.twin.step4_sub": {
+   "en": "Then the app says what to do.",
+   "es": "Luego la app dice qué hacer."
+  },
+  "shared.twin.example_title": {
+   "en": "One real example",
+   "es": "Un ejemplo real"
+  },
+  "shared.twin.example_who": {
+   "en": "A {crop} farmer who cannot water.",
+   "es": "Un agricultor de {crop} que no puede regar."
+  },
+  "shared.twin.example": {
+   "en": "{new_crop} did better in {count} of {year_count} winters.",
+   "es": "{new_crop} fue mejor en {count} de {year_count} inviernos."
+  },
+  "shared.twin.better_means": {
+   "en": "Better means more of its water need met.",
+   "es": "Mejor significa más agua de la que necesita."
+  },
+  "shared.twin.past_not_promise": {
+   "en": "Past years, not a promise.",
+   "es": "Son años pasados, no una promesa."
+  },
+  "shared.twin.home_line": {
+   "en": "We tested each plan in {year_count} past years.",
+   "es": "Probamos cada plan en {year_count} años pasados."
+  },
+  "shared.twin.open": {
+   "en": "See how",
+   "es": "Ver cómo"
   }
  }
 }

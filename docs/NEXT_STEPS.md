@@ -1,6 +1,6 @@
 # Next steps after the deadline
 
-Written 14 November 2026. Seven steps, the rice pond first (owner's decision 7). One paragraph each: why it matters,
+Written 14 November 2026. Nine steps, the rice pond first (owner's decision 7); the hosted service (8) and the season outlook (9) added the same evening (owner's item 3 and answer 3). One paragraph each: why it matters,
 and what it would need. Numbers in square brackets are in `docs/PITCH_FACTS.md`.
 
 ## 1. The rice pond
@@ -68,3 +68,25 @@ after a season [E4]. **What it needs.** A co-operative willing to take part, wit
 (`notes/REAL_FIELD_RECORDING.md`); at least 10 real fields, each prepared with the same two commands [I3]; the probe's
 bench test first [E3]; the farmer test (`docs/FARMER_TEST.md`); and one full season, with the comparison rule written
 before it starts. Every plan would still say "try it on one small part first. You know your land best." [E2]
+
+## 8. A hosted service for instant check-ups
+
+**Why.** Today any organisation can make a Khet Sathi site for any field with one command (`scripts/make_site.py`,
+`docs/DEPLOY_ANYWHERE.md`), but it takes a computer, a NASA Earthdata login and about 3 to 4 hours, nearly all of it
+downloads. A farmer or an extension worker should get a check-up in minutes. **What it needs.** A server that keeps the
+global datasets on hand (GPM, POWER, HLS, SoilGrids, GRACE, NEX-GDDP) for whole regions, so a new field only reads its own
+cells; the same pipeline, unchanged, as a job queue; country profiles (`config/countries/`) written with each country's
+weather office and extension service; the shorter record finished first (the downloads take `record_years`, the build
+still assumes 2001-2025); and a privacy rule written before launch, since a farmer's field location is personal. The
+public site stays static and keeps working without it. GPM's GES DISC servers are moving to Earthdata Cloud ("will end
+no earlier than September 30th 2026"), so `pipeline/fetch/gpm.py` would move with them.
+
+## 9. A season outlook, once its skill for Nepal is verified
+
+**Why.** Weather ahead (the app's third choice) says only what usually happened in each month of the field's own 24 years;
+it is never a forecast. A real outlook for the coming months would help more. **What it needs.** A seasonal forecast whose
+skill at this field is shown first. NASA's GEOS-S2S is open but gives raw monthly means, with no probabilities
+(`notes/SOURCES_CHECK.md` 8); IRI's NMME-based forecasts need no account for downloads, but their published skill (RPSS) at
+the field's 1-degree cell is about zero for December-May (SOURCES_CHECK 9b), so "NASA's guess" would be the wrong label
+today. Dropped from the app by the owner (answer 3, 2026-11-14 evening) until its skill for Nepal is verified.
+

@@ -99,7 +99,8 @@ def main(argv=None):
     ap.add_argument("--field", default="demo")
     ap.add_argument("--year", type=int, default=2016)
     a = ap.parse_args(argv)
-    field, rules, lib, data_dir = load_field(a.field), load_rules(), load_crops(), REPO / "data"
+    field, rules, data_dir = load_field(a.field), load_rules(), REPO / "data"
+    lib = load_crops(field=field)        # the field's country profile (config/countries/)
     inputs = build_inputs(field, a.year, data_dir)
     soil = pd.read_parquet(data_dir / "clean" / field["id"] / "soilgrids.parquet")
     plan = [("wheat", str(sow_date(lib["wheat"]["calendar"], a.year - 1).date())),

@@ -4,7 +4,8 @@
 
 A field is listed once its file site/data/fields/<id>.json exists (so the field abroad appears only when exported), with
 its id, name, country, point and prepared area (`bbox` in its config) and two labels: `sample` (a sample field near a
-demo field: config `sample: true`) and `area`, the area map it belongs to. An area is a field's own id or, for a sample,
+demo field: config `sample: true`) and `area`, the area map it belongs to. A field on the global defaults (no country
+profile in config/countries/; owner's item 3, 2026-11-14) also carries `profile: "default"` and a `note` for the list. An area is a field's own id or, for a sample,
 the field it is a sample of (`sample_of`), and is listed only when its map site/data/area/<id>.json exists; its name is
 the config's `area_name` or "<field name before any parenthesis> area". The index must validate (index_schema.json).
 """
@@ -20,6 +21,17 @@ def _area_of(cfg):
     return cfg.get("sample_of") or cfg["id"]
 
 
+GLOBAL_NOTE = {"en": "A field on another continent. Built with the global settings, not checked against local rain gauges yet.",
+               "ne": "अर्को महादेशको खेत। विश्वव्यापी सेटिङले बनाइएको, स्थानीय वर्षा मापकसँग अझै जाँच गरिएको छैन।"}
+
+
+def _profile_flag(cfg):
+    """{'profile': 'default', 'note': ...} for a field on the global defaults (no country profile, owner's item 3), else {}:
+    a field with a country profile keeps its entry as before."""
+    from pipeline.fetch.profiles import load_profiles, profile_id
+    return {"profile": "default", "note": dict(GLOBAL_NOTE)} if profile_id(cfg, load_profiles()) == "default" else {}
+
+
 def build_index(configs, data_dir):
     """{fields, areas} from the configs (dicts as load_field gives them) and what exists under data_dir (site/data)."""
     data_dir = Path(data_dir)
@@ -28,7 +40,7 @@ def build_index(configs, data_dir):
     with_map = {a for a in {_area_of(c) for c in listed} if (data_dir / "area" / f"{a}.json").exists()}
     fields = [{"id": c["id"], "name": c["name"], "country": c["country"], "lat": c["lat"], "lon": c["lon"],
                "bbox": list(c["bbox"]), "sample": bool(c.get("sample")),
-               "area": _area_of(c) if _area_of(c) in with_map else None} for c in listed]
+               "area": _area_of(c) if _area_of(c) in with_map else None, **_profile_flag(c)} for c in listed]
     areas = []
     for a in dict.fromkeys(_area_of(c) for c in listed if _area_of(c) in with_map):     # in the order the fields come
         owner = by_id.get(a, {})

@@ -414,6 +414,82 @@
    ],
    "how": "100 x (factors.jjas - 1), from the same card, rounded",
    "example": 5
+  },
+  "risk_years": {
+   "from": [
+    "code:pipeline/plans/risk.py:heavy_rain_years",
+    "code:pipeline/plans/risk.py:days_by_season"
+   ],
+   "how": "years (of year_count) with at least one heavy-rain day in a crop's harvest weeks (site/data/rainrisk/<field>.json plans[].crops[].count) or with a too hot or too cold day (site/data/heatclock/<field>.json checks[].today.years_with); rules.yaml rain_risk, heat_clock",
+   "example": 8
+  },
+  "risk_low": {
+   "from": [
+    "code:pipeline/plans/risk.py:heavy_rain_years"
+   ],
+   "how": "the lowest count over the four rain versions (rainrisk plans[].crops[].count_low)",
+   "example": 5
+  },
+  "risk_high": {
+   "from": [
+    "code:pipeline/plans/risk.py:heavy_rain_years"
+   ],
+   "how": "the highest count over the four rain versions (rainrisk plans[].crops[].count_high)",
+   "example": 8
+  },
+  "dry_run_days": {
+   "from": [
+    "code:pipeline/plans/risk.py:longest_dry_runs",
+    "code:pipeline/plans/risk.py:typical_worst"
+   ],
+   "how": "days in the longest run of days with under 1 mm of rain from a crop's sowing day to its last day (DHM's CDD, counted per crop season): the typical year (site/data/rainrisk/<field>.json plans[].crops[].dry_run.typical), a worst year (dry_run.worst[].days) or a tapped year (dry_run.years[].days); rules.yaml rain_risk.dry_spells",
+   "example": 41
+  },
+  "per_season": {
+   "from": [
+    "code:pipeline/plans/risk.py:scenario_summary"
+   ],
+   "how": "mean too hot / too cold days per season around 2040 (heatclock checks[].future.scenarios.<ssp>.median) or the same models' 1995-2014 (past_median), one decimal, passed as text",
+   "example": "19.5"
+  },
+  "bags_low": {
+   "from": [
+    "code:pipeline/plans/risk.py:urea_saved"
+   ],
+   "how": "whole 50 kg urea bags per hectare, low end (site/data/fertiliser/<field>.json bags_ha_whole[0]); rules.yaml fertiliser_saver",
+   "example": 1
+  },
+  "bags_high": {
+   "from": [
+    "code:pipeline/plans/risk.py:urea_saved"
+   ],
+   "how": "whole 50 kg urea bags per hectare, high end (fertiliser bags_ha_whole[1])",
+   "example": 2
+  },
+  "next_crop": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the crop after the legume in the safest plan (site/data/fertiliser/<field>.json next_crop), named from shared.crop_names",
+   "example": {
+    "en": "rice",
+    "ne": "धान"
+   }
+  },
+  "danger_years": {
+   "from": [
+    "contract:weather.blocks[].dangers[].years"
+   ],
+   "how": "in how many of the block's past years the danger happened (rules.yaml weather_ahead.count)",
+   "example": 15
+  },
+  "count": {
+   "from": [
+    "code:pipeline/export/build_simple.py:compare"
+   ],
+   "how": "how many past winters the suggested crop did better (site/data/simple/<field>.json replay_card counts.better)",
+   "example": 24
   }
  },
  "conditions": {

@@ -58,7 +58,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--field", default="demo")
     a = ap.parse_args(argv)
-    field, rules, lib = load_field(a.field), load_rules(), load_crops()
+    field, rules = load_field(a.field), load_rules()
+    lib = load_crops(field=field)        # the field's country profile (config/countries/)
     clean = REPO / "data" / "clean" / field["id"]
     smap_path = clean / "smap.parquet"
     if not smap_path.exists():

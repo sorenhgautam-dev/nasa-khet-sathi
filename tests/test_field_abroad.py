@@ -196,8 +196,21 @@ def _driver():
 def test_before_the_square_is_picked_only_the_box_steps_run():
     ff = _driver()
     p = dict(ff.plan({"id": "x", "polygon": None, "validation_station": "S"}, {}))
-    assert [k for k, v in p.items() if v == "run"] == ["worldcover", "hls_recent", "placeholder", "gpm", "chirps", "hls"]
+    assert [k for k, v in p.items() if v == "run"] == ["worldcover", "hls_recent", "placeholder", "modis_submit", "modis",
+                                                       "gpm", "chirps", "hls"]
     assert p["power"].startswith("wait") and p["rain_check"].startswith("wait") and len(p) == len(ff.STEPS)
+    assert p["cropcalendar"] == "skip: fao_crop_calendar not in config"           # Nepal's fields keep crops.json
+
+
+def test_a_held_modis_bundle_is_not_fetched_again_and_a_short_record_asks_only_for_its_years():
+    ff = _driver()
+    field = {"id": "x", "polygon": [[0, 0]] * 4}
+    assert dict(ff.plan(field, {}, present={"modis_submit", "modis"}))["modis"] == "skip: already held"
+    assert ff.command("gpm", field) == ["-m", "pipeline.fetch.gpm", "--workers", "6"]                 # 2001-2025: as before
+    short = {**field, "record_years": [2016, 2025]}
+    assert ff.command("gpm", short)[-4:] == ["--start", "2016-01-01", "--end", "2025-12-31"]
+    assert ff.command("chirps", short) == ["-m", "pipeline.fetch.chirps", "--years", "2016-2025"]
+    assert ff.command("hls", short)[-2:] == ["--since", "2016-01-01"] and ff.command("nasadem", short) == ["-m", "pipeline.fetch.nasadem"]
 
 
 def test_done_steps_are_skipped_unless_forced_and_a_station_step_needs_a_station():
@@ -263,7 +276,8 @@ def test_a_sample_shares_its_demos_box_downloads_and_fetches_only_its_own_point(
     assert ff.shares_box_with(sample, demo) == "demo"
     assert ff.shares_box_with({**sample, "fetch_box": [1, 2, 3, 5]}, demo) is None
     p = dict(ff.plan(sample, {}, shared_with="demo"))
-    assert [k for k, v in p.items() if v.startswith("skip: box shared")] == ["worldcover", "hls_recent", "gpm", "chirps", "hls"]
+    assert [k for k, v in p.items() if v.startswith("skip: box shared")] == ["worldcover", "hls_recent", "modis_submit", "modis",
+                                                                            "gpm", "chirps", "hls"]
     assert p["placeholder"] == "skip: the square is in the config"
     assert p["gpm_build"] == "run" and p["power"] == "run" and p["ghcn"] == "run"
     for x in ("gpm", "hls_l30"):

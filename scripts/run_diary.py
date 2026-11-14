@@ -31,6 +31,7 @@ from pipeline.fetch.cropslib import load_crops  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.fetch import guards as g  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
+from pipeline.fetch.profiles import has_onset_rule  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.ml import seasons as det  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
@@ -294,15 +295,24 @@ def run_seasons(field, rules, out_dir, data):
         print(f"  held out {Y}: {per_year[str(Y)]['thinned']} (reference {len(ref_y)} days; detective on all obs "
               f"{per_year[str(Y)]['detective_on_all_obs']})")
     methods = ("threshold", "changepoint", "detective")
-    mean = {m: round(float(np.mean([per_year[y]["thinned"][m] for y in per_year])), 4) for m in methods}
-    best = se.choose_best(mean, "threshold", S["best_margin"])
+    if not dense:       # rules.yaml season_detection.no_dense_years: no comparison, the threshold method, no detective
+        print(f"no full HLS year has {S['held_out_min_clear_obs']} clear observations ({n_obs.to_dict()}): the comparison "
+              "cannot run; the threshold method is used and the detective is not trained")
+        methods, mean, best = ("threshold", "changepoint"), None, "threshold"
+    else:
+        mean = {m: round(float(np.mean([per_year[y]["thinned"][m] for y in per_year])), 4) for m in methods}
+        best = se.choose_best(mean, "threshold", S["best_margin"])
 
-    final_model = det.train(X_full[dates.year.isin(dense) & agree], labels_full[dates.year.isin(dense) & agree],
-                            D["trees"], D["min_samples_leaf"], D["seed"])
-    det_full = _detective(final_model, full, weather, D, bare_max)
+    if dense:
+        final_model = det.train(X_full[dates.year.isin(dense) & agree], labels_full[dates.year.isin(dense) & agree],
+                                D["trees"], D["min_samples_leaf"], D["seed"])
+        det_full = _detective(final_model, full, weather, D, bare_max)
+    else:
+        final_model, det_full = None, {"seasons": [], "labels": None}
     full["detective"] = det_full
     modis = _rule_methods(mod, "2001-01-01", str((first_hls - pd.Timedelta(1, unit="D")).date()), S, bare_max)
-    modis["detective"] = _detective(final_model, modis, weather, D, bare_max)
+    modis["detective"] = (_detective(final_model, modis, weather, D, bare_max) if final_model is not None
+                          else {"seasons": [], "labels": None})
 
     def by_year(seasons_hls, seasons_mod):
         out = {}
@@ -326,7 +336,8 @@ def run_seasons(field, rules, out_dir, data):
                    "changepoint_kinks": full["kinks"], "modis_composites": int(len(mod))},
         "held_out": {"years": dense, "thin_days": S["held_out_thin_days"], "training_days": train_sizes,
                      "per_year": per_year, "mean_score": mean, "best": best, "best_margin": S["best_margin"],
-                     "threshold_vs_changepoint_all_obs": round(float(agree[dates.year.isin(dense)].mean()), 4)},
+                     "threshold_vs_changepoint_all_obs": round(float(agree[dates.year.isin(dense)].mean()), 4) if dense else None,
+                     **({} if dense else {"not_run": "rules.yaml season_detection.no_dense_years"})},
         "season_date_differences_days": {
             "changepoint_vs_threshold": _match_shift(full["threshold"]["seasons"], full["changepoint"]["seasons"]),
             "detective_vs_threshold": _match_shift(full["threshold"]["seasons"], det_full["seasons"])},
@@ -337,13 +348,15 @@ def run_seasons(field, rules, out_dir, data):
     path.write_text(json.dumps(out, indent=1, default=str) + "\n")
     # label = the chosen method's; label_threshold and label_detective feed the 'less sure' signal (rules.yaml
     # season_detection.cover_sure: the SI detective against the rule method, owner's priorities, 2026-11-13)
+    det_cols = final_model is not None         # no detective: no label_detective column, so no 'less sure' months
     days = pd.concat([pd.DataFrame({"date": modis["dates"], "ndvi_smooth": modis["smooth"], "label": modis[best]["labels"],
                                     "label_threshold": modis["threshold"]["labels"],
-                                    "label_detective": modis["detective"]["labels"], "source": "modis"}),
+                                    **({"label_detective": modis["detective"]["labels"]} if det_cols else {}), "source": "modis"}),
                       pd.DataFrame({"date": dates, "ndvi_smooth": full["smooth"], "label": full[best]["labels"],
                                     "label_threshold": full["threshold"]["labels"],
-                                    "label_detective": full["detective"]["labels"], "source": "hls"})], ignore_index=True)
-    for col in ("label", "label_threshold", "label_detective"):
+                                    **({"label_detective": full["detective"]["labels"]} if det_cols else {}), "source": "hls"})],
+                     ignore_index=True)
+    for col in ("label", "label_threshold", "label_detective")[:3 if det_cols else 2]:
         days[col] = days[col].astype(str)
     days.to_parquet(data / "clean" / field["id"] / "seasons_daily.parquet", index=False)
     print(f"seasons: held-out years {dense}; mean score {mean}; chosen: {best}")
@@ -386,7 +399,7 @@ def _onset_doy(out_dir):
 def run_diary_6c(field, rules, out_dir, data, base_dir=None):
     """base_dir: where the rain-free results (seasons, bare days) are read; out_dir by default."""
     base_dir = base_dir or out_dir
-    lib = load_crops()
+    lib = load_crops(field=field)          # the field's country profile: Nepal's crops.json, else its FAO zone calendar
     clean = data / "clean" / field["id"]
     w = _weather(field, data)
     rain = pd.Series(w["rain_mm"].to_numpy(float), index=pd.DatetimeIndex(w["date"]))
@@ -464,14 +477,17 @@ def run_diary_6c(field, rules, out_dir, data, base_dir=None):
     sj = json.loads((base_dir / "diary_seasons.json").read_text())
     hls_seasons = [{k: pd.Timestamp(r[k]) for k in ("start", "peak", "end")}
                    for rows in sj["chosen"]["seasons_by_year"].values() for r in rows if r["source"] == "hls"]
-    crops = [c for c in lib if lib[c].get("stages_days")]
+    crops = [c for c in lib if lib[c].get("stages_days") and lib[c]["calendar"]["windows"]]   # (a zone may not list a crop)
     gs = gu.guess(hls_seasons, lib, crops)
     win = gs["slots"]["winter"]["fit"]
-    rw = {"rice_then_wheat": gs["slots"]["monsoon"]["fit"]["rice"]["median_total"] + win["wheat"]["median_total"],
-          "rice_then_potato": gs["slots"]["monsoon"]["fit"]["rice"]["median_total"] + win["potato"]["median_total"]}
+    mon = gs["slots"]["monsoon"]["fit"]
+    rw = ({"rice_then_wheat": mon["rice"]["median_total"] + win["wheat"]["median_total"],
+           "rice_then_potato": mon["rice"]["median_total"] + win["potato"]["median_total"]}
+          if "rice" in mon and {"wheat", "potato"} <= set(win) else {})     # a zone calendar may lack one of them
 
     bare = json.loads((base_dir / "diary_bare_days.json").read_text())["summary"]["mean_bare_days_hls_years"]
-    shift_days = None if pinned > len(doy) / 2 else shift["change_over_record"]
+    # no onset rule in the field's country profile (config/countries/default.yaml): the onset trend is not exported
+    shift_days = None if pinned > len(doy) / 2 or not has_onset_rule(field) else shift["change_over_record"]
     export = {"shift_days": shift_days, "bare_days": int(round(bare)), "guess": gs["guess"],
               "groundwater": gw_out, "months": months}
     out = {"labels": {"field": field["name"], "rotation_for_soil": f"{rotation} ({rot_label}), rain-fed twin",
@@ -501,7 +517,7 @@ def run_diary_6c(field, rules, out_dir, data, base_dir=None):
         fits = sorted(gs["slots"][slot]["fit"].items(), key=lambda kv: kv[1]["median_total"])
         print(f"guess {slot}: " + "; ".join(f"{c} {f['median_total']:.0f} (start {f['median_start']:.0f}, end "
                                              f"{f['median_end']:.0f}, length {f['median_length']:.0f})" for c, f in fits))
-    print(f"guess: {gs['guess']}; rice-wheat {rw['rice_then_wheat']:.0f} vs rice-potato {rw['rice_then_potato']:.0f} days\n-> {path.relative_to(REPO)}")
+    print(f"guess: {gs['guess']}; rice-wheat vs rice-potato distances {rw}\n-> {path.relative_to(REPO)}")
     return out
 
 

@@ -83,7 +83,10 @@ def build(fid, data=REPO / "data", site=REPO / "site" / "data"):
     ev = evidence(bt, rcb, gauge)
     w = pd.read_parquet(clean / "weather.parquet")
     from scripts.common import rain_kw          # the rain versions' arguments, as every runner builds them
-    totals = {name: complete_year_totals(w["date"], with_rain(w, v, **rain_kw(rules, v, fid))["rain_mm"]) for name, v in VERSIONS}
+    from pipeline.fetch.profiles import profile_for
+    has_dhm = bool(profile_for(field)["gauges"].get("normals"))     # owner's item 3: DHM's normals only where the profile has them
+    totals = {name: complete_year_totals(w["date"], with_rain(w, v, **rain_kw(rules, v, fid))["rain_mm"])
+              for name, v in VERSIONS if has_dhm or v != "dhm"}
     years = sorted(totals["tuned"])
     normals = (rcb or {}).get("normals_mm", {}).get("Bhaktapur")
     if normals and rcb.get("sources"):
@@ -124,10 +127,10 @@ def build(fid, data=REPO / "data", site=REPO / "site" / "data"):
             {"name": "CHIRPS", "product": "v3.0 rnl daily rain (satellite and gauges), a check only",
              "resolution": "0.05 deg (about 5 km)", "years": "2001-2025", "type": "satellite"},
             {"name": "GPCC", "product": "Full Data Monthly V2022: rain gauges counted in the field's 1-degree box",
-             "resolution": "1 deg", "years": "2001-2020", "type": "station"},
+             "resolution": "1 deg", "years": "2001-2020", "type": "station"}] + ([
             {"name": "DHM (Department of Hydrology and Meteorology, Government of Nepal)",
              "product": "1991-2020 monthly normals, Bhaktapur", "resolution": "one gauge, 2.3 km away", "years": "1991-2020",
-             "type": "station"}],
+             "type": "station"}] if has_dhm else []),
     }
 
 

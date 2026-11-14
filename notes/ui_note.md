@@ -162,6 +162,66 @@ one is missing, say "not ready yet". Schemas: `pipeline/export/{labels,replay,pu
 - **checkup:** `break_test`, `evidence[]` by id, `correction`, `versions` (tuned is central), `yearly` (one chart:
   gpm as published, twin, chirps), `depends_on_corrected_rain` (label ids). Word it as a check we ran, not a fault.
 
+## 6h. Landed on 14 November (Saturday), evening: three small checks for "How do we know?"
+
+No home cards (owner): place them behind the cards' "How do we know?" buttons. Fetch relatively
+(`fetch('data/rainrisk/' + id + '.json')`); if one is missing, say "not ready yet". Schemas: `pipeline/export/{rainrisk,
+fertiliser,heatclock}_schema.json`. Words: `words.json`, screen `last_years` (`rr_*`, `hc_*`, `risk_none`, `why_btn`,
+`why_title`, `why_sources`) and `what_to_grow` (`fs_*`). Each file has `labels` (show the two chips on every number),
+`why.en` / `why.ne` (the Why? button's lines, as they are) and `sources`.
+
+- **Rain at harvest, in the Replay card's details** (`data/rainrisk/<id>.json`). For the plan shown, per crop: "Harvest
+  weeks:" with the `window` months (Bikram Sambat in Nepali, plus `months_note`), then `rr_count` with `risk_years` =
+  `count` and `year_count`, and one square per `years[]` entry (heavy when `days` > 0: `rr_sq_heavy`, else `rr_sq_none`;
+  a picture, never colour alone). A tapped square: `rr_days` and `days`; `rr_records_differ` when the year is in some
+  `other_versions.*.heavy_years` lists but not others. In Why?: `rr_range` with `count_low` / `count_high`, then
+  `why.*`. `good_news` true: `risk_none`. Always `rr_past_only`. Demo: rice 8 of 24 years (other rain 5 to 8); potato,
+  wheat and lentil 0 (good news).
+- **Heat and cold, in the Replay card's details** (`data/heatclock/<id>.json`). One card per `checks[]` entry, named by
+  `hc_wheat_heat`, `hc_potato_heat` or `hc_potato_cold`, with `hc_weeks` and the `window`, the plans it belongs to
+  (`plans`), `hc_years` (`risk_years` = `today.years_with`) and one square per `today.years[]` (its `days`). `good_news`:
+  `risk_none`. Cold: always `hc_cold_caveat`. Around 2040 (`future`, may be null): `hc_less` (ssp245) and `hc_more`
+  (ssp585) with `hc_per_season` (`median`, one decimal, as text), `hc_their_past` with `past_median`, `hc_spread` with
+  `low`–`high`; `future.good_news`: `hc_rare_2040`. Also `hc_left_out`. Demo: potato cold nights in 17 of 24 years, 3.0 a
+  season; models 28.0 a season in 1995-2014 against 19.5 (ssp245) and 20.2 (ssp585) in 2026-2040, lowest to highest 7.3
+  to 38.5; no hot day for wheat or potato today or around 2040.
+- **Fertiliser saver, in the "Feed your soil" plan's details** (`data/fertiliser/<id>.json`, only when `applies`).
+  `fs_lead` (`next_crop`, `legume_crop` from `shared.crop_names`), `fs_saved` (`bags_ha_whole`), `fs_plot`,
+  `fs_size_why`, `fs_wide`, `fs_measured_less`, `fs_short`, `fs_ask`. The kg and the hectare stay in Why? (`why.*`):
+  "hectare" is a word the screens never show (glossary `never_on_screens`), and no ropani figure has a source yet. The
+  plan's `check` tab already carries the dhaincha lines (field file), so nothing else is needed there.
+
+## 6i. Landed on 14 November (Saturday), evening: Weather ahead and How we test each plan
+
+- **Weather ahead** is the third choice on your Choose screen. Data: `fields/<id>.json` `weather` (optional; absent on
+  fields outside Nepal, so hide the choice). Contract: `pipeline/export/CONTRACT_CHANGES.md` (2026-11-14 evening). Words:
+  `words.json` `screens.shared.weather.*`. One line at the top (`top`, `not_forecast`), then the six blocks after the one
+  holding today, Bikram Sambat first, three lines each: Usually (rain and temperature words), Watch out (the first
+  danger of the farmer's crop, with "Most years." or "Some years."), Do this (the tip, then "Check with your local
+  expert."). No numbers on the blocks; the years, "is it changing", rain, temperatures, dry runs, caveats and sources sit
+  behind "Why?".
+- **How we test each plan** (the Field Twin explainer, for judges): four steps with a picture and one sentence each, then
+  one real example from `simple/<id>.json`. Linked from home (one line, `twin.home_line`) and from How we know. Words:
+  `screens.shared.twin.*`.
+
+## 6j. Landed on 14 November (Saturday), evening: dry runs after sowing, and two wheat-book checks
+
+Only new keys; every existing value is unchanged. These live on the judges' "How we know" page (rain at harvest, heat and
+cold), never on the farmer screens, which show no numbers. Words: `words.json` screen `last_years`.
+
+- **Rain at harvest** (`data/rainrisk/<id>.json`): each crop row has `dry_run` (`window` = sowing day to last day,
+  `years[]` one value a year, `typical`, `worst[]` three `{year, days}`, `typical_low`/`typical_high`). Under each crop:
+  `rr_dry_usual` with `dry_run_days` = `typical`; then `rr_dry_worst` and each worst year as its year plus `rr_dry_run`
+  (`dry_run_days` = its `days`). A tapped year square can add `rr_dry_run` with that year's `dry_run.years[].days`. The
+  range over the rain versions stays in Why? (`why.*`, already in the file). Demo, rice sown 23 Jun: usually 6 days.
+- **Heat and cold** (`data/heatclock/<id>.json`): `checks[]` now has four more rows (after the first four), one floret-heat
+  and one flowering-frost row per wheat sowing. Every row has `words`: name the card with `T('last_years.' + c.words)`
+  (old rows: `hc_wheat_heat`, `hc_potato_heat`, `hc_potato_cold`; new: `hc_wheat_floret_formation_heat`,
+  `hc_wheat_flowering_cold`). New rows also have `sure: "estimate"`, `days_after_sowing`, `conditions` (English, for the
+  Why?): show `hc_book` on them, and on the flowering row show `hc_frost_caveat` instead of `hc_cold_caveat`. Everything
+  else as before (`hc_weeks`, `hc_years`, squares, around 2040). `left_out` now names the 8-35 C pollen figure; keep
+  `hc_left_out`.
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

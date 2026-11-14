@@ -2303,6 +2303,738 @@
   "screens.last_years.texts.calendar_note": {
    "en": "Dates follow the usual crop calendar, not yours.",
    "sw": "Tarehe zinafuata kalenda ya kawaida, si yako."
+  },
+  "screens.last_years.texts.rr_title": {
+   "en": "Rain at harvest",
+   "sw": "Mvua wakati wa mavuno"
+  },
+  "screens.last_years.texts.rr_lead": {
+   "en": "How often heavy rain fell near harvest.",
+   "sw": "Mara ngapi mvua kubwa ilinyesha karibu na mavuno."
+  },
+  "screens.last_years.texts.rr_weeks": {
+   "en": "Harvest weeks:",
+   "sw": "Wiki za mavuno:"
+  },
+  "screens.last_years.texts.rr_count": {
+   "en": "Heavy rain at harvest: {risk_years} of {year_count} years.",
+   "sw": "Mvua kubwa mavunoni: miaka {risk_years} kati ya {year_count}."
+  },
+  "screens.last_years.texts.risk_none": {
+   "en": "None in these years. Good news.",
+   "sw": "Hakuna katika miaka hii. Habari njema."
+  },
+  "screens.last_years.texts.rr_sq_heavy": {
+   "en": "Heavy rain",
+   "sw": "Mvua kubwa"
+  },
+  "screens.last_years.texts.rr_sq_none": {
+   "en": "No heavy rain",
+   "sw": "Hakuna mvua kubwa"
+  },
+  "screens.last_years.texts.rr_tap": {
+   "en": "Tap a year to see more.",
+   "sw": "Gusa mwaka mmoja kuona zaidi."
+  },
+  "screens.last_years.texts.rr_days": {
+   "en": "Heavy rain days:",
+   "sw": "Siku za mvua kubwa:"
+  },
+  "screens.last_years.texts.rr_records_differ": {
+   "en": "Other rain records disagree on this year.",
+   "sw": "Rekodi nyingine za mvua zinatofautiana mwaka huu."
+  },
+  "screens.last_years.texts.rr_range": {
+   "en": "Other rain records: {risk_low} to {risk_high} years.",
+   "sw": "Rekodi nyingine za mvua: miaka {risk_low} hadi {risk_high}."
+  },
+  "screens.last_years.texts.rr_dry_usual": {
+   "en": "Longest dry run after sowing: usually {dry_run_days} days.",
+   "sw": "Ukame mrefu baada ya kupanda: kawaida siku {dry_run_days}."
+  },
+  "screens.last_years.texts.rr_dry_worst": {
+   "en": "Worst years:",
+   "sw": "Miaka mibaya zaidi:"
+  },
+  "screens.last_years.texts.rr_dry_run": {
+   "en": "{dry_run_days} dry days in a row",
+   "sw": "siku {dry_run_days} kavu mfululizo"
+  },
+  "screens.last_years.texts.rr_past_only": {
+   "en": "Past years only, not a forecast.",
+   "sw": "Miaka iliyopita tu, si utabiri."
+  },
+  "screens.last_years.texts.hc_title": {
+   "en": "Heat and cold",
+   "sw": "Joto na baridi"
+  },
+  "screens.last_years.texts.hc_lead": {
+   "en": "Too hot or too cold, at key times.",
+   "sw": "Joto kali au baridi kali wakati muhimu."
+  },
+  "screens.last_years.texts.hc_wheat_heat": {
+   "en": "Too hot while wheat grains fill?",
+   "sw": "Joto kali wakati punje za ngano zinajaa?"
+  },
+  "screens.last_years.texts.hc_potato_heat": {
+   "en": "Too hot for potato?",
+   "sw": "Joto kali kwa viazi?"
+  },
+  "screens.last_years.texts.hc_potato_cold": {
+   "en": "Too cold for potato?",
+   "sw": "Baridi kali kwa viazi?"
+  },
+  "screens.last_years.texts.hc_wheat_floret_formation_heat": {
+   "en": "Too hot while wheat flowers form?",
+   "sw": "Joto kali maua ya ngano yanapoundwa?"
+  },
+  "screens.last_years.texts.hc_wheat_flowering_cold": {
+   "en": "Frost while wheat flowers?",
+   "sw": "Jalidi ngano inapochanua?"
+  },
+  "screens.last_years.texts.hc_book": {
+   "en": "From FAO's wheat book. An estimate.",
+   "sw": "Kutoka kitabu cha ngano cha FAO. Ni makadirio."
+  },
+  "screens.last_years.texts.hc_frost_caveat": {
+   "en": "Real frost nights may be more or fewer.",
+   "sw": "Usiku wa jalidi unaweza kuwa zaidi au pungufu."
+  },
+  "screens.last_years.texts.hc_weeks": {
+   "en": "Weeks counted:",
+   "sw": "Wiki zilizohesabiwa:"
+  },
+  "screens.last_years.texts.hc_years": {
+   "en": "Days like this: {risk_years} of {year_count} years.",
+   "sw": "Siku kama hizi: miaka {risk_years} kati ya {year_count}."
+  },
+  "screens.last_years.texts.hc_cold_caveat": {
+   "en": "Our cold nights may be too many.",
+   "sw": "Huenda tumehesabu usiku baridi mwingi mno."
+  },
+  "screens.last_years.texts.hc_2040": {
+   "en": "Around 2040",
+   "sw": "Karibu mwaka 2040"
+  },
+  "screens.last_years.texts.hc_less": {
+   "en": "If the world warms less:",
+   "sw": "Dunia ikipata joto kidogo:"
+  },
+  "screens.last_years.texts.hc_more": {
+   "en": "If the world warms more:",
+   "sw": "Dunia ikipata joto zaidi:"
+  },
+  "screens.last_years.texts.hc_per_season": {
+   "en": "About {per_season} days each season.",
+   "sw": "Takriban siku {per_season} kila msimu."
+  },
+  "screens.last_years.texts.hc_their_past": {
+   "en": "Same computer guesses, past years:",
+   "sw": "Makadirio yale yale, miaka iliyopita:"
+  },
+  "screens.last_years.texts.hc_spread": {
+   "en": "Lowest to highest guess:",
+   "sw": "Makadirio ya chini hadi ya juu:"
+  },
+  "screens.last_years.texts.hc_rare_2040": {
+   "en": "Still rare around 2040. Good news.",
+   "sw": "Bado ni nadra karibu 2040. Habari njema."
+  },
+  "screens.last_years.texts.hc_left_out": {
+   "en": "Rice and lentil: no checked limits yet.",
+   "sw": "Mpunga na dengu: bado hakuna mipaka iliyothibitishwa."
+  },
+  "screens.last_years.texts.why_btn": {
+   "en": "Why?",
+   "sw": "Kwa nini?"
+  },
+  "screens.last_years.texts.why_title": {
+   "en": "Why we say this",
+   "sw": "Kwa nini tunasema hivi"
+  },
+  "screens.last_years.texts.why_sources": {
+   "en": "Where this comes from:",
+   "sw": "Hii inatoka wapi:"
+  },
+  "screens.what_to_grow.texts.fs_title": {
+   "en": "Fertiliser saver",
+   "sw": "Kuokoa mbolea"
+  },
+  "screens.what_to_grow.texts.fs_lead": {
+   "en": "{next_crop} after {legume_crop} may need less urea.",
+   "sw": "{next_crop} baada ya {legume_crop} huenda ikahitaji urea kidogo."
+  },
+  "screens.what_to_grow.texts.fs_saved": {
+   "en": "Maybe {bags_low} to {bags_high} fewer urea bags.",
+   "sw": "Huenda mifuko {bags_low} hadi {bags_high} ya urea pungufu."
+  },
+  "screens.what_to_grow.texts.fs_plot": {
+   "en": "Counted for one big plot of land.",
+   "sw": "Imehesabiwa kwa shamba moja kubwa."
+  },
+  "screens.what_to_grow.texts.fs_size_why": {
+   "en": "See its size under Why.",
+   "sw": "Ona ukubwa wake kwenye ‘Kwa nini’."
+  },
+  "screens.what_to_grow.texts.fs_wide": {
+   "en": "This is a wide guess, not a promise.",
+   "sw": "Haya ni makadirio mapana, si ahadi."
+  },
+  "screens.what_to_grow.texts.fs_measured_less": {
+   "en": "One field study found much less.",
+   "sw": "Utafiti mmoja wa shambani ulipata kidogo sana."
+  },
+  "screens.what_to_grow.texts.fs_short": {
+   "en": "Urea can be short at rice planting.",
+   "sw": "Urea inaweza kukosekana wakati wa kupanda mpunga."
+  },
+  "screens.what_to_grow.texts.fs_ask": {
+   "en": "Ask your agriculture office before using less.",
+   "sw": "Uliza ofisi ya kilimo kabla ya kupunguza."
+  },
+  "screens.home.texts.crop_winter": {
+   "en": "{crop} this winter:",
+   "sw": "{crop} msimu huu wa baridi:"
+  },
+  "screens.home.texts.verdict_better": {
+   "en": "better than what you grow now",
+   "sw": "bora kuliko unachopanda sasa"
+  },
+  "screens.home.texts.verdict_same": {
+   "en": "about the same as now",
+   "sw": "karibu sawa na sasa"
+  },
+  "screens.home.texts.verdict_worse": {
+   "en": "worse than what you grow now",
+   "sw": "mbaya kuliko unachopanda sasa"
+  },
+  "screens.home.texts.verdict_mixed": {
+   "en": "sometimes better, sometimes worse",
+   "sw": "wakati mwingine bora, wakati mwingine mbaya"
+  },
+  "screens.home.texts.face_better": {
+   "en": "Better",
+   "sw": "Bora"
+  },
+  "screens.home.texts.face_same": {
+   "en": "Same",
+   "sw": "Sawa"
+  },
+  "screens.home.texts.face_worse": {
+   "en": "Worse",
+   "sw": "Mbaya"
+  },
+  "screens.home.texts.per_ten_pre": {
+   "en": "about",
+   "sw": "takriban"
+  },
+  "screens.home.texts.per_ten_post": {
+   "en": "of every 10 winters",
+   "sw": "kati ya kila baridi 10"
+  },
+  "screens.home.texts.rests_in": {
+   "en": "Your field rests in:",
+   "sw": "Shamba lako hupumzika:"
+  },
+  "screens.home.texts.never_rests": {
+   "en": "Your field is green all year.",
+   "sw": "Shamba lako ni kijani mwaka mzima."
+  },
+  "screens.last_years.texts.cmp_title": {
+   "en": "How we compared",
+   "sw": "Tulivyolinganisha"
+  },
+  "screens.last_years.texts.cmp_ran": {
+   "en": "Both crops, in {year_count} past winters.",
+   "sw": "Mazao yote, katika baridi {year_count} zilizopita."
+  },
+  "screens.last_years.texts.cmp_winters": {
+   "en": "winters",
+   "sw": "baridi"
+  },
+  "screens.last_years.texts.better_means": {
+   "en": "Better means more water need met by rain.",
+   "sw": "Bora: mvua inakidhi maji zaidi yanayohitajika."
+  },
+  "screens.last_years.texts.better_not": {
+   "en": "Not price, not labour, not taste.",
+   "sw": "Si bei, si kazi, si ladha."
+  },
+  "screens.last_years.texts.water_yes_1": {
+   "en": "With water, dry spells stop mattering.",
+   "sw": "Ukimwagilia, siku kavu hazijalishi."
+  },
+  "screens.last_years.texts.water_yes_2": {
+   "en": "Our computer looks at water only.",
+   "sw": "Kompyuta yetu huangalia maji tu."
+  },
+  "screens.last_years.texts.boxes_only": {
+   "en": "Boxes: the coming months only, rain only.",
+   "sw": "Visanduku: miezi ijayo tu, mvua tu."
+  },
+  "screens.last_years.texts.scores_all_year": {
+   "en": "Plan scores count both crops, all year.",
+   "sw": "Alama za mpango: mazao yote, mwaka mzima."
+  },
+  "screens.from_space.texts.plans_calendar": {
+   "en": "Our plans use the usual crop calendar.",
+   "sw": "Mipango yetu hutumia kalenda ya kawaida ya mazao."
+  },
+  "screens.from_space.texts.line_saw": {
+   "en": "This line shows what we saw from space.",
+   "sw": "Mstari huu unaonyesha tulichoona angani."
+  },
+  "screens.home.texts.map_tag": {
+   "en": "NASA map",
+   "sw": "Ramani ya NASA"
+  },
+  "screens.home.texts.map_sub": {
+   "en": "A top view of your farm",
+   "sw": "Shamba lako kutoka juu"
+  },
+  "screens.home.texts.what_to_grow": {
+   "en": "What to grow",
+   "sw": "Nini cha kupanda"
+  },
+  "screens.home.texts.farmer_first": {
+   "en": "Farmer first",
+   "sw": "Mkulima kwanza"
+  },
+  "screens.home.texts.open_records": {
+   "en": "Uses open NASA records",
+   "sw": "Hutumia kumbukumbu wazi za NASA"
+  },
+  "screens.where.texts.sky_h1": {
+   "en": "Your farm",
+   "sw": "Shamba lako"
+  },
+  "screens.where.texts.sky_h2": {
+   "en": "from the sky",
+   "sw": "kutoka angani"
+  },
+  "screens.where.texts.your_farm": {
+   "en": "Your farm",
+   "sw": "Shamba lako"
+  },
+  "screens.where.texts.is_this": {
+   "en": "Is this your farm?",
+   "sw": "Je, hili ni shamba lako?"
+  },
+  "screens.where.texts.split_next": {
+   "en": "Next, we split it into small parts.",
+   "sw": "Kisha, tunaligawa katika sehemu ndogo."
+  },
+  "screens.where.texts.yes_parts": {
+   "en": "Yes, make the parts",
+   "sw": "Ndiyo, tengeneza sehemu"
+  },
+  "screens.parts.texts.h1": {
+   "en": "Your farm,",
+   "sw": "Shamba lako,"
+  },
+  "screens.parts.texts.h2": {
+   "en": "in {section_count} parts",
+   "sw": "katika sehemu {section_count}"
+  },
+  "screens.parts.texts.here": {
+   "en": "Here are the {section_count} parts.",
+   "sw": "Hizi ndizo sehemu {section_count}."
+  },
+  "screens.parts.texts.middle": {
+   "en": "We test the middle of each part.",
+   "sw": "Tunapima katikati ya kila sehemu."
+  },
+  "screens.parts.texts.start_test": {
+   "en": "Start the soil test",
+   "sw": "Anza kupima udongo"
+  },
+  "screens.check_soil.texts.h1": {
+   "en": "Your soil,",
+   "sw": "Udongo wako,"
+  },
+  "screens.check_soil.texts.h2": {
+   "en": "part by part",
+   "sw": "sehemu kwa sehemu"
+  },
+  "screens.check_soil.texts.not_tested": {
+   "en": "Not tested yet",
+   "sw": "Bado haijapimwa"
+  },
+  "screens.check_soil.texts.tested": {
+   "en": "Tested",
+   "sw": "Imepimwa"
+  },
+  "screens.check_soil.texts.again": {
+   "en": "Test again",
+   "sw": "Pima tena"
+  },
+  "screens.check_soil.texts.see_what": {
+   "en": "See what to do",
+   "sw": "Ona cha kufanya"
+  },
+  "screens.check_soil.texts.from_test": {
+   "en": "From the soil test",
+   "sw": "Kutoka kipimo cha udongo"
+  },
+  "screens.check_soil.texts.tested_h1": {
+   "en": "Soil tested.",
+   "sw": "Udongo umepimwa."
+  },
+  "screens.check_soil.texts.tested_h2": {
+   "en": "What next?",
+   "sw": "Nini sasa?"
+  },
+  "screens.each_part.texts.todo_h": {
+   "en": "What to do",
+   "sw": "Cha kufanya"
+  },
+  "screens.each_part.texts.do_water": {
+   "en": "Water part {section} today.",
+   "sw": "Mwagilia sehemu {section} leo."
+  },
+  "screens.each_part.texts.do_drain": {
+   "en": "Let water drain from part {section}.",
+   "sw": "Toa maji kutoka sehemu {section}."
+  },
+  "screens.each_part.texts.do_test": {
+   "en": "Test the soil first.",
+   "sw": "Pima udongo kwanza."
+  },
+  "screens.each_part.texts.do_relative": {
+   "en": "We can only say which parts are drier.",
+   "sw": "Tunaweza kusema tu sehemu kavu zaidi."
+  },
+  "screens.each_part.texts.do_fine": {
+   "en": "The tested parts look fine today.",
+   "sw": "Sehemu zilizopimwa ziko sawa leo."
+  },
+  "screens.each_part.texts.twin_title": {
+   "en": "The computer's guess for each part",
+   "sw": "Makadirio ya kompyuta kwa kila sehemu"
+  },
+  "screens.each_part.texts.twin_why": {
+   "en": "This guess comes from weather, not the stick.",
+   "sw": "Makadirio haya yanatoka hali ya hewa, si kijiti."
+  },
+  "screens.what_to_grow.texts.sub3": {
+   "en": "Rain and cold ahead, and what to grow.",
+   "sw": "Mvua na baridi zijazo, na nini cha kupanda."
+  },
+  "screens.what_to_grow.texts.see3": {
+   "en": "See the next 3 months",
+   "sw": "Ona miezi 3 ijayo"
+  },
+  "screens.what_to_grow.texts.our_pick": {
+   "en": "Our suggestion",
+   "sw": "Pendekezo letu"
+  },
+  "screens.what_to_grow.texts.try_part": {
+   "en": "Try it in one part first",
+   "sw": "Jaribu kwanza katika sehemu moja"
+  },
+  "screens.what_to_grow.texts.line_pre": {
+   "en": "Rain only: better in",
+   "sw": "Mvua tu: bora mara"
+  },
+  "screens.what_to_grow.texts.line_post": {
+   "en": "of 10 winters",
+   "sw": "kati ya baridi 10"
+  },
+  "screens.what_to_grow.texts.line_same": {
+   "en": "Rain only: about the same as now",
+   "sw": "Mvua tu: karibu sawa na sasa"
+  },
+  "screens.what_to_grow.texts.line_worse": {
+   "en": "Rain only: worse than now",
+   "sw": "Mvua tu: mbaya kuliko sasa"
+  },
+  "shared.weather.title": {
+   "en": "Weather ahead",
+   "sw": "Hali ya hewa ijayo"
+  },
+  "shared.weather.choice_sub": {
+   "en": "What each month usually brings.",
+   "sw": "Kile kila mwezi huleta kwa kawaida."
+  },
+  "shared.weather.top": {
+   "en": "What usually happens here: {year_count} years of records.",
+   "sw": "Kinachotokea kwa kawaida hapa: rekodi za miaka {year_count}."
+  },
+  "shared.weather.not_forecast": {
+   "en": "Not a forecast.",
+   "sw": "Huu si utabiri."
+  },
+  "shared.weather.usually": {
+   "en": "Usually:",
+   "sw": "Kwa kawaida:"
+  },
+  "shared.weather.rain_dry": {
+   "en": "dry",
+   "sw": "kavu"
+  },
+  "shared.weather.rain_some_rain": {
+   "en": "some rain",
+   "sw": "mvua kidogo"
+  },
+  "shared.weather.rain_wet": {
+   "en": "wet",
+   "sw": "mvua nyingi"
+  },
+  "shared.weather.temp_cold": {
+   "en": "cold",
+   "sw": "baridi"
+  },
+  "shared.weather.temp_mild": {
+   "en": "mild",
+   "sw": "wastani"
+  },
+  "shared.weather.temp_warm": {
+   "en": "warm",
+   "sw": "joto"
+  },
+  "shared.weather.watch": {
+   "en": "Watch out:",
+   "sw": "Tahadhari:"
+  },
+  "shared.weather.potato_cold": {
+   "en": "Cold nights for {crop}.",
+   "sw": "Usiku wa baridi kwa {crop}."
+  },
+  "shared.weather.potato_heat": {
+   "en": "Hot days for {crop}.",
+   "sw": "Siku za joto kwa {crop}."
+  },
+  "shared.weather.wheat_flower_frost": {
+   "en": "Frost on {crop} flowers.",
+   "sw": "Barafu kwenye maua ya {crop}."
+  },
+  "shared.weather.wheat_floret_heat": {
+   "en": "Heat before {crop} flowers.",
+   "sw": "Joto kabla {crop} haijachanua."
+  },
+  "shared.weather.wheat_grain_heat": {
+   "en": "Heat while {crop} grain fills.",
+   "sw": "Joto wakati nafaka ya {crop} inajaa."
+  },
+  "shared.weather.dry_spell": {
+   "en": "Weeks without rain for {crop}.",
+   "sw": "Wiki bila mvua kwa {crop}."
+  },
+  "shared.weather.big_rain_sowing": {
+   "en": "Big rain at {crop} sowing.",
+   "sw": "Mvua kubwa wakati wa kupanda {crop}."
+  },
+  "shared.weather.big_rain_harvest": {
+   "en": "Big rain at {crop} harvest.",
+   "sw": "Mvua kubwa wakati wa kuvuna {crop}."
+  },
+  "shared.weather.nothing": {
+   "en": "Nothing big in past years.",
+   "sw": "Hakuna hatari kubwa miaka iliyopita."
+  },
+  "shared.weather.most": {
+   "en": "Most years.",
+   "sw": "Miaka mingi."
+  },
+  "shared.weather.some": {
+   "en": "Some years.",
+   "sw": "Baadhi ya miaka."
+  },
+  "shared.weather.do": {
+   "en": "Do this:",
+   "sw": "Fanya hivi:"
+  },
+  "shared.weather.tip_cold": {
+   "en": "Cover young plants on clear, cold nights.",
+   "sw": "Funika mimea michanga usiku wa baridi."
+  },
+  "shared.weather.tip_heat": {
+   "en": "Water in the evening on hot days.",
+   "sw": "Mwagilia jioni siku za joto."
+  },
+  "shared.weather.tip_dry_spell": {
+   "en": "Water before flowering if no rain.",
+   "sw": "Mwagilia kabla ya kuchanua kama hakuna mvua."
+  },
+  "shared.weather.tip_big_rain": {
+   "en": "Clear drains before the rains.",
+   "sw": "Safisha mifereji kabla ya mvua."
+  },
+  "shared.weather.tip_end": {
+   "en": "Check with your local expert.",
+   "sw": "Muulize mtaalamu wa eneo lako."
+  },
+  "shared.weather.why": {
+   "en": "Why?",
+   "sw": "Kwa nini?"
+  },
+  "shared.weather.years": {
+   "en": "In {danger_years} of {year_count} past years.",
+   "sw": "Katika miaka {danger_years} kati ya {year_count} iliyopita."
+  },
+  "shared.weather.changing": {
+   "en": "Is it changing?",
+   "sw": "Je, inabadilika?"
+  },
+  "shared.weather.change_more_common": {
+   "en": "Happening more often.",
+   "sw": "Inatokea mara nyingi zaidi."
+  },
+  "shared.weather.change_less_common": {
+   "en": "Happening less often.",
+   "sw": "Inatokea mara chache zaidi."
+  },
+  "shared.weather.change_about_same": {
+   "en": "No clear change.",
+   "sw": "Hakuna mabadiliko wazi."
+  },
+  "shared.weather.change_cant_tell": {
+   "en": "Can't tell yet.",
+   "sw": "Bado hatuwezi kusema."
+  },
+  "shared.weather.none_seen": {
+   "en": "Not seen in these years. Good news.",
+   "sw": "Haikuonekana miaka hii. Habari njema."
+  },
+  "shared.weather.other_dangers": {
+   "en": "Other dangers",
+   "sw": "Hatari nyingine"
+  },
+  "shared.weather.rain_label": {
+   "en": "Rain in this month",
+   "sw": "Mvua ya mwezi huu"
+  },
+  "shared.weather.day_label": {
+   "en": "Day temperature",
+   "sw": "Joto la mchana"
+  },
+  "shared.weather.night_label": {
+   "en": "Night temperature",
+   "sw": "Joto la usiku"
+  },
+  "shared.weather.dry_label": {
+   "en": "Longest run of dry days",
+   "sw": "Siku kavu mfululizo, ndefu zaidi"
+  },
+  "shared.weather.usual_year": {
+   "en": "usual year",
+   "sw": "mwaka wa kawaida"
+  },
+  "shared.weather.worst_years": {
+   "en": "worst years",
+   "sw": "miaka mibaya zaidi"
+  },
+  "shared.weather.frost_label": {
+   "en": "Frost",
+   "sw": "Barafu"
+  },
+  "shared.weather.frost_none": {
+   "en": "no frost",
+   "sw": "hakuna barafu"
+  },
+  "shared.weather.frost_risk": {
+   "en": "frost possible",
+   "sw": "barafu inawezekana"
+  },
+  "shared.weather.frost_high": {
+   "en": "frost likely",
+   "sw": "barafu ina uwezekano mkubwa"
+  },
+  "shared.weather.frost_note1": {
+   "en": "Our cold nights may be too many.",
+   "sw": "Huenda tunahesabu usiku wa baridi mwingi mno."
+  },
+  "shared.weather.frost_note2": {
+   "en": "Bhaktapur's own nights are often colder.",
+   "sw": "Usiku wa Bhaktapur mara nyingi ni baridi zaidi."
+  },
+  "shared.weather.big_rain_note1": {
+   "en": "Big rain here means 20 mm a day.",
+   "sw": "Hapa mvua kubwa ni mm 20 kwa siku."
+  },
+  "shared.weather.big_rain_note2": {
+   "en": "The weather office calls 50 mm heavy.",
+   "sw": "Idara ya hewa huita mm 50 nzito."
+  },
+  "shared.weather.dry_note": {
+   "en": "A dry day has under 1 mm.",
+   "sw": "Siku kavu ina chini ya mm 1."
+  },
+  "shared.weather.estimate": {
+   "en": "This is an estimate.",
+   "sw": "Hii ni makadirio."
+  },
+  "shared.weather.sources": {
+   "en": "Where this comes from",
+   "sw": "Hii imetoka wapi"
+  },
+  "shared.weather.days_word": {
+   "en": "days",
+   "sw": "siku"
+  },
+  "shared.twin.h1": {
+   "en": "How we test each plan",
+   "sw": "Jinsi tunavyopima kila mpango"
+  },
+  "shared.twin.h2": {
+   "en": "Four simple steps.",
+   "sw": "Hatua nne rahisi."
+  },
+  "shared.twin.step1": {
+   "en": "NASA watched your area for {year_count} years.",
+   "sw": "NASA ilitazama eneo lako miaka {year_count}."
+  },
+  "shared.twin.step1_sub": {
+   "en": "Rain, heat and green.",
+   "sw": "Mvua, joto na kijani."
+  },
+  "shared.twin.step2": {
+   "en": "Our computer makes a copy of your field.",
+   "sw": "Kompyuta yetu inatengeneza nakala ya shamba lako."
+  },
+  "shared.twin.step2_sub": {
+   "en": "Soil, crop and water.",
+   "sw": "Udongo, zao na maji."
+  },
+  "shared.twin.step3": {
+   "en": "It tries each plan in every year.",
+   "sw": "Inajaribu kila mpango katika kila mwaka."
+  },
+  "shared.twin.step4": {
+   "en": "Your soil stick checks the soil today.",
+   "sw": "Kijiti chako cha udongo kinapima udongo leo."
+  },
+  "shared.twin.step4_sub": {
+   "en": "Then the app says what to do.",
+   "sw": "Kisha programu inakuambia la kufanya."
+  },
+  "shared.twin.example_title": {
+   "en": "One real example",
+   "sw": "Mfano mmoja halisi"
+  },
+  "shared.twin.example_who": {
+   "en": "A {crop} farmer who cannot water.",
+   "sw": "Mkulima wa {crop} asiyeweza kumwagilia."
+  },
+  "shared.twin.example": {
+   "en": "{new_crop} did better in {count} of {year_count} winters.",
+   "sw": "{new_crop} ilikuwa bora baridi {count} kati ya {year_count}."
+  },
+  "shared.twin.better_means": {
+   "en": "Better means more of its water need met.",
+   "sw": "Bora ni kupata maji zaidi inayohitaji."
+  },
+  "shared.twin.past_not_promise": {
+   "en": "Past years, not a promise.",
+   "sw": "Ni miaka iliyopita, si ahadi."
+  },
+  "shared.twin.home_line": {
+   "en": "We tested each plan in {year_count} past years.",
+   "sw": "Tulipima kila mpango katika miaka {year_count} iliyopita."
+  },
+  "shared.twin.open": {
+   "en": "See how",
+   "sw": "Ona jinsi"
   }
  }
 }

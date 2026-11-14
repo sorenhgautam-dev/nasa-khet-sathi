@@ -116,7 +116,17 @@ def conditions(plan, current, ctx, lib):
         held.add("soil_cell_far")                             # owner's answer 10
     if ctx.get("winter_crop_unconfirmed"):
         held.add("winter_crop_unconfirmed")                   # owner's answer 6: the farmer has not confirmed the winter crop
+    if ctx.get("profile"):
+        held.add(f"profile_{ctx['profile']}")                 # owner's item 3: the field's country profile (NP, default)
     return held
+
+
+def plan_name(role, crops, lib, names, no_legume_name):
+    """The plan's name (rules.yaml plans.plan_names); a third plan with no legume keeps decision 5's name
+    (plans.third_plan_name_no_legume), since 'Feed your soil' names a pulse crop."""
+    if role == "safest" and not any(lib[c].get("legume") for c in crops):
+        return no_legume_name
+    return names[role]
 
 
 def gain_bounds(plan):

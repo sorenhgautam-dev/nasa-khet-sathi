@@ -20,8 +20,10 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 from pipeline.fetch.cropslib import load_crops  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
+from pipeline.fetch.profiles import events_rules  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import events as ev  # noqa: E402
+from pipeline.plans import explain as ex  # noqa: E402
 from pipeline.diary import guess as gu  # noqa: E402
 from pipeline.plans import generate as ge  # noqa: E402
 from pipeline.plans import options as po  # noqa: E402
@@ -145,7 +147,9 @@ def main(argv=None):
                     help="write plans.json here instead of data/checks/<field>/ (a check run; the diary is still read there)")
     add_switches(ap)
     a = ap.parse_args(argv)
-    field, rules, lib = load_field(a.field), load_rules(), load_crops()
+    field, rules = load_field(a.field), load_rules()
+    lib = load_crops(field=field)              # the field's country profile: Nepal's crops.json, else its FAO zone calendar
+    rules["events"] = events_rules(field, rules)   # the profile's drought seasons (Nepal: DHM's, equal to rules.yaml events)
     set_switches(rules, a)
     clean = REPO / "data" / "clean" / field["id"]
     out_dir = REPO / "data" / "checks" / field["id"]                 # inputs (diary) are always read here
@@ -211,7 +215,7 @@ def main(argv=None):
                "rotation_source": rot_label if role == "current" else
                f"suggested plan '{P['plan_names'][role]}' ({rules['plans']['third_plan_rule'] if role == 'safest' else rules['plans']['cover_gap_rule']}); "
                + ("PLACEHOLDER field" if field.get("placeholder") else "")}
-        exports[role] = {"id": role, "plan": r["id"], "name": P["plan_names"][role], "spans": r["spans"],
+        exports[role] = {"id": role, "plan": r["id"], "name": ex.plan_name(role, r["crops"], lib, P["plan_names"], P["third_plan_name_no_legume"]), "spans": r["spans"],
                          "score": {k: r[k] for k in ("harvest", "water", "cover", "soil_kept")},
                          "stability": r["stability"], "pest_break": r["pest_break"], "nitrogen": r["nitrogen"],
                          "needs_water_window": r["needs_water_window"], "ky_assumed": r["ky_assumed"],

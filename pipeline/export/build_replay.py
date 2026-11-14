@@ -65,7 +65,8 @@ def band_p(crops, lib, start):
 
 
 def build(fid, data=REPO / "data", site=REPO / "site" / "data"):
-    field, rules, lib = load_field(fid), load_rules(), load_crops()
+    field, rules = load_field(fid), load_rules()
+    lib = load_crops(field=field)        # the field's country profile: Nepal's crops.json, else its FAO zone calendar
     R = rules["window_replay"]
     doc = json.loads((site / "fields" / f"{fid}.json").read_text())
     src = field.get("sample_of") or fid

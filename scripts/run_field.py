@@ -49,13 +49,18 @@ STEPS = [   # (name, command after the interpreter, which fields); --field <id> 
     ("rain_selection", ["scripts/run_rain_selection.py"], FULL),
     ("area_map", ["scripts/run_area_map.py"], FULL),
     ("export", ["-m", "pipeline.export.build_field_json"], CORE),
+    ("weather_ahead", ["scripts/run_weather.py"], CORE),   # the optional weather block (2026-11-14 evening), right after export
     ("index", ["-m", "pipeline.export.build_index"], SITE),
     ("words", ["-m", "pipeline.export.build_words"], SITE),
     ("replay_window", ["-m", "pipeline.export.build_replay"], CORE),   # the farmer's question (2026-11-14): 25-Year Replay,
     ("pulse", ["-m", "pipeline.export.build_pulse"], CORE),            # Field Pulse and Data Check-up, before verification
     ("checkup", ["-m", "pipeline.export.build_checkup"], CORE),        # (it scores them once the farmer's files exist)
+    ("rainrisk", ["-m", "pipeline.export.build_risks", "--kind", "rainrisk"], CORE),       # 2026-11-14: rain at harvest,
+    ("fertiliser", ["-m", "pipeline.export.build_risks", "--kind", "fertiliser"], CORE),   # fertiliser saver and heat clock
+    ("heatclock", ["-m", "pipeline.export.build_risks", "--kind", "heatclock"], CORE),     # (labels refreshes their labels)
     ("verification", ["scripts/run_verification.py"], FULL),     # before story: the page shows this run's scorecard
     ("labels", ["-m", "pipeline.export.build_labels"], CORE),         # after verification: this run's scorecard
+    ("simple", ["-m", "pipeline.export.build_simple"], CORE),         # the three farmer cards, from the replay and pulse files
     ("story", ["-m", "pipeline.export.build_story"], SITE),
     ("validate", ["-m", "pipeline.export.validate", "--final"], SITE),
     ("site_check", ["scripts/check_site.py", "--final"], SITE),

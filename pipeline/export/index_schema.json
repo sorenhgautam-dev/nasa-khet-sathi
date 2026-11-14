@@ -87,6 +87,18 @@
             ],
             "pattern": "^[a-z0-9-]+$",
             "description": "id of the area in `areas` holding this field"
+          },
+          "profile": {
+            "type": "string",
+            "enum": ["default"],
+            "description": "present only for a field built on the global defaults (config/countries/default.yaml: no country profile), e.g. a field on another continent; a field with a country profile has no key (owner's item 3, 2026-11-14)"
+          },
+          "note": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["en"],
+            "properties": {"en": {"type": "string", "minLength": 1}, "ne": {"type": "string", "minLength": 1}},
+            "description": "a short line the field list shows beside such a field (with `profile`)"
           }
         }
       }

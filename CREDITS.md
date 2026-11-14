@@ -40,6 +40,13 @@ server functions, no environment variables. GitHub Pages is not used.
 - **The four features (2026-11-14):** Home, the 25-Year Replay, Field Pulse, Safe Trial and the record check-up, and the
   two labels on every number, built by SI in the same design style (no new design files; see SI_LOG.md, 2026-11-14, "the
   four features on the site"). The Safe Trial keeps its photos on the phone only (IndexedDB).
+- **The teammate's seven steps as the app (2026-11-14 evening):** the owner's decision: the UI teammate's design
+  (`design/screens/`, phone and web) is the app; the four-features home is gone, and the features are content inside his
+  screens or on "How we know". Built by SI; every word that differs from his design is listed, with the reason, in
+  `docs/DESIGN_WORDING_CHANGES.md` (see SI_LOG.md, 2026-11-14 evening, "the seven steps as the app").
+- **Weather ahead and How we test each plan (2026-11-14 evening):** the Choose screen's fourth card, the Weather ahead
+  screen and its Why? sheet, and the four-step page for judges, built by SI in the teammate's styles (see SI_LOG.md,
+  2026-11-14 evening, "Weather ahead and How we test each plan on the site").
 
 ## Data and metadata services
 
@@ -407,6 +414,75 @@ for each claim (copied from notes/parallel_session.md).
   (iridl.ldeo.columbia.edu/documentation/usgs/adds/wrsi/WRSI_readme.pdf), read in a web-search summary, not opened.
 - `site/data/{labels,replay,pulse,checkup}/` otherwise reuse only the project's own outputs listed above.
 
+### Rain at harvest, fertiliser saver, heat and cold (2026-11-14 evening; cited in `config/rules.yaml` `rain_risk`, `fertiliser_saver`, `heat_clock`; every source opened on 2026-11-14, `notes/SOURCES_CHECK.md`)
+
+- DHM, Meteorological Forecasting Division, "Terms used in Weather Forecasting in Nepal" (one-page PDF,
+  http://dhm.gov.np/mfd/api/image/forecast-terminology/): heavy rain "50 mm or more but less than 100 mm" in 24 h, the
+  heavier classes above it (SOURCES_CHECK 1). Used for the heavy-rain day (50 mm or more).
+- DHM, *Update of Climate Change Study of Nepal*, Final Report, August 2024 (Table 6, p.16): searched for an 8-day dry
+  spell, NOT FOUND (SOURCES_CHECK 2b), so no dry-spell squares are built. Its CDD (the longest run of days with rain
+  under 1 mm) is used, from the owner's answer 1 of 2026-11-14 evening, as the rain risk's longest dry run after sowing
+  (`rules.yaml` `rain_risk.dry_spells`; counted per crop season, not per calendar year as DHM does).
+- FAO Irrigation and Drainage Paper 56 (Allen, Pereira, Raes and Smith, 1998), chapter 6, "Length of growth stages"
+  (https://www.fao.org/4/x0490e/x0490e0b.htm, opened 2026-11-14): the late-season stage, used as the harvest weeks and the
+  wheat grain-filling weeks; its lengths are those of `config/crops.json`.
+- FAO Irrigation and Drainage Paper 66, *Crop yield response to water* (Steduto, Hsiao, Fereres and Raes, 2012), section
+  3.4 (https://www.fao.org/4/i2800e/i2800e07.pdf): wheat p.98 (above 34 °C during grain filling), Table 1 p.95 (wheat stage
+  days, India), potato p.187 (cold 1 °C and less, heat 35 °C or higher) (SOURCES_CHECK 7). Not used: the 8-35 °C pollen
+  sentence, which is FAO-66's rice chapter (p.106).
+- E. Acevedo, P. Silva and H. Silva, "Wheat growth and physiology", in Curtis, Rajaram and Gómez Macpherson (eds), *Bread Wheat: Improvement and Production*, FAO Plant Production and Protection Series No. 30, Rome, 2002
+  (https://www.fao.org/4/Y4011e/y4011e06.htm, opened 2026-11-14): "Temperatures above 30°C during floret formation cause
+  complete sterility"; frost damage "between flag leaf emergence and ten days after anthesis" at "minimum screen
+  temperatures below 0°C"; Table 3.1 (days from emergence, spring wheat). Used for the heat clock's two wheat-book checks
+  (`rules.yaml` `heat_clock.wheat_floret_*`, `wheat_flower_*`; owner's answer 2 of 2026-11-14 evening), labelled
+  estimate (SOURCES_CHECK 7a).
+- Nagaraju, M. (2017), *Drought management through foliar application and balance supply of nutrients in lentil (Lens
+  culinaris Medic.)*, M.Sc. (Ag) thesis, Banaras Hindu University, p.2, via Krishikosh
+  (https://krishikosh.egranth.ac.in/server/api/core/bitstreams/ca484984-ae09-41d1-9a85-d3df51acb455/content), citing Quinn,
+  M.A. (2009), "Biological nitrogen fixation and soil health improvement", in Erskine et al. (eds), *The Lentil: Botany,
+  Production and Uses*, pp. 229-247 (not opened): the 23-45 kg N/ha carry-over (SOURCES_CHECK 4a).
+- Mooleki, S.P., Slinkard, A.E. and van Kessel, C., "Nitrogen and non-nitrogen benefits of lentil in the succeeding wheat
+  crop", University of Saskatchewan, pp. 292-300
+  (https://harvest.usask.ca/server/api/core/bitstreams/7d7103d7-1356-45d4-80e4-45e0323cc8d4/content): 2.3 kg N/ha recovered
+  in the next wheat (SOURCES_CHECK 4b).
+- IUPAC Commission on Isotopic Abundances and Atomic Weights, *Abridged Standard Atomic Weights 2024*
+  (https://www.ciaaw.org/abridged-atomic-weights.htm): urea's nitrogen share, 46.6 % (SOURCES_CHECK 10b).
+- "Government Policy Guides Fertilizer Distribution, Says Salt Trading Corporation", BankingNews, 16 July 2026
+  (https://bankingnews.com.np/2026/07/4524/): urea in 50 kg bags (SOURCES_CHECK 6).
+- "Farmers scramble for fertiliser as paddy planting season begins amid shortages", *The Kathmandu Post*, Post National
+  Bureau, 26 May 2026
+  (https://kathmandupost.com/money/2026/05/26/farmers-scramble-for-fertiliser-as-paddy-planting-season-begins-amid-shortages):
+  50 kg sacks; shortages at paddy planting (Terai districts) (SOURCES_CHECK 5, 6).
+- Adhikary, B.H. (January 2014), *Green-Manuring for Increased Crop Production*, Nepal Agricultural Research Council,
+  Communication, Publication and Documentation Division, Khumaltar, NARC Publication Serial No. 0042-2013/14, hosted by the
+  Directorate of Agriculture Development, Lumbini (https://doad.lumbini.gov.np/media/publications/Green_Manuring_booklet.pdf),
+  PDF p.5, citing Lacsina et al. (1987), not opened: dhaincha in the "Feed your soil" plan's check tab (SOURCES_CHECK 3).
+- NEX-GDDP-CMIP6 and NASA POWER / Kathmandu Airport (GHCN-Daily) as credited above: the heat clock's 2040 and today counts.
+  No new download.
+
+### Country profiles and the deploy-anywhere kit (owner's item 3, 2026-11-14; cited in `config/countries/*.yaml`, `config/rules.yaml` `crop_calendar.zone_from_fao`, `bare_soil.rew_no_row_mm`; every page opened on 2026-11-14)
+
+- ETCCDI, "Climate Change Indices: Definitions of the 27 core indices", https://etccdi.pacificclimate.org/list_27_indices.shtml:
+  CDD, CWD, R10mm, R20mm, PRCPTOT and the wet day (RR >= 1 mm) for the global defaults' dry day, dry spell, rain classes
+  and drought year.
+- NOAA NCEI, Global Historical Climatology Network daily (GHCNd),
+  https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily ("more than 100,000
+  stations in 180 countries and territories"); cite Menne, M.J. et al. (2012), J. Atmos. Oceanic Technol. 29, 897-910. No
+  licence is stated (NCEI: no warranty).
+- Schneider, U., Hänsel, S., Finger, P., Rustemeier, E., Ziese, M. (2022): GPCC Full Data Monthly Product Version 2022 at
+  1.0°, doi:10.5676/DWD_GPCC/FD_M_V2022_100, DWD open data (CC BY 4.0, DWD legal notice).
+- FAO Crop Calendar API v1, https://api-cropcalendar.apps.fao.org/api/v1 (countries, aez and cropCalendar; no login;
+  FAO's general terms: acknowledge FAO as the source). The field abroad's zone is credited under "Crop calendars" above.
+- BIPM, The International System of Units (SI Brochure), 9th edition (text updated 2026), Table 8, p. 141: the hectare.
+- IETF RFC 3339 (2002), Date and Time on the Internet: Timestamps, Abstract: ISO 8601 "using the Gregorian calendar".
+- FAO-56 (Allen et al. 1998), Chapter 7, https://www.fao.org/4/x0490e/x0490e0c.htm: REW "normally ranges from 5 to 12 mm"
+  (`bare_soil.rew_no_row_mm`, a soil texture with no Table 19 row).
+- Hosting documentation quoted in `docs/DEPLOY_ANYWHERE.md`: NASA Earthdata Login (urs.earthdata.nasa.gov, its curl and
+  wget and pre-authorise pages), the GES DISC data server notice (gpm1.gesdisc.eosdis.nasa.gov/data/), earthaccess
+  (earthaccess.readthedocs.io), GitHub Pages (docs.github.com), Vercel (vercel.com/docs) and Netlify (docs.netlify.com,
+  netlify.com/pricing).
+- NASA LP DAAC AppEEARS, MOD13Q1.061 for field `ambohidratrimo`'s fetch box (2001-2025), as credited for the demo above.
+
 ### Licence notices (REVIEW_2, 2026-11-13; owner's answer 13: keep the DHM table with a notice, state the GSOD terms, say in LICENSE what MIT does not cover)
 
 - **Kathmandu Airport station values.** Every value has GHCN source flag `S` (NOAA Global Summary of the Day). The GSOD
@@ -476,6 +552,8 @@ Licences are read from each package's installed metadata.
 | Claude Opus 5.5 (Anthropic), via Claude Code (parallel agent) | 2026-11-14 (Saturday morning) | The "How we know" data story (`pipeline/export/build_story.py` -> `site/data/story.json`: 17 charts from finished outputs), the accuracy report card (VALIDATION.md), the satellite inventory and the challenge's resource list (DATA_AUDIT.md 7-8), the Sentinel-1 assessment (DATA_AUDIT 8.1, ASF metadata only); English and Nepali captions drafted by SI. Details in SI_LOG.md | Not reviewed yet: the owner reviews the report card and the confidence rules (METHOD_NOTES 98); a native speaker reviews the Nepali |
 | Claude Opus 5.5 (Anthropic), via Claude Code (session 9f5addf3, a sub-agent) | 2026-11-14 (Saturday) | Locked accuracy test set, reference data only: downloaded and transcribed DHM's 38 monthly bulletins (10 valley gauges, 358 station-months, with each month's wettest day), DHM's monsoon-season station totals (2022-2025, 36 rows) and MoALD's district yields for Bhaktapur (7 editions, 21 rows), with data cards and image spot-checks; not compared with any model output. Details in SI_LOG.md | Not reviewed by a person yet |
 | Claude Opus 5.5 (Anthropic), via Claude Code (session 9f5addf3, a sub-agent) | 2026-11-14 (Saturday afternoon) | Launch tooling and the probe's recorded demo (owner's launch brief): self-hosted fonts downloaded into `site/fonts/` with their licences; NASA map backgrounds (`pipeline/fetch/basemap.py`: HLS from NASA GIBS on a date chosen by a rule fixed before looking, and Blue Marble); `scripts/final_check.py` (all checks, the version stamp, the outside-request scan, the live byte-for-byte comparison); `scripts/demo_probe.py`; the probe replay's date, place and per-line times (`scripts/build_probe_log.py`); schemas and validator checks for `probe_log.json`, `version.json` and `basemap/*.json`; `docs/PROBE_RECORDING.md`, `docs/DEMO_CHECKLIST.md`, `docs/LAUNCH_CHECKLIST.md`; tests first. Details in SI_LOG.md | Not reviewed by a person yet |
+| Claude Opus 5.5 (Anthropic), via Claude Code (session 9f5addf3, a sub-agent) | 2026-11-14 (Saturday evening) | Three small checks for the farmer's question: rain at harvest (DHM heavy rain in each crop's FAO-56 late stage), the fertiliser saver after lentil (a published range turned into urea bags per hectare) and the heat and cold clock for wheat and potato (FAO-66 limits, today and in 23 NEX-GDDP models): rules committed before the first run, `pipeline/plans/risk.py`, `pipeline/export/build_risks.py`, schemas, validator checks, run_field steps, tests first; 40 screen texts (English, Nepali and five draft languages), six dhaincha lines in the plan's check tab, the Why? texts in English and Nepali. Details in SI_LOG.md | Not reviewed by a person yet; Nepali and drafts need native speakers |
+| Claude Opus 5.5 (Anthropic), via Claude Code (parallel agent) | 2026-11-14 (Saturday evening) | The site rebuilt on the UI teammate's seven screens (owner's change of direction): Home, Photo, Parts, the soil test (the real probe walk from `live.json` or `probe_log.json`, worded as a prototype carried by hand), Choose, Today (each part from the probe), Next 3 and 6 months (our three plans in his option style, one Replay line each, "Try it in one part first" opening the Safe Trial in a sheet); the judges' sections on "How we know"; 41 screen texts (English, Nepali marked for review, five drafts); `docs/DESIGN_WORDING_CHANGES.md`. A small local stand-in for the design tool's runtime (scratchpad only, never shipped) rendered his design files for comparison. Details in SI_LOG.md | Not reviewed yet: the UI teammate checks the screenshots; Nepali and drafts need native speakers |
 
 ## Data fetched by the pipeline
 

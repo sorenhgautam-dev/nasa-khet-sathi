@@ -147,6 +147,15 @@ def test_rew_is_the_midpoint_of_table_19_and_loam_gives_example_31s_9_mm():
         ev.rew_mm("clay loam", table)
 
 
+def test_a_texture_without_a_table_19_row_takes_the_middle_of_fao56s_5_to_12_mm():
+    # rules.yaml bare_soil.rew_no_row_mm (owner's item 3, 2026-11-14): FAO-56 ch. 7, REW 'normally ranges from 5 to 12 mm'
+    from pipeline.fetch.rules import load_rules
+    rb = load_rules()["bare_soil"]
+    assert rb["rew_no_row_mm"] == [5, 12]
+    assert ev.rew_mm("sandy clay loam", rb["table_19_rew_mm"], rb["rew_no_row_mm"]) == pytest.approx(8.5)
+    assert ev.rew_mm("loam", rb["table_19_rew_mm"], rb["rew_no_row_mm"]) == pytest.approx(9.0)      # a row wins
+
+
 def test_start_depletion_of_a_bare_spell_follows_the_root_zone():
     """rules.yaml bare_soil.de_start: De = TEW x Dr / TAW (0 at field capacity, TEW at the wilting point)."""
     assert ev.de_start_mm(0.0, 150.0, 25.0) == 0.0

@@ -502,7 +502,7 @@
     "evidence": "We replayed the weather from 2002 to 2025. Harvest was 74 out of 100 on average. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
     "benefits": "Harvest: about 5 to 14 more. Needs less water than now. Ground stays covered more of the year. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
     "unknown": "This is a sample field, not yours. Nearby parts share one soil map. All parts get the same rain and weather. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
-    "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Check how much water you really have. Try it on one small part first. You know your land best."
+    "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Ask about dhaincha, grown before rice. NARC: “a popular green-manuring crop for rice”. Gain: “equivalent to 50-100 kg of fertilizer N”. The booklet cites Lacsina and others, 1987. Booklet: Adhikary, NARC 2014, Lumbini agriculture website. Ask your agriculture office if it fits. Check how much water you really have. Try it on one small part first. You know your land best."
    },
    "tips": [
     "Lentil gets most thirsty in January. Water it then if you can."
@@ -512,7 +512,7 @@
     "evidence": "२००२ देखि २०२५ सम्मको मौसम दोहोर्‍याएर हेर्‍यौं। औसत उब्जनी १०० मा ७४ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
     "benefits": "उब्जनी: करिब ५ देखि १४ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
     "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। सबै भागमा एउटै वर्षा र मौसम मानिएको छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी लगाउन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिकका मापकबाट २०१७ देखि नाप आएनन्। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा भएको पानी ठूलो क्षेत्रभरिको नाप हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
-    "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+    "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। धानअघि ढैंचा लगाउने बारे सोध्नुहोस्। नार्क: ‘धानका लागि लोकप्रिय हरियो मल बाली’ (अनुवाद)। लाभ: ‘५०–१०० किलो रासायनिक मलको N बराबर’ (अनुवाद)। पुस्तिकाले लाक्सिना र अरू (१९८७) लाई उद्धृत गर्छ। पुस्तिका: अधिकारी, नार्क २०१४, लुम्बिनी कृषि वेबसाइट। यो यहाँ मिल्छ कि, कृषि कार्यालयलाई सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
    },
    "tips_ne": [
     "मसुरलाई माघ (जनवरी–फेब्रुअरी)मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्।"
@@ -3101,8 +3101,14 @@
    {
     "id": "bare_soil.rew_mm",
     "choice": "FAO-56 Table 19; Example 31 uses REW 9 mm for loam ('For Loam: TEW ~ 20 mm and REW ~ 9 mm'). The midpoint is Claude's choice, fixed before the first run. Texture: SSSA Glossary of Soil Science Terms (2022), 'soil texture', p. 115: 'loam - Soil material that contains 7 to 27% clay, 28 to 50% silt, and <52% sand' (p. 115 opened; the other classes, on p. 116, follow the USDA Soil Survey Manual as coded in the NRCS texture calculator: TODO-VERIFY)",
-    "value": "the midpoint of table_19_rew_mm for the USDA texture class of SoilGrids' top layer (0-5 cm). Demo: sand 33.6, silt 45.8, clay 20.6 % = loam, 8-10 mm -> 9 mm. A class with no Table 19 row (sandy clay loam, clay loam, sandy clay) stops the run",
+    "value": "the midpoint of table_19_rew_mm for the USDA texture class of SoilGrids' top layer (0-5 cm). Demo: sand 33.6, silt 45.8, clay 20.6 % = loam, 8-10 mm -> 9 mm. A class with no Table 19 row (sandy clay loam, clay loam, sandy clay) takes rew_no_row_mm (owner's item 3, 2026-11-14; until then it stopped the run)",
     "status": "Claude's choice"
+   },
+   {
+    "id": "bare_soil.rew_no_row_mm",
+    "choice": "FAO-56 Chapter 7, 'Evaporation reduction coefficient (Kr)' (https://www.fao.org/4/x0490e/x0490e0c.htm, opened 2026-11-14): 'The depth [REW] normally ranges from 5 to 12 mm and is generally highest for medium and fine textured soils. Typical values for REW are given in Table 19.' A texture class with no Table 19 row takes the midpoint of this general range, 8.5 mm, as rew_mm takes a row's midpoint; the run's bare-soil label says so (rew_from). Claude's choice, fixed before the first run; put to the owner. Nepal's five fields are loam (a Table 19 row): unchanged",
+    "value": "[5, 12]",
+    "status": "Claude's choice, put to the owner"
    },
    {
     "id": "bare_soil.kc_max",
@@ -3120,6 +3126,12 @@
     "id": "crop_calendar.rule",
     "choice": "Claude's choice, owner-approved 2026-11-12 (step-4 review item 5); start, middle or end in step 7 owner-approved 2026-11-12 (owner's batch decisions, item 10). Windows from the FAO Crop Calendar, Nepal Hill zone (crops.json calendar sources)",
     "value": "sow at the middle of the crop's default sowing window; season length from crops.json stages_days. Step 7's plan generator may also sow at the window's start or end and keeps the sequences that fit without overlap; the current plan stays at the middle. No relay cropping, so maize then rice stays out (rice's latest default sowing is 15 Jul)",
+    "status": "Claude's choice, owner-approved 2026-11-12"
+   },
+   {
+    "id": "crop_calendar.zone_from_fao",
+    "choice": "Owner's item 3, 2026-11-14 ('FAO crop calendars by country' as the global default). The mapping copies how crops.json's Nepal windows were read from the same API (crops.json calendar sources; a session without days dropped, as Nepal's fourth rice session; days recomputed from dates, REVIEW_NOTES H4; stages kept or scaled to the window's middle, REVIEW_NOTES H4, owner-approved 2026-11-12). The irrigation words, the first-listed default and rounding half up are Claude's choices, fixed before the first run; put to the owner. API field names from api-cropcalendar.apps.fao.org/api/v1 (opened 2026-11-14): early_sowing, later_sowing, early_harvest, late_harvest, growing_period {period, value}, additional_information, comments",
+    "value": "for the zone the field config names (fao_crop_calendar country and aez, picked by a person): each FAO session of a library crop (fao_crop_ids) becomes a window: sow = early_sowing, sow_end = later_sowing, harvest = early_harvest, harvest_end = late_harvest, days = growing_period in days ('155 - 165' -> [155, 165]); a session with no growing period in days is dropped; days that cannot fit the window's own dates are recomputed from them; the note is FAO's session label plus 'Irrigated (FAO)' or 'rainfed (FAO ...)' when FAO's comments open with 'Irrigated', 'Not irrigated' or 'Unirrigated'. The default window is the session the field config names by FAO's label (crop_calendar_defaults), else the first listed. Stage lengths: FAO-56's (stages_fao56, else stages_days) when their total lies in the default window's days, else scaled to the middle of those days, rounded half up (pipeline/twin/crops.scale_stages). A library crop FAO does not list in the zone gets no window and is never sown there (simulate false)",
     "status": "Claude's choice, owner-approved 2026-11-12"
    },
    {
@@ -3989,7 +4001,7 @@
    {
     "id": "labels.outputs",
     "choice": "Every number or data word the site shows (docs/TRACEABILITY.md, screen by screen, plus the four new features): the 19 rows of verification.outputs by their own ids, and the rest tied to the row that tests the same thing, as TRACEABILITY's Status column does (e.g. the replay's dry days to rain_months; the plan cards' water, cover and soil-kept to plan_scores). 'harvest_years.replay_window' is that row's farmer score of the 25-Year Replay (window_replay.farmer_scoring). rain_corrected: the number is computed from the twin's corrected rain (the watered harvest is not: watering keeps Ks at 1 whatever the rain). Claude's mapping, fixed before the first run",
-    "value": "{'rain_months': {'inputs': ['gpm'], 'also': ['dhm_bulletins'], 'scorecard': ['rain_months'], 'rain_corrected': True}, 'rain_month_words': {'inputs': ['gpm'], 'also': [], 'scorecard': ['rain_month_words'], 'rain_corrected': True}, 'heat_month_words': {'inputs': ['power', 'ghcn'], 'also': [], 'scorecard': ['heat_month_words'], 'rain_corrected': False}, 'frost_month_words': {'inputs': ['power', 'ghcn'], 'also': [], 'scorecard': ['frost_month_words'], 'rain_corrected': False}, 'soil_month_words': {'inputs': ['twin'], 'also': [], 'scorecard': ['soil_month_words'], 'rain_corrected': True}, 'cover_months': {'inputs': ['hls'], 'also': [], 'scorecard': ['cover_months'], 'rain_corrected': False}, 'season_dates': {'inputs': ['hls'], 'also': ['crop_calendar'], 'scorecard': ['season_dates'], 'rain_corrected': False}, 'rotation_guess': {'inputs': ['hls'], 'also': ['crop_calendar'], 'scorecard': ['rotation_guess'], 'rain_corrected': False}, 'flood_years': {'inputs': ['gpm'], 'also': [], 'scorecard': ['flood_years'], 'rain_corrected': True}, 'drought_years': {'inputs': ['gpm'], 'also': [], 'scorecard': ['drought_years'], 'rain_corrected': True}, 'harvest_years': {'inputs': ['twin'], 'also': [], 'scorecard': ['harvest_years'], 'rain_corrected': True}, 'plan_cover_gap_beats_current': {'inputs': ['twin', 'nexgddp'], 'also': [], 'scorecard': ['plan_cover_gap_beats_current'], 'rain_corrected': True}, 'plan_safest_beats_current': {'inputs': ['twin', 'nexgddp'], 'also': [], 'scorecard': ['plan_safest_beats_current'], 'rain_corrected': True}, 'monsoon_start': {'inputs': ['dhm_onset'], 'also': [], 'scorecard': ['monsoon_start'], 'rain_corrected': False}, 'groundwater': {'inputs': ['grace'], 'also': [], 'scorecard': ['groundwater'], 'rain_corrected': False}, 'part_soil_water': {'inputs': ['twin'], 'also': [], 'scorecard': ['part_soil_water'], 'rain_corrected': True}, 'probe_water': {'inputs': ['probe'], 'also': [], 'scorecard': ['probe_water'], 'rain_corrected': False}, 'outlook_2040': {'inputs': ['twin', 'nexgddp'], 'also': [], 'scorecard': ['outlook_2040'], 'rain_corrected': True}, 'plan_scores': {'inputs': ['twin'], 'also': ['grace', 'crop_calendar'], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'bare_days': {'inputs': ['hls'], 'also': [], 'scorecard': ['cover_months'], 'rain_corrected': False}, 'monsoon_shift': {'inputs': ['dhm_onset'], 'also': ['chirps', 'gpm'], 'scorecard': [], 'rain_corrected': False}, 'plan_harvest': {'inputs': ['twin'], 'also': ['crop_calendar'], 'scorecard': ['harvest_years'], 'rain_corrected': True}, 'plan_harvest_watered': {'inputs': ['twin'], 'also': ['crop_calendar'], 'scorecard': ['harvest_years'], 'rain_corrected': False}, 'plan_water': {'inputs': ['twin'], 'also': [], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'plan_cover': {'inputs': ['crop_calendar'], 'also': [], 'scorecard': ['plan_scores'], 'rain_corrected': False}, 'plan_soil_kept': {'inputs': ['gpm'], 'also': ['crop_calendar'], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'plan_gain': {'inputs': ['twin'], 'also': [], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'plan_tips': {'inputs': ['twin'], 'also': ['hls'], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'plan_months': {'inputs': ['crop_calendar'], 'also': [], 'scorecard': ['season_dates'], 'rain_corrected': False}, 'replay_year': {'inputs': ['twin'], 'also': [], 'scorecard': ['harvest_years'], 'rain_corrected': True}, 'replay_dry_days': {'inputs': ['twin'], 'also': [], 'scorecard': ['rain_months'], 'rain_corrected': True}, 'replay_event': {'inputs': ['gpm'], 'also': [], 'scorecard': ['flood_years', 'drought_years'], 'rain_corrected': True}, 'part_wetness': {'inputs': ['twin'], 'also': [], 'scorecard': ['part_soil_water'], 'rain_corrected': True}, 'part_sure': {'inputs': ['twin', 'smap'], 'also': [], 'scorecard': ['part_soil_water'], 'rain_corrected': True}, 'part_status': {'inputs': ['twin'], 'also': [], 'scorecard': ['part_soil_water'], 'rain_corrected': True}, 'part_greener': {'inputs': ['hls'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'part_low_ground': {'inputs': ['nasadem'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'pulse_hls': {'inputs': ['hls'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'pulse_modis': {'inputs': ['modis'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'pulse_curve': {'inputs': ['hls', 'modis'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'pulse_seasons': {'inputs': ['hls', 'modis'], 'also': [], 'scorecard': ['season_dates'], 'rain_corrected': False}, 'pulse_typical': {'inputs': ['hls'], 'also': ['crop_calendar'], 'scorecard': ['season_dates'], 'rain_corrected': False}, 'nearby_fields': {'inputs': ['area_box'], 'also': ['hls', 'worldcover'], 'scorecard': None, 'rain_corrected': False}, 'replay_window': {'inputs': ['twin'], 'also': ['oni'], 'scorecard': ['harvest_years.replay_window'], 'rain_corrected': True}, 'checkup_rain': {'inputs': ['gpm'], 'also': ['dhm_bulletins', 'dhm_normals', 'chirps'], 'scorecard': ['rain_months'], 'rain_corrected': True}, 'checkup_break': {'inputs': ['gpm', 'chirps'], 'also': ['gpcc'], 'scorecard': None, 'rain_corrected': False}}",
+    "value": "{'rain_months': {'inputs': ['gpm'], 'also': ['dhm_bulletins'], 'scorecard': ['rain_months'], 'rain_corrected': True}, 'rain_month_words': {'inputs': ['gpm'], 'also': [], 'scorecard': ['rain_month_words'], 'rain_corrected': True}, 'heat_month_words': {'inputs': ['power', 'ghcn'], 'also': [], 'scorecard': ['heat_month_words'], 'rain_corrected': False}, 'frost_month_words': {'inputs': ['power', 'ghcn'], 'also': [], 'scorecard': ['frost_month_words'], 'rain_corrected': False}, 'soil_month_words': {'inputs': ['twin'], 'also': [], 'scorecard': ['soil_month_words'], 'rain_corrected': True}, 'cover_months': {'inputs': ['hls'], 'also': [], 'scorecard': ['cover_months'], 'rain_corrected': False}, 'season_dates': {'inputs': ['hls'], 'also': ['crop_calendar'], 'scorecard': ['season_dates'], 'rain_corrected': False}, 'rotation_guess': {'inputs': ['hls'], 'also': ['crop_calendar'], 'scorecard': ['rotation_guess'], 'rain_corrected': False}, 'flood_years': {'inputs': ['gpm'], 'also': [], 'scorecard': ['flood_years'], 'rain_corrected': True}, 'drought_years': {'inputs': ['gpm'], 'also': [], 'scorecard': ['drought_years'], 'rain_corrected': True}, 'harvest_years': {'inputs': ['twin'], 'also': [], 'scorecard': ['harvest_years'], 'rain_corrected': True}, 'plan_cover_gap_beats_current': {'inputs': ['twin', 'nexgddp'], 'also': [], 'scorecard': ['plan_cover_gap_beats_current'], 'rain_corrected': True}, 'plan_safest_beats_current': {'inputs': ['twin', 'nexgddp'], 'also': [], 'scorecard': ['plan_safest_beats_current'], 'rain_corrected': True}, 'monsoon_start': {'inputs': ['dhm_onset'], 'also': [], 'scorecard': ['monsoon_start'], 'rain_corrected': False}, 'groundwater': {'inputs': ['grace'], 'also': [], 'scorecard': ['groundwater'], 'rain_corrected': False}, 'part_soil_water': {'inputs': ['twin'], 'also': [], 'scorecard': ['part_soil_water'], 'rain_corrected': True}, 'probe_water': {'inputs': ['probe'], 'also': [], 'scorecard': ['probe_water'], 'rain_corrected': False}, 'outlook_2040': {'inputs': ['twin', 'nexgddp'], 'also': [], 'scorecard': ['outlook_2040'], 'rain_corrected': True}, 'plan_scores': {'inputs': ['twin'], 'also': ['grace', 'crop_calendar'], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'bare_days': {'inputs': ['hls'], 'also': [], 'scorecard': ['cover_months'], 'rain_corrected': False}, 'monsoon_shift': {'inputs': ['dhm_onset'], 'also': ['chirps', 'gpm'], 'scorecard': [], 'rain_corrected': False}, 'plan_harvest': {'inputs': ['twin'], 'also': ['crop_calendar'], 'scorecard': ['harvest_years'], 'rain_corrected': True}, 'plan_harvest_watered': {'inputs': ['twin'], 'also': ['crop_calendar'], 'scorecard': ['harvest_years'], 'rain_corrected': False}, 'plan_water': {'inputs': ['twin'], 'also': [], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'plan_cover': {'inputs': ['crop_calendar'], 'also': [], 'scorecard': ['plan_scores'], 'rain_corrected': False}, 'plan_soil_kept': {'inputs': ['gpm'], 'also': ['crop_calendar'], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'plan_gain': {'inputs': ['twin'], 'also': [], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'plan_tips': {'inputs': ['twin'], 'also': ['hls'], 'scorecard': ['plan_scores'], 'rain_corrected': True}, 'plan_months': {'inputs': ['crop_calendar'], 'also': [], 'scorecard': ['season_dates'], 'rain_corrected': False}, 'replay_year': {'inputs': ['twin'], 'also': [], 'scorecard': ['harvest_years'], 'rain_corrected': True}, 'replay_dry_days': {'inputs': ['twin'], 'also': [], 'scorecard': ['rain_months'], 'rain_corrected': True}, 'replay_event': {'inputs': ['gpm'], 'also': [], 'scorecard': ['flood_years', 'drought_years'], 'rain_corrected': True}, 'part_wetness': {'inputs': ['twin'], 'also': [], 'scorecard': ['part_soil_water'], 'rain_corrected': True}, 'part_sure': {'inputs': ['twin', 'smap'], 'also': [], 'scorecard': ['part_soil_water'], 'rain_corrected': True}, 'part_status': {'inputs': ['twin'], 'also': [], 'scorecard': ['part_soil_water'], 'rain_corrected': True}, 'part_greener': {'inputs': ['hls'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'part_low_ground': {'inputs': ['nasadem'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'pulse_hls': {'inputs': ['hls'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'pulse_modis': {'inputs': ['modis'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'pulse_curve': {'inputs': ['hls', 'modis'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'pulse_seasons': {'inputs': ['hls', 'modis'], 'also': [], 'scorecard': ['season_dates'], 'rain_corrected': False}, 'pulse_typical': {'inputs': ['hls'], 'also': ['crop_calendar'], 'scorecard': ['season_dates'], 'rain_corrected': False}, 'nearby_fields': {'inputs': ['area_box'], 'also': ['hls', 'worldcover'], 'scorecard': None, 'rain_corrected': False}, 'replay_window': {'inputs': ['twin'], 'also': ['oni'], 'scorecard': ['harvest_years.replay_window'], 'rain_corrected': True}, 'checkup_rain': {'inputs': ['gpm'], 'also': ['dhm_bulletins', 'dhm_normals', 'chirps'], 'scorecard': ['rain_months'], 'rain_corrected': True}, 'checkup_break': {'inputs': ['gpm', 'chirps'], 'also': ['gpcc'], 'scorecard': None, 'rain_corrected': False}, 'rainrisk_harvest': {'inputs': ['gpm'], 'also': ['crop_calendar'], 'scorecard': None, 'rain_corrected': True}, 'fertiliser_saver': {'inputs': ['literature'], 'also': [], 'scorecard': None, 'rain_corrected': False}, 'heatclock_today': {'inputs': ['power', 'ghcn'], 'also': ['crop_calendar'], 'scorecard': None, 'rain_corrected': False}, 'heatclock_2040': {'inputs': ['nexgddp'], 'also': ['crop_calendar'], 'scorecard': None, 'rain_corrected': False}}",
     "status": "Claude's choice"
    },
    {
@@ -4044,6 +4056,54 @@
     "id": "pulse.typical",
     "choice": "Coordinator's brief ('the typical planting and harvest dates the farmer can confirm or correct'); season_dates.sowing (FAO-56 ch. 6: the initial stage runs from planting to about 10% ground cover). The median over years is Claude's choice, fixed before the first run",
     "value": "per slot, over the HLS seasons only (season_dates.seasons): green-up, peak and harvest (the season's end) = the median over the years of each date counted in days from 1 January of the season's year (earlier dates negative), written MM-DD in a 365-day year; planting = green-up minus the slot's guessed crop's initial stage (diary.guess; crops.json stages_days.ini), as season_dates.sowing reads the threshold method's start. The farmer confirms or corrects them on the phone",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "fertiliser_saver.arithmetic",
+    "choice": "Owner's brief ('urea saved is 23/0.466 to 45/0.466 kg per hectare. Bags are 50 kg ... Show kg and bags as a range, per hectare only'). The rounding is Claude's, fixed before the first run",
+    "value": "urea_saved_kg_ha = carry_over / urea_n_share, low and high, rounded to whole kg; bags_ha = urea_saved_kg_ha (unrounded) / bag_kg, rounded to 1 decimal for Why? and to whole bags for the main line. Per hectare only",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "fertiliser_saver.label",
+    "choice": "Owner's brief ('the two labels on every number'; 'none yet = estimate'). The 'literature' source and its scale are Claude's choice, fixed before the first run",
+    "value": "labels.outputs.fertiliser_saver: input 'literature' (labels.source_scales literature: region, the coarsest class, because the range comes from studies elsewhere, not from this field or valley); no scorecard row (estimate)",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "heat_clock.wheat_window",
+    "choice": "Owner's brief ('FAO-66's wheat stage days if SOURCES_CHECK has them, else FAO-56 stage lengths in crops.json: say which'). SOURCES_CHECK 7 (stage timing): FAO-66 Table 1, p.95, row India gives sowing to anthesis '70-103' days and to maturity '85-145' days, and 'FAO-66 gives no separate grain-filling length'. So FAO-56 stage lengths in crops.json are used. Our 140-day wheat's late stage is days 106-140 after sowing: after FAO-66's latest anthesis (day 103) and before its latest maturity (day 145), so it lies inside grain filling but may miss its first days. Claude's reading, fixed before the first run",
+    "value": "the FAO-56 late-season stage of crops.json (wheat stages_days.late = 35 days), ending on the crop's last day as the plan exports it: the grain-filling window. Same MM-DD dates every year, as rain_risk.harvest_window",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "simple_cards.replay_window",
+    "choice": "Owner: '[Crop] this winter: better than what you grow now'. The Replay's 6-month window (to early May) holds every winter crop's whole season in the plans (potato to 21 Feb, wheat to 3 Mar or 3 Apr, lentil to 24 Feb). Claude's choice, fixed before the first run",
+    "value": "m6",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "simple_cards.compare",
+    "choice": "Owner: 'with the threshold for better/same/worse fixed in rules.yaml before running'. Better = the suggested crop's score at least 10 points above the farmer's own winter crop's in the same past winter; worse = at least 10 points below; same otherwise. 10 points is Claude's choice, unsourced (half the width of the WRSI 'mediocre' class 60-80 named in window_replay.classes, whose bands other than the failure bound could not be opened). Fixed before the first run, without looking at the comparisons",
+    "value": "{'score': \"each past winter's Replay score (water need met over the window's crop days, WRSI)\", 'better_by': 10, 'worse_by': 10}",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "simple_cards.per_ten",
+    "choice": "Owner: 'scaled from our 24 winters to about X of every 10 winters, rounded'; the faces must add up to 10, so the largest-remainder (Hamilton) rounding. Claude's choice",
+    "value": "largest remainder: 10 x count / winters, floored; the leftover faces go to the largest remainders (ties: better, then same, then worse)",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "simple_cards.verdict",
+    "choice": "Owner: 'If it's worse or mixed, say so just as plainly.' Claude's choice, fixed before the first run",
+    "value": "better when better winters are at least half of all winters and outnumber the worse ones; worse when worse winters are at least half and outnumber the better ones; same when same winters are at least half; otherwise mixed",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "simple_cards.suggestion",
+    "choice": "Claude's choice, fixed before the first run: the card names one crop ('[Crop] this winter'), the one that does best against the farmer's own crop",
+    "value": "the suggested plan (cover_gap or safest, never current) whose winter crop differs from the farmer's answer and has the most (better minus worse) winters; ties: fewer worse winters, then the plans' order",
     "status": "Claude's choice"
    }
   ]
@@ -4812,14 +4872,14 @@
        "evidence": "We replayed the weather from 2002 to 2025. Harvest was 74 out of 100 on average. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
        "benefits": "Harvest: about 5 to 14 more. Needs less water than now. Ground stays covered more of the year. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
        "unknown": "This is a sample field, not yours. Nearby parts share one soil map. All parts get the same rain and weather. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
-       "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Check how much water you really have. Try it on one small part first. You know your land best."
+       "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Ask about dhaincha, grown before rice. NARC: “a popular green-manuring crop for rice”. Gain: “equivalent to 50-100 kg of fertilizer N”. The booklet cites Lacsina and others, 1987. Booklet: Adhikary, NARC 2014, Lumbini agriculture website. Ask your agriculture office if it fits. Check how much water you really have. Try it on one small part first. You know your land best."
       },
       "tabs_ne": {
        "why": "यो योजना माटोलाई मलिलो बनाउन हो। मसुरले अर्को बालीका लागि माटोमा मल थप्छ। खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। यो योजनालाई कम पानी चाहिन्छ।",
        "evidence": "२००२ देखि २०२५ सम्मको मौसम दोहोर्‍याएर हेर्‍यौं। औसत उब्जनी १०० मा ७४ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
        "benefits": "उब्जनी: करिब ५ देखि १४ बढी। अहिलेभन्दा कम पानी चाहिन्छ। वर्षको धेरै समय जमिन ढाकिएको रहन्छ। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
        "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। सबै भागमा एउटै वर्षा र मौसम मानिएको छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी लगाउन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिकका मापकबाट २०१७ देखि नाप आएनन्। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा भएको पानी ठूलो क्षेत्रभरिको नाप हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
-       "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+       "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। धानअघि ढैंचा लगाउने बारे सोध्नुहोस्। नार्क: ‘धानका लागि लोकप्रिय हरियो मल बाली’ (अनुवाद)। लाभ: ‘५०–१०० किलो रासायनिक मलको N बराबर’ (अनुवाद)। पुस्तिकाले लाक्सिना र अरू (१९८७) लाई उद्धृत गर्छ। पुस्तिका: अधिकारी, नार्क २०१४, लुम्बिनी कृषि वेबसाइट। यो यहाँ मिल्छ कि, कृषि कार्यालयलाई सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
       }
      }
     },
@@ -5590,14 +5650,14 @@
        "evidence": "We replayed the weather from 2002 to 2025. Harvest was 74 out of 100 on average. Drier than usual: 6 of 24 years. Harvest numbers are computer estimates. GPM IMERG: seen from space, 0.1 deg (about 10 km), 2001-2025. NASA POWER: worked out by computer, 0.5 x 0.625 deg (about 55 km), 2001-2025. GRACE and GRACE-FO: seen from space, about 300 km, 2002-2026. ISRIC SoilGrids: worked out by computer, 250 m, one map.",
        "benefits": "Harvest: up to 6 more, maybe none. Lentil adds natural fertilizer to the soil. Changing crops can keep pests and diseases down.",
        "unknown": "This is a sample field, not yours. Nearby parts share one soil map. All parts get the same rain and weather. The soil numbers come from 859 m away. Planting dates are typical ones, not yours. Your winter crop dates may differ from ours. We don't know how deep roots reach here. So the harvest gain is a range. We guessed how thirst hurts rice and lentil. If you can water, rice stands in water. Without water, rice lives on rain alone. Your water is unknown, so we show both. NASA checks its rain against ground rain gauges. Near here, those gauge reports stopped in 2017. Then NASA's rain here jumped too high. We lowered rain from 2017 to match before. That may also hide a real change. Our rain may still read too high. Stored water is measured for a wide area. It is not your own well. We may count too many freezing nights. Prices and markets are not included.",
-       "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Check how much water you really have. Try it on one small part first. You know your land best."
+       "check": "Ask your local farm advisor first. Ask if lentil seed is sold nearby. Ask neighbours when they plant lentil. Ask if lentil grows well here. Ask about dhaincha, grown before rice. NARC: “a popular green-manuring crop for rice”. Gain: “equivalent to 50-100 kg of fertilizer N”. The booklet cites Lacsina and others, 1987. Booklet: Adhikary, NARC 2014, Lumbini agriculture website. Ask your agriculture office if it fits. Check how much water you really have. Try it on one small part first. You know your land best."
       },
       "tabs_ne": {
        "why": "यो योजना माटोलाई मलिलो बनाउन हो। मसुरले अर्को बालीका लागि माटोमा मल थप्छ।",
        "evidence": "२००२ देखि २०२५ सम्मको मौसम दोहोर्‍याएर हेर्‍यौं। औसत उब्जनी १०० मा ७४ थियो। सामान्यभन्दा सुक्खा: २४ मध्ये ६ वर्ष। उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। GPM IMERG: अन्तरिक्षबाट देखिएको, ०.१ deg (about १० km), २००१-२०२५। NASA POWER: कम्प्युटरले निकालेको, ०.५ x ०.६२५ deg (about ५५ km), २००१-२०२५। GRACE and GRACE-FO: अन्तरिक्षबाट देखिएको, about ३०० km, २००२-२०२६। ISRIC SoilGrids: कम्प्युटरले निकालेको, २५० m, one map।",
        "benefits": "उब्जनी: ६ सम्म बढी, वा उस्तै। मसुरले माटोमा प्राकृतिक मल थप्छ। बाली फेर्दा कीरा र रोग घट्न सक्छ।",
        "unknown": "यो नमुना खेत हो, तपाईंको होइन। नजिकका भागहरूको माटोको नक्सा एउटै छ। सबै भागमा एउटै वर्षा र मौसम मानिएको छ। माटोको नाप ८५९ मिटर परको हो। रोप्ने मिति सामान्य हुन्, तपाईंका होइनन्। तपाईंको हिउँदे बालीको मिति हाम्रोभन्दा फरक हुन सक्छ। यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। धान र मसुरमा तिर्खाको असर हाम्रो अनुमान हो। पानी लगाउन सक्नुहुन्छ भने धान पानीमा रहन्छ। पानी नभए धान वर्षामा मात्र भर पर्छ। पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। यहाँ नजिकका मापकबाट २०१७ देखि नाप आएनन्। त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। हामीले २०१७ देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। जम्मा भएको पानी ठूलो क्षेत्रभरिको नाप हो। यो तपाईंको आफ्नै इनार होइन। हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। बजार र मूल्य यसमा समावेश छैनन्।",
-       "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
+       "check": "पहिले नजिकको कृषि प्राविधिकलाई सोध्नुहोस्। नजिकै मसुरको बीउ पाइन्छ कि सोध्नुहोस्। छिमेकीलाई मसुर कहिले रोप्छन् भनी सोध्नुहोस्। यहाँ मसुर राम्रो हुन्छ कि सोध्नुहोस्। धानअघि ढैंचा लगाउने बारे सोध्नुहोस्। नार्क: ‘धानका लागि लोकप्रिय हरियो मल बाली’ (अनुवाद)। लाभ: ‘५०–१०० किलो रासायनिक मलको N बराबर’ (अनुवाद)। पुस्तिकाले लाक्सिना र अरू (१९८७) लाई उद्धृत गर्छ। पुस्तिका: अधिकारी, नार्क २०१४, लुम्बिनी कृषि वेबसाइट। यो यहाँ मिल्छ कि, कृषि कार्यालयलाई सोध्नुहोस्। तपाईंसँग साँच्चै कति पानी छ, जाँच्नुहोस्। पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ।"
       }
      }
     },
@@ -5634,6 +5694,1636 @@
       86
      ]
     }
+   }
+  ]
+ },
+ "weather": {
+  "basis": "what usually happened on this field in 24 years of its own record; not a forecast",
+  "made_by": "scripts/run_weather.py (rules.yaml weather_ahead)",
+  "years": 24,
+  "block_starts_on_day": 15,
+  "label": {
+   "sure": "estimate",
+   "scale": "valley"
+  },
+  "blocks": [
+   {
+    "key": "Jan",
+    "from": "01-15",
+    "to": "02-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 14.6,
+      "low": 2.3,
+      "high": 51.5,
+      "versions": {
+       "untuned": 19.5,
+       "dhm": 14.3,
+       "uncorrected": 20.8
+      }
+     },
+     "tmax_c": 19.9,
+     "tmin_c": 4.0,
+     "frost": "risk",
+     "rain": "dry",
+     "temp": "cold"
+    },
+    "dry_run": {
+     "typical": 20,
+     "worst": [
+      {
+       "year": 2023,
+       "days": 31
+      },
+      {
+       "year": 2011,
+       "days": 30
+      },
+      {
+       "year": 2020,
+       "days": 28
+      }
+     ]
+    },
+    "dangers": [
+     {
+      "check": "potato_cold",
+      "kind": "cold",
+      "crop": "potato",
+      "sow": "10-30",
+      "window": [
+       "10-30",
+       "02-21"
+      ],
+      "years": 9,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2004,
+       2008,
+       2011,
+       2012,
+       2013,
+       2019,
+       2020,
+       2022,
+       2024
+      ],
+      "change": "about_same",
+      "change_basis": "nights past the limit in the tested days, 2004 on",
+      "tip": "cold"
+     },
+     {
+      "check": "wheat_flower_frost",
+      "kind": "cold",
+      "crop": "wheat",
+      "sow": "10-15",
+      "window": [
+       "01-13",
+       "02-02"
+      ],
+      "years": 5,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2008,
+       2011,
+       2013,
+       2020,
+       2022
+      ],
+      "change": "about_same",
+      "change_basis": "nights past the limit in the tested days, 2004 on",
+      "tip": "cold"
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "potato",
+      "sow": "10-30",
+      "window": [
+       "12-24",
+       "02-21"
+      ],
+      "years": 1,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2023
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "wheat",
+      "sow": "10-15",
+      "window": [
+       "12-01",
+       "03-03"
+      ],
+      "years": 1,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2023
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "wheat",
+      "sow": "11-15",
+      "window": [
+       "01-01",
+       "04-03"
+      ],
+      "years": 1,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2023
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "lentil",
+      "sow": "10-15",
+      "window": [
+       "12-01",
+       "02-24"
+      ],
+      "years": 1,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2023
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     },
+     {
+      "check": "big_rain_harvest",
+      "kind": "big_rain",
+      "crop": "potato",
+      "sow": "10-30",
+      "window": [
+       "01-23",
+       "02-21"
+      ],
+      "years": 1,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2019
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     },
+     {
+      "check": "big_rain_harvest",
+      "kind": "big_rain",
+      "crop": "wheat",
+      "sow": "10-15",
+      "window": [
+       "01-28",
+       "03-03"
+      ],
+      "years": 1,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2019
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     },
+     {
+      "check": "big_rain_harvest",
+      "kind": "big_rain",
+      "crop": "lentil",
+      "sow": "10-15",
+      "window": [
+       "01-25",
+       "02-24"
+      ],
+      "years": 1,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2019
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     }
+    ],
+    "none_seen": [
+     {
+      "check": "potato_heat",
+      "kind": "heat",
+      "crop": "potato",
+      "sow": "10-30",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "wheat_grain_heat",
+      "kind": "heat",
+      "crop": "wheat",
+      "sow": "10-15",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "wheat_floret_heat",
+      "kind": "heat",
+      "crop": "wheat",
+      "sow": "11-15",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   },
+   {
+    "key": "Feb",
+    "from": "02-15",
+    "to": "03-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 14.8,
+      "low": 1.4,
+      "high": 61.9,
+      "versions": {
+       "untuned": 19.8,
+       "dhm": 15.6,
+       "uncorrected": 22.7
+      }
+     },
+     "tmax_c": 23.7,
+     "tmin_c": 7.4,
+     "frost": "none",
+     "rain": "some_rain",
+     "temp": "cold"
+    },
+    "dry_run": {
+     "typical": 13,
+     "worst": [
+      {
+       "year": 2010,
+       "days": 28
+      },
+      {
+       "year": 2009,
+       "days": 28
+      },
+      {
+       "year": 2018,
+       "days": 24
+      }
+     ]
+    },
+    "dangers": [
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "wheat",
+      "sow": "10-15",
+      "window": [
+       "12-01",
+       "03-03"
+      ],
+      "years": 4,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2004,
+       2009,
+       2010,
+       2018
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     },
+     {
+      "check": "big_rain_harvest",
+      "kind": "big_rain",
+      "crop": "wheat",
+      "sow": "10-15",
+      "window": [
+       "01-28",
+       "03-03"
+      ],
+      "years": 4,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2003,
+       2011,
+       2013,
+       2015
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "wheat",
+      "sow": "11-15",
+      "window": [
+       "01-01",
+       "04-03"
+      ],
+      "years": 2,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2009,
+       2010
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     },
+     {
+      "check": "big_rain_harvest",
+      "kind": "big_rain",
+      "crop": "wheat",
+      "sow": "11-15",
+      "window": [
+       "02-28",
+       "04-03"
+      ],
+      "years": 2,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2015,
+       2017
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     }
+    ],
+    "none_seen": [
+     {
+      "check": "wheat_grain_heat",
+      "kind": "heat",
+      "crop": "wheat",
+      "sow": "10-15",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "wheat_flower_frost",
+      "kind": "cold",
+      "crop": "wheat",
+      "sow": "11-15",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "wheat_grain_heat",
+      "kind": "heat",
+      "crop": "wheat",
+      "sow": "11-15",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   },
+   {
+    "key": "Mar",
+    "from": "03-15",
+    "to": "04-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 33.6,
+      "low": 6.4,
+      "high": 62.7,
+      "versions": {
+       "untuned": 45.0,
+       "dhm": 38.2,
+       "uncorrected": 55.6
+      }
+     },
+     "tmax_c": 27.5,
+     "tmin_c": 11.3,
+     "frost": "none",
+     "rain": "some_rain",
+     "temp": "mild"
+    },
+    "dry_run": {
+     "typical": 13,
+     "worst": [
+      {
+       "year": 2011,
+       "days": 19
+      },
+      {
+       "year": 2004,
+       "days": 18
+      },
+      {
+       "year": 2025,
+       "days": 17
+      }
+     ]
+    },
+    "dangers": [
+     {
+      "check": "big_rain_harvest",
+      "kind": "big_rain",
+      "crop": "wheat",
+      "sow": "11-15",
+      "window": [
+       "02-28",
+       "04-03"
+      ],
+      "years": 3,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2003,
+       2005,
+       2024
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     }
+    ],
+    "none_seen": [
+     {
+      "check": "wheat_grain_heat",
+      "kind": "heat",
+      "crop": "wheat",
+      "sow": "11-15",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "wheat",
+      "sow": "11-15",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   },
+   {
+    "key": "Apr",
+    "from": "04-15",
+    "to": "05-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 82.6,
+      "low": 34.4,
+      "high": 144.1,
+      "versions": {
+       "untuned": 110.7,
+       "dhm": 96.7,
+       "uncorrected": 111.6
+      }
+     },
+     "tmax_c": 28.7,
+     "tmin_c": 14.3,
+     "frost": "none",
+     "rain": "some_rain",
+     "temp": "mild"
+    },
+    "dry_run": {
+     "typical": 8,
+     "worst": [
+      {
+       "year": 2024,
+       "days": 21
+      },
+      {
+       "year": 2012,
+       "days": 17
+      },
+      {
+       "year": 2016,
+       "days": 15
+      }
+     ]
+    },
+    "dangers": [],
+    "none_seen": []
+   },
+   {
+    "key": "May",
+    "from": "05-15",
+    "to": "06-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 151.0,
+      "low": 72.9,
+      "high": 254.0,
+      "versions": {
+       "untuned": 166.9,
+       "dhm": 150.9,
+       "uncorrected": 178.5
+      }
+     },
+     "tmax_c": 29.9,
+     "tmin_c": 17.6,
+     "frost": "none",
+     "rain": "some_rain",
+     "temp": "warm"
+    },
+    "dry_run": {
+     "typical": 5,
+     "worst": [
+      {
+       "year": 2007,
+       "days": 13
+      },
+      {
+       "year": 2014,
+       "days": 9
+      },
+      {
+       "year": 2024,
+       "days": 7
+      }
+     ]
+    },
+    "dangers": [],
+    "none_seen": []
+   },
+   {
+    "key": "Jun",
+    "from": "06-15",
+    "to": "07-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 402.7,
+      "low": 227.0,
+      "high": 704.9,
+      "versions": {
+       "untuned": 382.5,
+       "dhm": 291.0,
+       "uncorrected": 461.2
+      }
+     },
+     "tmax_c": 29.0,
+     "tmin_c": 19.8,
+     "frost": "none",
+     "rain": "wet",
+     "temp": "warm"
+    },
+    "dry_run": {
+     "typical": 2,
+     "worst": [
+      {
+       "year": 2009,
+       "days": 5
+      },
+      {
+       "year": 2019,
+       "days": 3
+      },
+      {
+       "year": 2005,
+       "days": 3
+      }
+     ]
+    },
+    "dangers": [
+     {
+      "check": "big_rain_sowing",
+      "kind": "big_rain",
+      "crop": "rice",
+      "sow": "06-23",
+      "window": [
+       "06-23",
+       "07-14"
+      ],
+      "years": 24,
+      "of": 24,
+      "often": "most",
+      "hit_years": [
+       2002,
+       2003,
+       2004,
+       2005,
+       2006,
+       2007,
+       2008,
+       2009,
+       2010,
+       2011,
+       2012,
+       2013,
+       2014,
+       2015,
+       2016,
+       2017,
+       2018,
+       2019,
+       2020,
+       2021,
+       2022,
+       2023,
+       2024,
+       2025
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     },
+     {
+      "check": "big_rain_sowing",
+      "kind": "big_rain",
+      "crop": "rice",
+      "sow": "06-15",
+      "window": [
+       "06-15",
+       "07-06"
+      ],
+      "years": 24,
+      "of": 24,
+      "often": "most",
+      "hit_years": [
+       2002,
+       2003,
+       2004,
+       2005,
+       2006,
+       2007,
+       2008,
+       2009,
+       2010,
+       2011,
+       2012,
+       2013,
+       2014,
+       2015,
+       2016,
+       2017,
+       2018,
+       2019,
+       2020,
+       2021,
+       2022,
+       2023,
+       2024,
+       2025
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     }
+    ],
+    "none_seen": []
+   },
+   {
+    "key": "Jul",
+    "from": "07-15",
+    "to": "08-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 480.3,
+      "low": 331.3,
+      "high": 759.2,
+      "versions": {
+       "untuned": 456.1,
+       "dhm": 325.1,
+       "uncorrected": 493.7
+      }
+     },
+     "tmax_c": 29.2,
+     "tmin_c": 20.1,
+     "frost": "none",
+     "rain": "wet",
+     "temp": "warm"
+    },
+    "dry_run": {
+     "typical": 1,
+     "worst": [
+      {
+       "year": 2022,
+       "days": 2
+      },
+      {
+       "year": 2009,
+       "days": 2
+      },
+      {
+       "year": 2025,
+       "days": 1
+      }
+     ]
+    },
+    "dangers": [],
+    "none_seen": [
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "rice",
+      "sow": "06-15",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   },
+   {
+    "key": "Aug",
+    "from": "08-15",
+    "to": "09-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 361.8,
+      "low": 258.4,
+      "high": 603.5,
+      "versions": {
+       "untuned": 343.6,
+       "dhm": 234.0,
+       "uncorrected": 411.2
+      }
+     },
+     "tmax_c": 29.3,
+     "tmin_c": 19.5,
+     "frost": "none",
+     "rain": "wet",
+     "temp": "warm"
+    },
+    "dry_run": {
+     "typical": 2,
+     "worst": [
+      {
+       "year": 2023,
+       "days": 4
+      },
+      {
+       "year": 2009,
+       "days": 4
+      },
+      {
+       "year": 2025,
+       "days": 3
+      }
+     ]
+    },
+    "dangers": [],
+    "none_seen": [
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "rice",
+      "sow": "06-23",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "rice",
+      "sow": "06-15",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   },
+   {
+    "key": "Sep",
+    "from": "09-15",
+    "to": "10-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 195.1,
+      "low": 75.4,
+      "high": 422.8,
+      "versions": {
+       "untuned": 204.2,
+       "dhm": 136.7,
+       "uncorrected": 227.2
+      }
+     },
+     "tmax_c": 28.6,
+     "tmin_c": 17.1,
+     "frost": "none",
+     "rain": "wet",
+     "temp": "mild"
+    },
+    "dry_run": {
+     "typical": 7,
+     "worst": [
+      {
+       "year": 2015,
+       "days": 19
+      },
+      {
+       "year": 2012,
+       "days": 17
+      },
+      {
+       "year": 2010,
+       "days": 17
+      }
+     ]
+    },
+    "dangers": [
+     {
+      "check": "big_rain_harvest",
+      "kind": "big_rain",
+      "crop": "rice",
+      "sow": "06-15",
+      "window": [
+       "09-11",
+       "10-02"
+      ],
+      "years": 20,
+      "of": 24,
+      "often": "most",
+      "hit_years": [
+       2002,
+       2003,
+       2004,
+       2005,
+       2006,
+       2007,
+       2008,
+       2009,
+       2011,
+       2012,
+       2014,
+       2016,
+       2017,
+       2019,
+       2020,
+       2021,
+       2022,
+       2023,
+       2024,
+       2025
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     },
+     {
+      "check": "big_rain_harvest",
+      "kind": "big_rain",
+      "crop": "rice",
+      "sow": "06-23",
+      "window": [
+       "09-19",
+       "10-10"
+      ],
+      "years": 19,
+      "of": 24,
+      "often": "most",
+      "hit_years": [
+       2002,
+       2003,
+       2004,
+       2005,
+       2006,
+       2007,
+       2008,
+       2009,
+       2011,
+       2014,
+       2016,
+       2017,
+       2019,
+       2020,
+       2021,
+       2022,
+       2023,
+       2024,
+       2025
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     }
+    ],
+    "none_seen": [
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "rice",
+      "sow": "06-23",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "rice",
+      "sow": "06-15",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   },
+   {
+    "key": "Oct",
+    "from": "10-15",
+    "to": "11-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 12.0,
+      "low": 0.4,
+      "high": 72.8,
+      "versions": {
+       "untuned": 16.1,
+       "dhm": 11.7,
+       "uncorrected": 16.1
+      }
+     },
+     "tmax_c": 25.4,
+     "tmin_c": 11.6,
+     "frost": "none",
+     "rain": "dry",
+     "temp": "mild"
+    },
+    "dry_run": {
+     "typical": 18,
+     "worst": [
+      {
+       "year": 2018,
+       "days": 31
+      },
+      {
+       "year": 2014,
+       "days": 31
+      },
+      {
+       "year": 2009,
+       "days": 28
+      }
+     ]
+    },
+    "dangers": [
+     {
+      "check": "big_rain_sowing",
+      "kind": "big_rain",
+      "crop": "wheat",
+      "sow": "10-15",
+      "window": [
+       "10-15",
+       "11-01"
+      ],
+      "years": 2,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2005,
+       2007
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     },
+     {
+      "check": "big_rain_sowing",
+      "kind": "big_rain",
+      "crop": "lentil",
+      "sow": "10-15",
+      "window": [
+       "10-15",
+       "11-03"
+      ],
+      "years": 2,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2005,
+       2007
+      ],
+      "change": "about_same",
+      "change_basis": "days of 20 mm or more in the tested days",
+      "tip": "big_rain"
+     }
+    ],
+    "none_seen": [
+     {
+      "check": "potato_cold",
+      "kind": "cold",
+      "crop": "potato",
+      "sow": "10-30",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "potato_heat",
+      "kind": "heat",
+      "crop": "potato",
+      "sow": "10-30",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "big_rain_sowing",
+      "kind": "big_rain",
+      "crop": "potato",
+      "sow": "10-30",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   },
+   {
+    "key": "Nov",
+    "from": "11-15",
+    "to": "12-14",
+    "years": [
+     2002,
+     2025
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 6.6,
+      "low": 0.7,
+      "high": 31.3,
+      "versions": {
+       "untuned": 8.8,
+       "dhm": 8.0,
+       "uncorrected": 8.7
+      }
+     },
+     "tmax_c": 21.6,
+     "tmin_c": 6.8,
+     "frost": "none",
+     "rain": "dry",
+     "temp": "cold"
+    },
+    "dry_run": {
+     "typical": 25,
+     "worst": [
+      {
+       "year": 2024,
+       "days": 30
+      },
+      {
+       "year": 2022,
+       "days": 30
+      },
+      {
+       "year": 2012,
+       "days": 30
+      }
+     ]
+    },
+    "dangers": [
+     {
+      "check": "potato_cold",
+      "kind": "cold",
+      "crop": "potato",
+      "sow": "10-30",
+      "window": [
+       "10-30",
+       "02-21"
+      ],
+      "years": 1,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2024
+      ],
+      "change": "about_same",
+      "change_basis": "nights past the limit in the tested days, 2004 on",
+      "tip": "cold"
+     }
+    ],
+    "none_seen": [
+     {
+      "check": "potato_heat",
+      "kind": "heat",
+      "crop": "potato",
+      "sow": "10-30",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "wheat_floret_heat",
+      "kind": "heat",
+      "crop": "wheat",
+      "sow": "10-15",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "big_rain_sowing",
+      "kind": "big_rain",
+      "crop": "wheat",
+      "sow": "11-15",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   },
+   {
+    "key": "Dec",
+    "from": "12-15",
+    "to": "01-14",
+    "years": [
+     2001,
+     2024
+    ],
+    "usual": {
+     "rain_mm": {
+      "median": 7.2,
+      "low": 1.8,
+      "high": 25.6,
+      "versions": {
+       "untuned": 9.7,
+       "dhm": 7.4,
+       "uncorrected": 9.8
+      }
+     },
+     "tmax_c": 19.0,
+     "tmin_c": 3.4,
+     "frost": "risk",
+     "rain": "dry",
+     "temp": "cold"
+    },
+    "dry_run": {
+     "typical": 18,
+     "worst": [
+      {
+       "year": 2015,
+       "days": 31
+      },
+      {
+       "year": 2013,
+       "days": 31
+      },
+      {
+       "year": 2008,
+       "days": 31
+      }
+     ]
+    },
+    "dangers": [
+     {
+      "check": "potato_cold",
+      "kind": "cold",
+      "crop": "potato",
+      "sow": "10-30",
+      "window": [
+       "10-30",
+       "02-21"
+      ],
+      "years": 15,
+      "of": 24,
+      "often": "most",
+      "hit_years": [
+       2002,
+       2003,
+       2004,
+       2007,
+       2009,
+       2010,
+       2011,
+       2012,
+       2013,
+       2014,
+       2015,
+       2018,
+       2019,
+       2021,
+       2022
+      ],
+      "change": "about_same",
+      "change_basis": "nights past the limit in the tested days, 2004 on",
+      "tip": "cold"
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "potato",
+      "sow": "10-30",
+      "window": [
+       "12-24",
+       "02-21"
+      ],
+      "years": 4,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2007,
+       2008,
+       2013,
+       2015
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "wheat",
+      "sow": "10-15",
+      "window": [
+       "12-01",
+       "03-03"
+      ],
+      "years": 4,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2007,
+       2008,
+       2013,
+       2015
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     },
+     {
+      "check": "dry_spell",
+      "kind": "dry_spell",
+      "crop": "lentil",
+      "sow": "10-15",
+      "window": [
+       "12-01",
+       "02-24"
+      ],
+      "years": 4,
+      "of": 24,
+      "often": "some",
+      "hit_years": [
+       2007,
+       2008,
+       2013,
+       2015
+      ],
+      "change": "about_same",
+      "change_basis": "the block's longest dry run",
+      "tip": "dry_spell"
+     }
+    ],
+    "none_seen": [
+     {
+      "check": "potato_heat",
+      "kind": "heat",
+      "crop": "potato",
+      "sow": "10-30",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "wheat_floret_heat",
+      "kind": "heat",
+      "crop": "wheat",
+      "sow": "10-15",
+      "years": 0,
+      "of": 24
+     },
+     {
+      "check": "wheat_floret_heat",
+      "kind": "heat",
+      "crop": "wheat",
+      "sow": "11-15",
+      "years": 0,
+      "of": 24
+     }
+    ]
+   }
+  ],
+  "windows": [
+   {
+    "check": "dry_spell",
+    "crop": "rice",
+    "sow": "06-23",
+    "window": [
+     "08-06",
+     "10-10"
+    ]
+   },
+   {
+    "check": "big_rain_sowing",
+    "crop": "rice",
+    "sow": "06-23",
+    "window": [
+     "06-23",
+     "07-14"
+    ]
+   },
+   {
+    "check": "big_rain_harvest",
+    "crop": "rice",
+    "sow": "06-23",
+    "window": [
+     "09-19",
+     "10-10"
+    ]
+   },
+   {
+    "check": "potato_cold",
+    "crop": "potato",
+    "sow": "10-30",
+    "window": [
+     "10-30",
+     "02-21"
+    ]
+   },
+   {
+    "check": "potato_heat",
+    "crop": "potato",
+    "sow": "10-30",
+    "window": [
+     "10-30",
+     "02-21"
+    ]
+   },
+   {
+    "check": "dry_spell",
+    "crop": "potato",
+    "sow": "10-30",
+    "window": [
+     "12-24",
+     "02-21"
+    ]
+   },
+   {
+    "check": "big_rain_sowing",
+    "crop": "potato",
+    "sow": "10-30",
+    "window": [
+     "10-30",
+     "11-23"
+    ]
+   },
+   {
+    "check": "big_rain_harvest",
+    "crop": "potato",
+    "sow": "10-30",
+    "window": [
+     "01-23",
+     "02-21"
+    ]
+   },
+   {
+    "check": "dry_spell",
+    "crop": "rice",
+    "sow": "06-15",
+    "window": [
+     "07-29",
+     "10-02"
+    ]
+   },
+   {
+    "check": "big_rain_sowing",
+    "crop": "rice",
+    "sow": "06-15",
+    "window": [
+     "06-15",
+     "07-06"
+    ]
+   },
+   {
+    "check": "big_rain_harvest",
+    "crop": "rice",
+    "sow": "06-15",
+    "window": [
+     "09-11",
+     "10-02"
+    ]
+   },
+   {
+    "check": "wheat_flower_frost",
+    "crop": "wheat",
+    "sow": "10-15",
+    "window": [
+     "01-13",
+     "02-02"
+    ]
+   },
+   {
+    "check": "wheat_floret_heat",
+    "crop": "wheat",
+    "sow": "10-15",
+    "window": [
+     "11-04",
+     "01-23"
+    ]
+   },
+   {
+    "check": "wheat_grain_heat",
+    "crop": "wheat",
+    "sow": "10-15",
+    "window": [
+     "01-28",
+     "03-03"
+    ]
+   },
+   {
+    "check": "dry_spell",
+    "crop": "wheat",
+    "sow": "10-15",
+    "window": [
+     "12-01",
+     "03-03"
+    ]
+   },
+   {
+    "check": "big_rain_sowing",
+    "crop": "wheat",
+    "sow": "10-15",
+    "window": [
+     "10-15",
+     "11-01"
+    ]
+   },
+   {
+    "check": "big_rain_harvest",
+    "crop": "wheat",
+    "sow": "10-15",
+    "window": [
+     "01-28",
+     "03-03"
+    ]
+   },
+   {
+    "check": "dry_spell",
+    "crop": "lentil",
+    "sow": "10-15",
+    "window": [
+     "12-01",
+     "02-24"
+    ]
+   },
+   {
+    "check": "big_rain_sowing",
+    "crop": "lentil",
+    "sow": "10-15",
+    "window": [
+     "10-15",
+     "11-03"
+    ]
+   },
+   {
+    "check": "big_rain_harvest",
+    "crop": "lentil",
+    "sow": "10-15",
+    "window": [
+     "01-25",
+     "02-24"
+    ]
+   },
+   {
+    "check": "wheat_flower_frost",
+    "crop": "wheat",
+    "sow": "11-15",
+    "window": [
+     "02-13",
+     "03-05"
+    ]
+   },
+   {
+    "check": "wheat_floret_heat",
+    "crop": "wheat",
+    "sow": "11-15",
+    "window": [
+     "12-05",
+     "02-23"
+    ]
+   },
+   {
+    "check": "wheat_grain_heat",
+    "crop": "wheat",
+    "sow": "11-15",
+    "window": [
+     "02-28",
+     "04-03"
+    ]
+   },
+   {
+    "check": "dry_spell",
+    "crop": "wheat",
+    "sow": "11-15",
+    "window": [
+     "01-01",
+     "04-03"
+    ]
+   },
+   {
+    "check": "big_rain_sowing",
+    "crop": "wheat",
+    "sow": "11-15",
+    "window": [
+     "11-15",
+     "12-02"
+    ]
+   },
+   {
+    "check": "big_rain_harvest",
+    "crop": "wheat",
+    "sow": "11-15",
+    "window": [
+     "02-28",
+     "04-03"
+    ]
+   }
+  ],
+  "caveats": {
+   "frost": "cold_nights_both_ways",
+   "rain_trend": "gpm_break",
+   "heat_trend": "power_2001_2003_left_out",
+   "big_rain": "20_mm_not_dhm_heavy"
+  },
+  "limits": [
+   {
+    "name": "FAO, Bread Wheat: Improvement and Production (2002), ch. 3 and Table 3.1",
+    "says": "wheat: above 30 C during floret formation (days 20-100 after sowing); frost below 0 C from heading to ten days after flowering (days 90-110)"
+   },
+   {
+    "name": "FAO Irrigation and Drainage Paper 66 (2012)",
+    "says": "wheat above 34 C at grain filling; potato heat 35 C or more, cold 1 C or less"
+   },
+   {
+    "name": "FAO Irrigation and Drainage Paper 56 (1998), ch. 6",
+    "says": "the crop stages: sowing weeks, flowering and grain fill, harvest weeks"
+   },
+   {
+    "name": "DHM, Update of Climate Change Study of Nepal (2024), Table 6",
+    "says": "a dry day has under 1 mm of rain; the longest run of dry days"
+   },
+   {
+    "name": "ETCCDI R20mm",
+    "says": "a day of 20 mm or more (DHM calls 50 mm or more heavy)"
+   }
+  ],
+  "sources": [
+   {
+    "name": "NASA POWER",
+    "product": "Daily API, T2M_MAX and T2M_MIN, corrected to Kathmandu Airport (monthly offset; frost nights by quantile mapping)",
+    "resolution": "0.5 x 0.625 deg",
+    "years": "2001-2025",
+    "type": "model"
+   },
+   {
+    "name": "GPM IMERG",
+    "product": "GPM_3IMERGDF V07, break-corrected and gauge-tuned (the twin's rain)",
+    "resolution": "0.1 deg",
+    "years": "2001-2025",
+    "type": "satellite"
    }
   ]
  }

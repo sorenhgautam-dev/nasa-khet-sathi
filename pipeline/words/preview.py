@@ -109,6 +109,8 @@ def render():
               ("Months", list(shared["months"].values())),
               ("Where a number comes from", list(shared["source_kinds"].values())),
               ("Joining words", list(shared["join"].values()))]
+    groups += [(about, list(shared[k].values())) for k, about in (("weather", "Weather ahead"), ("twin", "How we test each plan"))
+               if k in shared]
     rows, nodes = [], []
     for about, group in groups:
         rows += [f"| *{about}* | |", *[_row(n, conditions) for n in group]]
