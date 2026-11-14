@@ -193,6 +193,9 @@ paddy_losses:                     # owner's item 3 (2026-11-14 afternoon): the w
   failure:
     value: "no new failure rule: rice fails only as paddy_rainfed says (land preparation more than max_delay_days late); otherwise the losses act through Ks and Ky"
     source: "Coordinator's brief (2026-11-14): a failure outcome needs a published source or the existing rules; none other is added"
+  water_score:
+    value: "with the losses on, the plans' water score (plans/score.water_score) counts the crop's own water need: the watered case's irrigation less irrigation_losses_mm. irrigation_losses_mm = the pond top-ups that replace the previous day's seepage and percolation (each top-up less what the crop alone used beyond that day's rain, so the first top-up of a season is the crop's) + the land-preparation water (watered_case). It is reported beside irrigation_mm in the seasons, the years and the plans, never hidden. With the losses off nothing changes"
+    source: "Claude's choice (the coordinator's, 2026-11-14 afternoon), fixed before its first run; put to the owner. Why: Bouman, Barker, Humphreys, Tuong et al. (2007), 'Rice: feeding the billions', ch. 14 of Water for Food, Water for Life (IWMI/Earthscan), p. 523: 'Though runoff, seepage, and percolation are losses at the field level, they are often captured and reused downstream and do not necessarily lead to true water depletion at the irrigation area or basin scales. However, the proportion and magnitude of reuse of these flows are not generally known'; p. 526: 'Percolation from rice fields, canals, and storage reservoirs recharges groundwater systems'. Perry, Steduto & Karajeh (2017), Does improved irrigation technology save water? A review of the evidence (FAO, Cairo; ISBN 978-92-5-109774-8), p. 8: 'percolation from “inefficient” irrigation ... is often a major source of aquifer recharge'. Whether this valley's percolation is reused is not known (diary.groundwater is falling, so the score is already made stricter: plans.water_strict_when_falling); that is why the losses stay visible"
 
 field_capacity_measured:          # owner's item 4 (2026-11-14 afternoon): the field's own field capacity. Written and committed before its first run
   # Protocol for the team: notes/FIELD_CAPACITY_PROTOCOL.md. Code: pipeline/fetch/field_visit.py (reads the file, data card),
@@ -531,6 +534,19 @@ gpm_series:                       # rain check B (Friday): is the 2017 jump real
     years:
       value: [2001, 2020]
       source: "Claude's choice, fixed before the first run: the years the twin's record (2001-2025) shares with the normals' period (1991-2020), so the two means cover as much of the same time as they can. The overlap problem stays: the normal also holds 1991-2000, which the twin has no rain for, and 2021-2025 are scaled with factors fitted without them; a real change in rain between the decades would be scaled away, as the 2017 correction already removes any real change across 2017"
+  gauge_calibration:              # owner's choice pending (2026-11-14): the corrected rain or the gauge-calibrated winner of verification.rain_selection as the twin's central rain. One-line flip: apply
+    apply:
+      value: false
+      source: "Owner, 2026-11-14 (via the coordinator): prepare the switch so the choice between the current corrected rain and the gauge-calibrated winner is a one-line flip, OFF until the owner chooses. Off: the central rain is the break-corrected rain, exactly as before"
+    factors:
+      value: {jjas: 1.053, other: 0.746}
+      source: "verification.rain_selection's winner, the gauge-calibrated version (VALIDATION 3.9e; data/checks/demo/rain_selection/selection.json factors.gauge_calibrated_all_four_gauges, 1.0530 and 0.7458 rounded): the ratio of sums gauge / corrected over the selection months (June 2023-December 2025) of all four gauges (Bhaktapur, Changu Narayan, Nagarkot, Kathmandu Airport), June-September and the other months. Leave one gauge out: 40 of 83 gauge-months within 19% against 38 for the corrected rain; locked 2026 test: 3 of 15 (20%, 7-45%), the same as the corrected rain"
+    fields:
+      value: [demo]
+      source: "Claude's choice, fixed before any run: the factors were fitted at the demo field's GPM cell against the gauges around it, so they apply to the demo only; any other field (samples included) is put to the owner"
+    rule:
+      value: "when apply is true, for a field in `fields`, the twin's central rain (weather.parquet rain_mm, built by pipeline/fetch/weather.correct_gpm_break after the break correction, and so every run, the 2001-2025 record and the now-cast's weather_now.parquet alike) is the break-corrected rain times factors.jjas on every day of June-September and factors.other on every other day. rain_uncorrected_mm (GPM as published) is unchanged, and so is the DHM-scaled version (with_rain 'dhm': its monthly factors to DHM's normals absorb these). The weather cards record it (corrections.rain_break.gauge_calibration) and the method page's rain words say it in one plain line"
+      source: "Owner, 2026-11-14 (via the coordinator): 'When on, the twin's central rain ... is the corrected rain times those factors, for 2001-2025 and for the 2026 now-cast inputs; the as-published and DHM-scaled versions stay as they are; record the version in the weather card and in the export's method page'"
 
 monsoon_onset:                    # diary, build step 6a (pipeline/diary/onset.py); rain = the twin's GPM rain
   # Owner, 2026-11-12: the rule is kept as set in CLAUDE.md, with no tuning to the results, although it fails
