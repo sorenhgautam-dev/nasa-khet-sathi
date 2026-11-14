@@ -2730,6 +2730,28 @@
      "sw": "Jaribio la kifaa chetu bustanini, lilirekodiwa tarehe"
     },
     {
+     "id": "indoor_title",
+     "en": "Indoor test of our soil stick.",
+     "ne": "हाम्रो यन्त्रको घरभित्र गरिएको जाँच।",
+     "ne_review": "needs native-speaker review",
+     "hi": "घर के अंदर हमारे यंत्र की जाँच।",
+     "bn": "ঘরের ভেতরে আমাদের যন্ত্রের পরীক্ষা।",
+     "es": "Prueba en casa de nuestra sonda.",
+     "fr": "Test de notre sonde à l'intérieur.",
+     "sw": "Jaribio la kifaa chetu ndani ya nyumba."
+    },
+    {
+     "id": "indoor_on",
+     "en": "4 bowls of soil, recorded on",
+     "ne": "माटोका ४ कचौरा, नापिएको मिति:",
+     "ne_review": "needs native-speaker review",
+     "hi": "मिट्टी के 4 कटोरे, तारीख़:",
+     "bn": "মাটির 4টি বাটি, রেকর্ডের তারিখ:",
+     "es": "4 cuencos de tierra, registrada el",
+     "fr": "4 bols de terre, enregistré le",
+     "sw": "Bakuli 4 za udongo, lilirekodiwa tarehe"
+    },
+    {
      "id": "practice",
      "en": "Practice: made-up numbers",
      "ne": "अभ्यास: नक्कली अङ्क",

@@ -1922,7 +1922,7 @@
   },
   "screens.check_soil.texts.indoor_on": {
    "en": "4 bowls of soil, recorded on",
-   "bn": "মাটির ৪টি বাটি, রেকর্ডের তারিখ:"
+   "bn": "মাটির 4টি বাটি, রেকর্ডের তারিখ:"
   },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",
