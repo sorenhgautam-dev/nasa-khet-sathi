@@ -35,6 +35,17 @@ def test_fao56_stage_windows_of_a_plan_crop():
     assert wa.stage_window(potato, st, "season") == ("10-30", "02-21")
 
 
+def test_rice_has_no_big_rain_at_sowing_and_other_crops_keep_it():
+    """Owner's answer 3, 2026-11-14 night: paddy is flooded at transplanting, so rice keeps only big rain at harvest."""
+    from pipeline.fetch.cropslib import load_crops
+    from pipeline.fetch.rules import load_rules
+    lib, rules = load_crops(), load_rules()
+    crops = [{"crop": "rice", "start": "06-15", "end": "10-12"}, {"crop": "lentil", "start": "11-01", "end": "03-15"}]
+    checks = {(c["crop"], k) for k, _, c, *_ in wa._candidates(crops, lib, rules)}
+    assert ("rice", "big_rain_harvest") in checks and ("rice", "big_rain_sowing") not in checks
+    assert {("lentil", "big_rain_sowing"), ("lentil", "big_rain_harvest")} <= checks
+
+
 def test_a_window_counts_in_a_block_only_when_it_holds_half_of_one_or_the_other():
     nov = {"key": "Nov", "from": "11-15", "to": "12-14"}
     dec = {"key": "Dec", "from": "12-15", "to": "01-14"}

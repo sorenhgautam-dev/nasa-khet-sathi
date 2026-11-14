@@ -3145,8 +3145,8 @@
    "sw": "Mvua kubwa inaweza kuharibu mavuno ya {crop}."
   },
   "shared.farm.wx_calm": {
-   "en": "Usually no big danger to crops.",
-   "sw": "Kwa kawaida hakuna hatari kubwa kwa mazao."
+   "en": "Usually no big danger.",
+   "sw": "Kwa kawaida hakuna hatari kubwa."
   },
   "shared.farm.today_drier": {
    "en": "Patch {section} is drier than the others.",

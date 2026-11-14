@@ -114,9 +114,13 @@ def test_a_weather_line_takes_the_farmers_crop_and_says_may():
     assert line == {"usual": {"text": "farm.wx_usual", "fill": {"month": "Dec", "rain_word": "dry", "temp_word": "cold"}},
                     "danger": {"text": "farm.wx_hurt_potato_cold", "fill": {"crop": "potato"}},
                     "tip": {"text": "weather.tip_cold"}}
-    # no danger for the farmer's crops: the first danger of any crop; watering drops dry spells
-    assert bs.weather_line(block, crops={"lentil"}, can_water=False)["danger"]["text"] == "farm.wx_hurt_dry_spell"
-    assert bs.weather_line(block, crops={"lentil"}, can_water=True)["danger"]["text"] == "farm.wx_hurt_potato_cold"
+    # no danger for the farmer's own crop: "Usually no big danger.", never another crop's (owner, 2026-11-14 night)
+    for water in (False, True):
+        other = bs.weather_line(block, crops={"lentil"}, can_water=water)
+        assert other["danger"] == {"text": "farm.wx_calm"} and other["tip"] is None
+    # watering drops dry spells: a wheat grower who can water has no danger left in this block
+    assert bs.weather_line(block, crops={"wheat"}, can_water=False)["danger"]["text"] == "farm.wx_hurt_dry_spell"
+    assert bs.weather_line(block, crops={"wheat"}, can_water=True)["danger"] == {"text": "farm.wx_calm"}
     calm = bs.weather_line({"key": "Apr", "usual": {"rain": "some_rain", "temp": "mild"}, "dangers": []}, {"potato"}, False)
     assert calm["danger"] == {"text": "farm.wx_calm"} and calm["tip"] is None
 

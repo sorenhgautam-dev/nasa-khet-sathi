@@ -11,8 +11,9 @@ Ctrl-C stops both; the bridge marks live.json stale first.
 - The real probe: the bridge writes site/data/live.json (git-ignored; it exists during the demo only) and logs every
   line to data/probe/<field>/readings_<date>.jsonl, the file the public replay is built from (scripts/build_probe_log.py).
 - --fake: robot/fake_probe.py's made-up lines. They never enter site/data/ or data/probe/<field>/ (the bridge refuses):
-  live.json and the log go to a rehearsal folder, and the server answers data/live.json from there, so the phone shows
-  the rehearsal while nothing made-up can be published.
+  live.json and the log go to a rehearsal folder, and the server answers data/live.json from there. The site shows only
+  readings from a real serial port (owner, 2026-11-14 night), so the phone's soil test stays at "not tested yet": the
+  rehearsal is followed in this terminal, and nothing made-up can be shown or published.
 Every answer carries Cache-Control: no-store, so the phone never shows an old reading.
 """
 import argparse

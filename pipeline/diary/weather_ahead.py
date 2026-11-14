@@ -197,7 +197,8 @@ def _candidates(crops, lib, r):
             out.append(("wheat_grain_heat", "heat", c, stage_window(c, st, "late"),
                         hc["wheat_grain_filling_heat"]["temperature"], hc["wheat_grain_filling_heat"]))
         out.append(("dry_spell", "dry_spell", c, stage_window(c, st, "mid_late"), "rain_mm", None))
-        out.append(("big_rain_sowing", "big_rain", c, stage_window(c, st, "initial"), "rain_mm", None))
+        if c["crop"] != "rice":   # paddy is flooded at transplanting (owner, 2026-11-14 night): big rain at harvest only
+            out.append(("big_rain_sowing", "big_rain", c, stage_window(c, st, "initial"), "rain_mm", None))
         out.append(("big_rain_harvest", "big_rain", c, stage_window(c, st, "late"), "rain_mm", None))
     return out
 

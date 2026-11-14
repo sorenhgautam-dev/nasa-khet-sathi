@@ -3145,8 +3145,8 @@
    "hi": "भारी बारिश {crop} की कटाई बिगाड़ सकती है।"
   },
   "shared.farm.wx_calm": {
-   "en": "Usually no big danger to crops.",
-   "hi": "आमतौर पर फ़सल को बड़ा ख़तरा नहीं।"
+   "en": "Usually no big danger.",
+   "hi": "आमतौर पर बड़ा ख़तरा नहीं।"
   },
   "shared.farm.today_drier": {
    "en": "Patch {section} is drier than the others.",

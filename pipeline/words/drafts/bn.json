@@ -3145,8 +3145,8 @@
    "bn": "বড় বৃষ্টি {crop} কাটা নষ্ট করতে পারে।"
   },
   "shared.farm.wx_calm": {
-   "en": "Usually no big danger to crops.",
-   "bn": "সাধারণত ফসলের বড় বিপদ নেই।"
+   "en": "Usually no big danger.",
+   "bn": "সাধারণত বড় বিপদ নেই।"
   },
   "shared.farm.today_drier": {
    "en": "Patch {section} is drier than the others.",

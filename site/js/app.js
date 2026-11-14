@@ -738,19 +738,22 @@
 
   // ---------------- 4 the soil test, part by part (design: Robot, W4_Robot) ----------------
   // The walk is the real one: live.json during the in-person demo, else the recorded walk (probe_log.json); with neither,
-  // every part says "not tested yet". The robot is drawn as the plan (Krishi Scout); the words say a person carries the
-  // prototype soil stick, so no sentence says a robot tested anything.
+  // every part says "not tested yet". Only readings from a real serial port are shown (robot/bridge.py is_real), each with
+  // its date: a practice run with the fake probe, or any sample, shows nothing (owner, 2026-11-14 night). The robot is
+  // drawn as the plan (Krishi Scout); the words say a person carries the prototype soil stick, so no sentence says a robot
+  // tested anything.
   function liveParts(lv) {
     var m = {};
     (lv.parts || []).forEach(function (p) { if (p && p.section) m[p.section] = Object.assign({ state: 'done' }, p); });
     if (lv.section) m[lv.section] = Object.assign({}, m[lv.section] || {}, lv);
     return m;
   }
+  function isReal(src) { return /^serial:./.test(String(src || '')); }
   function probeData() {
     return Promise.all([getJSON('data/live.json', true), getJSON('data/probe_log.json')]).then(function (r) {
       var lv = r[0], log = r[1];
-      if (lv && (lv.section || (lv.parts || []).length)) return (S.probe = { kind: 'live', live: lv, parts: liveParts(lv) });
-      var sess = log && log.sessions && log.sessions[log.sessions.length - 1];
+      if (lv && isReal(lv.source) && (lv.section || (lv.parts || []).length)) return (S.probe = { kind: 'live', live: lv, parts: liveParts(lv) });
+      var sess = log && (log.sessions || []).filter(function (x) { return isReal(x.source); }).pop();
       if (sess && sess.parts && sess.parts.length) {
         var m = {}; sess.parts.forEach(function (p) { m[p.section] = p; });
         return (S.probe = { kind: 'log', log: log, sess: sess, parts: m });
@@ -771,9 +774,10 @@
     return { k: 'info', word: T('check_soil.tested') };
   }
   function recordedLine(pd) {
-    if (!pd || pd.kind !== 'log') return null;
+    var days = !pd ? [] : pd.kind === 'log' ? pd.log.recorded_on || [] : pd.kind === 'live' && pd.live.time ? [String(pd.live.time).slice(0, 10)] : [];
+    if (!days.length) return null;
     return h('p', { class: 'small', style: 'margin:0;font-weight:700;color:var(--ink)' }, svg(I('stick', 14)), ' ', T('check_soil.recorded_on') + ' ' +
-      (pd.log.recorded_on || []).map(fmtDate).join(', ') + (pd.log.place ? ' · ' + pd.log.place : ''));
+      days.map(fmtDate).join(', ') + (pd.kind === 'log' && pd.log.place ? ' · ' + pd.log.place : ''));
   }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
@@ -824,8 +828,7 @@
       }
       function drawCta(active) {
         ctaBox.textContent = '';
-        var n = G.filter(function (g) { return shown[g.s.id] && shown[g.s.id].state === 'done'; }).length;
-        if (active) { ctaBox.append(h('button', { type: 'button', class: 'cta wait', disabled: true }, T('check_soil.tested') + ': ' + num(n) + ' / ' + num(G.length))); return; }
+        if (active) { ctaBox.append(h('button', { type: 'button', class: 'cta wait', disabled: true }, T('check_soil.measuring'))); return; }
         if (pd && pd.kind === 'log') ctaBox.append(roundBtn(T('check_soil.replay_check'), 'redo', function () { walk(pd.sess.parts); }));
         ctaBox.append(cta(T('check_soil.see_what'), function () { go('choose'); }));
       }
@@ -852,7 +855,7 @@
         if (lv.state === 'done' && g) ring.hidden = true;
         var active = !lv.stale && (lv.state === 'settling' || lv.state === 'measuring');
         info.textContent = '';
-        if (lv.source === 'fake_probe') info.append(h('span', { class: 'chip sample' }, svg(I('stick', 14)), T('check_soil.practice')));
+        add(info, recordedLine({ kind: 'live', live: lv }));
         if (lv.stale) info.append(h('p', { class: 'lead', style: 'margin:0' }, svg(I('warn', 18, 3)), ' ', T('check_soil.not_connected')));
         else if (active) info.append(h('p', { class: 'sub', style: 'margin:0' }, T('check_soil.hold')));
         drawCta(active);
@@ -977,8 +980,7 @@
           cards.append(h('div', { class: 'tcard ' + x.k, style: 'animation-delay:' + (i * 110 + 100) + 'ms' }, dotEl(x.k), h('span', { class: 'word' }, x.text)));
         });
         if (!anyTested(pd)) more.append(btn2(T('parts.start_test'), function () { go('soil'); }, 'stick'));
-        else add(more, [h('span', { class: 'chip' }, svg(I('stick', 16)), T('check_soil.from_test')),
-          pd.kind === 'live' && pd.live.source === 'fake_probe' ? h('span', { class: 'chip sample' }, svg(I('stick', 14)), T('check_soil.practice')) : null]);
+        else add(more, [h('span', { class: 'chip' }, svg(I('stick', 16)), T('check_soil.from_test')), recordedLine(pd)]);
       }
       draw({ kind: 'none', parts: {} });
       Promise.all([probeData(), featData('simple')]).then(function (r) {

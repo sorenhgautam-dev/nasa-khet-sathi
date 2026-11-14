@@ -3145,8 +3145,8 @@
    "es": "La lluvia fuerte puede dañar {crop} al cosechar."
   },
   "shared.farm.wx_calm": {
-   "en": "Usually no big danger to crops.",
-   "es": "Normalmente sin gran peligro para los cultivos."
+   "en": "Usually no big danger.",
+   "es": "Normalmente sin gran peligro."
   },
   "shared.farm.today_drier": {
    "en": "Patch {section} is drier than the others.",

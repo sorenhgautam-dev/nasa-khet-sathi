@@ -194,12 +194,12 @@ def animation(scores, order, failed_below):
 
 
 def weather_line(block, crops, can_water):
-    """One Weather ahead block for one farmer: usual words, the first danger of the farmer's crops (else of any crop;
-    no dry spells when they can water), its tip. Always soft: 'usually', 'may' (farmer_answers.wording)."""
+    """One Weather ahead block for one farmer: usual words, the first danger of the farmer's crops (none: 'Usually no big
+    danger.', never another crop's; no dry spells when they can water), its tip. Always soft (farmer_answers.wording)."""
     usual = {"text": "farm.wx_usual", "fill": {"month": block["key"], "rain_word": block["usual"]["rain"],
                                                "temp_word": block["usual"]["temp"]}}
     ds = [d for d in block["dangers"] if not (can_water and d["kind"] == "dry_spell")]
-    d = next((d for d in ds if d["crop"] in crops), ds[0] if ds else None)
+    d = next((d for d in ds if d["crop"] in crops), None)
     if d is None:
         return {"usual": usual, "danger": {"text": "farm.wx_calm"}, "tip": None}
     return {"usual": usual, "danger": {"text": f"farm.wx_hurt_{d['check']}", "fill": {"crop": d["crop"]}},
