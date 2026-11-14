@@ -94,7 +94,7 @@ in-person demo, else the recorded walk (`probe_log.json`). With neither, nothing
 | — | Test again | When the reading jumped (`live.json` state test_again). |
 | 2 of 4 tested (the waiting button) | Tested: 2 / 4 | Shown only while a part is settling or measuring. |
 | — | Our soil stick is a prototype. Today we carry it by hand. A robot to carry it comes next. | Owner's brief: honest words. |
-| — | Readings come after our team tests it. / Recorded on <date> · <place> / Garden test of our soil stick, recorded on <date> / Practice: made-up numbers | No readings yet, real readings with their date, or the garden test. Practice readings show only at the in-person demo, under a big banner; there is no "Tested: n / N" count (owner, 2026-11-14 night). |
+| — | Readings come after our team tests it. / Recorded on <date> · <place> / Garden test of our soil stick, recorded on <date> / Indoor test of our soil stick. 4 bowls of soil, recorded on <date> / Practice: made-up numbers | No readings yet, real readings with their date, or the garden test. Practice readings show only at the in-person demo, under a big banner; there is no "Tested: n / N" count (owner, 2026-11-14 night). |
 | See what to do | Kept; also shown when nothing is tested | The public site has no readings yet, so the farmer must still be able to go on. |
 | Web: round "refresh" button | Shown only with a recorded walk: "Watch a soil check we did earlier." | |
 

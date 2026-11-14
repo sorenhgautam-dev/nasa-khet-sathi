@@ -4,7 +4,7 @@ brief, 2026-11-14, fix 5).
     .venv/bin/python scripts/build_probe_log.py --field demo          # data/probe/demo/readings_*.jsonl
     .venv/bin/python scripts/build_probe_log.py --field demo --logs data/probe/demo/readings_2026-11-16.jsonl
     .venv/bin/python scripts/build_probe_log.py --field demo --session 2026-11-16T103000_serial --place "the demo field"
-    .venv/bin/python scripts/build_probe_log.py --field demo --session 2026-11-16T103000_serial --garden   # docs/GARDEN_TEST.md
+    .venv/bin/python scripts/build_probe_log.py --field demo --session 2026-11-16T103000_serial --test garden   # or --test indoor
 
 The file says when (recorded_on, and the note's first words: "Recorded on 16 November 2026") and, with --place, where
 (e.g. "four pots of field soil at the event"). --session keeps only the named walks (a rehearsal with the real probe can
@@ -13,10 +13,11 @@ be left out); the session ids are printed by the bridge's log. Every reading kee
 Per part: the median on the probe's own scale, spread, steady, off the scale, temperature, water % and band (only after
 the bench test), drier or wetter than the session's other parts, and the twin before and after the Kalman update; plus a
 link to the bench result (config/probe_calibration.yaml -> data/checks/probe/bench.json). Only sessions read from a real
-serial port are used (rules.yaml probe.live.replay_sources). --garden marks a walk in a garden mini-field
-(rules.yaml probe.live.garden_test): kind 'garden_test', labelled as a garden test, with no twin before or after: a session from the fake probe, stdin or a pseudo-terminal is
+serial port are used (rules.yaml probe.live.replay_sources): a session from the fake probe, stdin or a pseudo-terminal is
 skipped and named, and a log with no real session is refused, so no made-up number reaches the site. Validated against
-pipeline/export/probe_log_schema.json; nothing is written if it fails.
+pipeline/export/probe_log_schema.json; nothing is written if it fails. --test garden or --test indoor marks a test of the
+probe away from the field (rules.yaml probe.live.garden_test; docs/PROBE_RECORDING.md 4b): kind 'garden_test' or
+'indoor_test', labelled so, with no twin before or after.
 """
 import argparse
 import json
@@ -32,15 +33,20 @@ NOTE = ("Readings recorded with the real soil probe at the in-person demo, repla
         "then measured; 'before' is the twin alone, 'after' the twin with the probe's reading.")
 
 
-GARDEN = ("A garden test of our probe, recorded on {when}: a 2 m by 2 m mini-field with one patch watered, all four patches "
-          "probed. Not the field shown here, and not live: the twin is not updated with garden soil.")
+TESTS = {   # a test of the probe away from the field (owner, 2026-11-14 night): its note; the twin is never updated with it
+    "garden": "Garden test of our soil stick, recorded on {when}: a 2 m by 2 m mini-field with one patch watered, all four "
+              "patches probed.",
+    "indoor": "Indoor test of our soil stick (4 bowls of soil), recorded on {when}: four bowls of the same soil, one watered, "
+              "probed in order, 60 seconds each.",
+}
+NOT_FIELD = " Not the field shown here, and not live: the twin is not updated with this soil."
 
 
-def note_for(dates, place, garden=False):
+def note_for(dates, place, test=None):
     days = [datetime.fromisoformat(d) for d in dates]
     when = " and ".join(f"{d.day} {d:%B %Y}" for d in days)
-    if garden:
-        return GARDEN.format(when=when) + (f" ({place})" if place else "")
+    if test:
+        return TESTS[test].format(when=when) + NOT_FIELD + (f" ({place})" if place else "")
     return f"Recorded on {when}" + (f" ({place})" if place else "") + ". " + NOTE
 
 
@@ -68,7 +74,7 @@ def part_doc(rec, lines=()):
             "relative": None, "before": estimate(ev.get("before")), "after": estimate(ev.get("after")), "lines": list(lines)}
 
 
-def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None, only=None, settle_n=20, garden=False):
+def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None, only=None, settle_n=20, test=None):
     from robot.calibrate import relative
     sessions, sources, twin_dates, buffers = {}, {}, [], {}
     for p in paths:
@@ -100,7 +106,7 @@ def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None
     out = []
     for sid, recs in sorted(keep.items(), key=lambda kv: kv[1][0][0]["time"]):
         parts = [part_doc(r, lines) for r, lines in recs]
-        if garden:   # garden soil is not the field's twin (rules.yaml probe.live.garden_test)
+        if test:   # garden or bowl soil is not the field's twin (rules.yaml probe.live.garden_test)
             for prt in parts:
                 prt["before"] = prt["after"] = None
         for prt in parts:
@@ -108,10 +114,10 @@ def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None
             prt["relative"] = relative(prt["wetness"], others, same_band) if prt["wetness"] is not None else None
         out.append({"id": sid, "source": sources[sid], "start": parts[0]["time"], "end": parts[-1]["time"], "parts": parts})
     dates = sorted({p["time"][:10] for s in out for p in s["parts"]})
-    doc = {"field": field, "note": note_for(dates, place, garden), "built": datetime.now().astimezone().isoformat(timespec="seconds"),
-           "recorded_on": dates, "place": place, "twin_date": None if garden or not twin_dates else twin_dates[-1], "bench": bench,
+    doc = {"field": field, "note": note_for(dates, place, test), "built": datetime.now().astimezone().isoformat(timespec="seconds"),
+           "recorded_on": dates, "place": place, "twin_date": None if test or not twin_dates else twin_dates[-1], "bench": bench,
            "skipped": skipped, "sessions": out}
-    return dict(doc, kind="garden_test") if garden else doc
+    return dict(doc, kind=f"{test}_test") if test else doc
 
 
 def bench_link(cal_path):
@@ -139,13 +145,13 @@ def main(argv=None):
     ap.add_argument("--out", default=str(REPO / "site" / "data" / "probe_log.json"))
     ap.add_argument("--session", action="append", help="publish only this session (repeat for more); default every real one")
     ap.add_argument("--place", default=None, help='where it was recorded, in plain words, e.g. "four pots of field soil at the event"')
-    ap.add_argument("--garden", action="store_true", help="the walk was the garden mini-field test (docs/GARDEN_TEST.md)")
+    ap.add_argument("--test", choices=sorted(TESTS), help="the walk was a test of the probe: the garden mini-field or 4 bowls indoors")
     a = ap.parse_args(argv)
     rules = load_rules()["probe"]
     paths = [Path(p) for p in a.logs] if a.logs else sorted(Path(a.dir or REPO / "data" / "probe" / a.field).glob("readings_*.jsonl"))
     try:
         doc = build(paths, a.field, bench_link(a.calibration), tuple(rules["live"]["replay_sources"]), rules["same_band_pct"],
-                    place=a.place, only=a.session, settle_n=int(rules["settle_lines"]), garden=a.garden)
+                    place=a.place, only=a.session, settle_n=int(rules["settle_lines"]), test=a.test)
     except ValueError as e:
         print(f"NOT YET POSSIBLE: {e}; nothing written", file=sys.stderr)
         return 2
@@ -161,7 +167,7 @@ def main(argv=None):
     tmp.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
     os.replace(tmp, out)
     print(f"{len(doc['sessions'])} real session(s), {sum(len(s['parts']) for s in doc['sessions'])} parts -> {out}")
-    for s in doc["sessions"]:   # the garden test's check: the watered patch should read wetter than the others
+    for s in doc["sessions"]:   # the test's check: the watered patch or bowl should read wetter than the others
         print(f"  {s['id']}: " + ", ".join(f"{p['section']} {p['relative'] or p['state']}" for p in s["parts"]))
     return 0
 

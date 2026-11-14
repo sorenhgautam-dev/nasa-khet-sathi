@@ -1916,6 +1916,14 @@
    "en": "Garden test of our soil stick, recorded on",
    "sw": "Jaribio la kifaa chetu bustanini, lilirekodiwa tarehe"
   },
+  "screens.check_soil.texts.indoor_title": {
+   "en": "Indoor test of our soil stick.",
+   "sw": "Jaribio la kifaa chetu ndani ya nyumba."
+  },
+  "screens.check_soil.texts.indoor_on": {
+   "en": "4 bowls of soil, recorded on",
+   "sw": "Bakuli 4 za udongo, lilirekodiwa tarehe"
+  },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",
    "sw": "Miaka {year_count}"

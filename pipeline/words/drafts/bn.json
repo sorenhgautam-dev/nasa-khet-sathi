@@ -1916,6 +1916,14 @@
    "en": "Garden test of our soil stick, recorded on",
    "bn": "বাগানে আমাদের যন্ত্রের পরীক্ষা, রেকর্ডের তারিখ:"
   },
+  "screens.check_soil.texts.indoor_title": {
+   "en": "Indoor test of our soil stick.",
+   "bn": "ঘরের ভেতরে আমাদের যন্ত্রের পরীক্ষা।"
+  },
+  "screens.check_soil.texts.indoor_on": {
+   "en": "4 bowls of soil, recorded on",
+   "bn": "মাটির ৪টি বাটি, রেকর্ডের তারিখ:"
+  },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",
    "bn": "{year_count} বছরের"

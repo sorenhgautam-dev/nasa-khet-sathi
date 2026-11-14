@@ -111,10 +111,14 @@ def test_a_garden_test_is_labelled_so_and_never_updates_the_fields_twin(tmp_path
     _session(log, "serial:COM3", "r")                 # with the bench calibration, so a normal walk has before and after
     normal = bpl.build([log], field="demo")
     assert normal["sessions"][0]["parts"][0]["after"] is not None and "kind" not in normal
-    doc = bpl.build([log], field="demo", garden=True)
+    doc = bpl.build([log], field="demo", test="garden")
     Draft202012Validator(SCHEMA).validate(doc)
     assert doc["kind"] == "garden_test" and doc["twin_date"] is None
-    assert doc["note"].startswith("A garden test of our probe, recorded on 16 November 2026")
+    assert doc["note"].startswith("Garden test of our soil stick, recorded on 16 November 2026")
+    indoor = bpl.build([log], field="demo", test="indoor")
+    Draft202012Validator(SCHEMA).validate(indoor)
+    assert indoor["kind"] == "indoor_test" and indoor["note"].startswith("Indoor test of our soil stick (4 bowls of soil), recorded on 16")
+    assert all(p["before"] is None and p["after"] is None for p in indoor["sessions"][0]["parts"])
     assert all(p["before"] is None and p["after"] is None and p["wetness"] is not None for p in doc["sessions"][0]["parts"])
     assert [p["relative"] for p in doc["sessions"][0]["parts"]] == [p["relative"] for p in normal["sessions"][0]["parts"]]
 

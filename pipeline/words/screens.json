@@ -1545,6 +1545,18 @@
      "ne_review": "needs native-speaker review"
     },
     {
+     "id": "indoor_title",
+     "en": "Indoor test of our soil stick.",
+     "ne": "हाम्रो यन्त्रको घरभित्र गरिएको जाँच।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "indoor_on",
+     "en": "4 bowls of soil, recorded on",
+     "ne": "माटोका ४ कचौरा, नापिएको मिति:",
+     "ne_review": "needs native-speaker review"
+    },
+    {
      "id": "practice",
      "en": "Practice: made-up numbers",
      "ne": "अभ्यास: नक्कली अङ्क",

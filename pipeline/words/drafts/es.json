@@ -1916,6 +1916,14 @@
    "en": "Garden test of our soil stick, recorded on",
    "es": "Prueba en huerto de nuestra sonda, registrada el"
   },
+  "screens.check_soil.texts.indoor_title": {
+   "en": "Indoor test of our soil stick.",
+   "es": "Prueba en casa de nuestra sonda."
+  },
+  "screens.check_soil.texts.indoor_on": {
+   "en": "4 bowls of soil, recorded on",
+   "es": "4 cuencos de tierra, registrada el"
+  },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",
    "es": "{year_count} años"

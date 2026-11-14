@@ -4,11 +4,11 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
-## 2026-11-14 (Saturday, night): `probe_log.json` may say it is a garden test; practice readings only on the hotspot
+## 2026-11-14 (Saturday, night): `probe_log.json` may say it is a garden or indoor test; practice readings only on the hotspot
 
-- `probe_log.json` gains an optional `kind: "garden_test"` (`scripts/build_probe_log.py --garden`; rules.yaml
+- `probe_log.json` gains an optional `kind: "garden_test"` or `"indoor_test"` (`scripts/build_probe_log.py --test garden|indoor`; rules.yaml
   `probe.live.garden_test`). Then the site labels the walk "Garden test of our soil stick, recorded on <date>"
-  (`check_soil.garden_on`), every part's `before` and `after` are null and `twin_date` is null, and its bands never set
+  (`check_soil.garden_on`), or "Indoor test of our soil stick. 4 bowls of soil, recorded on <date>" (`indoor_title`, `indoor_on`), every part's `before` and `after` are null and `twin_date` is null, and its bands never set
   the field's soil at the start. Files without `kind` are unchanged.
 - `live.json` from the fake probe (`source: "fake_probe"`) is shown only when the page is opened from this laptop or its
   hotspot, under a big "Practice: made-up numbers" banner (`check_soil.practice`), and is never used for anything else

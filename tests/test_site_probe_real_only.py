@@ -34,17 +34,18 @@ def test_practice_readings_show_only_on_the_laptop_or_its_hotspot():
 
 
 def test_practice_and_garden_readings_never_stand_for_the_field():
-    assert "function forField(pd) { return !!pd && !pd.practice && !pd.garden; }" in APP
+    assert "function forField(pd) { return !!pd && !pd.practice && !pd.test; }" in APP
     assert "sd.today.mode === 'band' && forField(pd)" in APP                  # the soil at the start
     assert "if (!forField(pd)) return;" in APP                                   # the Choose screen's dots
     assert "if (!K.forField(pd)) return null;" in FEATURES                       # the Replay's start band
-    assert "garden: log.kind === 'garden_test'" in APP and "'check_soil.garden_on'" in APP
+    assert "TEST_LABEL = { garden_test: ['garden_on'], indoor_test: ['indoor_title', 'indoor_on'] }" in APP
+    assert "test: TEST_LABEL[log.kind] ? log.kind : null" in APP
 
 
 def test_real_readings_carry_a_date_and_there_is_no_tested_count():
     reader = APP[APP.index("function probeData()"):APP.index("function anyTested(")]
     assert "isReal(lv.source) || isPractice(lv)" in reader and "isReal(x.source)" in reader
-    assert "pd.live.time" in APP and "T(pd.garden ? 'check_soil.garden_on' : 'check_soil.recorded_on')" in APP
+    assert "pd.live.time" in APP and "(pd.test ? TEST_LABEL[pd.test] : ['recorded_on'])" in APP
     assert not re.search(r"T\('check_soil\.tested'\) \+ ': '", APP)
 
 

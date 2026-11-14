@@ -137,34 +137,47 @@ Every line goes to `data/probe/demo/readings_<date>.jsonl` automatically.
 If you do a practice walk with the real probe, that is fine. Write down its start time too and say it was practice.
 We publish only the walk you name.
 
-## 4b. The garden test (about 45 minutes, before the freeze)
+## 4b. A test of the soil stick: the garden, or 4 bowls indoors (about 45 minutes, before the freeze)
 
-The owner's test of the probe in a garden mini-field (2026-11-14 night). The public site then replays it, labelled "Garden
-test of our soil stick, recorded on <date>". It is not the demo field, so the twin is never updated with it.
+The owner's test of the probe away from the field (2026-11-14 night). Do **one** of the two. The public site then replays
+it, labelled "Garden test of our soil stick, recorded on <date>" or "Indoor test of our soil stick. 4 bowls of soil,
+recorded on <date>". It is not the demo field, so the twin is never updated with it and it never changes the advice.
+
+**Option A, the garden:**
 
 1. **Mark the mini-field.** On bare garden soil, mark a square 2 m by 2 m with four sticks and string. Split it with
    string into four patches of 1 m by 1 m. Name them like the field and put a label on a stick in each:
    s1 south-west, s2 south-east, s3 north-west, s4 north-east.
 2. **Water one patch only.** Choose one patch. Pour **10 litres** from a watering can evenly over that patch, and none on
    the others. Write down which patch and the time. **Wait 30 minutes** so the water soaks in.
+
+**Option B, indoors:**
+
+1. **Fill 4 bowls with the same soil.** Take one bucket of soil, mix it well, and fill 4 bowls of the same size to the
+   same height (at least 12 cm deep, so the blade fits). Press each one down the same way. Label them s1, s2, s3, s4.
+2. **Water one bowl only.** Choose one bowl. Pour in **200 ml** of water slowly and evenly. Write down which bowl and the
+   time. **Wait 30 minutes** so the water soaks in.
+
+**Then, for either option:**
+
 3. **Start the recording.** Plug the probe into the laptop with this repository and run
-   `.venv/bin/python scripts/demo_probe.py` (the real probe; never `--fake`). Write down the **time you start**.
-4. **Walk the four patches** in the order s1, s2, s3, s4, exactly as in step 4 above: probe in at the patch's centre,
+   `.venv/bin/python scripts/demo_probe.py` (the real probe; **never** `--fake`). Write down the **time you start**.
+4. **Walk the four patches or bowls** in the order s1, s2, s3, s4, exactly as in step 4 above: probe in at the centre,
    temperature sensor beside it, then Enter, then **60 seconds without touching**. If it says "not steady, test again",
    press Enter and measure the same spot again.
 5. **Stop** with Ctrl-C after s4.
 6. **Notes.** Make the notes file of step 5 and add three lines:
 
    ```
-   place: garden mini-field, 2 m by 2 m
-   watered patch: s3, 10 litres at 15:20
-   last rain before the test:
+   place: garden mini-field, 2 m by 2 m   (or: 4 bowls of the same soil, indoors)
+   watered: s3, 10 litres at 07:30   (or: s3, 200 ml at 07:30)
+   last rain or watering before the test:
    ```
 
-7. Send the zip as in step 5, or, on the main laptop, just tell the owner the start time and the watered patch.
+7. Send the zip as in step 5, or, on the main laptop, just tell the owner the start time and which one was watered.
 
-What we check: the watered patch should read "wetter than the other parts". If it does not, we say so; we never change a
-reading.
+What we check: the watered patch or bowl should read "wetter than the other parts". If it does not, we say so; we never
+change a reading.
 
 ## 5. What to send back, and how to name it
 
@@ -204,7 +217,7 @@ are never published.
 ```
 .venv/bin/python scripts/run_probe_bench.py                      # if the bench files came from another laptop
 .venv/bin/python scripts/build_probe_log.py --field demo --session <the walk's session id> --place "<place from the notes>"
-.venv/bin/python scripts/build_probe_log.py --field demo --session <the garden walk's session id> --garden   # the garden test (4b)
+.venv/bin/python scripts/build_probe_log.py --field demo --session <the test walk's session id> --test garden   # or --test indoor (4b)
 .venv/bin/python -m pipeline.export.validate
 .venv/bin/python scripts/final_check.py
 ```

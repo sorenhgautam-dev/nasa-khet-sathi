@@ -1916,6 +1916,14 @@
    "en": "Garden test of our soil stick, recorded on",
    "hi": "बगीचे में हमारे यंत्र की जाँच, तारीख़:"
   },
+  "screens.check_soil.texts.indoor_title": {
+   "en": "Indoor test of our soil stick.",
+   "hi": "घर के अंदर हमारे यंत्र की जाँच।"
+  },
+  "screens.check_soil.texts.indoor_on": {
+   "en": "4 bowls of soil, recorded on",
+   "hi": "मिट्टी के 4 कटोरे, तारीख़:"
+  },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",
    "hi": "{year_count} साल का"
