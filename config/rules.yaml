@@ -1266,3 +1266,145 @@ verification:                     # owner's accuracy and verification programme,
       value: "Spearman rank correlation between our yearly monsoon totals and the stations' (the mean of the stations' % of normal where at least two report, and each station alone), with a 95% bootstrap interval (validation_checks.common.correlation); holds up when the interval's lower bound is above 0. Also each year's class with DHM's own bands (below normal < 90%, near normal 90-110%, above normal > 110% of the record's mean for ours, of DHM's normal for the stations): the share of years in the same class. 2023 reported by itself: its rank and class in each"
       source: "Owner, 2026-11-14 ('check whether our wet and dry years come in the right order (rank correlation). Report 2023 specifically'). Bands: DHM, Preliminary Precipitation and Temperature Summary, Monsoon Season 2025, p. 2 ('less than 90% of normal ... below normal, 90 to 110% ... near normal, more than 110% ... above normal'). Claude's measure details, fixed before the run"
 
+# ---------- The four features of the farmer's question (coordinator's brief, 2026-11-14): "What can I grow in my field's
+# empty months without risking the harvest I depend on?" Built only from outputs we already have. Every block below was
+# written and committed BEFORE its first run; nothing in it was tuned to config/known_events.yaml or to any check result.
+
+labels:                           # feature 1: two labels on every number (pipeline/export/build_labels.py -> site/data/labels/<field>.json)
+  sure:
+    value: "'verified' only when the output's scorecard row (data/checks/<field>/scorecard.json from scripts/run_verification.py; a sample field takes its source field's, sample_of) has status VERIFIED; every other output is 'estimate', its status, k and n kept for the detail view. An output with no scorecard row (scorecard null) is NOT YET VERIFIABLE with k = n = 0: no yardstick exists for it yet. An output tied to several rows takes the weakest status (NOT YET VERIFIABLE < ESTIMATE < VERIFIED) and the sums of their k and n"
+    source: "Coordinator's brief, 2026-11-14: 'sure is verified only when the scorecard status is VERIFIED. Everything else is estimate, with the status kept for detail'; verification.common.statuses. The no-row and several-rows readings are Claude's, fixed before the first run"
+  scales:
+    value: {field: {en: "Your field", ne: "तपाईंको खेत", about: "30 m or finer", below_m: 90}, neighbourhood: {en: "Around your field", ne: "तपाईंको खेत वरपर", about: "250 m to 1 km", below_m: 3000}, valley: {en: "Your valley", ne: "तपाईंको उपत्यका", about: "about 10 km", below_m: 22000}, region: {en: "Your wider region", ne: "तपाईंको फराकिलो क्षेत्र", about: "50 km or more"}}
+    source: "Names and 'about' texts: coordinator's brief, 2026-11-14 (the Nepali is Claude's draft, not reviewed by a native speaker). The bounds between classes are Claude's choice, fixed before the first run: the geometric middle of neighbouring classes' typical sizes, sqrt(30 x 250) m = 87 m -> 90 m, sqrt(1 x 10) km = 3.2 km -> 3 km, sqrt(10 x 50) km = 22.4 km -> 22 km. A source's size is its grid cell, or the area a point record or index stands for"
+  rule:
+    value: "a number takes the coarsest scale among the inputs that mainly drive it (outputs.<id>.inputs); inputs it also rests on are listed (also) but do not set the scale. 'twin' stands for the twin's three inputs: its rain (gpm), weather (power) and soil (soilgrids). A total over an area takes the scale of the area it sums (area_box)"
+    source: "Coordinator's brief, 2026-11-14 ('a number takes the coarsest scale among the inputs that mainly drive it'). The twin's inputs: CLAUDE.md 'Who supplies what to the twin'. The area rule is Claude's choice, fixed before the first run: a share of all the cropland in the 10 km fetch box describes the box, not one 30 m pixel"
+  source_scales:
+    value: {gpm: valley, power_corrected: valley, power: region, ghcn: valley, hls: field, modis: neighbourhood, soilgrids: neighbourhood, grace: region, nasadem: field, smap: valley, nexgddp: region, dhm_normals: valley, dhm_onset: region, dhm_bulletins: valley, chirps: valley, gpcc: region, crop_calendar: region, worldcover: field, probe: field, oni: region, area_box: valley}
+    source: "Each source's cell against the bounds above: GPM IMERG 0.1 deg (about 10 km); NASA POWER 0.5 x 0.625 deg (about 55 km) is 'power', but 'power_corrected' (valley) for a field whose temperatures are corrected to the Kathmandu Airport station (temperature_correction; the field config's correction_label), as the brief says; GHCN-Daily Kathmandu Airport, a point 7 km away standing for the valley floor; HLS 30 m; MODIS 250 m; SoilGrids 250 m (nearest cell 859 m away); GRACE's mascon about 300 km; NASADEM 30 m; SMAP L4 9 km; NEX-GDDP-CMIP6 0.25 deg (25-28 km here); DHM's Bhaktapur normals and bulletins, valley gauges within 10 km; DHM's onset dates, one date for the monsoon's entry into eastern Nepal; CHIRPS 0.05 deg (about 5 km), valley; GPCC's 1-degree box (about 100 km); the FAO crop calendar, Nepal Hill zone; WorldCover 10 m; the probe, a few cm of one part; NOAA's ONI, the Nino-3.4 region of the Pacific; the area map's fetch box, about 10 km. The brief's examples are kept (GPM valley, corrected POWER valley, HLS field, MODIS and SoilGrids neighbourhood, GRACE region, probe field). Claude's assignments for the rest, fixed before the first run"
+  outputs:
+    value:
+      rain_months: {inputs: [gpm], also: [dhm_bulletins], scorecard: [rain_months], rain_corrected: true}
+      rain_month_words: {inputs: [gpm], also: [], scorecard: [rain_month_words], rain_corrected: true}
+      heat_month_words: {inputs: [power, ghcn], also: [], scorecard: [heat_month_words], rain_corrected: false}
+      frost_month_words: {inputs: [power, ghcn], also: [], scorecard: [frost_month_words], rain_corrected: false}
+      soil_month_words: {inputs: [twin], also: [], scorecard: [soil_month_words], rain_corrected: true}
+      cover_months: {inputs: [hls], also: [], scorecard: [cover_months], rain_corrected: false}
+      season_dates: {inputs: [hls], also: [crop_calendar], scorecard: [season_dates], rain_corrected: false}
+      rotation_guess: {inputs: [hls], also: [crop_calendar], scorecard: [rotation_guess], rain_corrected: false}
+      flood_years: {inputs: [gpm], also: [], scorecard: [flood_years], rain_corrected: true}
+      drought_years: {inputs: [gpm], also: [], scorecard: [drought_years], rain_corrected: true}
+      harvest_years: {inputs: [twin], also: [], scorecard: [harvest_years], rain_corrected: true}
+      plan_cover_gap_beats_current: {inputs: [twin, nexgddp], also: [], scorecard: [plan_cover_gap_beats_current], rain_corrected: true}
+      plan_safest_beats_current: {inputs: [twin, nexgddp], also: [], scorecard: [plan_safest_beats_current], rain_corrected: true}
+      monsoon_start: {inputs: [dhm_onset], also: [], scorecard: [monsoon_start], rain_corrected: false}
+      groundwater: {inputs: [grace], also: [], scorecard: [groundwater], rain_corrected: false}
+      part_soil_water: {inputs: [twin], also: [], scorecard: [part_soil_water], rain_corrected: true}
+      probe_water: {inputs: [probe], also: [], scorecard: [probe_water], rain_corrected: false}
+      outlook_2040: {inputs: [twin, nexgddp], also: [], scorecard: [outlook_2040], rain_corrected: true}
+      plan_scores: {inputs: [twin], also: [grace, crop_calendar], scorecard: [plan_scores], rain_corrected: true}
+      bare_days: {inputs: [hls], also: [], scorecard: [cover_months], rain_corrected: false}
+      monsoon_shift: {inputs: [dhm_onset], also: [chirps, gpm], scorecard: [monsoon_start], rain_corrected: false}
+      plan_harvest: {inputs: [twin], also: [crop_calendar], scorecard: [harvest_years], rain_corrected: true}
+      plan_harvest_watered: {inputs: [twin], also: [crop_calendar], scorecard: [harvest_years], rain_corrected: false}
+      plan_water: {inputs: [twin], also: [grace], scorecard: [plan_scores], rain_corrected: true}
+      plan_cover: {inputs: [crop_calendar], also: [], scorecard: [plan_scores], rain_corrected: false}
+      plan_soil_kept: {inputs: [gpm], also: [crop_calendar], scorecard: [plan_scores], rain_corrected: true}
+      plan_gain: {inputs: [twin], also: [], scorecard: [plan_scores], rain_corrected: true}
+      plan_tips: {inputs: [twin], also: [hls], scorecard: [plan_scores], rain_corrected: true}
+      plan_months: {inputs: [crop_calendar], also: [], scorecard: [season_dates], rain_corrected: false}
+      replay_year: {inputs: [twin], also: [], scorecard: [harvest_years], rain_corrected: true}
+      replay_dry_days: {inputs: [twin], also: [], scorecard: [rain_months], rain_corrected: true}
+      replay_event: {inputs: [gpm], also: [], scorecard: [flood_years, drought_years], rain_corrected: true}
+      part_wetness: {inputs: [twin], also: [], scorecard: [part_soil_water], rain_corrected: true}
+      part_sure: {inputs: [twin, smap], also: [], scorecard: [part_soil_water], rain_corrected: true}
+      part_status: {inputs: [twin], also: [], scorecard: [part_soil_water], rain_corrected: true}
+      part_greener: {inputs: [hls], also: [], scorecard: null, rain_corrected: false}
+      part_low_ground: {inputs: [nasadem], also: [], scorecard: null, rain_corrected: false}
+      pulse_hls: {inputs: [hls], also: [], scorecard: null, rain_corrected: false}
+      pulse_modis: {inputs: [modis], also: [], scorecard: null, rain_corrected: false}
+      pulse_curve: {inputs: [hls, modis], also: [], scorecard: null, rain_corrected: false}
+      pulse_seasons: {inputs: [hls, modis], also: [], scorecard: [season_dates], rain_corrected: false}
+      pulse_typical: {inputs: [hls], also: [crop_calendar], scorecard: [season_dates], rain_corrected: false}
+      nearby_fields: {inputs: [area_box], also: [hls, worldcover], scorecard: null, rain_corrected: false}
+      replay_window: {inputs: [twin], also: [oni], scorecard: [harvest_years.replay_window], rain_corrected: true}
+      checkup_rain: {inputs: [gpm], also: [dhm_bulletins, dhm_normals, chirps], scorecard: [rain_months], rain_corrected: true}
+      checkup_break: {inputs: [gpm, chirps], also: [gpcc], scorecard: null, rain_corrected: false}
+    source: "Every number or data word the site shows (docs/TRACEABILITY.md, screen by screen, plus the four new features): the 19 rows of verification.outputs by their own ids, and the rest tied to the row that tests the same thing, as TRACEABILITY's Status column does (e.g. the replay's dry days to rain_months; the plan cards' water, cover and soil-kept to plan_scores). 'harvest_years.replay_window' is that row's farmer score of the 25-Year Replay (window_replay.farmer_scoring). rain_corrected: the number is computed from the twin's corrected rain (the watered harvest is not: watering keeps Ks at 1 whatever the rain). Claude's mapping, fixed before the first run"
+
+window_replay:                    # feature 2: the 25-Year Replay (pipeline/plans/window.py; pipeline/export/build_replay.py -> site/data/replay/<field>.json)
+  start:
+    value: "the day after the twin's state day (data/clean/<field>/twin_state.json date; the demo's 2026-11-03 gives 2026-11-04), written in the file and fixed until the next export. A field with no twin state of its own (a sample field) takes its source field's (sample_of)"
+    source: "Coordinator's brief, 2026-11-14: windows from a fixed start date written in the file (the site stays unchanged until January), e.g. the twin's state date. The twin's state is the soil at the end of its day, so the window starts the next day: Claude's choice, fixed before the first run"
+  windows:
+    value: {m3: 3, m6: 6}
+    source: "Coordinator's brief: the next 3 months and the next 6 months. A window of m months ends the day before the same day m months later (2026-11-04 to 2027-02-03 and to 2027-05-03)"
+  past_seasons:
+    value: "every year Y in which the window, started on the start's month and day of Y, ends on or before the last day of the twin's record (weather.parquet, 2001-01-01 to 2025-12-31) and every crop it holds was sown on or after the record's first day: on the demo the 24 seasons 2001-02 to 2024-25. A season is named 'Y-(Y+1)' (two digits after the dash) and its year is the year its window ends (replay.year_of_season); the file carries year_count"
+    source: "Coordinator's brief ('a Nov-May window gives about 24 past seasons. Put year_count in the file'); replay.year_of_season (owner-approved 2026-11-12)"
+  plans:
+    value: "each plan of site/data/fields/<field>.json (current, cover_gap, safest) and each current_options option, at its exported sowing days (crops[].start, MM-DD) in every past year, each crop for its crops.json season length (stages_days). The window holds every crop season that overlaps it; a crop sown before the start is in the ground on the first day at its own stage (its Kc curve counted from its sowing day) and is not sown again. season_dates and paddy_rainfed (both off today) are not applied: the calendar days are the coming season's plan"
+    source: "Coordinator's brief: 'each of the three exported plans ... plus current_options gets its coming season run through every past season'. The in-ground reading is Claude's, fixed before the first run: the plans' winter crops are sown 15-30 October by the FAO calendar, before a November start"
+  twin:
+    value: "the existing twin day by day over the window only, rain-fed: the FAO-56 bucket (twin/soil_water.run_bucket) with season.simulate's segments, TAW (the crop's Zr; a bare spell the next crop's, else the last one's), table p, curve numbers (curve_numbers), Kc curves (each crop's Kc mid and end adjusted for its whole season's own climate, kc_climate), bare-soil surface layer (bare_soil; De starts at TEW x Dr / TAW) and a paddy's losses (paddy_losses); depletion handed between segments as a fraction of TAW (season.carry_over). The window's first day starts from the chosen start's depletion"
+    source: "Coordinator's brief: 'use the existing twin (pipeline/twin/*, pipeline/plans/simulate.py, twin_options.py; FAO-56 bucket and FAO-33 harvest)'. tests/test_window.py checks that a window run gives season.simulate's days to rounding"
+  rain:
+    value: "the twin's central rain (weather.parquet rain_mm: break-corrected and gauge-tuned, gpm_series.gauge_calibration); every square is also run on the other rain versions untuned, dhm and uncorrected (pipeline/twin/inputs.with_rain with scripts/common.rain_kw) and their result and score are written beside it"
+    source: "Coordinator's brief: 'with the central rain (the tuned version, now the main one)'; 'also record the result under the other rain versions (dhm, untuned, uncorrected)'"
+  water_case:
+    value: "rain-fed only: the risk case. The file says that watering removes the dry stress: in the twin's watered case a crop is refilled whenever Dr passes RAW, so every crop day starts at or below RAW, Ks is 1 (FAO-56 eq. 84) and the score below is 100"
+    source: "Coordinator's brief: 'Rain-fed is the risk case; say in the file that watering removes dry stress'; CLAUDE.md (irrigation refills when Dr > RAW); twin/soil_water.run_bucket"
+  starts:
+    value: {wet: {depletion_fraction: "0", probe_band: "too wet"}, medium: {depletion_fraction: "p / 2", probe_band: "good"}, dry: {depletion_fraction: "(1 + p) / 2", probe_band: "needs water"}}
+    source: "Coordinator's brief: precompute dry, medium and wet starts and let the probe's band (probe.band) pick one. probe.band: 'needs water' below theta_fc - p (theta_fc - theta_wp), 'good' from there to field capacity, 'too wet' above field capacity, p = crops.json p of the crop in the ground on the twin state's day. In depletion (FAO-56 eqs. 82-84) 'good' is 0 <= Dr/TAW <= p and 'needs water' p < Dr/TAW <= 1. Each start is the middle of its band; 'too wet' starts at field capacity, the wettest the bucket holds (eq. 88 drains the rest the same day). p: the current plan's crop in the ground on the start day (the next crop's when the ground is bare, as season.simulate uses for a bare spell), as the probe's band uses; the same fraction of TAW starts every plan (the same water in the soil). Claude's choice, fixed before the first run"
+  start_default:
+    value: "before any probe reading: the start whose band holds the twin's own state (twin_state.json dr_mm / taw_mm, against the same p). A field with no twin state of its own: medium"
+    source: "Coordinator's brief: 'which start is the default before any probe reading (the twin's own state today)'. The fallback is Claude's choice, fixed before the first run: the middle of the 'good' band, the band the probe cannot rule out without a reading"
+  score:
+    value: "the water need met over the window's crop days: 100 x sum(ETa) / sum(ETc) over every crop day in the window (all crops pooled; bare days do not count), rounded to a whole number; null when no crop grows in the window. This is FEWS NET's Water Requirement Satisfaction Index (WRSI), taken over the window rather than a whole season"
+    source: "WRSI = actual over required crop evapotranspiration, 100 = no yield loss from water shortage (Frere & Popov 1979, FAO Plant Production and Protection Paper 17; USGS FEWS NET WRSI readme, iridl.ldeo.columbia.edu/documentation/usgs/adds/wrsi/WRSI_readme.pdf, found by a web search 2026-11-14, not opened). Over the window instead of the season: Claude's choice, fixed before the first run, because a window may end before harvest, where FAO-33's seasonal harvest formula does not apply"
+  classes:
+    value: {worked_min: 80, failed_below: 50}
+    source: "FEWS NET WRSI classes: below 50 failure, 50-60 poor, 60-80 mediocre, 80-95 average, 95-99 good, 99-100 very good (World Bank Data Catalog, 'Gridded dekadal Water Requirement Satisfaction Index (WRSI) for Africa', metadata of 2025-06-24, read in a web-search summary 2026-11-14, not opened); 'a WRSI below 50 is regarded as a crop failure condition (Smith 1992)' (the USGS WRSI readme, as the same search summarised it). Grouped by Claude, fixed before the first run: worked = average or better (80 or more), struggled = poor or mediocre (50 to under 80), failed = failure (under 50)"
+  reason:
+    value: "the longest run of consecutive dry crop days in the window (Ks < 1): {code: dry_spell, month: the run's first day's month MM, days: its length}, the earliest of equal runs; with no dry crop day {code: no_dry_days}; with no crop in the window {code: no_crop_in_window}"
+    source: "CLAUDE.md: 'A dry day is a day with Ks < 1 during a crop season'. The longest run as the reason is Claude's choice, fixed before the first run; the UI renders the words from the code"
+  sensitive:
+    value: "a square is sensitive when its result word under any of the other rain versions differs from the central one"
+    source: "Coordinator's brief: 'Mark a square sensitive when they differ'"
+  enso:
+    value: {threshold_c: 0.5, season_now: "the latest 3-month season in NOAA's ONI table that ends before the start's month (start 2026-11-04: ASO 2026)", season_past: "the same 3-month season of the year each past season starts (ASO of Y for season Y-(Y+1))", states: "el_nino when the ONI is +0.5 C or more, la_nina when -0.5 C or less, else neutral"}
+    source: "NOAA CPC Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (US government, public domain): 3-month running means of ERSST.v5 sea-surface temperature anomalies in the Nino 3.4 region; NOAA marks warm and cold periods with a threshold of +/- 0.5 C (CPC's ONI page; cited from memory, not opened 2026-11-14). One season's value, not NOAA's full episode (the threshold met for 5 consecutive overlapping seasons): the state known at the start. The season choice is Claude's, fixed before the first run"
+  farmer_scoring:
+    value: "once the farmer's locked years exist (data/field_visit/<field>/farmer_years.csv), the current plan's m6 results from the default start are scored with verify.year_matches on the score (worst years in the lowest third, best in the highest third, average ranks for ties), over the farmer's rows whose crop grows in that window; a named year is the year the window ends. Written into the scorecard row harvest_years as replay_window (k, n, status by verification.common); NOT YET VERIFIABLE until then"
+    source: "Coordinator's brief (owner's D3: the farmer's three best and three worst years are locked test data; 'the Replay's results against the best and worst years'); the thirds as verification.outputs.harvest_years, fixed before any answer exists"
+
+pulse:                            # feature 3: Field Pulse, खेतको नाडी (pipeline/export/build_pulse.py -> site/data/pulse/<field>.json)
+  points:
+    value: "the observations the diary's own series uses (scripts/run_diary.py run_greenness, data/clean/<field>/greenness_field.parquet): HLS images that pass greenness.min_clear_fraction from the first clear HLS day (greenness.hls_from), MODIS composites before it; NDVI rounded to 3 decimals. HLS points are labelled field scale, MODIS points neighbourhood scale"
+    source: "Coordinator's brief, 2026-11-14 ('use the diary's own cloud-masked series'; 'round NDVI to 3 decimals'); labels.source_scales"
+  curve:
+    value: {step_days: 7, from: "the diary's smoothed curve (data/clean/<field>/seasons_daily.parquet ndvi_smooth, the chosen season method's input), every 7th day from its first day, NDVI to 3 decimals, with the day's source"}
+    source: "Coordinator's brief ('thin the curve to about weekly')"
+  seasons:
+    value: "every season of the chosen method (data/checks/<field>/diary_seasons.json chosen.seasons_by_year): its year (the key), slot (rotation_guess slots by peak month: monsoon June-November, winter December-May), source, green-up (the method's start), peak, end and peak NDVI"
+    source: "Coordinator's brief ('the seasons per year (green-up, peak, harvest)'); season_detection; pipeline/diary/guess.py SLOTS"
+  typical:
+    value: "per slot, over the HLS seasons only (season_dates.seasons): green-up, peak and harvest (the season's end) = the median over the years of each date counted in days from 1 January of the season's year (earlier dates negative), written MM-DD in a 365-day year; planting = green-up minus the slot's guessed crop's initial stage (diary.guess; crops.json stages_days.ini), as season_dates.sowing reads the threshold method's start. The farmer confirms or corrects them on the phone"
+    source: "Coordinator's brief ('the typical planting and harvest dates the farmer can confirm or correct'); season_dates.sowing (FAO-56 ch. 6: the initial stage runs from planting to about 10% ground cover). The median over years is Claude's choice, fixed before the first run"
+  nearby:
+    value: "totals only, copied from the field's own area map (data/checks/<field>/area_map.json: cropland area and the three numbers with their low and high; the map file site/data/area/<field>.json): only the demo has one; any other field gets null. This field's own diary values sit beside them"
+    source: "Coordinator's brief ('nearby: totals only, from the area map ... demo only; other fields get null')"
+  farmer_scoring:
+    value: "once the farmer's locked dates exist (data/field_visit/<field>/farmer_dates.csv: crop, year, planted, harvested), each row is matched with the Pulse's HLS season of the same slot (the slot of the middle day between planted and harvested) and year (the year the crop is harvested): planted against the season's planting (green-up minus the crop's initial stage), harvested against its end; a date passes within verification.outputs.season_dates.tolerance_days (10 days, one dekad); a missing season fails. Written into the scorecard row season_dates (k, n, status by verification.common); NOT YET VERIFIABLE until then"
+    source: "Coordinator's brief: 'Field Pulse season dates within one dekad (+-10 days)'; verification.outputs.season_dates (fixed before any answer exists); the slot as season_dates.match. Claude's matching, fixed before the first run"
+
+checkup:                          # feature 4: Data Check-up (pipeline/export/build_checkup.py -> site/data/checkup/<field>.json)
+  contents:
+    value: "how this field's rain record was checked, worded as a check, not a fault: the field's own break test (data/checks/<field>/break_test.json, gpm_series.break_test) for every field; and where the field's own run has them, the rest of rain check B's evidence: the gauge weight's monthly range before the break year and the range of its yearly means after (data/clean/<field>/gauge_evidence.parquet, break_test.json), GPCC stations, Pettitt on GPM / CHIRPS and on CHIRPS alone with their steps, the IMERG Late check (rain_check_b.json late_check), Pettitt on GPM's yearly totals, DHM's Bhaktapur normal against GPM before and after the break and against the twin's central rain; the correction applied (data/cards/<field>/weather.json corrections.rain_break; gpm_series.gauge_calibration); the rain versions' mean yearly rain over the record's complete years; and one chart's yearly series (GPM as published, the twin's central rain, CHIRPS v3.0). evidence_level 'full' when the field has the gauge evidence, the Late check and DHM normals; else 'own_break_test'"
+    source: "Coordinator's brief, 2026-11-14. Nothing new is computed beyond yearly sums and means of the existing tables"
+  depends_on_corrected_rain:
+    value: "the output ids whose labels.outputs entry has rain_corrected true"
+    source: "Coordinator's brief; labels.outputs (fixed above)"
+
