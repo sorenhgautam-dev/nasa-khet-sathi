@@ -1,4 +1,10 @@
-# Proposal 2c (4c in your queue): when can rain-fed rice be transplanted? For the owner; NOT applied
+# Proposal 2c (4c in your queue): when can rain-fed rice be transplanted? For the owner; APPLIED since 2026-11-14
+
+**Update 2026-11-14:** you said yes ("4c: yes, apply the sourced rain-fed rice rule"). It is on, with no value changed
+(`e89d3e1`). With your 4a (sowing from the satellite) also on, it applies only to rice still on a calendar day; a
+satellite-dated rice keeps its day. It catches neither the 2009 nor the 2015 monsoon drought: 2009 is 11 days late and
+its rice does slightly better; 2015 is dated by the satellite, so the rule does not apply. Details: VALIDATION 4.1,
+METHOD_NOTES 69. The text below is the proposal as it was.
 
 The rule is `config/rules.yaml` `paddy_rainfed` (status "PROPOSED, awaiting the owner", `apply: false`), committed before
 the what-if run (`abbe701`). Nothing in the export changes until you say yes. Runs: `data/checks/demo/rainfed_rice_proposal/`.

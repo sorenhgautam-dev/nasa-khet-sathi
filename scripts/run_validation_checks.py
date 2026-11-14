@@ -75,7 +75,7 @@ def twin_runs(field, rules, lib, soil, w, checks_dir, data):
     cn = {"bare": by["bare"], **{c: by[cov[c]] for c in cov}}
     # every switch of rules.yaml as the runners apply them (pipeline/plans/twin_options.py): bare_soil, season_dates (the
     # farmer's plans on the satellite's seasons), paddy_rainfed (rain-fed paddy on a calendar day waits for its rain)
-    sj_path = checks_dir / "diary_seasons.json"
+    sj_path = Path(data) / "checks" / field["id"] / "diary_seasons.json"    # rain-free: one file for every rain version
     hls = to.hls_seasons(json.loads(sj_path.read_text())) if sj_path.exists() else None
     cur = to.replay(w, rotation, lib, soil, cn, rules, irrigated=False, farmer=True, seasons=hls)
     stored = json.loads((checks_dir / "replay.json").read_text())
