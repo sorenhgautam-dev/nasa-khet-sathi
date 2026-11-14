@@ -1436,6 +1436,10 @@
    "en": "3 months",
    "fr": "3 mois"
   },
+  "screens.what_to_grow.texts.next_h2_6": {
+   "en": "6 months",
+   "fr": "6 mois"
+  },
   "screens.what_to_grow.texts.next_to_plant": {
    "en": "Next to plant:",
    "fr": "Prochain semis :"

@@ -739,7 +739,7 @@
   };
 
   // ---------------- 5 what to see ----------------
-  function nextMonths(n) { var m = new Date().getMonth(); return [1, 2, 3].slice(0, n || 3).map(function (i) { return MONTHS[(m + i) % 12]; }); }
+  function nextMonths(n) { var m = new Date().getMonth(), out = []; for (var i = 1; i <= (n || 3); i++) out.push(MONTHS[(m + i) % 12]); return out; }
   SCREENS.choose = function () {
     var a = h('button', { type: 'button', class: 'bigcard light', onclick: function () { go('today'); } },
       h('div', { class: 'row', style: 'justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('pc', 16)), T('kind.model')),
@@ -834,7 +834,12 @@
   }
   SCREENS.next = function () {
     return withField('next', function (F) {
-      var keys = nextMonths(), months = keys.map(function (k) { return monthRow(F, k); });
+      var n = S.nextN || 3, span = n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2';
+      var keys = nextMonths(n), months = keys.map(function (k) { return monthRow(F, k); });
+      var spanTabs = h('div', { class: 'tabs', role: 'tablist', style: 'margin-bottom:10px' }, [3, 6].map(function (k) {
+        return h('button', { type: 'button', role: 'tab', 'aria-selected': String(n === k), onclick: function () { S.nextN = k; rerender(); } },
+          T(k === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2'));
+      }));
       var monsoon = keys.some(function (k) { return k === 'Jun' || k === 'Jul'; }) && F.diary.monsoon_start;
       var frost = (F.diary.months || []).some(function (m) { return keys.indexOf(m.m) >= 0 && m.frost !== 'none'; });
       var monthCard = h('div', { class: 'card', style: 'animation:ks-reveal 800ms var(--ease) 100ms both;padding:4px 16px' }, months,
@@ -857,8 +862,8 @@
         } }, svg(I(k === 'harvest' ? 'sprout' : k === 'water' ? 'drop' : 'soil', 18)), T('lbl.what_to_grow.priority.' + k));
       }));
       return screen('next', {
-        head: [bigTitle(T('what_to_grow.next_h1'), T('what_to_grow.next_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
-        scene: [h('p', { class: 'sub', style: 'font-weight:600;color:var(--ink);margin-bottom:8px' }, T('home.card_months_sub')), monthCard,
+        head: [bigTitle(T('what_to_grow.next_h1'), T(span)), isPlaceholder(F.field.name) ? sampleChip() : null],
+        scene: [spanTabs, h('p', { class: 'sub', style: 'font-weight:600;color:var(--ink);margin-bottom:8px' }, T('home.card_months_sub')), monthCard,
           h('div', { style: 'height:8px' }), srcs(F, ['gpm', 'power', 'hls', 'twin']),
           h('p', { class: 'small' }, frost ? T('from_space.frost_note') + ' ' : '', T('from_space.months_note'))],
         body: [h('h2', { class: 'h2' }, T('what_to_grow.choices_title')), h('p', { class: 'sub' }, T('what_to_grow.tap_choice')),

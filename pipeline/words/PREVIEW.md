@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 287 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 288 texts): needs native-speaker review.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 93 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
@@ -249,6 +249,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Why do some crops help the soil? | केही बालीले माटोलाई किन मद्दत गर्छन्? |
 | Next | अर्को |
 | 3 months | ३ महिना |
+| 6 months | ६ महिना |
 | Next to plant: | अब रोप्ने: |
 | Your choices | तपाईंका विकल्प |
 | Tap a choice to see why. | किन भनेर हेर्न विकल्पमा थिच्नुहोस्। |
