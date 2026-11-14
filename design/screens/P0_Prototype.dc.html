@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Khet Sathi phone prototype</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&amp;family=Inter:wght@400;500;600&amp;family=Mukta:wght@400;600;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14301E}a:hover{color:#0B1F12}
+.ks-bg{background:#89A378 url(/_blob/4f0b25b11732b3cab6a3285746008d0b) no-repeat center top/390px auto}
+@keyframes ks-drift{from{transform:translateX(-170px)}to{transform:translateX(470px)}}
+@keyframes ks-fly{0%{transform:translate(-90px,20px)}100%{transform:translate(480px,-30px)}}
+@keyframes ks-flap{to{transform:scaleY(.35)}}
+.ks-cloud{position:absolute;left:0;z-index:-1;width:150px;height:38px;border-radius:99px;background:rgba(255,253,246,.75);filter:blur(8px);animation:ks-drift linear infinite;pointer-events:none}
+.ks-birds{position:absolute;z-index:-1;left:0;top:190px;width:70px;height:24px;animation:ks-fly 28s linear 2s infinite;opacity:.55;pointer-events:none}
+.ks-birds path{fill:none;stroke:#3A3A35;stroke-width:1.8;stroke-linecap:round;transform-box:fill-box;transform-origin:center;animation:ks-flap .55s ease-in-out infinite alternate}
+.ks-sun{position:absolute;left:0;top:0;width:42px;height:42px;margin:-21px 0 0 -21px;z-index:-1;pointer-events:none;transform:translate(var(--x1),var(--y1));animation:ks-sunmove 1.8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ks-sunmove{from{transform:translate(var(--x0),var(--y0))}to{transform:translate(var(--x1),var(--y1))}}
+.ks-sun .ks-glow{position:absolute;inset:-34px;border-radius:50%;animation:ks-sunpulse 3.4s ease-in-out infinite}
+@keyframes ks-sunpulse{50%{transform:scale(1.18);opacity:.75}}
+.ks-sun .ks-rays{position:absolute;left:-12px;top:-12px;width:66px;height:66px;animation:ks-sunrot 26s linear infinite}
+@keyframes ks-sunrot{to{transform:rotate(360deg)}}
+.ks-sun .ks-core{position:absolute;inset:0;border-radius:50%}
+.ks-tint{position:absolute;left:0;top:0;width:100%;height:560px;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(208,92,52,.6) 0%,rgba(232,138,78,.38) 38%,rgba(232,138,78,0) 80%);animation:ks-tintin 1.8s ease both}
+@keyframes ks-tintin{from{opacity:var(--t0)}to{opacity:var(--t1)}}
+@keyframes ks-arrive{from{opacity:0;transform:scale(1.25);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes ks-wave{50%{opacity:.2}}
+[style*="height: 62px"] > svg:last-child{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+[style*="height: 62px"]:hover > svg:last-child,[style*="height: 62px"]:active > svg:last-child{transform:translateX(7px)}
+button:hover path[d^="M15.5"],button:active path[d^="M15.5"],button:hover path[d^="M18.5"],button:active path[d^="M18.5"]{animation:ks-wave .9s ease-in-out infinite}
+button:hover path[d^="M18.5"]{animation-delay:.18s}
+@keyframes ks-grow{from{transform:scale(0,0)}70%{transform:scale(1.1,1.15)}to{transform:scale(1)}}
+@keyframes ks-sway2{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes ks-sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
+.ks-blade{transform-box:fill-box;transform-origin:50% 100%;animation:ks-sway 3.2s ease-in-out infinite}
+@keyframes ks-path{from{stroke-dashoffset:var(--p0)}to{stroke-dashoffset:var(--p1)}}
+@keyframes ks-reveal{from{opacity:0;transform:translateY(34px) scale(.96);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+@keyframes ks-word{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes ks-cap{from{opacity:0;transform:translateY(10px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.ks-hcloud{position:absolute;left:0;z-index:-1;border-radius:99px;background:rgba(255,251,242,.6);filter:blur(10px);animation:ks-roam linear infinite;pointer-events:none}
+@keyframes ks-roam{0%{transform:translate(-200px,0)}25%{transform:translate(20px,-14px)}50%{transform:translate(200px,8px)}75%{transform:translate(340px,-10px)}100%{transform:translate(480px,0)}}
+@keyframes ks-puff{0%,100%{transform:translate(0,0)}25%{transform:translate(12px,-7px)}50%{transform:translate(4px,5px)}75%{transform:translate(-10px,-3px)}}
+.ks-puff{position:absolute;border-radius:50%;background:radial-gradient(closest-side,rgba(255,253,247,.95),rgba(255,253,247,.6) 55%,rgba(255,253,247,0));pointer-events:none;animation:ks-puff ease-in-out infinite}
+@keyframes ks-winp{0%{clip-path:inset(46% 38% 44% 38% round 28px);background-size:620px auto;opacity:0}22%{clip-path:inset(24% 6% 42% 6% round 28px);background-size:560px auto;opacity:1}100%{clip-path:inset(0 0 0 0 round 0);background-size:390px auto;opacity:1}}
+.ks-win{background:#89A378 url(/_blob/4f0b25b11732b3cab6a3285746008d0b) no-repeat center top/390px auto}
+@keyframes ks-word{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes ks-in{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; isolation: isolate; overflow: hidden; color: #14301E; font-family: Inter, Mukta, system-ui, sans-serif; background: #F6D19F">
+  <div aria-hidden="true" style="position: absolute; inset: 0; z-index: 0; pointer-events: none">
+    <div style="{{homeSky}}">
+            <span class="ks-puff" aria-hidden="true" style="left: -40px; top: 90px; width: 189px; height: 79px; opacity: 0.64; animation-duration: 8.8s; animation-delay: -4.1s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 300px; top: 70px; width: 177px; height: 74px; opacity: 0.56; animation-duration: 9.3s; animation-delay: -5.7s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: -30px; top: 380px; width: 116px; height: 48px; opacity: 0.87; animation-duration: 7.6s; animation-delay: -2.8s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 320px; top: 330px; width: 141px; height: 59px; opacity: 0.68; animation-duration: 7.5s; animation-delay: -1.5s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: -50px; top: 600px; width: 137px; height: 57px; opacity: 0.69; animation-duration: 7.9s; animation-delay: -5.2s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 310px; top: 560px; width: 159px; height: 66px; opacity: 0.61; animation-duration: 11.0s; animation-delay: -0.8s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 30px; top: 690px; width: 189px; height: 79px; opacity: 0.71; animation-duration: 7.7s; animation-delay: -5.8s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 170px; top: 720px; width: 110px; height: 46px; opacity: 0.62; animation-duration: 8.1s; animation-delay: -5.9s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 280px; top: 700px; width: 131px; height: 55px; opacity: 0.65; animation-duration: 11.8s; animation-delay: -3.2s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: -30px; top: 780px; width: 190px; height: 79px; opacity: 0.62; animation-duration: 11.7s; animation-delay: -4.1s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 110px; top: 790px; width: 159px; height: 66px; opacity: 0.65; animation-duration: 8.8s; animation-delay: -1.0s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 240px; top: 800px; width: 128px; height: 53px; opacity: 0.64; animation-duration: 8.7s; animation-delay: -4.9s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 330px; top: 770px; width: 185px; height: 77px; opacity: 0.55; animation-duration: 10.4s; animation-delay: -2.0s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 150px; top: 600px; width: 149px; height: 62px; opacity: 0.67; animation-duration: 8.5s; animation-delay: -4.2s"></span>
+      <span class="ks-hcloud" aria-hidden="true" style="top: 58px; width: 160px; height: 40px; animation-duration: 80s; animation-delay: -25s"></span>
+      <span class="ks-hcloud" aria-hidden="true" style="top: 150px; width: 120px; height: 30px; animation-duration: 105s; animation-delay: -70s; opacity: .75"></span>
+      <span class="ks-hcloud" aria-hidden="true" style="top: 300px; width: 140px; height: 34px; animation-duration: 120s; animation-delay: -45s; opacity: .6"></span>
+      <span class="ks-hcloud" aria-hidden="true" style="top: 240px; width: 180px; height: 44px; animation-duration: 95s; animation-delay: -10s; opacity: .7"></span>
+      <span class="ks-hcloud" aria-hidden="true" style="top: 420px; width: 200px; height: 48px; animation-duration: 115s; animation-delay: -60s; opacity: .65"></span>
+      <span class="ks-hcloud" aria-hidden="true" style="top: 640px; width: 150px; height: 36px; animation-duration: 130s; animation-delay: -20s; opacity: .5"></span>
+      <span class="ks-hcloud" aria-hidden="true" style="top: 760px; width: 170px; height: 40px; animation-duration: 150s; animation-delay: -110s; opacity: .45"></span>
+      <span class="ks-hcloud" aria-hidden="true" style="top: 520px; width: 110px; height: 28px; animation-duration: 140s; animation-delay: -95s; opacity: .45"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: -40px; top: 150px; width: 120px; height: 52px; animation-duration: 9s; animation-delay: -4s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 270px; top: 120px; width: 120px; height: 50px; animation-duration: 8.5s; animation-delay: -1.5s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 40px; top: 20px; width: 110px; height: 40px; animation-duration: 10s; animation-delay: -5s"></span>
+      <span class="ks-puff" aria-hidden="true" style="left: 230px; top: 40px; width: 90px; height: 36px; animation-duration: 9s; animation-delay: -2.5s"></span>
+    </div>
+    <div class="ks-win" style="{{landStyle}}"></div>
+    <div style="{{tintStyle}}"></div>
+    <div style="{{skyStyle}}">
+      <span class="ks-cloud" style="top: 64px; z-index: 0; animation-duration: 70s; animation-delay: -22s"></span>
+      <span class="ks-cloud" style="top: 168px; z-index: 0; width: 110px; animation-duration: 95s; animation-delay: -60s; opacity: 0.8"></span>
+      <span class="ks-cloud" style="top: 118px; z-index: 0; width: 90px; height: 26px; animation-duration: 120s; animation-delay: -35s; opacity: 0.7"></span>
+      <svg class="ks-birds" viewBox="0 0 120 40" style="z-index: 0"><path d="M10 20q6-6 12 0q6-6 12 0"></path><path d="M40 10q5-5 10 0q5-5 10 0"></path><path d="M62 24q5-5 10 0q5-5 10 0"></path></svg>
+      <svg viewBox="0 0 390 844" style="position: absolute; left: 0; top: 0; width: 390px; height: 844px">
+        <path d="M -10 712 C 60 668, 120 736, 200 700 S 330 642, 400 676" fill="none" stroke="#1E3A24" stroke-opacity="0.16" stroke-width="12" stroke-linecap="round"></path>
+        <path d="M -10 712 C 60 668, 120 736, 200 700 S 330 642, 400 676" fill="none" stroke="#C8E05A" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" style="{{pathDraw}}"></path>
+      </svg>
+      <svg aria-hidden="true" viewBox="0 0 390 82" preserveAspectRatio="none" style="position: absolute; left: 0; bottom: 0; width: 100%; height: 82px; pointer-events: none"><path class="ks-blade" d="M 0 82 Q 0.3 55.5 0.7 37.9" fill="none" stroke="#5F8A4B" stroke-width="2.7" stroke-linecap="round" style="animation-duration: 4.14s; animation-delay: -0.57s"></path><path class="ks-blade" d="M 7 82 Q 6.9 47.1 6.7 23.8" fill="none" stroke="#7FA862" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.15s; animation-delay: -0.27s"></path><path class="ks-blade" d="M 14 82 Q 14.9 47.0 16.3 23.6" fill="none" stroke="#6E9A55" stroke-width="3.0" stroke-linecap="round" style="animation-duration: 3.31s; animation-delay: -1.36s"></path><path class="ks-blade" d="M 21 82 Q 21.7 48.7 22.8 26.4" fill="none" stroke="#6E9A55" stroke-width="3.3" stroke-linecap="round" style="animation-duration: 2.71s; animation-delay: -0.11s"></path><path class="ks-blade" d="M 28 82 Q 28.5 45.3 29.2 20.8" fill="none" stroke="#5F8A4B" stroke-width="2.5" stroke-linecap="round" style="animation-duration: 3.66s; animation-delay: -0.59s"></path><path class="ks-blade" d="M 35 82 Q 34.0 60.8 32.5 46.7" fill="none" stroke="#6E9A55" stroke-width="3.1" stroke-linecap="round" style="animation-duration: 3.42s; animation-delay: -0.83s"></path><path class="ks-blade" d="M 42 82 Q 44.4 42.5 47.9 16.1" fill="none" stroke="#6E9A55" stroke-width="3.1" stroke-linecap="round" style="animation-duration: 3.17s; animation-delay: -0.69s"></path><path class="ks-blade" d="M 49 82 Q 46.9 59.5 43.8 44.4" fill="none" stroke="#6E9A55" stroke-width="2.6" stroke-linecap="round" style="animation-duration: 4.12s; animation-delay: -1.16s"></path><path class="ks-blade" d="M 56 82 Q 57.7 43.4 60.2 17.7" fill="none" stroke="#6E9A55" stroke-width="2.3" stroke-linecap="round" style="animation-duration: 4.27s; animation-delay: -0.16s"></path><path class="ks-blade" d="M 63 82 Q 64.0 57.4 65.5 41.0" fill="none" stroke="#5F8A4B" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 3.73s; animation-delay: -2.34s"></path><path class="ks-blade" d="M 70 82 Q 68.0 59.9 65.0 45.2" fill="none" stroke="#8DB46E" stroke-width="2.0" stroke-linecap="round" style="animation-duration: 3.34s; animation-delay: -2.77s"></path><path class="ks-blade" d="M 77 82 Q 78.0 63.2 79.5 50.6" fill="none" stroke="#6E9A55" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 4.03s; animation-delay: -0.53s"></path><path class="ks-blade" d="M 84 82 Q 83.7 53.0 83.4 33.6" fill="none" stroke="#7FA862" stroke-width="3.6" stroke-linecap="round" style="animation-duration: 3.99s; animation-delay: -1.26s"></path><path class="ks-blade" d="M 91 82 Q 90.5 57.2 89.7 40.6" fill="none" stroke="#7FA862" stroke-width="2.0" stroke-linecap="round" style="animation-duration: 4.16s; animation-delay: -2.92s"></path><path class="ks-blade" d="M 98 82 Q 100.4 52.2 104.0 32.3" fill="none" stroke="#6E9A55" stroke-width="2.3" stroke-linecap="round" style="animation-duration: 3.31s; animation-delay: -2.56s"></path><path class="ks-blade" d="M 105 82 Q 103.1 51.0 100.2 30.3" fill="none" stroke="#7FA862" stroke-width="2.3" stroke-linecap="round" style="animation-duration: 3.06s; animation-delay: -2.32s"></path><path class="ks-blade" d="M 112 82 Q 111.0 58.5 109.6 42.8" fill="none" stroke="#6E9A55" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 2.98s; animation-delay: -1.91s"></path><path class="ks-blade" d="M 119 82 Q 118.4 66.0 117.4 55.4" fill="none" stroke="#5F8A4B" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.66s; animation-delay: -2.50s"></path><path class="ks-blade" d="M 126 82 Q 125.5 63.1 124.6 50.6" fill="none" stroke="#7FA862" stroke-width="2.5" stroke-linecap="round" style="animation-duration: 3.01s; animation-delay: -1.83s"></path><path class="ks-blade" d="M 133 82 Q 131.4 49.0 128.9 27.0" fill="none" stroke="#7FA862" stroke-width="3.1" stroke-linecap="round" style="animation-duration: 3.30s; animation-delay: -1.45s"></path><path class="ks-blade" d="M 140 82 Q 137.8 64.5 134.6 52.9" fill="none" stroke="#6E9A55" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 4.33s; animation-delay: -0.72s"></path><path class="ks-blade" d="M 147 82 Q 145.8 49.5 144.1 27.8" fill="none" stroke="#5F8A4B" stroke-width="2.5" stroke-linecap="round" style="animation-duration: 2.92s; animation-delay: -2.16s"></path><path class="ks-blade" d="M 154 82 Q 152.7 64.7 150.7 53.2" fill="none" stroke="#6E9A55" stroke-width="2.4" stroke-linecap="round" style="animation-duration: 4.25s; animation-delay: -0.61s"></path><path class="ks-blade" d="M 161 82 Q 159.9 66.0 158.2 55.3" fill="none" stroke="#5F8A4B" stroke-width="2.4" stroke-linecap="round" style="animation-duration: 2.68s; animation-delay: -0.85s"></path><path class="ks-blade" d="M 168 82 Q 170.3 53.7 173.7 34.8" fill="none" stroke="#6E9A55" stroke-width="2.6" stroke-linecap="round" style="animation-duration: 4.20s; animation-delay: -2.94s"></path><path class="ks-blade" d="M 175 82 Q 175.9 50.6 177.3 29.7" fill="none" stroke="#7FA862" stroke-width="2.9" stroke-linecap="round" style="animation-duration: 4.26s; animation-delay: -1.42s"></path><path class="ks-blade" d="M 182 82 Q 181.1 57.8 179.7 41.7" fill="none" stroke="#6E9A55" stroke-width="2.0" stroke-linecap="round" style="animation-duration: 3.75s; animation-delay: -1.45s"></path><path class="ks-blade" d="M 189 82 Q 188.1 48.9 186.8 26.8" fill="none" stroke="#6E9A55" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 3.58s; animation-delay: -2.21s"></path><path class="ks-blade" d="M 196 82 Q 197.1 44.8 198.8 20.0" fill="none" stroke="#7FA862" stroke-width="3.3" stroke-linecap="round" style="animation-duration: 4.25s; animation-delay: -1.06s"></path><path class="ks-blade" d="M 203 82 Q 204.9 50.0 207.8 28.6" fill="none" stroke="#5F8A4B" stroke-width="3.5" stroke-linecap="round" style="animation-duration: 2.65s; animation-delay: -1.50s"></path><path class="ks-blade" d="M 210 82 Q 210.8 66.1 211.9 55.4" fill="none" stroke="#5F8A4B" stroke-width="2.9" stroke-linecap="round" style="animation-duration: 3.70s; animation-delay: -0.24s"></path><path class="ks-blade" d="M 217 82 Q 219.4 51.1 222.9 30.4" fill="none" stroke="#5F8A4B" stroke-width="3.2" stroke-linecap="round" style="animation-duration: 3.30s; animation-delay: -2.21s"></path><path class="ks-blade" d="M 224 82 Q 223.7 52.5 223.3 32.8" fill="none" stroke="#6E9A55" stroke-width="2.8" stroke-linecap="round" style="animation-duration: 3.53s; animation-delay: -0.93s"></path><path class="ks-blade" d="M 231 82 Q 228.7 64.3 225.3 52.5" fill="none" stroke="#6E9A55" stroke-width="2.8" stroke-linecap="round" style="animation-duration: 3.71s; animation-delay: -2.76s"></path><path class="ks-blade" d="M 238 82 Q 235.7 60.3 232.1 45.8" fill="none" stroke="#8DB46E" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.70s; animation-delay: -1.56s"></path><path class="ks-blade" d="M 245 82 Q 244.2 48.3 243.1 25.8" fill="none" stroke="#5F8A4B" stroke-width="2.8" stroke-linecap="round" style="animation-duration: 3.03s; animation-delay: -1.21s"></path><path class="ks-blade" d="M 252 82 Q 252.6 60.4 253.6 46.0" fill="none" stroke="#7FA862" stroke-width="3.4" stroke-linecap="round" style="animation-duration: 3.29s; animation-delay: -1.75s"></path><path class="ks-blade" d="M 259 82 Q 257.3 58.8 254.6 43.3" fill="none" stroke="#5F8A4B" stroke-width="2.6" stroke-linecap="round" style="animation-duration: 4.21s; animation-delay: -0.12s"></path><path class="ks-blade" d="M 266 82 Q 268.3 64.9 271.8 53.4" fill="none" stroke="#7FA862" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.45s; animation-delay: -2.78s"></path><path class="ks-blade" d="M 273 82 Q 272.4 46.5 271.6 22.8" fill="none" stroke="#5F8A4B" stroke-width="3.1" stroke-linecap="round" style="animation-duration: 3.89s; animation-delay: -2.53s"></path><path class="ks-blade" d="M 280 82 Q 279.1 51.4 277.8 31.0" fill="none" stroke="#6E9A55" stroke-width="2.4" stroke-linecap="round" style="animation-duration: 3.69s; animation-delay: -2.03s"></path><path class="ks-blade" d="M 287 82 Q 286.3 59.7 285.3 44.8" fill="none" stroke="#6E9A55" stroke-width="3.0" stroke-linecap="round" style="animation-duration: 3.33s; animation-delay: -0.57s"></path><path class="ks-blade" d="M 294 82 Q 292.9 47.9 291.2 25.2" fill="none" stroke="#7FA862" stroke-width="3.3" stroke-linecap="round" style="animation-duration: 4.37s; animation-delay: -0.35s"></path><path class="ks-blade" d="M 301 82 Q 301.2 63.8 301.4 51.6" fill="none" stroke="#8DB46E" stroke-width="3.5" stroke-linecap="round" style="animation-duration: 3.83s; animation-delay: -0.60s"></path><path class="ks-blade" d="M 308 82 Q 306.5 55.0 304.1 37.0" fill="none" stroke="#6E9A55" stroke-width="3.2" stroke-linecap="round" style="animation-duration: 3.56s; animation-delay: -0.11s"></path><path class="ks-blade" d="M 315 82 Q 316.3 61.0 318.3 46.9" fill="none" stroke="#7FA862" stroke-width="2.6" stroke-linecap="round" style="animation-duration: 4.03s; animation-delay: -2.72s"></path><path class="ks-blade" d="M 322 82 Q 324.1 64.3 327.2 52.5" fill="none" stroke="#5F8A4B" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.42s; animation-delay: -1.88s"></path><path class="ks-blade" d="M 329 82 Q 328.4 44.6 327.5 19.6" fill="none" stroke="#8DB46E" stroke-width="2.7" stroke-linecap="round" style="animation-duration: 3.77s; animation-delay: -0.61s"></path><path class="ks-blade" d="M 336 82 Q 337.5 49.1 339.8 27.1" fill="none" stroke="#6E9A55" stroke-width="2.3" stroke-linecap="round" style="animation-duration: 4.22s; animation-delay: -2.94s"></path><path class="ks-blade" d="M 343 82 Q 343.2 42.9 343.4 16.9" fill="none" stroke="#8DB46E" stroke-width="2.4" stroke-linecap="round" style="animation-duration: 3.89s; animation-delay: -0.05s"></path><path class="ks-blade" d="M 350 82 Q 347.8 54.3 344.4 35.8" fill="none" stroke="#8DB46E" stroke-width="2.9" stroke-linecap="round" style="animation-duration: 3.98s; animation-delay: -1.46s"></path><path class="ks-blade" d="M 357 82 Q 358.5 65.7 360.7 54.9" fill="none" stroke="#6E9A55" stroke-width="2.7" stroke-linecap="round" style="animation-duration: 2.66s; animation-delay: -1.60s"></path><path class="ks-blade" d="M 364 82 Q 366.0 49.9 369.0 28.5" fill="none" stroke="#5F8A4B" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.53s; animation-delay: -2.17s"></path><path class="ks-blade" d="M 371 82 Q 371.9 46.2 373.3 22.4" fill="none" stroke="#5F8A4B" stroke-width="2.9" stroke-linecap="round" style="animation-duration: 3.84s; animation-delay: -2.27s"></path><path class="ks-blade" d="M 378 82 Q 378.3 55.9 378.7 38.4" fill="none" stroke="#7FA862" stroke-width="2.8" stroke-linecap="round" style="animation-duration: 4.12s; animation-delay: -1.68s"></path><path class="ks-blade" d="M 385 82 Q 384.4 58.9 383.6 43.5" fill="none" stroke="#7FA862" stroke-width="2.5" stroke-linecap="round" style="animation-duration: 2.85s; animation-delay: -1.63s"></path></svg>
+    </div>
+    <div style="{{sunStyle}}">
+      <span style="position: absolute; inset: -34px; border-radius: 50%; background: radial-gradient(circle, rgba(242,160,82,.55), rgba(242,177,82,0) 66%); animation: ks-sunpulse 3.4s ease-in-out infinite"></span>
+      <svg viewBox="0 0 66 66" style="position: absolute; left: -12px; top: -12px; width: 66px; height: 66px; animation: ks-sunrot 26s linear infinite"><g stroke="#EFA048" stroke-width="2.4" stroke-linecap="round"><path d="M33 2v7M33 57v7M2 33h7M57 33h7M11 11l5 5M50 50l5 5M55 11l-5 5M16 50l-5 5"></path></g></svg>
+      <span style="position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 35% 32%, #FBE3A0, #F2B654 58%, #D9902E); box-shadow: 0 0 0 7px rgba(242,177,82,0.22)"></span>
+      <span style="{{sunsetCore}}"></span>
+    </div>
+  </div>
+
+  <div style="position: relative; z-index: 1; height: 844px; overflow-x: hidden; overflow-y: auto">
+    <sc-if value="{{is.Main}}" hint-placeholder-val="{{ true }}">
+      <div style="{{wrap}}"><dc-import name="Main" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{is.Photo}}" hint-placeholder-val="{{ false }}">
+      <div style="{{wrap}}"><dc-import name="Photo" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{is.Parts}}" hint-placeholder-val="{{ false }}">
+      <div style="{{wrap}}"><dc-import name="Parts" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{is.Robot}}" hint-placeholder-val="{{ false }}">
+      <div style="{{wrap}}"><dc-import name="Robot" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{is.Choose}}" hint-placeholder-val="{{ false }}">
+      <div style="{{wrap}}"><dc-import name="Choose" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{is.Today}}" hint-placeholder-val="{{ false }}">
+      <div style="{{wrap}}"><dc-import name="Today" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
+    </sc-if>
+    <sc-if value="{{is.Future}}" hint-placeholder-val="{{ false }}">
+      <div style="{{wrap}}"><dc-import name="Future" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
+    </sc-if>
+  </div>
+
+  <div aria-hidden="true" style="{{loaderStyle}}">
+    <sc-for list="{{words}}" as="w" hint-placeholder-count="1">
+      <sc-if value="{{w.show}}" hint-placeholder-val="{{ false }}">
+        <span style="{{wordStyle}}"><span style="width: 10px; height: 10px; border-radius: 999px; background: #C8E05A"></span>{{w.text}}</span>
+      </sc-if>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { screen: 'Main', bg: 'Main', fading: false, portal: false, wi: 0, loading: true, lifting: false };
+    this.timers = [];
+  }
+  componentDidMount() {
+    var self = this;
+    for (var i = 1; i < 6; i++) (function (k) { self.timers.push(setTimeout(function () { self.setState({ wi: k }); }, 360 * k)); })(i);
+    this.timers.push(setTimeout(function () { self.setState({ lifting: true }); }, 360 * 6 + 200));
+    this.timers.push(setTimeout(function () { self.setState({ loading: false }); }, 360 * 6 + 1200));
+  }
+  componentWillUnmount() { this.timers.forEach(clearTimeout); }
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var SUN = { Main: [30, 300], Photo: [79, 197], Parts: [131, 119], Robot: [183, 81], Choose: [236, 96], Today: [288, 159], Future: [325, 223] };
+    var TINT = { Main: 0, Photo: 0, Parts: 0, Robot: 0.05, Choose: 0.15, Today: 0.4, Future: 0.65 };
+    var SET = { Main: 0, Photo: 0, Parts: 0, Robot: 0.1, Choose: 0.3, Today: 0.65, Future: 0.95 };
+    var PROG = { Main: 0, Photo: 0.16, Parts: 0.33, Robot: 0.5, Choose: 0.66, Today: 0.84, Future: 1 };
+    var WORDS = ['\u0928\u092e\u0938\u094d\u0924\u0947', 'Namaste', '\u0916\u0947\u0924 \u0938\u093e\u0925\u0940', 'Know your land', '\u092e\u094c\u0938\u092e', 'Plan your season'];
+    var land = st.bg !== 'Main';
+    var sp = SUN[st.bg];
+    var is = {};
+    ['Main', 'Photo', 'Parts', 'Robot', 'Choose', 'Today', 'Future'].forEach(function (k) { is[k] = st.screen === k; });
+    return {
+      is: is,
+      homeSky: 'position: absolute; inset: 0; transition: opacity 900ms ease; opacity: ' + (land ? 0 : 1),
+      landStyle: 'position: absolute; inset: 0; ' + (!land ? 'opacity: 0; transition: opacity 600ms ease' : (st.portal ? 'animation: ks-winp 1500ms cubic-bezier(.76,0,.24,1) both' : 'opacity: 1')),
+      tintStyle: 'position: absolute; left: 0; top: 0; width: 100%; height: 560px; background: linear-gradient(180deg, rgba(208,92,52,.6) 0%, rgba(232,138,78,.38) 38%, rgba(232,138,78,0) 80%); transition: opacity 2400ms ease; opacity: ' + TINT[st.bg],
+      skyStyle: 'position: absolute; inset: 0; transition: opacity 1400ms ease 500ms; opacity: ' + (land ? 1 : 0),
+      pathDraw: 'transition: stroke-dashoffset 2600ms cubic-bezier(.45,0,.25,1); stroke-dashoffset: ' + (1 - PROG[st.bg]),
+      sunStyle: 'position: absolute; width: 42px; height: 42px; margin: -21px 0 0 -21px; left: ' + sp[0] + 'px; top: ' + sp[1] + 'px; transition: left 2600ms cubic-bezier(.45,0,.25,1), top 2600ms cubic-bezier(.45,0,.25,1), opacity 1200ms ease 500ms; opacity: ' + (land ? 1 : 0),
+      sunsetCore: 'position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 35% 32%, #F7B26A, #E2733A 58%, #B84E24); transition: opacity 2400ms ease; opacity: ' + SET[st.bg],
+      wrap: 'transition: opacity 380ms ease; opacity: ' + (st.fading ? 0 : 1) + '; animation: ks-in 600ms cubic-bezier(.2,.8,.2,1) both',
+      words: WORDS.map(function (w, i) { return { text: w, show: i === st.wi }; }),
+      loaderStyle: st.loading ? 'position: absolute; inset: 0; z-index: 50; background: #14301E; display: flex; align-items: center; justify-content: center; transition: transform 950ms cubic-bezier(.76,0,.24,1), border-radius 950ms cubic-bezier(.76,0,.24,1); transform: translateY(' + (st.lifting ? '-110%' : '0') + '); border-bottom-left-radius: ' + (st.lifting ? '50% 120px' : '0') + '; border-bottom-right-radius: ' + (st.lifting ? '50% 120px' : '0') : 'display: none',
+      wordStyle: 'display: inline-flex; align-items: center; gap: 12px; color: #FBF4EA; font-family: \'Inter Tight\', Mukta, sans-serif; font-weight: 800; font-size: 38px; letter-spacing: -0.02em; animation: ks-word 300ms ease-out both; transition: opacity 300ms; opacity: ' + (st.lifting ? 0 : 1),
+      nav: function (to, delay) {
+        if (!to || to === self.state.screen) return;
+        self.timers.forEach(clearTimeout);
+        self.timers = [];
+        var fromHome = self.state.bg === 'Main';
+        self.setState({ bg: to, portal: fromHome });
+        if (fromHome) self.timers.push(setTimeout(function () { self.setState({ portal: false }); }, 1700));
+        self.timers.push(setTimeout(function () {
+          self.setState({ fading: true });
+          self.timers.push(setTimeout(function () { self.setState({ screen: to, fading: false }); }, 380));
+        }, delay || 0));
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

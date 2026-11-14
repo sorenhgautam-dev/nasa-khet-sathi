@@ -148,14 +148,14 @@
     "ne_review": "needs native-speaker review"
    },
    {
-    "id": "ev_harvest_uncorrected",
+    "id": "ev_harvest_dhm",
     "when": [
      "rain_changes_harvest"
     ],
-    "en": "Without our rain fix, it was {harvest_uncorrected}.",
-    "ne": "हाम्रो वर्षा सुधारबिना यो {harvest_uncorrected} थियो।",
+    "en": "With the nearby station's rain level: {harvest_dhm}.",
+    "ne": "नजिकको केन्द्रको वर्षा मान्दा: {harvest_dhm}।",
     "ne_review": "needs native-speaker review",
-    "basis": "owner's decision 1 (2026-11-13): keep the uncorrected GPM run and show both as a range"
+    "basis": "owner's decision 4b (2026-11-14): the range's dry edge is the rain scaled to DHM Bhaktapur's 1991-2020 normals (was: GPM as published, owner's decision 1)"
    },
    {
     "id": "ev_dry_years",

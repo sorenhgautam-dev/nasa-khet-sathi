@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Your field today (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&amp;family=Inter:wght@400;500;600;700&amp;family=Mukta:wght@400;600;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14301E}a:hover{color:#0B1F12}
+.ks-wbg{background:#89A378 url(/_blob/3aa695d5bdb8271424d72ab091c78b64) center bottom/cover no-repeat}
+@keyframes ks-drift{from{transform:translateX(-260px)}to{transform:translateX(110vw)}}
+@keyframes ks-fly{0%{transform:translate(-120px,30px)}100%{transform:translate(110vw,-40px)}}
+@keyframes ks-flap{to{transform:scaleY(.35)}}
+.ks-cloud{position:absolute;left:0;z-index:-1;width:240px;height:60px;border-radius:99px;background:rgba(255,245,235,.7);filter:blur(10px);animation:ks-drift linear infinite;pointer-events:none}
+.ks-birds{position:absolute;z-index:-1;left:0;top:150px;width:110px;height:36px;animation:ks-fly 32s linear 2s infinite;opacity:.55;pointer-events:none}
+.ks-birds path{fill:none;stroke:#3A3A35;stroke-width:1.6;stroke-linecap:round;transform-box:fill-box;transform-origin:center;animation:ks-flap .55s ease-in-out infinite alternate}
+.ks-sun{position:absolute;z-index:-1;width:56px;height:56px;margin:-28px 0 0 -28px;left:var(--x1);top:var(--y1);pointer-events:none;animation:ks-sunmove 1.8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ks-sunmove{from{left:var(--x0);top:var(--y0)}to{left:var(--x1);top:var(--y1)}}
+.ks-sun .ks-glow{position:absolute;inset:-46px;border-radius:50%;animation:ks-sunpulse 3.4s ease-in-out infinite}
+@keyframes ks-sunpulse{50%{transform:scale(1.18);opacity:.75}}
+.ks-sun .ks-rays{position:absolute;left:-16px;top:-16px;width:88px;height:88px;animation:ks-sunrot 26s linear infinite}
+@keyframes ks-sunrot{to{transform:rotate(360deg)}}
+.ks-sun .ks-core{position:absolute;inset:0;border-radius:50%}
+.ks-tint{position:absolute;left:0;top:0;width:100%;height:620px;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(208,92,52,.6) 0%,rgba(232,138,78,.38) 38%,rgba(232,138,78,0) 80%);animation:ks-tintin 1.8s ease both}
+@keyframes ks-tintin{from{opacity:var(--t0)}to{opacity:var(--t1)}}
+@keyframes ks-rise{from{opacity:0;transform:translateY(40px) scale(.96);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+@keyframes ks-wave{50%{opacity:.2}}
+[style*="height: 66px"] > svg:last-child,[style*="height: 68px"] > svg:last-child{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+[style*="height: 66px"]:hover > svg:last-child,[style*="height: 68px"]:hover > svg:last-child{transform:translateX(7px)}
+button:hover path[d^="M15.5"],button:hover path[d^="M18.5"]{animation:ks-wave .9s ease-in-out infinite}
+button:hover path[d^="M18.5"]{animation-delay:.18s}
+@keyframes ks-grow{from{transform:scale(0,0)}70%{transform:scale(1.1,1.15)}to{transform:scale(1)}}
+@keyframes ks-sway2{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="width: 100%; min-height: 900px; box-sizing: border-box; padding: 24px; position: relative; isolation: isolate; overflow: hidden; color: #14301E; font-family: Inter, Mukta, system-ui, sans-serif">
+  <sc-if value="{{showSky}}" hint-placeholder-val="{{ true }}">
+  <div class="ks-tint" aria-hidden="true" style="--t0: 0.15; --t1: 0.4; opacity: 0.4"></div>
+  <div class="ks-sun" aria-hidden="true" style="--x0: 62%; --y0: 125px; --x1: 77%; --y1: 221px"><span class="ks-glow" style="background: radial-gradient(circle, rgba(234,122,64,.6), rgba(242,177,82,0) 66%)"></span><svg class="ks-rays" viewBox="0 0 66 66"><g stroke="#E88C44" stroke-width="2.4" stroke-linecap="round"><path d="M33 2v7M33 57v7M2 33h7M57 33h7M11 11l5 5M50 50l5 5M55 11l-5 5M16 50l-5 5"></path></g></svg><span class="ks-core" style="background: radial-gradient(circle at 35% 32%, #F9C77C, #E88C44 58%, #C9622A); box-shadow: 0 0 0 8px rgba(242,177,82,0.22)"></span></div>
+  <span class="ks-cloud" aria-hidden="true" style="top: 70px; animation-duration: 95s; animation-delay: -10s"></span>
+  <span class="ks-cloud" aria-hidden="true" style="top: 180px; width: 180px; animation-duration: 120s; animation-delay: -50s; opacity: .8"></span>
+  <span class="ks-cloud" aria-hidden="true" style="top: 290px; width: 160px; height: 44px; animation-duration: 140s; animation-delay: -90s; opacity: .6"></span>
+  <svg class="ks-birds" viewBox="0 0 120 40" aria-hidden="true"><path d="M10 20q6-6 12 0q6-6 12 0"></path><path d="M40 10q5-5 10 0q5-5 10 0"></path><path d="M62 24q5-5 10 0q5-5 10 0"></path><path d="M86 14q4-4 8 0q4-4 8 0"></path></svg>
+  </sc-if>
+
+  <div style="max-width: 1360px; margin: 0 auto; min-height: 852px; box-sizing: border-box; border-radius: 32px; padding: 26px clamp(20px, 3.4vw, 48px) 40px; border: 2px solid rgba(255,255,255,0.85); background: rgba(255,250,242,0.18); display: flex; flex-direction: column; gap: 28px">
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W5_Choose.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+        </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W5}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+        </button></sc-if>
+        <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: 22px">{{t.brand}}</span>
+      </div>
+      <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF">
+        <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
+        <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
+      </div>
+    </header>
+
+    <div style="flex: 1; display: flex; flex-wrap: wrap; align-items: stretch; gap: 32px">
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 24px; animation: ks-rise 600ms ease-out both">
+        <h1 style="margin: 0; font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(40px, 4.6vw, 72px); line-height: 0.95; text-transform: uppercase">
+          <span style="display: block; color: #14301E">{{t.h1}}</span>
+          <span style="display: block; color: #9A5426">{{t.h2}}</span>
+        </h1>
+        <div style="flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+          <sc-for list="{{parts}}" as="p" hint-placeholder-count="4">
+            <div style="{{p.card}}">
+              <div style="display: flex; align-items: center; justify-content: space-between">
+                <span style="font-size: 16px; font-weight: 600; color: #4A5646">{{p.name}}</span>
+                <span style="{{p.dot}}">
+                  <sc-if value="{{p.good}}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></sc-if>
+                  <sc-if value="{{p.care}}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 6v8"></path><circle cx="12" cy="18.5" r="0.6" fill="#FFFFFF"></circle></svg></sc-if>
+                </span>
+              </div>
+              <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 900; font-size: 26px; line-height: 1.1">{{p.word}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 18px; animation: ks-rise 700ms ease-out 150ms both">
+        <div style="flex: 1; background: #FFFFFF; border-radius: 28px; padding: 26px 28px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 30px 60px -32px rgba(40,50,20,0.5)">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px">
+            <h2 style="margin: 0; font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: 28px; text-transform: uppercase">{{t.todoH}}</h2>
+            <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 52px; height: 52px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
+            </button>
+          </div>
+          <sc-for list="{{todo}}" as="d" hint-placeholder-count="3">
+            <div style="{{d.row}}">
+              <span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 999px; background: #14301E; color: #C8E05A; font-weight: 800; font-size: 17px; display: flex; align-items: center; justify-content: center">{{d.n}}</span>
+              <span style="font-size: 20px; line-height: 1.35; font-weight: 500">{{d.text}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W7_Future.dc.html" style="height: 68px; border-radius: 999px; background: #14301E; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 12px; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 20px; box-shadow: 0 18px 34px -16px rgba(20,48,30,0.7)">
+          <span>{{t.cta}}</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W7}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; height: 68px; border-radius: 999px; background: #14301E; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 12px; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 20px; box-shadow: 0 18px 34px -16px rgba(20,48,30,0.7)">
+          <span>{{t.cta}}</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </button></sc-if>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"embedded":{"editor":null,"default":false},"onNav":{"editor":null},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { lang: 'en' }; }
+  renderVals() {
+    var S = {
+      en: { brand: 'Khet Sathi', back: 'Back', h1: 'Your field', h2: 'today', listen: 'Listen', part: 'Part ', todoH: 'What to do', cta: 'See the next 3 months',
+        words: ['Good', 'Needs water', 'Too wet', 'A bit dry'],
+        todo: ['Water part 2 today.', 'Dig a small channel in part 3 so water can leave.', 'Water part 4 in 2 or 3 days.'] },
+      ne: { brand: 'खेत साथी', back: 'पछाडि', h1: 'आजको', h2: 'खेत', listen: 'सुन्नुहोस्', part: 'भाग ', todoH: 'के गर्ने', cta: 'अर्को ३ महिना हेर्नुहोस्',
+        words: ['राम्रो', 'पानी चाहियो', 'धेरै भिजेको', 'अलि सुख्खा'],
+        todo: ['आज भाग २ मा पानी लगाउनुहोस्।', 'पानी निस्कन भाग ३ मा सानो कुलो खन्नुहोस्।', '२–३ दिनमा भाग ४ मा पानी लगाउनुहोस्।'] }
+    };
+    var lang = this.state.lang;
+    var t = S[lang];
+    var num = function (v) { var s = String(v); return lang === 'ne' ? s.replace(/[0-9]/g, function (d) { return '०१२३४५६७८९'[d]; }) : s; };
+    var GOOD = [true, false, false, false];
+    var on = 'height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: #14301E; color: #FFFFFF; font-weight: 700; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var off = 'height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #14301E; font-weight: 600; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var self_ = this;
+    return {
+      rootClass: this.props.embedded ? '' : 'ks-wbg',
+      showSky: !this.props.embedded,
+      standalone: !this.props.embedded,
+      embedded: !!this.props.embedded,
+      navTo: {W1: function () { if (self_.props.onNav) self_.props.onNav('W1'); }, W2: function () { if (self_.props.onNav) self_.props.onNav('W2'); }, W3: function () { if (self_.props.onNav) self_.props.onNav('W3'); }, W4: function () { if (self_.props.onNav) self_.props.onNav('W4'); }, W5: function () { if (self_.props.onNav) self_.props.onNav('W5'); }, W6: function () { if (self_.props.onNav) self_.props.onNav('W6'); }, W7: function () { if (self_.props.onNav) self_.props.onNav('W7'); }},
+      t: t,
+      isEn: lang === 'en' ? 'true' : 'false',
+      isNe: lang === 'ne' ? 'true' : 'false',
+      enStyle: lang === 'en' ? on : off,
+      neStyle: lang === 'ne' ? on : off,
+      setEn: () => this.setState({ lang: 'en' }),
+      setNe: () => this.setState({ lang: 'ne' }),
+      parts: GOOD.map(function (g, i) {
+        return {
+          name: t.part + num(i + 1), word: t.words[i], good: g, care: !g,
+          card: 'background: #FFFFFF; border-radius: 26px; padding: 22px; min-height: 150px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; box-shadow: 0 24px 48px -30px rgba(40,50,20,0.5); animation: ks-rise 500ms ease-out ' + (i * 90 + 200) + 'ms both',
+          dot: 'width: 48px; height: 48px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: ' + (g ? '#14301E' : '#9A5426')
+        };
+      }),
+      todo: t.todo.map(function (x, i) {
+        return { n: num(i + 1), text: x, row: 'display: flex; align-items: center; gap: 16px; padding: 18px 0; ' + (i > 0 ? 'border-top: 1px solid #EFE6D4' : '') };
+      }),
+      speak: () => {
+        try {
+          var u = new SpeechSynthesisUtterance(t.todo.join(' '));
+          u.lang = lang === 'ne' ? 'ne-NP' : 'en-IN';
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(u);
+        } catch (err) {}
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

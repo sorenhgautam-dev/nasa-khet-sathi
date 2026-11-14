@@ -83,10 +83,10 @@ def _plans():
 
 def _with_ranges(plans, replay):
     """Owner's decision 1 (2026-11-13): where GPM's uncorrected rain changes a result, the file carries it beside."""
-    plans[1]["score_uncorrected_rain"] = {**plans[1]["score"], "harvest": plans[1]["score"]["harvest"] + 4}
+    plans[1]["score_dhm_rain"] = {**plans[1]["score"], "harvest": plans[1]["score"]["harvest"] + 4}
     for y in replay["current"]:
         if y["year"] in (2020, 2022):
-            y["uncorrected_rain"] = {"harvest": min(100, y["harvest"] + 6), "dry_days": max(0, y["dry_days"] - 5),
+            y["dhm_rain"] = {"harvest": min(100, y["harvest"] + 6), "dry_days": max(0, y["dry_days"] - 5),
                                      "event": "flood" if y["year"] == 2020 else y["event"], "irrigated": dict(y["irrigated"])}
     return plans, replay
 
@@ -137,7 +137,7 @@ def build_field():
 
 def build_index():
     return {"fields": [{"id": "demo", "name": _CFG["name"], "country": _CFG["country"],
-                        "lat": LAT, "lon": LON, "bbox": list(BBOX)}]}
+                        "lat": LAT, "lon": LON, "bbox": list(BBOX), "sample": False, "area": None}]}
 
 
 def write_all(out_dir, force=False):

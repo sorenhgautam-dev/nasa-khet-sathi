@@ -86,15 +86,15 @@ def validate_field(doc, final=False):
             errors.append(f"replay/{key}: duplicate years {d}")
         elif [y["year"] for y in years] != list(range(years[0]["year"], years[0]["year"] + len(years))):
             errors.append(f"replay/{key}: years must run year by year, in order, with no gap")
-        for y in years:                     # owner's decision 1 (2026-11-13): the uncorrected run only where it differs
-            u = y.get("uncorrected_rain")
+        for y in years:                     # owner's decisions 1 and 4b: the second rain version only where it differs
+            u = y.get("dhm_rain")
             if u and all(u.get(k) == y.get(k) for k in ("harvest", "dry_days", "event", "irrigated")):
-                errors.append(f"replay/{key}/{y['year']}: uncorrected_rain is given but changes nothing")
+                errors.append(f"replay/{key}/{y['year']}: dhm_rain is given but changes nothing")
     # owner's answer 9 to REVIEW_2 (2026-11-13): one weather event per year for the field, the same on every plan
     by_year = {}
     for key, years in doc["replay"].items():
         for y in years:
-            for tag, row in (("", y), (" (uncorrected rain)", y.get("uncorrected_rain"))):
+            for tag, row in (("", y), (" (DHM-scaled rain)", y.get("dhm_rain"))):
                 if row and "event_season" in row and row["event"] != "drought":
                     errors.append(f"replay/{key}/{y['year']}{tag}: event_season is only for a drought")
             by_year.setdefault(y["year"], set()).add((y["event"], y.get("event_season")))
@@ -102,9 +102,9 @@ def validate_field(doc, final=False):
     if differ:
         errors.append(f"replay: a year must carry the same event (and season) on every plan; they differ in {differ}")
     for p in doc["plans"]:
-        u = p.get("score_uncorrected_rain")
+        u = p.get("score_dhm_rain")
         if u and u == p["score"]:
-            errors.append(f"plans/{p['id']}: score_uncorrected_rain is given but changes nothing")
+            errors.append(f"plans/{p['id']}: score_dhm_rain is given but changes nothing")
     # owner's answer 2 to REVIEW_2 (2026-11-13): a block that is not computed yet is named in `mock` and holds no numbers
     not_ready = doc.get("mock", [])
     empty_sections = [s["id"] for s in doc["field"]["sections"]
@@ -121,9 +121,9 @@ def validate_field(doc, final=False):
     if doc["future"] is not None:
         series_list += [(f"future/{k}", doc["future"][k]) for k in ("nothing_changes", "with_plan")]
     for p in doc["plans"]:
-        series_list += [(f"plans/{p['id']}/{k}", p[k]) for k in ("future", "future_uncorrected_rain") if k in p]
+        series_list += [(f"plans/{p['id']}/{k}", p[k]) for k in ("future", "future_dhm_rain") if k in p]
     for o in (doc.get("current_options") or {}).get("options", []):
-        series_list += [(f"current_options/{o['id']}/{k}", o[k]) for k in ("future", "future_uncorrected_rain") if k in o]
+        series_list += [(f"current_options/{o['id']}/{k}", o[k]) for k in ("future", "future_dhm_rain") if k in o]
     for name, s in series_list:
         if doc["future"] is None:
             errors.append(f"{name}: a 2040 outlook needs the future block (future.years)")
@@ -179,7 +179,7 @@ def _current_options_errors(doc):
     cur = next((p for p in doc["plans"] if p["id"] == "current"), None)
     d = opts[co["default"]]
     if cur is None or any(d[k] != cur[k] for k in ("crops", "score", "tabs", "tips", "tabs_ne", "tips_ne")) \
-            or d.get("score_uncorrected_rain") != cur.get("score_uncorrected_rain") or d["replay"] != doc["replay"].get("current"):
+            or d.get("score_dhm_rain") != cur.get("score_dhm_rain") or d["replay"] != doc["replay"].get("current"):
         errors.append("current_options: the default option must be what plans (id current) and replay.current show")
     years = [y["year"] for y in doc["replay"].get("current", [])]
     suggested = sorted(p["id"] for p in doc["plans"] if p["id"] != "current")
@@ -226,6 +226,21 @@ def validate_index(doc):
             errors.append(f"fields/{f['id']}/bbox: min must be below max")
         elif not _inside(b, f["lon"], f["lat"]):
             errors.append(f"fields/{f['id']}: lat/lon outside its bbox")
+    areas = {a["id"]: a for a in doc.get("areas", [])}           # REVIEW_2 H6: areas from build_index.py
+    if d := _dupes([a["id"] for a in doc.get("areas", [])]):
+        errors.append(f"areas: duplicate ids {d}")
+    listed = {f["id"]: f for f in doc["fields"]}
+    for a in areas.values():
+        for fid in a["fields"]:
+            if fid not in listed:
+                errors.append(f"areas/{a['id']}: field {fid} is not listed in fields")
+            elif listed[fid]["area"] != a["id"]:
+                errors.append(f"areas/{a['id']}: field {fid} names area {listed[fid]['area']}")
+            elif not _inside(a["bbox"], listed[fid]["lon"], listed[fid]["lat"]):
+                errors.append(f"areas/{a['id']}: field {fid} lies outside the area's bbox")
+    for f in doc["fields"]:
+        if f.get("area") is not None and f["area"] not in areas:
+            errors.append(f"fields/{f['id']}: area {f['area']} is not in areas")
     return errors
 
 
@@ -264,6 +279,9 @@ def main(argv=None):
     for f in (index or {}).get("fields", []):
         if not (data_dir / "fields" / f"{f['id']}.json").exists():
             problems.setdefault(str(index_path), []).append(f"{f['id']}: listed but no fields/{f['id']}.json")
+    for a in (index or {}).get("areas", []):
+        if not (data_dir / a["map"][len("data/"):]).exists():          # map is relative to the site: data/area/<id>.json
+            problems.setdefault(str(index_path), []).append(f"areas/{a['id']}: map {a['map']} does not exist")
 
     words_path = data_dir / "words.json"
     if words_path.exists():

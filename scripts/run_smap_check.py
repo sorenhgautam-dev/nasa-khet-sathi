@@ -24,16 +24,17 @@ from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.fetch.smap import monthly_anomaly  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
-from pipeline.twin.evaporation import bare_soil_setting  # noqa: E402
+from pipeline.plans import twin_options as to  # noqa: E402
 
 
-def twin_wetness(weather, field, rules, lib, soil):
-    """Daily root-zone wetness 1 - Dr/TAW of the current rotation, rain-fed (the series behind diary.months soil)."""
+def twin_wetness(weather, field, rules, lib, soil, seasons=None):
+    """Daily root-zone wetness 1 - Dr/TAW of the current rotation, rain-fed (the series behind diary.months soil), with
+    every switch of rules.yaml as the exported replay (pipeline/plans/twin_options.py: bare_soil, season_dates with the
+    satellite's `seasons`, paddy_rainfed)."""
     cov, by = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by["bare"], **{c: by[cov[c]] for c in cov}}
     rotation, _ = sim.rotation_for(field, rules)
-    r = sim.replay(weather, rotation, lib, soil, cn, bare_kc=bare_soil_setting(rules["bare_soil"], soil), irrigated=False,
-                   kc_climate=rules["kc_climate"]["apply"])
+    r = to.replay(weather, rotation, lib, soil, cn, rules, irrigated=False, farmer=True, seasons=seasons)
     d = r["daily"]
     return pd.Series(1.0 - d["dr_mm"].to_numpy(float) / d["taw_mm"].to_numpy(float), index=pd.DatetimeIndex(d["date"]))
 
@@ -75,8 +76,10 @@ def main(argv=None):
                                 "recommended-quality retrieval over this cell and is not used (data card smap.json)."},
            "months_smap": int(len(sm)), "rain": {}}
     years = sorted(set(sm.index.year))
+    sj_path = REPO / "data" / "checks" / field["id"] / "diary_seasons.json"
+    hls = to.hls_seasons(json.loads(sj_path.read_text())) if sj_path.exists() else None
     for version in ("corrected", "uncorrected"):
-        tw_daily = twin_wetness(with_rain(w, version), field, rules, lib, soil)
+        tw_daily = twin_wetness(with_rain(w, version), field, rules, lib, soil, seasons=hls)
         tw = monthly_anomaly(tw_daily[tw_daily.index >= smap.index.min()])
         sm2, tw2 = sm.align(tw, join="inner")
         sm2, tw2 = sm2 - sm2.groupby(sm2.index.month).transform("mean"), tw2 - tw2.groupby(tw2.index.month).transform("mean")

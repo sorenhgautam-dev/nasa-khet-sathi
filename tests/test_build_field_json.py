@@ -153,15 +153,15 @@ def test_a_diary_without_twelve_months_is_refused():
 # ---------- build step 7 (2026-11-13): plans, ranges for the uncorrected rain, sources, method page ----------
 
 def test_uncorrected_rain_is_added_only_to_years_it_changes():
-    from pipeline.export.build_field_json import with_uncorrected
+    from pipeline.export.build_field_json import with_second_rain
     base = [{"year": 2016, "harvest": 70, "dry_days": 80, "event": "none", "irrigated": {"harvest": 100, "dry_days": 0}},
             {"year": 2020, "harvest": 84, "dry_days": 86, "event": "none", "irrigated": {"harvest": 100, "dry_days": 0}}]
     unc = [dict(base[0]), {**base[1], "harvest": 90, "dry_days": 63, "event": "flood"}]
-    out = with_uncorrected(base, unc)
-    assert "uncorrected_rain" not in out[0]
-    assert out[1]["uncorrected_rain"] == {"harvest": 90, "dry_days": 63, "event": "flood", "irrigated": {"harvest": 100, "dry_days": 0}}
+    out = with_second_rain(base, unc)
+    assert "dhm_rain" not in out[0]
+    assert out[1]["dhm_rain"] == {"harvest": 90, "dry_days": 63, "event": "flood", "irrigated": {"harvest": 100, "dry_days": 0}}
     with pytest.raises(ValueError, match="same years"):
-        with_uncorrected(base, unc[:1])
+        with_second_rain(base, unc[:1])
 
 
 def test_stated_choices_list_claudes_choices_with_their_approval():
@@ -252,7 +252,8 @@ def test_the_exported_demo_file_has_three_rice_plans_and_ranges_where_the_rain_f
     assert all(any(c["crop"] == "rice" for c in p["crops"]) for p in d["plans"])
     assert len({tuple(sorted(c["crop"] for c in p["crops"])) for p in d["plans"]}) == 3      # three rotations
     years = {y["year"]: y for y in d["replay"]["current"]}
-    assert all("uncorrected_rain" not in years[y] for y in years if y < 2004)
+    # owner's decision 4b (2026-11-14): the second version is the DHM-scaled rain, which differs in any year, not only from 2017
+    assert any("dhm_rain" in y for y in years.values())
     assert d["method"]["rain_correction"]["from"] == "2017-01-01"
 
 
@@ -274,10 +275,10 @@ def test_the_uncorrected_run_keeps_its_own_event_season():
     y0 = r["years"][3]["year"]
     u["events"][str(y0)] = "drought"
     u["event_seasons"] = {str(y0): "monsoon"}
-    rows = b.with_uncorrected(b.replay_rows(r), b.replay_rows(u))
+    rows = b.with_second_rain(b.replay_rows(r), b.replay_rows(u))
     row = next(x for x in rows if x["year"] == y0)
-    assert row["event"] == "none" and row["uncorrected_rain"]["event"] == "drought"
-    assert row["uncorrected_rain"]["event_season"] == "monsoon"
+    assert row["event"] == "none" and row["dhm_rain"]["event"] == "drought"
+    assert row["dhm_rain"]["event_season"] == "monsoon"
 
 
 def test_the_exported_demo_file_holds_the_current_plan_for_both_winter_crops():
@@ -291,7 +292,7 @@ def test_the_exported_demo_file_holds_the_current_plan_for_both_winter_crops():
     assert co["default"] == "rice_potato" and [o["id"] for o in co["options"]] == ["rice_potato", "rice_wheat"]
     wheat = co["options"][1]
     assert [c["crop"] for c in wheat["crops"]] == ["rice", "wheat"] and len(wheat["replay"]) == len(d["replay"]["current"])
-    assert all("irrigated" in y for y in wheat["replay"]) and any("uncorrected_rain" in y for y in wheat["replay"])
+    assert all("irrigated" in y for y in wheat["replay"]) and any("dhm_rain" in y for y in wheat["replay"])
     assert set(wheat["compared"]) == {"cover_gap", "safest"}
     assert "Your winter crop dates may differ from ours." in d["plans"][0]["tabs"]["unknown"]
     assert "sample field" in d["plans"][0]["tabs"]["unknown"]
@@ -392,10 +393,10 @@ def test_dhms_monsoon_record_fills_the_shift_and_the_usual_start():
 def _future_check():
     def run(h, lo, hi):
         return {"outlook": {"harvest": h, "harvest_low": lo, "harvest_high": hi}}
-    plans = {"P_cur": {"corrected": run(70.9, 66.8, 72.8), "uncorrected": run(71.8, 67.3, 73.8)},
-             "P_wheat": {"corrected": run(87.8, 85.0, 89.2), "uncorrected": run(88.0, 85.1, 89.9)},
-             "P_lentil": {"corrected": run(79.4, 76.2, 81.0), "uncorrected": run(79.4, 76.2, 81.0)},
-             "P_opt": {"corrected": run(80.6, 76.0, 82.1), "uncorrected": run(80.9, 76.3, 82.4)}}
+    plans = {"P_cur": {"corrected": run(70.9, 66.8, 72.8), "dhm": run(71.8, 67.3, 73.8)},
+             "P_wheat": {"corrected": run(87.8, 85.0, 89.2), "dhm": run(88.0, 85.1, 89.9)},
+             "P_lentil": {"corrected": run(79.4, 76.2, 81.0), "dhm": run(79.4, 76.2, 81.0)},
+             "P_opt": {"corrected": run(80.6, 76.0, 82.1), "dhm": run(80.9, 76.3, 82.4)}}
     return {"models": ["A", "B", "C", "D", "E"], "labels": {"scenarios": ["ssp245", "ssp585"],
             "periods": {"historical": [1995, 2014], "future": [2026, 2040]}}, "plans": plans}
 
@@ -414,7 +415,7 @@ def test_the_2040_outlook_fills_every_plan_and_option():
     assert f["with_plan"] == {"harvest": [88], "harvest_low": [85], "harvest_high": [89]}
     p = {x["id"]: x for x in out["plans"]}
     assert p["safest"]["future"] == {"harvest": [79], "harvest_low": [76], "harvest_high": [81]}
-    assert "future_uncorrected_rain" in p["current"] and "future_uncorrected_rain" not in p["safest"]
+    assert "future_dhm_rain" in p["current"] and "future_dhm_rain" not in p["safest"]
     assert out["current_options"]["options"][1]["future"]["harvest"] == [81]
     assert "future" not in out.get("mock", [])
     assert f["words"]["en"] and f["words"]["ne"]

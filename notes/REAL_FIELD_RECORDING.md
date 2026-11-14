@@ -68,12 +68,14 @@ watering:
   which_crops: ""              # e.g. "potato only"
   how_often: ""                # e.g. "every 10 days in winter"
   enough_water: ""             # yes / sometimes / no
-bad_years:                     # years the harvest was poor, in Bikram Sambat or AD (say which), and why
+# ASK THE NEXT TWO QUESTIONS FIRST, BEFORE THE FARMER SEES THE APP (owner, 2026-11-14), so the app cannot shape the answer.
+# Ask for the three worst and the three best years since about 2001 (2058 BS), with the crop and why.
+bad_years:                     # the three worst years, in Bikram Sambat or AD (say which), and why
   - year: "2079 BS"
     crop: rice
     what_happened: "rain came late, transplanted late"   # drought / flood / hail / frost / pests / late rain / other
     how_bad: "about half"      # their own words: "half", "a little less", "nothing"
-good_years:
+good_years:                    # the three best years, and why
   - year: "2080 BS"
     crop: potato
     why: "good rain in winter"
@@ -85,7 +87,7 @@ soil:
 notes: ""
 ```
 
-The bad and good years matter most: they are our first real ground truth for the twin.
+The three worst and three best years matter most: they are our first real ground truth for the twin. Ask them before showing the app.
 
 ## 4. `probe_spots.csv`: probe readings in four spots
 

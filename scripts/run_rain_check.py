@@ -43,7 +43,7 @@ def rain_check_config(field):
         cfg = DEMO_RAIN_CHECK
     cfg = dict(cfg or {})
     cfg.setdefault("normals", [])
-    cfg.setdefault("station_key", "station")
+    cfg.setdefault("station_key", str(field.get("validation_station") or "station").lower())
     cfg.setdefault("station_name", field.get("validation_station_name") or field.get("validation_station"))
     cfg.setdefault("normals_label", "normals named in the field config (config/dhm_normals_1991_2020.csv)")
     return cfg
@@ -73,7 +73,7 @@ def break_test_report(field, G, gauge, yg, cy, gpm_over_power, data_dir):
         n = gauge.dropna(subset=["gpcc_stations"])
         rep["gpcc_stations_yearly_mean"] = {int(y): round(float(v), 1) for y, v in
                                             n.groupby(n["month"].str[:4].astype(int))["gpcc_stations"].mean().items()}
-    corrected = field["id"] in G["correction_fields"]
+    corrected = rc.break_corrected(field, G, bt)          # the demo, or a sample whose own test found it (810b3c8)
     out = {"field": field["id"], "rule": f"rules.yaml gpm_series.break_test (committed {BREAK_TEST_COMMIT} before any run on a field abroad)",
            "rule_values": {k: v for k, v in G["break_test"].items() if k != "rule"},
            "inputs": {"gauge_weight": str((data_dir / "clean" / field["id"] / "gauge_evidence.parquet").relative_to(REPO))
@@ -81,7 +81,7 @@ def break_test_report(field, G, gauge, yg, cy, gpm_over_power, data_dir):
                       "chirps": str((data_dir / "clean" / field["id"] / "chirps.parquet").relative_to(REPO)) if cy is not None else None,
                       "gpm": str((data_dir / "clean" / field["id"] / "gpm.parquet").relative_to(REPO))},
            **bt, "reported_not_required": rep, "field_in_correction_fields": corrected,
-           "what_follows": ("the field is corrected (gpm_series.correction_fields)" if corrected else
+           "what_follows": ("the field is corrected (gpm_series.correction_fields or correction_for_samples)" if corrected else
                             (f"break found from {bt.get('year')}: put to the owner for gpm_series.correction_fields; "
                              "nothing is corrected until the owner's go") if bt["found"] else
                             "no break found: the field's GPM rain is used as published (no correction)")}
@@ -142,7 +142,11 @@ def main(argv=None):
     weather = clean / "weather.parquet"
     corr = _series(pd.read_parquet(weather), "rain_mm") if weather.exists() else None
     out_corr = None
-    if fid in G["correction_fields"] and station is not None and corr is not None:
+    chirps_path = clean / "chirps.parquet"
+    cy = _yearly(_series(pd.read_parquet(chirps_path))) if chirps_path.exists() else None
+    gpath = clean / "gauge_evidence.parquet"
+    bt = break_test_report(field, G, pd.read_parquet(gpath) if gpath.exists() else None, yg, cy, tests["gpm_over_power"], data_dir)
+    if bt["field_in_correction_fields"] and station is not None and corr is not None:
         # the break correction (owner's decision 1, 2026-11-13; rules.yaml gpm_series), for corrected fields only
         st_months = rc.complete_month_totals(station)
         hold = rc.holdout_break_correction(rc.complete_month_totals(final_only), st_months,
@@ -179,11 +183,8 @@ def main(argv=None):
                 "step_final": round(rc.step_ratio({y: fy[y] for y in years}, 2017), 3),
                 "step_late": round(rc.step_ratio({y: ly[y] for y in years}, 2017), 3),
                 "read": "step = mean yearly total 2017-2019 / 2014-2016; the gauge loss shows as a step in Final only"}
-    chirps_path = clean / "chirps.parquet"
-    chirps, cy = None, None
+    chirps = None
     if chirps_path.exists():
-        cs = _series(pd.read_parquet(chirps_path))
-        cy = _yearly(cs)
         yrs = sorted(set(cy.index) & set(yg.index))
         cy_ = {int(y): round(float(cy[y]), 1) for y in yrs}
         chirps = {"years": yrs, "chirps_mm": cy_, "gpm_mm": {int(y): round(float(yg[y]), 1) for y in yrs}}
@@ -217,8 +218,6 @@ def main(argv=None):
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / "rain_check_b.json"
     path.write_text(json.dumps(out, indent=1) + "\n")
-    gpath = clean / "gauge_evidence.parquet"
-    bt = break_test_report(field, G, pd.read_parquet(gpath) if gpath.exists() else None, yg, cy, tests["gpm_over_power"], data_dir)
     bpath = out_dir / "break_test.json"
     bpath.write_text(json.dumps(bt, indent=1) + "\n")
     if refs:

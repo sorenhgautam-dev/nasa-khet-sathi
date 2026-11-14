@@ -1219,6 +1219,434 @@
     "text": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
     "source": "FAO (1998), FAO's Emergency Activities: Technical Handbook Series, Phase One: Prevention, section 2.1.1 'Crop Diversification': https://www.fao.org/4/X6869E/x6869e01.htm"
    }
+  },
+  "screens.home.texts.hero_1": {
+   "en": "Know your land.",
+   "hi": "अपनी ज़मीन को जानें।"
+  },
+  "screens.home.texts.hero_2": {
+   "en": "Plan your season.",
+   "hi": "अपने मौसम की योजना बनाएँ।"
+  },
+  "screens.home.texts.card_today_tag": {
+   "en": "Soil check",
+   "hi": "मिट्टी की जाँच"
+  },
+  "screens.home.texts.card_today_big": {
+   "en": "Today",
+   "hi": "आज"
+  },
+  "screens.home.texts.card_today_sub": {
+   "en": "How each part of your field is doing.",
+   "hi": "आपके खेत का हर हिस्सा कैसा है।"
+  },
+  "screens.home.texts.card_months_tag": {
+   "en": "NASA records",
+   "hi": "नासा के रिकॉर्ड"
+  },
+  "screens.home.texts.card_months_big": {
+   "en": "3 months",
+   "hi": "3 महीने"
+  },
+  "screens.home.texts.card_months_sub": {
+   "en": "What these months usually bring.",
+   "hi": "इन महीनों में अक्सर क्या होता है।"
+  },
+  "screens.home.texts.records_years": {
+   "en": "We read NASA records, {source_years}.",
+   "hi": "हम नासा के रिकॉर्ड पढ़ते हैं, {source_years}।"
+  },
+  "screens.home.texts.prepared_title": {
+   "en": "Fields we have looked at",
+   "hi": "जो खेत हमने देखे हैं"
+  },
+  "screens.where.texts.photo_h1": {
+   "en": "Your field",
+   "hi": "आपका खेत"
+  },
+  "screens.where.texts.photo_h2": {
+   "en": "from above",
+   "hi": "ऊपर से"
+  },
+  "screens.where.texts.map_not_photo": {
+   "en": "This is a map, not a photo.",
+   "hi": "यह नक्शा है, फ़ोटो नहीं।"
+  },
+  "screens.where.texts.line_is_field": {
+   "en": "The line shows the sample field.",
+   "hi": "रेखा नमूना खेत दिखाती है।"
+  },
+  "screens.where.texts.photo_later": {
+   "en": "A real photo comes when we visit.",
+   "hi": "हमारे आने पर असली फ़ोटो आएगी।"
+  },
+  "screens.where.texts.inside_sample": {
+   "en": "We show our sample field near you.",
+   "hi": "हम आपके पास का नमूना खेत दिखाते हैं।"
+  },
+  "screens.where.texts.draw_own": {
+   "en": "Mark my own field",
+   "hi": "अपना खेत चिह्नित करें"
+  },
+  "screens.where.texts.make_parts": {
+   "en": "Show the parts",
+   "hi": "हिस्से दिखाएँ"
+  },
+  "screens.from_space.texts.usually": {
+   "en": "Usually:",
+   "hi": "आम तौर पर:"
+  },
+  "screens.parts.texts.making": {
+   "en": "Making the parts…",
+   "hi": "हिस्से बन रहे हैं…"
+  },
+  "screens.each_part.texts.today_h1": {
+   "en": "Your field",
+   "hi": "आपका खेत"
+  },
+  "screens.each_part.texts.today_h2": {
+   "en": "today",
+   "hi": "आज"
+  },
+  "screens.each_part.texts.as_of": {
+   "en": "As of this day:",
+   "hi": "इस दिन तक:"
+  },
+  "screens.each_part.texts.greener_more": {
+   "en": "A little greener than the rest.",
+   "hi": "बाकी से थोड़ा ज़्यादा हरा।"
+  },
+  "screens.each_part.texts.greener_less": {
+   "en": "A little less green than the rest.",
+   "hi": "बाकी से थोड़ा कम हरा।"
+  },
+  "screens.each_part.texts.greener_unknown": {
+   "en": "We can't tell how green.",
+   "hi": "कितना हरा, हम नहीं बता सकते।"
+  },
+  "screens.each_part.texts.low_ground": {
+   "en": "Low ground: cold air can collect.",
+   "hi": "नीची ज़मीन: ठंडी हवा जमा हो सकती है।"
+  },
+  "screens.each_part.texts.one_soil": {
+   "en": "All parts share one soil and weather.",
+   "hi": "सब हिस्सों की मिट्टी और मौसम एक है।"
+  },
+  "screens.check_soil.texts.prototype": {
+   "en": "Our soil stick is a prototype.",
+   "hi": "हमारी मिट्टी की छड़ी अभी नमूना है।"
+  },
+  "screens.check_soil.texts.by_hand": {
+   "en": "Today we carry it by hand.",
+   "hi": "अभी हम इसे हाथ से ले जाते हैं।"
+  },
+  "screens.check_soil.texts.robot_next": {
+   "en": "A robot to carry it comes next.",
+   "hi": "इसे ले जाने वाला रोबोट आगे आएगा।"
+  },
+  "screens.check_soil.texts.robot_name": {
+   "en": "Krishi Scout, our robot idea",
+   "hi": "कृषि स्काउट, हमारे रोबोट का विचार"
+  },
+  "screens.check_soil.texts.robot_shows": {
+   "en": "This shows how the robot will work.",
+   "hi": "यह दिखाता है कि रोबोट कैसे काम करेगा।"
+  },
+  "screens.check_soil.texts.top_only": {
+   "en": "It reads only the top few centimetres.",
+   "hi": "यह सिर्फ़ ऊपर के कुछ सेंटीमीटर नापती है।"
+  },
+  "screens.check_soil.texts.after_test": {
+   "en": "Readings come after our team tests it.",
+   "hi": "हमारी टीम की जाँच के बाद नाप आएँगे।"
+  },
+  "screens.check_soil.texts.no_reading": {
+   "en": "No reading yet",
+   "hi": "अभी कोई नाप नहीं"
+  },
+  "screens.check_soil.texts.settling": {
+   "en": "Settling…",
+   "hi": "स्थिर हो रही है…"
+  },
+  "screens.check_soil.texts.measuring": {
+   "en": "Measuring…",
+   "hi": "नाप रही है…"
+  },
+  "screens.check_soil.texts.measured": {
+   "en": "Measured",
+   "hi": "नाप लिया"
+  },
+  "screens.check_soil.texts.test_again": {
+   "en": "The reading jumped. Please test again.",
+   "hi": "नाप उछल गया। कृपया फिर जाँचें।"
+  },
+  "screens.check_soil.texts.off_scale": {
+   "en": "Off the scale",
+   "hi": "पैमाने से बाहर"
+  },
+  "screens.check_soil.texts.not_connected": {
+   "en": "Soil stick not connected.",
+   "hi": "मिट्टी की छड़ी जुड़ी नहीं है।"
+  },
+  "screens.check_soil.texts.part_of": {
+   "en": "Part {section} of {section_count}",
+   "hi": "{section_count} में से हिस्सा {section}"
+  },
+  "screens.check_soil.texts.drier": {
+   "en": "Drier than the other parts",
+   "hi": "बाकी हिस्सों से सूखा"
+  },
+  "screens.check_soil.texts.wetter": {
+   "en": "Wetter than the other parts",
+   "hi": "बाकी हिस्सों से गीला"
+  },
+  "screens.check_soil.texts.about_same": {
+   "en": "About the same as the others",
+   "hi": "बाकी जैसा ही"
+  },
+  "screens.check_soil.texts.before_reading": {
+   "en": "Before the reading:",
+   "hi": "नाप से पहले:"
+  },
+  "screens.check_soil.texts.band_needs_water": {
+   "en": "Needs water",
+   "hi": "पानी चाहिए"
+  },
+  "screens.check_soil.texts.band_good": {
+   "en": "Good",
+   "hi": "ठीक है"
+  },
+  "screens.check_soil.texts.band_too_wet": {
+   "en": "Too wet",
+   "hi": "बहुत गीला"
+  },
+  "screens.check_soil.texts.water_in_soil": {
+   "en": "Water in the soil:",
+   "hi": "मिट्टी में पानी:"
+  },
+  "screens.check_soil.texts.give_or_take": {
+   "en": "give or take",
+   "hi": "कम या ज़्यादा"
+  },
+  "screens.what_to_grow.texts.next_h1": {
+   "en": "Next",
+   "hi": "अगले"
+  },
+  "screens.what_to_grow.texts.next_h2": {
+   "en": "3 months",
+   "hi": "3 महीने"
+  },
+  "screens.what_to_grow.texts.next_to_plant": {
+   "en": "Next to plant:",
+   "hi": "अगली बुआई:"
+  },
+  "screens.what_to_grow.texts.choices_title": {
+   "en": "Your choices",
+   "hi": "आपके विकल्प"
+  },
+  "screens.what_to_grow.texts.tap_choice": {
+   "en": "Tap a choice to see why.",
+   "hi": "क्यों, यह देखने के लिए विकल्प दबाएँ।"
+  },
+  "screens.what_to_grow.texts.more_than_now": {
+   "en": "More than now",
+   "hi": "अभी से ज़्यादा"
+  },
+  "screens.what_to_grow.texts.less_than_now": {
+   "en": "Less than now",
+   "hi": "अभी से कम"
+  },
+  "screens.what_to_grow.texts.same_as_now": {
+   "en": "About the same as now",
+   "hi": "लगभग अभी जैसा"
+  },
+  "screens.what_to_grow.texts.water_never_out": {
+   "en": "This assumes water never runs out.",
+   "hi": "यह मानकर कि पानी कभी खत्म नहीं होता।"
+  },
+  "screens.what_to_grow.texts.see_years": {
+   "en": "See the last {year_count} years",
+   "hi": "पिछले {year_count} साल देखें"
+  },
+  "screens.what_to_grow.texts.range_why": {
+   "en": "Two ways of counting rain give a range.",
+   "hi": "बारिश गिनने के दो तरीके दायरा देते हैं।"
+  },
+  "screens.what_to_grow.texts.range_town": {
+   "en": "One matches the nearby town's usual rain.",
+   "hi": "एक पास के कस्बे की सामान्य बारिश जैसा।"
+  },
+  "screens.last_years.texts.which_plan": {
+   "en": "Which plan?",
+   "hi": "कौन-सी योजना?"
+  },
+  "screens.field_future.texts.by_year": {
+   "en": "By {future_year}",
+   "hi": "{future_year} तक"
+  },
+  "shared.buttons.not_ready": {
+   "en": "Not ready yet.",
+   "hi": "अभी तैयार नहीं।"
+  },
+  "shared.buttons.sample_field": {
+   "en": "Sample field",
+   "hi": "नमूना खेत"
+  },
+  "shared.buttons.how_we_know": {
+   "en": "How we know",
+   "hi": "हमें कैसे पता है"
+  },
+  "screens.your_plan.texts.sources_title": {
+   "en": "Where our numbers come from",
+   "hi": "हमारे अंक कहाँ से आते हैं"
+  },
+  "shared.buttons.about": {
+   "en": "about",
+   "hi": "लगभग"
+  },
+  "shared.buttons.out_of_100": {
+   "en": "out of 100",
+   "hi": "100 में से"
+  },
+  "shared.buttons.close": {
+   "en": "Close",
+   "hi": "बंद करें"
+  },
+  "shared.buttons.language": {
+   "en": "Language",
+   "hi": "भाषा"
+  },
+  "screens.check_soil.texts.choose_h1": {
+   "en": "What do you",
+   "hi": "आप क्या"
+  },
+  "screens.check_soil.texts.choose_h2": {
+   "en": "want to see?",
+   "hi": "देखना चाहेंगे?"
+  },
+  "screens.your_plan.texts.computer_helped": {
+   "en": "How the computer helped",
+   "hi": "कंप्यूटर ने कैसे मदद की"
+  },
+  "screens.your_plan.texts.helped_words": {
+   "en": "A computer drafted many words here.",
+   "hi": "यहाँ के कई शब्द कंप्यूटर ने लिखे।"
+  },
+  "screens.your_plan.texts.helped_check": {
+   "en": "Nepali words still need a careful check.",
+   "hi": "नेपाली शब्दों की जाँच अभी बाकी है।"
+  },
+  "screens.your_plan.texts.helped_drafts": {
+   "en": "Other languages are draft translations.",
+   "hi": "दूसरी भाषाएँ मसौदा अनुवाद हैं।"
+  },
+  "screens.your_plan.texts.helped_seasons": {
+   "en": "A computer also helped find the seasons.",
+   "hi": "मौसम खोजने में भी कंप्यूटर ने मदद की।"
+  },
+  "screens.your_plan.texts.seasons_title": {
+   "en": "Finding the seasons",
+   "hi": "मौसम का पता लगाना"
+  },
+  "screens.your_plan.texts.seasons_tested": {
+   "en": "We tested three ways on unseen years.",
+   "hi": "हमने अनदेखे सालों पर तीन तरीके जाँचे।"
+  },
+  "screens.your_plan.texts.way_threshold": {
+   "en": "A simple green rule",
+   "hi": "हरियाली का सरल नियम"
+  },
+  "screens.your_plan.texts.way_changepoint": {
+   "en": "A change finder",
+   "hi": "बदलाव खोजने वाला"
+  },
+  "screens.your_plan.texts.way_detective": {
+   "en": "A learning computer",
+   "hi": "सीखने वाला कंप्यूटर"
+  },
+  "screens.your_plan.texts.we_use_this": {
+   "en": "We use this one.",
+   "hi": "हम यही इस्तेमाल करते हैं।"
+  },
+  "screens.your_plan.texts.rain_fix_title": {
+   "en": "Fixing the rain numbers",
+   "hi": "बारिश के अंक ठीक करना"
+  },
+  "screens.your_plan.texts.rains_title": {
+   "en": "When the rains come",
+   "hi": "बारिश कब आती है"
+  },
+  "screens.your_plan.texts.memory_title": {
+   "en": "Teaching a computer this field",
+   "hi": "कंप्यूटर को यह खेत सिखाना"
+  },
+  "screens.your_plan.texts.area_title": {
+   "en": "Fields around the sample field",
+   "hi": "नमूना खेत के आसपास के खेत"
+  },
+  "screens.your_plan.texts.future_title": {
+   "en": "Looking ahead",
+   "hi": "आगे की ओर"
+  },
+  "screens.your_plan.texts.not_ready_title": {
+   "en": "What is not ready yet",
+   "hi": "क्या अभी तैयार नहीं है"
+  },
+  "screens.your_plan.texts.nr_photo": {
+   "en": "A real photo of the field.",
+   "hi": "खेत की असली फ़ोटो।"
+  },
+  "screens.your_plan.texts.nr_readings": {
+   "en": "Soil stick readings from the field.",
+   "hi": "खेत से मिट्टी की छड़ी के नाप।"
+  },
+  "screens.your_plan.texts.nr_own_field": {
+   "en": "Your own field: today we show a sample.",
+   "hi": "आपका अपना खेत: अभी हम नमूना दिखाते हैं।"
+  },
+  "screens.your_plan.texts.nr_robot": {
+   "en": "The robot that carries the stick.",
+   "hi": "छड़ी ले जाने वाला रोबोट।"
+  },
+  "screens.your_plan.texts.report_card": {
+   "en": "How sure are we?",
+   "hi": "हम कितने पक्के हैं?"
+  },
+  "screens.your_plan.texts.sure_high": {
+   "en": "Quite sure",
+   "hi": "काफ़ी पक्का"
+  },
+  "screens.your_plan.texts.sure_medium": {
+   "en": "Fairly sure",
+   "hi": "कुछ हद तक पक्का"
+  },
+  "screens.your_plan.texts.sure_low": {
+   "en": "Not very sure",
+   "hi": "ज़्यादा पक्का नहीं"
+  },
+  "screens.your_plan.texts.missions_title": {
+   "en": "The NASA missions we used",
+   "hi": "हमने जिन नासा मिशनों का उपयोग किया"
+  },
+  "shared.buttons.read_more": {
+   "en": "Read more",
+   "hi": "और पढ़ें"
+  },
+  "shared.buttons.source_label": {
+   "en": "Source:",
+   "hi": "स्रोत:"
+  },
+  "screens.your_plan.texts.method_title": {
+   "en": "How we worked it out",
+   "hi": "हमने कैसे निकाला"
+  },
+  "screens.your_plan.texts.story_title": {
+   "en": "What the records show",
+   "hi": "रिकॉर्ड क्या दिखाते हैं"
+  },
+  "screens.your_plan.texts.links_title": {
+   "en": "To read more",
+   "hi": "और पढ़ने के लिए"
   }
  }
 }

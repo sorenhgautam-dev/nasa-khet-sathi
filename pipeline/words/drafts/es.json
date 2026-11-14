@@ -1219,6 +1219,434 @@
     "text": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
     "source": "FAO (1998), FAO's Emergency Activities: Technical Handbook Series, Phase One: Prevention, section 2.1.1 'Crop Diversification': https://www.fao.org/4/X6869E/x6869e01.htm"
    }
+  },
+  "screens.home.texts.hero_1": {
+   "en": "Know your land.",
+   "es": "Conozca su tierra."
+  },
+  "screens.home.texts.hero_2": {
+   "en": "Plan your season.",
+   "es": "Planee su temporada."
+  },
+  "screens.home.texts.card_today_tag": {
+   "en": "Soil check",
+   "es": "Revisar la tierra"
+  },
+  "screens.home.texts.card_today_big": {
+   "en": "Today",
+   "es": "Hoy"
+  },
+  "screens.home.texts.card_today_sub": {
+   "en": "How each part of your field is doing.",
+   "es": "Cómo está cada parte de su campo."
+  },
+  "screens.home.texts.card_months_tag": {
+   "en": "NASA records",
+   "es": "Registros de la NASA"
+  },
+  "screens.home.texts.card_months_big": {
+   "en": "3 months",
+   "es": "3 meses"
+  },
+  "screens.home.texts.card_months_sub": {
+   "en": "What these months usually bring.",
+   "es": "Lo que suelen traer estos meses."
+  },
+  "screens.home.texts.records_years": {
+   "en": "We read NASA records, {source_years}.",
+   "es": "Leemos registros de la NASA, {source_years}."
+  },
+  "screens.home.texts.prepared_title": {
+   "en": "Fields we have looked at",
+   "es": "Campos que ya miramos"
+  },
+  "screens.where.texts.photo_h1": {
+   "en": "Your field",
+   "es": "Su campo"
+  },
+  "screens.where.texts.photo_h2": {
+   "en": "from above",
+   "es": "desde arriba"
+  },
+  "screens.where.texts.map_not_photo": {
+   "en": "This is a map, not a photo.",
+   "es": "Esto es un mapa, no una foto."
+  },
+  "screens.where.texts.line_is_field": {
+   "en": "The line shows the sample field.",
+   "es": "La línea muestra el campo de ejemplo."
+  },
+  "screens.where.texts.photo_later": {
+   "en": "A real photo comes when we visit.",
+   "es": "Una foto real llegará cuando visitemos."
+  },
+  "screens.where.texts.inside_sample": {
+   "en": "We show our sample field near you.",
+   "es": "Le mostramos nuestro campo de ejemplo cercano."
+  },
+  "screens.where.texts.draw_own": {
+   "en": "Mark my own field",
+   "es": "Marcar mi propio campo"
+  },
+  "screens.where.texts.make_parts": {
+   "en": "Show the parts",
+   "es": "Mostrar las partes"
+  },
+  "screens.from_space.texts.usually": {
+   "en": "Usually:",
+   "es": "Por lo general:"
+  },
+  "screens.parts.texts.making": {
+   "en": "Making the parts…",
+   "es": "Haciendo las partes…"
+  },
+  "screens.each_part.texts.today_h1": {
+   "en": "Your field",
+   "es": "Su campo"
+  },
+  "screens.each_part.texts.today_h2": {
+   "en": "today",
+   "es": "hoy"
+  },
+  "screens.each_part.texts.as_of": {
+   "en": "As of this day:",
+   "es": "A esta fecha:"
+  },
+  "screens.each_part.texts.greener_more": {
+   "en": "A little greener than the rest.",
+   "es": "Un poco más verde que el resto."
+  },
+  "screens.each_part.texts.greener_less": {
+   "en": "A little less green than the rest.",
+   "es": "Un poco menos verde que el resto."
+  },
+  "screens.each_part.texts.greener_unknown": {
+   "en": "We can't tell how green.",
+   "es": "No sabemos cuán verde está."
+  },
+  "screens.each_part.texts.low_ground": {
+   "en": "Low ground: cold air can collect.",
+   "es": "Terreno bajo: el aire frío se queda."
+  },
+  "screens.each_part.texts.one_soil": {
+   "en": "All parts share one soil and weather.",
+   "es": "Todas las partes comparten tierra y tiempo."
+  },
+  "screens.check_soil.texts.prototype": {
+   "en": "Our soil stick is a prototype.",
+   "es": "Nuestra varilla es un prototipo."
+  },
+  "screens.check_soil.texts.by_hand": {
+   "en": "Today we carry it by hand.",
+   "es": "Hoy la llevamos a mano."
+  },
+  "screens.check_soil.texts.robot_next": {
+   "en": "A robot to carry it comes next.",
+   "es": "Después vendrá un robot que la lleve."
+  },
+  "screens.check_soil.texts.robot_name": {
+   "en": "Krishi Scout, our robot idea",
+   "es": "Krishi Scout, nuestra idea de robot"
+  },
+  "screens.check_soil.texts.robot_shows": {
+   "en": "This shows how the robot will work.",
+   "es": "Así funcionará el robot."
+  },
+  "screens.check_soil.texts.top_only": {
+   "en": "It reads only the top few centimetres.",
+   "es": "Solo mide los primeros centímetros."
+  },
+  "screens.check_soil.texts.after_test": {
+   "en": "Readings come after our team tests it.",
+   "es": "Las medidas llegan tras la prueba del equipo."
+  },
+  "screens.check_soil.texts.no_reading": {
+   "en": "No reading yet",
+   "es": "Aún sin medida"
+  },
+  "screens.check_soil.texts.settling": {
+   "en": "Settling…",
+   "es": "Asentándose…"
+  },
+  "screens.check_soil.texts.measuring": {
+   "en": "Measuring…",
+   "es": "Midiendo…"
+  },
+  "screens.check_soil.texts.measured": {
+   "en": "Measured",
+   "es": "Medido"
+  },
+  "screens.check_soil.texts.test_again": {
+   "en": "The reading jumped. Please test again.",
+   "es": "La medida saltó. Pruebe otra vez."
+  },
+  "screens.check_soil.texts.off_scale": {
+   "en": "Off the scale",
+   "es": "Fuera de escala"
+  },
+  "screens.check_soil.texts.not_connected": {
+   "en": "Soil stick not connected.",
+   "es": "La varilla no está conectada."
+  },
+  "screens.check_soil.texts.part_of": {
+   "en": "Part {section} of {section_count}",
+   "es": "Parte {section} de {section_count}"
+  },
+  "screens.check_soil.texts.drier": {
+   "en": "Drier than the other parts",
+   "es": "Más seca que las otras partes"
+  },
+  "screens.check_soil.texts.wetter": {
+   "en": "Wetter than the other parts",
+   "es": "Más húmeda que las otras partes"
+  },
+  "screens.check_soil.texts.about_same": {
+   "en": "About the same as the others",
+   "es": "Más o menos igual que las otras"
+  },
+  "screens.check_soil.texts.before_reading": {
+   "en": "Before the reading:",
+   "es": "Antes de medir:"
+  },
+  "screens.check_soil.texts.band_needs_water": {
+   "en": "Needs water",
+   "es": "Necesita agua"
+  },
+  "screens.check_soil.texts.band_good": {
+   "en": "Good",
+   "es": "Bien"
+  },
+  "screens.check_soil.texts.band_too_wet": {
+   "en": "Too wet",
+   "es": "Demasiado mojada"
+  },
+  "screens.check_soil.texts.water_in_soil": {
+   "en": "Water in the soil:",
+   "es": "Agua en la tierra:"
+  },
+  "screens.check_soil.texts.give_or_take": {
+   "en": "give or take",
+   "es": "más o menos"
+  },
+  "screens.what_to_grow.texts.next_h1": {
+   "en": "Next",
+   "es": "Los próximos"
+  },
+  "screens.what_to_grow.texts.next_h2": {
+   "en": "3 months",
+   "es": "3 meses"
+  },
+  "screens.what_to_grow.texts.next_to_plant": {
+   "en": "Next to plant:",
+   "es": "Lo próximo a sembrar:"
+  },
+  "screens.what_to_grow.texts.choices_title": {
+   "en": "Your choices",
+   "es": "Sus opciones"
+  },
+  "screens.what_to_grow.texts.tap_choice": {
+   "en": "Tap a choice to see why.",
+   "es": "Toque una opción para ver por qué."
+  },
+  "screens.what_to_grow.texts.more_than_now": {
+   "en": "More than now",
+   "es": "Más que ahora"
+  },
+  "screens.what_to_grow.texts.less_than_now": {
+   "en": "Less than now",
+   "es": "Menos que ahora"
+  },
+  "screens.what_to_grow.texts.same_as_now": {
+   "en": "About the same as now",
+   "es": "Casi igual que ahora"
+  },
+  "screens.what_to_grow.texts.water_never_out": {
+   "en": "This assumes water never runs out.",
+   "es": "Supone que el agua nunca se acaba."
+  },
+  "screens.what_to_grow.texts.see_years": {
+   "en": "See the last {year_count} years",
+   "es": "Ver los últimos {year_count} años"
+  },
+  "screens.what_to_grow.texts.range_why": {
+   "en": "Two ways of counting rain give a range.",
+   "es": "Dos cuentas de lluvia dan un rango."
+  },
+  "screens.what_to_grow.texts.range_town": {
+   "en": "One matches the nearby town's usual rain.",
+   "es": "Una sigue la lluvia normal del pueblo cercano."
+  },
+  "screens.last_years.texts.which_plan": {
+   "en": "Which plan?",
+   "es": "¿Qué plan?"
+  },
+  "screens.field_future.texts.by_year": {
+   "en": "By {future_year}",
+   "es": "Hacia {future_year}"
+  },
+  "shared.buttons.not_ready": {
+   "en": "Not ready yet.",
+   "es": "Aún no está listo."
+  },
+  "shared.buttons.sample_field": {
+   "en": "Sample field",
+   "es": "Campo de ejemplo"
+  },
+  "shared.buttons.how_we_know": {
+   "en": "How we know",
+   "es": "Cómo lo sabemos"
+  },
+  "screens.your_plan.texts.sources_title": {
+   "en": "Where our numbers come from",
+   "es": "De dónde salen nuestros números"
+  },
+  "shared.buttons.about": {
+   "en": "about",
+   "es": "unos"
+  },
+  "shared.buttons.out_of_100": {
+   "en": "out of 100",
+   "es": "de 100"
+  },
+  "shared.buttons.close": {
+   "en": "Close",
+   "es": "Cerrar"
+  },
+  "shared.buttons.language": {
+   "en": "Language",
+   "es": "Idioma"
+  },
+  "screens.check_soil.texts.choose_h1": {
+   "en": "What do you",
+   "es": "¿Qué quiere"
+  },
+  "screens.check_soil.texts.choose_h2": {
+   "en": "want to see?",
+   "es": "ver ahora?"
+  },
+  "screens.your_plan.texts.computer_helped": {
+   "en": "How the computer helped",
+   "es": "Cómo ayudó la computadora"
+  },
+  "screens.your_plan.texts.helped_words": {
+   "en": "A computer drafted many words here.",
+   "es": "Una computadora redactó muchas palabras aquí."
+  },
+  "screens.your_plan.texts.helped_check": {
+   "en": "Nepali words still need a careful check.",
+   "es": "Las palabras en nepalí aún necesitan revisión."
+  },
+  "screens.your_plan.texts.helped_drafts": {
+   "en": "Other languages are draft translations.",
+   "es": "Los otros idiomas son traducciones provisionales."
+  },
+  "screens.your_plan.texts.helped_seasons": {
+   "en": "A computer also helped find the seasons.",
+   "es": "La computadora también ayudó a hallar temporadas."
+  },
+  "screens.your_plan.texts.seasons_title": {
+   "en": "Finding the seasons",
+   "es": "Encontrar las temporadas"
+  },
+  "screens.your_plan.texts.seasons_tested": {
+   "en": "We tested three ways on unseen years.",
+   "es": "Probamos tres formas en años no vistos."
+  },
+  "screens.your_plan.texts.way_threshold": {
+   "en": "A simple green rule",
+   "es": "Una regla simple del verde"
+  },
+  "screens.your_plan.texts.way_changepoint": {
+   "en": "A change finder",
+   "es": "Un buscador de cambios"
+  },
+  "screens.your_plan.texts.way_detective": {
+   "en": "A learning computer",
+   "es": "Una computadora que aprende"
+  },
+  "screens.your_plan.texts.we_use_this": {
+   "en": "We use this one.",
+   "es": "Usamos esta."
+  },
+  "screens.your_plan.texts.rain_fix_title": {
+   "en": "Fixing the rain numbers",
+   "es": "Corregir los números de lluvia"
+  },
+  "screens.your_plan.texts.rains_title": {
+   "en": "When the rains come",
+   "es": "Cuándo llegan las lluvias"
+  },
+  "screens.your_plan.texts.memory_title": {
+   "en": "Teaching a computer this field",
+   "es": "Enseñar este campo a una computadora"
+  },
+  "screens.your_plan.texts.area_title": {
+   "en": "Fields around the sample field",
+   "es": "Campos alrededor del campo de ejemplo"
+  },
+  "screens.your_plan.texts.future_title": {
+   "en": "Looking ahead",
+   "es": "Mirando adelante"
+  },
+  "screens.your_plan.texts.not_ready_title": {
+   "en": "What is not ready yet",
+   "es": "Lo que aún no está listo"
+  },
+  "screens.your_plan.texts.nr_photo": {
+   "en": "A real photo of the field.",
+   "es": "Una foto real del campo."
+  },
+  "screens.your_plan.texts.nr_readings": {
+   "en": "Soil stick readings from the field.",
+   "es": "Medidas de la varilla en el campo."
+  },
+  "screens.your_plan.texts.nr_own_field": {
+   "en": "Your own field: today we show a sample.",
+   "es": "Su propio campo: hoy mostramos un ejemplo."
+  },
+  "screens.your_plan.texts.nr_robot": {
+   "en": "The robot that carries the stick.",
+   "es": "El robot que lleva la varilla."
+  },
+  "screens.your_plan.texts.report_card": {
+   "en": "How sure are we?",
+   "es": "¿Cuán seguros estamos?"
+  },
+  "screens.your_plan.texts.sure_high": {
+   "en": "Quite sure",
+   "es": "Bastante seguros"
+  },
+  "screens.your_plan.texts.sure_medium": {
+   "en": "Fairly sure",
+   "es": "Algo seguros"
+  },
+  "screens.your_plan.texts.sure_low": {
+   "en": "Not very sure",
+   "es": "Poco seguros"
+  },
+  "screens.your_plan.texts.missions_title": {
+   "en": "The NASA missions we used",
+   "es": "Las misiones de la NASA que usamos"
+  },
+  "shared.buttons.read_more": {
+   "en": "Read more",
+   "es": "Leer más"
+  },
+  "shared.buttons.source_label": {
+   "en": "Source:",
+   "es": "Fuente:"
+  },
+  "screens.your_plan.texts.method_title": {
+   "en": "How we worked it out",
+   "es": "Cómo lo calculamos"
+  },
+  "screens.your_plan.texts.story_title": {
+   "en": "What the records show",
+   "es": "Lo que muestran los registros"
+  },
+  "screens.your_plan.texts.links_title": {
+   "en": "To read more",
+   "es": "Para leer más"
   }
  }
 }

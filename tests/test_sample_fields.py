@@ -36,9 +36,9 @@ def test_sample_config_is_a_labelled_placeholder_in_the_demo_box(tmp_path):
     demo = load_field("demo")
     cand = {"lat": 27.65, "lon": 85.40, "quadrant": "SW"}
     cfg = sm.sample_config(2, cand, demo, why="test")
-    path = tmp_path / "sample_2.yaml"
+    path = tmp_path / "sample-2.yaml"
     sm.write_yaml(path, cfg, header="# test header\n")
-    f = load_field("sample_2", tmp_path)
+    f = load_field("sample-2", tmp_path)
     assert f["placeholder"] is True and f["sample"] is True and f["sample_of"] == "demo"
     assert f["name"] == "Bhaktapur sample field 2 (PLACEHOLDER)"
     assert f["water_source"] is None and f["fetch_box"] == demo["fetch_box"] and f["bbox"] == demo["bbox"]

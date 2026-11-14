@@ -147,7 +147,7 @@ def column_sources(df, station_id, corrections, frost_method, gpm_card, n_filled
     return ({c: src[c] for c in df.columns if c != "date"}, {c: res[c] for c in df.columns if c != "date"})
 
 
-def correct_gpm_break(rain, gpm, rule, field_id):
+def correct_gpm_break(rain, gpm, rule, field_id, field=None, break_test=None):
     """Owner's decision 1, 2026-11-13 (rules.yaml gpm_series.correction): the merged rain table gets
     rain_uncorrected_mm (as published) and rain_break_corrected; rain_mm becomes the corrected rain. GPM days of the
     products in correction_products are scaled; only days of the products in correction_factor_products set the
@@ -157,9 +157,10 @@ def correct_gpm_break(rain, gpm, rule, field_id):
     rain["rain_break_corrected"] = False
     if gpm is None:
         return rain, None
-    if field_id not in rule["correction_fields"]:
+    from pipeline.checks.rain_check import break_corrected
+    if not break_corrected(field or {"id": field_id}, rule, break_test):    # the demo, or a sample whose own test found it
         return rain, {"applied": False, "status": f"not applied: field '{field_id}' has no rain check B finding of the "
-                                                  "break (rules.yaml gpm_series.correction_fields)"}
+                                                  "break (rules.yaml gpm_series.correction_fields, correction_for_samples)"}
     d = pd.DatetimeIndex(rain["date"])
     prod = gpm.set_index("date")["product"].reindex(d).astype(str)
     gpm_day = rain["rain_source"].astype(str).to_numpy() == "gpm"
@@ -289,7 +290,9 @@ def build(field, data_dir=REPO / "data", rules=None):
                   "GPM not fetched yet: rain is missing on every day and nothing is filled (decision D)",
         "gpm_record": fills["primary_record"], "by_year": fills["by_year"],
         "filled_outside_gpm_record": fills["filled_outside_primary_record"]}
-    rain, break_info = correct_gpm_break(rain, gpm, rules["gpm_series"], fid)
+    bt_path = data_dir / "checks" / fid / "break_test.json"         # the field's own break test (REVIEW_2 H6)
+    rain, break_info = correct_gpm_break(rain, gpm, rules["gpm_series"], fid, field=field,
+                                         break_test=json.loads(bt_path.read_text()) if bt_path.exists() else None)
     corrections["rain_break"] = break_info or {"applied": False, "status": "no GPM record: nothing to correct"}
     df = df.merge(rain, on="date")
 

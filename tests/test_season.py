@@ -299,3 +299,17 @@ def test_a_season_pushed_past_the_record_is_dropped():
 def test_the_slot_of_a_crop_is_the_slot_of_its_calendar_seasons_middle():
     assert s.crop_slot("rice", "2016-06-23", LIB) == "monsoon"
     assert s.crop_slot("potato", "2016-10-30", LIB) == "winter" and s.crop_slot("wheat", "2016-11-15", LIB) == "winter"
+
+
+# --- owner's decisions 2026-11-14: 4a and 4c together. A paddy dated by the satellite keeps its day (its real delay is
+# already in the observation); only calendar-dated paddy seasons wait for the land-preparation rain ---
+def test_a_satellite_dated_paddy_is_kept_as_it_is():
+    w = _rain_from("2016-07-01", 5.0)                                        # would fail by the rule
+    plan, info = s.paddy_transplant(PLAN_2C, w["date"], w["rain_mm"], LIB, RULE_2C, keep={("rice", "2016-06-25")})
+    assert plan == PLAN_2C and info == []
+
+
+def test_last_day_lets_a_season_run_past_the_rain_record():
+    w = _rain_from("2016-06-25", 10.0, end="2017-03-10")
+    plan, _ = s.paddy_transplant(PLAN_2C, w["date"], w["rain_mm"], LIB, RULE_2C, last_day="2017-06-30")
+    assert plan == [("rice", "2016-07-09"), ("wheat", "2016-10-27")]

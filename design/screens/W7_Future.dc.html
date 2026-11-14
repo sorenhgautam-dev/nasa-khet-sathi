@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Next 3 months (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&amp;family=Inter:wght@400;500;600;700&amp;family=Mukta:wght@400;600;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14301E}a:hover{color:#0B1F12}
+.ks-wbg{background:#89A378 url(/_blob/3aa695d5bdb8271424d72ab091c78b64) center bottom/cover no-repeat}
+@keyframes ks-drift{from{transform:translateX(-260px)}to{transform:translateX(110vw)}}
+@keyframes ks-fly{0%{transform:translate(-120px,30px)}100%{transform:translate(110vw,-40px)}}
+@keyframes ks-flap{to{transform:scaleY(.35)}}
+.ks-cloud{position:absolute;left:0;z-index:-1;width:240px;height:60px;border-radius:99px;background:rgba(255,236,222,.65);filter:blur(10px);animation:ks-drift linear infinite;pointer-events:none}
+.ks-birds{position:absolute;z-index:-1;left:0;top:150px;width:110px;height:36px;animation:ks-fly 32s linear 2s infinite;opacity:.55;pointer-events:none}
+.ks-birds path{fill:none;stroke:#3A3A35;stroke-width:1.6;stroke-linecap:round;transform-box:fill-box;transform-origin:center;animation:ks-flap .55s ease-in-out infinite alternate}
+.ks-sun{position:absolute;z-index:-1;width:56px;height:56px;margin:-28px 0 0 -28px;left:var(--x1);top:var(--y1);pointer-events:none;animation:ks-sunmove 1.8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ks-sunmove{from{left:var(--x0);top:var(--y0)}to{left:var(--x1);top:var(--y1)}}
+.ks-sun .ks-glow{position:absolute;inset:-46px;border-radius:50%;animation:ks-sunpulse 3.4s ease-in-out infinite}
+@keyframes ks-sunpulse{50%{transform:scale(1.18);opacity:.75}}
+.ks-sun .ks-rays{position:absolute;left:-16px;top:-16px;width:88px;height:88px;animation:ks-sunrot 26s linear infinite}
+@keyframes ks-sunrot{to{transform:rotate(360deg)}}
+.ks-sun .ks-core{position:absolute;inset:0;border-radius:50%}
+.ks-tint{position:absolute;left:0;top:0;width:100%;height:620px;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(208,92,52,.6) 0%,rgba(232,138,78,.38) 38%,rgba(232,138,78,0) 80%);animation:ks-tintin 1.8s ease both}
+@keyframes ks-tintin{from{opacity:var(--t0)}to{opacity:var(--t1)}}
+@keyframes ks-rise{from{opacity:0;transform:translateY(40px) scale(.96);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+@keyframes ks-wave{50%{opacity:.2}}
+[style*="height: 66px"] > svg:last-child,[style*="height: 68px"] > svg:last-child{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+[style*="height: 66px"]:hover > svg:last-child,[style*="height: 68px"]:hover > svg:last-child{transform:translateX(7px)}
+button:hover path[d^="M15.5"],button:hover path[d^="M18.5"]{animation:ks-wave .9s ease-in-out infinite}
+button:hover path[d^="M18.5"]{animation-delay:.18s}
+@keyframes ks-grow{from{transform:scale(0,0)}70%{transform:scale(1.1,1.15)}to{transform:scale(1)}}
+@keyframes ks-sway2{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="width: 100%; min-height: 900px; box-sizing: border-box; padding: 24px; position: relative; isolation: isolate; overflow: hidden; color: #14301E; font-family: Inter, Mukta, system-ui, sans-serif">
+  <sc-if value="{{showSky}}" hint-placeholder-val="{{ true }}">
+  <div class="ks-tint" aria-hidden="true" style="--t0: 0.15; --t1: 0.65; opacity: 0.65"></div>
+  <div class="ks-sun" aria-hidden="true" style="--x0: 62%; --y0: 125px; --x1: 88%; --y1: 319px"><span class="ks-glow" style="background: radial-gradient(circle, rgba(234,122,64,.6), rgba(242,177,82,0) 66%)"></span><svg class="ks-rays" viewBox="0 0 66 66"><g stroke="#E2733A" stroke-width="2.4" stroke-linecap="round"><path d="M33 2v7M33 57v7M2 33h7M57 33h7M11 11l5 5M50 50l5 5M55 11l-5 5M16 50l-5 5"></path></g></svg><span class="ks-core" style="background: radial-gradient(circle at 35% 32%, #F7B26A, #E2733A 58%, #B84E24); box-shadow: 0 0 0 8px rgba(242,177,82,0.22)"></span></div>
+  <span class="ks-cloud" aria-hidden="true" style="top: 70px; animation-duration: 95s; animation-delay: -20s"></span>
+  <span class="ks-cloud" aria-hidden="true" style="top: 180px; width: 180px; animation-duration: 120s; animation-delay: -65s; opacity: .8"></span>
+  <span class="ks-cloud" aria-hidden="true" style="top: 290px; width: 160px; height: 44px; animation-duration: 140s; animation-delay: -100s; opacity: .6"></span>
+  <svg class="ks-birds" viewBox="0 0 120 40" aria-hidden="true"><path d="M10 20q6-6 12 0q6-6 12 0"></path><path d="M40 10q5-5 10 0q5-5 10 0"></path><path d="M62 24q5-5 10 0q5-5 10 0"></path><path d="M86 14q4-4 8 0q4-4 8 0"></path></svg>
+  </sc-if>
+
+  <div style="max-width: 1360px; margin: 0 auto; min-height: 852px; box-sizing: border-box; border-radius: 32px; padding: 26px clamp(20px, 3.4vw, 48px) 40px; border: 2px solid rgba(255,255,255,0.85); background: rgba(255,250,242,0.18); display: flex; flex-direction: column; gap: 28px">
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W5_Choose.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+        </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W5}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+        </button></sc-if>
+        <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: 22px">{{t.brand}}</span>
+      </div>
+      <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF">
+        <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
+        <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
+      </div>
+    </header>
+
+    <div style="flex: 1; display: flex; flex-wrap: wrap; align-items: stretch; gap: 32px">
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 22px; animation: ks-rise 600ms ease-out both">
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+          <h1 style="margin: 0; font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(40px, 4.6vw, 72px); line-height: 0.95; text-transform: uppercase">
+            <span style="display: block; color: #14301E">{{t.h1}}</span>
+            <span style="display: block; color: #9A5426">{{t.h2}}</span>
+          </h1>
+          <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 52px; height: 52px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
+          </button>
+        </div>
+        <span style="align-self: flex-start; height: 34px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,0.85); font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A4A37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 7L9 3 5 7l4 4"></path><path d="M17 11l4 4-4 4-4-4"></path><path d="M8 12l4 4 6-6-4-4z"></path><path d="M9 21a6 6 0 0 0-6-6"></path></svg>{{t.source}}
+        </span>
+        <div style="flex: 1; background: #FFFFFF; border-radius: 28px; padding: 10px 26px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 30px 60px -32px rgba(40,50,20,0.5)">
+          <div style="display: flex; align-items: center; gap: 18px; padding: 18px 0">
+            <span style="width: 86px; flex-shrink: 0; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 900; font-size: 22px; text-transform: uppercase">{{t.m1}}</span>
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#9A5426" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            <span style="font-size: 19px; line-height: 1.35">{{t.d1}}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 18px; padding: 18px 0; border-top: 1px solid #EFE6D4">
+            <span style="width: 86px; flex-shrink: 0; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 900; font-size: 22px; text-transform: uppercase">{{t.m2}}</span>
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M12 2v20M4.9 6.5l14.2 11M4.9 17.5l14.2-11M9 4l3 2 3-2M9 20l3-2 3 2"></path></svg>
+            <span style="font-size: 19px; line-height: 1.35">{{t.d2}}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 18px; padding: 18px 0; border-top: 1px solid #EFE6D4">
+            <span style="width: 86px; flex-shrink: 0; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 900; font-size: 22px; text-transform: uppercase">{{t.m3}}</span>
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M7 14a4 4 0 010-8 5 5 0 019.6 1.2A3.4 3.4 0 0117 14zM9 17.5l-1 3M13 17.5l-1 3"></path></svg>
+            <span style="font-size: 19px; line-height: 1.35">{{t.d3}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 18px; animation: ks-rise 700ms ease-out 150ms both">
+        <div style="background: #14301E; color: #FFFFFF; border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -28px rgba(20,48,30,0.7)">
+          <span style="font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C8E05A">{{t.bestTag}}</span>
+          <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(32px, 3.2vw, 48px); line-height: 1; text-transform: uppercase">{{t.best}}</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px">
+            <sc-for list="{{reasons}}" as="r" hint-placeholder-count="3">
+              <span style="height: 40px; padding: 0 16px; border-radius: 999px; background: rgba(255,255,255,0.1); display: inline-flex; align-items: center; gap: 8px; font-size: 16px">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>{{r}}
+              </span>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border-radius: 28px; padding: 8px 26px; box-shadow: 0 24px 48px -30px rgba(40,50,20,0.5)">
+          <span style="display: block; padding: 14px 0 4px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7A6A4A">{{t.otherH}}</span>
+          <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 0">
+            <span style="font-weight: 700; font-size: 19px">{{t.o1}}</span>
+            <span style="font-size: 16px; color: #4A5646">{{t.o1s}}</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 0 16px; border-top: 1px solid #EFE6D4">
+            <span style="font-weight: 700; font-size: 19px">{{t.o2}}</span>
+            <span style="font-size: 16px; color: #4A5646">{{t.o2s}}</span>
+          </div>
+        </div>
+        <p style="margin: 0; padding: 12px 18px; border-radius: 18px; background: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.45; color: #3F4A3C">{{t.note}}</p>
+        <div style="flex: 1"></div>
+        <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W1_Home.dc.html" style="height: 68px; border-radius: 999px; background: #14301E; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 12px; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 20px; box-shadow: 0 18px 34px -16px rgba(20,48,30,0.7)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>
+          <span>{{t.cta}}</span>
+        </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W1}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; height: 68px; border-radius: 999px; background: #14301E; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 12px; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 20px; box-shadow: 0 18px 34px -16px rgba(20,48,30,0.7)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>
+          <span>{{t.cta}}</span>
+        </button></sc-if>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"embedded":{"editor":null,"default":false},"onNav":{"editor":null},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { lang: 'en' }; }
+  renderVals() {
+    var S = {
+      en: { brand: 'Khet Sathi', back: 'Back', h1: 'Next', h2: '3 months', listen: 'Listen', source: 'From 20 years of NASA data and your soil test',
+        m1: 'Dec', d1: 'Dry. Very little rain.', m2: 'Jan', d2: 'Very cold. Frost on some nights.', m3: 'Feb', d3: 'Warmer. A few showers.',
+        bestTag: 'Best to grow now', best: 'Lentil (masoor)', reasons: ['Needs little water', 'Makes your soil better', 'Ready by March'],
+        otherH: 'Other choices', o1: 'Mustard (tori)', o1s: 'Sells well, but needs more water.', o2: 'Leave it empty', o2s: 'What you do now. No income for 3 months.',
+        note: 'You know your land best. Ask your local agriculture office before you sow.', cta: 'Done' },
+      ne: { brand: 'खेत साथी', back: 'पछाडि', h1: 'अर्को', h2: '३ महिना', listen: 'सुन्नुहोस्', source: 'नासाको २० वर्षको डाटा र तपाईंको माटो जाँचबाट',
+        m1: 'पुस', d1: 'सुख्खा। धेरै कम वर्षा।', m2: 'माघ', d2: 'धेरै चिसो। केही रात तुसारो।', m3: 'फागुन', d3: 'न्यानो। केही झरी।',
+        bestTag: 'अहिले लगाउन सबैभन्दा राम्रो', best: 'मसुरो', reasons: ['कम पानी चाहिन्छ', 'माटो राम्रो बनाउँछ', 'चैतसम्म तयार'],
+        otherH: 'अरू विकल्प', o1: 'तोरी', o1s: 'राम्रो बिक्छ, तर बढी पानी चाहिन्छ।', o2: 'खाली छोड्ने', o2s: 'अहिले जस्तै। ३ महिना आम्दानी छैन।',
+        note: 'आफ्नो जमिन तपाईंलाई सबैभन्दा राम्रो थाहा छ। छर्नुअघि स्थानीय कृषि कार्यालयसँग सोध्नुहोस्।', cta: 'सकियो' }
+    };
+    var lang = this.state.lang;
+    var t = S[lang];
+    var on = 'height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: #14301E; color: #FFFFFF; font-weight: 700; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var off = 'height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #14301E; font-weight: 600; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var self_ = this;
+    return {
+      rootClass: this.props.embedded ? '' : 'ks-wbg',
+      showSky: !this.props.embedded,
+      standalone: !this.props.embedded,
+      embedded: !!this.props.embedded,
+      navTo: {W1: function () { if (self_.props.onNav) self_.props.onNav('W1'); }, W2: function () { if (self_.props.onNav) self_.props.onNav('W2'); }, W3: function () { if (self_.props.onNav) self_.props.onNav('W3'); }, W4: function () { if (self_.props.onNav) self_.props.onNav('W4'); }, W5: function () { if (self_.props.onNav) self_.props.onNav('W5'); }, W6: function () { if (self_.props.onNav) self_.props.onNav('W6'); }, W7: function () { if (self_.props.onNav) self_.props.onNav('W7'); }},
+      t: t,
+      isEn: lang === 'en' ? 'true' : 'false',
+      isNe: lang === 'ne' ? 'true' : 'false',
+      enStyle: lang === 'en' ? on : off,
+      neStyle: lang === 'ne' ? on : off,
+      setEn: () => this.setState({ lang: 'en' }),
+      setNe: () => this.setState({ lang: 'ne' }),
+      reasons: t.reasons,
+      speak: () => {
+        try {
+          var u = new SpeechSynthesisUtterance([t.m1, t.d1, t.m2, t.d2, t.m3, t.d3, t.bestTag, t.best].join(' '));
+          u.lang = lang === 'ne' ? 'ne-NP' : 'en-IN';
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(u);
+        } catch (err) {}
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

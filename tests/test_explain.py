@@ -20,7 +20,7 @@ CUR = _plan("current", [("rice", "06-23", "10-10"), ("potato", "10-30", "02-21")
 GAP = _plan("cover_gap", [("rice", "06-15", "10-02"), ("wheat", "10-15", "03-03")],
             {"harvest": 89.6, "water": 50.8, "cover": 68.5, "soil_kept": 74.4}, pest_break=0,
             needs_water_window=True, windows=[None, "Irrigated Condition"],
-            score_uncorrected_rain={"harvest": 93.0, "water": 55.0, "cover": 68.5, "soil_kept": 72.4})
+            score_dhm_rain={"harvest": 93.0, "water": 55.0, "cover": 68.5, "soil_kept": 72.4})
 SAFE = _plan("safest", [("rice", "06-15", "10-02"), ("lentil", "10-15", "02-24")],
              {"harvest": 80.8, "water": 44.5, "cover": 66.6, "soil_kept": 74.2}, pest_break=1, windows=[None, None],
              stability=75.6)
@@ -46,7 +46,7 @@ def test_cover_gap_with_wheat_is_flagged_for_water_and_names_lentil_as_the_optio
     out = ex.render(GAP, CUR, CTX, LIB, WORDS)
     assert "Wheat here usually needs watering." in out["tabs"]["check"]
     assert "Lentil after rice is another choice." in out["tabs"]["check"]
-    assert "Without our rain fix, it was 93." in out["tabs"]["evidence"]
+    assert "With the nearby station's rain level: 93." in out["tabs"]["evidence"]
     assert "Near here, those gauge reports stopped in 2017." in out["tabs"]["unknown"]
     assert "२०१७" in out["tabs_ne"]["unknown"] and len(out["tips"]) == len(out["tips_ne"])
 

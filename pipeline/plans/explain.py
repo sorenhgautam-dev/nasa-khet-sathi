@@ -85,7 +85,7 @@ def conditions(plan, current, ctx, lib):
                       ("soil_kept", "soil_better")):
         if round(plan["score"][key]) > round(current["score"][key]):
             held.add(cond)
-    u = plan.get("score_uncorrected_rain")
+    u = plan.get("score_dhm_rain")
     if u and round(u["harvest"]) != round(plan["score"]["harvest"]):
         held.add("rain_changes_harvest")
     if ctx.get("rain_corrected"):
@@ -152,9 +152,9 @@ def values(plan, current, ctx, lib, names):
         v["assumed_crop"] = {lang: f" {join[lang]} ".join(crop_name(c)[lang] for c in assumed) for lang in ("en", "ne")}
     if ctx["diary"].get("shift_days") is not None:
         v["shift_days_abs"] = abs(int(round(ctx["diary"]["shift_days"])))
-    u = plan.get("score_uncorrected_rain")
+    u = plan.get("score_dhm_rain")
     if u:
-        v["harvest_uncorrected"] = int(round(u["harvest"]))
+        v["harvest_dhm"] = int(round(u["harvest"]))
     if ctx.get("rain_fix_year"):
         v["rain_fix_year"] = ctx["rain_fix_year"]
     water = [c for c, w in zip(crops, plan.get("windows", [None] * len(crops))) if irrigated_window(w)]

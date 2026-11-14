@@ -174,9 +174,11 @@ def test_the_old_method_is_the_constant_kc():
 
 
 # --- the free callers follow rules.yaml bare_soil.apply (coordinator's item 1, 2026-11-14) ---
-@pytest.mark.parametrize("script", ["run_diary.py", "run_memory.py", "run_smap_check.py", "run_season.py",
-                                    "run_replay.py", "run_plans.py"])
+@pytest.mark.parametrize("script", ["scripts/run_diary.py", "scripts/run_memory.py", "scripts/run_smap_check.py",
+                                    "scripts/run_season.py", "scripts/run_replay.py", "scripts/run_plans.py",
+                                    "scripts/run_twin_now.py", "scripts/run_validation_checks.py", "pipeline/future/runs.py"])
 def test_callers_take_the_bare_soil_method_from_the_switch_not_the_constant(script):
+    """Every runner takes the switches through evaporation.bare_soil_setting or pipeline/plans/twin_options.py."""
     from pathlib import Path
-    src = (Path(__file__).resolve().parents[1] / "scripts" / script).read_text()
-    assert 'rules["bare_soil"]["kc"]' not in src and "bare_soil_setting" in src
+    src = (Path(__file__).resolve().parents[1] / script).read_text()
+    assert 'rules["bare_soil"]["kc"]' not in src and ("bare_soil_setting" in src or "twin_options" in src)

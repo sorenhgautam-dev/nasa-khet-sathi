@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "story_schema.json",
+  "title": "site/data/story.json: the 'How we know' page as a visual data story",
+  "description": "Built by pipeline/export/build_story.py from finished outputs only. Charts carry their sources and the files they were read from (inputs). Points are [x, y]; for a series with role 'range', y is [low, high]; y is null for a gap. Axis x type: 'year' (integers), 'date' (ISO YYYY-MM-DD; monthly values sit on the 15th), 'month' (Jan..Dec, as diary.months[].m), 'category' (ids listed in x.categories with their words). A chart whose status is 'not_ready' or 'coming' holds no data. x and y are null for kind 'map' and 'table'.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["generated", "field", "placeholder", "ne_review", "sections", "inputs", "charts", "report_card",
+               "satellites", "resources"],
+  "properties": {
+    "generated": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "field": {"type": "string", "minLength": 1},
+    "placeholder": {"type": "boolean", "description": "true while the field's location and rotation are placeholders"},
+    "ne_review": {"const": "needs native-speaker review", "description": "every Nepali text in this file is an SI draft"},
+    "sections": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["id", "title", "charts"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"$ref": "#/$defs/text"},
+          "charts": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "description": "for each chart id (and report_card, satellites, resources): the repository files it was read from",
+      "additionalProperties": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+    },
+    "charts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/chart"}},
+    "report_card": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["id", "thing", "confidence", "why", "refs"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "thing": {"$ref": "#/$defs/text"},
+          "confidence": {"enum": ["high", "medium", "low"]},
+          "why": {"$ref": "#/$defs/text"},
+          "refs": {"type": "array", "minItems": 1, "items": {"type": "string"},
+                   "description": "VALIDATION.md row numbers behind the line"}
+        }
+      }
+    },
+    "satellites": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "mission", "instrument", "dataset", "kind", "job", "checked", "refs"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "mission": {"type": "string", "minLength": 1},
+          "instrument": {"type": "string", "minLength": 1},
+          "dataset": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["satellite", "satellites and gauges", "model"]},
+          "job": {"$ref": "#/$defs/text"},
+          "checked": {"$ref": "#/$defs/text"},
+          "refs": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "resources": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["name", "status", "how"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "status": {"enum": ["used", "equivalent", "not used"]},
+          "how": {"$ref": "#/$defs/text"},
+          "instead": {"type": "string", "minLength": 1, "description": "the Nepal or world equivalent used (status 'equivalent')"},
+          "label": {"type": "string", "minLength": 1},
+          "link": {"type": "string", "pattern": "^https://"}
+        },
+        "if": {"properties": {"status": {"const": "equivalent"}}},
+        "then": {"required": ["instead"]}
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "object", "additionalProperties": false, "required": ["en", "ne"],
+      "properties": {"en": {"type": "string", "minLength": 1}, "ne": {"type": "string", "minLength": 1}}
+    },
+    "text_lines": {
+      "type": "object", "additionalProperties": false, "required": ["en", "ne"],
+      "properties": {"en": {"type": "array", "items": {"type": "string", "minLength": 1}},
+                     "ne": {"type": "array", "items": {"type": "string", "minLength": 1}}}
+    },
+    "axis_x": {
+      "type": "object", "additionalProperties": false, "required": ["label", "type"],
+      "properties": {
+        "label": {"$ref": "#/$defs/text"},
+        "type": {"enum": ["year", "date", "month", "category", "number"]},
+        "categories": {
+          "type": "array",
+          "items": {"type": "object", "additionalProperties": false, "required": ["id", "en", "ne"],
+                    "properties": {"id": {"type": "string"}, "en": {"type": "string"}, "ne": {"type": "string"}}}
+        }
+      }
+    },
+    "axis_y": {
+      "type": "object", "additionalProperties": false, "required": ["label", "unit"],
+      "properties": {
+        "label": {"$ref": "#/$defs/text"},
+        "unit": {"type": "string"},
+        "type": {"enum": ["number", "category"]},
+        "categories": {
+          "type": "array",
+          "items": {"type": "object", "additionalProperties": false, "required": ["id", "en", "ne"],
+                    "properties": {"id": {"type": "string"}, "en": {"type": "string"}, "ne": {"type": "string"}}}
+        },
+        "ref": {"type": "number", "description": "a reference line (e.g. 1 = the same as the gauges)"},
+        "ref_label": {"$ref": "#/$defs/text"}
+      }
+    },
+    "point": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "prefixItems": [
+        {"type": ["integer", "number", "string"]},
+        {"anyOf": [{"type": "number"}, {"type": "null"}, {"type": "string"},
+                   {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number"}}]}
+      ]
+    },
+    "series": {
+      "type": "object", "additionalProperties": false, "required": ["name", "role", "points"],
+      "properties": {
+        "name": {"$ref": "#/$defs/text"},
+        "role": {"enum": ["main", "compare", "range", "marker"]},
+        "points": {"type": "array", "items": {"$ref": "#/$defs/point"}}
+      }
+    },
+    "chart": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "section", "status", "title", "caption", "sources", "kind", "x", "y", "series", "bands",
+                   "markers", "rows"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "section": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ready", "not_ready", "coming"]},
+        "title": {"$ref": "#/$defs/text"},
+        "caption": {"$ref": "#/$defs/text"},
+        "sources": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "kind": {"enum": ["line", "bars", "bands", "table", "timeline", "map"]},
+        "x": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/axis_x"}]},
+        "y": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/axis_y"}]},
+        "series": {"type": "array", "items": {"$ref": "#/$defs/series"}},
+        "bands": {
+          "type": "array",
+          "items": {"type": "object", "additionalProperties": false, "required": ["from", "to", "label"],
+                    "properties": {"from": {"type": ["string", "integer"]}, "to": {"type": ["string", "integer"]},
+                                   "label": {"$ref": "#/$defs/text"}}}
+        },
+        "markers": {
+          "type": "array",
+          "items": {"type": "object", "additionalProperties": false, "required": ["x", "label"],
+                    "properties": {"x": {"type": ["string", "integer", "number"]}, "label": {"$ref": "#/$defs/text"}}}
+        },
+        "rows": {"type": "array", "items": {"type": "object"}},
+        "link": {"type": "string", "minLength": 1, "description": "kind 'map': the site file it draws (relative path)"},
+        "note": {"$ref": "#/$defs/text"},
+        "words": {"$ref": "#/$defs/text_lines"},
+        "summary": {"type": "object"}
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"enum": ["not_ready", "coming"]}}},
+         "then": {"properties": {"series": {"maxItems": 0}, "rows": {"maxItems": 0}}}},
+        {"if": {"properties": {"status": {"const": "ready"}, "kind": {"enum": ["line", "bars", "bands", "timeline"]}}},
+         "then": {"properties": {"series": {"minItems": 1}, "x": {"$ref": "#/$defs/axis_x"},
+                                 "y": {"$ref": "#/$defs/axis_y"}}}},
+        {"if": {"properties": {"kind": {"const": "map"}}}, "then": {"required": ["link"]}}
+      ]
+    }
+  }
+}

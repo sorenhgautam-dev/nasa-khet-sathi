@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ne">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Khet Sathi · खेत साथी</title>
+<meta name="description" content="Khet Sathi helps farmers choose what to grow, and when, from NASA records. Static site: every number comes from site/data.">
+<meta name="theme-color" content="#14301E">
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/app.css">
+<link rel="preload" as="image" href="img/farm.webp" type="image/webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="js/app.js" defer></script>
+</head>
+<body class="r-home">
+<div id="sky" aria-hidden="true">
+  <div class="home"></div>
+  <div class="land"></div>
+  <div class="tint"></div>
+  <div class="sun"><span class="glow"></span><svg class="rays" viewBox="0 0 66 66"><g stroke="#F2B654" stroke-width="2.4" stroke-linecap="round"><path d="M33 2v7M33 57v7M2 33h7M57 33h7M11 11l5 5M50 50l5 5M55 11l-5 5M16 50l-5 5"/></g></svg><span class="core"></span><span class="set"></span></div>
+  <span class="cloud" style="top:118px;width:90px;height:26px;animation-duration:120s;animation-delay:-35s;opacity:.7"></span>
+  <span class="cloud" style="top:64px;animation-duration:70s;animation-delay:-22s"></span>
+  <span class="cloud" style="top:168px;width:110px;animation-duration:95s;animation-delay:-60s;opacity:.8"></span>
+  <svg class="birds" viewBox="0 0 120 40"><path d="M10 20q6-6 12 0q6-6 12 0"/><path d="M40 10q5-5 10 0q5-5 10 0"/><path d="M62 24q5-5 10 0q5-5 10 0"/></svg>
+  <svg class="road" viewBox="0 0 390 130" preserveAspectRatio="none"><path d="M -10 82 C 60 38, 120 106, 200 70 S 330 12, 400 46" fill="none" stroke="#1E3A24" stroke-opacity=".16" stroke-width="12" stroke-linecap="round"/><path class="ln" d="M -10 82 C 60 38, 120 106, 200 70 S 330 12, 400 46" fill="none" stroke="#C8E05A" stroke-width="7" stroke-linecap="round" pathLength="1"/></svg>
+  <svg class="grass" viewBox="0 0 390 82" preserveAspectRatio="none"></svg>
+</div>
+<div id="curtain"><span class="mark"><span class="dot"></span><span lang="ne">खेत साथी</span></span></div>
+<div id="shell">
+  <div class="frame">
+    <header id="top"></header>
+    <main id="app" tabindex="-1"></main>
+  </div>
+</div>
+<div id="sheet" hidden></div>
+</body>
+</html>

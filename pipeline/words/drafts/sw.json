@@ -1219,6 +1219,434 @@
     "text": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
     "source": "FAO (1998), FAO's Emergency Activities: Technical Handbook Series, Phase One: Prevention, section 2.1.1 'Crop Diversification': https://www.fao.org/4/X6869E/x6869e01.htm"
    }
+  },
+  "screens.home.texts.hero_1": {
+   "en": "Know your land.",
+   "sw": "Ijue ardhi yako."
+  },
+  "screens.home.texts.hero_2": {
+   "en": "Plan your season.",
+   "sw": "Panga msimu wako."
+  },
+  "screens.home.texts.card_today_tag": {
+   "en": "Soil check",
+   "sw": "Kupima udongo"
+  },
+  "screens.home.texts.card_today_big": {
+   "en": "Today",
+   "sw": "Leo"
+  },
+  "screens.home.texts.card_today_sub": {
+   "en": "How each part of your field is doing.",
+   "sw": "Kila sehemu ya shamba lako ikoje."
+  },
+  "screens.home.texts.card_months_tag": {
+   "en": "NASA records",
+   "sw": "Kumbukumbu za NASA"
+  },
+  "screens.home.texts.card_months_big": {
+   "en": "3 months",
+   "sw": "Miezi 3"
+  },
+  "screens.home.texts.card_months_sub": {
+   "en": "What these months usually bring.",
+   "sw": "Miezi hii kwa kawaida huleta nini."
+  },
+  "screens.home.texts.records_years": {
+   "en": "We read NASA records, {source_years}.",
+   "sw": "Tunasoma kumbukumbu za NASA, {source_years}."
+  },
+  "screens.home.texts.prepared_title": {
+   "en": "Fields we have looked at",
+   "sw": "Mashamba tuliyoangalia"
+  },
+  "screens.where.texts.photo_h1": {
+   "en": "Your field",
+   "sw": "Shamba lako"
+  },
+  "screens.where.texts.photo_h2": {
+   "en": "from above",
+   "sw": "kutoka juu"
+  },
+  "screens.where.texts.map_not_photo": {
+   "en": "This is a map, not a photo.",
+   "sw": "Hii ni ramani, si picha."
+  },
+  "screens.where.texts.line_is_field": {
+   "en": "The line shows the sample field.",
+   "sw": "Mstari unaonyesha shamba la mfano."
+  },
+  "screens.where.texts.photo_later": {
+   "en": "A real photo comes when we visit.",
+   "sw": "Picha halisi itakuja tutakapotembelea."
+  },
+  "screens.where.texts.inside_sample": {
+   "en": "We show our sample field near you.",
+   "sw": "Tunaonyesha shamba letu la mfano karibu nawe."
+  },
+  "screens.where.texts.draw_own": {
+   "en": "Mark my own field",
+   "sw": "Weka alama shamba langu"
+  },
+  "screens.where.texts.make_parts": {
+   "en": "Show the parts",
+   "sw": "Onyesha sehemu"
+  },
+  "screens.from_space.texts.usually": {
+   "en": "Usually:",
+   "sw": "Kwa kawaida:"
+  },
+  "screens.parts.texts.making": {
+   "en": "Making the parts…",
+   "sw": "Tunatengeneza sehemu…"
+  },
+  "screens.each_part.texts.today_h1": {
+   "en": "Your field",
+   "sw": "Shamba lako"
+  },
+  "screens.each_part.texts.today_h2": {
+   "en": "today",
+   "sw": "leo"
+  },
+  "screens.each_part.texts.as_of": {
+   "en": "As of this day:",
+   "sw": "Hadi siku hii:"
+  },
+  "screens.each_part.texts.greener_more": {
+   "en": "A little greener than the rest.",
+   "sw": "Kijani kidogo zaidi kuliko nyingine."
+  },
+  "screens.each_part.texts.greener_less": {
+   "en": "A little less green than the rest.",
+   "sw": "Kijani kidogo pungufu kuliko nyingine."
+  },
+  "screens.each_part.texts.greener_unknown": {
+   "en": "We can't tell how green.",
+   "sw": "Hatuwezi kusema ukijani wake."
+  },
+  "screens.each_part.texts.low_ground": {
+   "en": "Low ground: cold air can collect.",
+   "sw": "Ardhi ya chini: hewa baridi inaweza kukaa."
+  },
+  "screens.each_part.texts.one_soil": {
+   "en": "All parts share one soil and weather.",
+   "sw": "Sehemu zote: udongo mmoja, hali ya hewa moja."
+  },
+  "screens.check_soil.texts.prototype": {
+   "en": "Our soil stick is a prototype.",
+   "sw": "Kijiti chetu cha udongo ni cha majaribio."
+  },
+  "screens.check_soil.texts.by_hand": {
+   "en": "Today we carry it by hand.",
+   "sw": "Leo tunakibeba kwa mkono."
+  },
+  "screens.check_soil.texts.robot_next": {
+   "en": "A robot to carry it comes next.",
+   "sw": "Roboti ya kukibeba itakuja baadaye."
+  },
+  "screens.check_soil.texts.robot_name": {
+   "en": "Krishi Scout, our robot idea",
+   "sw": "Krishi Scout, wazo letu la roboti"
+  },
+  "screens.check_soil.texts.robot_shows": {
+   "en": "This shows how the robot will work.",
+   "sw": "Hivi ndivyo roboti itakavyofanya kazi."
+  },
+  "screens.check_soil.texts.top_only": {
+   "en": "It reads only the top few centimetres.",
+   "sw": "Inapima sentimita chache za juu tu."
+  },
+  "screens.check_soil.texts.after_test": {
+   "en": "Readings come after our team tests it.",
+   "sw": "Vipimo vitakuja baada ya timu kukijaribu."
+  },
+  "screens.check_soil.texts.no_reading": {
+   "en": "No reading yet",
+   "sw": "Bado hakuna kipimo"
+  },
+  "screens.check_soil.texts.settling": {
+   "en": "Settling…",
+   "sw": "Inatulia…"
+  },
+  "screens.check_soil.texts.measuring": {
+   "en": "Measuring…",
+   "sw": "Inapima…"
+  },
+  "screens.check_soil.texts.measured": {
+   "en": "Measured",
+   "sw": "Imepimwa"
+  },
+  "screens.check_soil.texts.test_again": {
+   "en": "The reading jumped. Please test again.",
+   "sw": "Kipimo kiliruka. Tafadhali pima tena."
+  },
+  "screens.check_soil.texts.off_scale": {
+   "en": "Off the scale",
+   "sw": "Nje ya kipimo"
+  },
+  "screens.check_soil.texts.not_connected": {
+   "en": "Soil stick not connected.",
+   "sw": "Kijiti cha udongo hakijaunganishwa."
+  },
+  "screens.check_soil.texts.part_of": {
+   "en": "Part {section} of {section_count}",
+   "sw": "Sehemu {section} kati ya {section_count}"
+  },
+  "screens.check_soil.texts.drier": {
+   "en": "Drier than the other parts",
+   "sw": "Kavu kuliko sehemu nyingine"
+  },
+  "screens.check_soil.texts.wetter": {
+   "en": "Wetter than the other parts",
+   "sw": "Na unyevu kuliko sehemu nyingine"
+  },
+  "screens.check_soil.texts.about_same": {
+   "en": "About the same as the others",
+   "sw": "Karibu sawa na nyingine"
+  },
+  "screens.check_soil.texts.before_reading": {
+   "en": "Before the reading:",
+   "sw": "Kabla ya kipimo:"
+  },
+  "screens.check_soil.texts.band_needs_water": {
+   "en": "Needs water",
+   "sw": "Inahitaji maji"
+  },
+  "screens.check_soil.texts.band_good": {
+   "en": "Good",
+   "sw": "Nzuri"
+  },
+  "screens.check_soil.texts.band_too_wet": {
+   "en": "Too wet",
+   "sw": "Imelowa sana"
+  },
+  "screens.check_soil.texts.water_in_soil": {
+   "en": "Water in the soil:",
+   "sw": "Maji udongoni:"
+  },
+  "screens.check_soil.texts.give_or_take": {
+   "en": "give or take",
+   "sw": "zaidi au pungufu"
+  },
+  "screens.what_to_grow.texts.next_h1": {
+   "en": "Next",
+   "sw": "Ijayo:"
+  },
+  "screens.what_to_grow.texts.next_h2": {
+   "en": "3 months",
+   "sw": "miezi 3"
+  },
+  "screens.what_to_grow.texts.next_to_plant": {
+   "en": "Next to plant:",
+   "sw": "Kinachofuata kupandwa:"
+  },
+  "screens.what_to_grow.texts.choices_title": {
+   "en": "Your choices",
+   "sw": "Machaguo yako"
+  },
+  "screens.what_to_grow.texts.tap_choice": {
+   "en": "Tap a choice to see why.",
+   "sw": "Gusa chaguo kuona kwa nini."
+  },
+  "screens.what_to_grow.texts.more_than_now": {
+   "en": "More than now",
+   "sw": "Zaidi ya sasa"
+  },
+  "screens.what_to_grow.texts.less_than_now": {
+   "en": "Less than now",
+   "sw": "Pungufu kuliko sasa"
+  },
+  "screens.what_to_grow.texts.same_as_now": {
+   "en": "About the same as now",
+   "sw": "Karibu sawa na sasa"
+  },
+  "screens.what_to_grow.texts.water_never_out": {
+   "en": "This assumes water never runs out.",
+   "sw": "Hii inadhani maji hayaishi kamwe."
+  },
+  "screens.what_to_grow.texts.see_years": {
+   "en": "See the last {year_count} years",
+   "sw": "Tazama miaka {year_count} iliyopita"
+  },
+  "screens.what_to_grow.texts.range_why": {
+   "en": "Two ways of counting rain give a range.",
+   "sw": "Njia mbili za kuhesabu mvua zinatoa kiwango."
+  },
+  "screens.what_to_grow.texts.range_town": {
+   "en": "One matches the nearby town's usual rain.",
+   "sw": "Moja inafuata mvua ya kawaida ya mji jirani."
+  },
+  "screens.last_years.texts.which_plan": {
+   "en": "Which plan?",
+   "sw": "Mpango upi?"
+  },
+  "screens.field_future.texts.by_year": {
+   "en": "By {future_year}",
+   "sw": "Kufikia {future_year}"
+  },
+  "shared.buttons.not_ready": {
+   "en": "Not ready yet.",
+   "sw": "Bado haiko tayari."
+  },
+  "shared.buttons.sample_field": {
+   "en": "Sample field",
+   "sw": "Shamba la mfano"
+  },
+  "shared.buttons.how_we_know": {
+   "en": "How we know",
+   "sw": "Tunajuaje"
+  },
+  "screens.your_plan.texts.sources_title": {
+   "en": "Where our numbers come from",
+   "sw": "Namba zetu zinatoka wapi"
+  },
+  "shared.buttons.about": {
+   "en": "about",
+   "sw": "karibu"
+  },
+  "shared.buttons.out_of_100": {
+   "en": "out of 100",
+   "sw": "kati ya 100"
+  },
+  "shared.buttons.close": {
+   "en": "Close",
+   "sw": "Funga"
+  },
+  "shared.buttons.language": {
+   "en": "Language",
+   "sw": "Lugha"
+  },
+  "screens.check_soil.texts.choose_h1": {
+   "en": "What do you",
+   "sw": "Ungependa"
+  },
+  "screens.check_soil.texts.choose_h2": {
+   "en": "want to see?",
+   "sw": "kuona nini?"
+  },
+  "screens.your_plan.texts.computer_helped": {
+   "en": "How the computer helped",
+   "sw": "Jinsi kompyuta ilivyosaidia"
+  },
+  "screens.your_plan.texts.helped_words": {
+   "en": "A computer drafted many words here.",
+   "sw": "Kompyuta iliandika maneno mengi hapa."
+  },
+  "screens.your_plan.texts.helped_check": {
+   "en": "Nepali words still need a careful check.",
+   "sw": "Maneno ya Kinepali bado yanahitaji kukaguliwa."
+  },
+  "screens.your_plan.texts.helped_drafts": {
+   "en": "Other languages are draft translations.",
+   "sw": "Lugha nyingine ni rasimu za tafsiri."
+  },
+  "screens.your_plan.texts.helped_seasons": {
+   "en": "A computer also helped find the seasons.",
+   "sw": "Kompyuta pia ilisaidia kupata misimu."
+  },
+  "screens.your_plan.texts.seasons_title": {
+   "en": "Finding the seasons",
+   "sw": "Kupata misimu"
+  },
+  "screens.your_plan.texts.seasons_tested": {
+   "en": "We tested three ways on unseen years.",
+   "sw": "Tulijaribu njia tatu kwa miaka isiyoonekana."
+  },
+  "screens.your_plan.texts.way_threshold": {
+   "en": "A simple green rule",
+   "sw": "Kanuni rahisi ya ukijani"
+  },
+  "screens.your_plan.texts.way_changepoint": {
+   "en": "A change finder",
+   "sw": "Kitafuta mabadiliko"
+  },
+  "screens.your_plan.texts.way_detective": {
+   "en": "A learning computer",
+   "sw": "Kompyuta inayojifunza"
+  },
+  "screens.your_plan.texts.we_use_this": {
+   "en": "We use this one.",
+   "sw": "Tunatumia hii."
+  },
+  "screens.your_plan.texts.rain_fix_title": {
+   "en": "Fixing the rain numbers",
+   "sw": "Kurekebisha namba za mvua"
+  },
+  "screens.your_plan.texts.rains_title": {
+   "en": "When the rains come",
+   "sw": "Mvua zinakuja lini"
+  },
+  "screens.your_plan.texts.memory_title": {
+   "en": "Teaching a computer this field",
+   "sw": "Kuifundisha kompyuta shamba hili"
+  },
+  "screens.your_plan.texts.area_title": {
+   "en": "Fields around the sample field",
+   "sw": "Mashamba yanayozunguka shamba la mfano"
+  },
+  "screens.your_plan.texts.future_title": {
+   "en": "Looking ahead",
+   "sw": "Kuangalia mbele"
+  },
+  "screens.your_plan.texts.not_ready_title": {
+   "en": "What is not ready yet",
+   "sw": "Kisicho tayari bado"
+  },
+  "screens.your_plan.texts.nr_photo": {
+   "en": "A real photo of the field.",
+   "sw": "Picha halisi ya shamba."
+  },
+  "screens.your_plan.texts.nr_readings": {
+   "en": "Soil stick readings from the field.",
+   "sw": "Vipimo vya kijiti kutoka shambani."
+  },
+  "screens.your_plan.texts.nr_own_field": {
+   "en": "Your own field: today we show a sample.",
+   "sw": "Shamba lako: leo tunaonyesha mfano."
+  },
+  "screens.your_plan.texts.nr_robot": {
+   "en": "The robot that carries the stick.",
+   "sw": "Roboti inayobeba kijiti."
+  },
+  "screens.your_plan.texts.report_card": {
+   "en": "How sure are we?",
+   "sw": "Tuna uhakika kiasi gani?"
+  },
+  "screens.your_plan.texts.sure_high": {
+   "en": "Quite sure",
+   "sw": "Uhakika mkubwa"
+  },
+  "screens.your_plan.texts.sure_medium": {
+   "en": "Fairly sure",
+   "sw": "Uhakika wa wastani"
+  },
+  "screens.your_plan.texts.sure_low": {
+   "en": "Not very sure",
+   "sw": "Uhakika mdogo"
+  },
+  "screens.your_plan.texts.missions_title": {
+   "en": "The NASA missions we used",
+   "sw": "Misheni za NASA tulizotumia"
+  },
+  "shared.buttons.read_more": {
+   "en": "Read more",
+   "sw": "Soma zaidi"
+  },
+  "shared.buttons.source_label": {
+   "en": "Source:",
+   "sw": "Chanzo:"
+  },
+  "screens.your_plan.texts.method_title": {
+   "en": "How we worked it out",
+   "sw": "Jinsi tulivyokokotoa"
+  },
+  "screens.your_plan.texts.story_title": {
+   "en": "What the records show",
+   "sw": "Kumbukumbu zinaonyesha nini"
+  },
+  "screens.your_plan.texts.links_title": {
+   "en": "To read more",
+   "sw": "Kusoma zaidi"
   }
  }
 }

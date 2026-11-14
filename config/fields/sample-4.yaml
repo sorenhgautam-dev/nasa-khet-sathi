@@ -6,7 +6,7 @@
 # checked it on satellite imagery yet (the demo's first square was a construction plot). The rotation, water source and
 # elevation are not known: the rotations are the demo's placeholders, elevation_m is filled when the pipeline runs.
 # Why picked: best-ranked passing square in the SW quadrant (rank 2466 of 4752; weaker season's monthly peak NDVI 0.549), 6.77 km from the demo field
-id: sample_4
+id: sample-4
 name: Bhaktapur sample field 4 (PLACEHOLDER)
 placeholder: true
 sample: true
@@ -32,3 +32,4 @@ current_rotation_options:
 current_rotation_source: 'PLACEHOLDER (sample field, as the demo''s, owner 2026-11-12 and 2026-11-13): rice in the monsoon, then potato in winter, or rice then wheat; nobody has asked this field''s farmer'
 validation_station: NP000444540
 correction_label: Kathmandu-valley correction
+rain_check: {normals: [Bhaktapur, Kathmandu Airport], station_key: airport, station_name: Kathmandu Airport}  # DHM 1991-2020 normals, as for the demo (scripts/run_rain_check.py DEMO_RAIN_CHECK; REVIEW_2 H6)

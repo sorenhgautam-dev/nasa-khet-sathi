@@ -24,7 +24,7 @@ from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.ml import memory as fm  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
-from pipeline.twin.evaporation import bare_soil_setting  # noqa: E402
+from pipeline.plans import twin_options as to  # noqa: E402
 
 
 def dataset(field, rules, lib, data=REPO / "data"):
@@ -34,14 +34,15 @@ def dataset(field, rules, lib, data=REPO / "data"):
     cov, by = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by["bare"], **{c: by[cov[c]] for c in cov}}
     rotation, rot_label = sim.rotation_for(field, rules)
-    twin = sim.replay(w, rotation, lib, soil, cn, bare_kc=bare_soil_setting(rules["bare_soil"], soil), irrigated=False,
-                      kc_climate=rules["kc_climate"]["apply"])["daily"]
+    sj = json.loads((checks / "diary_seasons.json").read_text())
+    # the rain-fed replay with every switch of rules.yaml (pipeline/plans/twin_options.py: bare_soil, season_dates on the
+    # satellite's seasons, paddy_rainfed), as the exported replay
+    twin = to.replay(w, rotation, lib, soil, cn, rules, irrigated=False, farmer=True, seasons=to.hls_seasons(sj))["daily"]
     daily = pd.DataFrame({"date": pd.DatetimeIndex(twin["date"]), "eta_mm": twin["eta_mm"].to_numpy(float),
                           "etc_mm": twin["etc_mm"].to_numpy(float)})
     daily = daily.merge(pd.DataFrame({"date": pd.DatetimeIndex(w["date"]), "rain_mm": w["rain_mm"].to_numpy(float),
                                       "tmax_c": w["tmax_c"].to_numpy(float)}), on="date", how="left")
     onset = {int(y): v for y, v in json.loads((checks / "diary_onset.json").read_text())["day_of_year"].items()}
-    sj = json.loads((checks / "diary_seasons.json").read_text())
     rows = []
     for ss in sj["chosen"]["seasons_by_year"].values():
         for s in ss:

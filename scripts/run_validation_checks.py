@@ -38,7 +38,7 @@ from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import generate as ge  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
-from pipeline.twin import season  # noqa: E402
+from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
 
 RULE_COMMIT = "fe3223a"
@@ -70,15 +70,14 @@ def _same_seasons(mine, stored, what):
 def twin_runs(field, rules, lib, soil, w, checks_dir, data):
     """The rain-fed twin in memory for the current rotation and the rice-then-wheat option, checked against the stored
     outputs. Returns {'current': replay result, 'wheat': replay result or None, 'wheat_plan': id}."""
-    rr, rp = _script("run_replay"), _script("run_plans")
     rotation, _ = sim.rotation_for(field, rules)
     cov, by = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by["bare"], **{c: by[cov[c]] for c in cov}}
-    kw = dict(bare_kc=rr.bare_setting(rules, soil), kc_climate=rules["kc_climate"]["apply"])
-    if rr.season_dates_on(rules):
-        plan = sim.rotation_plan(rotation, lib, w["date"].min(), w["date"].max())
-        kw["plan"], _ = season.plan_from_seasons(plan, rr.hls_seasons(checks_dir / "diary_seasons.json"), lib, w["date"].max())
-    cur = rr.rainfed_replay(w, rotation, lib, soil, cn, kw, rules)
+    # every switch of rules.yaml as the runners apply them (pipeline/plans/twin_options.py): bare_soil, season_dates (the
+    # farmer's plans on the satellite's seasons), paddy_rainfed (rain-fed paddy on a calendar day waits for its rain)
+    sj_path = checks_dir / "diary_seasons.json"
+    hls = to.hls_seasons(json.loads(sj_path.read_text())) if sj_path.exists() else None
+    cur = to.replay(w, rotation, lib, soil, cn, rules, irrigated=False, farmer=True, seasons=hls)
     stored = json.loads((checks_dir / "replay.json").read_text())
     _same_seasons(cur["seasons"], stored["rain-fed"]["seasons"], f"{checks_dir.name}/replay.json")
     out = {"current": cur, "rotation": rotation, "wheat": None, "wheat_plan": None}
@@ -90,9 +89,8 @@ def twin_runs(field, rules, lib, soil, w, checks_dir, data):
             specs = next(p["specs"] for p in pj["plans"] if p["id"] == opt["plan"]) if any(p["id"] == opt["plan"] for p in pj["plans"]) \
                 else [{"crop": c, "window": int(wd[1:]), "position": pos} for c, wd, pos in (x.split(".") for x in opt["plan"].split("+"))]
             crops = [s["crop"] for s in specs]
-            kw2 = dict(bare_kc=rp.bare_setting(rules, soil), kc_climate=rules["kc_climate"]["apply"],
-                       plan=ge.plan_dates(specs, lib, w["date"].min(), w["date"].max()))
-            wr = rp.rainfed_replay(w, crops, lib, soil, cn, kw2, rules)
+            wr = to.replay(w, crops, lib, soil, cn, rules, irrigated=False, plan=ge.plan_dates(specs, lib, w["date"].min(),
+                           w["date"].max()), farmer=True, seasons=hls)      # a current-plan option: the farmer's plan
             mine = {y["year"]: y["harvest"] for y in wr["years"]}
             for y in opt["replay"]["years"]:
                 if abs(mine.get(y["year"], np.nan) - y["harvest"]) > TOL:

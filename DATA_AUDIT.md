@@ -327,7 +327,7 @@ square (candidate 1 of the demo's rule with the zone's seasons; METHOD_NOTES 86)
 | --- | --- | --- | --- |
 | ESA WorldCover | v200 2021, tile S21E045, box window (no login) | done | 60.5% cropland, 26.7% grassland, 8.2% built-up of 196,992 pixels |
 | HLS-VI L30 + S30 | v2.0 windows of tile T38KQE (`cogwindows.py`); 2023-2025 first (`--since`), then 2013-2025 | done: 368 of 368 L30, 638 of 638 S30 (2013-04 to 2025-12; 2023-2025 first; 21 failed reads all succeeded on a retry); cards written | one tile, no overlap; the windows share one grid (two spellings of the same UTM 38 CRS, as on the demo) |
-| GPM IMERG daily | V07 Final through 2025-09-30, Late for Oct-Dec 2025 (as on the demo), OPeNDAP box subsets | running | the field's 0.1 deg cell is the origin's; UTC days = 03:00-03:00 local time (UTC+03:00) |
+| GPM IMERG daily | V07 Final through 2025-09-30, Late for Oct-Dec 2025 (as on the demo), OPeNDAP box subsets | done: 9,131 of 9,131 days, no fill in the field's cell (1,758 days first refused with HTTP 503 by GES DISC, all fetched on a retry) | the field's 0.1 deg cell is the origin's; UTC days = 03:00-03:00 local time (UTC+03:00); not corrected: its own break test finds no break (VALIDATION 3.24) |
 | CHIRPS v3.0 `rnl` | yearly global files, range reads of the box's cells | done: 2001-2025 (25 years) | checks only. Mean 1,446 mm a year at the field's cell; wet November-March (January 340 mm), dry May-September (5-15 mm a month) |
 | NASA POWER | point at the field, 2001-2025 | done (9,131 days, no fills, no range warnings) | cell elevation 1,425 m |
 | NASADEM | NASADEM_HGT v001, one tile | done | field 1,249 m (4 pixels, 1,248-1,250 m), slope 2.4 deg |
@@ -473,3 +473,99 @@ SoilGrids conversion factors (from the API itself); hydrologic soil group (NEH 6
 guidance); curve numbers (TR-55 Table 2-2b = NEH Table 9-1); Nepal crop calendar (FAO Crop Calendar,
 Hill zone). Earlier: POWER resolutions; station observation day; CMR, SoilGrids, POWER citations; FAO-56
 example values; GHCN units; GRACE product name; IMERG gap (D1); soil-moisture range (D2).
+
+## 7. Satellite inventory (added 2026-11-14)
+
+Every satellite or instrument behind every dataset, its job in the app and how we checked it. Product names checked against
+section 1 and CREDITS.md. The same list, with plain words in English and Nepali, is `satellites` in `site/data/story.json`
+(`pipeline/export/build_story.py`; `--markdown` prints this table).
+
+| Mission | Instrument | Dataset | Job | How we checked it | VALIDATION rows |
+| --- | --- | --- | --- | --- | --- |
+| GPM Core Observatory and the GPM constellation (partner microwave satellites, geostationary infrared) | GMI radiometer and DPR radar on the core; partner passive-microwave sensors; geostationary infrared | GPM IMERG V07: Final daily (GPM_3IMERGDF), Late daily (GPM_3IMERGDL), Final monthly (GPM_3IMERGM), 0.1° (1.2, 1.17) | The model's daily rain | The 2017 loss of its gauge input found (gauge weight, GPCC counts) and corrected; checked against CHIRPS, IMERG Late, DHM's 2025 gauges and GLDAS's rain | 3.9, 3.9b, 3.9c, 3.9d, 4.2d |
+| Landsat 8 and Landsat 9 (NASA/USGS) | OLI and OLI-2 | HLS-VI v2.0, HLSL30_VI (30 m) (1.3) | Greenness: seasons, bare days, crop cover, the area map | Three season methods agree (24 of 24 seasons); MODIS agrees (r 0.83); the area map reproduces the diary | 3.6, 3.10, 3.15, 3.23 |
+| Sentinel-2 (ESA Copernicus) | MSI | HLS-VI v2.0, HLSS30_VI (30 m) (1.3) | Greenness, more often than Landsat alone (one harmonised series) | As Landsat | 3.10, 3.15, 3.23 |
+| Terra (NASA) | MODIS | MOD13Q1 v061 NDVI (250 m, 16 days) (1.4) | Greenness before HLS, compared with HLS only; no number shown uses it | Agrees with HLS; its 16-day composites miss short bare spells | 3.10 |
+| SMAP (NASA) | L-band radiometer (its radar failed in 2015) | SPL4SMGP v008 (L4 root zone, model-assisted, 9 km); SPL3SMP_E v006 (L3) (1.5) | Checks the model's soil water; sets the model's own sureness (the Kalman prior) | L3: no recommended-quality retrieval at the field's cell; L4 anomalies agree moderately | 4.2b, 5.4 |
+| GRACE and GRACE-FO (NASA/DLR, NASA/GFZ) | Twin satellites measuring Earth's gravity (microwave ranging; a laser ranging test on GRACE-FO) | JPL mascon CRI RL06.3 v04 (one 3° mascon, about 300 km) (1.10) | The region's stored-water trend (`diary.groundwater`, the water score) | Trend robust to autocorrelation; regional only; not checked against wells (none available) | 3.16 |
+| ECOSTRESS on the International Space Station (NASA) | PHyTIR thermal infrared radiometer | ECO_L2T_LSTE and ECO_L4T_ESI, V003 first, V002 where V003 lacks a pass (70 m) (1.8) | A check on crop water stress | Too few clear passes per season: not testable | 4.2e |
+| SRTM on Space Shuttle Endeavour (NASA/NGA, 2000) | C-band radar interferometry | NASADEM_HGT v001 (SRTM reprocessed, 30 m) (1.7) | Field height for ET0, slope, low ground of the parts | Low ground smaller than the product's stated error, so "can't tell"; ET0 barely moves with it (switch-off, section 4) | 3.20 |
+| CERES on Terra, Aqua, Suomi NPP and NOAA-20 (NASA), via NASA POWER | CERES broadband radiometers (geostationary imagers fill the hours in SYN1deg) | CERES SYN1deg Ed4.2 in NASA POWER (1°); FLASHFlux for the latest months (1.1, 1.19) | Sunshine for ET0 | ET0 reproduces FAO-56's worked examples; agrees with GLDAS's potential evaporation in its ups and downs | 2.1b, 4.2d |
+| MERRA-2 and GEOS-IT (NASA GMAO), via NASA POWER | A weather model assimilating many satellites (reanalysis), not one instrument | NASA POWER daily API v2.10.3, community AG (0.5 x 0.625°) (1.1) | Temperature, humidity, wind | Temperatures corrected to Kathmandu Airport and tested on held-out years and DHM's normals; 2001-2003 faulty (1.1) | 3.8, 3.11, 3.11b, 3.17 |
+| Sentinel-1 and Sentinel-2 (ESA Copernicus), behind ESA WorldCover | C-SAR radar and MSI | ESA WorldCover 10 m 2021 v200, cropland class (1.14, 1.20) | Finds farmland; picked the placeholder field; the area map's mask | The first pick was a construction plot; published cropland user's accuracy for Asia 80.6% | 1.4, 3.23 |
+| CHIRPS v3.0 (Climate Hazards Center, UC Santa Barbara) | Geostationary thermal infrared (cold-cloud duration) blended with rain gauges; days split with ERA5 (`rnl`) | CHIRPS v3.0 daily, rnl (0.05°) (1.2) | A check on GPM's rain; never the model's rain | No 2017 step; its own onset cross-check | 3.9b, 3.22b |
+| GLDAS-2.1 (NASA GSFC) | Noah 3.6 land model driven by GDAS weather, AGRMET satellite radiation and GPCP v1.3 rain (satellites and gauges) | GLDAS_NOAH025_M v2.1 (0.25°, monthly) (1.21) | A check on the model's soil water and water use | Weak agreement for soil and ET; its rain agrees with the corrected rain | 4.2d |
+| NEX-GDDP-CMIP6 (NASA), climate models, not satellites | CMIP6 global climate models, bias-corrected and downscaled to observations | NEX-GDDP-CMIP6 v2.0 daily (0.25°), SSP2-4.5 and SSP5-8.5 (1.9) | Climate change by 2040 (the outlook) | The ensemble's changes lie inside the published range for Nepal (a weak test) | 4.7 |
+
+Gauges, not satellites, sit behind three of these: GPCC (IMERG Final's monthly gauge analysis and our break evidence, 1.17),
+CHIRPS's station blend, and GPCP's gauge adjustment in GLDAS. So IMERG Final, CHIRPS and GLDAS are not fully independent of
+one another (VALIDATION 3.22b, 4.2d).
+
+## 8. NASA's resource list for this challenge (added 2026-11-14)
+
+Each item of the challenge's resource list: **used** (and how), **equivalent** (the Nepal or world dataset used instead) or
+**not used** (and why). The same list, in English and Nepali, is `resources` in `site/data/story.json`.
+
+| Resource | Status | How, or why not | Used instead |
+| --- | --- | --- | --- |
+| SMAP | used | A check on the model's soil water (L4); sets the model's sureness before a probe reading. L3 had no good-quality value at the field (1.5) | |
+| GPM IMERG | used | The model's daily rain, corrected from 2017 (1.2) | |
+| Landsat and MODIS/VIIRS (reflectance, NDVI, vegetation indices) | used | Landsat (with Sentinel-2) in HLS: the field's greenness. MODIS MOD13Q1: compared with HLS only. VIIRS: not used (30 m HLS suits a 60 m field better) | |
+| NASA POWER | used | Temperature, humidity, wind and sunshine for ET0; its rain for cross-checks only (1.1) | |
+| SRTM | used | Through NASADEM: field height and slope, low ground (1.7) | |
+| ECOSTRESS | used | A check on crop stress; not testable here (too few clear passes, 1.8) | |
+| USDA Ag Data Commons | not used | Its data cover the United States | |
+| Web Soil Survey | equivalent | United States only | ISRIC SoilGrids 2.0 (250 m, world; 1.6) |
+| Cropland Data Layer (CropScape) | equivalent | United States only | ESA WorldCover 10 m 2021 v200 (1.14) |
+| PRISM | equivalent | United States only | DHM (Government of Nepal) 1991-2020 normals and 2025 monthly bulletins (1.2, 1.16) |
+| USDA NRCS SSURGO/STATSGO2 | equivalent | United States only | ISRIC SoilGrids 2.0 (1.6) |
+| NAIP | not used | Aerial photographs of the United States only | |
+| USGS NLCD | equivalent | United States only | ESA WorldCover 10 m 2021 v200 (1.14) |
+| NLDAS/GLDAS | used | GLDAS-2.1 Noah checks the model's soil water and water use (1.21); NLDAS covers North America only | |
+| FAO GAEZ | not used: **linked as a reference, data not used** (https://gaez.fao.org/) | Owner, 2026-11-14: its licence is non-commercial and share-alike, so none of its data goes into the repository or the export; a link for the "check locally" tab only | |
+| CoCoRaHS | equivalent | Volunteer gauges in North America | DHM's gauges: 1991-2020 normals and 2025 monthly bulletins (1.16) |
+| USGS NWIS | not used | United States water data; we have no Nepal well records (GRACE gives only a regional trend) | |
+| USDA AMS Market News | not used | United States prices; the site shows no money figures (harvest only as a percentage) | |
+| USDA NASS QuickStats | equivalent | United States yields | FAOSTAT QCL, Nepal's national yields (1.12) |
+| OpenET | not used | Covers the United States; we compute water use with FAO-56 and check it against GLDAS | |
+| USFS LANDFIRE | not used | United States fire and vegetation maps | |
+| GEDI | not used | Measures forest canopy height in sparse footprints, not low crops | |
+| Copernicus Sentinel-2 (ESA) | used | Inside HLS (HLSS30) and inside ESA WorldCover | |
+| ERA5 (ECMWF reanalysis) | not used | Not fetched; it reaches us only inside CHIRPS v3 `rnl`, which splits its pentads into days with ERA5 (a check) | |
+
+### 8.1 Sentinel-1 radar for paddy flooding: assessment only, nothing downloaded (2026-11-14)
+
+**Question.** Could Sentinel-1 radar, through monsoon cloud, show when the paddy is flooded for transplanting, using ASF's
+HyP3 radiometric terrain correction (RTC) and no new dependency (`requests` only)?
+
+**Scenes over the field** (ASF Search API, `https://api.daac.asf.alaska.edu/services/search/param`, `platform=Sentinel-1`,
+`processingLevel=GRD_HD`, `beamMode=IW`, `intersectsWith=POINT(85.4418 27.6908)`; queried 2026-11-14 about 09:30; metadata
+only, no login, nothing downloaded; the listing is in the session scratchpad, not the repository):
+
+| Period | IW GRD scenes | Detail | Raw GRD size |
+| --- | --- | --- | --- |
+| June-September 2025 | **30** | all Sentinel-1A, VV+VH; three tracks, 10 scenes each: descending 19 and 121 (about 00:11-00:20 UTC), ascending 85 (about 12:22 UTC); each track every 12 days, together one look about every 4 days. No Sentinel-1C scene listed over the field in 2025 | 28.5 GB (0.96-1.0 GB a scene) |
+| 2017-2025 | **826** (Sentinel-1A 802, Sentinel-1B 24; Sentinel-1B failed in December 2021) | 83-108 a year; **272 in June-September** (28-33 a season) | 841 GB |
+
+**HyP3 RTC** (ASF HyP3 documentation, read 2026-11-14): a 30 m RTC job costs 5 credits, with 8,000 free credits a month
+(1,600 such jobs; 20 m costs 15, 10 m 60; credits page). "New requests are typically available for download within an hour
+or two" and products are kept 14 days (Vertex On Demand page). The product is one 32-bit GeoTIFF per polarization; ASF's
+example VV GeoTIFF is 267 MB at 30 m (600 MB at 20 m, 2,350 MB at 10 m; RTC product guide). The guide lists no option to
+clip a job to an area: a product covers its whole scene.
+
+**Estimate.** One monsoon season at 30 m: 30 jobs, 150 credits, about 1-2 hours of processing on ASF's side, unattended
+(jobs run side by side); download about 30 x 2 x 267 MB = **about 16 GB** (VV only: about 8 GB), plus the download time on
+our line. The whole record, June-September 2017-2025: 272 jobs, 1,360 credits, about 145 GB; every scene of 2017-2025: 826
+jobs, 4,130 credits, about 440 GB.
+
+**What it would add.** C-band radar sees through monsoon cloud. Standing water at transplanting reflects the signal away
+(very low VV backscatter), which rises as the rice grows, so each year from 2017 would get a transplanting date seen from
+space, independent of the rain and of the greenness: a check of the rain-fed paddy rule now switched on (it waits for its
+land-preparation rain, METHOD_NOTES 69) and of the sowing dates taken from HLS (VALIDATION 4.2c). Limits: the 60 m field is
+2 x 2 pixels at 30 m (speckle; 10 m costs 60 credits and about 2.35 GB a polarization), terrace walls and nearby hills
+(the product's layover and shadow mask), and the three tracks look from different angles.
+
+**Verdict (owner's rule: one monsoon season in under about 2 hours unattended, and under about 2 GB to download): a next
+step, not now.** The processing time is at the limit (about 1-2 hours), but the download is about 16 GB for one season, eight
+times the 2 GB rule (VV only, still four times). A route that might fit later, not checked: processing next to the data in
+the cloud with windowed reads of the field only, or a burst-sized radar product.

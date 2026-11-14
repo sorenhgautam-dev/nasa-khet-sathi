@@ -1,97 +1,723 @@
 {
  "_about": "Where the pipeline gets every {placeholder} and every 'when' condition used in screens.json and tabs.json. 'from' lists references that tests/test_words.py resolves: contract:<path in pipeline/export/schema.json> ([] = array items, * = any plan id), crops:<crop or *>.<key in config/crops.json>, field:<key in config/fields/<id>.yaml>, words:<word file>.<key path>, code:<repo file>:<function> (a value the twin computes that the contract does not carry). 'how' says how the value is made. Names (crops, months, source kinds) are filled per language from screens.json 'shared'. Numbers are written with Devanagari digits in Nepali (texts.fill). 'example' is a sample value for tests and the preview only.",
  "placeholders": {
-  "guess_list": {"from": ["contract:diary.guess[]", "words:screens.shared.crop_names", "words:screens.shared.join.then"], "how": "crop ids in season order, each named from shared.crop_names ('bare' = no crop), joined with ', then ' / ', अनि '", "example": {"en": "rice, then potato", "ne": "धान, अनि आलु"}},
-  "bare_days": {"from": ["contract:diary.bare_days"], "how": "whole days", "example": 110},
-  "year_first": {"from": ["contract:replay.*[].year"], "how": "first year of the replay", "example": 2001},
-  "year_last": {"from": ["contract:replay.*[].year"], "how": "last year of the replay", "example": 2025},
-  "year_count": {"from": ["contract:replay.*[].year"], "how": "number of replay years (2001-2025 = 25); the screen title uses it instead of CLAUDE.md's '20' (owner approved, 2026-11-12, choice 1)", "example": 25},
-  "shift_days_abs": {"from": ["contract:diary.shift_days"], "how": "absolute value, rounded to whole days; the sign picks onset_earlier or onset_later", "example": 12},
-  "section_count": {"from": ["contract:field.sections[]"], "how": "number of sections", "example": 16},
-  "section": {"from": ["contract:field.sections[].id"], "how": "the number after 's' in the section id", "example": 3},
-  "wetness": {"from": ["contract:field.sections[].wetness"], "how": "rounded to a whole number, 0 to 100", "example": 62},
-  "temp": {"from": ["contract:field.sections[].temp"], "how": "soil temperature from the probe, not air temperature (owner, 2026-11-12, choice 9), rounded to a whole degree C; shown with the source kind 'measured by the soil stick'", "example": 18},
-  "sure_pct": {"from": ["contract:field.sections[].sure"], "how": "sure x 100, rounded", "example": 40},
-  "dry_days": {"from": ["contract:replay.*[].dry_days"], "how": "that year's dry days (the field's own water case)", "example": 12},
-  "drought_years": {"from": ["contract:replay.*[].event"], "how": "count of this plan's replay years with event 'drought'", "example": 4},
-  "harvest": {"from": ["contract:plans[].score.harvest"], "how": "the plan's harvest score, rounded", "example": 72},
-  "harvest_gain": {"from": ["contract:plans[].score.harvest"], "how": "this plan's harvest score minus the current plan's, rounded; used only when harvest_better", "example": 6},
-  "gain_low": {"from": ["code:scripts/run_plans.py:gain_range", "crops:rice.zr_range_m"], "how": "the smallest harvest gain over the current plan when both plans are replayed with each crop at the smaller and at the larger root depth of its FAO-56 Table 22 range (rules.yaml plans.gain_range), rounded", "example": 8},
-  "gain_high": {"from": ["code:scripts/run_plans.py:gain_range", "crops:rice.zr_range_m"], "how": "the largest harvest gain over the same runs, rounded", "example": 22},
-  "cover_days_gain": {"from": ["contract:plans[].score.cover"], "how": "this plan's days with a crop in a year minus the current plan's (the cover score is that share of 365 days), whole days", "example": 25},
-  "soil_distance": {"from": ["code:pipeline/export/build_field_json.py:sources_block"], "how": "metres from the field to the soil-map cell used, when that is not the field's own cell (the soil data card), whole metres", "example": 859},
-  "first_crop": {"from": ["contract:current_options.options[].crops[].crop", "words:screens.shared.crop_names"], "how": "the crop every option of current_options grows first (the monsoon crop), named from shared.crop_names", "example": {"en": "rice", "ne": "धान"}},
-  "option_a": {"from": ["contract:current_options.options[].crops[].crop", "words:screens.shared.crop_names"], "how": "the crop that only the first (default) option grows", "example": {"en": "potato", "ne": "आलु"}},
-  "option_b": {"from": ["contract:current_options.options[].crops[].crop", "words:screens.shared.crop_names"], "how": "the crop that only the second option grows", "example": {"en": "wheat", "ne": "गहुँ"}},
-  "memory_seasons": {"from": ["contract:method.field_memory.seasons"], "how": "the number of satellite-seen seasons the field-memory test used (build step 7b)", "example": 24},
-  "source_name": {"from": ["contract:sources[].name"], "how": "one line per source (repeat: sources)", "example": "GPM IMERG"},
-  "source_kind": {"from": ["contract:sources[].type", "words:screens.shared.source_kinds"], "how": "sources[].type in plain words (model = 'worked out by computer': golden rule 8)", "example": {"en": "seen from space", "ne": "अन्तरिक्षबाट देखिएको"}},
-  "source_resolution": {"from": ["contract:sources[].resolution"], "how": "as written in sources[]", "example": "0.1 deg"},
-  "source_years": {"from": ["contract:sources[].years"], "how": "as written in sources[]", "example": "2001-2025"},
-  "new_crop": {"from": ["contract:plans[].crops[].crop", "words:screens.shared.crop_names"], "how": "the plan's first crop that the current plan does not have", "example": {"en": "lentil", "ne": "मसुर"}},
-  "legume_crop": {"from": ["contract:plans[].crops[].crop", "crops:*.legume", "words:screens.shared.crop_names"], "how": "the plan's first crop with legume true", "example": {"en": "lentil", "ne": "मसुर"}},
-  "deep_root_crop": {"from": ["contract:plans[].crops[].crop", "crops:*.zr_m", "words:screens.shared.crop_names"], "how": "the plan's crop with the largest zr_m", "example": {"en": "finger millet", "ne": "कोदो"}},
-  "assumed_crop": {"from": ["contract:plans[].crops[].crop", "crops:*.ky_assumed", "words:screens.shared.crop_names", "words:screens.shared.join.and"], "how": "the plan's crops with ky_assumed true, joined with ' and ' / ' र '", "example": {"en": "rice", "ne": "धान"}},
-  "crop": {"from": ["contract:plans[].crops[].crop", "words:screens.shared.crop_names"], "how": "the crop the line is about", "example": {"en": "rice", "ne": "धान"}},
-  "month": {"from": ["contract:diary.months[].m", "words:screens.shared.months"], "how": "the month the tip is about, named per language from shared.months (Nepali: the Bikram Sambat month that begins in it, with the Gregorian months beside it; owner, 2026-11-12, choice 7)", "example": {"en": "September", "ne": "असोज (सेप्टेम्बर–अक्टोबर)"}},
-  "sow_month": {"from": ["contract:plans[].crops[].start", "words:screens.shared.months"], "how": "month of the crop's start date, named from shared.months (Nepali: Bikram Sambat first, approximate)", "example": {"en": "June", "ne": "असार (जुन–जुलाई)"}},
-  "harvest_month": {"from": ["contract:plans[].crops[].end", "words:screens.shared.months"], "how": "month of the crop's end date, named from shared.months (Nepali: Bikram Sambat first, approximate)", "example": {"en": "October", "ne": "कात्तिक (अक्टोबर–नोभेम्बर)"}},
-  "future_year": {"from": ["contract:future.years[]"], "how": "the last year in future.years", "example": 2040},
-  "future_low": {"from": ["contract:future.nothing_changes.harvest_low[]", "contract:future.with_plan.harvest_low[]"], "how": "the dial's series at future_year, rounded", "example": 55},
-  "future_high": {"from": ["contract:future.nothing_changes.harvest_high[]", "contract:future.with_plan.harvest_high[]"], "how": "the dial's series at future_year, rounded", "example": 74},
-  "harvest_uncorrected": {"from": ["contract:plans[].score_uncorrected_rain.harvest"], "how": "the plan's harvest score with GPM's rain as published (no 2017 correction), rounded; used only when it differs (owner's decision 1, 2026-11-13)", "example": 78},
-  "rain_fix_year": {"from": ["contract:method.rain_correction.from"], "how": "the year the GPM break correction starts (2017 for the demo field)", "example": 2017},
-  "water_crop": {"from": ["contract:plans[].crops[].crop", "crops:*.calendar", "words:screens.shared.crop_names"], "how": "the plan's first crop sown in a window config/crops.json notes as irrigated (FAO Crop Calendar)", "example": {"en": "wheat", "ne": "गहुँ"}},
-  "option_legume": {"from": ["crops:*.legume", "words:screens.shared.crop_names", "code:pipeline/plans/explain.py:legume_option"], "how": "the legume of the best rice plan with a legume (pipeline/plans/explain.py legume_option)", "example": {"en": "lentil", "ne": "मसुर"}},
-  "rain_before": {"from": ["contract:method.rain_correction.rain_mm_per_year.reference"], "how": "mean yearly rain in the field's GPM cell over the reference years, rounded to 10 mm", "example": 1840},
-  "rain_after": {"from": ["contract:method.rain_correction.rain_mm_per_year.after_uncorrected"], "how": "mean yearly rain from the break on, as published, rounded to 10 mm", "example": 2730},
-  "rain_normal": {"from": ["contract:method.rain_correction.rain_mm_per_year.station_normal"], "how": "DHM 1991-2020 normal of the nearest town's station (Bhaktapur), rounded to 10 mm", "example": 1370},
-  "err_before": {"from": ["contract:method.rain_correction.held_out.error_before_mm"], "how": "held-out mean monthly error against the airport station before the fix, whole mm", "example": 94},
-  "err_after": {"from": ["contract:method.rain_correction.held_out.error_after_mm"], "how": "the same after the fix, whole mm", "example": 31}
+  "guess_list": {
+   "from": [
+    "contract:diary.guess[]",
+    "words:screens.shared.crop_names",
+    "words:screens.shared.join.then"
+   ],
+   "how": "crop ids in season order, each named from shared.crop_names ('bare' = no crop), joined with ', then ' / ', अनि '",
+   "example": {
+    "en": "rice, then potato",
+    "ne": "धान, अनि आलु"
+   }
+  },
+  "bare_days": {
+   "from": [
+    "contract:diary.bare_days"
+   ],
+   "how": "whole days",
+   "example": 110
+  },
+  "year_first": {
+   "from": [
+    "contract:replay.*[].year"
+   ],
+   "how": "first year of the replay",
+   "example": 2001
+  },
+  "year_last": {
+   "from": [
+    "contract:replay.*[].year"
+   ],
+   "how": "last year of the replay",
+   "example": 2025
+  },
+  "year_count": {
+   "from": [
+    "contract:replay.*[].year"
+   ],
+   "how": "number of replay years (2001-2025 = 25); the screen title uses it instead of CLAUDE.md's '20' (owner approved, 2026-11-12, choice 1)",
+   "example": 25
+  },
+  "shift_days_abs": {
+   "from": [
+    "contract:diary.shift_days"
+   ],
+   "how": "absolute value, rounded to whole days; the sign picks onset_earlier or onset_later",
+   "example": 12
+  },
+  "section_count": {
+   "from": [
+    "contract:field.sections[]"
+   ],
+   "how": "number of sections",
+   "example": 16
+  },
+  "section": {
+   "from": [
+    "contract:field.sections[].id"
+   ],
+   "how": "the number after 's' in the section id",
+   "example": 3
+  },
+  "wetness": {
+   "from": [
+    "contract:field.sections[].wetness"
+   ],
+   "how": "rounded to a whole number, 0 to 100",
+   "example": 62
+  },
+  "temp": {
+   "from": [
+    "contract:field.sections[].temp"
+   ],
+   "how": "soil temperature from the probe, not air temperature (owner, 2026-11-12, choice 9), rounded to a whole degree C; shown with the source kind 'measured by the soil stick'",
+   "example": 18
+  },
+  "sure_pct": {
+   "from": [
+    "contract:field.sections[].sure"
+   ],
+   "how": "sure x 100, rounded",
+   "example": 40
+  },
+  "dry_days": {
+   "from": [
+    "contract:replay.*[].dry_days"
+   ],
+   "how": "that year's dry days (the field's own water case)",
+   "example": 12
+  },
+  "drought_years": {
+   "from": [
+    "contract:replay.*[].event"
+   ],
+   "how": "count of this plan's replay years with event 'drought'",
+   "example": 4
+  },
+  "harvest": {
+   "from": [
+    "contract:plans[].score.harvest"
+   ],
+   "how": "the plan's harvest score, rounded",
+   "example": 72
+  },
+  "harvest_gain": {
+   "from": [
+    "contract:plans[].score.harvest"
+   ],
+   "how": "this plan's harvest score minus the current plan's, rounded; used only when harvest_better",
+   "example": 6
+  },
+  "gain_low": {
+   "from": [
+    "code:scripts/run_plans.py:gain_range",
+    "crops:rice.zr_range_m"
+   ],
+   "how": "the smallest harvest gain over the current plan when both plans are replayed with each crop at the smaller and at the larger root depth of its FAO-56 Table 22 range (rules.yaml plans.gain_range), rounded",
+   "example": 8
+  },
+  "gain_high": {
+   "from": [
+    "code:scripts/run_plans.py:gain_range",
+    "crops:rice.zr_range_m"
+   ],
+   "how": "the largest harvest gain over the same runs, rounded",
+   "example": 22
+  },
+  "cover_days_gain": {
+   "from": [
+    "contract:plans[].score.cover"
+   ],
+   "how": "this plan's days with a crop in a year minus the current plan's (the cover score is that share of 365 days), whole days",
+   "example": 25
+  },
+  "soil_distance": {
+   "from": [
+    "code:pipeline/export/build_field_json.py:sources_block"
+   ],
+   "how": "metres from the field to the soil-map cell used, when that is not the field's own cell (the soil data card), whole metres",
+   "example": 859
+  },
+  "first_crop": {
+   "from": [
+    "contract:current_options.options[].crops[].crop",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the crop every option of current_options grows first (the monsoon crop), named from shared.crop_names",
+   "example": {
+    "en": "rice",
+    "ne": "धान"
+   }
+  },
+  "option_a": {
+   "from": [
+    "contract:current_options.options[].crops[].crop",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the crop that only the first (default) option grows",
+   "example": {
+    "en": "potato",
+    "ne": "आलु"
+   }
+  },
+  "option_b": {
+   "from": [
+    "contract:current_options.options[].crops[].crop",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the crop that only the second option grows",
+   "example": {
+    "en": "wheat",
+    "ne": "गहुँ"
+   }
+  },
+  "memory_seasons": {
+   "from": [
+    "contract:method.field_memory.seasons"
+   ],
+   "how": "the number of satellite-seen seasons the field-memory test used (build step 7b)",
+   "example": 24
+  },
+  "source_name": {
+   "from": [
+    "contract:sources[].name"
+   ],
+   "how": "one line per source (repeat: sources)",
+   "example": "GPM IMERG"
+  },
+  "source_kind": {
+   "from": [
+    "contract:sources[].type",
+    "words:screens.shared.source_kinds"
+   ],
+   "how": "sources[].type in plain words (model = 'worked out by computer': golden rule 8)",
+   "example": {
+    "en": "seen from space",
+    "ne": "अन्तरिक्षबाट देखिएको"
+   }
+  },
+  "source_resolution": {
+   "from": [
+    "contract:sources[].resolution"
+   ],
+   "how": "as written in sources[]",
+   "example": "0.1 deg"
+  },
+  "source_years": {
+   "from": [
+    "contract:sources[].years"
+   ],
+   "how": "as written in sources[]",
+   "example": "2001-2025"
+  },
+  "new_crop": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the plan's first crop that the current plan does not have",
+   "example": {
+    "en": "lentil",
+    "ne": "मसुर"
+   }
+  },
+  "legume_crop": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.legume",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the plan's first crop with legume true",
+   "example": {
+    "en": "lentil",
+    "ne": "मसुर"
+   }
+  },
+  "deep_root_crop": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.zr_m",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the plan's crop with the largest zr_m",
+   "example": {
+    "en": "finger millet",
+    "ne": "कोदो"
+   }
+  },
+  "assumed_crop": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.ky_assumed",
+    "words:screens.shared.crop_names",
+    "words:screens.shared.join.and"
+   ],
+   "how": "the plan's crops with ky_assumed true, joined with ' and ' / ' र '",
+   "example": {
+    "en": "rice",
+    "ne": "धान"
+   }
+  },
+  "crop": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the crop the line is about",
+   "example": {
+    "en": "rice",
+    "ne": "धान"
+   }
+  },
+  "month": {
+   "from": [
+    "contract:diary.months[].m",
+    "words:screens.shared.months"
+   ],
+   "how": "the month the tip is about, named per language from shared.months (Nepali: the Bikram Sambat month that begins in it, with the Gregorian months beside it; owner, 2026-11-12, choice 7)",
+   "example": {
+    "en": "September",
+    "ne": "असोज (सेप्टेम्बर–अक्टोबर)"
+   }
+  },
+  "sow_month": {
+   "from": [
+    "contract:plans[].crops[].start",
+    "words:screens.shared.months"
+   ],
+   "how": "month of the crop's start date, named from shared.months (Nepali: Bikram Sambat first, approximate)",
+   "example": {
+    "en": "June",
+    "ne": "असार (जुन–जुलाई)"
+   }
+  },
+  "harvest_month": {
+   "from": [
+    "contract:plans[].crops[].end",
+    "words:screens.shared.months"
+   ],
+   "how": "month of the crop's end date, named from shared.months (Nepali: Bikram Sambat first, approximate)",
+   "example": {
+    "en": "October",
+    "ne": "कात्तिक (अक्टोबर–नोभेम्बर)"
+   }
+  },
+  "future_year": {
+   "from": [
+    "contract:future.years[]"
+   ],
+   "how": "the last year in future.years",
+   "example": 2040
+  },
+  "future_low": {
+   "from": [
+    "contract:future.nothing_changes.harvest_low[]",
+    "contract:future.with_plan.harvest_low[]"
+   ],
+   "how": "the dial's series at future_year, rounded",
+   "example": 55
+  },
+  "future_high": {
+   "from": [
+    "contract:future.nothing_changes.harvest_high[]",
+    "contract:future.with_plan.harvest_high[]"
+   ],
+   "how": "the dial's series at future_year, rounded",
+   "example": 74
+  },
+  "rain_fix_year": {
+   "from": [
+    "contract:method.rain_correction.from"
+   ],
+   "how": "the year the GPM break correction starts (2017 for the demo field)",
+   "example": 2017
+  },
+  "water_crop": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.calendar",
+    "words:screens.shared.crop_names"
+   ],
+   "how": "the plan's first crop sown in a window config/crops.json notes as irrigated (FAO Crop Calendar)",
+   "example": {
+    "en": "wheat",
+    "ne": "गहुँ"
+   }
+  },
+  "option_legume": {
+   "from": [
+    "crops:*.legume",
+    "words:screens.shared.crop_names",
+    "code:pipeline/plans/explain.py:legume_option"
+   ],
+   "how": "the legume of the best rice plan with a legume (pipeline/plans/explain.py legume_option)",
+   "example": {
+    "en": "lentil",
+    "ne": "मसुर"
+   }
+  },
+  "rain_before": {
+   "from": [
+    "contract:method.rain_correction.rain_mm_per_year.reference"
+   ],
+   "how": "mean yearly rain in the field's GPM cell over the reference years, rounded to 10 mm",
+   "example": 1840
+  },
+  "rain_after": {
+   "from": [
+    "contract:method.rain_correction.rain_mm_per_year.after_uncorrected"
+   ],
+   "how": "mean yearly rain from the break on, as published, rounded to 10 mm",
+   "example": 2730
+  },
+  "rain_normal": {
+   "from": [
+    "contract:method.rain_correction.rain_mm_per_year.station_normal"
+   ],
+   "how": "DHM 1991-2020 normal of the nearest town's station (Bhaktapur), rounded to 10 mm",
+   "example": 1370
+  },
+  "err_before": {
+   "from": [
+    "contract:method.rain_correction.held_out.error_before_mm"
+   ],
+   "how": "held-out mean monthly error against the airport station before the fix, whole mm",
+   "example": 94
+  },
+  "err_after": {
+   "from": [
+    "contract:method.rain_correction.held_out.error_after_mm"
+   ],
+   "how": "the same after the fix, whole mm",
+   "example": 31
+  },
+  "harvest_dhm": {
+   "from": [
+    "contract:plans[].score_dhm_rain.harvest"
+   ],
+   "how": "the plan's harvest score with the rain scaled to DHM Bhaktapur's 1991-2020 normals (the range's dry edge, owner's decision 4b, 2026-11-14), rounded; used only when it differs",
+   "example": 78
+  }
  },
  "conditions": {
-  "plan_is_current": {"from": ["contract:plans[].id"], "how": "plan id == 'current'", "plain": "for the plan you have now"},
-  "plan_is_cover_gap": {"from": ["contract:plans[].id"], "how": "the plan chosen as best 'cover the gap' (CLAUDE.md 'Plans' step 4; build step 7 sets its id: 'cover_gap', owner approved 2026-11-12, choice 4)", "plain": "for the plan that fills empty months"},
-  "plan_is_follow_shift": {"from": ["contract:plans[].id"], "how": "the plan chosen as best 'follow the shift' (build step 7 sets its id: 'follow_shift', owner approved 2026-11-12, choice 4); not shown since owner's decision 5 (2026-11-13), kept for a revisit after step 9", "plain": "for the plan that follows the changing rains"},
-  "onset_earlier": {"from": ["contract:diary.shift_days"], "how": "round(shift_days) < 0 (schema: negative = earlier)", "plain": "if the rains now start earlier"},
-  "onset_later": {"from": ["contract:diary.shift_days"], "how": "round(shift_days) > 0", "plain": "if the rains now start later"},
-  "onset_same": {"from": ["contract:diary.shift_days"], "how": "round(shift_days) == 0", "plain": "if the start of the rains has not moved"},
-  "groundwater_falling": {"from": ["contract:diary.groundwater.direction"], "how": "direction == 'falling'", "plain": "if stored water in the area is falling"},
-  "groundwater_steady": {"from": ["contract:diary.groundwater.direction"], "how": "direction == 'steady'", "plain": "if stored water in the area is steady"},
-  "groundwater_rising": {"from": ["contract:diary.groundwater.direction"], "how": "direction == 'rising'", "plain": "if stored water in the area is rising"},
-  "has_frost_risk": {"from": ["contract:diary.months[].frost"], "how": "any month whose frost is not 'none'", "plain": "if some months have freezing nights"},
-  "water_source_unknown": {"from": ["field:water_source"], "how": "water_source is null", "plain": "if we do not know the field's water"},
-  "station_rain_lower": {"from": ["field:validation_station", "code:scripts/run_checks.py:crosscheck_station"], "how": "the field has a validation station and data/checks/<field>/crosscheck_gpm_<station>.json gives the station 25 to 40 percent less rain than GPM over complete months (demo: GPM +41.2%, station 29% lower); the text says 'about a third'", "plain": "if the nearby station records about a third less rain than the satellite"},
-  "field_is_placeholder": {"from": ["field:placeholder"], "how": "placeholder is true", "plain": "while the field is a sample, not a farmer's own"},
-  "new_crop": {"from": ["contract:plans[].crops[].crop"], "how": "the plan has a crop the current plan does not", "plain": "if the plan adds a crop you do not grow now"},
-  "has_legume": {"from": ["contract:plans[].crops[].crop", "crops:*.legume"], "how": "any crop in the plan has legume true", "plain": "if the plan has lentil or another crop that feeds the soil"},
-  "breaks_family": {"from": ["contract:plans[].crops[].crop", "crops:*.family"], "how": "no two crops in a row (round the year) share a family", "plain": "if no two crops in a row are of the same family"},
-  "has_deeper_roots": {"from": ["contract:plans[].crops[].crop", "crops:*.zr_m"], "how": "the plan's largest zr_m is larger than the current plan's (a comparison, so no threshold is needed)", "plain": "if the plan has a crop with deeper roots than now"},
-  "has_assumed_ky": {"from": ["contract:plans[].crops[].crop", "crops:*.ky_assumed"], "how": "any crop in the plan has ky_assumed true", "plain": "if a crop's harvest loss from thirst is our assumption"},
-  "has_rice": {"from": ["contract:plans[].crops[].crop", "crops:*.paddy"], "how": "any crop in the plan has paddy true", "plain": "if the plan has paddy rice"},
-  "harvest_better": {"from": ["contract:plans[].score.harvest"], "how": "rounded score above the current plan's", "plain": "if the harvest score beats the current plan"},
-  "water_better": {"from": ["contract:plans[].score.water"], "how": "rounded score above the current plan's", "plain": "if the water score beats the current plan"},
-  "cover_better": {"from": ["contract:plans[].score.cover"], "how": "rounded score above the current plan's", "plain": "if the ground-cover score beats the current plan"},
-  "soil_better": {"from": ["contract:plans[].score.soil_kept"], "how": "rounded score above the current plan's", "plain": "if the soil-kept score beats the current plan"},
-  "thirsty_month": {"from": ["code:pipeline/twin/soil_water.py:run_bucket", "contract:diary.months[].m"], "how": "per crop, the month with the most days where depletion passed RAW (Ks < 1) across the rain-fed replay (build step 7); shown only at 5 or more such days a year, and never for rice (rules.yaml tips; owner's answer 5, 2026-11-13)", "plain": "for the month a crop is most often thirsty"},
-  "bare_month": {"from": ["contract:diary.months[].cover", "contract:diary.months[].m"], "how": "the first month whose typical cover from the satellite is 'bare'; for a suggested plan, the first such month in which the plan's own calendar is bare too (rules.yaml tips.straw_months; owner's answer 5, 2026-11-13)", "plain": "for a month when the ground is usually bare"},
-  "steep_part": {"from": ["code:pipeline/fetch/nasadem.py:slope_deg", "contract:field.sections[].id"], "how": "a section whose slope passes a threshold still to be sourced in rules.yaml (build step 8: TODO-VERIFY)", "plain": "for a part of the field that slopes"},
-  "plan_is_safest": {"from": ["contract:plans[].id"], "how": "plan id == 'safest': the best 10th-percentile year among the rice plans keeping today's cover (owner's decision 5, 2026-11-13)", "plain": "for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years)"},
-  "rain_changes_harvest": {"from": ["contract:plans[].score.harvest", "contract:plans[].score_uncorrected_rain.harvest"], "how": "the plan has score_uncorrected_rain and its harvest differs", "plain": "if NASA's uncorrected rain gives another harvest number"},
-  "rain_corrected": {"from": ["contract:method.rain_correction.applied"], "how": "method.rain_correction.applied is true (rules.yaml gpm_series.correction_fields)", "plain": "if we lowered the rain numbers after the gauges stopped"},
-  "needs_water_window": {"from": ["contract:plans[].crops[].crop", "crops:*.calendar"], "how": "a crop of the plan is sown in a window whose note in config/crops.json says irrigated (and not rainfed)", "plain": "if a crop of the plan usually needs watering here"},
-  "legume_option": {"from": ["crops:*.legume", "code:pipeline/plans/explain.py:legume_option"], "how": "the plan is the cover-the-gap plan, it has no legume, and a rice plan with a legume exists (owner's decision 4, 2026-11-13)", "plain": "if lentil after rice is worth naming as another choice"},
-  "bad_years_better": {"from": ["code:pipeline/plans/score.py:harvest_metrics"], "how": "the plan's 10th-percentile year (stability) is above the current plan's, rounded", "plain": "if bad years hurt this plan less than the current one"},
-  "harvest_gain_single": {"from": ["contract:plans[].score.harvest", "code:scripts/run_plans.py:gain_range"], "how": "the gain is at least 1 and its smallest and largest value round to the same number (or no range was computed and the rounded score beats the current plan's)", "plain": "if the harvest gain is one number"},
-  "harvest_gain_range": {"from": ["code:scripts/run_plans.py:gain_range"], "how": "the smallest gain rounds to at least 1 and the largest is higher", "plain": "if the harvest gain runs from one number to a higher one"},
-  "harvest_gain_maybe": {"from": ["code:scripts/run_plans.py:gain_range"], "how": "the smallest gain rounds to less than 1 and the largest to at least 1", "plain": "if the harvest may be higher or no better"},
-  "has_gain_range": {"from": ["code:scripts/run_plans.py:gain_range"], "how": "a suggested plan whose harvest gain was computed over the root-depth range (owner's answer 4, 2026-11-13)", "plain": "for a suggested plan, to say why the gain is a range"},
-  "cover_days_more": {"from": ["contract:plans[].score.cover"], "how": "the plan has a crop on more days of the year than the current plan", "plain": "if the plan keeps a crop on the ground for more days"},
-  "rain_reads_high": {"from": ["contract:method.rain_correction.rain_mm_per_year.station_normal", "code:pipeline/export/build_field_json.py:export_step7"], "how": "the twin's mean yearly rain over the record is at least 1.25 times DHM's 1991-2020 normal of the nearest station (rules.yaml gpm_series.level_caveat_ratio; owner's answer 8, 2026-11-13)", "plain": "if our rain is well above the nearest town's usual rain"},
-  "soil_cell_far": {"from": ["code:pipeline/export/build_field_json.py:export_step7"], "how": "the soil-map cell used lies more than one cell (250 m) from the field (the field's own cell has no values)", "plain": "if the soil numbers are not from the field's own spot"},
-  "groundwater_trend_clear": {"from": ["contract:diary.groundwater.confidence"], "how": "diary.groundwater.confidence is at least 0.95 (the trend test's 5% level, rules.yaml groundwater.alpha); about the wide region, never about the field (owner's answer 18, 2026-11-13)", "plain": "if the wide area's water trend is clear"},
-  "winter_crop_unconfirmed": {"from": ["contract:current_options.options[].id", "field:current_rotation_options"], "how": "the field file has current_options with more than one option: the satellite's season timing cannot tell the rotations apart and the farmer has not confirmed one (owner's answer 6, 2026-11-13)", "plain": "while the farmer has not said which winter crop is grown"},
-  "memory_kept": {"from": ["contract:method.field_memory.kept"], "how": "method.field_memory.kept is true: on held-out years the learned correction beat both the physics twin alone and 'no anomaly' (rules.yaml field_memory.keep_rule)", "plain": "if the field memory won its test and is used"},
-  "memory_not_kept": {"from": ["contract:method.field_memory.kept"], "how": "method.field_memory.kept is false", "plain": "if the field memory did not win its test and is left out"}
+  "plan_is_current": {
+   "from": [
+    "contract:plans[].id"
+   ],
+   "how": "plan id == 'current'",
+   "plain": "for the plan you have now"
+  },
+  "plan_is_cover_gap": {
+   "from": [
+    "contract:plans[].id"
+   ],
+   "how": "the plan chosen as best 'cover the gap' (CLAUDE.md 'Plans' step 4; build step 7 sets its id: 'cover_gap', owner approved 2026-11-12, choice 4)",
+   "plain": "for the plan that fills empty months"
+  },
+  "plan_is_follow_shift": {
+   "from": [
+    "contract:plans[].id"
+   ],
+   "how": "the plan chosen as best 'follow the shift' (build step 7 sets its id: 'follow_shift', owner approved 2026-11-12, choice 4); not shown since owner's decision 5 (2026-11-13), kept for a revisit after step 9",
+   "plain": "for the plan that follows the changing rains"
+  },
+  "onset_earlier": {
+   "from": [
+    "contract:diary.shift_days"
+   ],
+   "how": "round(shift_days) < 0 (schema: negative = earlier)",
+   "plain": "if the rains now start earlier"
+  },
+  "onset_later": {
+   "from": [
+    "contract:diary.shift_days"
+   ],
+   "how": "round(shift_days) > 0",
+   "plain": "if the rains now start later"
+  },
+  "onset_same": {
+   "from": [
+    "contract:diary.shift_days"
+   ],
+   "how": "round(shift_days) == 0",
+   "plain": "if the start of the rains has not moved"
+  },
+  "groundwater_falling": {
+   "from": [
+    "contract:diary.groundwater.direction"
+   ],
+   "how": "direction == 'falling'",
+   "plain": "if stored water in the area is falling"
+  },
+  "groundwater_steady": {
+   "from": [
+    "contract:diary.groundwater.direction"
+   ],
+   "how": "direction == 'steady'",
+   "plain": "if stored water in the area is steady"
+  },
+  "groundwater_rising": {
+   "from": [
+    "contract:diary.groundwater.direction"
+   ],
+   "how": "direction == 'rising'",
+   "plain": "if stored water in the area is rising"
+  },
+  "has_frost_risk": {
+   "from": [
+    "contract:diary.months[].frost"
+   ],
+   "how": "any month whose frost is not 'none'",
+   "plain": "if some months have freezing nights"
+  },
+  "water_source_unknown": {
+   "from": [
+    "field:water_source"
+   ],
+   "how": "water_source is null",
+   "plain": "if we do not know the field's water"
+  },
+  "station_rain_lower": {
+   "from": [
+    "field:validation_station",
+    "code:scripts/run_checks.py:crosscheck_station"
+   ],
+   "how": "the field has a validation station and data/checks/<field>/crosscheck_gpm_<station>.json gives the station 25 to 40 percent less rain than GPM over complete months (demo: GPM +41.2%, station 29% lower); the text says 'about a third'",
+   "plain": "if the nearby station records about a third less rain than the satellite"
+  },
+  "field_is_placeholder": {
+   "from": [
+    "field:placeholder"
+   ],
+   "how": "placeholder is true",
+   "plain": "while the field is a sample, not a farmer's own"
+  },
+  "new_crop": {
+   "from": [
+    "contract:plans[].crops[].crop"
+   ],
+   "how": "the plan has a crop the current plan does not",
+   "plain": "if the plan adds a crop you do not grow now"
+  },
+  "has_legume": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.legume"
+   ],
+   "how": "any crop in the plan has legume true",
+   "plain": "if the plan has lentil or another crop that feeds the soil"
+  },
+  "breaks_family": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.family"
+   ],
+   "how": "no two crops in a row (round the year) share a family",
+   "plain": "if no two crops in a row are of the same family"
+  },
+  "has_deeper_roots": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.zr_m"
+   ],
+   "how": "the plan's largest zr_m is larger than the current plan's (a comparison, so no threshold is needed)",
+   "plain": "if the plan has a crop with deeper roots than now"
+  },
+  "has_assumed_ky": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.ky_assumed"
+   ],
+   "how": "any crop in the plan has ky_assumed true",
+   "plain": "if a crop's harvest loss from thirst is our assumption"
+  },
+  "has_rice": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.paddy"
+   ],
+   "how": "any crop in the plan has paddy true",
+   "plain": "if the plan has paddy rice"
+  },
+  "harvest_better": {
+   "from": [
+    "contract:plans[].score.harvest"
+   ],
+   "how": "rounded score above the current plan's",
+   "plain": "if the harvest score beats the current plan"
+  },
+  "water_better": {
+   "from": [
+    "contract:plans[].score.water"
+   ],
+   "how": "rounded score above the current plan's",
+   "plain": "if the water score beats the current plan"
+  },
+  "cover_better": {
+   "from": [
+    "contract:plans[].score.cover"
+   ],
+   "how": "rounded score above the current plan's",
+   "plain": "if the ground-cover score beats the current plan"
+  },
+  "soil_better": {
+   "from": [
+    "contract:plans[].score.soil_kept"
+   ],
+   "how": "rounded score above the current plan's",
+   "plain": "if the soil-kept score beats the current plan"
+  },
+  "thirsty_month": {
+   "from": [
+    "code:pipeline/twin/soil_water.py:run_bucket",
+    "contract:diary.months[].m"
+   ],
+   "how": "per crop, the month with the most days where depletion passed RAW (Ks < 1) across the rain-fed replay (build step 7); shown only at 5 or more such days a year, and never for rice (rules.yaml tips; owner's answer 5, 2026-11-13)",
+   "plain": "for the month a crop is most often thirsty"
+  },
+  "bare_month": {
+   "from": [
+    "contract:diary.months[].cover",
+    "contract:diary.months[].m"
+   ],
+   "how": "the first month whose typical cover from the satellite is 'bare'; for a suggested plan, the first such month in which the plan's own calendar is bare too (rules.yaml tips.straw_months; owner's answer 5, 2026-11-13)",
+   "plain": "for a month when the ground is usually bare"
+  },
+  "steep_part": {
+   "from": [
+    "code:pipeline/fetch/nasadem.py:slope_deg",
+    "contract:field.sections[].id"
+   ],
+   "how": "a section whose slope passes a threshold still to be sourced in rules.yaml (build step 8: TODO-VERIFY)",
+   "plain": "for a part of the field that slopes"
+  },
+  "plan_is_safest": {
+   "from": [
+    "contract:plans[].id"
+   ],
+   "how": "plan id == 'safest': the best 10th-percentile year among the rice plans keeping today's cover (owner's decision 5, 2026-11-13)",
+   "plain": "for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years)"
+  },
+  "rain_changes_harvest": {
+   "from": [
+    "contract:plans[].score.harvest",
+    "contract:plans[].score_dhm_rain.harvest"
+   ],
+   "how": "the plan has score_dhm_rain and its harvest differs",
+   "plain": "if NASA's uncorrected rain gives another harvest number"
+  },
+  "rain_corrected": {
+   "from": [
+    "contract:method.rain_correction.applied"
+   ],
+   "how": "method.rain_correction.applied is true (rules.yaml gpm_series.correction_fields)",
+   "plain": "if we lowered the rain numbers after the gauges stopped"
+  },
+  "needs_water_window": {
+   "from": [
+    "contract:plans[].crops[].crop",
+    "crops:*.calendar"
+   ],
+   "how": "a crop of the plan is sown in a window whose note in config/crops.json says irrigated (and not rainfed)",
+   "plain": "if a crop of the plan usually needs watering here"
+  },
+  "legume_option": {
+   "from": [
+    "crops:*.legume",
+    "code:pipeline/plans/explain.py:legume_option"
+   ],
+   "how": "the plan is the cover-the-gap plan, it has no legume, and a rice plan with a legume exists (owner's decision 4, 2026-11-13)",
+   "plain": "if lentil after rice is worth naming as another choice"
+  },
+  "bad_years_better": {
+   "from": [
+    "code:pipeline/plans/score.py:harvest_metrics"
+   ],
+   "how": "the plan's 10th-percentile year (stability) is above the current plan's, rounded",
+   "plain": "if bad years hurt this plan less than the current one"
+  },
+  "harvest_gain_single": {
+   "from": [
+    "contract:plans[].score.harvest",
+    "code:scripts/run_plans.py:gain_range"
+   ],
+   "how": "the gain is at least 1 and its smallest and largest value round to the same number (or no range was computed and the rounded score beats the current plan's)",
+   "plain": "if the harvest gain is one number"
+  },
+  "harvest_gain_range": {
+   "from": [
+    "code:scripts/run_plans.py:gain_range"
+   ],
+   "how": "the smallest gain rounds to at least 1 and the largest is higher",
+   "plain": "if the harvest gain runs from one number to a higher one"
+  },
+  "harvest_gain_maybe": {
+   "from": [
+    "code:scripts/run_plans.py:gain_range"
+   ],
+   "how": "the smallest gain rounds to less than 1 and the largest to at least 1",
+   "plain": "if the harvest may be higher or no better"
+  },
+  "has_gain_range": {
+   "from": [
+    "code:scripts/run_plans.py:gain_range"
+   ],
+   "how": "a suggested plan whose harvest gain was computed over the root-depth range (owner's answer 4, 2026-11-13)",
+   "plain": "for a suggested plan, to say why the gain is a range"
+  },
+  "cover_days_more": {
+   "from": [
+    "contract:plans[].score.cover"
+   ],
+   "how": "the plan has a crop on more days of the year than the current plan",
+   "plain": "if the plan keeps a crop on the ground for more days"
+  },
+  "rain_reads_high": {
+   "from": [
+    "contract:method.rain_correction.rain_mm_per_year.station_normal",
+    "code:pipeline/export/build_field_json.py:export_step7"
+   ],
+   "how": "the twin's mean yearly rain over the record is at least 1.25 times DHM's 1991-2020 normal of the nearest station (rules.yaml gpm_series.level_caveat_ratio; owner's answer 8, 2026-11-13)",
+   "plain": "if our rain is well above the nearest town's usual rain"
+  },
+  "soil_cell_far": {
+   "from": [
+    "code:pipeline/export/build_field_json.py:export_step7"
+   ],
+   "how": "the soil-map cell used lies more than one cell (250 m) from the field (the field's own cell has no values)",
+   "plain": "if the soil numbers are not from the field's own spot"
+  },
+  "groundwater_trend_clear": {
+   "from": [
+    "contract:diary.groundwater.confidence"
+   ],
+   "how": "diary.groundwater.confidence is at least 0.95 (the trend test's 5% level, rules.yaml groundwater.alpha); about the wide region, never about the field (owner's answer 18, 2026-11-13)",
+   "plain": "if the wide area's water trend is clear"
+  },
+  "winter_crop_unconfirmed": {
+   "from": [
+    "contract:current_options.options[].id",
+    "field:current_rotation_options"
+   ],
+   "how": "the field file has current_options with more than one option: the satellite's season timing cannot tell the rotations apart and the farmer has not confirmed one (owner's answer 6, 2026-11-13)",
+   "plain": "while the farmer has not said which winter crop is grown"
+  },
+  "memory_kept": {
+   "from": [
+    "contract:method.field_memory.kept"
+   ],
+   "how": "method.field_memory.kept is true: on held-out years the learned correction beat both the physics twin alone and 'no anomaly' (rules.yaml field_memory.keep_rule)",
+   "plain": "if the field memory won its test and is used"
+  },
+  "memory_not_kept": {
+   "from": [
+    "contract:method.field_memory.kept"
+   ],
+   "how": "method.field_memory.kept is false",
+   "plain": "if the field memory did not win its test and is left out"
+  }
  }
 }

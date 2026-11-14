@@ -141,8 +141,10 @@ def greenness(field, sections, rules, data):
             if a is not None:
                 anomalies[i].append(a)
                 slot_anoms.setdefault(s["slot"], {k: [] for k in ids})[i].append(a)
-    test = at.usually(anomalies, S["alpha"], S["ci_level"], S["same_margin_ndvi"])
-    by_slot = {slot: at.usually(v, S["alpha"], S["ci_level"], S["same_margin_ndvi"]) for slot, v in slot_anoms.items()}
+    field_peaks = [p["peak"] for p in peaks["field"]]
+    floor = at.size_floor(field_peaks, S["size_floor_relative"])          # owner, 2026-11-14 (Ju et al. 2025)
+    test = at.usually(anomalies, S["alpha"], S["ci_level"], floor)
+    by_slot = {slot: at.usually(v, S["alpha"], S["ci_level"], floor) for slot, v in slot_anoms.items()}
 
     # check: the field (all sections) against the diary's own field series (4 pixel centres inside, unweighted)
     diary = pd.read_parquet(data / "clean" / field["id"] / "greenness_field.parquet")
@@ -160,7 +162,13 @@ def greenness(field, sections, rules, data):
               "common_images": int(len(common)), "first": str(common["date"].min().date()), "last": str(common["date"].max().date())}
     series = {"date": [str(d.date()) for d in common["date"]], "sensor": list(common["sensor"]),
               "field": [round(float(x), 4) for x in common["field"]], **{i: [round(float(x), 4) for x in common[i]] for i in ids}}
-    return {"weights": weights, "grid": grid_info, "by_season": by_season, "test": test, "by_slot": by_slot,
+    size = {"floor_ndvi": round(floor, 4) if floor is not None else None, "relative": S["size_floor_relative"],
+            "field_median_season_peak": round(float(np.median([p for p in field_peaks if p is not None])), 4),
+            "rule": "greener / less green need the sign test (Holm) AND |median anomaly| > floor; otherwise same "
+                    "('about the same'); owner, 2026-11-14",
+            "source": "Ju et al. 2025, RSE 324:114723, abstract: same-day Landsat/Sentinel-2 'between-sensor VI "
+                      "difference is below 4.5% for most of the indices' (545 same-day pairs)"}
+    return {"size_floor": size, "weights": weights, "grid": grid_info, "by_season": by_season, "test": test, "by_slot": by_slot,
             "check_vs_diary": check, "counts": counts, "series": series, "season_method": method, "seasons": len(seasons)}
 
 
@@ -288,7 +296,7 @@ def main(argv=None):
     unknown.append(UNKNOWN_LINES["probe"])
     doc = {
         "labels": {"field": field["name"], "placeholder": bool(field.get("placeholder")),
-                   "rules": "rules.yaml sections (committed before the first run, in 5dce176)",
+                   "rules": "rules.yaml sections (committed before the first run, in 5dce176; size floor, owner 2026-11-14, in e5b9aef)",
                    "what_it_is": "the field split into parts of about one 30 m satellite pixel; each part's own greenness "
                                  "history from HLS, a low-ground flag from NASADEM, and the twin's status (shared)",
                    "not_crop": "NDVI shows green cover, not which crop or how good: greener can be weeds, trees or a "
@@ -302,6 +310,7 @@ def main(argv=None):
                           "low_ground": {s["id"]: s["low_ground"] for s in out_sections},
                           "status": stat["status"], "wetness_pct": out_sections[0]["wetness_pct"]},
         "greenness_method": {"seasons_from": f"diary_seasons.json, chosen method '{g['season_method']}', {g['seasons']} HLS seasons",
+                             "size_floor": g["size_floor"],
                              "counts": g["counts"], "check_vs_diary_field_series": g["check_vs_diary"],
                              "min_decidable_seasons": at.min_decidable_n(S["alpha"], len(sections)),
                              "hls_grid": g["grid"], "hls_geolocation": HLS_GUIDE},
@@ -310,7 +319,7 @@ def main(argv=None):
                               "nasadem_accuracy": NASADEM_GUIDE},
         "shared": shared_block(field, rules, data, twin),
         "unknown_lines_en": unknown,
-        "contract_proposal": {"per_section_add": {"greener": "one of 'greener', 'less green', 'same', 'can't tell' (sections.json greenness.usually)",
+        "contract_proposal": {"per_section_add": {"greener": "one of 'greener', 'less green', 'same', 'can't tell' (sections.json greenness.usually; the site says 'a little greener', 'a little less green', 'about the same')",
                                                   "low_ground": "true, false or null (null = can't tell: within NASADEM's stated error)"},
                               "keep": "id, polygon, status, wetness, temp, sure as they are"},
         "image_series": g["series"],

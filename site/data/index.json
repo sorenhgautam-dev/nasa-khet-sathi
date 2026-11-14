@@ -11,6 +11,24 @@
     27.625034,
     85.480773,
     27.714966
+   ],
+   "sample": false,
+   "area": "demo"
+  }
+ ],
+ "areas": [
+  {
+   "id": "demo",
+   "name": "Bhaktapur demo field area",
+   "bbox": [
+    85.379227,
+    27.625034,
+    85.480773,
+    27.714966
+   ],
+   "map": "data/area/demo.json",
+   "fields": [
+    "demo"
    ]
   }
  ]

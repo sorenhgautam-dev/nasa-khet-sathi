@@ -17,7 +17,7 @@ Build step 7 (2026-11-13): with data/checks/<field>/plans.json (scripts/run_plan
 (current, cover_gap, safest; rules.yaml plans), each with its replay, its five tabs and tips in English and Nepali
 (pipeline/plans/explain.py), the sources, and the method page's rain correction and stated choices. Owner's decision 1
 (2026-11-13): every result the 2017 rain correction changes carries the uncorrected run beside it (replay years'
-uncorrected_rain, plans' score_uncorrected_rain), from data/checks/<field>/rain_uncorrected/.
+uncorrected_rain, plans' score_dhm_rain), from data/checks/<field>/rain_uncorrected/.
 """
 from collections import Counter
 import argparse
@@ -79,17 +79,18 @@ def replay_rows(replay, doc=None):
     return rows
 
 
-def with_uncorrected(rows, rows_unc):
+def with_second_rain(rows, rows_unc):
     """Owner's decision 1 (2026-11-13): each year whose uncorrected-rain run differs (harvest, dry days, event or the
-    watered case) carries it as uncorrected_rain; other years are left as they are."""
+    watered case) carries it as dhm_rain (owner's decision 4b, 2026-11-14: the second version is the rain scaled to DHM
+    Bhaktapur's normals, the range's dry edge; it was GPM as published until then); other years are left as they are."""
     unc = {r["year"]: r for r in rows_unc}
     if sorted(unc) != [r["year"] for r in rows]:
-        raise ValueError("the uncorrected run must cover the same years")
+        raise ValueError("the second rain version must cover the same years")
     out = []
     for r in rows:
         u = {k: unc[r["year"]][k] for k in ("harvest", "dry_days", "event", "event_season", "irrigated") if k in unc[r["year"]]}
         differs = any(u.get(k) != r.get(k) for k in ("harvest", "dry_days", "event", "event_season", "irrigated"))
-        out.append({**r, "uncorrected_rain": u} if differs else dict(r))
+        out.append({**r, "dhm_rain": u} if differs else dict(r))
     return out
 
 
@@ -191,37 +192,140 @@ def stated_choices(rules):
     return out
 
 
-def sources_block(soil_distance_m=None, soil_around=None):
+def skeleton(field):
+    """REVIEW_2 H6: a field file's frame from config/fields/<id>.yaml alone (no site file needed): its identity, and
+    every block empty until the export's steps fill it. A sample's or placeholder's label is in its configured name."""
+    return {"field": {"name": field["name"], "lat": field["lat"], "lon": field["lon"],
+                      "water_source": field.get("water_source") or "unknown", "sections": []},
+            "diary": {}, "plans": [], "replay": {}, "future": None, "sources": [], "method": {"season_detection": None}}
+
+
+# GHCN-Daily stations a field may name (ghcnd-stations.txt, NOAA NCEI, read 2026-11-12 and 2026-11-14); a config may
+# override with validation_station_name and validation_station_latlon
+STATIONS = {"NP000444540": ("Kathmandu Airport", 27.700, 85.367), "MA000067083": ("Antananarivo/Ivato", -18.800, 47.483)}
+COMPASS = ["north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west"]
+
+
+def station_distance_text(lat, lon, st_lat, st_lon):
+    """'one point, <km> km <direction>' from the field to the station (great-circle distance, 8-point compass)."""
+    import math
+    from pipeline.fetch.worldcover import distance_km
+    km = distance_km(lat, lon, st_lat, st_lon)
+    north = st_lat - lat
+    east = (st_lon - lon) * math.cos(math.radians((lat + st_lat) / 2))
+    bearing = math.degrees(math.atan2(east, north)) % 360
+    return f"one point, {km:.0f} km {COMPASS[int((bearing + 22.5) // 45) % 8]}"
+
+
+def _years(card, default):
+    d = (card or {}).get("date_range") or []
+    return f"{str(d[0])[:4]}-{str(d[1])[:4]}" if len(d) == 2 else default
+
+
+def _late_note(gpm_card):
+    from pipeline.fetch.weather import MONTHS
+    late = [x for x in (gpm_card or {}).get("segments", []) if x.get("product") == "late"]
+    if not late:
+        return ""
+    a, z = late[0]["from"], late[-1]["to"]
+    span = MONTHS[int(a[5:7]) - 1] + ("" if a[5:7] == z[5:7] else f"-{MONTHS[int(z[5:7]) - 1]}")
+    return f" (Late for {span} {z[:4]})"
+
+
+def sources_block(soil_distance_m=None, soil_around=None, field=None, cards=None):
     """Every dataset behind a number on the site (golden rule 8: model-based data labelled model).
 
     REVIEW_2 M5, M6 (2026-11-13): the soil row names what the twin reads (the two water contents) and, when the
     cell used is not the field's own, how far away it is (soil_distance_m, from the soil data card); the MODIS row
-    says that no number shown uses it (bare days, cover months, the guess and the method page are HLS years only)."""
+    says that no number shown uses it (bare days, cover months, the guess and the method page are HLS years only).
+
+    REVIEW_2 H6: with `field` (its config) and `cards` ({power, gpm, grace, ghcn, modis, weather}: its data cards) the
+    rows come from them: the rain correction and the temperature correction only where the weather card applied them,
+    a station row only for the station the field names (measured from the field), MODIS only where the field has its
+    card. Without them, the demo's rows as they were (identical for the demo's own config and cards)."""
+    if field is None:
+        field, cards = DEMO_FIELD, DEMO_CARDS
+    cards = cards or {}
+    corr = (cards.get("weather") or {}).get("corrections", {})
+    rb = corr.get("rain_break") or {}
+    gpm_product = "V07 Final daily" + _late_note(cards.get("gpm"))
+    if rb.get("applied"):
+        gpm_product += (f"; days from {str(rb['from'])[:4]} scaled back, month by month, to its own "
+                        f"{rb['reference_years'][0]}-{rb['reference_years'][1]} level (the rain gauges behind it stopped reporting here)")
+    sid = field.get("validation_station")
+    st_name, st_lat, st_lon = STATIONS.get(sid, (sid, None, None)) if sid else (None, None, None)
+    st_name = field.get("validation_station_name") or st_name
+    if field.get("validation_station_latlon"):
+        st_lat, st_lon = field["validation_station_latlon"]
+    temp_corrected = any((corr.get(c) or {}).get("applied") for c in ("tmin_c", "tmax_c"))
+    power_product = f"Daily API {(cards.get('power') or {}).get('version', 'v2.10.3')} (MERRA-2 weather, CERES sunshine)"
+    if temp_corrected and st_name:
+        power_product += f"; temperatures corrected to {st_name}"
     soil_where = (f"; nearest cell with values, {soil_distance_m:.0f} m from the field" if soil_distance_m else "")
     if soil_around and soil_around.get("cells", 0) > 1:      # owner's answer 10 (2026-11-13): the neighbourhood range
         a = soil_around
         soil_where += (f". Water it holds for plants in the top {a['depth_m']:g} m: {a['used_mm']:.0f} mm; the {a['cells']} cells "
                        f"within {a['radius_m'] / 1000:g} km of the field hold {a['min_mm']:.0f} to {a['max_mm']:.0f} mm")
-    return [
-        {"name": "GPM IMERG", "product": "V07 Final daily (Late for Oct-Dec 2025); days from 2017 scaled back, month by "
-         "month, to its own 2001-2016 level (the rain gauges behind it stopped reporting here)", "resolution": "0.1 deg (about 10 km)",
-         "years": "2001-2025", "type": "satellite"},
-        {"name": "NASA POWER", "product": "Daily API v2.10.3 (MERRA-2 weather, CERES sunshine); temperatures corrected "
-         "to Kathmandu Airport", "resolution": "0.5 x 0.625 deg (about 55 km)", "years": "2001-2025", "type": "model"},
-        {"name": "Kathmandu Airport station", "product": "NOAA GHCN-Daily NP000444540 (temperature correction, checks)",
-         "resolution": "one point, 7 km west", "years": "2001-2025", "type": "station"},
-        {"name": "Harmonized Landsat Sentinel-2", "product": "HLS-VI v2.0 greenness (NDVI)", "resolution": "30 m",
-         "years": "2013-2025", "type": "satellite"},
-        {"name": "MODIS Terra", "product": "MOD13Q1 v061 greenness (NDVI), before HLS: compared with HLS only; "
-         "no number shown uses it", "resolution": "250 m", "years": "2001-2013", "type": "satellite"},
+    rows = [
+        {"name": "GPM IMERG", "product": gpm_product, "resolution": "0.1 deg (about 10 km)",
+         "years": _years(cards.get("gpm"), "2001-2025"), "type": "satellite"},
+        {"name": "NASA POWER", "product": power_product, "resolution": "0.5 x 0.625 deg (about 55 km)",
+         "years": _years(cards.get("power"), "2001-2025"), "type": "model"}]
+    if sid:
+        rows.append({"name": f"{st_name} station",
+                     "product": f"NOAA GHCN-Daily {sid} ({'temperature correction, checks' if temp_corrected else 'checks only'})",
+                     "resolution": (station_distance_text(field["lat"], field["lon"], st_lat, st_lon) if st_lat is not None
+                                    else "one point"), "years": _years(cards.get("ghcn"), "2001-2025"), "type": "station"})
+    rows.append({"name": "Harmonized Landsat Sentinel-2", "product": "HLS-VI v2.0 greenness (NDVI)", "resolution": "30 m",
+                 "years": "2013-2025", "type": "satellite"})
+    if "modis" in cards:
+        rows.append({"name": "MODIS Terra", "product": "MOD13Q1 v061 greenness (NDVI), before HLS: compared with HLS only; "
+                     "no number shown uses it", "resolution": "250 m", "years": "2001-2013", "type": "satellite"})
+    rows += [
         {"name": "GRACE and GRACE-FO", "product": "JPL mascon CRI RL06.3 v04: water stored across the region",
-         "resolution": "about 300 km", "years": "2002-2026", "type": "satellite"},
+         "resolution": "about 300 km", "years": _years(cards.get("grace"), "2002-2026"), "type": "satellite"},
         {"name": "ISRIC SoilGrids", "product": "2.0: water the soil holds at field capacity and wilting point "
          f"(machine-learning map){soil_where}", "resolution": "250 m", "years": "one map", "type": "model"},
         {"name": "NASADEM", "product": "v001 elevation", "resolution": "30 m", "years": "2000", "type": "satellite"},
         {"name": "Khet Sathi field twin", "product": "FAO-56 soil water, FAO-33 harvest, from the data above",
-         "resolution": "the field", "years": "2001-2025", "type": "model"},
+         "resolution": "the field", "years": _years(cards.get("weather"), "2001-2025"), "type": "model"},
     ]
+    return rows
+
+
+# The demo's rows as they were written before REVIEW_2 H6 (sources_block() with no field): its config and cards
+DEMO_FIELD = {"lat": 27.690767, "lon": 85.441792, "validation_station": "NP000444540"}
+DEMO_CARDS = {"power": {"version": "v2.10.3"}, "modis": {},
+              "gpm": {"segments": [{"product": "late", "from": "2025-10-01", "to": "2025-12-31"}]},
+              "weather": {"corrections": {"tmin_c": {"applied": True},
+                                          "rain_break": {"applied": True, "from": "2017-01-01", "reference_years": [2001, 2016]}}}}
+CARD_NAMES = {"power": "power", "gpm": "gpm", "grace": "grace", "modis": "modis", "weather": "weather"}
+
+
+def load_cards(field):
+    """The data cards sources_block reads, from data/cards/<field>/ (a card that does not exist is left out)."""
+    d = REPO / "data" / "cards" / field["id"]
+    names = {**CARD_NAMES, "ghcn": f"ghcn_{field['validation_station']}"} if field.get("validation_station") else CARD_NAMES
+    return {k: json.loads((d / f"{n}.json").read_text()) for k, n in names.items() if (d / f"{n}.json").exists()}
+
+
+def rain_context(rain_check, twin_mm, rules):
+    """The words' rain context (REVIEW_2 H6: only what the field has). rain_reads_high and rain_level need a normal
+    named by the field's rain check (the first one: the demo's Bhaktapur); station_rain_lower needs the station
+    comparison of a corrected field (the demo's band, 25 to 40 percent less rain at the station than in the twin)."""
+    normals = rain_check.get("normals_mm") or {}
+    name = next(iter(normals), None)
+    out = {"rain_reads_high": False, "rain_level": None, "station_rain_lower": False}
+    if name is not None:
+        normal_mm = float(normals[name]["annual"])
+        out["rain_reads_high"] = twin_mm / normal_mm >= rules["gpm_series"]["level_caveat_ratio"]
+        out["rain_level"] = {"twin_mm_per_year": round(twin_mm, 1), "station_normal_mm": round(normal_mm, 1),
+                             "ratio": round(twin_mm / normal_mm, 2)}
+    bc = rain_check.get("break_correction")
+    if bc:
+        station_less = 1 - 1 / bc["twin_rain_vs_station_all_shared_months"]["ratio"]   # share less rain at the station
+        out["station_rain_lower"] = 0.25 <= station_less <= 0.40
+    return out
 
 
 NOT_READY = ("field.sections", "future")     # build steps 8 and 9
@@ -309,14 +413,14 @@ def apply_future(doc, future, plan_ids, option_ids):
                      "with_plan": series(plan_ids["cover_gap"], "corrected"), "words": FUTURE_WORDS}
     for p in out["plans"]:
         p["future"] = series(plan_ids[p["id"]], "corrected")
-        u = series(plan_ids[p["id"]], "uncorrected")
-        if u != p["future"]:
-            p["future_uncorrected_rain"] = u
+        u = series(plan_ids[p["id"]], "dhm") if "dhm" in future["plans"][plan_ids[p["id"]]] else None
+        if u is not None and u != p["future"]:
+            p["future_dhm_rain"] = u
     for o in (out.get("current_options") or {}).get("options", []):
         o["future"] = series(option_ids[o["id"]], "corrected")
-        u = series(option_ids[o["id"]], "uncorrected")
-        if u != o["future"]:
-            o["future_uncorrected_rain"] = u
+        u = series(option_ids[o["id"]], "dhm") if "dhm" in future["plans"][option_ids[o["id"]]] else None
+        if u is not None and u != o["future"]:
+            o["future_dhm_rain"] = u
     out["mock"] = [m for m in out.get("mock", []) if m != "future"]
     return out
 
@@ -351,7 +455,7 @@ def rain_correction_block(rain_break, rain_check, evidence, words_tabs, shared):
                           "ratio_after": round(h["ratio_corrected"], 2)},
              "rain_mm_per_year": {"reference": round(gpm_pre), "after_uncorrected": round(gpm_post),
                                   "after_corrected": round(bc["twin_rain_2017_2025_annual_mm"]),
-                                  "station_normal": round(rain_check["normals_mm"]["Bhaktapur"]["annual"])},
+                                  "station_normal": round(next(iter(rain_check["normals_mm"].values()))["annual"])},
              "gauges": {"weight_before_pct": evidence["gauge_weight_before_pct"],
                         "weight_after_pct": evidence["gauge_weight_after_pct"],
                         "stations_before": evidence["gpcc_stations_before"], "stations_after": evidence["gpcc_stations_after"]}}
@@ -362,6 +466,15 @@ def rain_correction_block(rain_break, rain_check, evidence, words_tabs, shared):
     lines = words_tabs["method_page"]["rain_correction"]
     block["words"] = {lang: render_tab(lines, set(), vals, lang) for lang in ("en", "ne")}
     return block
+
+
+def evidence_from_card(summary):
+    """The gauge evidence a corrected sample's method page quotes, from its own card (data/cards/<field>/
+    gauge_evidence.json `summary`), rounded as rules.yaml gpm_series.break_evidence quotes the demo's."""
+    return {"gauge_weight_before_pct": [round(x) for x in summary["gauge_weight_before_pct"]],
+            "gauge_weight_after_pct": [round(x) for x in summary["gauge_weight_after_yearly_pct"]],
+            "gpcc_stations_before": round(summary["gpcc_stations_before"]),
+            "gpcc_stations_after": round(summary["gpcc_stations_after"])}
 
 
 def _window_notes(plan_id, lib):
@@ -379,12 +492,12 @@ def apply_plans(doc, plans, plans_unc, lib, words, ctx):
     out = copy.deepcopy(doc)
     roles = ("current", "cover_gap", "safest")
     if plans_unc is not None and [plans_unc["export"][r]["plan"] for r in roles] != [plans["export"][r]["plan"] for r in roles]:
-        raise ValueError("the uncorrected run must export the same plans as the corrected one")
+        raise ValueError("the DHM-scaled run must export the same plans as the corrected one")
     replay = {}
     for r in roles:
         rows = replay_rows(plans["export"][r]["replay"], out)
         if plans_unc is not None:
-            rows = with_uncorrected(rows, replay_rows(plans_unc["export"][r]["replay"], out))
+            rows = with_second_rain(rows, replay_rows(plans_unc["export"][r]["replay"], out))
         replay[r] = rows
     out["field"]["water_source"] = plans["export"]["current"]["replay"]["labels"].get("water_source") or "unknown"
     contract, info = [], {}
@@ -394,7 +507,7 @@ def apply_plans(doc, plans, plans_unc, lib, words, ctx):
         if plans_unc is not None:
             u = score_block(plans_unc["export"][r]["score"])
             if u != p["score"]:
-                p["score_uncorrected_rain"] = u
+                p["score_dhm_rain"] = u
         info[r] = {**p, "stability": e["stability"], "pest_break": e["pest_break"],
                    "needs_water_window": e["needs_water_window"], "windows": _window_notes(e["plan"], lib),
                    "thirsty": e["replay"].get("thirsty", {}), "gain_range": e.get("gain_range"),
@@ -419,18 +532,18 @@ def apply_plans(doc, plans, plans_unc, lib, words, ctx):
                 cur_p = {"id": "current", "name": contract[0]["name"], "crops": [dict(s) for s in o["spans"]],
                          "score": score_block(o["score"])}
                 if o["id"] in unc_by_id:
-                    rows = with_uncorrected(rows, replay_rows(unc_by_id[o["id"]]["replay"], out))
+                    rows = with_second_rain(rows, replay_rows(unc_by_id[o["id"]]["replay"], out))
                     u = score_block(unc_by_id[o["id"]]["score"])
                     if u != cur_p["score"]:
-                        cur_p["score_uncorrected_rain"] = u
+                        cur_p["score_dhm_rain"] = u
                 cur_info = {**cur_p, "stability": o["stability"], "pest_break": o["pest_break"],
                             "needs_water_window": o["needs_water_window"], "windows": _window_notes(o["plan"], lib),
                             "thirsty": o["replay"].get("thirsty", {}), "gain_range": None,
                             "cover_days": round(o["score"]["cover"] / 100.0 * 365)}
             ck = {**c, "replay": {**replay, "current": rows}}
             block = {"id": o["id"], "crops": cur_p["crops"], "score": cur_p["score"]}
-            if "score_uncorrected_rain" in cur_p:
-                block["score_uncorrected_rain"] = cur_p["score_uncorrected_rain"]
+            if "score_dhm_rain" in cur_p:
+                block["score_dhm_rain"] = cur_p["score_dhm_rain"]
             w = ex.render(cur_info, cur_info, ck, lib, words) if k else contract[0]
             block.update(tabs=w["tabs"], tips=w["tips"], tabs_ne=w["tabs_ne"], tips_ne=w["tips_ne"], replay=rows, compared={})
             for r in roles[1:]:
@@ -450,19 +563,27 @@ def apply_plans(doc, plans, plans_unc, lib, words, ctx):
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--field", default="demo")
+    ap.add_argument("--out", default=None, help="write here instead of site/data/fields/<field>.json")
     a = ap.parse_args(argv)
     src = REPO / "data" / "checks" / a.field / "replay.json"
-    dest = REPO / "site" / "data" / "fields" / f"{a.field}.json"
+    dest = Path(a.out) if a.out else REPO / "site" / "data" / "fields" / f"{a.field}.json"
     if not src.exists():
         print(f"NOT YET POSSIBLE: {src.relative_to(REPO)} does not exist (scripts/run_replay.py needs GPM rain). "
-              f"{dest.relative_to(REPO)} left unchanged.")
+              f"{dest} left unchanged.")
         return 2
     replay = json.loads(src.read_text())
     seasons_path = REPO / "data" / "checks" / a.field / "diary_seasons.json"
+    plans_path = REPO / "data" / "checks" / a.field / "plans.json"
     try:
-        doc = json.loads(dest.read_text())
-        doc.setdefault("method", {"season_detection": None})
-        plans_path = REPO / "data" / "checks" / a.field / "plans.json"
+        if plans_path.exists():          # REVIEW_2 H6: every block is rebuilt, so the frame comes from the config alone
+            from pipeline.fetch.fields import load_field
+            doc = skeleton(load_field(a.field))
+        elif dest.exists():              # the early steps (5, 6) fill one block of a file that already exists
+            doc = json.loads(dest.read_text())
+            doc.setdefault("method", {"season_detection": None})
+        else:
+            print(f"NOT YET POSSIBLE: neither {plans_path.relative_to(REPO)} nor {dest} exists. Nothing written.")
+            return 2
         whole = not plans_path.exists()      # with plans.json the last step replaces plans and replays and validates the whole
         if seasons_path.exists():
             doc = apply_method(doc, json.loads(seasons_path.read_text()), check=whole)
@@ -474,12 +595,12 @@ def main(argv=None):
         else:
             doc = apply_replay(doc, replay["export"], plan_id="current")
     except ValueError as e:
-        print(f"REFUSED: {e}. {dest.relative_to(REPO)} left unchanged.")
+        print(f"REFUSED: {e}. {dest} left unchanged.")
         return 1
     dest.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n")
     print(f"wrote the plans {[p['id'] for p in doc['plans']]} with their replays ({len(doc['replay']['current'])} years), "
           f"the diary, the sources and the method page (season detection: {doc['method']['season_detection']['chosen']}"
-          f"{'; rain correction' if 'rain_correction' in doc['method'] else ''}) into {dest.relative_to(REPO)}")
+          f"{'; rain correction' if 'rain_correction' in doc['method'] else ''}) into {dest}")
     return 0
 
 
@@ -492,10 +613,12 @@ def export_step7(doc, field_id, plans):
     from pipeline.words import texts
     field, rules, lib = load_field(field_id), load_rules(), load_crops()
     checks = REPO / "data" / "checks" / field_id
-    unc_path = checks / "rain_uncorrected" / "plans.json"
+    # owner's decision 4b (2026-11-14): the range's second edge is the rain scaled month by month to DHM Bhaktapur's
+    # 1991-2020 normals (data/checks/<field>/rain_dhm/, rules.yaml gpm_series.dhm_scaling), no longer GPM as published
+    unc_path = checks / "rain_dhm" / "plans.json"
     plans_unc = json.loads(unc_path.read_text()) if unc_path.exists() else None
-    if plans["labels"].get("rain_version") != "corrected" or (plans_unc and plans_unc["labels"].get("rain_version") != "uncorrected"):
-        raise ValueError("plans.json must be the corrected-rain run and rain_uncorrected/plans.json the uncorrected one")
+    if plans["labels"].get("rain_version") != "corrected" or (plans_unc and plans_unc["labels"].get("rain_version") != "dhm"):
+        raise ValueError("plans.json must be the corrected-rain run and rain_dhm/plans.json the DHM-scaled one")
     sec_path, state_path = checks / "sections.json", REPO / "data" / "clean" / field_id / "twin_state.json"
     out = not_ready_blocks(doc, field, sections=json.loads(sec_path.read_text()) if sec_path.exists() else None,
                            twin_state=json.loads(state_path.read_text()) if state_path.exists() else None)
@@ -503,7 +626,8 @@ def export_step7(doc, field_id, plans):
     soil_card = json.loads(soil_card_path.read_text()) if soil_card_path.exists() else {}
     soil_loc = soil_card.get("location", {})
     out["sources"] = sources_block(soil_distance_m=soil_loc.get("distance_m") if isinstance(soil_loc, dict) else None,
-                                   soil_around=(soil_card.get("summary") or {}).get("water_held_for_plants"))
+                                   soil_around=(soil_card.get("summary") or {}).get("water_held_for_plants"),
+                                   field=field, cards=load_cards(field))
     onset_path = checks / "onset_dhm.json"
     if onset_path.exists():
         out = apply_onset_dhm(out, json.loads(onset_path.read_text()))
@@ -513,28 +637,25 @@ def export_step7(doc, field_id, plans):
     words = {"tabs": texts.load("tabs"), "shared": texts.load("screens")["shared"]}
     if rain_break.get("applied"):
         if plans_unc is None:
-            raise ValueError("the rain was corrected but the uncorrected run is missing (owner's decision 1: show both)")
-        out["method"]["rain_correction"] = rain_correction_block(rain_break, rain_check, rules["gpm_series"]["break_evidence"],
-                                                                 words["tabs"], words["shared"])
+            raise ValueError("the rain was corrected but the DHM-scaled run is missing (owner's decisions 1 and 4b: show the range)")
+        evidence = (rules["gpm_series"]["break_evidence"] if field_id in rules["gpm_series"]["correction_fields"] else
+                    evidence_from_card(json.loads((REPO / "data" / "cards" / field_id / "gauge_evidence.json").read_text())["summary"]))
+        out["method"]["rain_correction"] = rain_correction_block(rain_break, rain_check, evidence, words["tabs"], words["shared"])
     memory_path = checks / "field_memory.json"
     if memory_path.exists():
         out["method"]["field_memory"] = field_memory_block(json.loads(memory_path.read_text()), words["tabs"])
     import yaml
     out["method"]["choices"] = stated_choices(yaml.safe_load((REPO / "config" / "rules.yaml").read_text()))
-    ratio = rain_check["break_correction"]["twin_rain_vs_station_all_shared_months"]["ratio"]
-    station_less = 1 - 1 / ratio                                  # share less rain at the station than in the twin
     import pandas as pd
     wx = pd.read_parquet(REPO / "data" / "clean" / field_id / "weather.parquet")
     twin_mm = float(wx.groupby(pd.DatetimeIndex(wx["date"]).year)["rain_mm"].sum().mean())
-    normal_mm = float(rain_check["normals_mm"]["Bhaktapur"]["annual"])
+    rain = rain_context(rain_check, twin_mm, rules)
     soil_far = (isinstance(soil_loc, dict) and soil_loc.get("distance_m") is not None
                 and float(soil_loc["distance_m"]) > float(rules["soilgrids"]["nearest_cell_step_m"]))
-    ctx = {"tips": rules["tips"], "rain_reads_high": twin_mm / normal_mm >= rules["gpm_series"]["level_caveat_ratio"],
-           "rain_level": {"twin_mm_per_year": round(twin_mm, 1), "station_normal_mm": round(normal_mm, 1),
-                          "ratio": round(twin_mm / normal_mm, 2)},
+    ctx = {"tips": rules["tips"], "rain_reads_high": rain["rain_reads_high"], "rain_level": rain["rain_level"],
            "soil_distance_m": int(round(float(soil_loc["distance_m"]))) if soil_far else None,
            "water_source_unknown": field.get("water_source") is None, "placeholder": bool(field.get("placeholder")),
-           "station_rain_lower": 0.25 <= station_less <= 0.40, "rain_corrected": bool(rain_break.get("applied")),
+           "station_rain_lower": rain["station_rain_lower"], "rain_corrected": bool(rain_break.get("applied")),
            "rain_fix_year": int(rain_break["from"][:4]) if rain_break.get("applied") else None,
            "legume_option": ex.legume_option(plans["plans"], rules["plans"]["suggested_must_include"], lib)}
     out = apply_plans(out, plans, plans_unc, lib, words, ctx)

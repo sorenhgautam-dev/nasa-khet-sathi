@@ -1,5 +1,5 @@
 """Local Impact 4b: pick 60 m sample fields across the demo's fetch box by the demo's own rule (rules.yaml
-sample_fields, committed before the first run). Writes config/fields/sample_<n>.yaml and
+sample_fields, committed before the first run). Writes config/fields/sample-<n>.yaml and
 data/checks/<field>/sample_fields.json. It does NOT run the field pipeline for them.
 
     .venv/bin/python scripts/pick_sample_fields.py --field demo
@@ -85,14 +85,14 @@ def main(argv=None):
     out_picks = []
     for n, c in enumerate(picks, 1):
         built = ph.distance_to_class_m(classes, wt, c["lat"], c["lon"], 30 + ph.MARGIN_M, ph.BUILT)
-        info = {"id": f"sample_{n}", "quadrant": c["quadrant"], "lat": c["lat"], "lon": c["lon"],
+        info = {"id": f"sample-{n}", "quadrant": c["quadrant"], "lat": c["lat"], "lon": c["lon"],
                 "rank_among_passing": rank_of[(c["lat"], c["lon"])], "passing": len(ranked),
                 "weaker_season_peak_ndvi": round(c["min_peak"], 3), "peaks_monsoon_winter_2023_2025": c["peaks"],
                 "winter_rise": c["winter_rise"], "soilgrids_nearest_m": c["soilgrids_nearest_m"],
                 "margin_to_built_up_m": None if built is None else round(built, 1),
                 "km_from_demo_field": round(distance_km(c["lat"], c["lon"], *demo_ll), 2),
                 "km_from_box_centre": c["distance_km"],
-                "km_to_other_samples": {p["id"] if "id" in p else f"sample_{k}": round(distance_km(c["lat"], c["lon"], p["lat"], p["lon"]), 2)
+                "km_to_other_samples": {p["id"] if "id" in p else f"sample-{k}": round(distance_km(c["lat"], c["lon"], p["lat"], p["lon"]), 2)
                                         for k, p in enumerate(picks, 1) if p is not c}}
         why = (f"best-ranked passing square in the {c['quadrant']} quadrant (rank {info['rank_among_passing']} of {len(ranked)}; "
                f"weaker season's monthly peak NDVI {info['weaker_season_peak_ndvi']}), {info['km_from_demo_field']} km from the demo field")
@@ -100,7 +100,7 @@ def main(argv=None):
         out_picks.append(info)
         if not a.no_write_configs:
             cfg = sm.sample_config(n, c, field, why)
-            sm.write_yaml(REPO / "config" / "fields" / f"sample_{n}.yaml", cfg,
+            sm.write_yaml(REPO / "config" / "fields" / f"sample-{n}.yaml", cfg,
                           HEADER.format(n=n, date=pd.Timestamp.now().strftime("%Y-%m-%d"), why=why))
         print(json.dumps(info))
     missing = sorted({"NE", "NW", "SE", "SW"} - {p["quadrant"] for p in out_picks})

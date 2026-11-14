@@ -28,6 +28,7 @@ from pipeline.fetch.cropslib import load_crops  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
+from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin import evaporation as evap  # noqa: E402
 from pipeline.twin import kalman as kf  # noqa: E402
 from pipeline.twin import season  # noqa: E402
@@ -43,10 +44,14 @@ def bare_setting(rules, soil):
     return evap.bare_soil_setting(rules["bare_soil"], soil, rules["bare_soil"].get("force", "rules"))
 
 
-def run_to_as_of(w, specs, lib, soil, cn, rules, irrigated):
-    """twin/season.simulate through the last weather day; (daily table, plan)."""
+def run_to_as_of(w, specs, lib, soil, cn, rules, irrigated, seasons=None):
+    """twin/season.simulate through the last weather day; (daily table, plan). The current plan is the farmer's: with
+    rules.yaml season_dates on it takes the satellite's seasons (item 4a), and rain-fed paddy on a calendar day waits for
+    its land-preparation rain (item 4c, paddy_rainfed), as pipeline/plans/twin_options.py applies them for every runner."""
     plan = kf.plan_through(specs, lib, w["date"].min(), w["date"].max())
     w = w.reset_index(drop=True)
+    last = max(pd.Timestamp(s) + pd.Timedelta(season_length(lib[c]["stages_days"]) - 1, unit="D") for c, s in plan)
+    plan, _, _ = to.dated_plan(plan, lib, rules, w, irrigated, farmer=True, seasons=seasons, last_day=max(last, w["date"].max()))
     w = w.assign(u2_ms=w["ws2m_ms"].to_numpy(), rhmin_pct=np.asarray(rhmin_pct(w["ea_kpa"], w["tmax_c"]), dtype=float))
     daily, _ = season.simulate(w[["date", "et0_mm", "rain_mm", "u2_ms", "rhmin_pct"]], plan, lib, soil, cn,
                                bare_setting(rules, soil), irrigated, kc_climate=rules["kc_climate"]["apply"])
@@ -86,9 +91,11 @@ def main(argv=None):
     specs = next(r["specs"] for r in plans["plans"] if r["id"] == current_id)
     water_source = field.get("water_source") or "unknown"
     case = sim.export_case(field.get("water_source"))
+    sj_path = checks / "diary_seasons.json"
+    hls = to.hls_seasons(json.loads(sj_path.read_text())) if sj_path.exists() else None
     runs = {}
     for version in ("corrected", "uncorrected"):
-        daily, plan = run_to_as_of(with_rain(w, version), specs, lib, soil, cn, rules, case == "irrigated")
+        daily, plan = run_to_as_of(with_rain(w, version), specs, lib, soil, cn, rules, case == "irrigated", seasons=hls)
         runs[version] = (daily, plan, kf.state_on_last_day(daily, plan))
     daily, plan, st = runs["corrected"]
     zr, zr_crop = zr_of_state(st, plan, lib, soil)
@@ -154,6 +161,10 @@ def main(argv=None):
             "q": "Q = prior_var x (1 - phi^2), phi = lag-1 autocorrelation of the twin-minus-SMAP residual: how fast the twin's "
                  "error grows back after a probe reading",
             "bare_soil": f"bare-soil evaporation as rules.yaml bare_soil says (apply {rules['bare_soil'].get('apply')}), passed as scripts/run_plans.py passes it",
+            "season_dates": f"rules.yaml season_dates (apply {to.season_dates_on(rules)}): sowing from the satellite's seasons in "
+                            "the HLS years, calendar otherwise; paddy_rainfed (apply "
+                            f"{to.paddy_rule(rules) is not None}): rain-fed paddy on a calendar day waits for its "
+                            "land-preparation rain",
             "rain": "GPM's rain from 2017 is scaled back to its 2001-2016 level (the gauges behind it stopped reporting); "
                     "uncorrected_rain is the same state on GPM as published",
             "placeholder": "PLACEHOLDER field and rotation" if field.get("placeholder") else ""},

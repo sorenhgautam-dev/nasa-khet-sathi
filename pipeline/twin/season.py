@@ -173,23 +173,26 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False)
 
 # ---------- proposal 2c (rules.yaml paddy_rainfed: PROPOSED, apply false, waiting for the owner) ----------
 
-def paddy_transplant(plan, dates, rain_mm, lib, rule):
+def paddy_transplant(plan, dates, rain_mm, lib, rule, keep=(), last_day=None):
     """When a RAIN-FED paddy can be transplanted (proposal 2c). Land preparation (soaking and puddling) needs
     rule['prep_mm'] of rain counted from rule['prep_days'] days before the planned day; the paddy is transplanted on the
     first day, on or after the planned day, by which that total is reached. More than rule['max_delay_days'] late, the
     season fails: it stays at its planned day (so the year keeps its crops) and paddy_outcome() sets its harvest to 0.
     A later crop that would overlap a moved paddy moves to the day after it ends (and so on down the plan); a crop pushed
     past the end of the record is dropped, so its year is incomplete. Irrigated paddy is not passed here.
+    keep: {(crop, day)} of paddy seasons whose day is observed (item 4a: the satellite's green-up), left as they are.
+    last_day: the end of the run (default the rain record's last day).
     Returns (plan, info): info has one entry per paddy season (planned, transplanted, delay_days, prep_rain_mm, failed,
     dropped_after)."""
     dates = pd.DatetimeIndex(dates)
     rain = pd.Series(np.asarray(rain_mm, dtype=float), index=dates)
     out, info, cursor = [], [], None                     # cursor: first free day after the previous crop
+    keep, end_of_run = set(keep), pd.Timestamp(last_day) if last_day is not None else dates[-1]
     for crop, start in plan:
         day = pd.Timestamp(start)
         if cursor is not None and day < cursor:
             day = cursor
-        if lib[crop].get("paddy"):
+        if lib[crop].get("paddy") and (crop, str(pd.Timestamp(start).date())) not in keep:
             planned = pd.Timestamp(start)
             first = planned - pd.Timedelta(int(rule["prep_days"]), unit="D")
             latest = planned + pd.Timedelta(int(rule["max_delay_days"]), unit="D")
@@ -205,7 +208,7 @@ def paddy_transplant(plan, dates, rain_mm, lib, rule):
                 day = when
             info[-1]["start"] = str(day.date())          # the day the season is simulated from
         end = day + pd.Timedelta(season_length(lib[crop]["stages_days"]) - 1, unit="D")
-        if end > dates[-1]:
+        if end > end_of_run:
             if info:
                 info[-1]["dropped_after"].append(crop)
             continue

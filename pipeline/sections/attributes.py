@@ -6,10 +6,10 @@ area: the field's own cloud rule (pipeline/diary/greenness.py), by area instead 
 the maximum of the smoothed daily curve between the season's start and end, drawn as the diary draws the field's
 (greenness.daily_series, then seasons.smooth); a section's anomaly is its peak minus the field's (all sections).
 
-'Usually greener'. Per section, a two-sided exact sign test on its seasons' anomalies (zeros left out), Holm's
-step-down over the field's sections; rejected -> 'greener' or 'less green' by the sign of most anomalies. Not
-rejected -> 'same' when the distribution-free interval for the median anomaly (order statistics; the interval that
-inverts the sign test, Conover 1999 sec. 3.2) lies within +/- margin, else "can't tell". "can't tell" as well when the
+'Usually greener' (owner, 2026-11-14). Per section, a two-sided exact sign test on its seasons' anomalies (zeros left
+out), Holm's step-down over the field's sections. 'greener' / 'less green' need the test AND a median anomaly larger
+in size than the satellite's normal noise: the same-day Landsat/Sentinel-2 vegetation-index difference of HLS v2.0
+(below 4.5%, Ju et al. 2025) times the field's median season peak. Otherwise 'same'. "can't tell" only when the
 seasons are too few for any outcome to pass Holm's first step.
 
 Low ground. Topographic position index (Weiss 2001, as documented by Jenness 2006): a pixel's elevation minus the mean
@@ -144,9 +144,19 @@ def min_decidable_n(alpha, m):
     return n
 
 
-def usually(anomalies, alpha, level, margin):
-    """{section id: {'word', 'n', 'positive', 'negative', 'zeros', 'p', 'holm_rejected', 'median', 'ci', 'decidable'}}
-    from each section's season anomalies (rules.yaml sections.usually_test)."""
+def size_floor(field_peaks, relative):
+    """The 'a little greener' floor in NDVI: `relative` (rules.yaml sections.size_floor_relative, the published
+    same-day L30/S30 vegetation-index difference) times the field's median season peak; None without peaks."""
+    p = [float(x) for x in field_peaks if x is not None and np.isfinite(x)]
+    return float(relative * np.median(p)) if p else None
+
+
+def usually(anomalies, alpha, level, floor_ndvi):
+    """{section id: {'word', 'n', 'positive', 'negative', 'zeros', 'p', 'holm_rejected', 'above_floor', 'median', 'ci',
+    'decidable'}} from each section's season anomalies (rules.yaml sections.usually_test; owner, 2026-11-14):
+    'greener' / 'less green' need BOTH the sign test (Holm over the sections) AND |median anomaly| > floor_ndvi;
+    otherwise 'same'. "can't tell" only when the seasons are too few for any outcome to pass Holm's first step.
+    The order-statistic interval for the median (at `level`) is reported, not used for the word."""
     ids = list(anomalies)
     tests = {s: sign_test(anomalies[s]) for s in ids}
     rejected = dict(zip(ids, holm([tests[s]["p"] for s in ids], alpha)))
@@ -155,17 +165,17 @@ def usually(anomalies, alpha, level, margin):
     for s in ids:
         t, vals = tests[s], [float(v) for v in anomalies[s]]
         ci = median_ci(vals, level) if vals else None
+        med = float(np.median(vals)) if vals else None
         decidable = t["n"] >= need
+        above = med is not None and floor_ndvi is not None and abs(med) > floor_ndvi
         if not decidable:
             word = "can't tell"
-        elif rejected[s]:
+        elif rejected[s] and above:
             word = "greener" if t["positive"] > t["negative"] else "less green"
-        elif ci is not None and -margin <= ci[0] and ci[1] <= margin:
-            word = "same"
         else:
-            word = "can't tell"
-        out[s] = {"word": word, **t, "holm_rejected": bool(rejected[s]), "decidable": decidable,
-                  "median": float(np.median(vals)) if vals else None,
+            word = "same"
+        out[s] = {"word": word, **t, "holm_rejected": bool(rejected[s]), "above_floor": bool(above),
+                  "decidable": decidable, "median": med,
                   "ci": [ci[0], ci[1]] if ci else None, "ci_coverage": ci[2] if ci else None}
     return out
 

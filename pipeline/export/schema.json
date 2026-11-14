@@ -894,7 +894,7 @@
          }
         }
        },
-       "score_uncorrected_rain": {
+       "score_dhm_rain": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -1083,9 +1083,9 @@
         "$ref": "#/$defs/future_series",
         "description": "Build step 9 (2026-11-14): this plan's harvest under the future climate, one value per entry in future.years; harvest_low/high = the spread across climate models and scenarios. For this current-plan option."
        },
-       "future_uncorrected_rain": {
+       "future_dhm_rain": {
         "$ref": "#/$defs/future_series",
-        "description": "As plans[].future_uncorrected_rain, for this option."
+        "description": "As plans[].future_dhm_rain, for this option."
        }
       }
      }
@@ -1420,7 +1420,7 @@
      },
      "description": "Nepali version of tips: one per English tip, in the same order (validate.py checks the count)."
     },
-    "score_uncorrected_rain": {
+    "score_dhm_rain": {
      "type": "object",
      "additionalProperties": false,
      "required": [
@@ -1449,9 +1449,9 @@
      "$ref": "#/$defs/future_series",
      "description": "Build step 9 (2026-11-14): this plan's harvest under the future climate, one value per entry in future.years; harvest_low/high = the spread across climate models and scenarios."
     },
-    "future_uncorrected_rain": {
+    "future_dhm_rain": {
      "$ref": "#/$defs/future_series",
-     "description": "The same outlook on GPM rain as published (no 2017 correction): show beside `future` as a range, like score_uncorrected_rain."
+     "description": "The same outlook on GPM rain as published (no 2017 correction): show beside `future` as a range, like score_dhm_rain."
     }
    }
   },
@@ -1513,7 +1513,7 @@
       }
      }
     },
-    "uncorrected_rain": {
+    "dhm_rain": {
      "type": "object",
      "additionalProperties": false,
      "required": [

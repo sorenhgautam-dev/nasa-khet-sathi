@@ -52,6 +52,66 @@
      "en": "We picked this field as an example.",
      "ne": "हामीले यो खेत उदाहरणका लागि छानेका हौं।",
      "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "hero_1",
+     "en": "Know your land.",
+     "ne": "आफ्नो जमिन चिन्नुहोस्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "hero_2",
+     "en": "Plan your season.",
+     "ne": "मौसमको योजना बनाउनुहोस्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "card_today_tag",
+     "en": "Soil check",
+     "ne": "माटो जाँच",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "card_today_big",
+     "en": "Today",
+     "ne": "आज",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "card_today_sub",
+     "en": "How each part of your field is doing.",
+     "ne": "खेतको हरेक भाग कस्तो छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "card_months_tag",
+     "en": "NASA records",
+     "ne": "नासाका अभिलेख",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "card_months_big",
+     "en": "3 months",
+     "ne": "३ महिना",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "card_months_sub",
+     "en": "What these months usually bring.",
+     "ne": "यी महिनामा प्रायः के हुन्छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "records_years",
+     "en": "We read NASA records, {source_years}.",
+     "ne": "हामी नासाका अभिलेख पढ्छौं, {source_years}।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "prepared_title",
+     "en": "Fields we have looked at",
+     "ne": "हामीले हेरेका खेत",
+     "ne_review": "needs native-speaker review"
     }
    ]
   },
@@ -107,6 +167,54 @@
      "id": "q_shape",
      "en": "Is your field flat or on steps?",
      "ne": "तपाईंको खेत समथर छ कि गरामा?",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "photo_h1",
+     "en": "Your field",
+     "ne": "तपाईंको खेत",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "photo_h2",
+     "en": "from above",
+     "ne": "माथिबाट",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "map_not_photo",
+     "en": "This is a map, not a photo.",
+     "ne": "यो नक्सा हो, फोटो होइन।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "line_is_field",
+     "en": "The line shows the sample field.",
+     "ne": "रेखाले नमुना खेत देखाउँछ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "photo_later",
+     "en": "A real photo comes when we visit.",
+     "ne": "हामी खेतमा आएपछि साँचो फोटो आउँछ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "inside_sample",
+     "en": "We show our sample field near you.",
+     "ne": "हामी तपाईंको नजिकको नमुना खेत देखाउँछौं।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "draw_own",
+     "en": "Mark my own field",
+     "ne": "मेरो आफ्नै खेत चिनाउँछु",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "make_parts",
+     "en": "Show the parts",
+     "ne": "भागहरू देखाउनुहोस्",
      "ne_review": "needs native-speaker review"
     }
    ],
@@ -358,6 +466,12 @@
      "en": "We are less sure about this month.",
      "ne": "यो महिनाबारे हामी कम पक्का छौं।",
      "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "usually",
+     "en": "Usually:",
+     "ne": "प्रायः:",
+     "ne_review": "needs native-speaker review"
     }
    ],
    "labels": {
@@ -510,6 +624,12 @@
      "en": "The soil stick tells them apart.",
      "ne": "माटो जाँच्ने यन्त्रले तिनको फरक देखाउँछ।",
      "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "making",
+     "en": "Making the parts…",
+     "ne": "भाग बनाउँदै…",
+     "ne_review": "needs native-speaker review"
     }
    ]
   },
@@ -560,6 +680,54 @@
      "id": "faces",
      "en": "A smiling face means all is well.",
      "ne": "हाँसेको अनुहारको अर्थ सबै ठीक छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "today_h1",
+     "en": "Your field",
+     "ne": "आजको",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "today_h2",
+     "en": "today",
+     "ne": "खेत",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "as_of",
+     "en": "As of this day:",
+     "ne": "यो दिनको:",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "greener_more",
+     "en": "A little greener than the rest.",
+     "ne": "अरूभन्दा अलि बढी हरियो।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "greener_less",
+     "en": "A little less green than the rest.",
+     "ne": "अरूभन्दा अलि कम हरियो।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "greener_unknown",
+     "en": "We can't tell how green.",
+     "ne": "कति हरियो, भन्न सकिँदैन।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "low_ground",
+     "en": "Low ground: cold air can collect.",
+     "ne": "होचो जमिन: चिसो हावा जम्न सक्छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "one_soil",
+     "en": "All parts share one soil and weather.",
+     "ne": "सबै भागमा एउटै माटो र मौसम।",
      "ne_review": "needs native-speaker review"
     }
    ],
@@ -649,6 +817,162 @@
      "en": "Watch a soil check we did earlier.",
      "ne": "हामीले पहिले गरेको माटो जाँच हेर्नुहोस्।",
      "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "prototype",
+     "en": "Our soil stick is a prototype.",
+     "ne": "हाम्रो माटो जाँच्ने यन्त्र परीक्षणकै नमुना हो।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "by_hand",
+     "en": "Today we carry it by hand.",
+     "ne": "अहिले हामी यसलाई हातैले बोक्छौं।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "robot_next",
+     "en": "A robot to carry it comes next.",
+     "ne": "यसलाई बोक्ने रोबोट अर्को चरणमा आउँछ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "robot_name",
+     "en": "Krishi Scout, our robot idea",
+     "ne": "कृषि स्काउट, हाम्रो रोबोटको योजना",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "robot_shows",
+     "en": "This shows how the robot will work.",
+     "ne": "रोबोटले कसरी काम गर्नेछ, यसले देखाउँछ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "top_only",
+     "en": "It reads only the top few centimetres.",
+     "ne": "यसले माथिको केही सेन्टिमिटर मात्र नाप्छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "after_test",
+     "en": "Readings come after our team tests it.",
+     "ne": "हाम्रो टोलीले जाँचेपछि नाप आउँछ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "no_reading",
+     "en": "No reading yet",
+     "ne": "अझै नापिएको छैन",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "settling",
+     "en": "Settling…",
+     "ne": "स्थिर हुँदै…",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "measuring",
+     "en": "Measuring…",
+     "ne": "नाप्दै…",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "measured",
+     "en": "Measured",
+     "ne": "नापियो",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "test_again",
+     "en": "The reading jumped. Please test again.",
+     "ne": "नाप उफ्रियो। कृपया फेरि जाँच्नुहोस्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "off_scale",
+     "en": "Off the scale",
+     "ne": "नापभन्दा बाहिर",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "not_connected",
+     "en": "Soil stick not connected.",
+     "ne": "माटो जाँच्ने यन्त्र जोडिएको छैन।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "part_of",
+     "en": "Part {section} of {section_count}",
+     "ne": "{section_count} मध्ये भाग {section}",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "drier",
+     "en": "Drier than the other parts",
+     "ne": "अरू भागभन्दा सुक्खा",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "wetter",
+     "en": "Wetter than the other parts",
+     "ne": "अरू भागभन्दा ओसिलो",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "about_same",
+     "en": "About the same as the others",
+     "ne": "अरू भागजस्तै",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "before_reading",
+     "en": "Before the reading:",
+     "ne": "नापअघि:",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "band_needs_water",
+     "en": "Needs water",
+     "ne": "पानी चाहिन्छ",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "band_good",
+     "en": "Good",
+     "ne": "ठीक छ",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "band_too_wet",
+     "en": "Too wet",
+     "ne": "धेरै भिजेको",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "water_in_soil",
+     "en": "Water in the soil:",
+     "ne": "माटोमा पानी:",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "give_or_take",
+     "en": "give or take",
+     "ne": "कम वा बढी",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "choose_h1",
+     "en": "What do you",
+     "ne": "तपाईं के",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "choose_h2",
+     "en": "want to see?",
+     "ne": "हेर्न चाहनुहुन्छ?",
+     "ne_review": "needs native-speaker review"
     }
    ]
   },
@@ -728,6 +1052,12 @@
      "id": "pause",
      "en": "Pause",
      "ne": "रोक्नुहोस्",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "which_plan",
+     "en": "Which plan?",
+     "ne": "कुन योजना?",
      "ne_review": "needs native-speaker review"
     }
    ],
@@ -849,6 +1179,78 @@
      "id": "learn_more",
      "en": "Why do some crops help the soil?",
      "ne": "केही बालीले माटोलाई किन मद्दत गर्छन्?",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "next_h1",
+     "en": "Next",
+     "ne": "अर्को",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "next_h2",
+     "en": "3 months",
+     "ne": "३ महिना",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "next_to_plant",
+     "en": "Next to plant:",
+     "ne": "अब रोप्ने:",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "choices_title",
+     "en": "Your choices",
+     "ne": "तपाईंका विकल्प",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "tap_choice",
+     "en": "Tap a choice to see why.",
+     "ne": "किन भनेर हेर्न विकल्पमा थिच्नुहोस्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "more_than_now",
+     "en": "More than now",
+     "ne": "अहिलेभन्दा बढी",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "less_than_now",
+     "en": "Less than now",
+     "ne": "अहिलेभन्दा कम",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "same_as_now",
+     "en": "About the same as now",
+     "ne": "अहिलेजस्तै",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "water_never_out",
+     "en": "This assumes water never runs out.",
+     "ne": "पानी कहिल्यै सकिँदैन भन्ने मानेर।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "see_years",
+     "en": "See the last {year_count} years",
+     "ne": "पछिल्ला {year_count} वर्ष हेर्नुहोस्",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "range_why",
+     "en": "Two ways of counting rain give a range.",
+     "ne": "वर्षा गन्ने दुई तरिकाले दायरा दिन्छन्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "range_town",
+     "en": "One matches the nearby town's usual rain.",
+     "ne": "एउटा नजिकको सहरको सामान्य वर्षासँग मिल्छ।",
      "ne_review": "needs native-speaker review"
     }
    ],
@@ -1020,6 +1422,12 @@
      "en": "More heat",
      "ne": "बढी गर्मी",
      "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "by_year",
+     "en": "By {future_year}",
+     "ne": "{future_year} सम्ममा",
+     "ne_review": "needs native-speaker review"
     }
    ]
   },
@@ -1100,6 +1508,186 @@
      "en": "Made with pictures and numbers from NASA.",
      "ne": "नासाका तस्बिर र अङ्कबाट बनाइएको।",
      "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "sources_title",
+     "en": "Where our numbers come from",
+     "ne": "हाम्रा अङ्क कहाँबाट आए",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "computer_helped",
+     "en": "How the computer helped",
+     "ne": "कम्प्युटरले कसरी सघायो",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "helped_words",
+     "en": "A computer drafted many words here.",
+     "ne": "यहाँका धेरै शब्द कम्प्युटरले लेख्यो।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "helped_check",
+     "en": "Nepali words still need a careful check.",
+     "ne": "नेपाली शब्द अझै राम्ररी जाँच्न बाँकी छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "helped_drafts",
+     "en": "Other languages are draft translations.",
+     "ne": "अरू भाषा मस्यौदा अनुवाद हुन्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "helped_seasons",
+     "en": "A computer also helped find the seasons.",
+     "ne": "बाली याम खोज्न पनि कम्प्युटरले सघायो।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "seasons_title",
+     "en": "Finding the seasons",
+     "ne": "बाली याम पत्ता लगाउने",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "seasons_tested",
+     "en": "We tested three ways on unseen years.",
+     "ne": "नदेखेका वर्षमा तीन तरिका जाँच्यौं।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "way_threshold",
+     "en": "A simple green rule",
+     "ne": "हरियोपनको सजिलो नियम",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "way_changepoint",
+     "en": "A change finder",
+     "ne": "फेरबदल खोज्ने तरिका",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "way_detective",
+     "en": "A learning computer",
+     "ne": "सिक्ने कम्प्युटर",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "we_use_this",
+     "en": "We use this one.",
+     "ne": "हामी यही प्रयोग गर्छौं।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "rain_fix_title",
+     "en": "Fixing the rain numbers",
+     "ne": "वर्षाका अङ्क मिलाउने",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "rains_title",
+     "en": "When the rains come",
+     "ne": "वर्षा कहिले आउँछ",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "memory_title",
+     "en": "Teaching a computer this field",
+     "ne": "कम्प्युटरलाई यो खेत सिकाउने",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "area_title",
+     "en": "Fields around the sample field",
+     "ne": "नमुना खेत वरिपरिका खेत",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "future_title",
+     "en": "Looking ahead",
+     "ne": "अगाडि हेर्दा",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "not_ready_title",
+     "en": "What is not ready yet",
+     "ne": "के अझै तयार छैन",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "nr_photo",
+     "en": "A real photo of the field.",
+     "ne": "खेतको साँचो फोटो।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "nr_readings",
+     "en": "Soil stick readings from the field.",
+     "ne": "खेतबाट माटो जाँचका नाप।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "nr_own_field",
+     "en": "Your own field: today we show a sample.",
+     "ne": "तपाईंको आफ्नै खेत: अहिले नमुना देखाउँछौं।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "nr_robot",
+     "en": "The robot that carries the stick.",
+     "ne": "यन्त्र बोक्ने रोबोट।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "report_card",
+     "en": "How sure are we?",
+     "ne": "हामी कति पक्का छौं?",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "sure_high",
+     "en": "Quite sure",
+     "ne": "धेरै पक्का",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "sure_medium",
+     "en": "Fairly sure",
+     "ne": "केही पक्का",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "sure_low",
+     "en": "Not very sure",
+     "ne": "कम पक्का",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "missions_title",
+     "en": "The NASA missions we used",
+     "ne": "हामीले प्रयोग गरेका नासाका मिसन",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "method_title",
+     "en": "How we worked it out",
+     "ne": "हामीले कसरी निकाल्यौं",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "story_title",
+     "en": "What the records show",
+     "ne": "अभिलेखले के देखाउँछन्",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "links_title",
+     "en": "To read more",
+     "ne": "थप पढ्न",
+     "ne_review": "needs native-speaker review"
     }
    ]
   }
@@ -1128,6 +1716,60 @@
     "id": "not_sure",
     "en": "Not sure yet",
     "ne": "अझै पक्का छैन",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "not_ready",
+    "en": "Not ready yet.",
+    "ne": "अझै तयार छैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "sample_field",
+    "en": "Sample field",
+    "ne": "नमुना खेत",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "how_we_know",
+    "en": "How we know",
+    "ne": "हामीलाई कसरी थाहा भयो",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "about",
+    "en": "about",
+    "ne": "करिब",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "out_of_100",
+    "en": "out of 100",
+    "ne": "१०० मा",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "close",
+    "en": "Close",
+    "ne": "बन्द गर्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "language",
+    "en": "Language",
+    "ne": "भाषा",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "read_more",
+    "en": "Read more",
+    "ne": "थप पढ्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "source_label",
+    "en": "Source:",
+    "ne": "स्रोत:",
     "ne_review": "needs native-speaker review"
    }
   ],

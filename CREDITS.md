@@ -281,6 +281,9 @@ for each claim (copied from notes/parallel_session.md).
 - Weiss, A. (2001), Topographic Position and Landforms Analysis, poster, ESRI User Conference, San Diego (not opened: the
   poster link returned 404), as documented by Jenness, J. (2006), Topographic Position Index (tpi_jen.avx) extension for
   ArcView 3.x, v. 1.2, Jenness Enterprises (http://www.jennessent.com/downloads/TPI_Documentation_online.pdf, read 2026-11-14).
+- Ju, J., Zhou, Q., Freitag, B., Roy, D. P., et al. (2025), The Harmonized Landsat and Sentinel-2 version 2.0 surface
+  reflectance dataset, Remote Sensing of Environment 324, 114723, doi:10.1016/j.rse.2025.114723 (abstract read 2026-11-14
+  through OpenAlex; CC BY-NC-ND): the same-day vegetation-index difference behind the parts' size floor.
 - Conover, W. J. (1999), Practical Nonparametric Statistics, 3rd ed., Wiley (sign test, interval for the median), and
   Holm, S. (1979), A simple sequentially rejective multiple test procedure, Scandinavian Journal of Statistics 6, 65-70:
   standard results, cited from memory, not opened.
@@ -309,6 +312,19 @@ for each claim (copied from notes/parallel_session.md).
 - Brewer, C. A., Harrower, M., ColorBrewer 2.0 (colorbrewer2.org): the YlOrBr and Greens sequential palettes of the area
   map, marked colour-blind safe there.
 - Data reused, nothing downloaded: HLS-VI v2.0 box windows and ESA WorldCover 10 m 2021 v200 (CC BY 4.0), as listed above.
+
+### The data story, the inventories and the Sentinel-1 assessment (2026-11-14; metadata and documentation only)
+
+- *metadata* ASF Search API, Alaska Satellite Facility DAAC (https://api.daac.asf.alaska.edu/services/search/param):
+  Sentinel-1 IW GRD-HD scene counts and listings (sizes, tracks, platforms) over the demo field's point, June-September
+  2025 and 2017-2025, queried 2026-11-14 without a login; nothing downloaded (DATA_AUDIT 8.1). Sentinel-1 data: Copernicus
+  Sentinel data, ESA, distributed by ASF.
+- ASF HyP3 documentation (hyp3-docs.asf.alaska.edu), read 2026-11-14: RTC Product Guide (file contents and the example
+  GeoTIFF sizes), "Credits" (cost per job, monthly allowance), "On Demand Sentinel-1 Processing in Vertex" (typical time to
+  download, 14-day retention).
+- FAO GAEZ v4 (https://gaez.fao.org/): **linked as a reference, data not used** (owner, 2026-11-14: its licence is
+  non-commercial and share-alike). Nothing from it is in the repository or the export.
+- `site/data/story.json` reuses only the project's own outputs listed above (each chart names its sources); no new dataset.
 
 ### Licence notices (REVIEW_2, 2026-11-13; owner's answer 13: keep the DHM table with a notice, state the GSOD terms, say in LICENSE what MIT does not cover)
 
@@ -374,6 +390,7 @@ Licences are read from each package's installed metadata.
 | Claude Opus 5.5 (Anthropic), via Claude Code (session 2f8edafe) | 2026-11-13 (Friday, midday) | The owner's decisions 1-6: the GPM break correction and the uncorrected run beside it, IMERG Late and CHIRPS check downloads, build step 7 (three plans, their replays, tabs and tips from templates, Nepali drafts), the method page's rain note and stated choices. Details in SI_LOG.md | Owner review pending (English lines); native-speaker review pending (Nepali) |
 | Claude Fable 5.2 (Anthropic), via Claude Code (session 9f5addf3), with ten read-only sub-reviewers | 2026-11-13 (Friday, afternoon) | Independent AI review of the whole project. Phase 1: every equation, correction, rule and exported number recomputed from the primary sources; data handling, the rain break, the export, licences, security and the probe checked (`REVIEW_2.md`). Phase 2: fixes with tests first (method-page approval labels, the leap-year count of pinned onset years, the hot-day trend caveat, `sources` rows, validator checks and `--final`, the mock-overwrite guard, GPM card flags) and the stale documents brought up to date. Phase 3: SMAP cleaned and compared with the twin (`pipeline/fetch/smap.py`, `scripts/run_smap_check.py`), DHM's 2025 gauge totals as an independent rain check (`scripts/run_dhm_bulletin_check.py`), the gauge evidence made reproducible (`pipeline/fetch/gauge_evidence.py`), sensitivity and switch-off runs. Phase 4: the plan in `REVIEW_2.md`. No scientific method, rule, threshold or exported result was changed; those questions are listed for the owner | Owner: not reviewed by a person yet |
 | Claude Opus 5.5 (Anthropic), via Claude Code (parallel agent) | 2026-11-13 (night) | Draft machine translations of the site's words (screens, shared words, glossary, crop explainers; 269 texts each) into Hindi, Bengali, Spanish, French and Swahili, translated from the English (`pipeline/words/drafts/`), published beside English and Nepali in `site/data/words.json`, each language flagged as a draft with a 'Draft translation' label. Source quotations kept in their original English, untranslated. Nothing calls an AI service from the site. Details in SI_LOG.md | Not reviewed: every draft language needs native-speaker review |
+| Claude Opus 5.5 (Anthropic), via Claude Code (parallel agent) | 2026-11-14 (Saturday morning) | The "How we know" data story (`pipeline/export/build_story.py` -> `site/data/story.json`: 17 charts from finished outputs), the accuracy report card (VALIDATION.md), the satellite inventory and the challenge's resource list (DATA_AUDIT.md 7-8), the Sentinel-1 assessment (DATA_AUDIT 8.1, ASF metadata only); English and Nepali captions drafted by SI. Details in SI_LOG.md | Not reviewed yet: the owner reviews the report card and the confidence rules (METHOD_NOTES 98); a native speaker reviews the Nepali |
 
 ## Data fetched by the pipeline
 

@@ -86,17 +86,27 @@ def test_fewest_seasons_that_could_ever_pass_holm():
     assert at.min_decidable_n(0.05, 1) == 6           # 2 x 0.5^5 = 0.0625; 2 x 0.5^6 = 0.03125
 
 
-def test_usually_words_by_the_pre_declared_rule():
-    an = {"s1": [0.03] * 10 + [-0.01] * 2,             # 10 of 12 above: p 0.0386 > 0.0125, not rejected; CI inside 0.05
-          "s2": [0.04] * 12,                           # all above: p 0.00049, rejected first
-          "s3": [-0.06] * 12,                          # all below: rejected next
-          "s4": [0.2, -0.2] * 6}                       # no steady sign, wide spread: can't tell
-    r = at.usually(an, alpha=0.05, level=0.95, margin=0.05)
+def test_the_size_floor_is_the_published_same_day_difference_times_the_field_peak():
+    """Owner, 2026-11-14: 'a little greener' only above the satellite's normal noise. Ju et al. 2025: same-day L30/S30
+    vegetation-index difference below 4.5%; the floor in NDVI is 4.5% of the field's median season peak."""
+    assert at.size_floor([0.8, 0.9, 0.85], 0.045) == pytest.approx(0.03825)
+    assert at.size_floor([0.8, None, 0.9], 0.045) == pytest.approx(0.045 * 0.85)
+    assert at.size_floor([], 0.045) is None
+
+
+def test_usually_words_by_the_owners_rule():
+    """greener / less green need BOTH the sign test (Holm) AND |median| above the floor; otherwise 'same'."""
+    an = {"s1": [0.01] * 12,                           # steady (p 0.00049, rejected) but tiny: same
+          "s2": [0.04] * 12,                           # steady and above the floor: greener
+          "s3": [-0.06] * 12,                          # steady and below: less green
+          "s4": [0.2, -0.2] * 6}                       # no steady sign: same
+    r = at.usually(an, alpha=0.05, level=0.95, floor_ndvi=0.03825)
+    assert r["s1"]["holm_rejected"] is True and r["s1"]["above_floor"] is False and r["s1"]["word"] == "same"
     assert r["s2"]["word"] == "greener" and r["s3"]["word"] == "less green"
-    assert r["s1"]["word"] == "same" and r["s1"]["holm_rejected"] is False
-    assert r["s4"]["word"] == "can't tell"
-    few = at.usually({"s1": [0.1] * 7, "s2": [-0.1] * 7, "s3": [0.0] * 7, "s4": [0.01] * 7}, 0.05, 0.95, 0.05)
-    assert all(v["word"] == "can't tell" and v["decidable"] is False for v in few.values())   # 7 < 8 seasons
+    assert r["s4"]["word"] == "same" and r["s4"]["holm_rejected"] is False
+    assert r["s2"]["ci"] == [0.04, 0.04]
+    few = at.usually({"s1": [0.1] * 7, "s2": [-0.1] * 7, "s3": [0.0] * 7, "s4": [0.01] * 7}, 0.05, 0.95, 0.03825)
+    assert all(v["word"] == "can't tell" and v["decidable"] is False for v in few.values())   # 7 < 8: no test possible
 
 
 def test_tpi_worked_numbers():

@@ -125,6 +125,13 @@ Saturday. Then `mock` becomes empty.
   years (2009 only, after 20 June) and its `words` in English and Nepali. Show it on "Next 3 months" and the diary.
 - `method.onset` holds the "How we know" paragraph on the monsoon's start.
 
+## 6e. Landed on 14 November (Saturday), 10:00: the second rain version is the DHM-scaled dry edge (renamed)
+
+- `uncorrected_rain` is now `dhm_rain`, `score_uncorrected_rain` is `score_dhm_rain`, and `future_uncorrected_rain` is
+  `future_dhm_rain`.
+- They hold the run with rain scaled to the Bhaktapur station's long-term average: the lower edge of each range.
+- Show "about 69 to 72", not two results.
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

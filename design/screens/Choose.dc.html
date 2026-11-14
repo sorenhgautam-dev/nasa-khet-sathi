@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What to see</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&amp;family=Inter:wght@400;500;600&amp;family=Mukta:wght@400;600;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14301E}a:hover{color:#0B1F12}
+@keyframes ks-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ks-orbit{to{transform:rotate(360deg)}}
+.ks-bg{background:#89A378 url(/_blob/4f0b25b11732b3cab6a3285746008d0b) no-repeat center top/390px auto}
+@keyframes ks-drift{from{transform:translateX(-170px)}to{transform:translateX(470px)}}
+@keyframes ks-fly{0%{transform:translate(-90px,20px)}100%{transform:translate(480px,-30px)}}
+@keyframes ks-flap{to{transform:scaleY(.35)}}
+.ks-cloud{position:absolute;left:0;z-index:-1;width:150px;height:38px;border-radius:99px;background:rgba(255,253,246,.75);filter:blur(8px);animation:ks-drift linear infinite;pointer-events:none}
+.ks-birds{position:absolute;z-index:-1;left:0;top:190px;width:70px;height:24px;animation:ks-fly 28s linear 2s infinite;opacity:.55;pointer-events:none}
+.ks-birds path{fill:none;stroke:#3A3A35;stroke-width:1.8;stroke-linecap:round;transform-box:fill-box;transform-origin:center;animation:ks-flap .55s ease-in-out infinite alternate}
+.ks-sun{position:absolute;left:0;top:0;width:42px;height:42px;margin:-21px 0 0 -21px;z-index:-1;pointer-events:none;transform:translate(var(--x1),var(--y1));animation:ks-sunmove 1.8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ks-sunmove{from{transform:translate(var(--x0),var(--y0))}to{transform:translate(var(--x1),var(--y1))}}
+.ks-sun .ks-glow{position:absolute;inset:-34px;border-radius:50%;animation:ks-sunpulse 3.4s ease-in-out infinite}
+@keyframes ks-sunpulse{50%{transform:scale(1.18);opacity:.75}}
+.ks-sun .ks-rays{position:absolute;left:-12px;top:-12px;width:66px;height:66px;animation:ks-sunrot 26s linear infinite}
+@keyframes ks-sunrot{to{transform:rotate(360deg)}}
+.ks-sun .ks-core{position:absolute;inset:0;border-radius:50%}
+.ks-tint{position:absolute;left:0;top:0;width:100%;height:560px;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(208,92,52,.6) 0%,rgba(232,138,78,.38) 38%,rgba(232,138,78,0) 80%);animation:ks-tintin 1.8s ease both}
+@keyframes ks-tintin{from{opacity:var(--t0)}to{opacity:var(--t1)}}
+@keyframes ks-arrive{from{opacity:0;transform:scale(1.25);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes ks-wave{50%{opacity:.2}}
+[style*="height: 62px"] > svg:last-child{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+[style*="height: 62px"]:hover > svg:last-child,[style*="height: 62px"]:active > svg:last-child{transform:translateX(7px)}
+button:hover path[d^="M15.5"],button:active path[d^="M15.5"],button:hover path[d^="M18.5"],button:active path[d^="M18.5"]{animation:ks-wave .9s ease-in-out infinite}
+button:hover path[d^="M18.5"]{animation-delay:.18s}
+@keyframes ks-grow{from{transform:scale(0,0)}70%{transform:scale(1.1,1.15)}to{transform:scale(1)}}
+@keyframes ks-sway2{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes ks-sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
+.ks-blade{transform-box:fill-box;transform-origin:50% 100%;animation:ks-sway 3.2s ease-in-out infinite}
+@keyframes ks-path{from{stroke-dashoffset:var(--p0)}to{stroke-dashoffset:var(--p1)}}
+@keyframes ks-reveal{from{opacity:0;transform:translateY(34px) scale(.96);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+@keyframes ks-word{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes ks-cap{from{opacity:0;transform:translateY(10px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="width: 390px; height: 844px; box-sizing: border-box; padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 18px; position: relative; isolation: isolate; color: #14301E; font-family: Inter, Mukta, system-ui, sans-serif; overflow: hidden">
+  <sc-if value="{{showSky}}" hint-placeholder-val="{{ true }}">
+  <div class="ks-tint" aria-hidden="true" style="--t0: 0.05; --t1: 0.15; opacity: 0.15"></div>
+  <div class="ks-sun" aria-hidden="true" style="--x0: 183px; --y0: 81px; --x1: 236px; --y1: 96px"><span class="ks-glow" style="background: radial-gradient(circle, rgba(242,177,82,.55), rgba(242,177,82,0) 66%)"></span><svg class="ks-rays" viewBox="0 0 66 66"><g stroke="#EBA145" stroke-width="2.4" stroke-linecap="round"><path d="M33 2v7M33 57v7M2 33h7M57 33h7M11 11l5 5M50 50l5 5M55 11l-5 5M16 50l-5 5"></path></g></svg><span class="ks-core" style="background: radial-gradient(circle at 35% 32%, #FAD88C, #EBA145 58%, #D27A2C); box-shadow: 0 0 0 7px rgba(242,177,82,0.22)"></span></div>
+  <div aria-hidden="true" style="{{hvLayer}}"></div>
+  <span class="ks-cloud" aria-hidden="true" style="top: 118px; width: 90px; height: 26px; animation-duration: 120s; animation-delay: -35s; opacity: 0.7"></span>
+  <span class="ks-cloud" aria-hidden="true" style="top: 64px; animation-duration: 70s; animation-delay: -22s"></span>
+  <span class="ks-cloud" aria-hidden="true" style="top: 168px; width: 110px; animation-duration: 95s; animation-delay: -60s; opacity: 0.8"></span>
+  <svg class="ks-birds" viewBox="0 0 120 40" aria-hidden="true"><path d="M10 20q6-6 12 0q6-6 12 0"></path><path d="M40 10q5-5 10 0q5-5 10 0"></path><path d="M62 24q5-5 10 0q5-5 10 0"></path></svg>
+  <svg aria-hidden="true" viewBox="0 0 390 844" style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; z-index: -1; pointer-events: none"><path d="M -10 712 C 60 668, 120 736, 200 700 S 330 642, 400 676" fill="none" stroke="#1E3A24" stroke-opacity="0.16" stroke-width="12" stroke-linecap="round"></path><path d="M -10 712 C 60 668, 120 736, 200 700 S 330 642, 400 676" fill="none" stroke="#C8E05A" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" style="--p0: 0.5; --p1: 0.33999999999999997; stroke-dashoffset: 0.33999999999999997; animation: ks-path 2.4s cubic-bezier(.45,0,.25,1) .3s both"></path></svg>
+  <svg aria-hidden="true" viewBox="0 0 390 82" preserveAspectRatio="none" style="position: absolute; left: 0; bottom: 0; width: 100%; height: 82px; z-index: -1; pointer-events: none"><path class="ks-blade" d="M 0 82 Q 0.3 55.5 0.7 37.9" fill="none" stroke="#5F8A4B" stroke-width="2.7" stroke-linecap="round" style="animation-duration: 4.14s; animation-delay: -0.57s"></path><path class="ks-blade" d="M 7 82 Q 6.9 47.1 6.7 23.8" fill="none" stroke="#7FA862" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.15s; animation-delay: -0.27s"></path><path class="ks-blade" d="M 14 82 Q 14.9 47.0 16.3 23.6" fill="none" stroke="#6E9A55" stroke-width="3.0" stroke-linecap="round" style="animation-duration: 3.31s; animation-delay: -1.36s"></path><path class="ks-blade" d="M 21 82 Q 21.7 48.7 22.8 26.4" fill="none" stroke="#6E9A55" stroke-width="3.3" stroke-linecap="round" style="animation-duration: 2.71s; animation-delay: -0.11s"></path><path class="ks-blade" d="M 28 82 Q 28.5 45.3 29.2 20.8" fill="none" stroke="#5F8A4B" stroke-width="2.5" stroke-linecap="round" style="animation-duration: 3.66s; animation-delay: -0.59s"></path><path class="ks-blade" d="M 35 82 Q 34.0 60.8 32.5 46.7" fill="none" stroke="#6E9A55" stroke-width="3.1" stroke-linecap="round" style="animation-duration: 3.42s; animation-delay: -0.83s"></path><path class="ks-blade" d="M 42 82 Q 44.4 42.5 47.9 16.1" fill="none" stroke="#6E9A55" stroke-width="3.1" stroke-linecap="round" style="animation-duration: 3.17s; animation-delay: -0.69s"></path><path class="ks-blade" d="M 49 82 Q 46.9 59.5 43.8 44.4" fill="none" stroke="#6E9A55" stroke-width="2.6" stroke-linecap="round" style="animation-duration: 4.12s; animation-delay: -1.16s"></path><path class="ks-blade" d="M 56 82 Q 57.7 43.4 60.2 17.7" fill="none" stroke="#6E9A55" stroke-width="2.3" stroke-linecap="round" style="animation-duration: 4.27s; animation-delay: -0.16s"></path><path class="ks-blade" d="M 63 82 Q 64.0 57.4 65.5 41.0" fill="none" stroke="#5F8A4B" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 3.73s; animation-delay: -2.34s"></path><path class="ks-blade" d="M 70 82 Q 68.0 59.9 65.0 45.2" fill="none" stroke="#8DB46E" stroke-width="2.0" stroke-linecap="round" style="animation-duration: 3.34s; animation-delay: -2.77s"></path><path class="ks-blade" d="M 77 82 Q 78.0 63.2 79.5 50.6" fill="none" stroke="#6E9A55" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 4.03s; animation-delay: -0.53s"></path><path class="ks-blade" d="M 84 82 Q 83.7 53.0 83.4 33.6" fill="none" stroke="#7FA862" stroke-width="3.6" stroke-linecap="round" style="animation-duration: 3.99s; animation-delay: -1.26s"></path><path class="ks-blade" d="M 91 82 Q 90.5 57.2 89.7 40.6" fill="none" stroke="#7FA862" stroke-width="2.0" stroke-linecap="round" style="animation-duration: 4.16s; animation-delay: -2.92s"></path><path class="ks-blade" d="M 98 82 Q 100.4 52.2 104.0 32.3" fill="none" stroke="#6E9A55" stroke-width="2.3" stroke-linecap="round" style="animation-duration: 3.31s; animation-delay: -2.56s"></path><path class="ks-blade" d="M 105 82 Q 103.1 51.0 100.2 30.3" fill="none" stroke="#7FA862" stroke-width="2.3" stroke-linecap="round" style="animation-duration: 3.06s; animation-delay: -2.32s"></path><path class="ks-blade" d="M 112 82 Q 111.0 58.5 109.6 42.8" fill="none" stroke="#6E9A55" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 2.98s; animation-delay: -1.91s"></path><path class="ks-blade" d="M 119 82 Q 118.4 66.0 117.4 55.4" fill="none" stroke="#5F8A4B" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.66s; animation-delay: -2.50s"></path><path class="ks-blade" d="M 126 82 Q 125.5 63.1 124.6 50.6" fill="none" stroke="#7FA862" stroke-width="2.5" stroke-linecap="round" style="animation-duration: 3.01s; animation-delay: -1.83s"></path><path class="ks-blade" d="M 133 82 Q 131.4 49.0 128.9 27.0" fill="none" stroke="#7FA862" stroke-width="3.1" stroke-linecap="round" style="animation-duration: 3.30s; animation-delay: -1.45s"></path><path class="ks-blade" d="M 140 82 Q 137.8 64.5 134.6 52.9" fill="none" stroke="#6E9A55" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 4.33s; animation-delay: -0.72s"></path><path class="ks-blade" d="M 147 82 Q 145.8 49.5 144.1 27.8" fill="none" stroke="#5F8A4B" stroke-width="2.5" stroke-linecap="round" style="animation-duration: 2.92s; animation-delay: -2.16s"></path><path class="ks-blade" d="M 154 82 Q 152.7 64.7 150.7 53.2" fill="none" stroke="#6E9A55" stroke-width="2.4" stroke-linecap="round" style="animation-duration: 4.25s; animation-delay: -0.61s"></path><path class="ks-blade" d="M 161 82 Q 159.9 66.0 158.2 55.3" fill="none" stroke="#5F8A4B" stroke-width="2.4" stroke-linecap="round" style="animation-duration: 2.68s; animation-delay: -0.85s"></path><path class="ks-blade" d="M 168 82 Q 170.3 53.7 173.7 34.8" fill="none" stroke="#6E9A55" stroke-width="2.6" stroke-linecap="round" style="animation-duration: 4.20s; animation-delay: -2.94s"></path><path class="ks-blade" d="M 175 82 Q 175.9 50.6 177.3 29.7" fill="none" stroke="#7FA862" stroke-width="2.9" stroke-linecap="round" style="animation-duration: 4.26s; animation-delay: -1.42s"></path><path class="ks-blade" d="M 182 82 Q 181.1 57.8 179.7 41.7" fill="none" stroke="#6E9A55" stroke-width="2.0" stroke-linecap="round" style="animation-duration: 3.75s; animation-delay: -1.45s"></path><path class="ks-blade" d="M 189 82 Q 188.1 48.9 186.8 26.8" fill="none" stroke="#6E9A55" stroke-width="2.1" stroke-linecap="round" style="animation-duration: 3.58s; animation-delay: -2.21s"></path><path class="ks-blade" d="M 196 82 Q 197.1 44.8 198.8 20.0" fill="none" stroke="#7FA862" stroke-width="3.3" stroke-linecap="round" style="animation-duration: 4.25s; animation-delay: -1.06s"></path><path class="ks-blade" d="M 203 82 Q 204.9 50.0 207.8 28.6" fill="none" stroke="#5F8A4B" stroke-width="3.5" stroke-linecap="round" style="animation-duration: 2.65s; animation-delay: -1.50s"></path><path class="ks-blade" d="M 210 82 Q 210.8 66.1 211.9 55.4" fill="none" stroke="#5F8A4B" stroke-width="2.9" stroke-linecap="round" style="animation-duration: 3.70s; animation-delay: -0.24s"></path><path class="ks-blade" d="M 217 82 Q 219.4 51.1 222.9 30.4" fill="none" stroke="#5F8A4B" stroke-width="3.2" stroke-linecap="round" style="animation-duration: 3.30s; animation-delay: -2.21s"></path><path class="ks-blade" d="M 224 82 Q 223.7 52.5 223.3 32.8" fill="none" stroke="#6E9A55" stroke-width="2.8" stroke-linecap="round" style="animation-duration: 3.53s; animation-delay: -0.93s"></path><path class="ks-blade" d="M 231 82 Q 228.7 64.3 225.3 52.5" fill="none" stroke="#6E9A55" stroke-width="2.8" stroke-linecap="round" style="animation-duration: 3.71s; animation-delay: -2.76s"></path><path class="ks-blade" d="M 238 82 Q 235.7 60.3 232.1 45.8" fill="none" stroke="#8DB46E" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.70s; animation-delay: -1.56s"></path><path class="ks-blade" d="M 245 82 Q 244.2 48.3 243.1 25.8" fill="none" stroke="#5F8A4B" stroke-width="2.8" stroke-linecap="round" style="animation-duration: 3.03s; animation-delay: -1.21s"></path><path class="ks-blade" d="M 252 82 Q 252.6 60.4 253.6 46.0" fill="none" stroke="#7FA862" stroke-width="3.4" stroke-linecap="round" style="animation-duration: 3.29s; animation-delay: -1.75s"></path><path class="ks-blade" d="M 259 82 Q 257.3 58.8 254.6 43.3" fill="none" stroke="#5F8A4B" stroke-width="2.6" stroke-linecap="round" style="animation-duration: 4.21s; animation-delay: -0.12s"></path><path class="ks-blade" d="M 266 82 Q 268.3 64.9 271.8 53.4" fill="none" stroke="#7FA862" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.45s; animation-delay: -2.78s"></path><path class="ks-blade" d="M 273 82 Q 272.4 46.5 271.6 22.8" fill="none" stroke="#5F8A4B" stroke-width="3.1" stroke-linecap="round" style="animation-duration: 3.89s; animation-delay: -2.53s"></path><path class="ks-blade" d="M 280 82 Q 279.1 51.4 277.8 31.0" fill="none" stroke="#6E9A55" stroke-width="2.4" stroke-linecap="round" style="animation-duration: 3.69s; animation-delay: -2.03s"></path><path class="ks-blade" d="M 287 82 Q 286.3 59.7 285.3 44.8" fill="none" stroke="#6E9A55" stroke-width="3.0" stroke-linecap="round" style="animation-duration: 3.33s; animation-delay: -0.57s"></path><path class="ks-blade" d="M 294 82 Q 292.9 47.9 291.2 25.2" fill="none" stroke="#7FA862" stroke-width="3.3" stroke-linecap="round" style="animation-duration: 4.37s; animation-delay: -0.35s"></path><path class="ks-blade" d="M 301 82 Q 301.2 63.8 301.4 51.6" fill="none" stroke="#8DB46E" stroke-width="3.5" stroke-linecap="round" style="animation-duration: 3.83s; animation-delay: -0.60s"></path><path class="ks-blade" d="M 308 82 Q 306.5 55.0 304.1 37.0" fill="none" stroke="#6E9A55" stroke-width="3.2" stroke-linecap="round" style="animation-duration: 3.56s; animation-delay: -0.11s"></path><path class="ks-blade" d="M 315 82 Q 316.3 61.0 318.3 46.9" fill="none" stroke="#7FA862" stroke-width="2.6" stroke-linecap="round" style="animation-duration: 4.03s; animation-delay: -2.72s"></path><path class="ks-blade" d="M 322 82 Q 324.1 64.3 327.2 52.5" fill="none" stroke="#5F8A4B" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.42s; animation-delay: -1.88s"></path><path class="ks-blade" d="M 329 82 Q 328.4 44.6 327.5 19.6" fill="none" stroke="#8DB46E" stroke-width="2.7" stroke-linecap="round" style="animation-duration: 3.77s; animation-delay: -0.61s"></path><path class="ks-blade" d="M 336 82 Q 337.5 49.1 339.8 27.1" fill="none" stroke="#6E9A55" stroke-width="2.3" stroke-linecap="round" style="animation-duration: 4.22s; animation-delay: -2.94s"></path><path class="ks-blade" d="M 343 82 Q 343.2 42.9 343.4 16.9" fill="none" stroke="#8DB46E" stroke-width="2.4" stroke-linecap="round" style="animation-duration: 3.89s; animation-delay: -0.05s"></path><path class="ks-blade" d="M 350 82 Q 347.8 54.3 344.4 35.8" fill="none" stroke="#8DB46E" stroke-width="2.9" stroke-linecap="round" style="animation-duration: 3.98s; animation-delay: -1.46s"></path><path class="ks-blade" d="M 357 82 Q 358.5 65.7 360.7 54.9" fill="none" stroke="#6E9A55" stroke-width="2.7" stroke-linecap="round" style="animation-duration: 2.66s; animation-delay: -1.60s"></path><path class="ks-blade" d="M 364 82 Q 366.0 49.9 369.0 28.5" fill="none" stroke="#5F8A4B" stroke-width="2.2" stroke-linecap="round" style="animation-duration: 3.53s; animation-delay: -2.17s"></path><path class="ks-blade" d="M 371 82 Q 371.9 46.2 373.3 22.4" fill="none" stroke="#5F8A4B" stroke-width="2.9" stroke-linecap="round" style="animation-duration: 3.84s; animation-delay: -2.27s"></path><path class="ks-blade" d="M 378 82 Q 378.3 55.9 378.7 38.4" fill="none" stroke="#7FA862" stroke-width="2.8" stroke-linecap="round" style="animation-duration: 4.12s; animation-delay: -1.68s"></path><path class="ks-blade" d="M 385 82 Q 384.4 58.9 383.6 43.5" fill="none" stroke="#7FA862" stroke-width="2.5" stroke-linecap="round" style="animation-duration: 2.85s; animation-delay: -1.63s"></path></svg>
+  </sc-if>
+
+
+  <header style="display: flex; align-items: center; justify-content: space-between; height: 48px">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="Robot.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E5D8C2; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.Robot}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E5D8C2; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+      </button></sc-if>
+      <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">{{t.brand}}</span>
+    </div>
+    <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 0 #E8DCC8">
+      <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
+      <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
+    </div>
+  </header>
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px">
+    <h1 style="margin: 0; font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 900; font-size: 40px; line-height: 0.98; letter-spacing: -0.035em">
+      <span style="display: block; color: #14301E">{{t.h1}}</span>
+      <span style="display: block; color: #9A5426">{{t.h2}}</span>
+    </h1>
+    <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
+    </button>
+  </div>
+
+  <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="Today.dc.html" onMouseEnter="{{hv1}}" onMouseLeave="{{hv0}}" onTouchStart="{{hv1}}" style="flex: 1; position: relative; overflow: hidden; border-radius: 28px; background: #FFFFFF; text-decoration: none; color: #14301E; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 18px 36px -22px rgba(70,55,20,0.45); animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 150ms both">
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <span style="height: 30px; padding: 0 12px; border-radius: 999px; background: #F3EAD8; color: #7A4A20; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="9" rx="2"></rect><path d="M12 7V4M7 16v2M17 16v2"></path></svg>{{t.tagA}}
+      </span>
+      <div style="display: flex; gap: 6px" aria-hidden="true">
+        <svg width="28" height="36" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#9B7048" stroke="#25362B" stroke-width="3"></path></svg>
+        <svg width="28" height="36" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
+        <svg width="28" height="36" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#6B4A2E" stroke="#25362B" stroke-width="3"></path></svg>
+        <svg width="28" height="36" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
+      </div>
+    </div>
+    <div style="flex: 1"></div>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 900; font-size: 30px; letter-spacing: -0.03em; line-height: 1">{{t.titleA}}</span>
+        <span style="font-size: 15px; line-height: 1.35; color: #4A5646">{{t.subA}}</span>
+      </div>
+      <span style="width: 54px; height: 54px; flex-shrink: 0; border-radius: 999px; background: #14301E; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </div>
+  </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.Today}}" onMouseEnter="{{hv1}}" onMouseLeave="{{hv0}}" onTouchStart="{{hv1}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; flex: 1; position: relative; overflow: hidden; border-radius: 28px; background: #FFFFFF; text-decoration: none; color: #14301E; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 18px 36px -22px rgba(70,55,20,0.45); animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 150ms both">
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <span style="height: 30px; padding: 0 12px; border-radius: 999px; background: #F3EAD8; color: #7A4A20; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="9" rx="2"></rect><path d="M12 7V4M7 16v2M17 16v2"></path></svg>{{t.tagA}}
+      </span>
+      <div style="display: flex; gap: 6px" aria-hidden="true">
+        <svg width="28" height="36" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#9B7048" stroke="#25362B" stroke-width="3"></path></svg>
+        <svg width="28" height="36" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
+        <svg width="28" height="36" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#6B4A2E" stroke="#25362B" stroke-width="3"></path></svg>
+        <svg width="28" height="36" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
+      </div>
+    </div>
+    <div style="flex: 1"></div>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 900; font-size: 30px; letter-spacing: -0.03em; line-height: 1">{{t.titleA}}</span>
+        <span style="font-size: 15px; line-height: 1.35; color: #4A5646">{{t.subA}}</span>
+      </div>
+      <span style="width: 54px; height: 54px; flex-shrink: 0; border-radius: 999px; background: #14301E; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </div>
+  </button></sc-if>
+
+  <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="Future.dc.html" onMouseEnter="{{hv2}}" onMouseLeave="{{hv0}}" onTouchStart="{{hv2}}" style="flex: 1; position: relative; overflow: hidden; border-radius: 28px; background: #14301E; text-decoration: none; color: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 18px 36px -18px rgba(20,48,30,0.6); animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 320ms both">
+    <svg width="230" height="230" viewBox="0 0 230 230" aria-hidden="true" style="position: absolute; right: -60px; top: -70px">
+      <circle cx="115" cy="115" r="110" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"></circle>
+      <circle cx="115" cy="115" r="78" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"></circle>
+      <circle cx="115" cy="115" r="46" fill="#C8E05A" fill-opacity="0.08"></circle>
+      <g style="transform-origin: 115px 115px; animation: ks-orbit 14s linear infinite">
+        <circle cx="115" cy="37" r="6" fill="#C8E05A"></circle>
+      </g>
+    </svg>
+    <div style="display: flex; align-items: center; justify-content: space-between; position: relative">
+      <span style="height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(200,224,90,0.16); color: #DDEB9C; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 7L9 3 5 7l4 4"></path><path d="M17 11l4 4-4 4-4-4"></path><path d="M8 12l4 4 6-6-4-4z"></path><path d="M9 21a6 6 0 0 0-6-6"></path></svg>{{t.tagB}}
+      </span>
+    </div>
+    <div style="display: flex; gap: 8px; position: relative" aria-hidden="true">
+      <span style="height: 34px; padding: 0 12px; border-radius: 12px; background: rgba(255,255,255,0.1); display: inline-flex; align-items: center; font-weight: 700; font-size: 14px">{{t.m1}}</span>
+      <span style="height: 34px; padding: 0 12px; border-radius: 12px; background: rgba(255,255,255,0.1); display: inline-flex; align-items: center; font-weight: 700; font-size: 14px">{{t.m2}}</span>
+      <span style="height: 34px; padding: 0 12px; border-radius: 12px; background: rgba(255,255,255,0.1); display: inline-flex; align-items: center; font-weight: 700; font-size: 14px">{{t.m3}}</span>
+    </div>
+    <div style="flex: 1"></div>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; position: relative">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 900; font-size: 30px; letter-spacing: -0.03em; line-height: 1">{{t.titleB}}</span>
+        <span style="font-size: 15px; line-height: 1.35; color: #D5E3D2">{{t.subB}}</span>
+      </div>
+      <span style="width: 54px; height: 54px; flex-shrink: 0; border-radius: 999px; background: #C8E05A; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </div>
+  </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.Future}}" onMouseEnter="{{hv2}}" onMouseLeave="{{hv0}}" onTouchStart="{{hv2}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; flex: 1; position: relative; overflow: hidden; border-radius: 28px; background: #14301E; text-decoration: none; color: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 18px 36px -18px rgba(20,48,30,0.6); animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 320ms both">
+    <svg width="230" height="230" viewBox="0 0 230 230" aria-hidden="true" style="position: absolute; right: -60px; top: -70px">
+      <circle cx="115" cy="115" r="110" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"></circle>
+      <circle cx="115" cy="115" r="78" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"></circle>
+      <circle cx="115" cy="115" r="46" fill="#C8E05A" fill-opacity="0.08"></circle>
+      <g style="transform-origin: 115px 115px; animation: ks-orbit 14s linear infinite">
+        <circle cx="115" cy="37" r="6" fill="#C8E05A"></circle>
+      </g>
+    </svg>
+    <div style="display: flex; align-items: center; justify-content: space-between; position: relative">
+      <span style="height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(200,224,90,0.16); color: #DDEB9C; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 7L9 3 5 7l4 4"></path><path d="M17 11l4 4-4 4-4-4"></path><path d="M8 12l4 4 6-6-4-4z"></path><path d="M9 21a6 6 0 0 0-6-6"></path></svg>{{t.tagB}}
+      </span>
+    </div>
+    <div style="display: flex; gap: 8px; position: relative" aria-hidden="true">
+      <span style="height: 34px; padding: 0 12px; border-radius: 12px; background: rgba(255,255,255,0.1); display: inline-flex; align-items: center; font-weight: 700; font-size: 14px">{{t.m1}}</span>
+      <span style="height: 34px; padding: 0 12px; border-radius: 12px; background: rgba(255,255,255,0.1); display: inline-flex; align-items: center; font-weight: 700; font-size: 14px">{{t.m2}}</span>
+      <span style="height: 34px; padding: 0 12px; border-radius: 12px; background: rgba(255,255,255,0.1); display: inline-flex; align-items: center; font-weight: 700; font-size: 14px">{{t.m3}}</span>
+    </div>
+    <div style="flex: 1"></div>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; position: relative">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 900; font-size: 30px; letter-spacing: -0.03em; line-height: 1">{{t.titleB}}</span>
+        <span style="font-size: 15px; line-height: 1.35; color: #D5E3D2">{{t.subB}}</span>
+      </div>
+      <span style="width: 54px; height: 54px; flex-shrink: 0; border-radius: 999px; background: #C8E05A; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </div>
+  </button></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"embedded":{"editor":null,"default":false},"onNav":{"editor":null},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { lang: 'en', hv: 0 }; }
+  renderVals() {
+    var S = {
+      en: { brand: 'Khet Sathi', back: 'Back', h1: 'Soil tested.', h2: 'What next?', listen: 'Listen', tagA: 'From the robot', titleA: 'Your field today', subA: 'How each part is doing, and what to fix now.', tagB: 'From NASA data', titleB: 'Next 3 months', subB: 'Rain and cold ahead, and what crops to grow.', m1: 'Dec', m2: 'Jan', m3: 'Feb', say: 'Soil tested. What next? Your field today, or the next 3 months.' },
+      ne: { brand: 'खेत साथी', back: 'पछाडि', h1: 'माटो जाँचियो।', h2: 'अब के?', listen: 'सुन्नुहोस्', tagA: 'रोबोटबाट', titleA: 'आजको खेत', subA: 'हरेक भाग कस्तो छ, र अहिले के सुधार्ने।', tagB: 'नासा डाटाबाट', titleB: 'अर्को ३ महिना', subB: 'आउने वर्षा र जाडो, र कुन बाली लगाउने।', m1: 'पुस', m2: 'माघ', m3: 'फागुन', say: 'माटो जाँचियो। अब के? आजको खेत, वा अर्को ३ महिना।' }
+    };
+    var lang = this.state.lang;
+    var t = S[lang];
+    var on = 'height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: #14301E; color: #FFFFFF; font-weight: 700; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var off = 'height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #14301E; font-weight: 600; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var self_ = this;
+    return {
+      rootClass: this.props.embedded ? '' : 'ks-bg',
+      showSky: !this.props.embedded,
+      standalone: !this.props.embedded,
+      embedded: !!this.props.embedded,
+      navTo: {Main: function () { if (self_.props.onNav) self_.props.onNav('Main'); }, Photo: function () { if (self_.props.onNav) self_.props.onNav('Photo'); }, Parts: function () { if (self_.props.onNav) self_.props.onNav('Parts'); }, Robot: function () { if (self_.props.onNav) self_.props.onNav('Robot'); }, Choose: function () { if (self_.props.onNav) self_.props.onNav('Choose'); }, Today: function () { if (self_.props.onNav) self_.props.onNav('Today'); }, Future: function () { if (self_.props.onNav) self_.props.onNav('Future'); }},
+      hv0: () => this.setState({ hv: 0 }),
+      hv1: () => this.setState({ hv: 1 }),
+      hv2: () => this.setState({ hv: 2 }),
+      hvLayer: 'position: absolute; inset: 0; z-index: -1; pointer-events: none; transition: background 700ms ease, opacity 700ms ease; opacity: ' + (this.state.hv ? 1 : 0) + '; background: ' + (this.state.hv === 2 ? 'linear-gradient(180deg, rgba(20,48,30,0.5), rgba(20,48,30,0.2))' : 'linear-gradient(180deg, rgba(251,241,228,0.85), rgba(251,241,228,0.4))'),
+      t: t,
+      isEn: lang === 'en' ? 'true' : 'false',
+      isNe: lang === 'ne' ? 'true' : 'false',
+      enStyle: lang === 'en' ? on : off,
+      neStyle: lang === 'ne' ? on : off,
+      setEn: () => this.setState({ lang: 'en' }),
+      setNe: () => this.setState({ lang: 'ne' }),
+      speak: () => {
+        try {
+          var u = new SpeechSynthesisUtterance(t.say);
+          u.lang = lang === 'ne' ? 'ne-NP' : 'en-IN';
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(u);
+        } catch (err) {}
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

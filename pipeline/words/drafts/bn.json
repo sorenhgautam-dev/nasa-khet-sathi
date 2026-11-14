@@ -1219,6 +1219,434 @@
     "text": "Crop diversification can improve the resilience of farming systems to adverse climatic conditions ... By spreading the risks associated with crop cultivation across a wider range of crops and crop characteristics, the likelihood of total crop failure is reduced.",
     "source": "FAO (1998), FAO's Emergency Activities: Technical Handbook Series, Phase One: Prevention, section 2.1.1 'Crop Diversification': https://www.fao.org/4/X6869E/x6869e01.htm"
    }
+  },
+  "screens.home.texts.hero_1": {
+   "en": "Know your land.",
+   "bn": "নিজের জমিকে জানুন।"
+  },
+  "screens.home.texts.hero_2": {
+   "en": "Plan your season.",
+   "bn": "মৌসুমের পরিকল্পনা করুন।"
+  },
+  "screens.home.texts.card_today_tag": {
+   "en": "Soil check",
+   "bn": "মাটি পরীক্ষা"
+  },
+  "screens.home.texts.card_today_big": {
+   "en": "Today",
+   "bn": "আজ"
+  },
+  "screens.home.texts.card_today_sub": {
+   "en": "How each part of your field is doing.",
+   "bn": "আপনার জমির প্রতিটি ভাগ কেমন আছে।"
+  },
+  "screens.home.texts.card_months_tag": {
+   "en": "NASA records",
+   "bn": "নাসার রেকর্ড"
+  },
+  "screens.home.texts.card_months_big": {
+   "en": "3 months",
+   "bn": "3 মাস"
+  },
+  "screens.home.texts.card_months_sub": {
+   "en": "What these months usually bring.",
+   "bn": "এই মাসগুলোতে সাধারণত কী হয়।"
+  },
+  "screens.home.texts.records_years": {
+   "en": "We read NASA records, {source_years}.",
+   "bn": "আমরা নাসার রেকর্ড পড়ি, {source_years}।"
+  },
+  "screens.home.texts.prepared_title": {
+   "en": "Fields we have looked at",
+   "bn": "যে জমিগুলো আমরা দেখেছি"
+  },
+  "screens.where.texts.photo_h1": {
+   "en": "Your field",
+   "bn": "আপনার জমি"
+  },
+  "screens.where.texts.photo_h2": {
+   "en": "from above",
+   "bn": "ওপর থেকে"
+  },
+  "screens.where.texts.map_not_photo": {
+   "en": "This is a map, not a photo.",
+   "bn": "এটা মানচিত্র, ছবি নয়।"
+  },
+  "screens.where.texts.line_is_field": {
+   "en": "The line shows the sample field.",
+   "bn": "রেখাটি নমুনা জমি দেখায়।"
+  },
+  "screens.where.texts.photo_later": {
+   "en": "A real photo comes when we visit.",
+   "bn": "আমরা এলে আসল ছবি আসবে।"
+  },
+  "screens.where.texts.inside_sample": {
+   "en": "We show our sample field near you.",
+   "bn": "আমরা আপনার কাছের নমুনা জমি দেখাই।"
+  },
+  "screens.where.texts.draw_own": {
+   "en": "Mark my own field",
+   "bn": "আমার নিজের জমি চিহ্নিত করি"
+  },
+  "screens.where.texts.make_parts": {
+   "en": "Show the parts",
+   "bn": "ভাগগুলো দেখান"
+  },
+  "screens.from_space.texts.usually": {
+   "en": "Usually:",
+   "bn": "সাধারণত:"
+  },
+  "screens.parts.texts.making": {
+   "en": "Making the parts…",
+   "bn": "ভাগ তৈরি হচ্ছে…"
+  },
+  "screens.each_part.texts.today_h1": {
+   "en": "Your field",
+   "bn": "আপনার জমি"
+  },
+  "screens.each_part.texts.today_h2": {
+   "en": "today",
+   "bn": "আজ"
+  },
+  "screens.each_part.texts.as_of": {
+   "en": "As of this day:",
+   "bn": "এই দিন পর্যন্ত:"
+  },
+  "screens.each_part.texts.greener_more": {
+   "en": "A little greener than the rest.",
+   "bn": "বাকিগুলোর চেয়ে একটু বেশি সবুজ।"
+  },
+  "screens.each_part.texts.greener_less": {
+   "en": "A little less green than the rest.",
+   "bn": "বাকিগুলোর চেয়ে একটু কম সবুজ।"
+  },
+  "screens.each_part.texts.greener_unknown": {
+   "en": "We can't tell how green.",
+   "bn": "কতটা সবুজ, বলা যাচ্ছে না।"
+  },
+  "screens.each_part.texts.low_ground": {
+   "en": "Low ground: cold air can collect.",
+   "bn": "নিচু জমি: ঠান্ডা বাতাস জমতে পারে।"
+  },
+  "screens.each_part.texts.one_soil": {
+   "en": "All parts share one soil and weather.",
+   "bn": "সব ভাগের মাটি আর আবহাওয়া এক।"
+  },
+  "screens.check_soil.texts.prototype": {
+   "en": "Our soil stick is a prototype.",
+   "bn": "আমাদের মাটির কাঠি এখনো পরীক্ষামূলক।"
+  },
+  "screens.check_soil.texts.by_hand": {
+   "en": "Today we carry it by hand.",
+   "bn": "এখন আমরা এটা হাতে বয়ে নিই।"
+  },
+  "screens.check_soil.texts.robot_next": {
+   "en": "A robot to carry it comes next.",
+   "bn": "এটা বয়ে নেওয়ার রোবট পরে আসবে।"
+  },
+  "screens.check_soil.texts.robot_name": {
+   "en": "Krishi Scout, our robot idea",
+   "bn": "কৃষি স্কাউট, আমাদের রোবটের ভাবনা"
+  },
+  "screens.check_soil.texts.robot_shows": {
+   "en": "This shows how the robot will work.",
+   "bn": "রোবট কীভাবে কাজ করবে, এটা দেখায়।"
+  },
+  "screens.check_soil.texts.top_only": {
+   "en": "It reads only the top few centimetres.",
+   "bn": "এটা শুধু ওপরের কয়েক সেন্টিমিটার মাপে।"
+  },
+  "screens.check_soil.texts.after_test": {
+   "en": "Readings come after our team tests it.",
+   "bn": "আমাদের দল পরীক্ষা করার পর মাপ আসবে।"
+  },
+  "screens.check_soil.texts.no_reading": {
+   "en": "No reading yet",
+   "bn": "এখনো মাপা হয়নি"
+  },
+  "screens.check_soil.texts.settling": {
+   "en": "Settling…",
+   "bn": "স্থির হচ্ছে…"
+  },
+  "screens.check_soil.texts.measuring": {
+   "en": "Measuring…",
+   "bn": "মাপা হচ্ছে…"
+  },
+  "screens.check_soil.texts.measured": {
+   "en": "Measured",
+   "bn": "মাপা হয়েছে"
+  },
+  "screens.check_soil.texts.test_again": {
+   "en": "The reading jumped. Please test again.",
+   "bn": "মাপ লাফিয়ে গেছে। আবার পরীক্ষা করুন।"
+  },
+  "screens.check_soil.texts.off_scale": {
+   "en": "Off the scale",
+   "bn": "মাপের বাইরে"
+  },
+  "screens.check_soil.texts.not_connected": {
+   "en": "Soil stick not connected.",
+   "bn": "মাটির কাঠি যুক্ত নেই।"
+  },
+  "screens.check_soil.texts.part_of": {
+   "en": "Part {section} of {section_count}",
+   "bn": "{section_count}-এর মধ্যে ভাগ {section}"
+  },
+  "screens.check_soil.texts.drier": {
+   "en": "Drier than the other parts",
+   "bn": "অন্য ভাগের চেয়ে শুকনো"
+  },
+  "screens.check_soil.texts.wetter": {
+   "en": "Wetter than the other parts",
+   "bn": "অন্য ভাগের চেয়ে ভেজা"
+  },
+  "screens.check_soil.texts.about_same": {
+   "en": "About the same as the others",
+   "bn": "অন্যগুলোর মতোই"
+  },
+  "screens.check_soil.texts.before_reading": {
+   "en": "Before the reading:",
+   "bn": "মাপের আগে:"
+  },
+  "screens.check_soil.texts.band_needs_water": {
+   "en": "Needs water",
+   "bn": "পানি দরকার"
+  },
+  "screens.check_soil.texts.band_good": {
+   "en": "Good",
+   "bn": "ঠিক আছে"
+  },
+  "screens.check_soil.texts.band_too_wet": {
+   "en": "Too wet",
+   "bn": "খুব ভেজা"
+  },
+  "screens.check_soil.texts.water_in_soil": {
+   "en": "Water in the soil:",
+   "bn": "মাটিতে পানি:"
+  },
+  "screens.check_soil.texts.give_or_take": {
+   "en": "give or take",
+   "bn": "কম-বেশি"
+  },
+  "screens.what_to_grow.texts.next_h1": {
+   "en": "Next",
+   "bn": "আগামী"
+  },
+  "screens.what_to_grow.texts.next_h2": {
+   "en": "3 months",
+   "bn": "3 মাস"
+  },
+  "screens.what_to_grow.texts.next_to_plant": {
+   "en": "Next to plant:",
+   "bn": "এরপর লাগাবেন:"
+  },
+  "screens.what_to_grow.texts.choices_title": {
+   "en": "Your choices",
+   "bn": "আপনার পছন্দগুলো"
+  },
+  "screens.what_to_grow.texts.tap_choice": {
+   "en": "Tap a choice to see why.",
+   "bn": "কেন, দেখতে একটি পছন্দে চাপ দিন।"
+  },
+  "screens.what_to_grow.texts.more_than_now": {
+   "en": "More than now",
+   "bn": "এখনকার চেয়ে বেশি"
+  },
+  "screens.what_to_grow.texts.less_than_now": {
+   "en": "Less than now",
+   "bn": "এখনকার চেয়ে কম"
+  },
+  "screens.what_to_grow.texts.same_as_now": {
+   "en": "About the same as now",
+   "bn": "প্রায় এখনকার মতো"
+  },
+  "screens.what_to_grow.texts.water_never_out": {
+   "en": "This assumes water never runs out.",
+   "bn": "ধরে নেওয়া হয়েছে, পানি কখনো ফুরোয় না।"
+  },
+  "screens.what_to_grow.texts.see_years": {
+   "en": "See the last {year_count} years",
+   "bn": "গত {year_count} বছর দেখুন"
+  },
+  "screens.what_to_grow.texts.range_why": {
+   "en": "Two ways of counting rain give a range.",
+   "bn": "বৃষ্টি গোনার দুই উপায়ে একটা সীমা আসে।"
+  },
+  "screens.what_to_grow.texts.range_town": {
+   "en": "One matches the nearby town's usual rain.",
+   "bn": "একটি কাছের শহরের সাধারণ বৃষ্টির সঙ্গে মেলে।"
+  },
+  "screens.last_years.texts.which_plan": {
+   "en": "Which plan?",
+   "bn": "কোন পরিকল্পনা?"
+  },
+  "screens.field_future.texts.by_year": {
+   "en": "By {future_year}",
+   "bn": "{future_year} সালের মধ্যে"
+  },
+  "shared.buttons.not_ready": {
+   "en": "Not ready yet.",
+   "bn": "এখনো তৈরি নয়।"
+  },
+  "shared.buttons.sample_field": {
+   "en": "Sample field",
+   "bn": "নমুনা জমি"
+  },
+  "shared.buttons.how_we_know": {
+   "en": "How we know",
+   "bn": "আমরা কীভাবে জানি"
+  },
+  "screens.your_plan.texts.sources_title": {
+   "en": "Where our numbers come from",
+   "bn": "আমাদের সংখ্যা কোথা থেকে আসে"
+  },
+  "shared.buttons.about": {
+   "en": "about",
+   "bn": "প্রায়"
+  },
+  "shared.buttons.out_of_100": {
+   "en": "out of 100",
+   "bn": "100-এর মধ্যে"
+  },
+  "shared.buttons.close": {
+   "en": "Close",
+   "bn": "বন্ধ করুন"
+  },
+  "shared.buttons.language": {
+   "en": "Language",
+   "bn": "ভাষা"
+  },
+  "screens.check_soil.texts.choose_h1": {
+   "en": "What do you",
+   "bn": "আপনি কী"
+  },
+  "screens.check_soil.texts.choose_h2": {
+   "en": "want to see?",
+   "bn": "দেখতে চান?"
+  },
+  "screens.your_plan.texts.computer_helped": {
+   "en": "How the computer helped",
+   "bn": "কম্পিউটার কীভাবে সাহায্য করেছে"
+  },
+  "screens.your_plan.texts.helped_words": {
+   "en": "A computer drafted many words here.",
+   "bn": "এখানকার অনেক কথা কম্পিউটার লিখেছে।"
+  },
+  "screens.your_plan.texts.helped_check": {
+   "en": "Nepali words still need a careful check.",
+   "bn": "নেপালি শব্দ এখনো যাচাই বাকি।"
+  },
+  "screens.your_plan.texts.helped_drafts": {
+   "en": "Other languages are draft translations.",
+   "bn": "অন্য ভাষাগুলো খসড়া অনুবাদ।"
+  },
+  "screens.your_plan.texts.helped_seasons": {
+   "en": "A computer also helped find the seasons.",
+   "bn": "ফসলের মৌসুম খুঁজতেও কম্পিউটার সাহায্য করেছে।"
+  },
+  "screens.your_plan.texts.seasons_title": {
+   "en": "Finding the seasons",
+   "bn": "মৌসুম খুঁজে বের করা"
+  },
+  "screens.your_plan.texts.seasons_tested": {
+   "en": "We tested three ways on unseen years.",
+   "bn": "অদেখা বছরে তিনটি উপায় পরীক্ষা করেছি।"
+  },
+  "screens.your_plan.texts.way_threshold": {
+   "en": "A simple green rule",
+   "bn": "সবুজের সহজ নিয়ম"
+  },
+  "screens.your_plan.texts.way_changepoint": {
+   "en": "A change finder",
+   "bn": "পরিবর্তন খোঁজার উপায়"
+  },
+  "screens.your_plan.texts.way_detective": {
+   "en": "A learning computer",
+   "bn": "শেখার কম্পিউটার"
+  },
+  "screens.your_plan.texts.we_use_this": {
+   "en": "We use this one.",
+   "bn": "আমরা এটাই ব্যবহার করি।"
+  },
+  "screens.your_plan.texts.rain_fix_title": {
+   "en": "Fixing the rain numbers",
+   "bn": "বৃষ্টির সংখ্যা ঠিক করা"
+  },
+  "screens.your_plan.texts.rains_title": {
+   "en": "When the rains come",
+   "bn": "বৃষ্টি কখন আসে"
+  },
+  "screens.your_plan.texts.memory_title": {
+   "en": "Teaching a computer this field",
+   "bn": "কম্পিউটারকে এই জমি শেখানো"
+  },
+  "screens.your_plan.texts.area_title": {
+   "en": "Fields around the sample field",
+   "bn": "নমুনা জমির আশপাশের জমি"
+  },
+  "screens.your_plan.texts.future_title": {
+   "en": "Looking ahead",
+   "bn": "সামনের দিকে"
+  },
+  "screens.your_plan.texts.not_ready_title": {
+   "en": "What is not ready yet",
+   "bn": "যা এখনো তৈরি নয়"
+  },
+  "screens.your_plan.texts.nr_photo": {
+   "en": "A real photo of the field.",
+   "bn": "জমির আসল ছবি।"
+  },
+  "screens.your_plan.texts.nr_readings": {
+   "en": "Soil stick readings from the field.",
+   "bn": "জমি থেকে মাটির কাঠির মাপ।"
+  },
+  "screens.your_plan.texts.nr_own_field": {
+   "en": "Your own field: today we show a sample.",
+   "bn": "আপনার নিজের জমি: এখন নমুনা দেখাই।"
+  },
+  "screens.your_plan.texts.nr_robot": {
+   "en": "The robot that carries the stick.",
+   "bn": "কাঠি বয়ে নেওয়ার রোবট।"
+  },
+  "screens.your_plan.texts.report_card": {
+   "en": "How sure are we?",
+   "bn": "আমরা কতটা নিশ্চিত?"
+  },
+  "screens.your_plan.texts.sure_high": {
+   "en": "Quite sure",
+   "bn": "বেশ নিশ্চিত"
+  },
+  "screens.your_plan.texts.sure_medium": {
+   "en": "Fairly sure",
+   "bn": "মোটামুটি নিশ্চিত"
+  },
+  "screens.your_plan.texts.sure_low": {
+   "en": "Not very sure",
+   "bn": "খুব নিশ্চিত নই"
+  },
+  "screens.your_plan.texts.missions_title": {
+   "en": "The NASA missions we used",
+   "bn": "আমরা যে নাসা মিশন ব্যবহার করেছি"
+  },
+  "shared.buttons.read_more": {
+   "en": "Read more",
+   "bn": "আরও পড়ুন"
+  },
+  "shared.buttons.source_label": {
+   "en": "Source:",
+   "bn": "উৎস:"
+  },
+  "screens.your_plan.texts.method_title": {
+   "en": "How we worked it out",
+   "bn": "আমরা কীভাবে বের করেছি"
+  },
+  "screens.your_plan.texts.story_title": {
+   "en": "What the records show",
+   "bn": "রেকর্ড কী দেখায়"
+  },
+  "screens.your_plan.texts.links_title": {
+   "en": "To read more",
+   "bn": "আরও পড়তে"
   }
  }
 }

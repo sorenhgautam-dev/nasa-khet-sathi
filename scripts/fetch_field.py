@@ -12,7 +12,9 @@ Box steps need only the config's fetch_box, so they run before the field's squar
 point, cell or polygon) wait until the config has a polygon: the placeholder step writes the candidates
 (data/clean/<field>/placeholder_candidates.json) and a person (or Claude, recorded in METHOD_NOTES) copies the chosen
 square into the config. Steps that use a global file (GRACE, GPCC, FAOSTAT) reuse the copy already held for another
-field. MODIS, SMAP and ECOSTRESS are not fetched abroad (no number shown there uses them); NEX-GDDP has its own
+field. A sample field (`sample_of: <field>` with the same fetch_box) shares that field's box downloads: its raw folders
+for the box datasets (SHARED) are links to the other field's, its box fetch steps are skipped, and the builds read them;
+POWER (a point) and the station table are its own. MODIS, SMAP and ECOSTRESS are not fetched abroad (no number shown there uses them); NEX-GDDP has its own
 fetcher (pipeline/fetch/nexgddp.py).
 """
 import argparse
@@ -49,13 +51,44 @@ STEPS = [
 ]
 
 
-def plan(field, done, only=None, force=()):
-    """[(step, action)] with action 'run', 'skip: done', 'wait: no square yet' or 'skip: <key> not in config'. Pure."""
+SHARED = ("gpm", "chirps", "hls_l30", "hls_s30", "nasadem", "worldcover", "soilgrids", "gauge_evidence")   # data/raw/<x>/
+BOX_FETCH = ("worldcover", "hls_recent", "gpm", "chirps", "hls")
+
+
+def shares_box_with(field, other=None):
+    """The field whose box downloads this one reuses: `sample_of`, when its fetch_box is the same. None otherwise."""
+    src = field.get("sample_of")
+    if not src:
+        return None
+    if other is None:
+        from pipeline.fetch.fields import load_field
+        other = load_field(src)
+    return src if list(other["fetch_box"]) == list(field["fetch_box"]) else None
+
+
+def link_shared(field_id, src_id, raw_root):
+    """data/raw/<x>/<field_id> -> <src_id> for every SHARED dataset the source holds; an existing folder is left alone."""
+    made = []
+    for x in SHARED:
+        dst, src = Path(raw_root) / x / field_id, Path(raw_root) / x / src_id
+        if src.is_dir() and not dst.exists() and not dst.is_symlink():
+            dst.symlink_to(src_id, target_is_directory=True)
+            made.append(x)
+    return made
+
+
+def plan(field, done, only=None, force=(), shared_with=None):
+    """[(step, action)] with action 'run', 'skip: done', 'wait: no square yet', 'skip: <key> not in config', 'skip: the
+    square is in the config' (placeholder) or 'skip: box shared with <field>' (a sample's box fetches). Pure."""
     out = []
     for name, needs_square, _, cond in STEPS:
         if only and name not in only:
             continue
-        if cond and not field.get(cond):
+        if shared_with and name in BOX_FETCH and name not in force:
+            out.append((name, f"skip: box shared with {shared_with}"))
+        elif name == "placeholder" and field.get("polygon") and name not in force:
+            out.append((name, "skip: the square is in the config"))
+        elif cond and not field.get(cond):
             out.append((name, f"skip: {cond} not in config"))
         elif name in done and done[name].get("exit") == 0 and name not in force:
             out.append((name, "skip: done"))
@@ -80,7 +113,12 @@ def main(argv=None):
     done = json.loads(state_path.read_text()) if state_path.exists() else {}
     commands = {n: c for n, _, c, _ in STEPS}
     failed = []
-    for name, action in plan(load_field(a.field), done, a.steps, a.force):
+    field = load_field(a.field)
+    src = shares_box_with(field)
+    if src and not a.list:
+        made = link_shared(field["id"], src, REPO / "data" / "raw")
+        print(f"box shared with {src}: linked {made or 'nothing new'}", flush=True)
+    for name, action in plan(field, done, a.steps, a.force, shared_with=src):
         print(f"{name:15s} {action}", flush=True)
         if action != "run" or a.list:
             continue

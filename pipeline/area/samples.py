@@ -26,8 +26,8 @@ def spread_pick(ranked, demo_latlon, origin, min_apart_km):
 
 
 def sample_config(n, cand, demo, why):
-    """A config/fields/sample_<n>.yaml modelled on the demo's: a labelled PLACEHOLDER sample in the same box."""
-    return {"id": f"sample_{n}", "name": f"Bhaktapur sample field {n} (PLACEHOLDER)", "placeholder": True,
+    """A config/fields/sample-<n>.yaml modelled on the demo's: a labelled PLACEHOLDER sample in the same box."""
+    return {"id": f"sample-{n}", "name": f"Bhaktapur sample field {n} (PLACEHOLDER)", "placeholder": True,
             "sample": True, "sample_of": demo["id"], "sample_why": why, "country": demo["country"],
             "origin_point": dict(demo["origin_point"]), "lat": round(cand["lat"], 6), "lon": round(cand["lon"], 6),
             "polygon": square_polygon(cand["lat"], cand["lon"], 60),
@@ -37,7 +37,10 @@ def sample_config(n, cand, demo, why):
             "current_rotation_options": [list(r) for r in demo["current_rotation_options"]],
             "current_rotation_source": ("PLACEHOLDER (sample field, as the demo's, owner 2026-11-12 and 2026-11-13): rice in the "
                                         "monsoon, then potato in winter, or rice then wheat; nobody has asked this field's farmer"),
-            "validation_station": demo["validation_station"], "correction_label": demo["correction_label"]}
+            "validation_station": demo["validation_station"], "correction_label": demo["correction_label"],
+            # REVIEW_2 H6: the demo's DHM normals for the sample's rain check (scripts/run_rain_check.py DEMO_RAIN_CHECK)
+            "rain_check": {"normals": ["Bhaktapur", "Kathmandu Airport"], "station_key": "airport",
+                           "station_name": "Kathmandu Airport"}}
 
 
 def write_yaml(path, cfg, header):

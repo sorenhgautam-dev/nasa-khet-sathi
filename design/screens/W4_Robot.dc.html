@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Robot soil test (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&amp;family=Inter:wght@400;500;600;700&amp;family=Mukta:wght@400;600;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14301E}a:hover{color:#0B1F12}
+.ks-wbg{background:#89A378 url(/_blob/3aa695d5bdb8271424d72ab091c78b64) center bottom/cover no-repeat}
+@keyframes ks-drift{from{transform:translateX(-260px)}to{transform:translateX(110vw)}}
+@keyframes ks-fly{0%{transform:translate(-120px,30px)}100%{transform:translate(110vw,-40px)}}
+@keyframes ks-flap{to{transform:scaleY(.35)}}
+.ks-cloud{position:absolute;left:0;z-index:-1;width:240px;height:60px;border-radius:99px;background:rgba(255,253,246,.75);filter:blur(10px);animation:ks-drift linear infinite;pointer-events:none}
+.ks-birds{position:absolute;z-index:-1;left:0;top:150px;width:110px;height:36px;animation:ks-fly 32s linear 2s infinite;opacity:.55;pointer-events:none}
+.ks-birds path{fill:none;stroke:#3A3A35;stroke-width:1.6;stroke-linecap:round;transform-box:fill-box;transform-origin:center;animation:ks-flap .55s ease-in-out infinite alternate}
+.ks-sun{position:absolute;z-index:-1;width:56px;height:56px;margin:-28px 0 0 -28px;left:var(--x1);top:var(--y1);pointer-events:none;animation:ks-sunmove 1.8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ks-sunmove{from{left:var(--x0);top:var(--y0)}to{left:var(--x1);top:var(--y1)}}
+.ks-sun .ks-glow{position:absolute;inset:-46px;border-radius:50%;animation:ks-sunpulse 3.4s ease-in-out infinite}
+@keyframes ks-sunpulse{50%{transform:scale(1.18);opacity:.75}}
+.ks-sun .ks-rays{position:absolute;left:-16px;top:-16px;width:88px;height:88px;animation:ks-sunrot 26s linear infinite}
+@keyframes ks-sunrot{to{transform:rotate(360deg)}}
+.ks-sun .ks-core{position:absolute;inset:0;border-radius:50%}
+@keyframes ks-draw{to{stroke-dashoffset:0}}
+@keyframes ks-ring{from{transform:scale(.4);opacity:1}to{transform:scale(2.6);opacity:0}}
+@keyframes ks-spin{to{transform:rotate(360deg)}}
+@keyframes ks-bob{to{transform:translateY(-1.2px)}}
+@keyframes ks-drill{40%,60%{transform:scaleY(1)}}
+@keyframes ks-hop{50%{transform:translateY(-5px)}}
+@keyframes ks-pop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes ks-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.ks-whs{transform-box:fill-box;transform-origin:center}
+.ks-moving .ks-whs{animation:ks-spin .5s linear infinite}
+.ks-moving .ks-bod{animation:ks-bob .28s ease-in-out infinite alternate}
+.ks-drill{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0)}
+.ks-probing .ks-drill{animation:ks-drill .9s ease-in-out}
+.ks-happy .ks-bod{animation:ks-hop .5s cubic-bezier(.34,1.56,.64,1) 2}
+@keyframes ks-wave{50%{opacity:.2}}
+[style*="height: 66px"] > svg:last-child,[style*="height: 68px"] > svg:last-child{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+[style*="height: 66px"]:hover > svg:last-child,[style*="height: 68px"]:hover > svg:last-child{transform:translateX(7px)}
+button:hover path[d^="M15.5"],button:hover path[d^="M18.5"]{animation:ks-wave .9s ease-in-out infinite}
+button:hover path[d^="M18.5"]{animation-delay:.18s}
+@keyframes ks-grow{from{transform:scale(0,0)}70%{transform:scale(1.1,1.15)}to{transform:scale(1)}}
+@keyframes ks-sway2{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="width: 100%; min-height: 900px; box-sizing: border-box; padding: 24px; position: relative; isolation: isolate; overflow: hidden; color: #14301E; font-family: Inter, Mukta, system-ui, sans-serif">
+  <sc-if value="{{showSky}}" hint-placeholder-val="{{ true }}">
+  <div class="ks-sun" aria-hidden="true" style="--x0: 31%; --y0: 160px; --x1: 47%; --y1: 102px"><span class="ks-glow" style="background: radial-gradient(circle, rgba(242,177,82,.55), rgba(242,177,82,0) 66%)"></span><svg class="ks-rays" viewBox="0 0 66 66"><g stroke="#F0AE4C" stroke-width="2.4" stroke-linecap="round"><path d="M33 2v7M33 57v7M2 33h7M57 33h7M11 11l5 5M50 50l5 5M55 11l-5 5M16 50l-5 5"></path></g></svg><span class="ks-core" style="background: radial-gradient(circle at 35% 32%, #FBE3A0, #F0AE4C 58%, #D88A2C); box-shadow: 0 0 0 8px rgba(242,177,82,0.22)"></span></div>
+  <span class="ks-cloud" aria-hidden="true" style="top: 70px; animation-duration: 95s; animation-delay: -60s"></span>
+  <span class="ks-cloud" aria-hidden="true" style="top: 180px; width: 180px; animation-duration: 120s; animation-delay: -105s; opacity: .8"></span>
+  <span class="ks-cloud" aria-hidden="true" style="top: 290px; width: 160px; height: 44px; animation-duration: 140s; animation-delay: -40s; opacity: .6"></span>
+  <svg class="ks-birds" viewBox="0 0 120 40" aria-hidden="true"><path d="M10 20q6-6 12 0q6-6 12 0"></path><path d="M40 10q5-5 10 0q5-5 10 0"></path><path d="M62 24q5-5 10 0q5-5 10 0"></path><path d="M86 14q4-4 8 0q4-4 8 0"></path></svg>
+  </sc-if>
+
+  <div style="max-width: 1360px; margin: 0 auto; min-height: 852px; box-sizing: border-box; border-radius: 32px; padding: 26px clamp(20px, 3.4vw, 48px) 32px; border: 2px solid rgba(255,255,255,0.85); background: rgba(255,250,242,0.18); display: flex; flex-direction: column; gap: 28px">
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W3_Parts.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+        </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W3}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+        </button></sc-if>
+        <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: 22px">{{t.brand}}</span>
+      </div>
+      <div aria-label="{{t.stepOf}}" style="display: flex; align-items: center; gap: 10px; height: 56px; padding: 0 26px; border-radius: 999px; background: rgba(255,255,255,0.85); gap: 14px">
+        <span style="font-size: 16px; font-weight: 700; margin-right: 6px">{{t.stepOf}}</span>
+        <span style="width: 88px; height: 8px; border-radius: 999px; background: #14301E"></span>
+        <span style="width: 88px; height: 8px; border-radius: 999px; background: #14301E"></span>
+        <span style="{{bar3}}"></span>
+      </div>
+      <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF">
+        <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
+        <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
+      </div>
+    </header>
+
+    <div style="flex: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 40px">
+      <div style="flex: 1 1 380px; min-width: 0; max-width: 520px; display: flex; flex-direction: column; gap: 22px; animation: ks-rise 700ms ease-out both">
+        <h1 style="margin: 0; font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(40px, 4.4vw, 68px); line-height: 0.95; text-transform: uppercase">
+          <span style="display: block; color: #14301E">{{t.h1}}</span>
+          <span style="display: block; color: #9A5426">{{t.h2}}</span>
+        </h1>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px" aria-live="polite">
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+            <div style="{{r.card}}">
+              <span style="font-weight: 700; font-size: 18px">{{r.part}}</span>
+              <span style="{{r.stateStyle}}">{{r.state}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; gap: 12px; animation: ks-rise 400ms ease-out both">
+            <button onClick="{{restart}}" aria-label="{{t.again}}" style="width: 66px; height: 66px; flex-shrink: 0; border-radius: 999px; border: 2px solid #14301E; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path><path d="M3 21v-5h5"></path></svg>
+            </button>
+            <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W5_Choose.dc.html" style="flex: 1; height: 66px; border-radius: 999px; background: #14301E; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 12px; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 19px; box-shadow: 0 18px 34px -16px rgba(20,48,30,0.7)">
+              <span>{{t.cta}}</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W5}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; flex: 1; height: 66px; border-radius: 999px; background: #14301E; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 12px; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 19px; box-shadow: 0 18px 34px -16px rgba(20,48,30,0.7)">
+              <span>{{t.cta}}</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </button></sc-if>
+          </div>
+        </sc-if>
+        <sc-if value="{{notDone}}" hint-placeholder-val="{{ true }}">
+          <button disabled="" style="height: 66px; border-radius: 999px; border: 0; background: rgba(220,227,211,0.95); color: #4E5E4A; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 19px">{{progressText}}</button>
+        </sc-if>
+      </div>
+
+      <div style="flex: 1.3 1 480px; min-width: 0; display: flex; justify-content: center">
+        <div role="img" aria-label="{{t.sceneAria}}" style="position: relative; width: 100%; max-width: 680px; aspect-ratio: 4 / 3; border-radius: 32px; overflow: hidden; background: #F3EAD8; border: 2.5px dashed #CDBF9F; box-sizing: border-box; box-shadow: 0 30px 60px -30px rgba(40,50,20,0.5)">
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center">
+            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: 40px; text-transform: uppercase; color: #DCCDAE">{{t.yourFarm}}</span>
+          </div>
+          <div style="position: absolute; inset: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr))">
+            <span style="{{q1}}"></span><span style="{{q2}}"></span><span style="{{q3}}"></span><span style="{{q4}}"></span>
+          </div>
+          <span style="position: absolute; left: calc(50% - 1.5px); top: 0; width: 3px; height: 100%; background: #14301E"></span>
+          <span style="position: absolute; top: calc(50% - 1.5px); left: 0; height: 3px; width: 100%; background: #14301E"></span>
+          <sc-for list="{{crops}}" as="c" hint-placeholder-count="0"><span style="{{c.style}}"><svg width="24" height="28" viewBox="0 0 24 28" aria-hidden="true" style="display: block; overflow: visible"><path d="M12 18 L22 22 L12 26 L2 22Z" fill="#B08A5C"></path><path d="M2 22 L12 26 V28 L2 24Z" fill="#8A6640"></path><path d="M22 22 L12 26 V28 L22 24Z" fill="#9C7650"></path><path d="M12 22 V10" stroke="#4E7A3A" stroke-width="2" stroke-linecap="round"></path><path d="M12 15 C 7 14, 4 10, 5 6 C 10 7, 12 10, 12 15Z" fill="{{c.leaf}}" style="transition: fill 500ms"></path><path d="M12 12 C 16 11, 20 7, 19 3 C 14 4, 12 8, 12 12Z" fill="{{c.leaf2}}" style="transition: fill 500ms"></path></svg></span></sc-for>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+            <sc-for list="{{segs}}" as="s" hint-placeholder-count="0">
+              <line x1="{{s.x1}}" y1="{{s.y1}}" x2="{{s.x2}}" y2="{{s.y2}}" pathLength="1" stroke-dasharray="1" stroke="#9A5426" stroke-width="4" stroke-linecap="round" stroke-opacity="0.5" vector-effect="non-scaling-stroke" style="{{s.style}}"></line>
+            </sc-for>
+          </svg>
+          <sc-if value="{{probing}}" hint-placeholder-val="{{ false }}">
+            <span style="{{ringA}}"></span>
+            <span style="{{ringB}}"></span>
+          </sc-if>
+          <sc-for list="{{marks}}" as="m" hint-placeholder-count="4">
+            <span style="{{m.style}}">{{m.label}}</span>
+          </sc-for>
+          <div style="{{robotPos}}">
+            <div style="{{robotFlip}}">
+              <svg width="72" height="92" viewBox="-18 -40 36 46" aria-hidden="true" class="{{robotClass}}" style="display: block; overflow: visible">
+                <ellipse cx="0" cy="1" rx="15" ry="3" fill="rgba(0,0,0,.2)"></ellipse>
+                <g class="ks-bod">
+                  <rect class="ks-drill" x="-1.5" y="-6" width="3" height="12" fill="#5B4630"></rect>
+                  <rect x="-15" y="-21" width="30" height="15" rx="5" fill="#C46A43" stroke="#7A3A22" stroke-width="1"></rect>
+                  <rect x="-9" y="-28" width="18" height="8" rx="3" fill="#EFE3C9" stroke="#7A3A22" stroke-width="1"></rect>
+                  <circle cx="4" cy="-24" r="2.2" fill="#25362B"></circle>
+                  <path d="M-5 -28L-7 -36" stroke="#7A3A22" stroke-width="1.3"></path>
+                  <circle cx="-7" cy="-37" r="2.8" fill="{{ledFill}}"></circle>
+                </g>
+                <g transform="translate(-8 -4)"><g class="ks-whs"><circle r="5" fill="#26302A"></circle><path d="M-3 0H3M0 -3V3" stroke="#8C958C" stroke-width="1"></path></g></g>
+                <g transform="translate(8 -4)"><g class="ks-whs"><circle r="5" fill="#26302A"></circle><path d="M-3 0H3M0 -3V3" stroke="#8C958C" stroke-width="1"></path></g></g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"embedded":{"editor":null,"default":false},"onNav":{"editor":null},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.C = [[25, 25], [75, 25], [25, 75], [75, 75]];
+    this.ORDER = [0, 1, 2, 3];
+    this.state = this.fresh('en');
+  }
+  fresh(lang) { return { lang: lang, pos: [5, 50], flip: false, legMs: 0, robot: 'idle', cur: -1, tested: [false, false, false, false], count: 0, segs: [], done: false }; }
+  componentDidMount() { this.run(); }
+  componentWillUnmount() { (this.timers || []).forEach(clearTimeout); }
+  run() {
+    var self = this;
+    (this.timers || []).forEach(clearTimeout);
+    this.timers = [];
+    this.setState(this.fresh(this.state.lang));
+    this.timers.push(setTimeout(function () { self.leg(0); }, 900));
+  }
+  leg(i) {
+    var self = this;
+    if (i >= 4) { this.setState({ done: true, robot: 'happy', cur: -1 }); return; }
+    var a = this.state.pos, b = this.C[this.ORDER[i]];
+    var ms = Math.max(1000, Math.round(Math.hypot(b[0] - a[0], b[1] - a[1]) * 22));
+    this.setState({ robot: 'moving', cur: this.ORDER[i], legMs: ms, flip: b[0] < a[0] - 1, pos: b, segs: this.state.segs.concat([{ x1: a[0], y1: a[1], x2: b[0], y2: b[1], ms: ms }]) });
+    this.timers.push(setTimeout(function () { self.setState({ robot: 'probing' }); }, ms));
+    this.timers.push(setTimeout(function () {
+      var tt = self.state.tested.slice(); tt[self.ORDER[i]] = true;
+      self.setState({ tested: tt, count: i + 1 });
+    }, ms + 1000));
+    this.timers.push(setTimeout(function () { self.leg(i + 1); }, ms + 1400));
+  }
+  renderVals() {
+    var S = {
+      en: { brand: 'Khet Sathi', back: 'Back', stepOf: 'Step 3 of 3', h1: 'Robot is', h2: 'testing the soil', sceneAria: 'The robot drives to the middle of each part and takes soil', yourFarm: 'Your farm', part: 'Part ', waiting: 'Waiting', testing: 'Testing…', tested: 'Tested ✓', again: 'Test again', cta: 'See what to do', of4: ' of 4 tested' },
+      ne: { brand: 'खेत साथी', back: 'पछाडि', stepOf: '३ मध्ये तेस्रो चरण', h1: 'रोबोटले', h2: 'माटो जाँच्दैछ', sceneAria: 'रोबोट हरेक भागको बीचमा गएर माटो लिन्छ', yourFarm: 'तपाईंको खेत', part: 'भाग ', waiting: 'पर्खँदै', testing: 'जाँच्दै…', tested: 'जाँचियो ✓', again: 'फेरि जाँच्नुहोस्', cta: 'के गर्ने हेर्नुहोस्', of4: ' / ४ जाँचियो' }
+    };
+    var lang = this.state.lang;
+    var t = S[lang];
+    var num = function (v) { var s = String(v); return lang === 'ne' ? s.replace(/[0-9]/g, function (d) { return '०१२३४५६७८९'[d]; }) : s; };
+    var st = this.state;
+    var C = this.C;
+    var q = function (i) { return 'transition: background 500ms; background: ' + (st.tested[i] ? 'rgba(200,224,90,0.3)' : (i === 0 || i === 3 ? 'rgba(20,48,30,0.06)' : 'rgba(154,84,38,0.06)')); };
+    var ring = function (d) {
+      var c = st.cur >= 0 ? C[st.cur] : [0, 0];
+      return 'position: absolute; left: calc(' + c[0] + '% - 28px); top: calc(' + c[1] + '% - 28px); width: 56px; height: 56px; border-radius: 999px; border: 3px solid #9A5426; box-sizing: border-box; animation: ks-ring 1.1s ease-out ' + d + 'ms infinite';
+    };
+    var on = 'height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: #14301E; color: #FFFFFF; font-weight: 700; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var off = 'height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #14301E; font-weight: 600; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var CROPS = [];
+    [[0, 0], [50, 0], [0, 50], [50, 50]].forEach(function (q, qi) {
+      for (var r = 0; r < 3; r++) for (var c = 0; c < 5; c++) {
+        var x = q[0] + 6 + c * 9.5, y = q[1] + 12 + r * 14;
+        if (Math.abs(x - (q[0] + 25)) < 9 && Math.abs(y - (q[1] + 25)) < 13) continue;
+        CROPS.push({ x: x, y: y, q: qi, k: CROPS.length });
+      }
+    });
+    var self_ = this;
+    return {
+      rootClass: this.props.embedded ? '' : 'ks-wbg',
+      showSky: !this.props.embedded,
+      standalone: !this.props.embedded,
+      embedded: !!this.props.embedded,
+      navTo: {W1: function () { if (self_.props.onNav) self_.props.onNav('W1'); }, W2: function () { if (self_.props.onNav) self_.props.onNav('W2'); }, W3: function () { if (self_.props.onNav) self_.props.onNav('W3'); }, W4: function () { if (self_.props.onNav) self_.props.onNav('W4'); }, W5: function () { if (self_.props.onNav) self_.props.onNav('W5'); }, W6: function () { if (self_.props.onNav) self_.props.onNav('W6'); }, W7: function () { if (self_.props.onNav) self_.props.onNav('W7'); }},
+      t: t,
+      isEn: lang === 'en' ? 'true' : 'false',
+      isNe: lang === 'ne' ? 'true' : 'false',
+      enStyle: lang === 'en' ? on : off,
+      neStyle: lang === 'ne' ? on : off,
+      setEn: () => this.setState({ lang: 'en' }),
+      setNe: () => this.setState({ lang: 'ne' }),
+      bar3: 'width: 88px; height: 8px; border-radius: 999px; transition: background 400ms; background: ' + (st.done ? '#14301E' : '#E3D6BF'),
+      q1: q(0), q2: q(1), q3: q(2), q4: q(3),
+      segs: st.segs.map(function (s) { return { x1: s.x1, y1: s.y1, x2: s.x2, y2: s.y2, style: 'stroke-dashoffset: 1; animation: ks-draw ' + s.ms + 'ms cubic-bezier(.45,0,.3,1) forwards' }; }),
+      crops: CROPS.map(function (c) { var tt = st.tested[c.q]; return { leaf: tt ? '#A9CF45' : '#7FB24A', leaf2: tt ? '#C8E05A' : '#93C258', style: 'position: absolute; left: calc(' + c.x + '% - 12px); top: calc(' + c.y + '% - 22px); transform-origin: 50% 100%; animation: ks-sway2 ' + (2.8 + (c.k % 5) * 0.3) + 's ease-in-out -' + (c.k % 7) * 0.4 + 's infinite' }; }),
+      probing: st.robot === 'probing',
+      ringA: ring(0),
+      ringB: ring(450),
+      marks: C.map(function (c, i) {
+        var d = st.tested[i];
+        return { label: d ? '✓' : num(i + 1), style: 'position: absolute; left: calc(' + c[0] + '% - 22px); top: calc(' + c[1] + '% + 10px); width: 44px; height: 44px; border-radius: 999px; box-sizing: border-box; border: 4px solid #FBF4EA; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; transition: background 300ms; ' + (d ? 'background: #C8E05A; color: #14301E; animation: ks-pop 400ms cubic-bezier(.34,1.56,.64,1)' : 'background: #14301E; color: #C8E05A') };
+      }),
+      robotPos: 'position: absolute; left: calc(' + st.pos[0] + '% - 36px); top: calc(' + st.pos[1] + '% - 80px); width: 72px; height: 92px; transition: left ' + st.legMs + 'ms cubic-bezier(.45,0,.3,1), top ' + st.legMs + 'ms cubic-bezier(.45,0,.3,1)',
+      robotFlip: 'transform: scaleX(' + (st.flip ? -1 : 1) + ')',
+      robotClass: st.robot === 'moving' ? 'ks-moving' : (st.robot === 'probing' ? 'ks-probing' : (st.robot === 'happy' ? 'ks-happy' : '')),
+      ledFill: st.done ? '#5FBF6A' : (st.robot === 'probing' ? '#F2C230' : '#E9A948'),
+      rows: [0, 1, 2, 3].map(function (i) {
+        var d = st.tested[i];
+        var now = st.cur === i && !d;
+        return {
+          part: t.part + num(i + 1),
+          state: d ? t.tested : (now ? t.testing : t.waiting),
+          card: 'height: 64px; border-radius: 18px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; transition: background 300ms; ' + (d ? 'background: #14301E; color: #FFFFFF' : 'background: rgba(255,255,255,0.9); color: #14301E; border: 1.5px solid ' + (now ? '#9A5426' : 'rgba(255,255,255,0.9)')),
+          stateStyle: 'font-size: 15px; font-weight: 700; color: ' + (d ? '#C8E05A' : (now ? '#9A5426' : '#6A746A'))
+        };
+      }),
+      progressText: num(st.count) + t.of4,
+      done: st.done,
+      notDone: !st.done,
+      restart: () => this.run()
+    };
+  }
+}
+</script>
+</body>
+</html>

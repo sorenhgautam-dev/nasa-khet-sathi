@@ -212,10 +212,10 @@
  "ne_status": "needs native-speaker review",
  "fields_in_area": [
   "demo",
-  "sample_1",
-  "sample_2",
-  "sample_3",
-  "sample_4"
+  "sample-1",
+  "sample-2",
+  "sample-3",
+  "sample-4"
  ],
  "sources": [
   {

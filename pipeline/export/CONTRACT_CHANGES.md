@@ -4,6 +4,21 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, 10:00): the second rain version is now the DHM-scaled dry edge (owner's decision 4b): renamed fields
+
+The owner kept the break-corrected rain as the central case. The other edge of every range is now the rain scaled month
+by month to DHM Bhaktapur's 1991-2020 normals (it reads lower). It is no longer GPM as published, which carries the
+known 2017 data break; that run stays in data/checks only.
+
+| Before | Now | What the UI must do |
+| --- | --- | --- |
+| `replay.<plan>[].uncorrected_rain` | `replay.<plan>[].dhm_rain` (same inner shape, present only where it differs) | Show it as the other edge of a range ("about 69 to 72"), never as a second result |
+| `plans[].score_uncorrected_rain`, `current_options.options[].score_uncorrected_rain` | `score_dhm_rain` | The same |
+| `plans[].future_uncorrected_rain` (and per option) | `future_dhm_rain` | The same, for the 2040 range |
+| evidence tab line "Without our rain fix, it was N." | "With the nearby station's rain level: N." | Nothing (text comes from the file) |
+
+Wording for the range: "The lower edge uses the nearby station's long-term rain."
+
 ## 2026-11-14 (Saturday, 05:45): the 2040 outlook is real; the monsoon's start comes from DHM's official record
 
 | What | Before | Now | What the UI must do |

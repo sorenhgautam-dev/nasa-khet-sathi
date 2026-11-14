@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 180 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 287 texts): needs native-speaker review.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 93 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
@@ -27,6 +27,16 @@ This page is made from the word files in this folder; change those, not this pag
 | Start | सुरु गरौं |
 | Try our sample field | हाम्रो नमुना खेत हेर्नुहोस् |
 | We picked this field as an example. *(while the field is a sample, not a farmer's own)* | हामीले यो खेत उदाहरणका लागि छानेका हौं। |
+| Know your land. | आफ्नो जमिन चिन्नुहोस्। |
+| Plan your season. | मौसमको योजना बनाउनुहोस्। |
+| Soil check | माटो जाँच |
+| Today | आज |
+| How each part of your field is doing. | खेतको हरेक भाग कस्तो छ। |
+| NASA records | नासाका अभिलेख |
+| 3 months | ३ महिना |
+| What these months usually bring. | यी महिनामा प्रायः के हुन्छ। |
+| We read NASA records, {source_years}. | हामी नासाका अभिलेख पढ्छौं, {source_years}। |
+| Fields we have looked at | हामीले हेरेका खेत |
 
 ### 2. Where is your field? / तपाईंको खेत कहाँ छ?
 
@@ -42,6 +52,14 @@ This page is made from the word files in this folder; change those, not this pag
 | Try our sample field instead. | बरु हाम्रो नमुना खेत हेर्नुहोस्। |
 | Where does your field's water come from? | तपाईंको खेतमा पानी कहाँबाट आउँछ? |
 | Is your field flat or on steps? | तपाईंको खेत समथर छ कि गरामा? |
+| Your field | तपाईंको खेत |
+| from above | माथिबाट |
+| This is a map, not a photo. | यो नक्सा हो, फोटो होइन। |
+| The line shows the sample field. | रेखाले नमुना खेत देखाउँछ। |
+| A real photo comes when we visit. | हामी खेतमा आएपछि साँचो फोटो आउँछ। |
+| We show our sample field near you. | हामी तपाईंको नजिकको नमुना खेत देखाउँछौं। |
+| Mark my own field | मेरो आफ्नै खेत चिनाउँछु |
+| Show the parts | भागहरू देखाउनुहोस् |
 | *Answers to the water question* | |
 | Rain only | वर्षा मात्र |
 | Canal | कुलो |
@@ -83,6 +101,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Nepali and English months don't line up exactly. | नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्। |
 | We may show too many freezing nights. *(if some months have freezing nights)* | हामीले तुषारो धेरै देखाएका हुन सक्छौं। |
 | We are less sure about this month. | यो महिनाबारे हामी कम पक्का छौं। |
+| Usually: | प्रायः: |
 | *Calendar: rain each month* | |
 | Little rain | थोरै पानी |
 | Some rain | मध्यम पानी |
@@ -116,6 +135,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Tap a part to see it. | हेर्न कुनै भागमा थिच्नुहोस्। |
 | From space, nearby parts look the same. | अन्तरिक्षबाट नजिकका भागहरू उस्तै देखिन्छन्। |
 | The soil stick tells them apart. | माटो जाँच्ने यन्त्रले तिनको फरक देखाउँछ। |
+| Making the parts… | भाग बनाउँदै… |
 
 ### 5. How is each part? / हरेक भाग कस्तो छ?
 
@@ -130,6 +150,14 @@ This page is made from the word files in this folder; change those, not this pag
 | How sure we are: {sure_pct} out of 100. | हामी कति पक्का: १०० मा {sure_pct}। |
 | Fog means we are not sure yet. | कुहिरोको अर्थ, हामी अझै पक्का छैनौं। |
 | A smiling face means all is well. | हाँसेको अनुहारको अर्थ सबै ठीक छ। |
+| Your field | आजको |
+| today | खेत |
+| As of this day: | यो दिनको: |
+| A little greener than the rest. | अरूभन्दा अलि बढी हरियो। |
+| A little less green than the rest. | अरूभन्दा अलि कम हरियो। |
+| We can't tell how green. | कति हरियो, भन्न सकिँदैन। |
+| Low ground: cold air can collect. | होचो जमिन: चिसो हावा जम्न सक्छ। |
+| All parts share one soil and weather. | सबै भागमा एउटै माटो र मौसम। |
 | *How each part is doing (always with a face and a mark, never colour alone)* | |
 | Doing well | राम्रो छ |
 | Needs a look | एकपटक हेर्नुपर्छ |
@@ -150,6 +178,32 @@ This page is made from the word files in this folder; change those, not this pag
 | Space sees wide. Your stick sees close. | अन्तरिक्षले फराकिलो देख्छ। यन्त्रले नजिकबाट देख्छ। |
 | Together they make a better guess. | दुवै मिलेर राम्रो अनुमान बन्छ। |
 | Watch a soil check we did earlier. | हामीले पहिले गरेको माटो जाँच हेर्नुहोस्। |
+| Our soil stick is a prototype. | हाम्रो माटो जाँच्ने यन्त्र परीक्षणकै नमुना हो। |
+| Today we carry it by hand. | अहिले हामी यसलाई हातैले बोक्छौं। |
+| A robot to carry it comes next. | यसलाई बोक्ने रोबोट अर्को चरणमा आउँछ। |
+| Krishi Scout, our robot idea | कृषि स्काउट, हाम्रो रोबोटको योजना |
+| This shows how the robot will work. | रोबोटले कसरी काम गर्नेछ, यसले देखाउँछ। |
+| It reads only the top few centimetres. | यसले माथिको केही सेन्टिमिटर मात्र नाप्छ। |
+| Readings come after our team tests it. | हाम्रो टोलीले जाँचेपछि नाप आउँछ। |
+| No reading yet | अझै नापिएको छैन |
+| Settling… | स्थिर हुँदै… |
+| Measuring… | नाप्दै… |
+| Measured | नापियो |
+| The reading jumped. Please test again. | नाप उफ्रियो। कृपया फेरि जाँच्नुहोस्। |
+| Off the scale | नापभन्दा बाहिर |
+| Soil stick not connected. | माटो जाँच्ने यन्त्र जोडिएको छैन। |
+| Part {section} of {section_count} | {section_count} मध्ये भाग {section} |
+| Drier than the other parts | अरू भागभन्दा सुक्खा |
+| Wetter than the other parts | अरू भागभन्दा ओसिलो |
+| About the same as the others | अरू भागजस्तै |
+| Before the reading: | नापअघि: |
+| Needs water | पानी चाहिन्छ |
+| Good | ठीक छ |
+| Too wet | धेरै भिजेको |
+| Water in the soil: | माटोमा पानी: |
+| give or take | कम वा बढी |
+| What do you | तपाईं के |
+| want to see? | हेर्न चाहनुहुन्छ? |
 
 ### 7. Your field's last {year_count} years / तपाईंको खेतका पछिल्ला {year_count} वर्ष
 
@@ -167,6 +221,7 @@ This page is made from the word files in this folder; change those, not this pag
 | So we show both, side by side. *(if we do not know the field's water)* | त्यसैले दुवै छेउछेउमा देखाएका छौं। |
 | Play | चलाउनुहोस् |
 | Pause | रोक्नुहोस् |
+| Which plan? | कुन योजना? |
 | *What the weather did that year. It is about the field, so it is the same on every plan (owner, 2026-11-13)* | |
 | A normal year | सामान्य वर्ष |
 | A drier year than usual | सामान्यभन्दा सुक्खा वर्ष |
@@ -192,6 +247,18 @@ This page is made from the word files in this folder; change those, not this pag
 | Tips for your field | तपाईंको खेतका लागि सुझाव |
 | Nepali and English months don't line up exactly. | नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्। |
 | Why do some crops help the soil? | केही बालीले माटोलाई किन मद्दत गर्छन्? |
+| Next | अर्को |
+| 3 months | ३ महिना |
+| Next to plant: | अब रोप्ने: |
+| Your choices | तपाईंका विकल्प |
+| Tap a choice to see why. | किन भनेर हेर्न विकल्पमा थिच्नुहोस्। |
+| More than now | अहिलेभन्दा बढी |
+| Less than now | अहिलेभन्दा कम |
+| About the same as now | अहिलेजस्तै |
+| This assumes water never runs out. | पानी कहिल्यै सकिँदैन भन्ने मानेर। |
+| See the last {year_count} years | पछिल्ला {year_count} वर्ष हेर्नुहोस् |
+| Two ways of counting rain give a range. | वर्षा गन्ने दुई तरिकाले दायरा दिन्छन्। |
+| One matches the nearby town's usual rain. | एउटा नजिकको सहरको सामान्य वर्षासँग मिल्छ। |
 | *Plan names* | |
 | What you do now | अहिले जे गर्नुहुन्छ |
 | Fill the empty months | खाली महिनामा पनि बाली |
@@ -241,7 +308,7 @@ This page is made from the word files in this folder; change those, not this pag
 | --- | --- |
 | We replayed the weather from {year_first} to {year_last}. | {year_first} देखि {year_last} सम्मको मौसम फेरि चलायौं। |
 | Harvest was {harvest} out of 100 on average. | औसत उब्जनी १०० मा {harvest} थियो। |
-| Without our rain fix, it was {harvest_uncorrected}. *(if NASA's uncorrected rain gives another harvest number)* | हाम्रो वर्षा सुधारबिना यो {harvest_uncorrected} थियो। |
+| With the nearby station's rain level: {harvest_dhm}. *(if NASA's uncorrected rain gives another harvest number)* | नजिकको केन्द्रको वर्षा मान्दा: {harvest_dhm}। |
 | Drier than usual: {drought_years} of {year_count} years. | सामान्यभन्दा सुक्खा: {year_count} मध्ये {drought_years} वर्ष। |
 | Harvest numbers are computer estimates. | उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। |
 | {source_name}: {source_kind}, {source_resolution}, {source_years}. *(one line for each source)* | {source_name}: {source_kind}, {source_resolution}, {source_years}। |
@@ -341,6 +408,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Try less rain or more heat. | कम पानी वा बढी गर्मी राखेर हेर्नुहोस्। |
 | Less rain | कम पानी |
 | More heat | बढी गर्मी |
+| By {future_year} | {future_year} सम्ममा |
 
 ### 10. Your plan / तपाईंको योजना
 
@@ -360,6 +428,36 @@ This page is made from the word files in this folder; change those, not this pag
 | Save this plan | यो योजना राख्नुहोस् |
 | Start again | फेरि सुरु गर्नुहोस् |
 | Made with pictures and numbers from NASA. | नासाका तस्बिर र अङ्कबाट बनाइएको। |
+| Where our numbers come from | हाम्रा अङ्क कहाँबाट आए |
+| How the computer helped | कम्प्युटरले कसरी सघायो |
+| A computer drafted many words here. | यहाँका धेरै शब्द कम्प्युटरले लेख्यो। |
+| Nepali words still need a careful check. | नेपाली शब्द अझै राम्ररी जाँच्न बाँकी छ। |
+| Other languages are draft translations. | अरू भाषा मस्यौदा अनुवाद हुन्। |
+| A computer also helped find the seasons. | बाली याम खोज्न पनि कम्प्युटरले सघायो। |
+| Finding the seasons | बाली याम पत्ता लगाउने |
+| We tested three ways on unseen years. | नदेखेका वर्षमा तीन तरिका जाँच्यौं। |
+| A simple green rule | हरियोपनको सजिलो नियम |
+| A change finder | फेरबदल खोज्ने तरिका |
+| A learning computer | सिक्ने कम्प्युटर |
+| We use this one. | हामी यही प्रयोग गर्छौं। |
+| Fixing the rain numbers | वर्षाका अङ्क मिलाउने |
+| When the rains come | वर्षा कहिले आउँछ |
+| Teaching a computer this field | कम्प्युटरलाई यो खेत सिकाउने |
+| Fields around the sample field | नमुना खेत वरिपरिका खेत |
+| Looking ahead | अगाडि हेर्दा |
+| What is not ready yet | के अझै तयार छैन |
+| A real photo of the field. | खेतको साँचो फोटो। |
+| Soil stick readings from the field. | खेतबाट माटो जाँचका नाप। |
+| Your own field: today we show a sample. | तपाईंको आफ्नै खेत: अहिले नमुना देखाउँछौं। |
+| The robot that carries the stick. | यन्त्र बोक्ने रोबोट। |
+| How sure are we? | हामी कति पक्का छौं? |
+| Quite sure | धेरै पक्का |
+| Fairly sure | केही पक्का |
+| Not very sure | कम पक्का |
+| The NASA missions we used | हामीले प्रयोग गरेका नासाका मिसन |
+| How we worked it out | हामीले कसरी निकाल्यौं |
+| What the records show | अभिलेखले के देखाउँछन् |
+| To read more | थप पढ्न |
 
 ## Method page
 
@@ -410,6 +508,15 @@ This page is made from the word files in this folder; change those, not this pag
 | Back | पछाडि |
 | What does this word mean? | यो शब्दको अर्थ के हो? |
 | Not sure yet | अझै पक्का छैन |
+| Not ready yet. | अझै तयार छैन। |
+| Sample field | नमुना खेत |
+| How we know | हामीलाई कसरी थाहा भयो |
+| about | करिब |
+| out of 100 | १०० मा |
+| Close | बन्द गर्नुहोस् |
+| Language | भाषा |
+| Read more | थप पढ्नुहोस् |
+| Source: | स्रोत: |
 | *Crop names* | |
 | rice | धान |
 | wheat | गहुँ |

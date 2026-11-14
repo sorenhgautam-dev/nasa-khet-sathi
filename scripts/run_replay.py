@@ -31,8 +31,7 @@ from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.plans import events as ev  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
-from pipeline.twin import evaporation as evap  # noqa: E402
-from pipeline.twin import season  # noqa: E402
+from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin.inputs import covered_year_runs, with_rain  # noqa: E402
 
 
@@ -50,37 +49,18 @@ def dhm_rain(rules):
 RAIN_DIRS = {"corrected": "", "uncorrected": "rain_uncorrected", "dhm": "rain_dhm"}
 
 def bare_setting(rules, soil):
-    """The twin's bare-soil argument (build step 2a): rules.yaml bare_soil (apply on: FAO-56's surface layer, off: the
-    constant Kc), unless --bare-soil forced one (main() stores it as rules['bare_soil']['force'])."""
-    return evap.bare_soil_setting(rules["bare_soil"], soil, rules["bare_soil"].get("force", "rules"))
+    """The twin's bare-soil argument (pipeline/plans/twin_options.py; rules.yaml bare_soil)."""
+    return to.bare_setting(rules, soil)
 
 
 def paddy_rule(rules):
-    """Proposal 2c (rules.yaml paddy_rainfed, PROPOSED, apply false): the rule when --paddy-rainfed proposal asks for it (or
-    the owner switches apply on), else None (the default: rain-fed rice is the plain bucket)."""
-    pr = rules.get("paddy_rainfed") or {}
-    force = pr.get("force", "rules")
-    if force == "off" or (force == "rules" and not pr.get("apply")):
-        return None
-    if "prep_mm" not in pr:
-        raise ValueError("--paddy-rainfed proposal: rules.yaml has no paddy_rainfed rule")
-    return pr
+    """The rain-fed paddy rule when rules.yaml paddy_rainfed is on (or forced), else None (pipeline/plans/twin_options.py)."""
+    return to.paddy_rule(rules)
 
 
-def rainfed_replay(w, crops, lib, soil, cn, kw, rules):
-    """The rain-fed replay. With proposal 2c the paddy is transplanted when the land-preparation rain allows
-    (season.paddy_transplant) and a season that cannot be transplanted in time gets harvest 0 (season.paddy_outcome)."""
-    rule = paddy_rule(rules)
-    if rule is None:
-        return sim.replay(w, crops, lib, soil, cn, irrigated=False, **kw)
-    plan = kw.get("plan") or sim.rotation_plan(crops, lib, w["date"].min(), w["date"].max())
-    plan, info = season.paddy_transplant(plan, w["date"], w["rain_mm"], lib, rule)
-    res = sim.replay(w, crops, lib, soil, cn, irrigated=False, **{**kw, "plan": plan})
-    res["seasons"] = season.paddy_outcome(res["seasons"], info)
-    res["years"] = sim.yearly(res["seasons"])
-    res["partial_years"] = {str(y["year"]): y["crops"] for y in res["years"] if sorted(y["crops"]) != sorted(crops)}
-    res["paddy_info"] = info
-    return res
+def rainfed_replay(w, crops, lib, soil, cn, kw, rules, farmer=False, seasons=None):
+    """The rain-fed replay with every switch (pipeline/plans/twin_options.replay); kw may hold a calendar 'plan'."""
+    return to.replay(w, crops, lib, soil, cn, rules, irrigated=False, plan=kw.get("plan"), farmer=farmer, seasons=seasons)
 
 
 def _case(res):
@@ -91,29 +71,25 @@ def _case(res):
 
 def hls_seasons(path):
     """Item 4a: the chosen season method's seasons with source 'hls' (data/checks/<field>/diary_seasons.json)."""
-    sj = json.loads(Path(path).read_text())
-    return [x for rows in sj["chosen"]["seasons_by_year"].values() for x in rows if x["source"] == "hls"]
+    return to.hls_seasons(json.loads(Path(path).read_text()))
 
 
 def season_dates_on(rules):
-    """Item 4a (rules.yaml season_dates, apply false): on when --season-dates hls asks for it or the switch is on."""
-    sd = rules.get("season_dates") or {}
-    force = sd.get("force", "rules")
-    return force == "hls" or (force == "rules" and bool(sd.get("apply")))
+    """Item 4a (rules.yaml season_dates): on when --season-dates hls asks for it or the switch is on."""
+    return to.season_dates_on(rules)
 
 
-def run(weather, rotation, lib, soil, cn, rules, plan=None):
-    """plan: [(crop, 'YYYY-MM-DD')] replacing the calendar sowing (item 4a); None = the calendar."""
+def run(weather, rotation, lib, soil, cn, rules, plan=None, seasons=None):
+    """The field's rotation (the farmer's plan) in both water cases with every switch of pipeline/plans/twin_options.py.
+    plan: calendar dates (None = the rotation's calendar); seasons: the satellite's (item 4a; None = none attached)."""
     out = {}
     # one weather event per year for the field, from its rain alone (owner's answer 9 to REVIEW_2, 2026-11-13)
     fe = ev.field_year_events(pd.Series(weather["rain_mm"].to_numpy(float), index=pd.DatetimeIndex(weather["date"])),
                               rules["events"])
     for case, irrigated in (("rain-fed", False), ("irrigated", True)):
-        kw = dict(bare_kc=bare_setting(rules, soil), kc_climate=rules["kc_climate"]["apply"])
-        if plan is not None:
-            kw["plan"] = plan
-        res = (sim.replay(weather, rotation, lib, soil, cn, irrigated=True, **kw) if irrigated
-               else rainfed_replay(weather, rotation, lib, soil, cn, kw, rules))
+        res = to.replay(weather, rotation, lib, soil, cn, rules, irrigated=irrigated, plan=plan, farmer=True, seasons=seasons)
+        if res["season_dates"] or res["paddy_info"]:                # items 4a and 4c; nothing extra when both are off
+            out.setdefault("dates_used", {})[case] = {"season_dates": res["season_dates"], "paddy": res["paddy_info"]}
         out[case] = _case(res)
         sens = {}
         for v in [rules["ky_assumed"]["neutral"], *rules["ky_assumed"]["sensitivity"]]:
@@ -133,10 +109,10 @@ def main(argv=None):
                          "surface layer (build step 2a)")
     ap.add_argument("--out-dir", default=None, help="write here instead of data/checks/<field>/ (a check run)")
     ap.add_argument("--paddy-rainfed", choices=("rules", "off", "proposal"), default="rules",
-                    help="rain-fed rice: as rules.yaml paddy_rainfed.apply says (default; off), the plain bucket, or the "
-                         "PROPOSED transplanting rule (2c, a what-if waiting for the owner)")
+                    help="rain-fed rice: as rules.yaml paddy_rainfed.apply says (default), the plain bucket, or the "
+                         "transplanting rule whatever apply says (item 4c)")
     ap.add_argument("--season-dates", choices=("rules", "calendar", "hls"), default="rules",
-                    help="sowing of the field's rotation: as rules.yaml season_dates.apply says (default; off), the "
+                    help="sowing of the field's rotation: as rules.yaml season_dates.apply says (default), the "
                          "calendar, or the satellite's seasons (item 4a)")
     a = ap.parse_args(argv)
     field, rules, lib, data = load_field(a.field), load_rules(), load_crops(), REPO / "data"
@@ -180,8 +156,8 @@ def main(argv=None):
 
     if isinstance(bare_setting(rules, soil), dict):          # build step 2a; the default output stays as it was
         labels["bare_soil"] = f"FAO-56 surface layer (eqs. 71-79; rules.yaml bare_soil): {bare_setting(rules, soil)}"
-    if paddy_rule(rules):                                     # proposal 2c, a what-if: never exported
-        labels["paddy_rainfed"] = ("PROPOSED rain-fed transplanting rule (rules.yaml paddy_rainfed, waiting for the owner): "
+    if paddy_rule(rules):                                     # item 4c (owner's decision 2026-11-14)
+        labels["paddy_rainfed"] = ("rain-fed transplanting rule (rules.yaml paddy_rainfed; calendar-dated paddy seasons only): "
                                    + str({k: v for k, v in paddy_rule(rules).items() if k not in ("force", "status")}))
     if not a.temporary_station_rain:
         problems = sim.rain_record_problems(w)
@@ -189,13 +165,12 @@ def main(argv=None):
             print("NOT YET POSSIBLE: the rain record is not a GPM record with POWER fill-in only (D6, D): "
                   + "; ".join(problems) + ". Nothing written. Dry run: --temporary-station-rain")
             return 2
-        plan = None
-        if season_dates_on(rules):                           # item 4a; the default output stays as it was
-            plan = sim.rotation_plan(rotation, lib, w["date"].min(), w["date"].max())
-            plan, info = season.plan_from_seasons(plan, hls_seasons(data / "checks" / field["id"] / "diary_seasons.json"),
-                                                  lib, w["date"].max())
-            labels["season_dates"] = {"rule": "rules.yaml season_dates (item 4a, apply false: a check run)", "seasons": info}
-        cases = run(w, rotation, lib, soil, cn, rules, plan=plan)
+        seasons, sj = None, data / "checks" / field["id"] / "diary_seasons.json"
+        if season_dates_on(rules) and sj.exists():          # item 4a; the default output stays as it was
+            seasons = hls_seasons(sj)
+            labels["season_dates"] = (f"rules.yaml season_dates (item 4a; apply {rules['season_dates'].get('apply')}): the field's "
+                                      "rotation sown from the satellite's seasons in the HLS years, the calendar otherwise")
+        cases = run(w, rotation, lib, soil, cn, rules, seasons=seasons)
         labels["rain_source"] = "gpm"
         labels["rain_version"] = (f"{a.rain}: " + ("GPM IMERG as published (rain_uncorrected_mm)" if a.rain == "uncorrected" else
                                   "the break-corrected rain scaled month by month to DHM Bhaktapur's 1991-2020 normals (item 4b; "

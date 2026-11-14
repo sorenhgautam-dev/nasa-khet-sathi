@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Khet Sathi home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&amp;family=Inter:wght@400;500;600&amp;family=Mukta:wght@400;600;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#14301E}a:hover{color:#0B1F12}
+.ks-home{background:#F6D19F}
+.ks-hcloud{position:absolute;left:0;z-index:-1;border-radius:99px;background:rgba(255,251,242,.6);filter:blur(10px);animation:ks-roam linear infinite;pointer-events:none}
+.ks-bg{background:#F8ECDA url(/_blob/90f92978700e4db452626990662eb262) no-repeat center top/390px auto}
+@keyframes ks-drift{from{transform:translateX(-170px)}to{transform:translateX(470px)}}
+@keyframes ks-roam{0%{transform:translate(-200px,0)}25%{transform:translate(20px,-14px)}50%{transform:translate(200px,8px)}75%{transform:translate(340px,-10px)}100%{transform:translate(480px,0)}}
+@keyframes ks-fly{0%{transform:translate(-90px,20px)}100%{transform:translate(480px,-30px)}}
+@keyframes ks-flap{to{transform:scaleY(.35)}}
+.ks-cloud{position:absolute;left:0;z-index:-1;width:150px;height:38px;border-radius:99px;background:rgba(255,253,246,.75);filter:blur(8px);animation:ks-drift linear infinite;pointer-events:none}
+.ks-birds{position:absolute;z-index:-1;left:0;top:190px;width:70px;height:24px;animation:ks-fly 28s linear 2s infinite;opacity:.55;pointer-events:none}
+.ks-birds path{fill:none;stroke:#3A3A35;stroke-width:1.8;stroke-linecap:round;transform-box:fill-box;transform-origin:center;animation:ks-flap .55s ease-in-out infinite alternate}
+@keyframes ks-float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(-0.6deg)}}
+@keyframes ks-dive{0%{transform:translateY(0) scale(1);opacity:1}30%{transform:translateY(-10px) scale(1.03);opacity:1}75%{transform:translateY(0) scale(1.22);opacity:0}100%{transform:scale(1.3);opacity:0}}
+.ks-win{background:#89A378 url(/_blob/4f0b25b11732b3cab6a3285746008d0b) no-repeat center top/390px auto}
+@keyframes ks-winp{0%{clip-path:inset(46% 38% 44% 38% round 28px);background-size:620px auto;opacity:0}22%{clip-path:inset(24% 6% 42% 6% round 28px);background-size:560px auto;opacity:1}100%{clip-path:inset(0 0 0 0 round 0);background-size:390px auto;opacity:1}}
+@keyframes ks-shadow{0%,100%{transform:scaleX(1);opacity:.55}50%{transform:scaleX(.88);opacity:.38}}
+@keyframes ks-wave{50%{opacity:.2}}
+[style*="height: 62px"] > svg:last-child{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+[style*="height: 62px"]:hover > svg:last-child,[style*="height: 62px"]:active > svg:last-child{transform:translateX(7px)}
+button:hover path[d^="M15.5"],button:active path[d^="M15.5"],button:hover path[d^="M18.5"],button:active path[d^="M18.5"]{animation:ks-wave .9s ease-in-out infinite}
+button:hover path[d^="M18.5"]{animation-delay:.18s}
+@keyframes ks-grow{from{transform:scale(0,0)}70%{transform:scale(1.1,1.15)}to{transform:scale(1)}}
+@keyframes ks-sway2{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes ks-sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
+.ks-blade{transform-box:fill-box;transform-origin:50% 100%;animation:ks-sway 3.2s ease-in-out infinite}
+@keyframes ks-path{from{stroke-dashoffset:var(--p0)}to{stroke-dashoffset:var(--p1)}}
+@keyframes ks-reveal{from{opacity:0;transform:translateY(34px) scale(.96);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+@keyframes ks-word{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes ks-cap{from{opacity:0;transform:translateY(10px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes ks-puff{0%,100%{transform:translate(0,0)}25%{transform:translate(12px,-7px)}50%{transform:translate(4px,5px)}75%{transform:translate(-10px,-3px)}}
+.ks-puff{position:absolute;border-radius:50%;background:radial-gradient(closest-side,rgba(255,253,247,.95),rgba(255,253,247,.6) 55%,rgba(255,253,247,0));pointer-events:none;animation:ks-puff ease-in-out infinite}
+</style>
+</helmet>
+<div class="{{homeClass}}" style="width: 390px; height: 844px; box-sizing: border-box; padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 18px; position: relative; isolation: isolate; color: #14301E; font-family: Inter, Mukta, system-ui, sans-serif; overflow: hidden">
+  <sc-if value="{{ownSky}}" hint-placeholder-val="{{ true }}">
+  <span class="ks-puff" aria-hidden="true" style="left: -40px; top: 90px; width: 189px; height: 79px; z-index: -1; opacity: 0.64; animation-duration: 8.8s; animation-delay: -4.1s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 300px; top: 70px; width: 177px; height: 74px; z-index: -1; opacity: 0.56; animation-duration: 9.3s; animation-delay: -5.7s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: -30px; top: 380px; width: 116px; height: 48px; z-index: -1; opacity: 0.87; animation-duration: 7.6s; animation-delay: -2.8s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 320px; top: 330px; width: 141px; height: 59px; z-index: -1; opacity: 0.68; animation-duration: 7.5s; animation-delay: -1.5s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: -50px; top: 600px; width: 137px; height: 57px; z-index: -1; opacity: 0.69; animation-duration: 7.9s; animation-delay: -5.2s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 310px; top: 560px; width: 159px; height: 66px; z-index: -1; opacity: 0.61; animation-duration: 11.0s; animation-delay: -0.8s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 30px; top: 690px; width: 189px; height: 79px; z-index: -1; opacity: 0.71; animation-duration: 7.7s; animation-delay: -5.8s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 170px; top: 720px; width: 110px; height: 46px; z-index: -1; opacity: 0.62; animation-duration: 8.1s; animation-delay: -5.9s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 280px; top: 700px; width: 131px; height: 55px; z-index: -1; opacity: 0.65; animation-duration: 11.8s; animation-delay: -3.2s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: -30px; top: 780px; width: 190px; height: 79px; z-index: -1; opacity: 0.62; animation-duration: 11.7s; animation-delay: -4.1s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 110px; top: 790px; width: 159px; height: 66px; z-index: -1; opacity: 0.65; animation-duration: 8.8s; animation-delay: -1.0s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 240px; top: 800px; width: 128px; height: 53px; z-index: -1; opacity: 0.64; animation-duration: 8.7s; animation-delay: -4.9s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 330px; top: 770px; width: 185px; height: 77px; z-index: -1; opacity: 0.55; animation-duration: 10.4s; animation-delay: -2.0s"></span>
+  <span class="ks-puff" aria-hidden="true" style="left: 150px; top: 600px; width: 149px; height: 62px; z-index: -1; opacity: 0.67; animation-duration: 8.5s; animation-delay: -4.2s"></span>
+  <span class="ks-hcloud" aria-hidden="true" style="top: 58px; width: 160px; height: 40px; animation-duration: 80s; animation-delay: -25s"></span>
+  <span class="ks-hcloud" aria-hidden="true" style="top: 150px; width: 120px; height: 30px; animation-duration: 105s; animation-delay: -70s; opacity: .75"></span>
+  <span class="ks-hcloud" aria-hidden="true" style="top: 300px; width: 140px; height: 34px; animation-duration: 120s; animation-delay: -45s; opacity: .6"></span>
+  <span class="ks-hcloud" aria-hidden="true" style="top: 240px; width: 180px; height: 44px; animation-duration: 95s; animation-delay: -10s; opacity: .7"></span>
+  <span class="ks-hcloud" aria-hidden="true" style="top: 420px; width: 200px; height: 48px; animation-duration: 115s; animation-delay: -60s; opacity: .65"></span>
+  <span class="ks-hcloud" aria-hidden="true" style="top: 640px; width: 150px; height: 36px; animation-duration: 130s; animation-delay: -20s; opacity: .5"></span>
+  <span class="ks-hcloud" aria-hidden="true" style="top: 760px; width: 170px; height: 40px; animation-duration: 150s; animation-delay: -110s; opacity: .45"></span>
+  <span class="ks-hcloud" aria-hidden="true" style="top: 520px; width: 110px; height: 28px; animation-duration: 140s; animation-delay: -95s; opacity: .45"></span>
+  </sc-if>
+  
+
+  <header style="display: flex; align-items: center; justify-content: space-between; height: 48px; {{fadeA}}">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <div style="width: 40px; height: 40px; border-radius: 12px; background: #14301E; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V11"></path><path d="M12 11C12 7 9 5 5 5c0 4 3 6 7 6z"></path><path d="M12 13c0-4 3-6 7-6 0 4-3 6-7 6z"></path></svg>
+      </div>
+      <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">{{t.brand}}</span>
+    </div>
+    <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 0 #E8DCC8">
+      <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
+      <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
+    </div>
+  </header>
+
+  <h1 style="margin: 0; font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 900; font-size: 40px; line-height: 0.98; letter-spacing: -0.035em; {{fadeA}}">
+    <span style="display: block; color: #14301E">{{t.h1}}</span>
+    <span style="display: block; color: #9A5426">{{t.h2}}</span>
+  </h1>
+
+  <div style="position: relative; display: flex; justify-content: center; flex-shrink: 0; z-index: 2; transform-origin: 46% 42%; {{islandStyle}}">
+    <span class="ks-puff" aria-hidden="true" style="left: -30px; top: 208px; width: 190px; height: 70px; z-index: 1; animation-duration: 7s; animation-delay: -1s"></span>
+    <span class="ks-puff" aria-hidden="true" style="left: 90px; top: 232px; width: 190px; height: 64px; z-index: 1; animation-duration: 8s; animation-delay: -3s"></span>
+    <span class="ks-puff" aria-hidden="true" style="left: 200px; top: 206px; width: 190px; height: 72px; z-index: 1; animation-duration: 6.5s; animation-delay: -2s"></span>
+    <span class="ks-puff" aria-hidden="true" style="left: -40px; top: 150px; width: 120px; height: 52px; z-index: -1; animation-duration: 9s; animation-delay: -4s"></span>
+    <span class="ks-puff" aria-hidden="true" style="left: 270px; top: 120px; width: 120px; height: 50px; z-index: -1; animation-duration: 8.5s; animation-delay: -1.5s"></span>
+    <span class="ks-puff" aria-hidden="true" style="left: 40px; top: 20px; width: 110px; height: 40px; z-index: -1; animation-duration: 10s; animation-delay: -5s"></span>
+    <span class="ks-puff" aria-hidden="true" style="left: 230px; top: 40px; width: 90px; height: 36px; z-index: -1; animation-duration: 9s; animation-delay: -2.5s"></span>
+    <span class="ks-puff" aria-hidden="true" style="left: 20px; top: 250px; width: 130px; height: 50px; z-index: 1; animation-duration: 7.5s; animation-delay: -0.5s"></span>
+    <span class="ks-puff" aria-hidden="true" style="left: 190px; top: 252px; width: 140px; height: 50px; z-index: 1; animation-duration: 8s; animation-delay: -2s"></span>
+    <img src="/_blob/e400c3e133fe4d41d2c3e7591df34505" alt="" style="position: relative; width: 342px; height: 289px; object-fit: contain; display: block; filter: drop-shadow(0 14px 12px rgba(122,74,32,0.2)); animation: ks-float 4.5s ease-in-out infinite">
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; {{fadeB}}">
+    <button onClick="{{selA}}" aria-pressed="{{pressA}}" style="{{cardA}}">
+      <div style="display: flex; align-items: center; gap: 6px; color: #2A4A37">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="9" rx="2"></rect><circle cx="9" cy="11.5" r="1"></circle><circle cx="15" cy="11.5" r="1"></circle><path d="M12 7V4M7 16v2M17 16v2M12 16v5"></path></svg>
+        <span style="font-size: 13px; font-weight: 600">{{t.rainTag}}</span>
+      </div>
+      <div style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.03em">{{t.rainNum}}</div>
+      <div style="font-size: 13px; line-height: 1.3; color: #4A5646">{{t.rainLabel}}</div>
+    </button>
+    <button onClick="{{selB}}" aria-pressed="{{pressB}}" style="{{cardB}}">
+      <div style="display: flex; align-items: center; gap: 6px; color: #9A5426">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 7L9 3 5 7l4 4"></path><path d="M17 11l4 4-4 4-4-4"></path><path d="M8 12l4 4 6-6-4-4z"></path><path d="M9 21a6 6 0 0 0-6-6"></path></svg>
+        <span style="font-size: 13px; font-weight: 600">{{t.bareTag}}</span>
+      </div>
+      <div style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.03em">{{t.bareNum}}</div>
+      <div style="font-size: 13px; line-height: 1.3; color: #4A5646">{{t.bareLabel}}</div>
+    </button>
+  </div>
+
+  <div style="display: flex; align-items: flex-start; gap: 12px; {{fadeB}}">
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+      <sc-for list="{{caps}}" as="c" hint-placeholder-count="1">
+        <sc-if value="{{c.show}}" hint-placeholder-val="{{ true }}">
+          <div aria-live="polite" style="display: flex; flex-direction: column; gap: 4px; animation: ks-cap 420ms cubic-bezier(.2,.8,.2,1) both">
+            <p style="margin: 0; font-weight: 600; font-size: 18px">{{c.lead}}</p>
+            <p style="margin: 0; font-size: 15px; line-height: 1.4; color: #4A5646">{{c.sub}}</p>
+          </div>
+        </sc-if>
+      </sc-for>
+    </div>
+    <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
+    </button>
+  </div>
+
+  <div style="flex: 1"></div>
+
+  <button onClick="{{go}}" style="border: 0; cursor: pointer; width: 100%; height: 62px; border-radius: 999px; background: #14301E; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 12px; font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 20px; box-shadow: 0 10px 24px rgba(20,48,30,0.22); {{fadeB}}">
+    <span>{{t.cta}}</span>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+  </button>
+  <a href="Photo.dc.html" class="ks-next" tabindex="-1" aria-hidden="true" style="position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none">next</a>
+  <div aria-hidden="true" class="ks-win" style="{{veil}}"></div>
+  <div aria-hidden="true" style="{{loaderStyle}}">
+    <sc-for list="{{words}}" as="w" hint-placeholder-count="1">
+      <sc-if value="{{w.show}}" hint-placeholder-val="{{ false }}">
+        <span style="{{wordStyle}}"><span style="width: 10px; height: 10px; border-radius: 999px; background: #C8E05A"></span>{{w.text}}</span>
+      </sc-if>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"embedded":{"editor":null,"default":false},"onNav":{"editor":null},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { lang: 'en', leaving: false, sel: -1, wi: 0, loading: true, lifting: false }; this.lt = []; }
+  componentDidMount() {
+    var self = this;
+    for (var i = 1; i < 6; i++) (function (k) { self.lt.push(setTimeout(function () { self.setState({ wi: k }); }, 360 * k)); })(i);
+    this.lt.push(setTimeout(function () { self.setState({ lifting: true }); }, 360 * 6 + 200));
+    this.lt.push(setTimeout(function () { self.setState({ loading: false }); }, 360 * 6 + 1200));
+  }
+  componentWillUnmount() { clearTimeout(this.navT); clearTimeout(this.resetT); (this.lt || []).forEach(clearTimeout); }
+  renderVals() {
+    var S = {
+      en: { brand: 'Khet Sathi', h1: 'Know your land.', h2: 'Plan your season.', rainTag: 'Soil robot', rainNum: 'Today', rainLabel: 'How each part of your field is doing', bareTag: 'NASA data', bareNum: '3 months', bareLabel: 'What is coming, and what to grow', lead: 'Stand in your field. Tap below.', sub: 'Our drone takes a photo. Our robot checks the soil.', cta: 'Show my field', listen: 'Listen' },
+      ne: { brand: 'खेत साथी', h1: 'आफ्नो जमिन चिन्नुहोस्।', h2: 'मौसमको योजना बनाउनुहोस्।', rainTag: 'माटो रोबोट', rainNum: 'आज', rainLabel: 'खेतको हरेक भाग कस्तो छ', bareTag: 'नासा डाटा', bareNum: '३ महिना', bareLabel: 'के आउँदैछ, र के लगाउने', lead: 'खेतमा उभिनुहोस्। तल थिच्नुहोस्।', sub: 'हाम्रो ड्रोनले फोटो खिच्छ। रोबोटले माटो जाँच्छ।', cta: 'मेरो खेत देखाउनुहोस्', listen: 'सुन्नुहोस्' }
+    };
+    var lang = this.state.lang;
+    var t = S[lang];
+    var on = 'height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: #14301E; color: #FFFFFF; font-weight: 700; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var off = 'height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #14301E; font-weight: 600; font-size: 14px; cursor: pointer; font-family: Inter, Mukta, sans-serif';
+    var lv = this.state.leaving;
+    var self = this;
+    var sel = this.state.sel;
+    var CAP = lang === 'ne'
+      ? [[t.lead, t.sub], ['माटो रोबोट', 'रोबोटले खेतको हरेक भागमा गएर माटो जाँच्छ, र आज के सुधार्ने भन्छ।'], ['नासा डाटा', 'नासाको २० वर्षको भू-उपग्रह रेकर्डबाट अर्को ३ महिना के आउँछ र के लगाउने भन्छौं।']]
+      : [[t.lead, t.sub], ['Soil robot', 'Our robot drives to every part of your field, tests the soil, and tells you what to fix today.'], ['NASA data', 'We read 20 years of NASA satellite records to show what the next 3 months bring, and what to grow.']];
+    var cardBase = 'border: 0; text-align: left; cursor: pointer; font: inherit; border-radius: 20px; padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 4px; transition: background 300ms ease, color 300ms ease, transform 300ms cubic-bezier(.34,1.56,.64,1), box-shadow 300ms ease; ';
+    var cardOn = 'background: #EEF5D6; color: #14301E; transform: translateY(-4px); box-shadow: inset 0 0 0 2px #14301E, 0 16px 28px -14px rgba(20,48,30,0.5)';
+    var cardOff = 'background: #FFFFFF; color: #14301E';
+    var WORDS = ['\u0928\u092e\u0938\u094d\u0924\u0947', 'Namaste', '\u0916\u0947\u0924 \u0938\u093e\u0925\u0940', 'Know your land', '\u092e\u094c\u0938\u092e', 'Plan your season'];
+    var ls = this.state;
+    return {
+      homeClass: this.props.embedded ? '' : 'ks-home',
+      ownSky: !this.props.embedded,
+      caps: CAP.map(function (c, i) { return { lead: c[0], sub: c[1], show: i === sel + 1 }; }),
+      selA: () => this.setState({ sel: sel === 0 ? -1 : 0 }),
+      selB: () => this.setState({ sel: sel === 1 ? -1 : 1 }),
+      pressA: sel === 0 ? 'true' : 'false',
+      pressB: sel === 1 ? 'true' : 'false',
+      cardA: cardBase + (sel === 0 ? cardOn : cardOff),
+      cardB: cardBase + (sel === 1 ? cardOn : cardOff),
+      words: WORDS.map(function (w, i) { return { text: w, show: i === ls.wi }; }),
+      loaderStyle: (ls.loading && !this.props.embedded) ? 'position: absolute; inset: 0; z-index: 50; background: #14301E; display: flex; align-items: center; justify-content: center; transition: transform 950ms cubic-bezier(.76,0,.24,1), border-radius 950ms cubic-bezier(.76,0,.24,1); transform: translateY(' + (ls.lifting ? '-110%' : '0') + '); border-bottom-left-radius: ' + (ls.lifting ? '50% 120px' : '0') + '; border-bottom-right-radius: ' + (ls.lifting ? '50% 120px' : '0') : 'display: none',
+      wordStyle: 'display: inline-flex; align-items: center; gap: 12px; color: #FBF4EA; font-family: \'Inter Tight\', Mukta, sans-serif; font-weight: 800; font-size: 38px; letter-spacing: -0.02em; animation: ks-word 300ms ease-out both; transition: opacity 300ms; opacity: ' + (ls.lifting ? 0 : 1),
+      fadeA: 'transition: opacity 450ms ease, transform 450ms ease; opacity: ' + (lv ? 0 : 1) + '; transform: translateY(' + (lv ? -18 : 0) + 'px)',
+      fadeB: 'transition: opacity 450ms ease, transform 450ms ease; opacity: ' + (lv ? 0 : 1) + '; transform: translateY(' + (lv ? 28 : 0) + 'px)',
+      islandStyle: lv ? 'animation: ks-dive 1500ms cubic-bezier(.65,0,.25,1) forwards' : '',
+      veil: (lv && !this.props.embedded) ? 'position: absolute; inset: 0; z-index: 1; pointer-events: none; animation: ks-winp 1500ms cubic-bezier(.76,0,.24,1) both' : 'display: none',
+      go: function (e) {
+        if (self.state.leaving) return;
+        var host = e && e.currentTarget ? e.currentTarget.parentNode : null;
+        var link = host ? host.querySelector('a.ks-next') : null;
+        self.setState({ leaving: true });
+        if (self.props.embedded) { if (self.props.onNav) self.props.onNav('Photo', 1500); return; }
+        self.navT = setTimeout(function () {
+          if (link) link.click();
+          self.resetT = setTimeout(function () { self.setState({ leaving: false }); }, 250);
+        }, 1550);
+      },
+      t: t,
+      isEn: lang === 'en' ? 'true' : 'false',
+      isNe: lang === 'ne' ? 'true' : 'false',
+      enStyle: lang === 'en' ? on : off,
+      neStyle: lang === 'ne' ? on : off,
+      setEn: () => this.setState({ lang: 'en' }),
+      setNe: () => this.setState({ lang: 'ne' }),
+      speak: () => {
+        try {
+          var u = new SpeechSynthesisUtterance(t.lead + ' ' + t.sub);
+          u.lang = lang === 'ne' ? 'ne-NP' : 'en-IN';
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(u);
+        } catch (e) {}
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

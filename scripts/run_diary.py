@@ -34,7 +34,7 @@ from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.ml import seasons as det  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
-from pipeline.twin.evaporation import bare_soil_setting  # noqa: E402
+from pipeline.plans import twin_options as to  # noqa: E402
 
 RAIN = {"version": "corrected"}   # set by main (--rain)
 
@@ -430,8 +430,11 @@ def run_diary_6c(field, rules, out_dir, data, base_dir=None):
     soil = pd.read_parquet(clean / "soilgrids.parquet")
     cover_c, by_cover = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by_cover["bare"], **{c: by_cover[cover_c[c]] for c in rotation}}
-    rep = sim.replay(w, rotation, lib, soil, cn, bare_kc=bare_soil_setting(rules["bare_soil"], soil), irrigated=False,
-                     kc_climate=rules["kc_climate"]["apply"])
+    # the rain-fed twin with every switch of rules.yaml, as the exported replay (pipeline/plans/twin_options.py: bare_soil,
+    # season_dates on the satellite's seasons, paddy_rainfed)
+    sj_soil = base_dir / "diary_seasons.json"
+    rep = to.replay(w, rotation, lib, soil, cn, rules, irrigated=False, farmer=True,
+                    seasons=to.hls_seasons(json.loads(sj_soil.read_text())) if sj_soil.exists() else None)
     daily = rep["daily"]
     wet = pd.Series((1 - daily["dr_mm"] / daily["taw_mm"]).to_numpy(float), index=pd.DatetimeIndex(daily["date"]))
     wet_m = wet.groupby(wet.index.month).mean()

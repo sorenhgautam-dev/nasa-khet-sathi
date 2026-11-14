@@ -241,3 +241,33 @@ def test_a_gpm_request_ending_before_the_last_final_day_asks_cmr_for_no_late_day
     with pytest.raises(RuntimeError, match="every GPM request failed"):
         gpm.fetch(field, workers=1, data_dir=tmp_path, start="2013-06-29", end="2013-06-30")
     assert calls == ["GPM_3IMERGDF"]
+
+
+def test_the_rain_check_names_normals_only_where_the_config_does():
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("rrc", Path(__file__).resolve().parents[1] / "scripts" / "run_rain_check.py")
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    demo = m.rain_check_config({"id": "demo", "validation_station": "NP000444540"})
+    assert demo["normals"] == ["Bhaktapur", "Kathmandu Airport"] and demo["station_key"] == "airport"
+    abroad = m.rain_check_config({"id": "ambohidratrimo", "validation_station": "MA000067083"})
+    assert abroad["normals"] == [] and abroad["station_key"] == "ma000067083" and abroad["station_name"] == "MA000067083"
+
+
+def test_a_sample_shares_its_demos_box_downloads_and_fetches_only_its_own_point(tmp_path):
+    ff = _driver()
+    demo = {"id": "demo", "fetch_box": [1, 2, 3, 4]}
+    sample = {"id": "sample-1", "sample_of": "demo", "fetch_box": [1, 2, 3, 4], "polygon": [[0, 0]] * 4,
+              "validation_station": "S"}
+    assert ff.shares_box_with(sample, demo) == "demo"
+    assert ff.shares_box_with({**sample, "fetch_box": [1, 2, 3, 5]}, demo) is None
+    p = dict(ff.plan(sample, {}, shared_with="demo"))
+    assert [k for k, v in p.items() if v.startswith("skip: box shared")] == ["worldcover", "hls_recent", "gpm", "chirps", "hls"]
+    assert p["placeholder"] == "skip: the square is in the config"
+    assert p["gpm_build"] == "run" and p["power"] == "run" and p["ghcn"] == "run"
+    for x in ("gpm", "hls_l30"):
+        (tmp_path / x / "demo").mkdir(parents=True)
+    assert ff.link_shared("sample-1", "demo", tmp_path) == ["gpm", "hls_l30"]
+    assert (tmp_path / "gpm" / "sample-1").resolve() == (tmp_path / "gpm" / "demo").resolve()
+    assert ff.link_shared("sample-1", "demo", tmp_path) == []                       # already linked: nothing new

@@ -32,9 +32,10 @@ from pipeline.fetch.rules import load_rules  # noqa: E402
 from pipeline.future import deltas as dl  # noqa: E402
 from pipeline.future import runs as ru  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
+from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
 
-VERSIONS = ("corrected", "uncorrected")
+VERSIONS = ("corrected", "uncorrected", "dhm")   # dhm: owner's decision 4b (2026-11-14), the range's dry edge
 ROLES = ("current", "cover_gap", "safest")
 
 
@@ -150,6 +151,10 @@ def main(argv=None):
     cn = {"bare": byc["bare"], **{c: byc[cov[c]] for c in cov}}
     pj = json.loads((out_dir / "plans.json").read_text())
     specs, keys = plans_to_run(pj)
+    # items 4a and 4c as run_plans: the farmer's plans (the current plan and its options) take the satellite's seasons
+    sj_path = out_dir / "diary_seasons.json"
+    to.attach(rules, to.hls_seasons(json.loads(sj_path.read_text())) if sj_path.exists() else None,
+              {pj["shown"]["current"], *(o["plan"] for o in pj.get("current_options", []))})
     elev_m, elev_src = elevation(field, cards)
     lat = float(field["lat"])
     repro = check_reproduces(w, elev_m, lat)
@@ -175,7 +180,12 @@ def main(argv=None):
 
     plans_out, grid = {pid: {} for pid in specs}, {}
     for v in VERSIONS:
-        wv = with_rain(w, v)
+        if v == "dhm":
+            sys.path.insert(0, str(REPO / "scripts"))
+            from run_plans import dhm_rain
+            wv = with_rain(w, v, dhm=dhm_rain(rules))
+        else:
+            wv = with_rain(w, v)
         base = {pid: ru.plan_run(sp, wv, lib, soil, cn, rules) for pid, sp in specs.items()}
         runs = {pid: [] for pid in specs}
         for (m, s), ch in changes.items():

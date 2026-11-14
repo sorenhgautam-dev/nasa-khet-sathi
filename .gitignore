@@ -41,3 +41,4 @@ __pycache__/
 
 # editor settings (personal; VS Code created this when .env appeared, 2026-11-12)
 .vscode/
+.gstack/

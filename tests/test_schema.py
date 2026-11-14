@@ -460,10 +460,10 @@ def test_a_plan_outlook_needs_the_outlook_block():
 
 def test_the_outlook_may_carry_a_second_rain_version():
     d = _with_future(build_field())
-    d["plans"][0]["future_uncorrected_rain"] = {"harvest": [68], "harvest_low": [58], "harvest_high": [79]}
+    d["plans"][0]["future_dhm_rain"] = {"harvest": [68], "harvest_low": [58], "harvest_high": [79]}
     assert validate_field(d) == []
-    d["plans"][0]["future_uncorrected_rain"]["harvest_high"] = [50]
-    assert any("future_uncorrected_rain" in e for e in validate_field(d))
+    d["plans"][0]["future_dhm_rain"]["harvest_high"] = [50]
+    assert any("future_dhm_rain" in e for e in validate_field(d))
 
 
 # --- owner, 2026-11-14: the monsoon's start from DHM's official record (shift, usual window, late years) ---
