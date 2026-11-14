@@ -1019,3 +1019,22 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **Please review (owner):** (1) the confidence words and their rules (METHOD_NOTES 98), above all "high" for the seasons
   and "medium" for rain, groundwater and the onset; (2) the event-matching rule of the timeline (METHOD_NOTES 97); (3) the
   Sentinel-1 verdict; (4) that the site's "How we know" page shows the report card with its weaknesses, not only the charts.
+
+## 2026-11-14: the static site built from the teammate's design (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- **What SI did:** built `site/` (index.html, css/app.css, js/app.js, js/how.js, img/, vendor/leaflet/) as plain static
+  files from our UI teammate's design in `design/` (the phone and web screens, their colours, fonts, images and motion).
+  Every number and sentence on screen is read from `site/data/` (fields/demo.json, words.json, index.json, area/demo.json,
+  story.json; probe_log.json and live.json only when they exist); nothing is simulated in the browser.
+- **Words added (drafted by SI):** 107 screen texts in `pipeline/words/screens.json` (English, and Nepali marked "needs
+  native-speaker review"), with machine translations into hi, bn, es, fr and sw in `pipeline/words/drafts/` (SI drafts,
+  not reviewed); `site/data/words.json` and `pipeline/words/PREVIEW.md` regenerated. They replace the design's sample
+  texts that the data cannot back: no drone photo (a map of the field's outline instead), no robot readings (a prototype
+  soil stick carried by hand; Krishi Scout is the planned next step), no forecast ("what these months usually bring"),
+  no market or income claims, the real 2001-2025 record instead of "20 years", the real three plans instead of lentil,
+  mustard or leaving the field empty, and no "Listen" buttons.
+- **Checked by SI:** `scripts/check_site.py --final` (0 problems), the word tests, screenshots at 360, 390 and 1440 px in
+  headless Chrome (Nepali, English, French and Hindi), the soil screen with a rehearsal `live.json` from
+  `robot.bridge --fake` and a test `probe_log.json`, both kept in the scratchpad, never in `site/data/`.
+- **For a person to review:** every new Nepali text and every draft translation; the wording that replaces the design's
+  claims; the designer's review of the look (see the hand-over report).

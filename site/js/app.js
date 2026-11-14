@@ -149,7 +149,13 @@
   function num(n) { return digits(Math.round(n)); }
   function fmt(v) { return typeof v === 'number' ? num(v) : digits(v); }
   function fill(t, vals) { return String(t).replace(/\{([a-z0-9_]+)\}/g, function (m, k) { return vals && vals[k] != null ? fmt(vals[k]) : m; }); }
-  function L(n, vals) { if (!n) return ''; var t = n[S.lang]; if (t == null || t === '') t = n.en; return fill(t, vals); }
+  function L(n, vals) {
+    if (!n) return ''; var t = n[S.lang]; if (t == null || t === '') t = n.en;
+    var out = fill(t, vals);
+    // a sentence that starts with a filled name ("rice: plant in June") starts with a capital in Latin scripts
+    if (t.charAt(0) === '{' && !/^(ne|hi|bn)$/.test(S.lang)) out = out.charAt(0).toUpperCase() + out.slice(1);
+    return out;
+  }
   function T(ref, vals) { var n = node(ref); if (!n && W.console) console.warn('word missing:', ref); return L(n, vals); }
   // a {en, ne} text (or list) from a data file; draft languages fall back to English
   function P(o) { if (o == null) return ''; if (typeof o === 'string') return o; var v = o[S.lang]; return v != null ? v : (o.en != null ? o.en : ''); }
@@ -280,7 +286,7 @@
     });
     return box;
   }
-  function fogLayer(sure) { var o = Math.max(0, Math.min(1, 1 - (sure == null ? 0 : sure))); return h('span', { class: 'fog', style: 'opacity:' + (o * 0.85).toFixed(2) }); }
+  function fogLayer(sure) { var o = Math.max(0, Math.min(1, 1 - (sure == null ? 0 : sure))); return h('span', { class: 'fog', 'aria-hidden': 'true', style: 'opacity:' + (o * 0.6).toFixed(2) }); }
   function fogTag() { return h('span', { class: 'fogtag' }, svg(I('fog', 16)), T('btn.not_sure')); }
 
   // ---------------- the field drawn as a box of parts ----------------
@@ -328,7 +334,7 @@
         var f = h('span', { class: 'face', style: 'left:' + g.cx + '%;top:' + g.cy + '%;animation-delay:' + (200 + i * 120) + 'ms' });
         f.innerHTML = faceSvg(g.s.status, 54); box.append(f);
         var fo = 1 - (g.s.sure == null ? 0 : g.s.sure);
-        box.append(h('span', { class: 'pfog', style: 'left:' + g.l + '%;top:' + g.t + '%;width:' + (g.r - g.l) + '%;height:' + (g.b - g.t) + '%;opacity:' + (fo * 0.75).toFixed(2) }));
+        box.append(h('span', { class: 'pfog', style: 'left:' + g.l + '%;top:' + g.t + '%;width:' + (g.r - g.l) + '%;height:' + (g.b - g.t) + '%;opacity:' + (fo * 0.6).toFixed(2) }));
         box.append(h('span', { class: 'n', style: 'left:' + (g.l + 9) + '%;top:' + (g.t + 12) + '%;width:30px;height:30px;margin:-15px 0 0 -15px;font-size:14px;border-width:2px' }, digits(g.n)));
       } else {
         g.num = h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + (mode === 'robot' ? g.cy + 14 : g.cy) + '%;' +
@@ -505,6 +511,7 @@
     return S.leafP;
   }
   function osm(L, m) {
+    if (m.attributionControl) m.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(m);
   }
   function winterQuestion(F, after) {
@@ -555,7 +562,7 @@
           var hl = hull(pts).map(function (p) { return [p[1], p[0]]; });
           L.polygon(hl, { color: '#14301E', weight: 7, opacity: .35, fill: false, interactive: false }).addTo(map);
           var outline = L.polygon(hl, { color: '#C8E05A', weight: 4, fillColor: '#C8E05A', fillOpacity: .12, interactive: false }).addTo(map);
-          map.fitBounds(outline.getBounds(), { padding: [70, 70], maxZoom: 18 });
+          map.fitBounds(outline.getBounds(), { padding: [70, 70], maxZoom: 17 });
         } else map.setView([F.field.lat, F.field.lon], 17);
       }).catch(function () { var m = mbox.querySelector('.msg'); if (m) m.append(h('p', null, T('btn.not_ready'))); });
       function startDraw() {
@@ -609,7 +616,7 @@
       var lead = h('p', { class: 'lead', 'aria-live': 'polite' }, T('parts.making'));
       later(function () { lead.textContent = T('parts.split', { section_count: n }); }, 2000);
       return screen('parts', {
-        head: [stepsBar(2), bigTitle(L(scr('parts').title))],
+        head: [stepsBar(2), bigTitle(L(scr('parts').title)), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: fieldBox(F, 'grow'),
         body: h('div', { class: 'card soft', style: 'display:flex;flex-direction:column;gap:6px' }, lead, lines([T('parts.numbers'), T('parts.look_same'), T('parts.stick_tells')], 'sub')),
         cta: cta(L(scr('check_soil').title), function () { go('soil'); })
@@ -651,7 +658,7 @@
         if (i >= G.length) { robot.firstChild.setAttribute('class', 'happy'); robot.querySelector('.led').setAttribute('fill', '#5FBF6A'); ring.hidden = true; return; }
         var g = G[i], b = [g.cx, g.cy], ms = Math.max(900, Math.round(Math.hypot(b[0] - pos[0], b[1] - pos[1]) * 22));
         var ln = D.createElementNS('http://www.w3.org/2000/svg', 'line');
-        [['x1', pos[0]], ['y1', pos[1]], ['x2', b[0]], ['y2', b[1]], ['pathLength', 1], ['stroke-dasharray', 1], ['stroke', '#9A5426'], ['stroke-width', 3], ['stroke-linecap', 'round'], ['stroke-opacity', .5], ['vector-effect', 'non-scaling-stroke']]
+        [['x1', pos[0]], ['y1', pos[1]], ['x2', b[0]], ['y2', b[1]], ['pathLength', 1], ['stroke-dasharray', 1], ['stroke', '#9A5426'], ['stroke-width', 0.6], ['stroke-linecap', 'round'], ['stroke-opacity', .5]]
           .forEach(function (kv) { ln.setAttribute(kv[0], kv[1]); });
         ln.setAttribute('style', 'stroke-dashoffset:1;animation:ks-draw ' + ms + 'ms cubic-bezier(.45,0,.3,1) forwards');
         route.append(ln);
@@ -672,14 +679,14 @@
         cards.textContent = '';
         G.forEach(function (g, i) {
           var r = byPart[g.s.id] || null;
-          var sure = r && r.sure != null ? r.sure : (r && r.after ? r.after.sure : g.s.sure);
+          var sure = r ? (r.sure != null ? r.sure : (r.after ? r.after.sure : null)) : g.s.sure;
           var st = live && live.section === g.s.id ? live.state : (r ? r.state : null);
           var c = h('div', { class: 'part fogwrap' + (live && live.stale ? ' stale' : ''), style: 'animation-delay:' + (i * 90) + 'ms' },
             h('div', { class: 'top' }, h('span', { class: 'name' }, T('each_part.part_name', { section: g.n })), stateEl(st)),
             r ? lines(readingWords(r)) : null,
             r && r.before ? h('p', { class: 'small', style: 'margin:0' }, T('check_soil.before_reading') + ' ' + T('each_part.how_sure', { sure_pct: r.before.sure * 100 })) : null,
-            h('p', { class: 'small', style: 'margin:0' }, T('each_part.how_sure', { sure_pct: (sure || 0) * 100 })),
-            fogLayer(sure));
+            r && sure == null ? fogTag() : h('p', { class: 'small', style: 'margin:0' }, T('each_part.how_sure', { sure_pct: (sure || 0) * 100 })),
+            fogLayer(sure == null ? g.s.sure : sure));
           cards.append(c);
         });
       }
@@ -723,7 +730,7 @@
       var honest = h('div', { class: 'card' },
         fact('stick', [T('check_soil.prototype')]), fact('hand', [T('check_soil.by_hand')]), fact('ruler', [T('check_soil.top_only')]), fact('robot', [T('check_soil.robot_next')]));
       return screen('soil', {
-        head: [stepsBar(3), bigTitle(L(scr('check_soil').title))],
+        head: [stepsBar(3), bigTitle(L(scr('check_soil').title)), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: [box, h('div', { style: 'height:10px' }), robotCap],
         body: [honest, status, cards, h('p', { class: 'small', style: 'margin:0' }, svg(I('fog', 16)), ' ', T('each_part.fog'), ' ', T('check_soil.clears'))],
         cta: cta(T('btn.next'), function () { go('choose'); })
@@ -745,7 +752,7 @@
     var orbit = svg('<svg width="230" height="230" viewBox="0 0 230 230"><circle cx="115" cy="115" r="110" fill="none" stroke="#FFF" stroke-opacity=".07" stroke-width="2"/><circle cx="115" cy="115" r="78" fill="none" stroke="#FFF" stroke-opacity=".07" stroke-width="2"/><circle cx="115" cy="115" r="46" fill="#C8E05A" fill-opacity=".08"/><g><circle cx="115" cy="37" r="6" fill="#C8E05A"/></g></svg>', 'orbit');
     var b = h('button', { type: 'button', class: 'bigcard darkc', onclick: function () { go('next'); } }, orbit,
       h('div', { class: 'row', style: 'position:relative' }, h('span', { class: 'chip', style: 'background:rgba(200,224,90,.16);color:#DDEB9C' }, svg(I('sat', 16)), T('home.card_months_tag'))),
-      h('div', { class: 'row', style: 'position:relative;gap:8px', 'aria-hidden': 'true' }, nextMonths().map(function (m) { return h('span', { class: 'mchip' }, monthName(m, true)); })),
+      h('div', { class: 'row', style: 'position:relative;gap:8px', 'aria-hidden': 'true' }, nextMonths().map(function (m) { return h('span', { class: 'mchip' }, monthName(m)); })),
       h('div', { class: 'grow' }),
       h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between;position:relative' },
         h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('what_to_grow.next_h1') + ' ' + T('what_to_grow.next_h2')), h('span', { class: 's' }, T('home.card_months_sub'))),
@@ -781,7 +788,7 @@
         return c;
       }));
       return screen('today', {
-        head: bigTitle(T('each_part.today_h1'), T('each_part.today_h2')),
+        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: fieldBox(F, 'status'),
         body: [h('div', { class: 'row wrap' }, F.field.status_date ? h('span', { class: 'chip' }, T('each_part.as_of') + ' ' + fmtDate(F.field.status_date)) : null, srcs(F, ['twin'])),
           cards,
@@ -850,7 +857,7 @@
         } }, svg(I(k === 'harvest' ? 'sprout' : k === 'water' ? 'drop' : 'soil', 18)), T('lbl.what_to_grow.priority.' + k));
       }));
       return screen('next', {
-        head: bigTitle(T('what_to_grow.next_h1'), T('what_to_grow.next_h2')),
+        head: [bigTitle(T('what_to_grow.next_h1'), T('what_to_grow.next_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: [h('p', { class: 'sub', style: 'font-weight:600;color:var(--ink);margin-bottom:8px' }, T('home.card_months_sub')), monthCard,
           h('div', { style: 'height:8px' }), srcs(F, ['gpm', 'power', 'hls', 'twin']),
           h('p', { class: 'small' }, frost ? T('from_space.frost_note') + ' ' : '', T('from_space.months_note'))],
@@ -1022,7 +1029,7 @@
     });
   }
   function loadFonts() {
-    D.head.append(h('link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&family=Inter:wght@400;500;600;700&family=Mukta:wght@400;600;800&display=swap' }));
+    D.head.append(h('link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&family=Inter:wght@400;500;600;700&family=Mukta:wght@400;700&display=swap' }));
   }
   function init() {
     grass();

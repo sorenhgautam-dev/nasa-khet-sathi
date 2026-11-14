@@ -8,6 +8,22 @@ Citation texts in quotes are copied verbatim from the official pages named (open
 The site is served by **Vercel** (vercel.com) as static files from `site/` (owner, 2026-11-13): no build step, no
 server functions, no environment variables. GitHub Pages is not used.
 
+## Site design
+
+- **Design:** our UI teammate. The look, the seven-step flow (phone and web screens), the wording the site starts from and
+  the motion (clouds, birds, sun, the robot, the screen changes) come from our UI teammate's Claude Design artifact
+  "Khet Sathi: App Screens", exported to `design/` on 2026-11-14. The static site in `site/` was built from it by SI
+  (see SI_LOG.md, 2026-11-14).
+- **Images:** `site/img/bg-phone.svg`, `bg-web.svg`, `bg-home.svg` and `farm.webp` are our UI teammate's images from
+  `design/assets/` (the farm illustration re-encoded smaller with cwebp; no other change). `site/img/icon.svg` redraws the
+  design's leaf logo.
+- **Fonts:** Inter Tight, Inter and Mukta (SIL Open Font License 1.1), loaded from Google Fonts after the first screen,
+  with `font-display: swap` and system fallbacks. Not self-hosted: the woff2 files the site uses (about 220 KB: Inter and Inter Tight
+  variable, Mukta 400 and 700) would not fit the first screen's 300 KB.
+- **Map:** Leaflet 1.9.4 (BSD 2-Clause; self-hosted in `site/vendor/leaflet/` with its LICENSE), with map tiles from
+  OpenStreetMap (© OpenStreetMap contributors, ODbL; https://www.openstreetmap.org/copyright), credited on every map.
+- **Charts:** drawn as inline SVG and HTML by `site/js/how.js`; no chart library and no outside chart service.
+
 ## Data and metadata services
 
 Rows marked *metadata* were used only to check names, versions and units. Data that entered the
@@ -418,3 +434,11 @@ Licences are read from each package's installed metadata.
 - NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `ambohidratrimo`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-14 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
 - FAOSTAT QCL bulk file (FAO), Madagascar rice, potato and wheat yields, 2001 to 2024, fetched 2026-11-14 (validation only)
 - NEX-GDDP-CMIP6 (NASA Earth Exchange; Thrasher et al. 2022), pr, tasmax, tasmin at the 0.25 deg cell 27.625 N, 85.375 E (field `demo`), historical 1995-2014 and ssp245 / ssp585 2026-2040, fetched from 2026-11-14 via NASA NCCS THREDDS by pipeline/fetch/nexgddp.py (the 2040 outlook; the models used are listed in data/cards/demo/nexgddp.json)
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `sample-1`'s fetch box, 2001-2025, fetched 2026-11-14 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
+- NASA POWER Daily API v2.10.3 (model-based), field `sample-1`, 2001-01-01 to 2025-12-31, fetched 2026-11-14
+- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `sample-1`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-14 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
+- FAOSTAT QCL bulk file (FAO), Nepal rice, wheat and maize yields, 2001 to 2024, fetched 2026-11-14 (validation only)
+- NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation; temperature correction A), field `sample-1`, 2001-01-01 to 2025-08-24, fetched 2026-11-14
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `sample-2`'s fetch box, 2001-2025, fetched 2026-11-14 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
+- NASA POWER Daily API v2.10.3 (model-based), field `sample-2`, 2001-01-01 to 2025-12-31, fetched 2026-11-14
+- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `sample-2`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-14 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
