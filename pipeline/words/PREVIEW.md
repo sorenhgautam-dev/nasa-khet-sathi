@@ -932,7 +932,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Weeks without rain may hurt {crop}. | हप्तौं पानी नपर्दा {crop}लाई हानि हुन सक्छ। |
 | Big rain may hurt {crop} sowing. | ठूलो पानीले {crop} लगाउने काम बिगार्न सक्छ। |
 | Big rain may hurt {crop} harvest. | ठूलो पानीले {crop} भित्र्याउने काम बिगार्न सक्छ। |
-| Usually no big danger to crops. | प्रायः बालीलाई ठूलो खतरा हुँदैन। |
+| Usually no big danger. | प्रायः ठूलो खतरा हुँदैन। |
 | Patch {section} is drier than the others. | भाग {section} अरूभन्दा सुक्खा छ। |
 | Water it first. | यसमा पहिले पानी दिनुहोस्। |
 | Patch {section} is wetter than the others. | भाग {section} अरूभन्दा ओसिलो छ। |
