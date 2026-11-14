@@ -194,6 +194,29 @@ paddy_losses:                     # owner's item 3 (2026-11-14 afternoon): the w
     value: "no new failure rule: rice fails only as paddy_rainfed says (land preparation more than max_delay_days late); otherwise the losses act through Ks and Ky"
     source: "Coordinator's brief (2026-11-14): a failure outcome needs a published source or the existing rules; none other is added"
 
+field_capacity_measured:          # owner's item 4 (2026-11-14 afternoon): the field's own field capacity. Written and committed before its first run
+  # Protocol for the team: notes/FIELD_CAPACITY_PROTOCOL.md. Code: pipeline/fetch/field_visit.py (reads the file, data card),
+  # pipeline/twin/field_capacity.py, pipeline/plans/twin_options.soil_versions. Sources opened 2026-11-14 by a research
+  # sub-agent (Claude); the FAO-56 and FAO Soils Bulletin 79 lines re-read by Claude.
+  apply:
+    value: false
+    source: "Off until the measurements exist and the integrator or the owner switches it on; then the replay and the plans run twice, 'map' and 'measured', and both are shown. Owner, 2026-11-14: 'When the numbers arrive, use the measured field capacity instead of the soil map's, keep the map's wilting point, and show both results'"
+  file:
+    value: "data/field_visit/<field>/field_capacity.csv, columns part,depth_cm,tin,tin_empty_g,tin_volume_ml,wet_with_tin_g,dry_with_tin_g,dried_how,notes. Per tin: water held theta = (wet - dry) / tin volume (1 g of water = 1 ml; m3/m3), bulk density = (dry - empty) / tin volume (g/cm3)"
+    source: "Core of known volume, dried at 105 C: FAO (2023) GLOSOLAN-SOP-22, Standard operating procedure for soil bulk density, cylinder method (doi:10.4060/cc7568en), sec. 7.1 'a core cylinder of known volume', sec. 8 'dry at 105 °C ±5 °C for 24 hours or until the constant weight is achieved'; USDA ARS/NRCS (2001) Soil Quality Test Kit Guide, ch. 4, p. 13: 'Soil bulk density (g/cm3) = oven dry weight of soil / volume of soil'"
+  when:
+    value: "48 hours after the spot was soaked below 30 cm and covered against evaporation, with no rain in between"
+    source: "FAO Soils Bulletin 79 (Shaxson & Barber 2003), glossary of soil moisture terms: 'FC is best determined in the field by saturating the soil and measuring its water content after 48 hours of drainage have elapsed'; FAO-56, ch. 8: field capacity is 'the amount of water that a well-drained soil should hold against gravitational forces, or the amount of water remaining when downward drainage has markedly decreased'; Ottoni Filho et al. (2014), Revista Brasileira de Ciência do Solo 38(6):1750-1764, p. 1752: the plot 'is flooded and, after irrigation, covered with a plastic sheet to avoid evaporation', p. 1753: 48 h 'a classical value (Cassel & Nielsen, 1986)', p. 1762: measure 'in the dry season whenever possible'"
+  per_depth:
+    value: "the median of all tins of a depth (four parts x 3 tins = 12 per depth); the per-part medians and bulk densities go into the data card (data/cards/<field>/field_capacity.json) for the sections"
+    source: "Claude's choice, fixed before the first run (one bad tin cannot move a median much); put to the owner"
+  layers:
+    value: "each SoilGrids layer of the twin's soil table takes the measured median where it was measured (depth-weighted where it is partly measured) and keeps the map's field capacity below the deepest measurement; the map's wilting point everywhere. It stops the run: a tin lighter wet than dry or below its empty weight, water outside 0-0.6 m3/m3 or above the tin's pore space (1 - bulk density / 2.65), a measured field capacity at or below the map's wilting point"
+    source: "Owner, 2026-11-14 (apply, above). Nothing is measured below 30 cm, so the map stays there: Claude's choice, fixed before the first run; put to the owner. Ranges: CLAUDE.md golden rule 12 (soil moisture 0 to 0.6 m3/m3); 2.65 g/cm3, the usual particle density of mineral soil"
+  drying:
+    value: "oven at 105 C for 24 hours is the method; a microwave to constant weight is accepted; sun drying only to constant weight (two weighings a day apart agree), recorded in dried_how and reported: sun-dried soil still holds some water, so its field capacity reads a little low"
+    source: "Microwave: Soil Quality Test Kit Guide (2001), p. 10: 'dry for two or more four-minute cycles at full power ... When its weight does not change after a drying cycle, then it is dry'. Air-dry against oven-dry: USDA-NRCS (2014) Soil Survey Field and Laboratory Methods Manual, SSIR 51 v2, sec. 2.3.1, p. 34: 'air-dry soils contain about 1 to 2 percent water'. No open source endorses sun drying; Claude's choice to accept it flagged, fixed before the first run"
+
 bare_soil:
   kc:
     value: 0.3
