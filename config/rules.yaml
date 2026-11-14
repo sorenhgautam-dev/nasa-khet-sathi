@@ -1435,6 +1435,9 @@ rain_risk:                        # item 1 (owner's brief, 2026-11-14): heavy ra
   count:
     value: "per crop and version: the number of harvest years with at least one heavy-rain day in the window; per year: the number of heavy-rain days and the largest day (mm, 1 decimal). No probability, no trend, no future: counts of past years only"
     source: "Owner's brief (example line 'Heavy rain at harvest: 5 of 24 years'). Claude's wording of the per-year detail, fixed before the first run"
+  words:
+    value: "a crop with no heavy-rain year in its harvest weeks (central rain) is said as good news: 'None in these years. Good news.'; every screen says these are past years, not a forecast"
+    source: "Owner's brief ('Near-zero counts are good news: say so in plain words', item 4; applied here too). Claude's wording, fixed before the first run"
   dry_spells:
     value: "left out: no dry-spell squares are built"
     source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 2b): the owner's 'dry spell of 8 or more consecutive days' is NOT FOUND in DHM's Update of Climate Change Study of Nepal (2024), which uses only CDD, the longest run of days under 1 mm. Owner's brief: 'leave the dry-spell squares out'. The dry day below 1 mm (2a, confirmed with conditions) is therefore not used here either"
@@ -1500,7 +1503,7 @@ heat_clock:                       # item 4 (owner's brief, 2026-11-14): heat and
     value: "data/clean/<field>/nexgddp_daily.parquet (NEX-GDDP-CMIP6, 23 models, one 0.25 deg cell; historical 1995-2014, ssp245 and ssp585 2026-2040): tasmax_c for heat, tasmin_c for cold, used as the models give them (not corrected to the station). The window is taken by month and day in each model's own calendar (360-day, 365-day or Gregorian); a season counts when its whole window lies in the period (a window that crosses 1 January needs both years). Per model and period: the mean risky days per complete season. Per scenario: the median over models of the 2026-2040 mean, its lowest and highest model, the median of the models' own 1995-2014 means, and every model's own pair (1995-2014 beside 2026-2040), the like-for-like comparison. A field with no series of its own (a sample field) uses its source field's (sample_of) when both lie in the same 0.25 deg cell (cell centres at 0.125 + 0.25 k deg), else none"
     source: "Owner's brief ('around 2040: the daily NEX-GDDP series on disk ... Report the median and the model range. For a like-for-like comparison, also give each model's own 1995-2014 count beside its 2026-2040 count'). The calendar handling, the complete-season rule and the sample rule are Claude's, fixed before the first run"
   words:
-    value: "near-zero counts are said as good news in plain words; the cold count carries 'our cold nights may be too many'"
+    value: "near-zero counts are said as good news in plain words: today, a check with no year holding a risky day ('None in these years. Good news.'); around 2040, a check whose every model's 2026-2040 mean is below 1 day a season in both scenarios ('Still rare around 2040. Good news.'). The cold count carries 'Our cold nights may be too many.'"
     source: "Owner's brief ('Near-zero counts are good news: say so in plain words')"
   label:
     value: "labels.outputs.heatclock_today (POWER corrected to the station: valley; estimate) and heatclock_2040 (NEX-GDDP: region; estimate)"
