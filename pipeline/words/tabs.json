@@ -71,7 +71,8 @@
    {
     "id": "why_safest",
     "when": [
-     "plan_is_safest"
+     "plan_is_safest",
+     "has_legume"
     ],
     "en": "This plan is here to feed your soil.",
     "ne": "यो योजना माटोलाई मलिलो बनाउन हो।",
@@ -575,7 +576,8 @@
    {
     "id": "chk_dhaincha",
     "when": [
-     "plan_is_safest"
+     "plan_is_safest",
+     "profile_NP"
     ],
     "en": "Ask about dhaincha, grown before rice.",
     "ne": "धानअघि ढैंचा लगाउने बारे सोध्नुहोस्।",
@@ -585,7 +587,8 @@
    {
     "id": "chk_dhaincha_narc",
     "when": [
-     "plan_is_safest"
+     "plan_is_safest",
+     "profile_NP"
     ],
     "en": "NARC: “a popular green-manuring crop for rice”.",
     "ne": "नार्क: ‘धानका लागि लोकप्रिय हरियो मल बाली’ (अनुवाद)।",
@@ -595,7 +598,8 @@
    {
     "id": "chk_dhaincha_gain",
     "when": [
-     "plan_is_safest"
+     "plan_is_safest",
+     "profile_NP"
     ],
     "en": "Gain: “equivalent to 50-100 kg of fertilizer N”.",
     "ne": "लाभ: ‘५०–१०० किलो रासायनिक मलको N बराबर’ (अनुवाद)।",
@@ -605,7 +609,8 @@
    {
     "id": "chk_dhaincha_cite",
     "when": [
-     "plan_is_safest"
+     "plan_is_safest",
+     "profile_NP"
     ],
     "en": "The booklet cites Lacsina and others, 1987.",
     "ne": "पुस्तिकाले लाक्सिना र अरू (१९८७) लाई उद्धृत गर्छ।",
@@ -615,7 +620,8 @@
    {
     "id": "chk_dhaincha_where",
     "when": [
-     "plan_is_safest"
+     "plan_is_safest",
+     "profile_NP"
     ],
     "en": "Booklet: Adhikary, NARC 2014, Lumbini agriculture website.",
     "ne": "पुस्तिका: अधिकारी, नार्क २०१४, लुम्बिनी कृषि वेबसाइट।",
@@ -625,7 +631,8 @@
    {
     "id": "chk_dhaincha_fit",
     "when": [
-     "plan_is_safest"
+     "plan_is_safest",
+     "profile_NP"
     ],
     "en": "Ask your agriculture office if it fits.",
     "ne": "यो यहाँ मिल्छ कि, कृषि कार्यालयलाई सोध्नुहोस्।",

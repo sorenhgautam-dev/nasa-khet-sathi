@@ -2939,12 +2939,12 @@
    {
     "id": "bare_soil.rew_mm",
     "choice": "FAO-56 Table 19; Example 31 uses REW 9 mm for loam ('For Loam: TEW ~ 20 mm and REW ~ 9 mm'). The midpoint is Claude's choice, fixed before the first run. Texture: SSSA Glossary of Soil Science Terms (2022), 'soil texture', p. 115: 'loam - Soil material that contains 7 to 27% clay, 28 to 50% silt, and <52% sand' (p. 115 opened; the other classes, on p. 116, follow the USDA Soil Survey Manual as coded in the NRCS texture calculator: TODO-VERIFY)",
-    "value": "the midpoint of table_19_rew_mm for the USDA texture class of SoilGrids' top layer (0-5 cm). Demo: sand 33.6, silt 45.8, clay 20.6 % = loam, 8-10 mm -> 9 mm. A class with no Table 19 row (sandy clay loam, clay loam, sandy clay) takes rew_no_row_mm (owner's item 3, 2026-11-14; until then it stopped the run)",
+    "value": "the midpoint of table_19_rew_mm for the USDA texture class of SoilGrids' top layer (0-5 cm). Demo: sand 33.6, silt 45.8, clay 20.6 % = loam, 8-10 mm -> 9 mm. A class with no Table 19 row (sandy clay loam, clay loam, sandy clay) stops the run",
     "status": "Claude's choice"
    },
    {
     "id": "bare_soil.rew_no_row_mm",
-    "choice": "FAO-56 Chapter 7, 'Evaporation reduction coefficient (Kr)' (https://www.fao.org/4/x0490e/x0490e0c.htm, opened 2026-11-14): 'The depth [REW] normally ranges from 5 to 12 mm and is generally highest for medium and fine textured soils. Typical values for REW are given in Table 19.' A texture class with no Table 19 row takes the midpoint of this general range, 8.5 mm, as rew_mm takes a row's midpoint; the run's bare-soil label says so (rew_from). Claude's choice, fixed before the first run; put to the owner. Nepal's five fields are loam (a Table 19 row): unchanged",
+    "choice": "FAO-56 Chapter 7, 'Evaporation reduction coefficient (Kr)' (https://www.fao.org/4/x0490e/x0490e0c.htm, opened 2026-11-14): 'The depth [REW] normally ranges from 5 to 12 mm and is generally highest for medium and fine textured soils. Typical values for REW are given in Table 19.' A texture class with no Table 19 row takes the midpoint of this general range, 8.5 mm, as rew_mm takes a row's midpoint; the run's bare-soil label says so (rew_from). It replaces the stop that rew_mm's value names for such a class (rew_mm's text is kept as committed, so the method page's earlier entries do not change). Claude's choice, fixed before the first run; put to the owner. Nepal's five fields are loam (a Table 19 row): unchanged",
     "value": "[5, 12]",
     "status": "Claude's choice, put to the owner"
    },
@@ -3363,6 +3363,12 @@
     "status": "Claude's choice, owner-approved 2026-11-13"
    },
    {
+    "id": "season_detection.no_dense_years",
+    "choice": "Claude's choice, fixed before its first run on such a field; put to the owner. The field in Madagascar has 30-49 clear HLS observations a year (data/clean/ambohidratrimo/greenness_field.parquet, counted on a shorter-record test copy, 2026-11-14), under the 90 that held_out_min_clear_obs (owner-approved 2026-11-13) asks; lowering the minimum after seeing those counts would be choosing the rule from the data. Nepal's five fields have qualifying years: unchanged",
+    "value": "when no full HLS year has held_out_min_clear_obs clear observations, the held-out comparison cannot run: the threshold method sets the seasons (the comparison's own default, which another method replaces only by beating it by best_margin), the season detective is not trained (so no 'less sure' months), and the method page's comparison is null ('could not run: too few clear images a year'). The minimum is not lowered",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
     "id": "field_memory.target",
     "choice": "CLAUDE.md 'Field memory': predict each season's observed peak-NDVI anomaly. Claude's reading (anomaly = difference from the slot's own mean over the HLS years), fixed before the first run; put to the owner",
     "value": "each detected season's peak NDVI in the HLS years (the chosen season method), as its difference from the mean peak of its slot (monsoon, winter)",
@@ -3457,6 +3463,18 @@
     "choice": "Owner, 2026-11-13 (decision 5): option A, best in bad years among plans that keep at least today's cover, named 'Safest in bad years' (not 'follow the shift', since shift_days cannot be measured; revisit only if step 9's 2040 projections finish). The fallback to every rice plan is Claude's, fixed before the run. 'Other crops' was added by Claude AFTER the first run, which picked rice then wheat again with rice sown on 1 June instead of 15 June: the same rotation, while CLAUDE.md and the challenge ask for at least three rotations. Owner-approved 2026-11-13 (answer 3 to REVIEW_2: the plan stays as chosen and is renamed 'Feed your soil')",
     "value": "'Safest in bad years': among the rice plans of the Pareto set that grow other crops than the current and the cover-the-gap plan and keep at least today's cover, the best 10th-percentile year (ties: higher mean harvest). If no Pareto plan qualifies, every rice plan is looked at. The cover-the-gap plan, too, grows other crops than the current plan",
     "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "plans.third_plan_fallback",
+    "choice": "Claude's choice, fixed 2026-11-14 before its first run (owner's item 3, a field on another continent): the FAO Crop Calendar for Madagascar's zone 004 lists four of the library's crops (rice, wheat, potato, maize), which make three rice rotations (rice then potato, rice then wheat, rice alone), so no third rotation keeps today's cover. CLAUDE.md and the challenge ask for at least three rotations including the current one (schema.json: plans minItems 3), and three different rotations come first. Never used for Nepal's five fields: each has a third rotation keeping today's cover (VALIDATION 3.25). Not owner-approved yet",
+    "value": "If no rice plan growing other crops than the current and the cover-the-gap plan keeps today's cover (not even after looking at every rice plan), the third plan is the best 10th-percentile year (ties: higher mean harvest) among those plans whatever their cover; plans.json records it as safest_from 'all rice plans, any cover', and its cover score is shown as computed. With no such plan at all (two rotations only), the plans step stops: NOT READY",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "plans.third_plan_name_no_legume",
+    "choice": "Owner, 2026-11-13 (decision 5) named the third plan 'Safest in bad years'; the owner renamed it 'Feed your soil' because Nepal's third plan grows a pulse crop that feeds the soil (answer 3 to REVIEW_2 H2, plan_names). A third plan with no legume (on a field abroad whose FAO zone calendar lists none of the library's legumes, e.g. Madagascar's rice alone; plans.third_plan_fallback) keeps decision 5's name, since nothing in it feeds the soil. Claude's reading, fixed 2026-11-14 before its first run; put to the owner. Nepal's five fields: every third plan is rice then lentil, unchanged",
+    "value": "Safest in bad years",
+    "status": "Claude's choice, put to the owner"
    },
    {
     "id": "plans.gain_range",
@@ -3942,6 +3960,54 @@
     "id": "simple_cards.suggestion",
     "choice": "Claude's choice, fixed before the first run: the card names one crop ('[Crop] this winter'), the one that does best against the farmer's own crop",
     "value": "the suggested plan (cover_gap or safest, never current) whose winter crop differs from the farmer's answer and has the most (better minus worse) winters; ties: fewer worse winters, then the plans' order",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "weather_ahead.blocks",
+    "choice": "Owner: 'One block per month for the next 6 months, Bikram Sambat first'. Each block is an approximate Bikram Sambat month starting on the 15th of a Gregorian month, the rule already fixed in monsoon_onset_dhm.bs_dates (a real BS month starts a day or two either side). Claude's choice, fixed before the first run: blocks, not calendar months, so that a Nepali month name labels its own days",
+    "value": "{'count': 12, 'starts_on_day': 15, 'key': \"the Gregorian month the block starts in, as words.json months ('Nov' = Mangsir, 15 Nov to 14 Dec)\"}",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "weather_ahead.years",
+    "choice": "Owner: 'from 24 years of records'; the replay's 24 complete years (CLAUDE.md). Claude's reading for the block that crosses 1 January",
+    "value": "per block, the 24 latest blocks lying wholly in the twin's record (weather.parquet, 2001-01-01 to 2025-12-31): blocks starting in 2002-2025, and Poush (starting 15 December) 2001-2024. A block's year is the year it starts",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "weather_ahead.rain_word",
+    "choice": "months.terciles (owner-approved 2026-11-13) applied to the twelve blocks; owner: 'Usually: [dry/wet, cold/warm]'. The middle word 'some rain' is Claude's",
+    "value": "{'rule': 'terciles of the twelve block means (as months.terciles)', 'words': ['dry', 'some_rain', 'wet']}",
+    "status": "Claude's choice, owner-approved 2026-11-13"
+   },
+   {
+    "id": "weather_ahead.attach",
+    "choice": "Claude's choice, fixed before the first run: a danger is never shown in a month the window only touches, and every window lands in at least one block",
+    "value": "a crop's danger window counts in a block when the block holds at least half of the window's days, or the window covers at least half of the block's days (in a 365-day year); then only the window's days inside the block are tested",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "weather_ahead.count",
+    "choice": "Team spec ('how often: in N of the last 24 years'); owner: 'Only the biggest danger per month on screen; the rest ... the years and the sources go behind a Why? button'. 'At least half' is simple_cards.verdict's cut; Claude's choice",
+    "value": "per danger, crop and block: the years (of the block's 24) with at least one risky day in the tested days (dry_spell: years whose tested days are all dry). Why? says 'in N of 24 years'; the farmer screen says 'Most years.' (N at least half) or 'Some years.' (N from 1 to under half). A danger with N = 0 is never a 'Watch out'; Why? lists it as 'None in these years. Good news.'",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "weather_ahead.rank",
+    "choice": "Owner: 'Watch out: [the single biggest danger, which crop]'. No published rule compares dangers of different kinds, so 'biggest' means 'happened in the most years': Claude's choice, fixed before the first run",
+    "value": "per block, the dangers with N of at least 1, most years first; ties: cold, heat, dry_spell, big_rain, then the crops in the order of the field's plans. Two lists: rain_fed (every danger) and watered (no dry_spell: watering stands in for the missing rain, as the twin's watered case). The screen shows the first danger of the farmer's own crop (their 'What do you grow in winter?' answer, and rice from June to October), else the first danger of any crop; the watered list when the farmer said they can water",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "farmer_answers.actions",
+    "choice": "Owner, 2026-11-14 evening: 'plain actions with Bikram Sambat months (\"Sow wheat in Kartik\", \"Harvest in Baisakh, then plant rice in Asar\")'; the owner's answer the same evening: shown as the usual calendar ('Wheat is usually sown in Kartik'), sourced to the FAO crop calendar (crops.json calendar windows; crop_calendar). Rice is transplanted as seedlings, hence 'plant'; the joining rule is Claude's, fixed before the first run",
+    "value": "per plan and window: every crop of the plan whose season touches the window (window_replay.plans), in date order: 'sow' (rice: 'plant') in the month of its sowing day, and 'harvest' in the month of its last day; the plan's last harvest is joined with the plan's next sowing after it into one action, 'harvest, then plant/sow the next crop', even when that sowing falls after the window. Months are approximate Bikram Sambat months starting on the 15th (weather_ahead.blocks; monsoon_onset_dhm.bs_dates): a day from the 15th takes its own Gregorian month's key, an earlier day the previous one ('10-15' = Kartik, '03-03' = Falgun). The actions are the plan's calendar, the same every year, not a promise that this season can still start on time",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "farmer_answers.animation",
+    "choice": "Owner, 2026-11-14 evening: 'a small field steps through the years, green when the plan did well, red when it struggled, then shows the winning plan'; 'We keep the plan that works most often'. Red uses the sourced failure bound, as confidence_word; the screen calls it 'Failed', not the Replay's 'struggled' (its 50-79 class). Claude's choice, fixed before the first run",
+    "value": "{'window': 'm6', 'start': \"the Replay's start_default\", 'plans': \"the field's three plans (current, cover_gap, safest)\", 'green': 'a season that did not fail (score at or above window_replay.classes.failed_below)', 'red': 'a failed season', 'winner': \"the plan with the most green seasons; ties: the higher median score, then the plans' order\"}",
     "status": "Claude's choice"
    }
   ]

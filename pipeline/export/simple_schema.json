@@ -4,7 +4,8 @@
  "description": "site/data/simple/<field>.json (owner, 2026-11-14 evening; rules.yaml simple_cards): what the three farmer cards say, per answer to the two questions. Built from the field's Replay and Field Pulse files only.",
  "type": "object",
  "additionalProperties": false,
- "required": ["field", "placeholder", "made_by", "window", "start", "winters", "answers", "replay_card", "trial_card", "plan_lines", "pulse_card", "label", "sources"],
+ "required": ["field", "placeholder", "made_by", "window", "start", "winters", "answers", "replay_card", "trial_card", "plan_lines", "pulse_card", "label", "sources",
+              "labels_used", "today", "guess", "plan_words", "actions", "animation", "weather_lines"],
  "$defs": {
   "three": {"type": "object", "additionalProperties": false, "required": ["better", "same", "worse"],
             "properties": {"better": {"type": "integer", "minimum": 0}, "same": {"type": "integer", "minimum": 0}, "worse": {"type": "integer", "minimum": 0}}},
@@ -34,6 +35,13 @@
                                                 "to": {"type": "string", "pattern": "^[01][0-9]-[0-3][0-9]$"}}}},
                                 "source": {"type": "string"}}},
   "label": {"type": "object"},
-  "sources": {"type": "array"}
+  "sources": {"type": "array"},
+  "labels_used": {"type": "object", "description": "The labels the farmer wording was chosen from (rules.yaml farmer_answers.wording).", "additionalProperties": {"enum": ["VERIFIED", "ESTIMATE", "NOT YET VERIFIABLE"]}},
+  "today": {"type": "object", "additionalProperties": false, "required": ["mode"], "properties": {"mode": {"enum": ["compare", "band"]}}},
+  "guess": {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {"text": {"type": "string", "pattern": "^[a-z_]+\\.[a-z_]+$"}, "fill": {"type": "object"}}},
+  "plan_words": {"type": "object", "description": "[winter answer][window][start][plan id]: {now: true} for the farmer's own plan, else {counts, verdict, text}", "additionalProperties": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": false, "properties": {"now": {"const": true}, "counts": {"type": "object"}, "verdict": {"enum": ["better", "same", "worse", "mixed"]}, "text": {"type": "string", "pattern": "^[a-z_]+\\.[a-z_]+$"}}}}}}},
+  "actions": {"type": "object", "description": "[plan or option id][window]: lines", "additionalProperties": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {"text": {"type": "string", "pattern": "^[a-z_]+\\.[a-z_]+$"}, "fill": {"type": "object"}}}}}},
+  "animation": {"type": "object", "additionalProperties": false, "required": ["plans", "winner", "window", "start", "seasons", "failed_below"], "properties": {"plans": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "green", "green_count", "median"], "properties": {"id": {"type": "string"}, "green": {"type": "array", "items": {"type": ["boolean", "null"]}}, "green_count": {"type": "integer", "minimum": 0}, "median": {"type": ["number", "null"]}}}}, "winner": {"type": "string"}, "window": {"type": "string"}, "start": {"type": "string"}, "seasons": {"type": "array", "items": {"type": "string"}}, "failed_below": {"type": "number"}}},
+  "weather_lines": {"type": "object", "description": "[winter answer][can water: no|yes][block key]: {usual, danger, tip}", "additionalProperties": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": false, "required": ["usual", "danger", "tip"], "properties": {"usual": {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {"text": {"type": "string", "pattern": "^[a-z_]+\\.[a-z_]+$"}, "fill": {"type": "object"}}}, "danger": {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {"text": {"type": "string", "pattern": "^[a-z_]+\\.[a-z_]+$"}, "fill": {"type": "object"}}}, "tip": {"anyOf": [{"type": "object", "additionalProperties": false, "required": ["text"], "properties": {"text": {"type": "string", "pattern": "^[a-z_]+\\.[a-z_]+$"}, "fill": {"type": "object"}}}, {"type": "null"}]}}}}}}
  }
 }

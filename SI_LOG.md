@@ -1357,3 +1357,15 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   month words are Gregorian; a month with no danger shows "Nothing big in past years." and no "Do this:" line; "dry
   day" is defined under every dry-run card.
 - **Words:** none added by SI (all from `shared.weather`, `shared.twin` and the `rr_dry_*`, `hc_*` texts).
+
+## 2026-11-14 (Saturday, late evening): farmer answers worded by their labels (Claude Opus 5.5 via Claude Code, session 9f5addf3)
+
+- **What SI did:** the rules `farmer_answers` (5b4ab42, then e666fea after the owner's answer: relative plan words, label
+  wording), the tests and code in `pipeline/export/build_simple.py` (actions with Bikram Sambat months, plan words, the
+  animation's green and red seasons, the weather lines per answer, Today's mode), the schema keys, and 57 words in
+  `shared.farm` and `shared.bs_months` (English; Nepali marked "needs native-speaker review"; drafts in hi, bn, es, fr, sw;
+  the drafts keep Gregorian months, as the draft rule says). The Nepal-only conditions on the third plan's lines
+  (`has_legume`, `profile_NP`) and the "Safest in bad years" plan name for fields abroad.
+- **For a person to review:** every new Nepali line and draft; the verbs (rice "planted", other crops "sown"); "Usually no
+  big danger to crops." for a calm month.
+

@@ -187,8 +187,8 @@ has used it; the field is a placeholder; most of the Nepali awaits a native spea
 
 **Galactic Impact.** *For:* the model's inputs are global datasets, and one command builds a field [I3, I4]. The rain
 check runs per field: in Madagascar it found no change and kept NASA's rain as published [F13]. Open code (MIT) and
-probe design; drafts in five more languages. *Not yet:* no field outside Nepal is on the site; the translations are
-unreviewed; the crop calendars are Nepal's.
+probe design; drafts in five more languages. *Not yet:* no field outside Nepal is on the site (one is built, VALIDATION 3.26);
+the translations are unreviewed.
 
 ## Global, usable everywhere
 
@@ -209,7 +209,8 @@ about 3 to 4 hours, nearly all of it downloads (`docs/DEPLOY_ANYWHERE.md`).
 **A field on another continent.** A placeholder field in Madagascar's central highlands was built with the kit on the
 global defaults: its own rain check (no gauge change found, so NASA's rain is used as published), its own FAO crop
 calendar (rainy-season rice, then dry-season potato), and labels that say "not yet verifiable" wherever no local check
-exists. It never borrows Nepal's checks.
+exists. It never borrows Nepal's checks. It is not on the live site yet: the third plan's words and name were written
+for Nepal's pulse crop and must first follow the field (VALIDATION 3.26).
 
 ## How farmers would get this
 

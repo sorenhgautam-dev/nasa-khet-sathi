@@ -714,6 +714,11 @@
       }
      }
     },
+    "choices_note": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Only for a field on the global defaults (no country profile; owner's item 3, 2026-11-14): says the stated choices are the whole project's, written for the Nepal fields, and which do not apply to it. English, technical, as the choices."
+    },
     "field_memory": {
      "type": "object",
      "additionalProperties": false,

@@ -3035,6 +3035,258 @@
   "shared.twin.open": {
    "en": "See how",
    "hi": "कैसे, देखें"
+  },
+  "shared.farm.act_sow": {
+   "en": "Sow {crop} in {sow_month}.",
+   "hi": "{sow_month} में {crop} बोएँ।"
+  },
+  "shared.farm.act_sow_usual": {
+   "en": "{crop} is usually sown in {sow_month}.",
+   "hi": "{crop} आमतौर पर {sow_month} में बोया जाता है।"
+  },
+  "shared.farm.act_plant": {
+   "en": "Plant {crop} in {sow_month}.",
+   "hi": "{sow_month} में {crop} रोपें।"
+  },
+  "shared.farm.act_plant_usual": {
+   "en": "{crop} is usually planted in {sow_month}.",
+   "hi": "{crop} आमतौर पर {sow_month} में रोपा जाता है।"
+  },
+  "shared.farm.act_harvest": {
+   "en": "Harvest {crop} in {harvest_month}.",
+   "hi": "{harvest_month} में {crop} काटें।"
+  },
+  "shared.farm.act_harvest_usual": {
+   "en": "{crop} is usually harvested in {harvest_month}.",
+   "hi": "{crop} आमतौर पर {harvest_month} में कटता है।"
+  },
+  "shared.farm.act_then_sow": {
+   "en": "Then sow {new_crop} in {sow_month}.",
+   "hi": "फिर {sow_month} में {new_crop} बोएँ।"
+  },
+  "shared.farm.act_then_sow_usual": {
+   "en": "Then {new_crop} is usually sown in {sow_month}.",
+   "hi": "फिर {new_crop} प्रायः {sow_month} में बोते हैं।"
+  },
+  "shared.farm.act_then_plant": {
+   "en": "Then plant {new_crop} in {sow_month}.",
+   "hi": "फिर {sow_month} में {new_crop} रोपें।"
+  },
+  "shared.farm.act_then_plant_usual": {
+   "en": "Then {new_crop} is usually planted in {sow_month}.",
+   "hi": "फिर {new_crop} प्रायः {sow_month} में रोपते हैं।"
+  },
+  "shared.farm.word_better": {
+   "en": "Better than now.",
+   "hi": "अभी से बेहतर।"
+  },
+  "shared.farm.word_better_usual": {
+   "en": "Usually better than now.",
+   "hi": "आमतौर पर अभी से बेहतर।"
+  },
+  "shared.farm.word_worse": {
+   "en": "Worse than now.",
+   "hi": "अभी से कमज़ोर।"
+  },
+  "shared.farm.word_worse_usual": {
+   "en": "Usually worse than now.",
+   "hi": "आमतौर पर अभी से कमज़ोर।"
+  },
+  "shared.farm.word_same": {
+   "en": "About the same as now.",
+   "hi": "लगभग अभी जैसा।"
+  },
+  "shared.farm.word_mixed": {
+   "en": "Sometimes better, sometimes worse.",
+   "hi": "कभी बेहतर, कभी कमज़ोर।"
+  },
+  "shared.farm.guess": {
+   "en": "We think you grow {guess_list}.",
+   "hi": "हमें लगता है आप {guess_list} उगाते हैं।"
+  },
+  "shared.farm.guess_ask": {
+   "en": "Is that right?",
+   "hi": "क्या यह सही है?"
+  },
+  "shared.farm.wx_usual": {
+   "en": "{month}: usually {rain_word}, {temp_word}.",
+   "hi": "{month}: आमतौर पर {rain_word}, {temp_word}।"
+  },
+  "shared.farm.wx_hurt_potato_cold": {
+   "en": "Cold nights may hurt {crop}.",
+   "hi": "ठंडी रातें {crop} को नुकसान कर सकती हैं।"
+  },
+  "shared.farm.wx_hurt_potato_heat": {
+   "en": "Hot days may hurt {crop}.",
+   "hi": "गर्म दिन {crop} को नुकसान कर सकते हैं।"
+  },
+  "shared.farm.wx_hurt_wheat_flower_frost": {
+   "en": "Frost may hurt {crop} flowers.",
+   "hi": "पाला {crop} के फूल बिगाड़ सकता है।"
+  },
+  "shared.farm.wx_hurt_wheat_floret_heat": {
+   "en": "Heat may hurt {crop} before flowering.",
+   "hi": "फूल से पहले गर्मी {crop} बिगाड़ सकती है।"
+  },
+  "shared.farm.wx_hurt_wheat_grain_heat": {
+   "en": "Heat may hurt {crop} grain.",
+   "hi": "गर्मी {crop} के दाने बिगाड़ सकती है।"
+  },
+  "shared.farm.wx_hurt_dry_spell": {
+   "en": "Weeks without rain may hurt {crop}.",
+   "hi": "हफ़्तों सूखा {crop} बिगाड़ सकता है।"
+  },
+  "shared.farm.wx_hurt_big_rain_sowing": {
+   "en": "Big rain may hurt {crop} sowing.",
+   "hi": "भारी बारिश {crop} की बुवाई बिगाड़ सकती है।"
+  },
+  "shared.farm.wx_hurt_big_rain_harvest": {
+   "en": "Big rain may hurt {crop} harvest.",
+   "hi": "भारी बारिश {crop} की कटाई बिगाड़ सकती है।"
+  },
+  "shared.farm.wx_calm": {
+   "en": "Usually no big danger to crops.",
+   "hi": "आमतौर पर फ़सल को बड़ा ख़तरा नहीं।"
+  },
+  "shared.farm.today_drier": {
+   "en": "Patch {section} is drier than the others.",
+   "hi": "हिस्सा {section} बाक़ी से सूखा है।"
+  },
+  "shared.farm.today_water_first": {
+   "en": "Water it first.",
+   "hi": "इसे पहले पानी दें।"
+  },
+  "shared.farm.today_wetter": {
+   "en": "Patch {section} is wetter than the others.",
+   "hi": "हिस्सा {section} बाक़ी से गीला है।"
+  },
+  "shared.farm.today_water_last": {
+   "en": "Water it last.",
+   "hi": "इसे बाद में पानी दें।"
+  },
+  "shared.farm.today_same": {
+   "en": "Patch {section} is like the others.",
+   "hi": "हिस्सा {section} बाक़ी जैसा है।"
+  },
+  "shared.farm.today_dry": {
+   "en": "Patch {section} is dry.",
+   "hi": "हिस्सा {section} सूखा है।"
+  },
+  "shared.farm.today_water_today": {
+   "en": "Water it today.",
+   "hi": "आज पानी दें।"
+  },
+  "shared.farm.today_fine": {
+   "en": "Patch {section} is fine.",
+   "hi": "हिस्सा {section} ठीक है।"
+  },
+  "shared.farm.today_no_water": {
+   "en": "No water needed.",
+   "hi": "पानी की ज़रूरत नहीं।"
+  },
+  "shared.farm.today_too_wet": {
+   "en": "Patch {section} is too wet.",
+   "hi": "हिस्सा {section} बहुत गीला है।"
+  },
+  "shared.farm.today_dont_water": {
+   "en": "Don't water it.",
+   "hi": "पानी न दें।"
+  },
+  "shared.farm.today_untested": {
+   "en": "Patch {section} is not tested yet.",
+   "hi": "हिस्सा {section} अभी जाँचा नहीं गया।"
+  },
+  "shared.farm.twin3_1": {
+   "en": "We copy your field into a computer.",
+   "hi": "आपके खेत की नक़ल कंप्यूटर में बनाते हैं।"
+  },
+  "shared.farm.twin3_2": {
+   "en": "We replay {year_count} years of NASA weather.",
+   "hi": "हम नासा का {year_count} साल मौसम दोहराते हैं।"
+  },
+  "shared.farm.twin3_2b": {
+   "en": "Each crop plan, in every year.",
+   "hi": "हर फ़सल योजना, हर वर्ष में।"
+  },
+  "shared.farm.twin3_3": {
+   "en": "We keep the plan that works most often.",
+   "hi": "सबसे ज़्यादा चलने वाली योजना रखते हैं।"
+  },
+  "shared.farm.twin3_3b": {
+   "en": "Then we tell you what to do.",
+   "hi": "फिर बताते हैं कि क्या करें।"
+  },
+  "shared.farm.anim_title": {
+   "en": "Each plan in every past season",
+   "hi": "हर योजना, हर पिछले मौसम में"
+  },
+  "shared.farm.anim_green": {
+   "en": "Did not fail",
+   "hi": "विफल नहीं हुआ"
+  },
+  "shared.farm.anim_red": {
+   "en": "Failed",
+   "hi": "विफल हुआ"
+  },
+  "shared.farm.anim_winner": {
+   "en": "Works most often:",
+   "hi": "सबसे ज़्यादा सफल:"
+  },
+  "shared.farm.judges_link": {
+   "en": "For judges: how we know",
+   "hi": "निर्णायकों के लिए: हमें कैसे पता"
+  },
+  "shared.bs_months.Jan": {
+   "en": "Magh",
+   "hi": "जनवरी–फ़रवरी"
+  },
+  "shared.bs_months.Feb": {
+   "en": "Falgun",
+   "hi": "फ़रवरी–मार्च"
+  },
+  "shared.bs_months.Mar": {
+   "en": "Chaitra",
+   "hi": "मार्च–अप्रैल"
+  },
+  "shared.bs_months.Apr": {
+   "en": "Baisakh",
+   "hi": "अप्रैल–मई"
+  },
+  "shared.bs_months.May": {
+   "en": "Jestha",
+   "hi": "मई–जून"
+  },
+  "shared.bs_months.Jun": {
+   "en": "Asar",
+   "hi": "जून–जुलाई"
+  },
+  "shared.bs_months.Jul": {
+   "en": "Shrawan",
+   "hi": "जुलाई–अगस्त"
+  },
+  "shared.bs_months.Aug": {
+   "en": "Bhadra",
+   "hi": "अगस्त–सितंबर"
+  },
+  "shared.bs_months.Sep": {
+   "en": "Asoj",
+   "hi": "सितंबर–अक्टूबर"
+  },
+  "shared.bs_months.Oct": {
+   "en": "Kartik",
+   "hi": "अक्टूबर–नवंबर"
+  },
+  "shared.bs_months.Nov": {
+   "en": "Mangsir",
+   "hi": "नवंबर–दिसंबर"
+  },
+  "shared.bs_months.Dec": {
+   "en": "Poush",
+   "hi": "दिसंबर–जनवरी"
+  },
+  "screens.what_to_grow.labels.plan.items.safest_bad_years": {
+   "en": "Safest in bad years",
+   "hi": "बुरे वर्षों में सबसे सुरक्षित"
   }
  }
 }

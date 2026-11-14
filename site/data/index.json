@@ -16,6 +16,26 @@
    "area": "demo"
   },
   {
+   "id": "ambohidratrimo",
+   "name": "Ambohidratrimo field, Madagascar (PLACEHOLDER location and rotation)",
+   "country": "Madagascar",
+   "lat": -18.834125,
+   "lon": 47.436917,
+   "bbox": [
+    47.400997,
+    -18.847986,
+    47.439003,
+    -18.812014
+   ],
+   "sample": false,
+   "area": null,
+   "profile": "default",
+   "note": {
+    "en": "A field on another continent. Built with the global settings, not checked against local rain gauges yet.",
+    "ne": "अर्को महादेशको खेत। विश्वव्यापी सेटिङले बनाइएको, स्थानीय वर्षा मापकसँग अझै जाँच गरिएको छैन।"
+   }
+  },
+  {
    "id": "sample-1",
    "name": "Bhaktapur sample field 1 (PLACEHOLDER)",
    "country": "Nepal",

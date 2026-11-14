@@ -4585,6 +4585,16 @@
        "es": "Alimentar su tierra",
        "fr": "Nourrir votre sol",
        "sw": "Lisha udongo wako"
+      },
+      "safest_bad_years": {
+       "en": "Safest in bad years",
+       "ne": "खराब वर्षमा सबैभन्दा भरपर्दो",
+       "ne_review": "needs native-speaker review",
+       "hi": "बुरे वर्षों में सबसे सुरक्षित",
+       "bn": "খারাপ বছরে সবচেয়ে নিরাপদ",
+       "es": "La más segura en años malos",
+       "fr": "Le plus sûr les mauvaises années",
+       "sw": "Salama zaidi miaka mibaya"
       }
      }
     },
@@ -7103,6 +7113,630 @@
     "es": "Ver cómo",
     "fr": "Voir comment",
     "sw": "Ona jinsi"
+   }
+  },
+  "farm": {
+   "act_sow": {
+    "en": "Sow {crop} in {sow_month}.",
+    "ne": "{sow_month}मा {crop} लगाउनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{sow_month} में {crop} बोएँ।",
+    "bn": "{sow_month}-এ {crop} বুনুন।",
+    "es": "Siembre {crop} en {sow_month}.",
+    "fr": "Semez {crop} en {sow_month}.",
+    "sw": "Panda {crop} mwezi {sow_month}."
+   },
+   "act_sow_usual": {
+    "en": "{crop} is usually sown in {sow_month}.",
+    "ne": "{crop} प्रायः {sow_month}मा लगाइन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} आमतौर पर {sow_month} में बोया जाता है।",
+    "bn": "{crop} সাধারণত {sow_month}-এ বোনা হয়।",
+    "es": "{crop} suele sembrarse en {sow_month}.",
+    "fr": "{crop} se sème d'habitude en {sow_month}.",
+    "sw": "{crop} kwa kawaida hupandwa {sow_month}."
+   },
+   "act_plant": {
+    "en": "Plant {crop} in {sow_month}.",
+    "ne": "{sow_month}मा {crop} रोप्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{sow_month} में {crop} रोपें।",
+    "bn": "{sow_month}-এ {crop} রোপণ করুন।",
+    "es": "Plante {crop} en {sow_month}.",
+    "fr": "Repiquez {crop} en {sow_month}.",
+    "sw": "Pandikiza {crop} mwezi {sow_month}."
+   },
+   "act_plant_usual": {
+    "en": "{crop} is usually planted in {sow_month}.",
+    "ne": "{crop} प्रायः {sow_month}मा रोपिन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} आमतौर पर {sow_month} में रोपा जाता है।",
+    "bn": "{crop} সাধারণত {sow_month}-এ রোপণ হয়।",
+    "es": "{crop} suele plantarse en {sow_month}.",
+    "fr": "{crop} se repique d'habitude en {sow_month}.",
+    "sw": "{crop} kwa kawaida hupandikizwa {sow_month}."
+   },
+   "act_harvest": {
+    "en": "Harvest {crop} in {harvest_month}.",
+    "ne": "{harvest_month}मा {crop} भित्र्याउनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{harvest_month} में {crop} काटें।",
+    "bn": "{harvest_month}-এ {crop} কাটুন।",
+    "es": "Coseche {crop} en {harvest_month}.",
+    "fr": "Récoltez {crop} en {harvest_month}.",
+    "sw": "Vuna {crop} mwezi {harvest_month}."
+   },
+   "act_harvest_usual": {
+    "en": "{crop} is usually harvested in {harvest_month}.",
+    "ne": "{crop} प्रायः {harvest_month}मा भित्र्याइन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} आमतौर पर {harvest_month} में कटता है।",
+    "bn": "{crop} সাধারণত {harvest_month}-এ কাটা হয়।",
+    "es": "{crop} suele cosecharse en {harvest_month}.",
+    "fr": "{crop} se récolte d'habitude en {harvest_month}.",
+    "sw": "{crop} kwa kawaida huvunwa {harvest_month}."
+   },
+   "act_then_sow": {
+    "en": "Then sow {new_crop} in {sow_month}.",
+    "ne": "अनि {sow_month}मा {new_crop} लगाउनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर {sow_month} में {new_crop} बोएँ।",
+    "bn": "তারপর {sow_month}-এ {new_crop} বুনুন।",
+    "es": "Luego siembre {new_crop} en {sow_month}.",
+    "fr": "Puis semez {new_crop} en {sow_month}.",
+    "sw": "Kisha panda {new_crop} mwezi {sow_month}."
+   },
+   "act_then_sow_usual": {
+    "en": "Then {new_crop} is usually sown in {sow_month}.",
+    "ne": "अनि {new_crop} प्रायः {sow_month}मा लगाइन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर {new_crop} प्रायः {sow_month} में बोते हैं।",
+    "bn": "তারপর {new_crop} সাধারণত {sow_month}-এ বোনা হয়।",
+    "es": "Luego {new_crop} suele sembrarse en {sow_month}.",
+    "fr": "Puis {new_crop} se sème d'habitude en {sow_month}.",
+    "sw": "Kisha {new_crop} kwa kawaida hupandwa {sow_month}."
+   },
+   "act_then_plant": {
+    "en": "Then plant {new_crop} in {sow_month}.",
+    "ne": "अनि {sow_month}मा {new_crop} रोप्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर {sow_month} में {new_crop} रोपें।",
+    "bn": "তারপর {sow_month}-এ {new_crop} রোপণ করুন।",
+    "es": "Luego plante {new_crop} en {sow_month}.",
+    "fr": "Puis repiquez {new_crop} en {sow_month}.",
+    "sw": "Kisha pandikiza {new_crop} mwezi {sow_month}."
+   },
+   "act_then_plant_usual": {
+    "en": "Then {new_crop} is usually planted in {sow_month}.",
+    "ne": "अनि {new_crop} प्रायः {sow_month}मा रोपिन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर {new_crop} प्रायः {sow_month} में रोपते हैं।",
+    "bn": "তারপর {new_crop} সাধারণত {sow_month}-এ রোপণ হয়।",
+    "es": "Luego {new_crop} suele plantarse en {sow_month}.",
+    "fr": "Puis {new_crop} se repique d'habitude en {sow_month}.",
+    "sw": "Kisha {new_crop} hupandikizwa {sow_month} kwa kawaida."
+   },
+   "word_better": {
+    "en": "Better than now.",
+    "ne": "अहिलेभन्दा राम्रो।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अभी से बेहतर।",
+    "bn": "এখনকার চেয়ে ভালো।",
+    "es": "Mejor que ahora.",
+    "fr": "Mieux qu'aujourd'hui.",
+    "sw": "Bora kuliko sasa."
+   },
+   "word_better_usual": {
+    "en": "Usually better than now.",
+    "ne": "प्रायः अहिलेभन्दा राम्रो।",
+    "ne_review": "needs native-speaker review",
+    "hi": "आमतौर पर अभी से बेहतर।",
+    "bn": "সাধারণত এখনকার চেয়ে ভালো।",
+    "es": "Suele ser mejor que ahora.",
+    "fr": "D'habitude mieux qu'aujourd'hui.",
+    "sw": "Kwa kawaida bora kuliko sasa."
+   },
+   "word_worse": {
+    "en": "Worse than now.",
+    "ne": "अहिलेभन्दा कमजोर।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अभी से कमज़ोर।",
+    "bn": "এখনকার চেয়ে খারাপ।",
+    "es": "Peor que ahora.",
+    "fr": "Moins bien qu'aujourd'hui.",
+    "sw": "Mbaya kuliko sasa."
+   },
+   "word_worse_usual": {
+    "en": "Usually worse than now.",
+    "ne": "प्रायः अहिलेभन्दा कमजोर।",
+    "ne_review": "needs native-speaker review",
+    "hi": "आमतौर पर अभी से कमज़ोर।",
+    "bn": "সাধারণত এখনকার চেয়ে খারাপ।",
+    "es": "Suele ser peor que ahora.",
+    "fr": "D'habitude moins bien qu'aujourd'hui.",
+    "sw": "Kwa kawaida mbaya kuliko sasa."
+   },
+   "word_same": {
+    "en": "About the same as now.",
+    "ne": "अहिलेजस्तै।",
+    "ne_review": "needs native-speaker review",
+    "hi": "लगभग अभी जैसा।",
+    "bn": "প্রায় এখনকার মতো।",
+    "es": "Más o menos como ahora.",
+    "fr": "À peu près comme aujourd'hui.",
+    "sw": "Karibu sawa na sasa."
+   },
+   "word_mixed": {
+    "en": "Sometimes better, sometimes worse.",
+    "ne": "कहिले राम्रो, कहिले कमजोर।",
+    "ne_review": "needs native-speaker review",
+    "hi": "कभी बेहतर, कभी कमज़ोर।",
+    "bn": "কখনো ভালো, কখনো খারাপ।",
+    "es": "A veces mejor, a veces peor.",
+    "fr": "Parfois mieux, parfois moins bien.",
+    "sw": "Mara bora, mara mbaya."
+   },
+   "guess": {
+    "en": "We think you grow {guess_list}.",
+    "ne": "तपाईं {guess_list} लगाउनुहुन्छ जस्तो लाग्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हमें लगता है आप {guess_list} उगाते हैं।",
+    "bn": "আমাদের মনে হয় আপনি {guess_list} চাষ করেন।",
+    "es": "Creemos que cultiva {guess_list}.",
+    "fr": "Nous pensons que vous cultivez {guess_list}.",
+    "sw": "Tunadhani unalima {guess_list}."
+   },
+   "guess_ask": {
+    "en": "Is that right?",
+    "ne": "के यो ठीक हो?",
+    "ne_review": "needs native-speaker review",
+    "hi": "क्या यह सही है?",
+    "bn": "এটা কি ঠিক?",
+    "es": "¿Es correcto?",
+    "fr": "Est-ce juste ?",
+    "sw": "Je, ni sahihi?"
+   },
+   "wx_usual": {
+    "en": "{month}: usually {rain_word}, {temp_word}.",
+    "ne": "{month}: प्रायः {rain_word}, {temp_word}।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{month}: आमतौर पर {rain_word}, {temp_word}।",
+    "bn": "{month}: সাধারণত {rain_word}, {temp_word}।",
+    "es": "{month}: suele ser {rain_word}, {temp_word}.",
+    "fr": "{month} : d'habitude {rain_word}, {temp_word}.",
+    "sw": "{month}: kwa kawaida {rain_word}, {temp_word}."
+   },
+   "wx_hurt_potato_cold": {
+    "en": "Cold nights may hurt {crop}.",
+    "ne": "चिसो रातले {crop}लाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "ठंडी रातें {crop} को नुकसान कर सकती हैं।",
+    "bn": "ঠান্ডা রাত {crop}-এর ক্ষতি করতে পারে।",
+    "es": "Las noches frías pueden dañar {crop}.",
+    "fr": "Les nuits froides peuvent abîmer {crop}.",
+    "sw": "Usiku wa baridi unaweza kudhuru {crop}."
+   },
+   "wx_hurt_potato_heat": {
+    "en": "Hot days may hurt {crop}.",
+    "ne": "तातो दिनले {crop}लाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "गर्म दिन {crop} को नुकसान कर सकते हैं।",
+    "bn": "গরম দিন {crop}-এর ক্ষতি করতে পারে।",
+    "es": "Los días calurosos pueden dañar {crop}.",
+    "fr": "Les jours chauds peuvent abîmer {crop}.",
+    "sw": "Siku za joto zinaweza kudhuru {crop}."
+   },
+   "wx_hurt_wheat_flower_frost": {
+    "en": "Frost may hurt {crop} flowers.",
+    "ne": "तुसारोले {crop}को फूललाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "पाला {crop} के फूल बिगाड़ सकता है।",
+    "bn": "তুষারপাত {crop}-এর ফুলের ক্ষতি করতে পারে।",
+    "es": "La helada puede dañar las flores de {crop}.",
+    "fr": "Le gel peut abîmer les fleurs de {crop}.",
+    "sw": "Barafu inaweza kudhuru maua ya {crop}."
+   },
+   "wx_hurt_wheat_floret_heat": {
+    "en": "Heat may hurt {crop} before flowering.",
+    "ne": "फुल्नुअघिको गर्मीले {crop}लाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "फूल से पहले गर्मी {crop} बिगाड़ सकती है।",
+    "bn": "ফুল আসার আগে গরম {crop}-এর ক্ষতি করতে পারে।",
+    "es": "El calor puede dañar {crop} antes de florecer.",
+    "fr": "La chaleur peut abîmer {crop} avant la floraison.",
+    "sw": "Joto linaweza kudhuru {crop} kabla ya kuchanua."
+   },
+   "wx_hurt_wheat_grain_heat": {
+    "en": "Heat may hurt {crop} grain.",
+    "ne": "गर्मीले {crop}को दानालाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "गर्मी {crop} के दाने बिगाड़ सकती है।",
+    "bn": "গরম {crop}-এর দানার ক্ষতি করতে পারে।",
+    "es": "El calor puede dañar el grano de {crop}.",
+    "fr": "La chaleur peut abîmer le grain de {crop}.",
+    "sw": "Joto linaweza kudhuru nafaka ya {crop}."
+   },
+   "wx_hurt_dry_spell": {
+    "en": "Weeks without rain may hurt {crop}.",
+    "ne": "हप्तौं पानी नपर्दा {crop}लाई हानि हुन सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हफ़्तों सूखा {crop} बिगाड़ सकता है।",
+    "bn": "টানা শুকনো সপ্তাহ {crop}-এর ক্ষতি করতে পারে।",
+    "es": "Semanas sin lluvia pueden dañar {crop}.",
+    "fr": "Des semaines sans pluie peuvent abîmer {crop}.",
+    "sw": "Wiki bila mvua zinaweza kudhuru {crop}."
+   },
+   "wx_hurt_big_rain_sowing": {
+    "en": "Big rain may hurt {crop} sowing.",
+    "ne": "ठूलो पानीले {crop} लगाउने काम बिगार्न सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "भारी बारिश {crop} की बुवाई बिगाड़ सकती है।",
+    "bn": "বড় বৃষ্টি {crop} বোনা নষ্ট করতে পারে।",
+    "es": "La lluvia fuerte puede dañar {crop} al sembrar.",
+    "fr": "Grosse pluie : risque pour le semis de {crop}.",
+    "sw": "Mvua kubwa inaweza kuharibu upandaji wa {crop}."
+   },
+   "wx_hurt_big_rain_harvest": {
+    "en": "Big rain may hurt {crop} harvest.",
+    "ne": "ठूलो पानीले {crop} भित्र्याउने काम बिगार्न सक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "भारी बारिश {crop} की कटाई बिगाड़ सकती है।",
+    "bn": "বড় বৃষ্টি {crop} কাটা নষ্ট করতে পারে।",
+    "es": "La lluvia fuerte puede dañar {crop} al cosechar.",
+    "fr": "Grosse pluie : risque pour la récolte de {crop}.",
+    "sw": "Mvua kubwa inaweza kuharibu mavuno ya {crop}."
+   },
+   "wx_calm": {
+    "en": "Usually no big danger to crops.",
+    "ne": "प्रायः बालीलाई ठूलो खतरा हुँदैन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "आमतौर पर फ़सल को बड़ा ख़तरा नहीं।",
+    "bn": "সাধারণত ফসলের বড় বিপদ নেই।",
+    "es": "Normalmente sin gran peligro para los cultivos.",
+    "fr": "D'habitude, pas de grand danger pour les cultures.",
+    "sw": "Kwa kawaida hakuna hatari kubwa kwa mazao."
+   },
+   "today_drier": {
+    "en": "Patch {section} is drier than the others.",
+    "ne": "भाग {section} अरूभन्दा सुक्खा छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हिस्सा {section} बाक़ी से सूखा है।",
+    "bn": "অংশ {section} অন্যগুলোর চেয়ে শুকনো।",
+    "es": "La parcela {section} está más seca.",
+    "fr": "La parcelle {section} est plus sèche.",
+    "sw": "Sehemu {section} ni kavu kuliko nyingine."
+   },
+   "today_water_first": {
+    "en": "Water it first.",
+    "ne": "यसमा पहिले पानी दिनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "इसे पहले पानी दें।",
+    "bn": "এখানে আগে পানি দিন।",
+    "es": "Riéguela primero.",
+    "fr": "Arrosez-la d'abord.",
+    "sw": "Imwagilie kwanza."
+   },
+   "today_wetter": {
+    "en": "Patch {section} is wetter than the others.",
+    "ne": "भाग {section} अरूभन्दा ओसिलो छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हिस्सा {section} बाक़ी से गीला है।",
+    "bn": "অংশ {section} অন্যগুলোর চেয়ে ভেজা।",
+    "es": "La parcela {section} está más húmeda.",
+    "fr": "La parcelle {section} est plus humide.",
+    "sw": "Sehemu {section} ina unyevu kuliko nyingine."
+   },
+   "today_water_last": {
+    "en": "Water it last.",
+    "ne": "यसमा पछि पानी दिनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "इसे बाद में पानी दें।",
+    "bn": "এখানে পরে পানি দিন।",
+    "es": "Riéguela al final.",
+    "fr": "Arrosez-la en dernier.",
+    "sw": "Imwagilie mwisho."
+   },
+   "today_same": {
+    "en": "Patch {section} is like the others.",
+    "ne": "भाग {section} अरूजस्तै छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हिस्सा {section} बाक़ी जैसा है।",
+    "bn": "অংশ {section} অন্যগুলোর মতো।",
+    "es": "La parcela {section} está como las otras.",
+    "fr": "La parcelle {section} est comme les autres.",
+    "sw": "Sehemu {section} ni kama nyingine."
+   },
+   "today_dry": {
+    "en": "Patch {section} is dry.",
+    "ne": "भाग {section} सुक्खा छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हिस्सा {section} सूखा है।",
+    "bn": "অংশ {section} শুকনো।",
+    "es": "La parcela {section} está seca.",
+    "fr": "La parcelle {section} est sèche.",
+    "sw": "Sehemu {section} ni kavu."
+   },
+   "today_water_today": {
+    "en": "Water it today.",
+    "ne": "आज पानी दिनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "आज पानी दें।",
+    "bn": "আজ পানি দিন।",
+    "es": "Riéguela hoy.",
+    "fr": "Arrosez-la aujourd'hui.",
+    "sw": "Imwagilie leo."
+   },
+   "today_fine": {
+    "en": "Patch {section} is fine.",
+    "ne": "भाग {section} ठीक छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हिस्सा {section} ठीक है।",
+    "bn": "অংশ {section} ঠিক আছে।",
+    "es": "La parcela {section} está bien.",
+    "fr": "La parcelle {section} va bien.",
+    "sw": "Sehemu {section} iko sawa."
+   },
+   "today_no_water": {
+    "en": "No water needed.",
+    "ne": "पानी चाहिँदैन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "पानी की ज़रूरत नहीं।",
+    "bn": "পানি লাগবে না।",
+    "es": "No necesita agua.",
+    "fr": "Pas besoin d'eau.",
+    "sw": "Haihitaji maji."
+   },
+   "today_too_wet": {
+    "en": "Patch {section} is too wet.",
+    "ne": "भाग {section} धेरै भिजेको छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हिस्सा {section} बहुत गीला है।",
+    "bn": "অংশ {section} খুব ভেজা।",
+    "es": "La parcela {section} está demasiado húmeda.",
+    "fr": "La parcelle {section} est trop humide.",
+    "sw": "Sehemu {section} ina maji mengi mno."
+   },
+   "today_dont_water": {
+    "en": "Don't water it.",
+    "ne": "पानी नदिनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "पानी न दें।",
+    "bn": "পানি দেবেন না।",
+    "es": "No la riegue.",
+    "fr": "Ne l'arrosez pas.",
+    "sw": "Usiimwagilie."
+   },
+   "today_untested": {
+    "en": "Patch {section} is not tested yet.",
+    "ne": "भाग {section} अझै जाँचिएको छैन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हिस्सा {section} अभी जाँचा नहीं गया।",
+    "bn": "অংশ {section} এখনও পরীক্ষা হয়নি।",
+    "es": "La parcela {section} aún no se ha probado.",
+    "fr": "La parcelle {section} n'est pas encore testée.",
+    "sw": "Sehemu {section} bado haijapimwa."
+   },
+   "twin3_1": {
+    "en": "We copy your field into a computer.",
+    "ne": "हामी तपाईंको खेत कम्प्युटरमा नक्कल गर्छौं।",
+    "ne_review": "needs native-speaker review",
+    "hi": "आपके खेत की नक़ल कंप्यूटर में बनाते हैं।",
+    "bn": "আমরা আপনার খেত কম্পিউটারে নকল করি।",
+    "es": "Copiamos su campo en un ordenador.",
+    "fr": "Nous copions votre champ dans un ordinateur.",
+    "sw": "Tunanakili shamba lako kwenye kompyuta."
+   },
+   "twin3_2": {
+    "en": "We replay {year_count} years of NASA weather.",
+    "ne": "हामी नासाको {year_count} वर्षको मौसम दोहोर्‍याउँछौं।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हम नासा का {year_count} साल मौसम दोहराते हैं।",
+    "bn": "আমরা নাসার {year_count} বছরের আবহাওয়া আবার চালাই।",
+    "es": "Repetimos {year_count} años de tiempo de la NASA.",
+    "fr": "Nous rejouons {year_count} ans de météo NASA.",
+    "sw": "Tunarudia miaka {year_count} ya hewa ya NASA."
+   },
+   "twin3_2b": {
+    "en": "Each crop plan, in every year.",
+    "ne": "हरेक बाली योजना, हरेक वर्षमा।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हर फ़सल योजना, हर वर्ष में।",
+    "bn": "প্রতিটি ফসল পরিকল্পনা, প্রতি বছরে।",
+    "es": "Cada plan de cultivo, cada año.",
+    "fr": "Chaque plan de culture, chaque année.",
+    "sw": "Kila mpango wa zao, kila mwaka."
+   },
+   "twin3_3": {
+    "en": "We keep the plan that works most often.",
+    "ne": "धेरैपटक सफल हुने योजना हामी राख्छौं।",
+    "ne_review": "needs native-speaker review",
+    "hi": "सबसे ज़्यादा चलने वाली योजना रखते हैं।",
+    "bn": "যে পরিকল্পনা বেশিবার কাজ করে, সেটি রাখি।",
+    "es": "Nos quedamos con el plan que más funciona.",
+    "fr": "Nous gardons le plan qui marche le plus.",
+    "sw": "Tunachagua mpango unaofaulu mara nyingi."
+   },
+   "twin3_3b": {
+    "en": "Then we tell you what to do.",
+    "ne": "अनि के गर्ने भनेर हामी बताउँछौं।",
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर बताते हैं कि क्या करें।",
+    "bn": "তারপর বলি কী করতে হবে।",
+    "es": "Luego le decimos qué hacer.",
+    "fr": "Puis nous vous disons quoi faire.",
+    "sw": "Kisha tunakuambia la kufanya."
+   },
+   "anim_title": {
+    "en": "Each plan in every past season",
+    "ne": "हरेक योजना, विगतका हरेक याममा",
+    "ne_review": "needs native-speaker review",
+    "hi": "हर योजना, हर पिछले मौसम में",
+    "bn": "প্রতিটি পরিকল্পনা, আগের প্রতিটি মৌসুমে",
+    "es": "Cada plan en cada temporada pasada",
+    "fr": "Chaque plan à chaque saison passée",
+    "sw": "Kila mpango katika kila msimu uliopita"
+   },
+   "anim_green": {
+    "en": "Did not fail",
+    "ne": "असफल भएन",
+    "ne_review": "needs native-speaker review",
+    "hi": "विफल नहीं हुआ",
+    "bn": "ব্যর্থ হয়নি",
+    "es": "No falló",
+    "fr": "N'a pas échoué",
+    "sw": "Haikushindwa"
+   },
+   "anim_red": {
+    "en": "Failed",
+    "ne": "असफल भयो",
+    "ne_review": "needs native-speaker review",
+    "hi": "विफल हुआ",
+    "bn": "ব্যর্থ হয়েছে",
+    "es": "Falló",
+    "fr": "A échoué",
+    "sw": "Ilishindwa"
+   },
+   "anim_winner": {
+    "en": "Works most often:",
+    "ne": "धेरैपटक सफल:",
+    "ne_review": "needs native-speaker review",
+    "hi": "सबसे ज़्यादा सफल:",
+    "bn": "সবচেয়ে বেশিবার সফল:",
+    "es": "Funciona más a menudo:",
+    "fr": "Marche le plus souvent :",
+    "sw": "Hufaulu mara nyingi:"
+   },
+   "judges_link": {
+    "en": "For judges: how we know",
+    "ne": "निर्णायकका लागि: हामीलाई कसरी थाहा भयो",
+    "ne_review": "needs native-speaker review",
+    "hi": "निर्णायकों के लिए: हमें कैसे पता",
+    "bn": "বিচারকদের জন্য: আমরা কীভাবে জানি",
+    "es": "Para el jurado: cómo lo sabemos",
+    "fr": "Pour le jury : comment nous savons",
+    "sw": "Kwa majaji: tunajuaje"
+   }
+  },
+  "bs_months": {
+   "Jan": {
+    "en": "Magh",
+    "ne": "माघ",
+    "ne_review": "needs native-speaker review",
+    "hi": "जनवरी–फ़रवरी",
+    "bn": "জানুয়ারি–ফেব্রুয়ারি",
+    "es": "enero–febrero",
+    "fr": "janvier–février",
+    "sw": "Januari–Februari"
+   },
+   "Feb": {
+    "en": "Falgun",
+    "ne": "फागुन",
+    "ne_review": "needs native-speaker review",
+    "hi": "फ़रवरी–मार्च",
+    "bn": "ফেব্রুয়ারি–মার্চ",
+    "es": "febrero–marzo",
+    "fr": "février–mars",
+    "sw": "Februari–Machi"
+   },
+   "Mar": {
+    "en": "Chaitra",
+    "ne": "चैत",
+    "ne_review": "needs native-speaker review",
+    "hi": "मार्च–अप्रैल",
+    "bn": "মার্চ–এপ্রিল",
+    "es": "marzo–abril",
+    "fr": "mars–avril",
+    "sw": "Machi–Aprili"
+   },
+   "Apr": {
+    "en": "Baisakh",
+    "ne": "बैशाख",
+    "ne_review": "needs native-speaker review",
+    "hi": "अप्रैल–मई",
+    "bn": "এপ্রিল–মে",
+    "es": "abril–mayo",
+    "fr": "avril–mai",
+    "sw": "Aprili–Mei"
+   },
+   "May": {
+    "en": "Jestha",
+    "ne": "जेठ",
+    "ne_review": "needs native-speaker review",
+    "hi": "मई–जून",
+    "bn": "মে–জুন",
+    "es": "mayo–junio",
+    "fr": "mai–juin",
+    "sw": "Mei–Juni"
+   },
+   "Jun": {
+    "en": "Asar",
+    "ne": "असार",
+    "ne_review": "needs native-speaker review",
+    "hi": "जून–जुलाई",
+    "bn": "জুন–জুলাই",
+    "es": "junio–julio",
+    "fr": "juin–juillet",
+    "sw": "Juni–Julai"
+   },
+   "Jul": {
+    "en": "Shrawan",
+    "ne": "साउन",
+    "ne_review": "needs native-speaker review",
+    "hi": "जुलाई–अगस्त",
+    "bn": "জুলাই–আগস্ট",
+    "es": "julio–agosto",
+    "fr": "juillet–août",
+    "sw": "Julai–Agosti"
+   },
+   "Aug": {
+    "en": "Bhadra",
+    "ne": "भदौ",
+    "ne_review": "needs native-speaker review",
+    "hi": "अगस्त–सितंबर",
+    "bn": "আগস্ট–সেপ্টেম্বর",
+    "es": "agosto–septiembre",
+    "fr": "août–septembre",
+    "sw": "Agosti–Septemba"
+   },
+   "Sep": {
+    "en": "Asoj",
+    "ne": "असोज",
+    "ne_review": "needs native-speaker review",
+    "hi": "सितंबर–अक्टूबर",
+    "bn": "সেপ্টেম্বর–অক্টোবর",
+    "es": "septiembre–octubre",
+    "fr": "septembre–octobre",
+    "sw": "Septemba–Oktoba"
+   },
+   "Oct": {
+    "en": "Kartik",
+    "ne": "कात्तिक",
+    "ne_review": "needs native-speaker review",
+    "hi": "अक्टूबर–नवंबर",
+    "bn": "অক্টোবর–নভেম্বর",
+    "es": "octubre–noviembre",
+    "fr": "octobre–novembre",
+    "sw": "Oktoba–Novemba"
+   },
+   "Nov": {
+    "en": "Mangsir",
+    "ne": "मंसिर",
+    "ne_review": "needs native-speaker review",
+    "hi": "नवंबर–दिसंबर",
+    "bn": "নভেম্বর–ডিসেম্বর",
+    "es": "noviembre–diciembre",
+    "fr": "novembre–décembre",
+    "sw": "Novemba–Desemba"
+   },
+   "Dec": {
+    "en": "Poush",
+    "ne": "पुस",
+    "ne_review": "needs native-speaker review",
+    "hi": "दिसंबर–जनवरी",
+    "bn": "ডিসেম্বর–জানুয়ারি",
+    "es": "diciembre–enero",
+    "fr": "décembre–janvier",
+    "sw": "Desemba–Januari"
    }
   }
  },

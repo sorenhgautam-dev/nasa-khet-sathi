@@ -195,6 +195,18 @@ def stated_choices(rules):
     return out
 
 
+def choices_note(profile_id):
+    """The method page's caption for a field on the global defaults (owner's item 3, 2026-11-14), or None: the stated
+    choices are the whole project's, written for the Nepal fields."""
+    if profile_id != "default":
+        return None
+    return ("These are the whole project's stated choices, written for the Nepal fields. This field is built on the global "
+            "defaults (config/countries/default.yaml): where they differ (drought years, the monsoon onset, the crop calendar, "
+            "the rain gauges) the defaults are used, and the steps that need a country profile (the DHM-scaled and gauge-tuned "
+            "rain, rain at harvest, the fertiliser saver, the heat clock, weather ahead, the replay window) were not run here, "
+            "so their choices do not apply to it.")
+
+
 def skeleton(field):
     """REVIEW_2 H6: a field file's frame from config/fields/<id>.yaml alone (no site file needed): its identity, and
     every block empty until the export's steps fill it. A sample's or placeholder's label is in its configured name."""
@@ -673,6 +685,8 @@ def export_step7(doc, field_id, plans):
         out["method"]["field_memory"] = field_memory_block(json.loads(memory_path.read_text()), words["tabs"])
     import yaml
     out["method"]["choices"] = stated_choices(yaml.safe_load((REPO / "config" / "rules.yaml").read_text()))
+    if note := choices_note(profile_for(field)["_id"]):     # owner's item 3: whose choices the list holds
+        out["method"]["choices_note"] = note
     import pandas as pd
     wx = pd.read_parquet(REPO / "data" / "clean" / field_id / "weather.parquet")
     twin_mm = float(wx.groupby(pd.DatetimeIndex(wx["date"]).year)["rain_mm"].sum().mean())

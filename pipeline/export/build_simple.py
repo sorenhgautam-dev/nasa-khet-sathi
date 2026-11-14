@@ -13,8 +13,10 @@ import argparse
 import json
 import math
 import sys
+from statistics import median
 from pathlib import Path
 
+from pipeline.export.build_replay import plans_of
 from pipeline.fetch.rules import load_rules
 
 REPO = Path(__file__).resolve().parents[2]
@@ -117,6 +119,164 @@ def winter_answers(field_doc, replay):
     return out
 
 
+# ---------- farmer answers (rules.yaml farmer_answers, owner 2026-11-14 evening) ----------
+KEYS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+MONSOON_BLOCKS = {"Jun", "Jul", "Aug", "Sep", "Oct"}       # rice is the farmer's crop in these blocks (weather_ahead.rank)
+
+
+def bs_key(mmdd, start_day=15):
+    """The approximate Bikram Sambat month of a day, by the Gregorian month key it starts in (weather_ahead.blocks)."""
+    m, d = (int(x) for x in mmdd.split("-"))
+    return KEYS[m - 1] if d >= start_day else KEYS[(m - 2) % 12]
+
+
+def _verb(crop):
+    return "plant" if crop == "rice" else "sow"
+
+
+def actions(rotation, in_window):
+    """The plan's calendar for the crops touching the window: sow (rice: plant) and harvest each; the last harvest joined
+    with the rotation's next crop (farmer_answers.actions)."""
+    out = []
+    for i, c in enumerate(in_window):
+        out.append({"do": _verb(c["crop"]), "crop": c["crop"], "month": bs_key(c["start"])})
+        if i < len(in_window) - 1:
+            out.append({"do": "harvest", "crop": c["crop"], "month": bs_key(c["end"])})
+            continue
+        k = next((j for j, r in enumerate(rotation) if (r["crop"], r["start"]) == (c["crop"], c["start"])), None)
+        nxt = rotation[(k + 1) % len(rotation)] if k is not None and len(rotation) > 1 else None
+        if nxt is None:
+            out.append({"do": "harvest", "crop": c["crop"], "month": bs_key(c["end"])})
+        else:
+            out.append({"do": "harvest_then", "crop": c["crop"], "month": bs_key(c["end"]), "new_do": _verb(nxt["crop"]),
+                        "new_crop": nxt["crop"], "new_month": bs_key(nxt["start"])})
+    return out
+
+
+def _soft(label):
+    return label != "VERIFIED"
+
+
+def action_lines(acts, label):
+    """Text keys and fills, plain only when the output (plan_months) is VERIFIED (farmer_answers.wording)."""
+    tail = "_usual" if _soft(label) else ""
+    out = []
+    for a in acts:
+        if a["do"] in ("sow", "plant"):
+            out.append({"text": f"farm.act_{a['do']}{tail}", "fill": {"crop": a["crop"], "sow_month": a["month"]}})
+        else:
+            out.append({"text": f"farm.act_harvest{tail}", "fill": {"crop": a["crop"], "harvest_month": a["month"]}})
+            if a["do"] == "harvest_then":
+                out.append({"text": f"farm.act_then_{a['new_do']}{tail}", "fill": {"new_crop": a["new_crop"], "sow_month": a["new_month"]}})
+    return out
+
+
+def plan_word(counts, n, label):
+    """simple_cards.verdict as the plan's word against the farmer's own plan (farmer_answers.plan_word)."""
+    v = verdict(counts, n)
+    soft = _soft(label)
+    text = {"better": "farm.word_better" + ("_usual" if soft else ""), "worse": "farm.word_worse" + ("_usual" if soft else ""),
+            "same": "farm.word_same", "mixed": "farm.word_mixed"}[v]
+    return {"verdict": v, "text": text}
+
+
+def animation(scores, order, failed_below):
+    """Green = a season that did not fail; the winner has the most green seasons (ties: higher median, then order)."""
+    plans = []
+    for pid in order:
+        sc = scores[pid]
+        green = [None if x is None else x >= failed_below for x in sc]
+        vals = sorted(x for x in sc if x is not None)
+        plans.append({"id": pid, "green": green, "green_count": sum(1 for g in green if g),
+                      "median": median(vals) if vals else None})
+    best = max(range(len(plans)), key=lambda i: (plans[i]["green_count"], plans[i]["median"] or -1, -i))
+    return {"plans": plans, "winner": plans[best]["id"]}
+
+
+def weather_line(block, crops, can_water):
+    """One Weather ahead block for one farmer: usual words, the first danger of the farmer's crops (else of any crop;
+    no dry spells when they can water), its tip. Always soft: 'usually', 'may' (farmer_answers.wording)."""
+    usual = {"text": "farm.wx_usual", "fill": {"month": block["key"], "rain_word": block["usual"]["rain"],
+                                               "temp_word": block["usual"]["temp"]}}
+    ds = [d for d in block["dangers"] if not (can_water and d["kind"] == "dry_spell")]
+    d = next((d for d in ds if d["crop"] in crops), ds[0] if ds else None)
+    if d is None:
+        return {"usual": usual, "danger": {"text": "farm.wx_calm"}, "tip": None}
+    return {"usual": usual, "danger": {"text": f"farm.wx_hurt_{d['check']}", "fill": {"crop": d["crop"]}},
+            "tip": {"text": f"weather.tip_{d['tip']}"}}
+
+
+def _status(labels, output):
+    return ((labels.get("outputs") or {}).get(output) or {}).get("status", "NOT YET VERIFIABLE")
+
+
+def _bench_passed(path):
+    """The soil stick's cup test passed (farmer_answers.wording.today): a real bench file whose proofs all hold."""
+    if not path.exists():
+        return False
+    b = json.loads(path.read_text())
+    real = not b.get("made_up", True) and "REHEARSAL" not in str(b.get("label", "")).upper() \
+        and "fake_probe" not in b.get("sources", [])
+    return real and all((b.get("proofs") or {}).get(k) is True for k in ("steady", "order", "temperature"))
+
+
+def farmer_answers(field_doc, replay, answers, rules, labels=None, bench_path=None):
+    """The farmer screens' final answers (rules.yaml farmer_answers): text keys and fills only, worded by each output's
+    label. answers: {winter crop: its Replay plan}."""
+    failed_below = load_rules()["window_replay"]["classes"]["failed_below"]
+    by, wb = rules["compare"]["better_by"], rules["compare"]["worse_by"]
+    lp = REPO / "site" / "data" / "labels" / f"{replay['field']}.json"
+    labels = labels if labels is not None else (json.loads(lp.read_text()) if lp.exists() else {})
+    st = {o: _status(labels, o) for o in ("plan_months", "replay_window", "rotation_guess", "probe_water", "part_status")}
+    rplans = {p["id"]: p for p in replay["plans"]}
+    rotation = {pid: crops for pid, _, crops in plans_of(field_doc)}
+    windows = [w["id"] for w in replay["windows"]]
+    starts = [x["id"] for x in replay["starts"]]
+    shown = [p["id"] for p in field_doc["plans"]]
+
+    def crops_of(pid, w):
+        return [c["crop"] for c in rplans[pid]["crops_in_window"][w]]
+
+    words = {}
+    for crop, own in answers.items():
+        words[crop] = {}
+        for w in windows:
+            words[crop][w] = {}
+            for s0 in starts:
+                own_sc = {q["year"]: q["score"] for q in rplans[own]["results"][w][s0]}
+                row = {}
+                for pid in shown:
+                    if crops_of(pid, w) == crops_of(own, w):
+                        row[pid] = {"now": True}
+                        continue
+                    sc = {q["year"]: q["score"] for q in rplans[pid]["results"][w][s0]}
+                    yrs = sorted(y for y in set(own_sc) & set(sc) if own_sc[y] is not None and sc[y] is not None)
+                    if not yrs:
+                        continue
+                    c = compare([sc[y] for y in yrs], [own_sc[y] for y in yrs], by, wb)
+                    row[pid] = {"counts": c, **plan_word(c, len(yrs), st["replay_window"])}
+                words[crop][w][s0] = row
+    acts = {pid: {w: action_lines(actions(rotation[pid], rplans[pid]["crops_in_window"][w]), st["plan_months"])
+                  for w in windows} for pid in rplans if pid in rotation}
+    s0 = replay["start_default"]
+    anim = animation({pid: [q["score"] for q in rplans[pid]["results"]["m6"][s0]] for pid in shown}, shown, failed_below)
+    anim.update({"window": "m6", "start": s0, "seasons": replay["seasons"], "failed_below": failed_below})
+    wx = {}
+    blocks = (field_doc.get("weather") or {}).get("blocks") or []
+    for crop in answers:
+        wx[crop] = {}
+        for water in ("no", "yes"):
+            wx[crop][water] = {b["key"]: weather_line(b, {crop} | ({"rice"} if b["key"] in MONSOON_BLOCKS else set()),
+                                                      water == "yes") for b in blocks}
+    bench = bench_path or REPO / "data" / "checks" / "probe" / "bench.json"
+    return {
+        "labels_used": st,
+        "today": {"mode": "band" if _bench_passed(bench) else "compare"},
+        "guess": {"text": "farm.guess", "fill": {"guess_list": (field_doc.get("diary") or {}).get("guess") or []}},
+        "plan_words": words, "actions": acts, "animation": anim, "weather_lines": wx,
+    }
+
+
 def build(field_id, rules=None):
     rules = rules or load_rules()["simple_cards"]
     site = REPO / "site" / "data"
@@ -144,6 +304,7 @@ def build(field_id, rules=None):
                        "source": "the satellite's typical crop months (site/data/pulse/<field>.json typical; HLS 30 m)"},
         "label": {"sure": "estimate", "scale": (replay.get("label") or {}).get("scale", "valley")},
         "sources": replay.get("sources", []),
+        **farmer_answers(field_doc, replay, answers, rules),
     }
 
 

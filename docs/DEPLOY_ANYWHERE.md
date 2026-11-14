@@ -80,12 +80,12 @@ Times as measured for the field in Madagascar (14 November 2026). NASA's servers
 | GPM IMERG rain (daily, 6 at a time) | about 75 min | 285 MB kept |
 | CHIRPS rain (a check) | about 30 min | about 1.5 GB read, 0.6 MB kept |
 | HLS greenness (2013-2025) | about 30 min | 40 MB |
-| MODIS greenness (AppEEARS: NASA cuts the box, then you wait in its queue) | 10 to 60 min | 4 MB |
+| MODIS greenness (AppEEARS: NASA cuts the box, then you wait in its queue) | 77 min here | 1 MB |
 | Rain-gauge counts (IMERG and GPCC) | about 30 min | 10 MB |
 | POWER, NASADEM, SoilGrids, GRACE, FAOSTAT, GHCN, FAO Crop Calendar | 1 to 2 min each | under 60 MB |
-| Build: weather, rain check, diary, replay | about 5 min | |
-| Build: the plans (a few hundred crop plans, 25 years, two water cases) | about 4 min | |
-| Build: the site's files | about 5 min | |
+| Build: weather, rain check, diary, replay | under 1 min | |
+| Build: the plans (67 crop plans here, 25 years, two water cases; Nepal's 165 take about 3 min) | about 1.5 min | |
+| Build: the site's files and the folder | seconds | 1.6 MB |
 
 So a new field takes about **3 to 4 hours**, nearly all of it downloads. The kit prints its estimate before it starts
 and the time each step took.
@@ -149,6 +149,14 @@ Its zone's FAO calendar lists four of the library's crops (rice, wheat, potato, 
 rotations: rice then potato (today), rice then wheat ("Fill the empty months") and rice alone. The third plan is rice
 alone, the only rotation left (rules.yaml `plans.third_plan_fallback`), with less cover than today, and it is named
 "Safest in bad years" (`plans.third_plan_name_no_legume`), not "Feed your soil": nothing in it feeds the soil.
+
+**Built, not on the live site yet.** The pieces of the app written for Nepal now follow the field's profile: its labels
+name its own station and FAO zone (no DHM), Field Pulse shows no typical seasons (Nepal's "monsoon" and "winter" slots
+do not fit a rainy season that crosses the new year), the method page says its list of choices is the whole project's,
+and `validate --final` accepts the files only a country profile makes (VALIDATION 3.26). Still to do: the third plan's
+words ("This plan is here to feed your soil" and NARC's dhaincha lines) and its name on screen, which the site takes from
+the plan's id. Then `scripts/run_field.py --field ambohidratrimo --only export pulse checkup labels` and
+`python -m pipeline.export.build_index` put it on the site.
 
 ## Not ready yet
 

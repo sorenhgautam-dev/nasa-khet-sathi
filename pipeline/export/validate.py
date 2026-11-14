@@ -220,6 +220,16 @@ def words_problems(doc):
 FEATURES = {"labels": "labels_schema.json", "replay": "replay_schema.json", "pulse": "pulse_schema.json",
             "checkup": "checkup_schema.json", "simple": "simple_schema.json",
             "rainrisk": "rainrisk_schema.json", "fertiliser": "fertiliser_schema.json", "heatclock": "heatclock_schema.json"}
+# Made only for a field with a country profile (scripts/make_site.py PROFILE_ONLY's site files; owner's item 3,
+# 2026-11-14): a field on the global defaults (index.json profile "default") has none, and the site says "not ready yet".
+NOT_ON_DEFAULTS = ("replay", "simple", "rainrisk", "fertiliser", "heatclock")
+
+
+def missing_feature_files(index, data_dir, kind):
+    """--final: each listed field's <kind>/<id>.json, except the profile-only kinds for a field on the global defaults."""
+    return [f"{f['id']}: listed in index.json but no {kind}/{f['id']}.json" for f in (index or {}).get("fields", [])
+            if not (f.get("profile") == "default" and kind in NOT_ON_DEFAULTS)
+            and not (Path(data_dir) / kind / f"{f['id']}.json").exists()]
 LABEL_IDS = ("rain_months", "rain_month_words", "heat_month_words", "frost_month_words", "soil_month_words", "cover_months",
              "season_dates", "rotation_guess", "flood_years", "drought_years", "harvest_years", "plan_cover_gap_beats_current",
              "plan_safest_beats_current", "monsoon_start", "groundwater", "part_soil_water", "probe_water", "outlook_2040",
@@ -524,7 +534,7 @@ def basemap_problems(doc, path, data_dir, index):
 def launch_problems(data_dir, index, final=False):
     """{path: problems} for the launch files (owner's launch brief, 2026-11-14): probe_log.json and version.json when
     they exist (no probe_log until real readings exist: the site says 'not ready yet'), and every basemap/*.json;
-    --final also wants a basemap for every listed field and the world."""
+    --final also wants a basemap for every listed field (but one on the global defaults) and the world."""
     data_dir, out = Path(data_dir), {}
     log_path = data_dir / "probe_log.json"
     if log_path.exists():
@@ -540,7 +550,8 @@ def launch_problems(data_dir, index, final=False):
         if errs := basemap_problems(json.loads(path.read_text()), path, data_dir, index):
             out[str(path)] = errs
     if final:
-        for fid in [f["id"] for f in (index or {}).get("fields", [])] + ["world"]:
+        # a field on the global defaults has no picture yet (basemap.py rebuilds every field's at once): the world's
+        for fid in [f["id"] for f in (index or {}).get("fields", []) if f.get("profile") != "default"] + ["world"]:
             p = data_dir / "basemap" / f"{fid}.json"
             if not p.exists():
                 out.setdefault(str(p), []).append("missing (python -m pipeline.fetch.basemap)")
@@ -608,10 +619,8 @@ def main(argv=None):
                 errs.append(f"nearby/map: {doc['nearby']['map']} does not exist")
             if errs:
                 problems[str(path)] = errs
-        if args.final:
-            for f in (index or {}).get("fields", []):
-                if not (data_dir / kind / f"{f['id']}.json").exists():
-                    problems.setdefault(str(data_dir / kind), []).append(f"{f['id']}: listed in index.json but no {kind}/{f['id']}.json")
+        if args.final and (gone := missing_feature_files(index, data_dir, kind)):
+            problems.setdefault(str(data_dir / kind), []).extend(gone)
 
     for path, errs in problems.items():
         for e in errs:

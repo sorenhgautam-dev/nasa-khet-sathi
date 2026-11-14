@@ -3035,6 +3035,258 @@
   "shared.twin.open": {
    "en": "See how",
    "es": "Ver cómo"
+  },
+  "shared.farm.act_sow": {
+   "en": "Sow {crop} in {sow_month}.",
+   "es": "Siembre {crop} en {sow_month}."
+  },
+  "shared.farm.act_sow_usual": {
+   "en": "{crop} is usually sown in {sow_month}.",
+   "es": "{crop} suele sembrarse en {sow_month}."
+  },
+  "shared.farm.act_plant": {
+   "en": "Plant {crop} in {sow_month}.",
+   "es": "Plante {crop} en {sow_month}."
+  },
+  "shared.farm.act_plant_usual": {
+   "en": "{crop} is usually planted in {sow_month}.",
+   "es": "{crop} suele plantarse en {sow_month}."
+  },
+  "shared.farm.act_harvest": {
+   "en": "Harvest {crop} in {harvest_month}.",
+   "es": "Coseche {crop} en {harvest_month}."
+  },
+  "shared.farm.act_harvest_usual": {
+   "en": "{crop} is usually harvested in {harvest_month}.",
+   "es": "{crop} suele cosecharse en {harvest_month}."
+  },
+  "shared.farm.act_then_sow": {
+   "en": "Then sow {new_crop} in {sow_month}.",
+   "es": "Luego siembre {new_crop} en {sow_month}."
+  },
+  "shared.farm.act_then_sow_usual": {
+   "en": "Then {new_crop} is usually sown in {sow_month}.",
+   "es": "Luego {new_crop} suele sembrarse en {sow_month}."
+  },
+  "shared.farm.act_then_plant": {
+   "en": "Then plant {new_crop} in {sow_month}.",
+   "es": "Luego plante {new_crop} en {sow_month}."
+  },
+  "shared.farm.act_then_plant_usual": {
+   "en": "Then {new_crop} is usually planted in {sow_month}.",
+   "es": "Luego {new_crop} suele plantarse en {sow_month}."
+  },
+  "shared.farm.word_better": {
+   "en": "Better than now.",
+   "es": "Mejor que ahora."
+  },
+  "shared.farm.word_better_usual": {
+   "en": "Usually better than now.",
+   "es": "Suele ser mejor que ahora."
+  },
+  "shared.farm.word_worse": {
+   "en": "Worse than now.",
+   "es": "Peor que ahora."
+  },
+  "shared.farm.word_worse_usual": {
+   "en": "Usually worse than now.",
+   "es": "Suele ser peor que ahora."
+  },
+  "shared.farm.word_same": {
+   "en": "About the same as now.",
+   "es": "Más o menos como ahora."
+  },
+  "shared.farm.word_mixed": {
+   "en": "Sometimes better, sometimes worse.",
+   "es": "A veces mejor, a veces peor."
+  },
+  "shared.farm.guess": {
+   "en": "We think you grow {guess_list}.",
+   "es": "Creemos que cultiva {guess_list}."
+  },
+  "shared.farm.guess_ask": {
+   "en": "Is that right?",
+   "es": "¿Es correcto?"
+  },
+  "shared.farm.wx_usual": {
+   "en": "{month}: usually {rain_word}, {temp_word}.",
+   "es": "{month}: suele ser {rain_word}, {temp_word}."
+  },
+  "shared.farm.wx_hurt_potato_cold": {
+   "en": "Cold nights may hurt {crop}.",
+   "es": "Las noches frías pueden dañar {crop}."
+  },
+  "shared.farm.wx_hurt_potato_heat": {
+   "en": "Hot days may hurt {crop}.",
+   "es": "Los días calurosos pueden dañar {crop}."
+  },
+  "shared.farm.wx_hurt_wheat_flower_frost": {
+   "en": "Frost may hurt {crop} flowers.",
+   "es": "La helada puede dañar las flores de {crop}."
+  },
+  "shared.farm.wx_hurt_wheat_floret_heat": {
+   "en": "Heat may hurt {crop} before flowering.",
+   "es": "El calor puede dañar {crop} antes de florecer."
+  },
+  "shared.farm.wx_hurt_wheat_grain_heat": {
+   "en": "Heat may hurt {crop} grain.",
+   "es": "El calor puede dañar el grano de {crop}."
+  },
+  "shared.farm.wx_hurt_dry_spell": {
+   "en": "Weeks without rain may hurt {crop}.",
+   "es": "Semanas sin lluvia pueden dañar {crop}."
+  },
+  "shared.farm.wx_hurt_big_rain_sowing": {
+   "en": "Big rain may hurt {crop} sowing.",
+   "es": "La lluvia fuerte puede dañar {crop} al sembrar."
+  },
+  "shared.farm.wx_hurt_big_rain_harvest": {
+   "en": "Big rain may hurt {crop} harvest.",
+   "es": "La lluvia fuerte puede dañar {crop} al cosechar."
+  },
+  "shared.farm.wx_calm": {
+   "en": "Usually no big danger to crops.",
+   "es": "Normalmente sin gran peligro para los cultivos."
+  },
+  "shared.farm.today_drier": {
+   "en": "Patch {section} is drier than the others.",
+   "es": "La parcela {section} está más seca."
+  },
+  "shared.farm.today_water_first": {
+   "en": "Water it first.",
+   "es": "Riéguela primero."
+  },
+  "shared.farm.today_wetter": {
+   "en": "Patch {section} is wetter than the others.",
+   "es": "La parcela {section} está más húmeda."
+  },
+  "shared.farm.today_water_last": {
+   "en": "Water it last.",
+   "es": "Riéguela al final."
+  },
+  "shared.farm.today_same": {
+   "en": "Patch {section} is like the others.",
+   "es": "La parcela {section} está como las otras."
+  },
+  "shared.farm.today_dry": {
+   "en": "Patch {section} is dry.",
+   "es": "La parcela {section} está seca."
+  },
+  "shared.farm.today_water_today": {
+   "en": "Water it today.",
+   "es": "Riéguela hoy."
+  },
+  "shared.farm.today_fine": {
+   "en": "Patch {section} is fine.",
+   "es": "La parcela {section} está bien."
+  },
+  "shared.farm.today_no_water": {
+   "en": "No water needed.",
+   "es": "No necesita agua."
+  },
+  "shared.farm.today_too_wet": {
+   "en": "Patch {section} is too wet.",
+   "es": "La parcela {section} está demasiado húmeda."
+  },
+  "shared.farm.today_dont_water": {
+   "en": "Don't water it.",
+   "es": "No la riegue."
+  },
+  "shared.farm.today_untested": {
+   "en": "Patch {section} is not tested yet.",
+   "es": "La parcela {section} aún no se ha probado."
+  },
+  "shared.farm.twin3_1": {
+   "en": "We copy your field into a computer.",
+   "es": "Copiamos su campo en un ordenador."
+  },
+  "shared.farm.twin3_2": {
+   "en": "We replay {year_count} years of NASA weather.",
+   "es": "Repetimos {year_count} años de tiempo de la NASA."
+  },
+  "shared.farm.twin3_2b": {
+   "en": "Each crop plan, in every year.",
+   "es": "Cada plan de cultivo, cada año."
+  },
+  "shared.farm.twin3_3": {
+   "en": "We keep the plan that works most often.",
+   "es": "Nos quedamos con el plan que más funciona."
+  },
+  "shared.farm.twin3_3b": {
+   "en": "Then we tell you what to do.",
+   "es": "Luego le decimos qué hacer."
+  },
+  "shared.farm.anim_title": {
+   "en": "Each plan in every past season",
+   "es": "Cada plan en cada temporada pasada"
+  },
+  "shared.farm.anim_green": {
+   "en": "Did not fail",
+   "es": "No falló"
+  },
+  "shared.farm.anim_red": {
+   "en": "Failed",
+   "es": "Falló"
+  },
+  "shared.farm.anim_winner": {
+   "en": "Works most often:",
+   "es": "Funciona más a menudo:"
+  },
+  "shared.farm.judges_link": {
+   "en": "For judges: how we know",
+   "es": "Para el jurado: cómo lo sabemos"
+  },
+  "shared.bs_months.Jan": {
+   "en": "Magh",
+   "es": "enero–febrero"
+  },
+  "shared.bs_months.Feb": {
+   "en": "Falgun",
+   "es": "febrero–marzo"
+  },
+  "shared.bs_months.Mar": {
+   "en": "Chaitra",
+   "es": "marzo–abril"
+  },
+  "shared.bs_months.Apr": {
+   "en": "Baisakh",
+   "es": "abril–mayo"
+  },
+  "shared.bs_months.May": {
+   "en": "Jestha",
+   "es": "mayo–junio"
+  },
+  "shared.bs_months.Jun": {
+   "en": "Asar",
+   "es": "junio–julio"
+  },
+  "shared.bs_months.Jul": {
+   "en": "Shrawan",
+   "es": "julio–agosto"
+  },
+  "shared.bs_months.Aug": {
+   "en": "Bhadra",
+   "es": "agosto–septiembre"
+  },
+  "shared.bs_months.Sep": {
+   "en": "Asoj",
+   "es": "septiembre–octubre"
+  },
+  "shared.bs_months.Oct": {
+   "en": "Kartik",
+   "es": "octubre–noviembre"
+  },
+  "shared.bs_months.Nov": {
+   "en": "Mangsir",
+   "es": "noviembre–diciembre"
+  },
+  "shared.bs_months.Dec": {
+   "en": "Poush",
+   "es": "diciembre–enero"
+  },
+  "screens.what_to_grow.labels.plan.items.safest_bad_years": {
+   "en": "Safest in bad years",
+   "es": "La más segura en años malos"
   }
  }
 }

@@ -12,6 +12,7 @@ import sys
 from pathlib import Path
 
 from pipeline.fetch.fields import load_field
+from pipeline.fetch.profiles import profile_for
 from pipeline.fetch.rules import load_rules
 
 REPO = Path(__file__).resolve().parents[2]
@@ -32,6 +33,38 @@ SOURCES = {   # key: (name, resolution) as the site's sources name them
     "area_box": ("Area map of the fetch box", "about 10 x 10 km"),
     "literature": ("Published studies (not measured on this field)", "studies elsewhere"),   # 2026-11-14 fertiliser_saver
 }
+
+
+def source_names(field, profile_id, data=REPO / "data"):
+    """{key: (name, resolution)}: SOURCES as they are for a field with a country profile; on the global defaults
+    (owner's item 3, 2026-11-14) the station and the crop calendar are the field's own (its GHCN station, its FAO zone)."""
+    if profile_id != "default":
+        return SOURCES
+    from pipeline.export.build_field_json import STATIONS, station_distance_text
+    out = dict(SOURCES)
+    sid = field.get("validation_station")
+    if sid:
+        name, lat, lon = STATIONS.get(sid, (sid, None, None))
+        name = field.get("validation_station_name") or name
+        out["ghcn"] = (f"{name} station", station_distance_text(field["lat"], field["lon"], lat, lon) if lat is not None
+                       else "one point")
+    card = Path(data) / "cards" / field["id"] / "crop_calendar.json"
+    zone = json.loads(card.read_text()).get("zone") if card.exists() else None
+    out["crop_calendar"] = (f"FAO Crop Calendar, {zone}" if zone else "FAO Crop Calendar", "a zone of the country")
+    return out
+
+
+def own_sources(keys, profile_id):
+    """An output's sources; on the global defaults without DHM's (Nepal's gauges: none is read there)."""
+    return keys if profile_id != "default" else [k for k in keys if not k.startswith("dhm_")]
+
+
+def rain_fixed(fid, data=REPO / "data"):
+    """Whether the field's rain was corrected (its weather card's rain_break.applied), or None with no card."""
+    card = Path(data) / "cards" / fid / "weather.json"
+    if not card.exists():
+        return None
+    return bool(json.loads(card.read_text())["corrections"].get("rain_break", {}).get("applied"))
 
 
 def load_scorecard(fid, field, data=REPO / "data"):
@@ -76,13 +109,19 @@ def build(fid, data=REPO / "data"):
     card, src = load_scorecard(fid, field, data)
     L = rules["labels"]
     outputs = {k: label_for(k, field, rules, card) for k in L["outputs"]}
+    pid, fixed = profile_for(field)["_id"], rain_fixed(fid, data)
+    for o in outputs.values():
+        o["sources"] = own_sources(o["sources"], pid)
+        if fixed is False:                            # the field's own rain was not corrected: no "rain fix" mark
+            o["rain_corrected"] = False
+    names = source_names({**field, "id": fid}, pid, data)
     used = sorted({s for o in outputs.values() for s in o["sources"]})
     return {"field": fid, "placeholder": bool(field.get("placeholder")),
             "made_by": "pipeline/export/build_labels.py (rules.yaml labels)",
             "scorecard_of": src,
             "scales": {k: {x: v[x] for x in ("en", "ne", "about")} for k, v in L["scales"].items()},
             "outputs": outputs,
-            "sources": {k: {"name": SOURCES[k][0], "resolution": SOURCES[k][1], "scale": _source_scale(k, field, rules)}
+            "sources": {k: {"name": names[k][0], "resolution": names[k][1], "scale": _source_scale(k, field, rules)}
                         for k in used}}
 
 

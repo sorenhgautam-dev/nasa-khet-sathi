@@ -143,7 +143,9 @@ a country adds its profile. Next step: a hosted service for instant check-ups.**
   Earthdata login and the GES DISC data agreement. A new field takes about 3 to 4 hours, nearly all of it downloads.
 - **A field on another continent.** `config/fields/ambohidratrimo.yaml`, a PLACEHOLDER square in Madagascar's central
   highlands, was built with the kit on the global defaults: its own rain check (no gauge break, so NASA's rain is used as
-  published), its own FAO crop calendar, and labels that say NOT YET VERIFIABLE where no local check exists.
+  published), its own FAO crop calendar, and labels that say NOT YET VERIFIABLE where no local check exists. It is
+  not on the live site yet: the third plan's words and name were written for Nepal's pulse crop and must first
+  follow the field (VALIDATION 3.26, docs/DEPLOY_ANYWHERE.md).
 
 ## Next steps (after the deadline)
 

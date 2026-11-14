@@ -77,7 +77,8 @@ downloads. A farmer or an extension worker should get a check-up in minutes. **W
 global datasets on hand (GPM, POWER, HLS, SoilGrids, GRACE, NEX-GDDP) for whole regions, so a new field only reads its own
 cells; the same pipeline, unchanged, as a job queue; country profiles (`config/countries/`) written with each country's
 weather office and extension service; the shorter record finished first (the downloads take `record_years`, the build
-still assumes 2001-2025); and a privacy rule written before launch, since a farmer's field location is personal. The
+still assumes 2001-2025); Field Pulse's typical seasons for a field abroad, with season slots taken from each field's own
+wet and dry months (left out on the global defaults today, VALIDATION 3.26); and a privacy rule written before launch, since a farmer's field location is personal. The
 public site stays static and keeps working without it. GPM's GES DISC servers are moving to Earthdata Cloud ("will end
 no earlier than September 30th 2026"), so `pipeline/fetch/gpm.py` would move with them.
 

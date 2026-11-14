@@ -3035,6 +3035,258 @@
   "shared.twin.open": {
    "en": "See how",
    "sw": "Ona jinsi"
+  },
+  "shared.farm.act_sow": {
+   "en": "Sow {crop} in {sow_month}.",
+   "sw": "Panda {crop} mwezi {sow_month}."
+  },
+  "shared.farm.act_sow_usual": {
+   "en": "{crop} is usually sown in {sow_month}.",
+   "sw": "{crop} kwa kawaida hupandwa {sow_month}."
+  },
+  "shared.farm.act_plant": {
+   "en": "Plant {crop} in {sow_month}.",
+   "sw": "Pandikiza {crop} mwezi {sow_month}."
+  },
+  "shared.farm.act_plant_usual": {
+   "en": "{crop} is usually planted in {sow_month}.",
+   "sw": "{crop} kwa kawaida hupandikizwa {sow_month}."
+  },
+  "shared.farm.act_harvest": {
+   "en": "Harvest {crop} in {harvest_month}.",
+   "sw": "Vuna {crop} mwezi {harvest_month}."
+  },
+  "shared.farm.act_harvest_usual": {
+   "en": "{crop} is usually harvested in {harvest_month}.",
+   "sw": "{crop} kwa kawaida huvunwa {harvest_month}."
+  },
+  "shared.farm.act_then_sow": {
+   "en": "Then sow {new_crop} in {sow_month}.",
+   "sw": "Kisha panda {new_crop} mwezi {sow_month}."
+  },
+  "shared.farm.act_then_sow_usual": {
+   "en": "Then {new_crop} is usually sown in {sow_month}.",
+   "sw": "Kisha {new_crop} kwa kawaida hupandwa {sow_month}."
+  },
+  "shared.farm.act_then_plant": {
+   "en": "Then plant {new_crop} in {sow_month}.",
+   "sw": "Kisha pandikiza {new_crop} mwezi {sow_month}."
+  },
+  "shared.farm.act_then_plant_usual": {
+   "en": "Then {new_crop} is usually planted in {sow_month}.",
+   "sw": "Kisha {new_crop} hupandikizwa {sow_month} kwa kawaida."
+  },
+  "shared.farm.word_better": {
+   "en": "Better than now.",
+   "sw": "Bora kuliko sasa."
+  },
+  "shared.farm.word_better_usual": {
+   "en": "Usually better than now.",
+   "sw": "Kwa kawaida bora kuliko sasa."
+  },
+  "shared.farm.word_worse": {
+   "en": "Worse than now.",
+   "sw": "Mbaya kuliko sasa."
+  },
+  "shared.farm.word_worse_usual": {
+   "en": "Usually worse than now.",
+   "sw": "Kwa kawaida mbaya kuliko sasa."
+  },
+  "shared.farm.word_same": {
+   "en": "About the same as now.",
+   "sw": "Karibu sawa na sasa."
+  },
+  "shared.farm.word_mixed": {
+   "en": "Sometimes better, sometimes worse.",
+   "sw": "Mara bora, mara mbaya."
+  },
+  "shared.farm.guess": {
+   "en": "We think you grow {guess_list}.",
+   "sw": "Tunadhani unalima {guess_list}."
+  },
+  "shared.farm.guess_ask": {
+   "en": "Is that right?",
+   "sw": "Je, ni sahihi?"
+  },
+  "shared.farm.wx_usual": {
+   "en": "{month}: usually {rain_word}, {temp_word}.",
+   "sw": "{month}: kwa kawaida {rain_word}, {temp_word}."
+  },
+  "shared.farm.wx_hurt_potato_cold": {
+   "en": "Cold nights may hurt {crop}.",
+   "sw": "Usiku wa baridi unaweza kudhuru {crop}."
+  },
+  "shared.farm.wx_hurt_potato_heat": {
+   "en": "Hot days may hurt {crop}.",
+   "sw": "Siku za joto zinaweza kudhuru {crop}."
+  },
+  "shared.farm.wx_hurt_wheat_flower_frost": {
+   "en": "Frost may hurt {crop} flowers.",
+   "sw": "Barafu inaweza kudhuru maua ya {crop}."
+  },
+  "shared.farm.wx_hurt_wheat_floret_heat": {
+   "en": "Heat may hurt {crop} before flowering.",
+   "sw": "Joto linaweza kudhuru {crop} kabla ya kuchanua."
+  },
+  "shared.farm.wx_hurt_wheat_grain_heat": {
+   "en": "Heat may hurt {crop} grain.",
+   "sw": "Joto linaweza kudhuru nafaka ya {crop}."
+  },
+  "shared.farm.wx_hurt_dry_spell": {
+   "en": "Weeks without rain may hurt {crop}.",
+   "sw": "Wiki bila mvua zinaweza kudhuru {crop}."
+  },
+  "shared.farm.wx_hurt_big_rain_sowing": {
+   "en": "Big rain may hurt {crop} sowing.",
+   "sw": "Mvua kubwa inaweza kuharibu upandaji wa {crop}."
+  },
+  "shared.farm.wx_hurt_big_rain_harvest": {
+   "en": "Big rain may hurt {crop} harvest.",
+   "sw": "Mvua kubwa inaweza kuharibu mavuno ya {crop}."
+  },
+  "shared.farm.wx_calm": {
+   "en": "Usually no big danger to crops.",
+   "sw": "Kwa kawaida hakuna hatari kubwa kwa mazao."
+  },
+  "shared.farm.today_drier": {
+   "en": "Patch {section} is drier than the others.",
+   "sw": "Sehemu {section} ni kavu kuliko nyingine."
+  },
+  "shared.farm.today_water_first": {
+   "en": "Water it first.",
+   "sw": "Imwagilie kwanza."
+  },
+  "shared.farm.today_wetter": {
+   "en": "Patch {section} is wetter than the others.",
+   "sw": "Sehemu {section} ina unyevu kuliko nyingine."
+  },
+  "shared.farm.today_water_last": {
+   "en": "Water it last.",
+   "sw": "Imwagilie mwisho."
+  },
+  "shared.farm.today_same": {
+   "en": "Patch {section} is like the others.",
+   "sw": "Sehemu {section} ni kama nyingine."
+  },
+  "shared.farm.today_dry": {
+   "en": "Patch {section} is dry.",
+   "sw": "Sehemu {section} ni kavu."
+  },
+  "shared.farm.today_water_today": {
+   "en": "Water it today.",
+   "sw": "Imwagilie leo."
+  },
+  "shared.farm.today_fine": {
+   "en": "Patch {section} is fine.",
+   "sw": "Sehemu {section} iko sawa."
+  },
+  "shared.farm.today_no_water": {
+   "en": "No water needed.",
+   "sw": "Haihitaji maji."
+  },
+  "shared.farm.today_too_wet": {
+   "en": "Patch {section} is too wet.",
+   "sw": "Sehemu {section} ina maji mengi mno."
+  },
+  "shared.farm.today_dont_water": {
+   "en": "Don't water it.",
+   "sw": "Usiimwagilie."
+  },
+  "shared.farm.today_untested": {
+   "en": "Patch {section} is not tested yet.",
+   "sw": "Sehemu {section} bado haijapimwa."
+  },
+  "shared.farm.twin3_1": {
+   "en": "We copy your field into a computer.",
+   "sw": "Tunanakili shamba lako kwenye kompyuta."
+  },
+  "shared.farm.twin3_2": {
+   "en": "We replay {year_count} years of NASA weather.",
+   "sw": "Tunarudia miaka {year_count} ya hewa ya NASA."
+  },
+  "shared.farm.twin3_2b": {
+   "en": "Each crop plan, in every year.",
+   "sw": "Kila mpango wa zao, kila mwaka."
+  },
+  "shared.farm.twin3_3": {
+   "en": "We keep the plan that works most often.",
+   "sw": "Tunachagua mpango unaofaulu mara nyingi."
+  },
+  "shared.farm.twin3_3b": {
+   "en": "Then we tell you what to do.",
+   "sw": "Kisha tunakuambia la kufanya."
+  },
+  "shared.farm.anim_title": {
+   "en": "Each plan in every past season",
+   "sw": "Kila mpango katika kila msimu uliopita"
+  },
+  "shared.farm.anim_green": {
+   "en": "Did not fail",
+   "sw": "Haikushindwa"
+  },
+  "shared.farm.anim_red": {
+   "en": "Failed",
+   "sw": "Ilishindwa"
+  },
+  "shared.farm.anim_winner": {
+   "en": "Works most often:",
+   "sw": "Hufaulu mara nyingi:"
+  },
+  "shared.farm.judges_link": {
+   "en": "For judges: how we know",
+   "sw": "Kwa majaji: tunajuaje"
+  },
+  "shared.bs_months.Jan": {
+   "en": "Magh",
+   "sw": "Januari–Februari"
+  },
+  "shared.bs_months.Feb": {
+   "en": "Falgun",
+   "sw": "Februari–Machi"
+  },
+  "shared.bs_months.Mar": {
+   "en": "Chaitra",
+   "sw": "Machi–Aprili"
+  },
+  "shared.bs_months.Apr": {
+   "en": "Baisakh",
+   "sw": "Aprili–Mei"
+  },
+  "shared.bs_months.May": {
+   "en": "Jestha",
+   "sw": "Mei–Juni"
+  },
+  "shared.bs_months.Jun": {
+   "en": "Asar",
+   "sw": "Juni–Julai"
+  },
+  "shared.bs_months.Jul": {
+   "en": "Shrawan",
+   "sw": "Julai–Agosti"
+  },
+  "shared.bs_months.Aug": {
+   "en": "Bhadra",
+   "sw": "Agosti–Septemba"
+  },
+  "shared.bs_months.Sep": {
+   "en": "Asoj",
+   "sw": "Septemba–Oktoba"
+  },
+  "shared.bs_months.Oct": {
+   "en": "Kartik",
+   "sw": "Oktoba–Novemba"
+  },
+  "shared.bs_months.Nov": {
+   "en": "Mangsir",
+   "sw": "Novemba–Desemba"
+  },
+  "shared.bs_months.Dec": {
+   "en": "Poush",
+   "sw": "Desemba–Januari"
+  },
+  "screens.what_to_grow.labels.plan.items.safest_bad_years": {
+   "en": "Safest in bad years",
+   "sw": "Salama zaidi miaka mibaya"
   }
  }
 }

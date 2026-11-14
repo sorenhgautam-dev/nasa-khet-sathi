@@ -490,6 +490,28 @@
    ],
    "how": "how many past winters the suggested crop did better (site/data/simple/<field>.json replay_card counts.better)",
    "example": 24
+  },
+  "rain_word": {
+   "from": [
+    "contract:weather.blocks[].usual.rain",
+    "words:screens.shared.weather"
+   ],
+   "how": "the block's usual rain word (dry, some rain, wet), from words.json weather.rain_<word>",
+   "example": {
+    "en": "dry",
+    "ne": "सुक्खा"
+   }
+  },
+  "temp_word": {
+   "from": [
+    "contract:weather.blocks[].usual.temp",
+    "words:screens.shared.weather"
+   ],
+   "how": "the block's usual temperature word (cold, mild, warm), from words.json weather.temp_<word>",
+   "example": {
+    "en": "cold",
+    "ne": "चिसो"
+   }
   }
  },
  "conditions": {
@@ -815,6 +837,13 @@
    ],
    "how": "the weather card's corrections.rain_break.gauge_calibration.applied is true (rules.yaml gpm_series.gauge_calibration apply, the owner's switch)",
    "plain": "if we also matched the rain to four DHM gauges"
+  },
+  "profile_NP": {
+   "from": [
+    "code:pipeline/plans/explain.py:conditions"
+   ],
+   "how": "the field's country profile is Nepal's (config/countries/NP.yaml; pipeline/fetch/profiles.py)",
+   "plain": "if the field is in Nepal"
   }
  }
 }

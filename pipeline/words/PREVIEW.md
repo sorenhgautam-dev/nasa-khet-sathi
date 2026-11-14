@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 634 texts): 611 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 697 texts): 674 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -426,7 +426,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 8. What should I grow? / म के लगाऊँ?
 
-*Nepali: 61 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 62 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -481,6 +481,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Fill the empty months | खाली महिनामा पनि बाली |
 | Follow the changing rains | बदलिँदो वर्षासँगै |
 | Feed your soil | माटोलाई मलिलो बनाउने |
+| Safest in bad years | खराब वर्षमा सबैभन्दा भरपर्दो |
 | *Score names* | |
 | Harvest | उब्जनी |
 | Water | पानी |
@@ -510,7 +511,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Rains now start about {shift_days_abs} days earlier. *(for the plan that follows the changing rains; if the rains now start earlier)* | वर्षा अहिले करिब {shift_days_abs} दिन चाँडै आउँछ। |
 | Rains now start about {shift_days_abs} days later. *(for the plan that follows the changing rains; if the rains now start later)* | वर्षा अहिले करिब {shift_days_abs} दिन ढिलो आउँछ। |
 | This plan plants to match the rains. *(for the plan that follows the changing rains)* | यो योजनामा वर्षा हेरेर रोपिन्छ। |
-| This plan is here to feed your soil. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | यो योजना माटोलाई मलिलो बनाउन हो। |
+| This plan is here to feed your soil. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if the plan has lentil or another crop that feeds the soil)* | यो योजना माटोलाई मलिलो बनाउन हो। |
 | {legume_crop} feeds the soil for the next crop. *(if the plan has lentil or another crop that feeds the soil)* | {legume_crop}ले अर्को बालीका लागि माटोमा मल थप्छ। |
 | Bad years hurt it less than now. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if bad years hurt this plan less than the current one)* | खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। |
 | This plan needs less water. *(if the water score beats the current plan)* | यो योजनालाई कम पानी चाहिन्छ। |
@@ -590,12 +591,12 @@ This page is made from the word files in this folder; change those, not this pag
 | Ask if {new_crop} seed is sold nearby. *(if the plan adds a crop you do not grow now)* | नजिकै {new_crop}को बीउ पाइन्छ कि सोध्नुहोस्। |
 | Ask neighbours when they plant {new_crop}. *(if the plan adds a crop you do not grow now)* | छिमेकीलाई {new_crop} कहिले रोप्छन् भनी सोध्नुहोस्। |
 | Ask if {legume_crop} grows well here. *(if the plan has lentil or another crop that feeds the soil)* | यहाँ {legume_crop} राम्रो हुन्छ कि सोध्नुहोस्। |
-| Ask about dhaincha, grown before rice. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | धानअघि ढैंचा लगाउने बारे सोध्नुहोस्। |
-| NARC: “a popular green-manuring crop for rice”. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | नार्क: ‘धानका लागि लोकप्रिय हरियो मल बाली’ (अनुवाद)। |
-| Gain: “equivalent to 50-100 kg of fertilizer N”. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | लाभ: ‘५०–१०० किलो रासायनिक मलको N बराबर’ (अनुवाद)। |
-| The booklet cites Lacsina and others, 1987. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | पुस्तिकाले लाक्सिना र अरू (१९८७) लाई उद्धृत गर्छ। |
-| Booklet: Adhikary, NARC 2014, Lumbini agriculture website. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | पुस्तिका: अधिकारी, नार्क २०१४, लुम्बिनी कृषि वेबसाइट। |
-| Ask your agriculture office if it fits. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | यो यहाँ मिल्छ कि, कृषि कार्यालयलाई सोध्नुहोस्। |
+| Ask about dhaincha, grown before rice. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if the field is in Nepal)* | धानअघि ढैंचा लगाउने बारे सोध्नुहोस्। |
+| NARC: “a popular green-manuring crop for rice”. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if the field is in Nepal)* | नार्क: ‘धानका लागि लोकप्रिय हरियो मल बाली’ (अनुवाद)। |
+| Gain: “equivalent to 50-100 kg of fertilizer N”. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if the field is in Nepal)* | लाभ: ‘५०–१०० किलो रासायनिक मलको N बराबर’ (अनुवाद)। |
+| The booklet cites Lacsina and others, 1987. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if the field is in Nepal)* | पुस्तिकाले लाक्सिना र अरू (१९८७) लाई उद्धृत गर्छ। |
+| Booklet: Adhikary, NARC 2014, Lumbini agriculture website. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if the field is in Nepal)* | पुस्तिका: अधिकारी, नार्क २०१४, लुम्बिनी कृषि वेबसाइट। |
+| Ask your agriculture office if it fits. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if the field is in Nepal)* | यो यहाँ मिल्छ कि, कृषि कार्यालयलाई सोध्नुहोस्। |
 | {option_legume} after rice is another choice. *(if lentil after rice is worth naming as another choice)* | धानपछि {option_legume} लगाउनु अर्को उपाय हो। |
 | It feeds the soil. *(if lentil after rice is worth naming as another choice)* | यसले माटोलाई मल दिन्छ। |
 | Changing crop kinds keeps pests down. *(if lentil after rice is worth naming as another choice)* | फरक किसिमको बाली लगाउँदा कीरा घट्छन्। |
@@ -779,7 +780,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 112 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 174 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -903,6 +904,70 @@ This page is made from the word files in this folder; change those, not this pag
 | Past years, not a promise. | विगतका वर्ष हुन्, वाचा होइन। |
 | We tested each plan in {year_count} past years. | हामीले हरेक योजना {year_count} वर्षको मौसममा जाँच्यौं। |
 | See how | कसरी, हेर्नुहोस् |
+| *Farmer answers* | |
+| Sow {crop} in {sow_month}. | {sow_month}मा {crop} लगाउनुहोस्। |
+| {crop} is usually sown in {sow_month}. | {crop} प्रायः {sow_month}मा लगाइन्छ। |
+| Plant {crop} in {sow_month}. | {sow_month}मा {crop} रोप्नुहोस्। |
+| {crop} is usually planted in {sow_month}. | {crop} प्रायः {sow_month}मा रोपिन्छ। |
+| Harvest {crop} in {harvest_month}. | {harvest_month}मा {crop} भित्र्याउनुहोस्। |
+| {crop} is usually harvested in {harvest_month}. | {crop} प्रायः {harvest_month}मा भित्र्याइन्छ। |
+| Then sow {new_crop} in {sow_month}. | अनि {sow_month}मा {new_crop} लगाउनुहोस्। |
+| Then {new_crop} is usually sown in {sow_month}. | अनि {new_crop} प्रायः {sow_month}मा लगाइन्छ। |
+| Then plant {new_crop} in {sow_month}. | अनि {sow_month}मा {new_crop} रोप्नुहोस्। |
+| Then {new_crop} is usually planted in {sow_month}. | अनि {new_crop} प्रायः {sow_month}मा रोपिन्छ। |
+| Better than now. | अहिलेभन्दा राम्रो। |
+| Usually better than now. | प्रायः अहिलेभन्दा राम्रो। |
+| Worse than now. | अहिलेभन्दा कमजोर। |
+| Usually worse than now. | प्रायः अहिलेभन्दा कमजोर। |
+| About the same as now. | अहिलेजस्तै। |
+| Sometimes better, sometimes worse. | कहिले राम्रो, कहिले कमजोर। |
+| We think you grow {guess_list}. | तपाईं {guess_list} लगाउनुहुन्छ जस्तो लाग्छ। |
+| Is that right? | के यो ठीक हो? |
+| {month}: usually {rain_word}, {temp_word}. | {month}: प्रायः {rain_word}, {temp_word}। |
+| Cold nights may hurt {crop}. | चिसो रातले {crop}लाई हानि गर्न सक्छ। |
+| Hot days may hurt {crop}. | तातो दिनले {crop}लाई हानि गर्न सक्छ। |
+| Frost may hurt {crop} flowers. | तुसारोले {crop}को फूललाई हानि गर्न सक्छ। |
+| Heat may hurt {crop} before flowering. | फुल्नुअघिको गर्मीले {crop}लाई हानि गर्न सक्छ। |
+| Heat may hurt {crop} grain. | गर्मीले {crop}को दानालाई हानि गर्न सक्छ। |
+| Weeks without rain may hurt {crop}. | हप्तौं पानी नपर्दा {crop}लाई हानि हुन सक्छ। |
+| Big rain may hurt {crop} sowing. | ठूलो पानीले {crop} लगाउने काम बिगार्न सक्छ। |
+| Big rain may hurt {crop} harvest. | ठूलो पानीले {crop} भित्र्याउने काम बिगार्न सक्छ। |
+| Usually no big danger to crops. | प्रायः बालीलाई ठूलो खतरा हुँदैन। |
+| Patch {section} is drier than the others. | भाग {section} अरूभन्दा सुक्खा छ। |
+| Water it first. | यसमा पहिले पानी दिनुहोस्। |
+| Patch {section} is wetter than the others. | भाग {section} अरूभन्दा ओसिलो छ। |
+| Water it last. | यसमा पछि पानी दिनुहोस्। |
+| Patch {section} is like the others. | भाग {section} अरूजस्तै छ। |
+| Patch {section} is dry. | भाग {section} सुक्खा छ। |
+| Water it today. | आज पानी दिनुहोस्। |
+| Patch {section} is fine. | भाग {section} ठीक छ। |
+| No water needed. | पानी चाहिँदैन। |
+| Patch {section} is too wet. | भाग {section} धेरै भिजेको छ। |
+| Don't water it. | पानी नदिनुहोस्। |
+| Patch {section} is not tested yet. | भाग {section} अझै जाँचिएको छैन। |
+| We copy your field into a computer. | हामी तपाईंको खेत कम्प्युटरमा नक्कल गर्छौं। |
+| We replay {year_count} years of NASA weather. | हामी नासाको {year_count} वर्षको मौसम दोहोर्‍याउँछौं। |
+| Each crop plan, in every year. | हरेक बाली योजना, हरेक वर्षमा। |
+| We keep the plan that works most often. | धेरैपटक सफल हुने योजना हामी राख्छौं। |
+| Then we tell you what to do. | अनि के गर्ने भनेर हामी बताउँछौं। |
+| Each plan in every past season | हरेक योजना, विगतका हरेक याममा |
+| Did not fail | असफल भएन |
+| Failed | असफल भयो |
+| Works most often: | धेरैपटक सफल: |
+| For judges: how we know | निर्णायकका लागि: हामीलाई कसरी थाहा भयो |
+| *Bikram Sambat months (English and Nepali)* | |
+| Magh | माघ |
+| Falgun | फागुन |
+| Chaitra | चैत |
+| Baisakh | बैशाख |
+| Jestha | जेठ |
+| Asar | असार |
+| Shrawan | साउन |
+| Bhadra | भदौ |
+| Asoj | असोज |
+| Kartik | कात्तिक |
+| Mangsir | मंसिर |
+| Poush | पुस |
 
 ## Glossary
 

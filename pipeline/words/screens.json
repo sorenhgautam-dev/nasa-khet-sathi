@@ -2580,6 +2580,11 @@
        "en": "Feed your soil",
        "ne": "माटोलाई मलिलो बनाउने",
        "ne_review": "needs native-speaker review"
+      },
+      "safest_bad_years": {
+       "en": "Safest in bad years",
+       "ne": "खराब वर्षमा सबैभन्दा भरपर्दो",
+       "ne_review": "needs native-speaker review"
       }
      }
     },
@@ -3927,6 +3932,320 @@
    "open": {
     "en": "See how",
     "ne": "कसरी, हेर्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   }
+  },
+  "farm": {
+   "act_sow": {
+    "en": "Sow {crop} in {sow_month}.",
+    "ne": "{sow_month}मा {crop} लगाउनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_sow_usual": {
+    "en": "{crop} is usually sown in {sow_month}.",
+    "ne": "{crop} प्रायः {sow_month}मा लगाइन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_plant": {
+    "en": "Plant {crop} in {sow_month}.",
+    "ne": "{sow_month}मा {crop} रोप्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_plant_usual": {
+    "en": "{crop} is usually planted in {sow_month}.",
+    "ne": "{crop} प्रायः {sow_month}मा रोपिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_harvest": {
+    "en": "Harvest {crop} in {harvest_month}.",
+    "ne": "{harvest_month}मा {crop} भित्र्याउनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_harvest_usual": {
+    "en": "{crop} is usually harvested in {harvest_month}.",
+    "ne": "{crop} प्रायः {harvest_month}मा भित्र्याइन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_then_sow": {
+    "en": "Then sow {new_crop} in {sow_month}.",
+    "ne": "अनि {sow_month}मा {new_crop} लगाउनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_then_sow_usual": {
+    "en": "Then {new_crop} is usually sown in {sow_month}.",
+    "ne": "अनि {new_crop} प्रायः {sow_month}मा लगाइन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_then_plant": {
+    "en": "Then plant {new_crop} in {sow_month}.",
+    "ne": "अनि {sow_month}मा {new_crop} रोप्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "act_then_plant_usual": {
+    "en": "Then {new_crop} is usually planted in {sow_month}.",
+    "ne": "अनि {new_crop} प्रायः {sow_month}मा रोपिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "word_better": {
+    "en": "Better than now.",
+    "ne": "अहिलेभन्दा राम्रो।",
+    "ne_review": "needs native-speaker review"
+   },
+   "word_better_usual": {
+    "en": "Usually better than now.",
+    "ne": "प्रायः अहिलेभन्दा राम्रो।",
+    "ne_review": "needs native-speaker review"
+   },
+   "word_worse": {
+    "en": "Worse than now.",
+    "ne": "अहिलेभन्दा कमजोर।",
+    "ne_review": "needs native-speaker review"
+   },
+   "word_worse_usual": {
+    "en": "Usually worse than now.",
+    "ne": "प्रायः अहिलेभन्दा कमजोर।",
+    "ne_review": "needs native-speaker review"
+   },
+   "word_same": {
+    "en": "About the same as now.",
+    "ne": "अहिलेजस्तै।",
+    "ne_review": "needs native-speaker review"
+   },
+   "word_mixed": {
+    "en": "Sometimes better, sometimes worse.",
+    "ne": "कहिले राम्रो, कहिले कमजोर।",
+    "ne_review": "needs native-speaker review"
+   },
+   "guess": {
+    "en": "We think you grow {guess_list}.",
+    "ne": "तपाईं {guess_list} लगाउनुहुन्छ जस्तो लाग्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "guess_ask": {
+    "en": "Is that right?",
+    "ne": "के यो ठीक हो?",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_usual": {
+    "en": "{month}: usually {rain_word}, {temp_word}.",
+    "ne": "{month}: प्रायः {rain_word}, {temp_word}।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_hurt_potato_cold": {
+    "en": "Cold nights may hurt {crop}.",
+    "ne": "चिसो रातले {crop}लाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_hurt_potato_heat": {
+    "en": "Hot days may hurt {crop}.",
+    "ne": "तातो दिनले {crop}लाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_hurt_wheat_flower_frost": {
+    "en": "Frost may hurt {crop} flowers.",
+    "ne": "तुसारोले {crop}को फूललाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_hurt_wheat_floret_heat": {
+    "en": "Heat may hurt {crop} before flowering.",
+    "ne": "फुल्नुअघिको गर्मीले {crop}लाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_hurt_wheat_grain_heat": {
+    "en": "Heat may hurt {crop} grain.",
+    "ne": "गर्मीले {crop}को दानालाई हानि गर्न सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_hurt_dry_spell": {
+    "en": "Weeks without rain may hurt {crop}.",
+    "ne": "हप्तौं पानी नपर्दा {crop}लाई हानि हुन सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_hurt_big_rain_sowing": {
+    "en": "Big rain may hurt {crop} sowing.",
+    "ne": "ठूलो पानीले {crop} लगाउने काम बिगार्न सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_hurt_big_rain_harvest": {
+    "en": "Big rain may hurt {crop} harvest.",
+    "ne": "ठूलो पानीले {crop} भित्र्याउने काम बिगार्न सक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_calm": {
+    "en": "Usually no big danger to crops.",
+    "ne": "प्रायः बालीलाई ठूलो खतरा हुँदैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_drier": {
+    "en": "Patch {section} is drier than the others.",
+    "ne": "भाग {section} अरूभन्दा सुक्खा छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_water_first": {
+    "en": "Water it first.",
+    "ne": "यसमा पहिले पानी दिनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_wetter": {
+    "en": "Patch {section} is wetter than the others.",
+    "ne": "भाग {section} अरूभन्दा ओसिलो छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_water_last": {
+    "en": "Water it last.",
+    "ne": "यसमा पछि पानी दिनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_same": {
+    "en": "Patch {section} is like the others.",
+    "ne": "भाग {section} अरूजस्तै छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_dry": {
+    "en": "Patch {section} is dry.",
+    "ne": "भाग {section} सुक्खा छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_water_today": {
+    "en": "Water it today.",
+    "ne": "आज पानी दिनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_fine": {
+    "en": "Patch {section} is fine.",
+    "ne": "भाग {section} ठीक छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_no_water": {
+    "en": "No water needed.",
+    "ne": "पानी चाहिँदैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_too_wet": {
+    "en": "Patch {section} is too wet.",
+    "ne": "भाग {section} धेरै भिजेको छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_dont_water": {
+    "en": "Don't water it.",
+    "ne": "पानी नदिनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "today_untested": {
+    "en": "Patch {section} is not tested yet.",
+    "ne": "भाग {section} अझै जाँचिएको छैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "twin3_1": {
+    "en": "We copy your field into a computer.",
+    "ne": "हामी तपाईंको खेत कम्प्युटरमा नक्कल गर्छौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   "twin3_2": {
+    "en": "We replay {year_count} years of NASA weather.",
+    "ne": "हामी नासाको {year_count} वर्षको मौसम दोहोर्‍याउँछौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   "twin3_2b": {
+    "en": "Each crop plan, in every year.",
+    "ne": "हरेक बाली योजना, हरेक वर्षमा।",
+    "ne_review": "needs native-speaker review"
+   },
+   "twin3_3": {
+    "en": "We keep the plan that works most often.",
+    "ne": "धेरैपटक सफल हुने योजना हामी राख्छौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   "twin3_3b": {
+    "en": "Then we tell you what to do.",
+    "ne": "अनि के गर्ने भनेर हामी बताउँछौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   "anim_title": {
+    "en": "Each plan in every past season",
+    "ne": "हरेक योजना, विगतका हरेक याममा",
+    "ne_review": "needs native-speaker review"
+   },
+   "anim_green": {
+    "en": "Did not fail",
+    "ne": "असफल भएन",
+    "ne_review": "needs native-speaker review"
+   },
+   "anim_red": {
+    "en": "Failed",
+    "ne": "असफल भयो",
+    "ne_review": "needs native-speaker review"
+   },
+   "anim_winner": {
+    "en": "Works most often:",
+    "ne": "धेरैपटक सफल:",
+    "ne_review": "needs native-speaker review"
+   },
+   "judges_link": {
+    "en": "For judges: how we know",
+    "ne": "निर्णायकका लागि: हामीलाई कसरी थाहा भयो",
+    "ne_review": "needs native-speaker review"
+   }
+  },
+  "bs_months": {
+   "Jan": {
+    "en": "Magh",
+    "ne": "माघ",
+    "ne_review": "needs native-speaker review"
+   },
+   "Feb": {
+    "en": "Falgun",
+    "ne": "फागुन",
+    "ne_review": "needs native-speaker review"
+   },
+   "Mar": {
+    "en": "Chaitra",
+    "ne": "चैत",
+    "ne_review": "needs native-speaker review"
+   },
+   "Apr": {
+    "en": "Baisakh",
+    "ne": "बैशाख",
+    "ne_review": "needs native-speaker review"
+   },
+   "May": {
+    "en": "Jestha",
+    "ne": "जेठ",
+    "ne_review": "needs native-speaker review"
+   },
+   "Jun": {
+    "en": "Asar",
+    "ne": "असार",
+    "ne_review": "needs native-speaker review"
+   },
+   "Jul": {
+    "en": "Shrawan",
+    "ne": "साउन",
+    "ne_review": "needs native-speaker review"
+   },
+   "Aug": {
+    "en": "Bhadra",
+    "ne": "भदौ",
+    "ne_review": "needs native-speaker review"
+   },
+   "Sep": {
+    "en": "Asoj",
+    "ne": "असोज",
+    "ne_review": "needs native-speaker review"
+   },
+   "Oct": {
+    "en": "Kartik",
+    "ne": "कात्तिक",
+    "ne_review": "needs native-speaker review"
+   },
+   "Nov": {
+    "en": "Mangsir",
+    "ne": "मंसिर",
+    "ne_review": "needs native-speaker review"
+   },
+   "Dec": {
+    "en": "Poush",
+    "ne": "पुस",
     "ne_review": "needs native-speaker review"
    }
   }

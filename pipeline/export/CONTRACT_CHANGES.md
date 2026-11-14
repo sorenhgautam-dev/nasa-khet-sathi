@@ -19,6 +19,17 @@ fields); only Why? lines (the old "left out" lines replaced, new lines inserted)
   `rr_dry_run` (placeholder `dry_run_days`), `hc_wheat_floret_formation_heat`, `hc_wheat_flowering_cold`, `hc_book`,
   `hc_frost_caveat` (notes/ui_note.md 6j).
 
+## 2026-11-14 (Saturday, late evening): farmer answers in `simple/<id>.json` (additions only)
+
+Owner, 2026-11-14 evening: farmer screens show only the final answer, and each sentence's wording comes from its output's
+label (rules `farmer_answers`, committed `5b4ab42` and `e666fea` before the first run). `build_simple.py` adds, beside the
+existing keys (unchanged): `labels_used` (the statuses the wording was chosen from), `today.mode` (`compare` until the soil
+stick's cup test passes, then `band`), `guess`, `plan_words[answer][window][start][plan]` (`{now: true}` or
+`{counts, verdict, text}`), `actions[plan][window]` (lines `{text, fill}`), `animation` (green/red seasons per plan and the
+winner) and `weather_lines[answer][water][block]` (`{usual, danger, tip}`). Every line is a words key plus its fills
+(`words.json` `shared.farm.*`, `shared.bs_months.*`); month fills are block keys ('Oct' = Kartik). Soft keys (`*_usual`,
+"may") are used unless the output is VERIFIED. Schema: `simple_schema.json`.
+
 ## 2026-11-14 (Saturday, evening): Weather ahead, an optional `weather` block in the field file (addition only)
 
 Owner, 2026-11-14 evening: the team's weather spec, approved with four changes (rules: `config/rules.yaml` `weather_ahead`,
@@ -80,6 +91,16 @@ Owner's item 3 ("global, usable everywhere"). `fields/<id>.json` and every Nepal
 - A third plan with no legume has `name` **"Safest in bad years"** (decision 5's name; rules.yaml
   `plans.third_plan_name_no_legume`), not "Feed your soil". The site's `planName()` reads the words node
   `lbl.what_to_grow.plan.safest` by id, so it needs a hook to show it (see the field's note in docs/DEPLOY_ANYWHERE.md).
+- Also only for a field on the global defaults (Nepal's files are byte-identical, VALIDATION 3.26):
+  - **`fields/<id>.json` `method.choices_note`** (new, optional string): the stated choices are the whole project's,
+    written for the Nepal fields, and which do not apply to this field. English, technical, as the choices.
+  - **`pulse/<id>.json` `typical` is `[]`**: Nepal's slots ("monsoon", "winter") and dates counted from 1 January do not
+    fit a rainy season that crosses the new year. The Field Pulse screen then shows no typical seasons.
+  - **`labels/<id>.json`**: no DHM source in any output's `sources`; `sources.ghcn` is the field's own station and
+    `sources.crop_calendar` its FAO zone. `rain_corrected` is `false` wherever the field's own rain was not corrected
+    (its weather card), for any field.
+  - **`validate --final`** does not ask a field with `profile: "default"` for `replay/`, `simple/`, `rainrisk/`,
+    `fertiliser/`, `heatclock/` or `basemap/` files (`validate.NOT_ON_DEFAULTS`): the site says "not ready yet".
 
 ## 2026-11-14 (Saturday, evening): launch files: map pictures, a version stamp, and the probe replay's date and lines (additions only)
 

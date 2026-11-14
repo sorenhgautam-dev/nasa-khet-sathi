@@ -16,6 +16,7 @@ from pipeline.diary.guess import SLOTS
 from pipeline.export.build_labels import label_for, load_scorecard
 from pipeline.fetch.cropslib import load_crops
 from pipeline.fetch.fields import load_field
+from pipeline.fetch.profiles import profile_for
 from pipeline.fetch.rules import load_rules
 
 REPO = Path(__file__).resolve().parents[2]
@@ -73,6 +74,13 @@ def typical(ss, guess, lib):
     return out
 
 
+def typical_for(profile_id, ss, guess, lib):
+    """The typical seasons; none on the global defaults (owner's item 3, 2026-11-14): the slots are Nepal's (peaks
+    June-November 'monsoon', December-May 'winter') and the dates are counted from 1 January, which garbles a rainy
+    season that crosses the new year (the field in Madagascar: VALIDATION 3.26). The site then shows none."""
+    return [] if profile_id == "default" else typical(ss, guess, lib)
+
+
 def nearby(fid, data, site):
     """rules.yaml pulse.nearby: totals copied from the field's own area map, or None."""
     path, area = data / "checks" / fid / "area_map.json", site / "area" / f"{fid}.json"
@@ -114,7 +122,7 @@ def build(fid, data=REPO / "data", site=REPO / "site" / "data"):
             "curve": {"step_days": rules["pulse"]["curve"]["step_days"],
                       "points": curve(pd.read_parquet(clean / "seasons_daily.parquet"), rules["pulse"]["curve"]["step_days"])},
             "seasons": ss, "bare_threshold": rules["bare_days"]["ndvi_max"],
-            "typical": typical(ss, doc["diary"].get("guess") or [], lib),
+            "typical": typical_for(profile_for(field)["_id"], ss, doc["diary"].get("guess") or [], lib),
             "nearby": near,
             "labels": {k: label_for(k, field, rules, card) for k in LABELS},
             "sources": srcs}

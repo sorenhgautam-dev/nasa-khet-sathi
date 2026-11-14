@@ -77,3 +77,13 @@ def test_the_site_folder_holds_the_app_and_one_fields_data(tmp_path):
     assert [f["id"] for f in idx["fields"]] == ["abroad"] and (out / "data" / "basemap" / "world.json").exists()
     with pytest.raises(SystemExit, match="outside site"):
         m.copy_site(field, site / "x", site=site)
+
+
+def test_the_final_check_skips_exactly_the_kits_profile_only_site_files():
+    """validate.NOT_ON_DEFAULTS (the files --final does not ask of a field on the global defaults) are the site files of
+    the steps the kit leaves out there (PROFILE_ONLY; plans_dhm and plans_untuned write none, replay_window writes replay/)."""
+    from pipeline.export import validate as va
+    site_kind = {"replay_window": "replay", "simple": "simple", "rainrisk": "rainrisk", "fertiliser": "fertiliser",
+                 "heatclock": "heatclock", "plans_dhm": None, "plans_untuned": None}
+    assert set(_kit().PROFILE_ONLY) == set(site_kind)
+    assert set(va.NOT_ON_DEFAULTS) == {k for k in site_kind.values() if k}

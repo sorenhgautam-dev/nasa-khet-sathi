@@ -195,5 +195,1529 @@
    "years": "1950-2026",
    "type": "model"
   }
- ]
+ ],
+ "labels_used": {
+  "plan_months": "NOT YET VERIFIABLE",
+  "replay_window": "NOT YET VERIFIABLE",
+  "rotation_guess": "NOT YET VERIFIABLE",
+  "probe_water": "NOT YET VERIFIABLE",
+  "part_status": "NOT YET VERIFIABLE"
+ },
+ "today": {
+  "mode": "compare"
+ },
+ "guess": {
+  "text": "farm.guess",
+  "fill": {
+   "guess_list": [
+    "rice",
+    "wheat"
+   ]
+  }
+ },
+ "plan_words": {
+  "potato": {
+   "m3": {
+    "dry": {
+     "current": {
+      "now": true
+     },
+     "cover_gap": {
+      "counts": {
+       "better": 21,
+       "same": 3,
+       "worse": 0
+      },
+      "verdict": "better",
+      "text": "farm.word_better_usual"
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 24,
+       "worse": 0
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     }
+    },
+    "medium": {
+     "current": {
+      "now": true
+     },
+     "cover_gap": {
+      "counts": {
+       "better": 24,
+       "same": 0,
+       "worse": 0
+      },
+      "verdict": "better",
+      "text": "farm.word_better_usual"
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 24,
+       "worse": 0
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     }
+    },
+    "wet": {
+     "current": {
+      "now": true
+     },
+     "cover_gap": {
+      "counts": {
+       "better": 23,
+       "same": 1,
+       "worse": 0
+      },
+      "verdict": "better",
+      "text": "farm.word_better_usual"
+     },
+     "safest": {
+      "counts": {
+       "better": 2,
+       "same": 22,
+       "worse": 0
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     }
+    }
+   },
+   "m6": {
+    "dry": {
+     "current": {
+      "now": true
+     },
+     "cover_gap": {
+      "counts": {
+       "better": 17,
+       "same": 7,
+       "worse": 0
+      },
+      "verdict": "better",
+      "text": "farm.word_better_usual"
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 24,
+       "worse": 0
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     }
+    },
+    "medium": {
+     "current": {
+      "now": true
+     },
+     "cover_gap": {
+      "counts": {
+       "better": 24,
+       "same": 0,
+       "worse": 0
+      },
+      "verdict": "better",
+      "text": "farm.word_better_usual"
+     },
+     "safest": {
+      "counts": {
+       "better": 5,
+       "same": 19,
+       "worse": 0
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     }
+    },
+    "wet": {
+     "current": {
+      "now": true
+     },
+     "cover_gap": {
+      "counts": {
+       "better": 24,
+       "same": 0,
+       "worse": 0
+      },
+      "verdict": "better",
+      "text": "farm.word_better_usual"
+     },
+     "safest": {
+      "counts": {
+       "better": 19,
+       "same": 5,
+       "worse": 0
+      },
+      "verdict": "better",
+      "text": "farm.word_better_usual"
+     }
+    }
+   }
+  },
+  "wheat": {
+   "m3": {
+    "dry": {
+     "current": {
+      "counts": {
+       "better": 0,
+       "same": 0,
+       "worse": 24
+      },
+      "verdict": "worse",
+      "text": "farm.word_worse_usual"
+     },
+     "cover_gap": {
+      "now": true
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 0,
+       "worse": 24
+      },
+      "verdict": "worse",
+      "text": "farm.word_worse_usual"
+     }
+    },
+    "medium": {
+     "current": {
+      "counts": {
+       "better": 0,
+       "same": 0,
+       "worse": 24
+      },
+      "verdict": "worse",
+      "text": "farm.word_worse_usual"
+     },
+     "cover_gap": {
+      "now": true
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 1,
+       "worse": 23
+      },
+      "verdict": "worse",
+      "text": "farm.word_worse_usual"
+     }
+    },
+    "wet": {
+     "current": {
+      "counts": {
+       "better": 0,
+       "same": 1,
+       "worse": 23
+      },
+      "verdict": "worse",
+      "text": "farm.word_worse_usual"
+     },
+     "cover_gap": {
+      "now": true
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 1,
+       "worse": 23
+      },
+      "verdict": "worse",
+      "text": "farm.word_worse_usual"
+     }
+    }
+   },
+   "m6": {
+    "dry": {
+     "current": {
+      "counts": {
+       "better": 0,
+       "same": 15,
+       "worse": 9
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     },
+     "cover_gap": {
+      "now": true
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 20,
+       "worse": 4
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     }
+    },
+    "medium": {
+     "current": {
+      "counts": {
+       "better": 0,
+       "same": 7,
+       "worse": 17
+      },
+      "verdict": "worse",
+      "text": "farm.word_worse_usual"
+     },
+     "cover_gap": {
+      "now": true
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 19,
+       "worse": 5
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     }
+    },
+    "wet": {
+     "current": {
+      "counts": {
+       "better": 0,
+       "same": 2,
+       "worse": 22
+      },
+      "verdict": "worse",
+      "text": "farm.word_worse_usual"
+     },
+     "cover_gap": {
+      "now": true
+     },
+     "safest": {
+      "counts": {
+       "better": 0,
+       "same": 19,
+       "worse": 5
+      },
+      "verdict": "same",
+      "text": "farm.word_same"
+     }
+    }
+   }
+  }
+ },
+ "actions": {
+  "current": {
+   "m3": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "potato",
+      "sow_month": "Oct"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "potato",
+      "harvest_month": "Feb"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ],
+   "m6": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "potato",
+      "sow_month": "Oct"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "potato",
+      "harvest_month": "Feb"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ]
+  },
+  "cover_gap": {
+   "m3": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "wheat",
+      "sow_month": "Oct"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "wheat",
+      "harvest_month": "Feb"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ],
+   "m6": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "wheat",
+      "sow_month": "Oct"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "wheat",
+      "harvest_month": "Feb"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ]
+  },
+  "safest": {
+   "m3": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "lentil",
+      "sow_month": "Oct"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "lentil",
+      "harvest_month": "Feb"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ],
+   "m6": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "lentil",
+      "sow_month": "Oct"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "lentil",
+      "harvest_month": "Feb"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ]
+  },
+  "rice_potato": {
+   "m3": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "potato",
+      "sow_month": "Oct"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "potato",
+      "harvest_month": "Feb"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ],
+   "m6": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "potato",
+      "sow_month": "Oct"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "potato",
+      "harvest_month": "Feb"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ]
+  },
+  "rice_wheat": {
+   "m3": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "wheat",
+      "sow_month": "Nov"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "wheat",
+      "harvest_month": "Mar"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ],
+   "m6": [
+    {
+     "text": "farm.act_sow_usual",
+     "fill": {
+      "crop": "wheat",
+      "sow_month": "Nov"
+     }
+    },
+    {
+     "text": "farm.act_harvest_usual",
+     "fill": {
+      "crop": "wheat",
+      "harvest_month": "Mar"
+     }
+    },
+    {
+     "text": "farm.act_then_plant_usual",
+     "fill": {
+      "new_crop": "rice",
+      "sow_month": "Jun"
+     }
+    }
+   ]
+  }
+ },
+ "animation": {
+  "plans": [
+   {
+    "id": "current",
+    "green": [
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     false,
+     false,
+     false,
+     false,
+     true,
+     true,
+     false,
+     true,
+     false,
+     true,
+     false,
+     true,
+     true,
+     false,
+     true,
+     false,
+     true,
+     false
+    ],
+    "green_count": 13,
+    "median": 52.0
+   },
+   {
+    "id": "cover_gap",
+    "green": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "green_count": 24,
+    "median": 77.5
+   },
+   {
+    "id": "safest",
+    "green": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true
+    ],
+    "green_count": 23,
+    "median": 58.5
+   }
+  ],
+  "winner": "cover_gap",
+  "window": "m6",
+  "start": "medium",
+  "seasons": [
+   "2001-02",
+   "2002-03",
+   "2003-04",
+   "2004-05",
+   "2005-06",
+   "2006-07",
+   "2007-08",
+   "2008-09",
+   "2009-10",
+   "2010-11",
+   "2011-12",
+   "2012-13",
+   "2013-14",
+   "2014-15",
+   "2015-16",
+   "2016-17",
+   "2017-18",
+   "2018-19",
+   "2019-20",
+   "2020-21",
+   "2021-22",
+   "2022-23",
+   "2023-24",
+   "2024-25"
+  ],
+  "failed_below": 50
+ },
+ "weather_lines": {
+  "potato": {
+   "no": {
+    "Jan": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jan",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    },
+    "Feb": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Feb",
+       "rain_word": "some_rain",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Mar": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Mar",
+       "rain_word": "some_rain",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Apr": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Apr",
+       "rain_word": "some_rain",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "May": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "May",
+       "rain_word": "some_rain",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Jun": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jun",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_sowing",
+      "fill": {
+       "crop": "rice"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Jul": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jul",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Aug": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Aug",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Sep": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Sep",
+       "rain_word": "wet",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "rice"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Oct": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Oct",
+       "rain_word": "dry",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_sowing",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Nov": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Nov",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    },
+    "Dec": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Dec",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    }
+   },
+   "yes": {
+    "Jan": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jan",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    },
+    "Feb": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Feb",
+       "rain_word": "some_rain",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Mar": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Mar",
+       "rain_word": "some_rain",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Apr": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Apr",
+       "rain_word": "some_rain",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "May": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "May",
+       "rain_word": "some_rain",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Jun": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jun",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_sowing",
+      "fill": {
+       "crop": "rice"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Jul": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jul",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Aug": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Aug",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Sep": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Sep",
+       "rain_word": "wet",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "rice"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Oct": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Oct",
+       "rain_word": "dry",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_sowing",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Nov": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Nov",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    },
+    "Dec": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Dec",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    }
+   }
+  },
+  "wheat": {
+   "no": {
+    "Jan": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jan",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_wheat_flower_frost",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    },
+    "Feb": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Feb",
+       "rain_word": "some_rain",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Mar": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Mar",
+       "rain_word": "some_rain",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Apr": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Apr",
+       "rain_word": "some_rain",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "May": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "May",
+       "rain_word": "some_rain",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Jun": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jun",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_sowing",
+      "fill": {
+       "crop": "rice"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Jul": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jul",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Aug": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Aug",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Sep": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Sep",
+       "rain_word": "wet",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "rice"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Oct": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Oct",
+       "rain_word": "dry",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_sowing",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Nov": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Nov",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    },
+    "Dec": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Dec",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_dry_spell",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_dry_spell"
+     }
+    }
+   },
+   "yes": {
+    "Jan": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jan",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_wheat_flower_frost",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    },
+    "Feb": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Feb",
+       "rain_word": "some_rain",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Mar": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Mar",
+       "rain_word": "some_rain",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Apr": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Apr",
+       "rain_word": "some_rain",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "May": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "May",
+       "rain_word": "some_rain",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Jun": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jun",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_sowing",
+      "fill": {
+       "crop": "rice"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Jul": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Jul",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Aug": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Aug",
+       "rain_word": "wet",
+       "temp_word": "warm"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_calm"
+     },
+     "tip": null
+    },
+    "Sep": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Sep",
+       "rain_word": "wet",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_harvest",
+      "fill": {
+       "crop": "rice"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Oct": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Oct",
+       "rain_word": "dry",
+       "temp_word": "mild"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_big_rain_sowing",
+      "fill": {
+       "crop": "wheat"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_big_rain"
+     }
+    },
+    "Nov": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Nov",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    },
+    "Dec": {
+     "usual": {
+      "text": "farm.wx_usual",
+      "fill": {
+       "month": "Dec",
+       "rain_word": "dry",
+       "temp_word": "cold"
+      }
+     },
+     "danger": {
+      "text": "farm.wx_hurt_potato_cold",
+      "fill": {
+       "crop": "potato"
+      }
+     },
+     "tip": {
+      "text": "weather.tip_cold"
+     }
+    }
+   }
+  }
+ }
 }
