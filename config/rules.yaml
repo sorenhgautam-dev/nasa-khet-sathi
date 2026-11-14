@@ -1448,8 +1448,8 @@ rain_risk:                        # item 1 (owner's brief, 2026-11-14): heavy ra
     value: "a crop with no heavy-rain year in its harvest weeks (central rain) is said as good news: 'None in these years. Good news.'; every screen says these are past years, not a forecast"
     source: "Owner's brief ('Near-zero counts are good news: say so in plain words', item 4; applied here too). Claude's wording, fixed before the first run"
   dry_spells:
-    value: "left out: no dry-spell squares are built"
-    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 2b): the owner's 'dry spell of 8 or more consecutive days' is NOT FOUND in DHM's Update of Climate Change Study of Nepal (2024), which uses only CDD, the longest run of days under 1 mm. Owner's brief: 'leave the dry-spell squares out'. The dry day below 1 mm (2a, confirmed with conditions) is therefore not used here either"
+    value: "per plan crop (rain_risk.plans) and harvest year (rain_risk.years): the longest run of consecutive days with rain under trends.dry_day_mm (1 mm) from the crop's sowing day to its last day (crops[].start to end, MM-DD, the same every year; a run is cut at both ends), on the twin's central rain; the same on the other three rain versions (rain_risk.rain) for the range in Why?. Shown simply: the typical year (the median over the 24 years, rounded half up to whole days) and the worst years (the three longest runs with their years; ties: the later year first). No fixed spell length and no squares of 'dry years'"
+    source: "Owner's answer 1, 2026-11-14 evening: 'use the weather office's own measure, the longest run of dry days (under 1 mm) after sowing, shown simply (typical years and the worst years), sourced to DHM'. SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 2a, 2b): DHM, Update of Climate Change Study of Nepal (2024), Table 6 p.16: CDD, the maximum run of days with RR < 1 mm (no 8-day rule). Conditions said in Why?: DHM counts CDD per calendar year, here it is counted per crop season from sowing (our adaptation); our days are IMERG UTC days. Until this answer the dry spells were left out (owner's brief); the rounding and 'three worst' are Claude's, fixed before the first run"
   label:
     value: "labels.outputs.rainrisk_harvest: GPM rain drives it (valley), no scorecard row yet (estimate), made from the corrected rain (the rain mark)"
     source: "Owner's brief: 'add an entry for each new output, with its scale and scorecard row (none yet = estimate)'"
@@ -1505,6 +1505,21 @@ heat_clock:                       # item 4 (owner's brief, 2026-11-14): heat and
   potato_window:
     value: "the potato's whole season, sowing day to last day (crops.json stages_days, 115 days), since FAO-66 names no stage"
     source: "Owner's brief ('potato uses its whole season, since no stage is given')"
+  wheat_floret_heat:
+    value: {temperature: tmax_c, above_c: 30, inclusive: false}
+    source: "Owner's answer 2, 2026-11-14 evening ('use FAO's wheat-book numbers (above 30 C at floret formation ...), labelled estimate'). SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 7a), re-opened 2026-11-14 evening: E. Acevedo, P. Silva and H. Silva, 'Wheat growth and physiology', in Curtis, Rajaram and Gomez Macpherson (eds), Bread Wheat: Improvement and Production, FAO Plant Production and Protection Series No. 30, 2002 (https://www.fao.org/4/Y4011e/y4011e06.htm): 'Temperatures above 30°C during floret formation cause complete sterility (Owen, 1971; Saini and Aspinal, 1982).' Conditions: the kind of daily temperature is not stated; our reading, as heat_clock's other heat checks: the daily maximum, strictly above 30 C. Labelled estimate"
+  wheat_floret_window:
+    value: {from_days_after_sowing: 20, to_days_after_sowing: 100}
+    source: "The same chapter, Table 3.1 ('Days from emergence to physiological maturity in a spring and winter wheat', spring type Yecora, adapted from Stapper and Fischer 1990): floral initiation (double ridge) 20, terminal spikelet 45, first node 60, heading 90, anthesis 100, physiological maturity 140. The text: after double ridge 'The glume and lemma primordium stages follow. The floret primordia are found in the axil of each lemma'; GS2 runs 'from double ridge to anthesis'. The end of floret formation is not given, so the whole of GS2 (days 20 to 100) is used. Our readings, stated in Why?: the table counts from emergence and we count from the sowing day (day 0; FAO-66 Table 1 India: emergence about 4 days after sowing); the table's 140-day cycle is used as it is because crops.json wheat is 140 days; the MM-DD dates are counted in a 365-day year, the same every year (as wheat_window)"
+  wheat_flower_frost:
+    value: {temperature: tmin_frost_c, below_c: 0, inclusive: false}
+    source: "Owner's answer 2, 2026-11-14 evening ('frost below 0 C around flowering ... with the frost caveat for our cold-night temperatures'). SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 7a), the same chapter: 'Frost can be particularly damaging between flag leaf emergence and ten days after anthesis [...] The damage during this period occurs at minimum screen temperatures below 0°C'. Our nights are the twin's frost temperatures (tmin_frost_c), which count too many cold nights against Kathmandu Airport (potato_cold), while Bhaktapur's own winter nights are 1.0-1.5 C colder than the twin's (VALIDATION 3.11b, DHM normals): both said in Why?. Labelled estimate"
+  wheat_flower_window:
+    value: {from_days_after_sowing: 90, to_days_after_sowing: 110}
+    source: "Table 3.1 above: heading 90, anthesis 100; the text: 'ten days after anthesis' = day 110. Flag leaf emergence is not in the table; heading, which follows it, is used as the start, so the window may start a little late (said in Why?). Days from the sowing day, as wheat_floret_window"
+  wheat_book_checks:
+    value: "the two wheat-book checks run like the others (today and around_2040, the same words rule; each wheat sowing day once); their file rows say 'estimate' and carry the conditions above"
+    source: "Owner's answer 2, 2026-11-14 evening. Until this answer they were left out (crops, above)"
   today:
     value: "the harvest years 2002-2025 (24; a season's year is the year its window ends), from weather.parquet: tmax_c (POWER corrected to Kathmandu Airport by the monthly offset, temperature_correction) for heat, tmin_frost_c for potato cold. Per year: the number of risky days in the window; per check: the years with at least one, and the mean days per season"
     source: "Owner's brief ('today: our 2002-2025 daily weather. Potato cold uses our frost temperatures, tmin_frost_c in weather.parquet, which overcount cold nights; label it'); rain_risk.years"
@@ -1543,3 +1558,80 @@ simple_cards:                     # owner, 2026-11-14 evening: the three farmer 
   winter_answers:
     value: "the winter crops of the field's current_options (demo: potato, wheat), each compared through its Replay plan (rice_potato, rice_wheat)"
     source: "Owner: 'What do you grow in winter?' asked once and kept on the phone; current_options (owner, 2026-11-13)"
+
+weather_ahead:                    # owner, 2026-11-14 evening: the team's weather spec, approved with four changes ("Weather ahead", the third choice on Choose). pipeline/diary/weather_ahead.py; scripts/run_weather.py -> data/checks/<field>/weather.json -> the optional block fields/<field>.json weather. Written and committed BEFORE its first run.
+  basis:
+    value: "what usually happened on this field in its own record, never a forecast: every sentence says 'usually' or 'in past years', never 'will'. The screen says so once at the top"
+    source: "Owner, 2026-11-14 evening: 'What usually happens here, from 24 years of records. Not a forecast.'; the team's spec ('It is NOT a forecast ... Every sentence says usually, never will')"
+  blocks:
+    value: {count: 12, starts_on_day: 15, key: "the Gregorian month the block starts in, as words.json months ('Nov' = Mangsir, 15 Nov to 14 Dec)"}
+    source: "Owner: 'One block per month for the next 6 months, Bikram Sambat first'. Each block is an approximate Bikram Sambat month starting on the 15th of a Gregorian month, the rule already fixed in monsoon_onset_dhm.bs_dates (a real BS month starts a day or two either side). Claude's choice, fixed before the first run: blocks, not calendar months, so that a Nepali month name labels its own days"
+  years:
+    value: "per block, the 24 latest blocks lying wholly in the twin's record (weather.parquet, 2001-01-01 to 2025-12-31): blocks starting in 2002-2025, and Poush (starting 15 December) 2001-2024. A block's year is the year it starts"
+    source: "Owner: 'from 24 years of records'; the replay's 24 complete years (CLAUDE.md). Claude's reading for the block that crosses 1 January"
+  next_six:
+    value: "the screen shows the six blocks after the one holding the viewer's date (on 14 Nov 2026: Mangsir to Baisakh, about 15 Nov 2026 to 14 May 2027); the file holds all twelve, so the screen stays right in any month"
+    source: "Owner: 'one block per month for the next 6 months'; the team's spec (Nov 2026 - Apr 2027). The Choose screen's month strip also starts at the next month (site/js/app.js nextMonths)"
+  rain:
+    value: "the twin's central rain (weather.parquet rain_mm: break-corrected and gauge-tuned): the block's total in each of its 24 years, given as the median, lowest and highest year; the median under each other rain version (untuned, dhm, uncorrected; pipeline/twin/inputs.with_rain with scripts/common.rain_kw) is the range in Why?"
+    source: "Team spec ('Rain: the twin's central rain (break-corrected + gauge-tuned), with the other rain versions as a range'); rain_risk.rain"
+  rain_word:
+    value: {rule: "terciles of the twelve block means (as months.terciles)", words: [dry, some_rain, wet]}
+    source: "months.terciles (owner-approved 2026-11-13) applied to the twelve blocks; owner: 'Usually: [dry/wet, cold/warm]'. The middle word 'some rain' is Claude's"
+  temperature:
+    value: "weather.parquet tmax_c and tmin_c (POWER corrected to Kathmandu Airport by the monthly offset, temperature_correction): the block's mean daily maximum and minimum over its 24 years, 1 decimal"
+    source: "Team spec ('Temperature: NASA POWER, via weather.parquet (Kathmandu-valley corrected tmin_c / tmax_c)')"
+  temperature_word:
+    value: {rule: "terciles of the twelve block means of the daily mean, (tmax_c + tmin_c) / 2", words: [cold, mild, warm]}
+    source: "months.terciles applied to temperature; owner: 'Usually: [dry/wet, cold/warm]'. The middle word 'mild' and the use of the daily mean are Claude's"
+  frost_band:
+    value: "the band of the block's median coldest night (tmin_frost_c) over its 24 years: below months.frost_c 'high', below months.frost_risk_c 'risk', else 'none' (as months.frost_month_rule). A band, never a count of nights. Why? says our cold nights are too many against Kathmandu Airport, and Bhaktapur's winter nights are 1.0-1.5 C colder than ours (VALIDATION 3.11b)"
+    source: "Team spec ('Frost: tmin_frost_c (the quantile-mapped frost temperature). Frost shown as RISK BANDS, never counts'; 'Bhaktapur's winter nights are 1-1.5 C colder than the model (DHM normals): say so'); months.frost_c, frost_risk_c, frost_month_rule; VALIDATION 3.11b"
+  dry_run:
+    value: "DHM's measure: the longest run of days with rain under trends.dry_day_mm (1 mm) inside the block, per year (a run is cut at the block's ends); given as the typical year (the median, rounded half up to whole days) and the worst years (the three longest, with their years; ties: the later year first). No fixed spell length"
+    source: "Owner's change 1 ('use DHM's own measure, the longest run of dry days (under 1 mm), not a fixed length') and answer 1 ('shown simply (typical years and the worst years), sourced to DHM'), 2026-11-14 evening. SOURCES CHECKED (notes/SOURCES_CHECK.md 2a, 2b): DHM, Update of Climate Change Study of Nepal (2024), Table 6 p.16: CDD, the maximum run of days with RR < 1 mm. DHM counts it per calendar year; here per block (our adaptation, said in Why?)"
+  crops:
+    value: "every crop of the field's plans and current_options (each crop and sowing day once), at its exported days (crops[].start to end, MM-DD, the same every year, counted in a 365-day year); its stages from config/crops.json stages_days, day 0 = the sowing day"
+    source: "rain_risk.plans; heat_clock.crops"
+  dangers:
+    value:
+      cold: "potato: heat_clock.potato_cold (tmin_frost_c 1 C or less, whole season); wheat: heat_clock.wheat_flower_frost (tmin_frost_c below 0 C, heat_clock.wheat_flower_window)"
+      heat: "potato: heat_clock.potato_heat (tmax_c 35 C or more, whole season); wheat: heat_clock.wheat_floret_heat (tmax_c above 30 C, heat_clock.wheat_floret_window) and heat_clock.wheat_grain_filling_heat (tmax_c above 34 C, heat_clock.wheat_window)"
+      dry_spell: "every crop: no day of trends.dry_day_mm (1 mm) or more in the part of the crop's FAO-56 mid- and late-season stages that lies in the block (the block's longest dry run covers all of it)"
+      big_rain: "every crop: a day of trends.heavy_rain_mm (20 mm) or more in the part of the crop's FAO-56 initial stage (sowing) or late stage (harvest, rain_risk.harvest_window) that lies in the block"
+      left_out: "rice and lentil have no temperature danger (no limit confirmed in notes/SOURCES_CHECK.md); disease weather is left out (owner's change 4); maize and other crops not in a plan are not shown"
+    source: "Owner's change 2, 2026-11-14 evening ('Crop harm from heat and cold: use crop-stage limits from the sources already checked (FAO wheat book: above 30 C at floret formation, above 34 C at grain filling, frost below 0 C around flowering; potato: heat at 35 C or above, cold at 1 C or below)'), with heat_clock's sources and windows. Team spec's danger table: dry spell hurts at 'flowering, grain fill', heavy rain at 'harvest, sowing'. Windows: FAO-56 ch. 6 (https://www.fao.org/4/x0490e/x0490e0b.htm, opened 2026-11-14): 'once the effective full cover for a plant canopy has been reached, the rate of further phenological development (flowering, seed development, ripening, and senescence) ...', so flowering and grain fill lie after effective full cover, in the mid- and late-season stages; the initial stage is the sowing weeks. 20 mm is ETCCDI R20mm (trends.heavy_rain_mm), the team spec's threshold; DHM calls 10-50 mm 'moderate' and only 50 mm or more 'heavy' (rain_risk.heavy_rain_mm), so the screen says 'big rain', never 'heavy rain', and Why? says so. The dry-spell test uses DHM's run of dry days with no fixed length (change 1): the whole part in the block is dry"
+  attach:
+    value: "a crop's danger window counts in a block when the block holds at least half of the window's days, or the window covers at least half of the block's days (in a 365-day year); then only the window's days inside the block are tested"
+    source: "Claude's choice, fixed before the first run: a danger is never shown in a month the window only touches, and every window lands in at least one block"
+  count:
+    value: "per danger, crop and block: the years (of the block's 24) with at least one risky day in the tested days (dry_spell: years whose tested days are all dry). Why? says 'in N of 24 years'; the farmer screen says 'Most years.' (N at least half) or 'Some years.' (N from 1 to under half). A danger with N = 0 is never a 'Watch out'; Why? lists it as 'None in these years. Good news.'"
+    source: "Team spec ('how often: in N of the last 24 years'); owner: 'Only the biggest danger per month on screen; the rest ... the years and the sources go behind a Why? button'. 'At least half' is simple_cards.verdict's cut; Claude's choice"
+  rank:
+    value: "per block, the dangers with N of at least 1, most years first; ties: cold, heat, dry_spell, big_rain, then the crops in the order of the field's plans. Two lists: rain_fed (every danger) and watered (no dry_spell: watering stands in for the missing rain, as the twin's watered case). The screen shows the first danger of the farmer's own crop (their 'What do you grow in winter?' answer, and rice from June to October), else the first danger of any crop; the watered list when the farmer said they can water"
+    source: "Owner: 'Watch out: [the single biggest danger, which crop]'. No published rule compares dangers of different kinds, so 'biggest' means 'happened in the most years': Claude's choice, fixed before the first run"
+  change:
+    value: "per danger with N of at least 1 (team spec: 'is it changing?'): Mann-Kendall and Sen's slope (trends.mk_sen at trends.alpha) on one number per year over the block's 24 years. Heat: the days in the block above the local 90th percentile of Tmax (trends.hot_day, TX90p). Cold: the nights in the tested days at or past the crop's limit (used for the trend only, never shown as a count). Dry spell: the block's longest dry run. Big rain: the days of 20 mm or more in the tested days. Words: more_common (p < alpha, slope > 0), less_common (p < alpha, slope < 0), cant_tell (fewer than 4 years with a value, or the same number in every year), else about_same, shown as 'No clear change.'. Temperature series leave out every block with a day in 2001-2003 (trends.hot_day_caveat); rain series carry gpm_series.trend_caveat in Why?"
+    source: "Team spec ('is it changing: Mann-Kendall + Sen's slope (existing trends code) -> more common / about the same / less common / can't tell'; 'Temperature trends: leave out POWER's 2001-2003'; 'Rain trends: carry the GPM 2017-break caveat'); owner's change 2 ('Use the local 90th percentile only for is it changing?'). The yearly numbers for cold, dry spell and big rain, and the screen words 'No clear change' (as the DHM onset screen's 'No clear shift'), are Claude's"
+  tips:
+    value: {cold: "Cover young plants on clear, cold nights.", heat: "Water in the evening on hot days.", dry_spell: "Water before flowering if no rain.", big_rain: "Clear drains before the rains.", end: "Check with your local expert."}
+    source: "Team spec's tip examples ('final wording reviewed'); owner: 'Every tip ends Check with your local expert.' Advice, not a number: reviewed by a person (SI_LOG), the Nepali by a native speaker"
+  recent_weeks:
+    value: "left out: no recent-weeks section. Recent rain is dropped (owner's change 3). Recent temperature cannot be checked: the Kathmandu Airport record on disk (GHCN-Daily NP000444540, downloaded 2026-11-11) ends 2025-08-24, and DHM's monthly bulletins on disk give rain only"
+    source: "Owner's change 3, 2026-11-14 evening: 'drop recent rain ... Keep recent temperature with its as of date, or drop the section if it can't be checked'"
+  season_outlook:
+    value: "left out of the app; a next step 'once its skill for Nepal is verified' (docs/NEXT_STEPS.md)"
+    source: "Owner's answer 3, 2026-11-14 evening; notes/SOURCES_CHECK.md 9b (IRI's skill at the field's cell for Dec-May is about zero)"
+  checks:
+    value:
+      rain_words: "the block rain words against the same tercile rule on DHM's Bhaktapur normals (config/dhm_normals_1991_2020.csv), each block's normal taken as half of the month it starts in plus half of the next; and calendar months (the twin's 2001-2025 monthly means against the twelve normals). Reported as k of 12, with the months that differ"
+      frost: "the known frost events (config/known_events.yaml, category frost): the band of the block holding each event, typical and in the event's own year"
+      rain_events: "the known floods with dates (category flood): a day of 20 mm or more in the twin's central rain on the event's dates or one day either side (UTC days); the known winter droughts (category drought, months inside November-April): each of the event's blocks with a longest dry run above that block's median. Reported as k of n, the valley ('yes') events apart"
+      report_card: "VALIDATION.md's accuracy report card gets a 'Weather ahead' row in plain words (low / medium / high), from these checks and the frost row"
+    source: "Team spec ('Checks before export (into VALIDATION.md)'). The details are Claude's, fixed before the first run; checks only, never tuning"
+  export:
+    value: "the optional block 'weather' in fields/<field>.json (pipeline/export/schema.json; CONTRACT_CHANGES.md): basis, years, the twelve blocks (key, BS name, days, usual, dry run, dangers rain_fed and watered with tip keys, N, change), the danger windows, sources. Screen words live in words.json (screen 'weather', new Nepali marked for review). Nothing else in the file changes"
+    source: "Owner: 'schema and CONTRACT_CHANGES updated (optional block)'; team spec ('Golden rule 1: the new block goes into schema.json + CONTRACT_CHANGES.md, optional, so nothing breaks')"
+  label:
+    value: "every number in the block is an estimate from POWER corrected to the airport (valley) and the twin's rain (valley); frost carries the cold-night caveat"
+    source: "Team spec ('Every number shown carries source, resolution and years; model-based data labelled model-based'); labels.source_scales"
