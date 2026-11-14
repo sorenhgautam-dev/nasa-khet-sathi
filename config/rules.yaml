@@ -1281,7 +1281,7 @@ labels:                           # feature 1: two labels on every number (pipel
     value: "a number takes the coarsest scale among the inputs that mainly drive it (outputs.<id>.inputs); inputs it also rests on are listed (also) but do not set the scale. 'twin' stands for the twin's three inputs: its rain (gpm), weather (power) and soil (soilgrids). A total over an area takes the scale of the area it sums (area_box)"
     source: "Coordinator's brief, 2026-11-14 ('a number takes the coarsest scale among the inputs that mainly drive it'). The twin's inputs: CLAUDE.md 'Who supplies what to the twin'. The area rule is Claude's choice, fixed before the first run: a share of all the cropland in the 10 km fetch box describes the box, not one 30 m pixel"
   source_scales:
-    value: {gpm: valley, power_corrected: valley, power: region, ghcn: valley, hls: field, modis: neighbourhood, soilgrids: neighbourhood, grace: region, nasadem: field, smap: valley, nexgddp: region, dhm_normals: valley, dhm_onset: region, dhm_bulletins: valley, chirps: valley, gpcc: region, crop_calendar: region, worldcover: field, probe: field, oni: region, area_box: valley}
+    value: {gpm: valley, power_corrected: valley, power: region, ghcn: valley, hls: field, modis: neighbourhood, soilgrids: neighbourhood, grace: region, nasadem: field, smap: valley, nexgddp: region, dhm_normals: valley, dhm_onset: region, dhm_bulletins: valley, chirps: valley, gpcc: region, crop_calendar: region, worldcover: field, probe: field, oni: region, area_box: valley, literature: region}
     source: "Each source's cell against the bounds above: GPM IMERG 0.1 deg (about 10 km); NASA POWER 0.5 x 0.625 deg (about 55 km) is 'power', but 'power_corrected' (valley) for a field whose temperatures are corrected to the Kathmandu Airport station (temperature_correction; the field config's correction_label), as the brief says; GHCN-Daily Kathmandu Airport, a point 7 km away standing for the valley floor; HLS 30 m; MODIS 250 m; SoilGrids 250 m (nearest cell 859 m away); GRACE's mascon about 300 km; NASADEM 30 m; SMAP L4 9 km; NEX-GDDP-CMIP6 0.25 deg (25-28 km here); DHM's Bhaktapur normals and bulletins, valley gauges within 10 km; DHM's onset dates, one date for the monsoon's entry into eastern Nepal; CHIRPS 0.05 deg (about 5 km), valley; GPCC's 1-degree box (about 100 km); the FAO crop calendar, Nepal Hill zone; WorldCover 10 m; the probe, a few cm of one part; NOAA's ONI, the Nino-3.4 region of the Pacific; the area map's fetch box, about 10 km. The brief's examples are kept (GPM valley, corrected POWER valley, HLS field, MODIS and SoilGrids neighbourhood, GRACE region, probe field). Claude's assignments for the rest, fixed before the first run"
   outputs:
     value:
@@ -1331,6 +1331,10 @@ labels:                           # feature 1: two labels on every number (pipel
       replay_window: {inputs: [twin], also: [oni], scorecard: [harvest_years.replay_window], rain_corrected: true}
       checkup_rain: {inputs: [gpm], also: [dhm_bulletins, dhm_normals, chirps], scorecard: [rain_months], rain_corrected: true}
       checkup_break: {inputs: [gpm, chirps], also: [gpcc], scorecard: null, rain_corrected: false}
+      rainrisk_harvest: {inputs: [gpm], also: [crop_calendar], scorecard: null, rain_corrected: true}      # 2026-11-14, rain_risk: no yardstick row yet, so estimate
+      fertiliser_saver: {inputs: [literature], also: [], scorecard: null, rain_corrected: false}           # 2026-11-14, fertiliser_saver: a published range, not this field
+      heatclock_today: {inputs: [power, ghcn], also: [crop_calendar], scorecard: null, rain_corrected: false}   # 2026-11-14, heat_clock: no yardstick row yet
+      heatclock_2040: {inputs: [nexgddp], also: [crop_calendar], scorecard: null, rain_corrected: false}
     source: "Every number or data word the site shows (docs/TRACEABILITY.md, screen by screen, plus the four new features): the 19 rows of verification.outputs by their own ids, and the rest tied to the row that tests the same thing, as TRACEABILITY's Status column does (e.g. the replay's dry days to rain_months; the plan cards' water, cover and soil-kept to plan_scores). 'harvest_years.replay_window' is that row's farmer score of the 25-Year Replay (window_replay.farmer_scoring). rain_corrected: the number is computed from the twin's corrected rain (the watered harvest is not: watering keeps Ks at 1 whatever the rain). Claude's mapping, fixed before the first run"
 
 window_replay:                    # feature 2: the 25-Year Replay (pipeline/plans/window.py; pipeline/export/build_replay.py -> site/data/replay/<field>.json)
@@ -1408,3 +1412,96 @@ checkup:                          # feature 4: Data Check-up (pipeline/export/bu
     value: "the output ids whose labels.outputs entry has rain_corrected true"
     source: "Coordinator's brief; labels.outputs (fixed above)"
 
+
+rain_risk:                        # item 1 (owner's brief, 2026-11-14): heavy rain in each plan crop's harvest weeks (pipeline/plans/risk.py; pipeline/export/build_risks.py --kind rainrisk -> site/data/rainrisk/<field>.json). Written and committed BEFORE its first run.
+  heavy_rain_mm:
+    value: {threshold: 50, inclusive: true}
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 1): DHM Meteorological Forecasting Division, 'Terms used in Weather Forecasting in Nepal' (dhm.gov.np/mfd/api/image/forecast-terminology/, one-page PDF): heavy rain is '50 mm or more but less than 100 mm' in 24 h; very heavy '100 mm or more but less than 200 mm'; extremely heavy '200 mm or more'. Every lower bound is inclusive, so 'a heavy-rain day' here is a day of 50 mm or more: heavy or above. The page does not say which 24 hours"
+  day:
+    value: "the twin's rain day: the IMERG day, a UTC day, 05:45 to 05:45 Nepal time (IMERG V07 Technical Documentation, 13 July 2023, p. 40; CLAUDE.md). DHM's page names no clock hours for its 24 h, so our days and DHM's may not be the same 24 hours: said in the file's Why? text"
+    source: "CLAUDE.md 'Who supplies what to the twin' (IMERG days are UTC days); owner's brief: 'IMERG days are UTC days: say so in Why?'"
+  harvest_window:
+    value: "each crop's FAO-56 late-season stage: the last stages_days.late days of its season (config/crops.json: rice 22, wheat 35, potato 30, lentil 31 days), ending on the crop's last day as the plan exports it (fields/<field>.json crops[].end, MM-DD). The window's first day is end - (late - 1) days, counted in a 365-day year; the same MM-DD dates are used in every year (a leap year can shift the real season by one day: not modelled)"
+    source: "Owner's brief, 2026-11-14 ('the crop's FAO-56 late-season stage from config/crops.json is the natural choice'). FAO-56 (Allen et al. 1998), Chapter 6, 'Length of growth stages' (https://www.fao.org/4/x0490e/x0490e0b.htm, opened 2026-11-14): 'The end of the mid-season and beginning of the late season is usually marked by senescence of leaves'; the late season ends with Kc end at harvest. The stage lengths: crops.json stages_days (FAO-56 Table 11, scaled to the local season; owner-approved 2026-11-12). A wording 'from the start of maturity to harvest' was looked for on that page and not found, so it is not quoted"
+  years:
+    value: "the harvest years 2002-2025 (24): a year is the year the window ends; every window of those years lies inside the twin's record (weather.parquet, 2001-01-01 to 2025-12-31). The same complete years as the replay (CLAUDE.md: only complete years are exported, 2002-2025)"
+    source: "Owner's brief ('from our 2002-2025 rain ... the years with a heavy-rain day ... in the crop's harvest window. Show them as squares, one per year'); CLAUDE.md output contract (complete years)"
+  plans:
+    value: "every plan of site/data/fields/<field>.json and every current_options option, each of its crops at its exported sowing and end days"
+    source: "Owner's brief ('for each plan's crops (site/data/fields/<id>.json plans and current_options)')"
+  rain:
+    value: "the squares use the twin's central rain (weather.parquet rain_mm: break-corrected and gauge-tuned). The same count is made on the other rain versions untuned, dhm and uncorrected (pipeline/twin/inputs.with_rain with scripts/common.rain_kw, as the replay builds them); the range shown in Why? is the lowest and highest count over the four"
+    source: "Owner's brief ('Give the count under the other rain versions too (dhm, untuned, uncorrected) ... shown as a range in Why?')"
+  count:
+    value: "per crop and version: the number of harvest years with at least one heavy-rain day in the window; per year: the number of heavy-rain days and the largest day (mm, 1 decimal). No probability, no trend, no future: counts of past years only"
+    source: "Owner's brief (example line 'Heavy rain at harvest: 5 of 24 years'). Claude's wording of the per-year detail, fixed before the first run"
+  dry_spells:
+    value: "left out: no dry-spell squares are built"
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 2b): the owner's 'dry spell of 8 or more consecutive days' is NOT FOUND in DHM's Update of Climate Change Study of Nepal (2024), which uses only CDD, the longest run of days under 1 mm. Owner's brief: 'leave the dry-spell squares out'. The dry day below 1 mm (2a, confirmed with conditions) is therefore not used here either"
+  label:
+    value: "labels.outputs.rainrisk_harvest: GPM rain drives it (valley), no scorecard row yet (estimate), made from the corrected rain (the rain mark)"
+    source: "Owner's brief: 'add an entry for each new output, with its scale and scorecard row (none yet = estimate)'"
+
+fertiliser_saver:                 # item 2 (owner's brief, 2026-11-14): the next crop after lentil on the "Feed your soil" plan (pipeline/plans/risk.py; build_risks.py --kind fertiliser -> site/data/fertiliser/<field>.json). Written and committed BEFORE its first run.
+  plan:
+    value: "the plan with id safest ('Feed your soil') when one of its crops is a legume (crops.json legume: true; lentil on every prepared field); the next crop is the plan's crop that follows the legume in the rotation (rice, the next monsoon). Any other field gets applies: false and no numbers"
+    source: "Owner's brief, 2026-11-14 ('FERTILISER SAVER, on the Feed your soil plan (plan id safest, rice then lentil)')"
+  carry_over_kg_n_ha:
+    value: [23, 45]
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 4a): Mamindla Nagaraju, 'Drought management through foliar application and balance supply of nutrients in lentil (Lens culinaris Medic.)', M.Sc. (Ag) Agronomy thesis, Banaras Hindu University, Varanasi, 2017, Introduction p.2 (PDF p.13): 'The carry-over of N from lentil is low at 23–45 kg N ha-1', citing Quinn, M.A. (2009), 'Biological nitrogen fixation and soil health improvement', in Erskine et al. (eds), The Lentil: Botany, Production and Uses, pp. 229-247 (not opened). Conditions stated in every output: both ends come from this one sentence; 'carry-over' is not defined (residue N, soil N or an N credit is not said); no country or conditions; a secondary citation; a wide, uncertain range"
+  measured_uptake_kg_n_ha:
+    value: 2.3
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 4b): S.P. Mooleki, A.E. Slinkard and C. van Kessel, 'Nitrogen and non-nitrogen benefits of lentil in the succeeding wheat crop', University of Saskatchewan, pp. 292-300, p.297: 'Only 2.3 kg N ha-1 was recovered in the subsequent wheat crop. [...] it represented 14.6% of the 15.8 kg N ha-1 supplied by the lentil residue.' Dinsmore, Saskatchewan, Canada; shown in Why? as the one field measurement, far below the range"
+  urea_n_share:
+    value: 0.466
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 10b), computed from the formula CO(NH2)2 = CH4N2O with IUPAC CIAAW 'Abridged Standard Atomic Weights 2024' (H 1.0080, C 12.011, N 14.007, O 15.999): N 2 x 14.007 = 28.014 g/mol; molar mass 12.011 + 15.999 + 28.014 + 4 x 1.0080 = 60.056 g/mol; share 28.014 / 60.056 = 0.4665, used as 46.6 % (0.466), as the owner's brief says ('23/0.466 to 45/0.466'). Commercial urea is sold as 46 % N (SOURCES_CHECK 10b); the arithmetic is shown in Why?"
+  bag_kg:
+    value: 50
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 6): BankingNews, 16 July 2026, 'Rs. 847 per 50 kg bag of urea'; The Kathmandu Post, 26 May 2026, 'Rs894.50 per 50-kg sack of urea'. Both say 50 kg"
+  arithmetic:
+    value: "urea_saved_kg_ha = carry_over / urea_n_share, low and high, rounded to whole kg; bags_ha = urea_saved_kg_ha (unrounded) / bag_kg, rounded to 1 decimal for Why? and to whole bags for the main line. Per hectare only"
+    source: "Owner's brief ('urea saved is 23/0.466 to 45/0.466 kg per hectare. Bags are 50 kg ... Show kg and bags as a range, per hectare only'). The rounding is Claude's, fixed before the first run"
+  area:
+    value: "per hectare only; no ropani figure until a ropani-to-square-metre conversion is opened in a government or academic source. Why? says so"
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 10a): NOT FOUND (the National Statistics Office site was unreachable twice). Owner's brief: 'Say in Why? that a ropani figure waits for a source'"
+  context:
+    value: "one line: fertiliser can be short when paddy planting begins (the next crop after lentil is rice, planted in the monsoon). Conditions said in Why?: the districts quoted are in the Terai and inner Terai, not Bhaktapur"
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 5): 'Farmers scramble for fertiliser as paddy planting season begins amid shortages', The Kathmandu Post, Post National Bureau, 26 May 2026: 'Farmers say they have suffered for years from shortages of fertiliser, seeds and irrigation facilities during the paddy planting season.'"
+  check_tab:
+    value: "the safest plan's 'check locally' tab adds: dhaincha grown before rice, in the NARC booklet's own words ('a popular green-manuring crop for rice'; nitrogen gain 'equivalent to 50-100 kg of fertilizer N', citing Lacsina et al. 1987; no 'per hectare' is added, the booklet prints none), then 'ask the local agriculture office whether it fits'. No claim that it fits this field (pipeline/words/tabs.json, condition plan_is_safest)"
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 3): Bishnu H. Adhikary, 'Green-Manuring for Increased Crop Production', Nepal Agricultural Research Council (NARC), Communication, Publication and Documentation Division, Khumaltar, NARC Publication Serial No. 0042-2013/14, January 2014, hosted by the Directorate of Agriculture Development, Lumbini: https://doad.lumbini.gov.np/media/publications/Green_Manuring_booklet.pdf (PDF p.5: 'Dhaincha is a popular green-manuring crop for rice and it is reported that nitrogen gain by green manured Dhaincha is equivalent to 50-100 kg of fertilizer N (Lacsina et al., 1987).'). Owner's brief: 'Then: ask the local agriculture office whether it fits. No claim that it fits'"
+  label:
+    value: "labels.outputs.fertiliser_saver: input 'literature' (labels.source_scales literature: region, the coarsest class, because the range comes from studies elsewhere, not from this field or valley); no scorecard row (estimate)"
+    source: "Owner's brief ('the two labels on every number'; 'none yet = estimate'). The 'literature' source and its scale are Claude's choice, fixed before the first run"
+
+heat_clock:                       # item 4 (owner's brief, 2026-11-14): heat and cold at the sensitive times of wheat and potato (pipeline/plans/risk.py; build_risks.py --kind heatclock -> site/data/heatclock/<field>.json). Written and committed BEFORE its first run.
+  crops:
+    value: "wheat and potato only, wherever a plan or current option grows them (each sowing day once). Rice and lentil are left out: no threshold for them is confirmed in notes/SOURCES_CHECK.md. Wheat flowering ('pollen damage outside 8-35 C') is left out: that sentence is FAO-66's rice chapter (p.106), verdict DIFFERENT (SOURCES_CHECK 7a)"
+    source: "Owner's brief, 2026-11-14 ('wheat and potato only (rice and lentil left out)'; 'DON'T use wheat pollen damage outside 8-35 C')"
+  wheat_grain_filling_heat:
+    value: {temperature: tmax_c, above_c: 34, inclusive: false}
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 7b): FAO Irrigation and Drainage Paper 66, Crop yield response to water (2012), wheat, p.98: 'Temperatures above 34 oC are possible in most wheat-growing regions during grain filling. Such temperatures accelerate senescence and can cause significant reduction in grain yield through reduced grain size'. Conditions said in Why?: worded as what is possible, not a tested threshold; the kind of daily temperature is not stated. Our reading, stated: the daily maximum (heat uses the daily maximum), strictly above 34 C ('above')"
+  wheat_window:
+    value: "the FAO-56 late-season stage of crops.json (wheat stages_days.late = 35 days), ending on the crop's last day as the plan exports it: the grain-filling window. Same MM-DD dates every year, as rain_risk.harvest_window"
+    source: "Owner's brief ('FAO-66's wheat stage days if SOURCES_CHECK has them, else FAO-56 stage lengths in crops.json: say which'). SOURCES_CHECK 7 (stage timing): FAO-66 Table 1, p.95, row India gives sowing to anthesis '70-103' days and to maturity '85-145' days, and 'FAO-66 gives no separate grain-filling length'. So FAO-56 stage lengths in crops.json are used. Our 140-day wheat's late stage is days 106-140 after sowing: after FAO-66's latest anthesis (day 103) and before its latest maturity (day 145), so it lies inside grain filling but may miss its first days. Claude's reading, fixed before the first run"
+  potato_cold:
+    value: {temperature: tmin_frost_c, at_or_below_c: 1, inclusive: true}
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 7c): FAO-66 potato, p.187: 'The temperature for frost or cold stress for potato is considered 1 oC and less, whereas that of heat stress is 35 oC or higher. However, potato cultivars vary in their tolerance to frost, cold and heat stress, and the extent of damage depends on stress intensity and duration.' Conditions: no crop stage, no daily max/min stated. Our reading, stated: the daily minimum (cold uses the daily minimum), 1 C or less. Today's nights are the twin's frost temperatures (weather.parquet tmin_frost_c, quantile-mapped to Kathmandu Airport), which count too many cold nights (held-out check: 15 nights below 2 C where the station had 9; CLAUDE.md 'Cold nights', REVIEW_NOTES M8): labelled in the file and on the screen"
+  potato_heat:
+    value: {temperature: tmax_c, at_or_above_c: 35, inclusive: true}
+    source: "SOURCES CHECKED 2026-11-14 (notes/SOURCES_CHECK.md 7d): the same FAO-66 p.187 sentence ('35 oC or higher'). Our reading: the daily maximum"
+  potato_window:
+    value: "the potato's whole season, sowing day to last day (crops.json stages_days, 115 days), since FAO-66 names no stage"
+    source: "Owner's brief ('potato uses its whole season, since no stage is given')"
+  today:
+    value: "the harvest years 2002-2025 (24; a season's year is the year its window ends), from weather.parquet: tmax_c (POWER corrected to Kathmandu Airport by the monthly offset, temperature_correction) for heat, tmin_frost_c for potato cold. Per year: the number of risky days in the window; per check: the years with at least one, and the mean days per season"
+    source: "Owner's brief ('today: our 2002-2025 daily weather. Potato cold uses our frost temperatures, tmin_frost_c in weather.parquet, which overcount cold nights; label it'); rain_risk.years"
+  around_2040:
+    value: "data/clean/<field>/nexgddp_daily.parquet (NEX-GDDP-CMIP6, 23 models, one 0.25 deg cell; historical 1995-2014, ssp245 and ssp585 2026-2040): tasmax_c for heat, tasmin_c for cold, used as the models give them (not corrected to the station). The window is taken by month and day in each model's own calendar (360-day, 365-day or Gregorian); a season counts when its whole window lies in the period (a window that crosses 1 January needs both years). Per model and period: the mean risky days per complete season. Per scenario: the median over models of the 2026-2040 mean, its lowest and highest model, the median of the models' own 1995-2014 means, and every model's own pair (1995-2014 beside 2026-2040), the like-for-like comparison. A field with no series of its own (a sample field) uses its source field's (sample_of) when both lie in the same 0.25 deg cell (cell centres at 0.125 + 0.25 k deg), else none"
+    source: "Owner's brief ('around 2040: the daily NEX-GDDP series on disk ... Report the median and the model range. For a like-for-like comparison, also give each model's own 1995-2014 count beside its 2026-2040 count'). The calendar handling, the complete-season rule and the sample rule are Claude's, fixed before the first run"
+  words:
+    value: "near-zero counts are said as good news in plain words; the cold count carries 'our cold nights may be too many'"
+    source: "Owner's brief ('Near-zero counts are good news: say so in plain words')"
+  label:
+    value: "labels.outputs.heatclock_today (POWER corrected to the station: valley; estimate) and heatclock_2040 (NEX-GDDP: region; estimate)"
+    source: "Owner's brief: 'add an entry for each new output, with its scale and scorecard row (none yet = estimate)'"
