@@ -5,6 +5,8 @@ brought in line with the final app that night: seven farmer steps, four answers,
 number has an ID in square brackets, e.g. [A2]: its source is in `docs/PITCH_FACTS.md`, or in the file named beside it.
 Refresh numbers there first. The IDs are for us, not for the page: remove them before pasting.
 
+**Live site:** https://sorenhgautam-dev.github.io/data-test-game/ (GitHub Pages from the repository, github.com/sorenhgautam-dev/data-test-game).
+
 ## Summary
 
 Khet Sathi ("field friend" in Nepali) is a phone website for smallholder farmers. It answers one question: "What can I
@@ -232,7 +234,7 @@ output labelled against a yardstick fixed in advance [G1]; a learned model that 
 [J4]. *Not yet:* no ground truth. Harvest numbers are low confidence: only wheat years follow Nepal's national yields
 (r 0.55) [J5]. The model cannot show a bad rice year [H10]. Dry years: 2 of 4 found [C2].
 
-**Best Use of Technology.** *For:* no backend: plain files on Vercel, no login, no keys [I1]. A test-first pipeline
+**Best Use of Technology.** *For:* no backend: plain files on GitHub Pages, no login, no keys [I1]. A test-first pipeline
 (1,687 tests collected [J1, recounted 14 Nov night with `pytest --collect-only`]) and a validator that refuses made-up
 numbers. An open prototype soil stick (ESP32, two sensors) and a Kalman update that passes hand-worked tests [M8]. *Not
 yet:* the bench test; real soil-stick readings; the robot (a plan, drawn only); offline use [I6]; a test with new users

@@ -147,7 +147,7 @@ around this field reached it. Our check found this and adjusted for it."
 
 | ID | Say it like this | Number | Source (file: key) | How sure |
 | --- | --- | --- | --- | --- |
-| I1 | No backend: plain files on Vercel, no login, no keys, no AI calls from the site | - | CLAUDE.md "Hosting"; `scripts/check_site.py` | BUILD |
+| I1 | No backend: plain files on GitHub Pages, no login, no keys, no AI calls from the site | - | CLAUDE.md "Hosting"; `scripts/check_site.py` | BUILD |
 | I2 | Free to open: a web link, no app, no account | - | CLAUDE.md "Hosting" | BUILD (never say a money figure) |
 | I3 | One command downloads, one builds | `scripts/fetch_field.py`; `scripts/run_field.py --field <id>` | `scripts/run_field.py` docstring | BUILD |
 | I4 | Built from global data | every input of the twin is a global dataset; the rain check ran unchanged in Madagascar | VALIDATION 3.24; `F` `sources` | BUILD. Say "made for any field on Earth", not "proven anywhere": no field outside Nepal is on the site |

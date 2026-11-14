@@ -79,7 +79,7 @@ Nothing found suggests a threshold was tuned to pass a check and then hidden.
   (`data/index.json`): the base path is `/data-test-game/`. The workflow file itself is correct (action versions
   exist; permissions right); no `.nojekyll` is needed.
 - **Effort.** Pages 5 min; push 15 min; UI integration unknown (teammate).
-- **Status.** Pushed 2026-11-13 (owner's answer 1). **Hosting moved to Vercel the same evening (owner):** Root Directory
+- **Status.** Pushed 2026-11-13 (owner's answer 1). **Hosting moved to Vercel the same evening (owner; superseded 2026-11-14 night: GitHub Pages from this repository again, https://sorenhgautam-dev.github.io/data-test-game/):** Root Directory
   `site/`, no build step, no functions, no environment variables; the GitHub Pages workflow was removed and
   `scripts/check_site.py` guards relative paths and a fully static site. Still open: the UI itself (`site/index.html`).
 
@@ -656,7 +656,7 @@ All 21 questions were answered. "Done" means tests first, rerun, re-exported, do
 
 | # | Answer | Status |
 | --- | --- | --- |
-| 1 | Commit and push now; the owner enables Pages by hand | **Done**: `6476cc2`, then one push per finished step. Superseded for hosting the same evening: **Vercel**, not GitHub Pages (the workflow is removed) |
+| 1 | Commit and push now; the owner enables Pages by hand | **Done**: `6476cc2`, then one push per finished step. Superseded for hosting the same evening: **Vercel**, not GitHub Pages (the workflow is removed). Superseded again 2026-11-14 night: **GitHub Pages** from this repository, the workflow restored |
 | 2 | A `mock` list, neutral "not ready yet" sections, no 2040 numbers until steps 8 and 9 are real | **Done** (`f645659`): 36 real 10 m sections with no numbers, `future: null`, both named in `mock`; no MOCK word left in the file |
 | 3 | Rename the third plan "Feed your soil" (keep the id); reword its why-text and the registry line | **Done** |
 | 4 | Keep FAO's larger root depths; show the gain as a range; explain it in the "unknown" tab | **Done**: wheat plan "about 8 to 22 more", lentil plan "about 4 to 14 more"; two "unknown" lines. Which runs make the range is the reviewer's reading (rules.yaml `plans.gain_range`): put to the owner |

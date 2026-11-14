@@ -1,5 +1,6 @@
-"""The site must stay fully static and work from any address (owner, 2026-11-13: hosted on Vercel, Root Directory
-`site/`, no build step, no Vercel functions, no environment variables; every fetch relative).
+"""The site must stay fully static and work from any address (owner, 2026-11-14 night: hosted on GitHub Pages from this
+repository, `.github/workflows/pages.yml` publishing `site/`; no build step, no server functions, no environment variables;
+every fetch relative). The api/, middleware, package.json and vercel.json checks keep it plain on any static host.
 
     .venv/bin/python scripts/check_site.py            # exit 1 on any problem
     .venv/bin/python scripts/check_site.py --final    # the freeze check: also wants site/index.html

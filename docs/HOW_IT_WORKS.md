@@ -80,7 +80,7 @@ bench test, so the site gives no water number from it [E3].
 ## Why no backend
 
 Judges open the site on their own phones, months later, with our laptops off. So all heavy work runs ahead of time, and
-the site is plain files on Vercel: no server, no keys, no login, no AI calls [I1]. The trade-off: a new field must be
+the site is plain files on GitHub Pages: no server, no keys, no login, no AI calls [I1]. The trade-off: a new field must be
 prepared on a laptop first, with one command to download and one to build [I3]. The site needs the network to open and
 for its map; offline use is not built yet [I6]. The one planned exception, a small database for live probe readings, is
 not built.

@@ -15,13 +15,13 @@ site/
     words.json
 ```
 
-- **Hosting is Vercel** (changed on 13 November; GitHub Pages is no longer used). Vercel serves the `site/` folder
-  as it is on every push (Root Directory `site/`, **no build step**). If you use a bundler, commit its **built
-  output** into `site/`; do not put a `package.json` in `site/`.
-- The live address is **(address to be added when the owner sends it)**. The site sits at the root of that address.
+- **Hosting is GitHub Pages from this repository** (owner, 14 November night; the Vercel plan is dropped). On every
+  push to `main`, `.github/workflows/pages.yml` publishes the `site/` folder as it is (**no build step**). If you use a
+  bundler, commit its **built output** into `site/`; do not put a `package.json` in `site/`.
+- The live address is **https://sorenhgautam-dev.github.io/data-test-game/**. The site sits in the `/data-test-game/` folder of that address.
 - **Every path must still be relative**: `fetch('data/index.json')`, `src="img/x.svg"`, `url(../img/bg.svg)`. Never
   start a path with `/`. Relative paths work at the root, in a folder and when you open a preview address.
-- **Fully static.** No Vercel functions (no `api/` folder, no `middleware.js`), no environment variables
+- **Fully static.** No server functions (no `api/` folder, no `middleware.js`), no environment variables
   (`process.env`, `import.meta.env`), no files that need compiling (`.ts`, `.jsx`, `.vue`, `.scss`). Plain `.html`,
   `.js`, `.css` and images only.
 - Check before you hand over: `python3 scripts/check_site.py` from the repository root lists anything that breaks

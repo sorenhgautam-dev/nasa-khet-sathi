@@ -5,8 +5,9 @@ Citation texts in quotes are copied verbatim from the official pages named (open
 
 ## Hosting
 
-The site is served by **Vercel** (vercel.com) as static files from `site/` (owner, 2026-11-13): no build step, no
-server functions, no environment variables. GitHub Pages is not used.
+The site is served by **GitHub Pages** (pages.github.com) from this repository, as static files from `site/`
+(`.github/workflows/pages.yml`; owner, 2026-11-14 night, replacing the Vercel plan of 2026-11-13): no build step, no
+server functions, no environment variables. Live: https://sorenhgautam-dev.github.io/data-test-game/
 
 ## Site design
 

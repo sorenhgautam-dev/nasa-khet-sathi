@@ -1,8 +1,9 @@
 # Launch checklist
 
 The live site must work, unchanged, until the winners are announced in January. That means no outside requests,
-nothing to fix later, and nothing pushed after submission. Hosting is Vercel: static files from `site/`, no build
-step, no functions and no environment variables (CLAUDE.md "Hosting").
+nothing to fix later, and nothing pushed after submission. Hosting is **GitHub Pages from this repository**:
+**https://sorenhgautam-dev.github.io/data-test-game/**. Static files from `site/`, uploaded by `.github/workflows/pages.yml` on every push to `main`;
+no build step, no functions and no environment variables (CLAUDE.md "Hosting"; owner, 2026-11-14 night).
 
 ## 1. Before the push (the owner, on the main laptop)
 
@@ -20,18 +21,15 @@ step, no functions and no environment variables (CLAUDE.md "Hosting").
        pushed commit is the next one.
 4. [ ] Push (the owner only, golden rule 2).
 
-## 2. Vercel settings (check once, in the Vercel project)
+## 2. GitHub Pages settings (check once, on GitHub)
 
-- [ ] Root Directory: `site/`
-- [ ] Framework Preset: **Other**
-- [ ] Build Command: **empty**. Install Command: **empty**.
-- [ ] Environment Variables: **none**
+- [ ] Settings > Pages > Build and deployment > Source: **GitHub Actions**
+- [ ] Actions tab: the push's **"Publish site to GitHub Pages"** run is green
 - [ ] No `api/` folder, no middleware, no `package.json` in `site/` (`check_site.py` checks this)
-- [ ] The newest deployment is the **Production** one, and it is "Ready"
 
 ## 3. After the deploy (laptop)
 
-- [ ] Run `.venv/bin/python scripts/final_check.py --live https://<live address> --live-only`. Every file the site
+- [ ] Run `.venv/bin/python scripts/final_check.py --live https://sorenhgautam-dev.github.io/data-test-game/ --live-only`. Every file the site
       publishes is downloaded and compared byte for byte with the checked local files. It must say **RESULT: PASS**.
 - [ ] In desktop Chrome, open the live address and open DevTools, then Network. Reload. Type `-domain:<live address
       host>` in the filter: **the list must be empty** (no fonts, maps or scripts from other sites).
@@ -39,8 +37,8 @@ step, no functions and no environment variables (CLAUDE.md "Hosting").
 
 ## 4. Phone checks (at least one iPhone with Safari and one Android with Chrome)
 
-Use a phone that **has never opened the site** (or a private tab), on **mobile data** (Wi-Fi off), **not signed in**
-to Vercel.
+Use a phone that **has never opened the site** (or a private tab), on **mobile data** (Wi-Fi off). The address:
+**https://sorenhgautam-dev.github.io/data-test-game/**
 
 - [ ] The live address opens. The first screen is in Nepali.
 - [ ] Tap **English**: the words change. Tap back to Nepali. The Nepali letters show properly (no empty boxes).
@@ -74,7 +72,7 @@ to Vercel.
 ## 5. Submit and freeze
 
 - [ ] Paste the live link and the repository link into the Space Apps project page, and submit.
-- [ ] **After submission, push nothing to the connected branch.** Every push redeploys the live site. Or switch off
-      automatic deployments in Vercel.
+- [ ] **After submission, push nothing to the connected branch.** Every push redeploys the live site. Or disable the
+      "Publish site to GitHub Pages" workflow in the Actions tab.
 - [ ] Once a week until January, open the live address on a phone. Optionally run
       `final_check.py --live <address> --live-only` again.

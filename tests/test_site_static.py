@@ -1,5 +1,6 @@
-"""The site is hosted on Vercel as plain files (owner, 2026-11-13): Root Directory `site/`, no build step, no Vercel
-functions, no environment variables, and every path relative, so it works at the site's root and in any folder.
+"""The site is hosted on GitHub Pages from this repository as plain files (owner, 2026-11-14 night; .github/workflows/
+pages.yml publishes site/): no build step, no server functions, no environment variables, and every path relative, so it
+works in the site's /data-test-game/ folder.
 scripts/check_site.py is the guard; these tests build throwaway site folders in tmp_path."""
 from pathlib import Path
 
@@ -81,6 +82,8 @@ def test_the_final_check_wants_index_html_at_the_root_of_site(tmp_path):
     assert any(p["kind"] == "missing" for p in cs.site_problems(_site(tmp_path, files), final=True))
 
 
-def test_the_real_site_folder_is_static_and_nothing_publishes_it_from_github():
+def test_the_real_site_folder_is_static_and_pages_publishes_only_site():
     assert cs.site_problems(REPO / "site") == []
-    assert not (REPO / ".github" / "workflows" / "pages.yml").exists()         # hosting is Vercel, not GitHub Pages
+    wf = (REPO / ".github" / "workflows" / "pages.yml").read_text()               # hosting: GitHub Pages (2026-11-14 night)
+    assert "branches: [main]" in wf and "upload-pages-artifact" in wf and "path: site\n" in wf
+    assert "run:" not in wf                                                          # no build step, nothing but site/

@@ -15,12 +15,14 @@ Several fields are prepared in advance (the demo field in Nepal plus a few abroa
 JSON file and an index file lists them, so a judge anywhere can open the live site and explore a
 prepared field while our laptop is switched off.
 
-**Hosting (owner, 2026-11-13):** the site is hosted on **Vercel**, connected to the repository, with Root Directory
-`site/` and **no build step**: Vercel serves the files in `site/` as they are. Live address: **(address to be added when the owner sends it)**. The site stays
-fully static: **no Vercel functions** (no `api/` folder, no middleware), **no environment variables**, no `package.json`
-in `site/`. **Every path in the site is relative** (`fetch('data/index.json')`, never `/data/...`), so it works at the
-site's root and in any folder. `scripts/check_site.py` checks all of this (tests in `tests/test_site_static.py`). GitHub
-Pages is no longer used: its workflow was removed on 2026-11-13.
+**Hosting (owner, 2026-11-14 night):** the site is hosted on **GitHub Pages from this repository**, live at
+**https://sorenhgautam-dev.github.io/data-test-game/**. No Vercel and no new repository (the Vercel plan of 2026-11-13 is dropped). The workflow
+`.github/workflows/pages.yml` uploads `site/` as the Pages artifact on every push to `main` (Pages can serve only the
+repository root or `/docs` from a branch; Settings > Pages > Source: "GitHub Actions"). There is **no build step**: the files
+in `site/` are served as they are. The site stays fully static: **no server functions** (no `api/` folder, no middleware),
+**no environment variables**, no `package.json` in `site/`. **Every path in the site is relative** (`fetch('data/index.json')`,
+never `/data/...`), so it works in the `/data-test-game/` folder. `scripts/check_site.py` checks all of this (tests in
+`tests/test_site_static.py`).
 
 **Demo field (owner, 2026-11-12):** 27.67 N, 85.43 E is Bhaktapur's old city, not farmland, so it is
 only the centre of a **fetch box** of about 5 km each way (`fetch_box` in `config/fields/demo.yaml`;
@@ -128,7 +130,7 @@ khet-sathi/
     export/             # schema.json, index_schema.json, validate.py, mock.py, build_field_json.py, build_words.py,
                         # CONTRACT_CHANGES.md (what changed for the UI, and when)
   scripts/              # backup.sh, make_review_pack.py, scan_history.py, check_site.py (the site stays static and
-                        # its paths relative: Vercel hosting); run_field.py, the one command that runs every build
+                        # its paths relative: GitHub Pages); run_field.py, the one command that runs every build
                         # step in order from the cached data/ (fetch_field.py downloads); the steps it runs: run_checks.py,
                         # run_replay.py, run_diary.py, run_plans.py, run_rain_check.py, run_smap_check.py and the
                         # other run_*.py (shared helpers in common.py); run_dhm_bulletin_check.py runs alone
@@ -534,8 +536,8 @@ Global judges only ever see the project page, the 30-second video, the public re
 **live site**, opened on their own device between submission and January, with nothing running on
 our side and nothing changeable after submission. Local judges also see the live probe demo.
 
-1. The site must work fully from static files, on a phone, on mobile data, with no keys. It is hosted on Vercel
-   as plain files (see "Hosting": no functions, no environment variables, no build step, relative paths only). The live
+1. The site must work fully from static files, on a phone, on mobile data, with no keys. It is hosted on GitHub
+   Pages as plain files (see "Hosting": no functions, no environment variables, no build step, relative paths only). The live
    probe (step 10b) is an extra: if Firebase is unreachable, every screen still works.
 2. **Prepared fields:** export at least the Nepal demo field plus two or three abroad (for example
    Guatemala, Kenya, USA) through the same pipeline with no code changes. That is the proof the
@@ -630,7 +632,7 @@ our side and nothing changeable after submission. Local judges also see the live
     refused, 2026-11-12). The web config is public by Firebase's design, but `scan_history.py` flags
     `apiKey`. **Keys (owner, approved in advance, 2026-11-12):** two API keys, both restricted to the
     Identity Toolkit API and the Token Service API only: the website's key, also restricted to the live site's
-    address (the Vercel address since 2026-11-13; it was to be the GitHub Pages address); and a separate key for the probe, with no website restriction (the probe is not a
+    address (https://sorenhgautam-dev.github.io/data-test-game/, GitHub Pages; owner, 2026-11-14 night); and a separate key for the probe, with no website restriction (the probe is not a
     browser). `scan_history.py` lets through the website's key **by its exact value only**, nothing else (built 2026-11-13, owner's answer 14: the
     script holds the key's SHA-256, never the key, and scans the working tree as well as the history; REVIEW_2 H7).
     The probe's key is therefore never in the repository (it is entered on the probe, or kept in a
@@ -663,18 +665,16 @@ used) before going public: deleting the file in a new commit is not enough.
 3. Run `.venv/bin/python scripts/final_check.py` (2026-11-14: one command for the version stamp, the full test suite,
    `pipeline.export.validate --final`, `scripts/check_site.py --final`, the no-outside-requests check and
    `scripts/scan_history.py`), and read its report; commit the version stamp it writes. Only if its RESULT line passes:
-   push. **Vercel** publishes
-   `site/` from the repository on that push (owner, 2026-11-13: Root Directory `site/`, no build step, no functions, no
-   environment variables; no GitHub Pages). In the Vercel project check once: Framework Preset "Other", Build Command
-   and Install Command empty, no Environment Variables, and that the newest deployment is the Production one.
+   push. **GitHub Pages** publishes `site/` on that push (`.github/workflows/pages.yml`; owner, 2026-11-14 night). Check
+   once that the push's "Publish site to GitHub Pages" run in the repository's Actions tab is green.
 4. Run `.venv/bin/python scripts/final_check.py --live https://<live address>` (the live files must match the pushed
-   ones byte for byte). Open the live address, **(address to be added when the owner sends it)**, on a phone that has never opened it, on mobile data and without
-   being signed in to Vercel, and check that a prepared field loads.
+   ones byte for byte). Open the live address, **https://sorenhgautam-dev.github.io/data-test-game/**, on a phone that has never opened it, on mobile data,
+   and check that a prepared field loads.
 5. Paste the live link and repository link into the Space Apps project page and submit.
 
 After submission, change nothing until the Global Winners are announced in January. **Every push to the connected
-branch redeploys the live site, so after submission nothing is pushed to it** (or automatic deployments are switched off in
-the Vercel project).
+branch redeploys the live site, so after submission nothing is pushed to it** (or the Pages workflow is disabled in the
+repository's Actions tab).
 
 ## Out of scope
 

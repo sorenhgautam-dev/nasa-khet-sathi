@@ -51,14 +51,15 @@ The judges open the site on their own phones, months after the event, while our 
 everything heavy runs here, on our laptops, before we publish:
 
 - the downloads, the twin and the scoring run once per field, ahead of time;
-- the website (`site/`) is plain files: HTML, CSS, JavaScript and the JSON this pipeline writes (today `site/`
-  holds only the JSON; the screens are a teammate's work and are not in this repository yet);
+- the website (`site/`) is plain files: HTML, CSS, JavaScript (the screens, built from our teammate's design) and the
+  JSON this pipeline writes;
 - the site needs no server, no login and no key, and it never calls an AI service;
-- it is hosted on Vercel as plain files: Vercel serves the `site/` folder as it is, with no build step, no server
-  functions and no environment variables. Every path in the site is relative, so it works at the site's root or in
-  any folder. `scripts/check_site.py` checks this.
+- it is hosted on GitHub Pages from this repository as plain files: on every push to `main`,
+  `.github/workflows/pages.yml` publishes the `site/` folder as it is, with no build step, no server functions and no
+  environment variables. Every path in the site is relative, so it works in the site's folder. `scripts/check_site.py`
+  checks this.
 
-Live site: **(address to be added when the owner sends it)**.
+Live site: **https://sorenhgautam-dev.github.io/data-test-game/**
 
 Fields are prepared ahead of time, and `site/data/index.json` lists them (today one: the demo field; fields
 abroad are build step 11). A field drawn outside every

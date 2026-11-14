@@ -26,7 +26,7 @@ def test_practice_readings_show_only_on_the_laptop_or_its_hotspot():
     rule = _regex("onHotspot")
     for host in ("localhost", "127.0.0.1", "192.168.1.5", "172.20.10.2", "10.0.0.4", "khet-laptop.local"):
         assert re.search(rule, host), host
-    for host in ("khet-sathi.vercel.app", "example.com", "172.32.0.1", "8.8.8.8", "localhost.example.com", "10.vercel.app",
+    for host in ("sorenhgautam-dev.github.io", "example.com", "172.32.0.1", "8.8.8.8", "localhost.example.com", "10.github.io",
                  "192.168.1.5.example.com", "evil.local.example.com"):
         assert not re.search(rule, host), host
     assert "function isPractice(lv) { return !!lv && lv.source === 'fake_probe' && onHotspot(); }" in APP
