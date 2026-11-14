@@ -1056,3 +1056,106 @@ validation_checks:                # independent checks of the twin (owner's grou
     holds_up:
       value: "Pearson r of the monthly anomalies with its 95% year-block bootstrap interval's lower bound above common.agree_band_r (0.3), in both rain versions"
       source: "Claude's choice, fixed before the first run (common.agree_band_r: Cohen 1988)"
+verification:                     # owner's accuracy and verification programme, 2026-11-14 (item 1: yardsticks first). Written and committed BEFORE any score below was computed (scripts/run_verification.py, pipeline/checks/verify.py). Published sources were looked up by a research sub-agent that was not shown any of our results.
+  common:
+    threshold:
+      value: 0.92
+      source: "Owner, 2026-11-14 (the local lead's requirement): VERIFIED needs at least 92%, as percent correct for categories and the percent of cases within tolerance for amounts; the point estimate counts, with its confidence interval always shown beside it"
+    n_min:
+      value: 10
+      source: "Claude's choice, set before any scoring (the owner asked for a minimum number of test cases). No general published rule exists (research sub-agent, 2026-11-14); map-accuracy practice asks far more, about 50 per class (Olofsson et al. 2014, Remote Sens. Environ. 148:42-57). Below 10 cases one case moves the share by more than 10 points, more than the 8-point margin 92% leaves, and even 10 of 10 has a 95% Wilson lower bound of 72%"
+    interval:
+      value: "95% Wilson score interval of the share, always shown beside it"
+      source: "Brown, Cai & DasGupta 2001, Statistical Science 16(2):101-133 ('we recommend the Wilson interval ... for small n'); formula as Newcombe 1998, Statistics in Medicine 17:857-872, method 3, whose Table II values tests/test_verify.py reproduces"
+    statuses:
+      value: {VERIFIED: "an independent reference, at least n_min cases, and a share of at least the threshold", ESTIMATE: "tested but below the threshold, or tested only against a reference that is not independent (consistency), or a projection that cannot be tested yet: shown with its range, never used alone for field advice", NOT YET VERIFIABLE: "no independent reference data yet, or fewer than n_min cases: the data that would verify it are named, and any partial result is shown"}
+      source: "Owner, 2026-11-14 (item 4): VERIFIED (meets 92% on an independent test), ESTIMATE (shown with its range, not used for field advice), NOT YET VERIFIABLE (with the data that would verify it)"
+    independence:
+      value: "a reference is independent only if it was not used to build, fit, scale, choose or tune the output. A reference built from the same satellite record, the same crop model or the same weather measures consistency, not truth, and can give at most ESTIMATE. A reference seen before its rule was set is marked not independent"
+      source: "Owner, 2026-11-14 (item 3): say what each reference is and whether it is truly independent; seasons scored against the same satellite record measure consistency, only the farmer's dates make it a true test"
+    field_advice:
+      value: "field advice (the plans and tips) uses only VERIFIED outputs, or says plainly that it rests on an estimate"
+      source: "Owner, 2026-11-14 (item 4)"
+    wording:
+      value: "every accuracy statement says what was measured, with its number, n and range, e.g. 'within 19% of DHM's rain gauges in 14 of 18 months (78%, 55-91%)'; never an apology"
+      source: "Owner, 2026-11-14 (item 4)"
+  locked_test:
+    farmer:
+      value: "every answer in the farmer's files (data/field_visit/<field>/: farmer.yaml, corners.csv, probe_spots.csv): dates, best and worst years, calendar, watering. Their SHA-256 is written into config/locked_test.yaml before any score uses them; no rule, fit or method choice reads them"
+      source: "Owner, 2026-11-14 (item 1): lock the farmer's answers; the worst and best years are asked before the farmer sees the app"
+    cups:
+      value: "every bench cup and push-in (data/probe/bench/cups.csv and the bench logs): each cup is scored by a line fitted on the other cups only (leave one cup out, rules.yaml probe.bench); cups.csv's SHA-256 is locked on arrival"
+      source: "Owner, 2026-11-14 (item 1); rules.yaml probe.bench (committed 32890ca before any bench data)"
+    field_readings:
+      value: "the probe's readings at the field and any weighed soil samples: the twin is scored on its state BEFORE a reading updates it (the Kalman prior), never after"
+      source: "Claude's choice, set before any reading exists: a state after the update has already seen the reading"
+    dhm_bulletins:
+      value: "DHM's monthly gauge bulletins (data/clean/<field>/dhm_bulletin_months.csv): never used to fit, scale or choose the rain"
+      source: "Owner, 2026-11-14 (items 1 and 2: merging GPM with DHM gauges only if tested on gauges and months it never saw)"
+    known_events:
+      value: "config/known_events.yaml events and negative controls: never used to set or tune an event rule"
+      source: "Owner, 2026-11-12 and 2026-11-14 ('never tune anything on the test set or the validation events')"
+    years:
+      value: "2014-2025. Any calibration (soil water held, root depth, Ky) is fitted on 2002-2013 only; whether a change is kept is decided by leave-one-year-out within 2002-2013; 2014-2025 only reports the score before and after"
+      source: "Owner, 2026-11-14 (item 2: 'fit on some years, test on years it never saw'; keep a change only if it improves the held-out score). A block in time, not alternate years: year-to-year changes need consecutive years, and neighbouring years are not independent (Roberts et al. 2017, Ecography 40:913-929, blocked cross-validation). Deciding keep-or-drop inside 2002-2013 keeps the test block untouched"
+    already_seen:
+      value: "looked at before these yardsticks were written: the twin's rain level against DHM's Bhaktapur normal (1.35 x, VALIDATION 3.1) and six DHM bulletin months of 2025 (3.9c); the events against known_events (4.1); the three season methods' agreement (3.15); the plan picks under changed inputs (4.4). The tolerances below come from published sources or stated conventions, not from these numbers"
+      source: "Claude, for the record (golden rule 11: honest outputs)"
+  outputs:
+    rain_months:
+      value: {shown: "Rain behind the month words, dry days and events", measure: "monthly rain, the twin's corrected rain against the mean of the valley gauges, within 19%", reference: "DHM monthly gauge bulletins: Bhaktapur, Changu Narayan, Kathmandu Airport", independent: true, needs: "more bulletin months", gauges: ["Bhaktapur", "Changu Narayan", "Kathmandu Airport"], min_gauges: 2, min_gauge_mm: 10, rain_column: rain_mm, tolerance_rel: 0.19}
+      source: "Tolerance: IMD's 'normal' category, -19% to +19% of the long-period average, which IMD uses 'operationally' for monthly rain over districts (IMD, Frequently asked Questions on Monsoon, Q3, p. 1: https://mausamaudit.imd.gov.in/imd_latest/monsoonfaq.pdf). Borrowed: it describes how unusual a month was, not how wrong a satellite is; no published satellite-against-gauge standard for monthly totals exists (GPM's Level-1 requirement covers instantaneous rain rates only; Skofronick-Jackson et al. 2017, BAMS 98:1679). DHM's own seasonal band, 90-110% 'near normal' (DHM Monsoon 2025 summary, p. 2), is reported beside it for whole seasons. Gauges: the three valley-floor gauges within 10 km of the field used in VALIDATION 3.9c, fixed in advance; at least 2 reporting; months whose gauge mean is under 10 mm are listed, not scored (a percentage of almost nothing). Claude's choices, fixed before the first score"
+    rain_month_words:
+      value: {shown: "The rain word of each month (low, medium, high)", measure: "the month's word equals the tercile of DHM's Bhaktapur normal for that month", reference: "DHM 1991-2020 normals, Bhaktapur", independent: true, needs: "-"}
+      source: "Same tercile rule as the diary (rules.yaml months; CLAUDE.md 'Monthly calendar'), applied to DHM's normals (config/dhm_normals_1991_2020.csv); the twin's corrected rain is not scaled to DHM. Claude's choice, fixed before the first score"
+    heat_month_words:
+      value: {shown: "The heat word of each month (none, some, high)", measure: "the month's word equals the tercile of DHM's Bhaktapur normal daytime temperature", reference: "DHM 1991-2020 normals, Bhaktapur", independent: true, needs: "-"}
+      source: "Same tercile rule as the diary; the temperature correction was fitted to Kathmandu Airport (GHCN), not to Bhaktapur, so Bhaktapur's normals are independent of the fit (VALIDATION 3.11b). Claude's choice, fixed before the first score"
+    frost_month_words:
+      value: {shown: "The frost word of each month", measure: "the month's frost word against the coldest nights measured at or near the field", reference: "none yet: DHM's normals give only monthly mean night temperatures", independent: true, needs: "DHM's daily night temperatures at Bhaktapur, or a thermometer at the field"}
+      source: "Owner, 2026-11-14 (item 4: name the data that would verify it)"
+    soil_month_words:
+      value: {shown: "The soil word of each month (dry, medium, wet)", measure: "against measured soil water", reference: "none measured; SMAP L4 and GLDAS are models (VALIDATION 4.2b, 4.2d)", independent: false, needs: "weighed soil samples or a calibrated probe through a year"}
+      source: "Owner, 2026-11-14 (item 3: model references measure consistency)"
+    cover_months:
+      value: {shown: "Which months the field is bare or growing", measure: "each month bare or not, satellite against the farmer's normal year", reference: "the farmer's calendar", independent: true, needs: "the farmer's answers"}
+      source: "Owner, 2026-11-14 (items 1 and 3: the farmer's answers are the true test of the satellite's seasons). Category per month (12 cases)"
+    season_dates:
+      value: {shown: "When each crop is sown and harvested", measure: "the satellite's season start and end dates within 10 days of the farmer's dates, per crop and year", reference: "the farmer's dates for recent years", independent: true, needs: "the farmer's dates for 3 recent years", tolerance_days: 10}
+      source: "No published day-accuracy standard exists (research sub-agent, 2026-11-14: ESA GlobDiversity LSP requirements, NASA VIIRS phenology validation and others state none). 10 days is one dekad, the time unit of operational crop monitoring ('Phenological timings are expressed as dekads': JRC ASAP Water Satisfaction Index manual v2.0, Boogaard et al. 2019, EUR 29396 EN, sec. 2.3; FEWS NET agroclimatology glossary); published satellite results reach 7-16 days (VIIRS LSP against PhenoCam and ground sites; Sakamoto et al. 2005, RSE 96:366, paddy planting RMSE 12.1 days). A chosen convention, stated as such"
+    rotation_guess:
+      value: {shown: "Our guess of the crops (rice, then potato or wheat)", measure: "guess equals the farmer's rotation, per field", reference: "farmers' answers", independent: true, needs: "at least 10 fields whose farmers told us their rotation"}
+      source: "Owner, 2026-11-14 (item 4); one field gives one case"
+    flood_years:
+      value: {shown: "Flood years in the replay", measure: "valley floods found (hit rate); false alarms beside it", reference: "sourced valley floods (known_events.yaml)", independent: false, needs: "more sourced valley flood years"}
+      source: "Hit rate (probability of detection) and false-alarm ratio as defined by the WWRP/WGNE Joint Working Group on Forecast Verification Research (https://jwgfvr.github.io/forecastverification; Jolliffe & Stephenson 2012, Forecast Verification, 2nd ed.). Not independent: the flood rule's earlier versions were run before it was set, so the valley floods were already known to be among the wettest days (VALIDATION 4.1, REVIEW_2 M8)"
+    drought_years:
+      value: {shown: "Dry years in the replay", measure: "valley dry seasons found (hit rate); false alarms beside it, a dry flag in a season DHM's gauges show was normal counting as one", reference: "sourced valley droughts and DHM's negative controls (known_events.yaml)", independent: false, needs: "more sourced valley drought seasons"}
+      source: "As flood_years. Not independent: deciles 1-2 were chosen partly because they found more of these events (owner's batch item 17; VALIDATION 4.1)"
+    harvest_years:
+      value: {shown: "Each year's harvest in the replay (baskets)", measure: "the farmer's 3 worst years in our lowest third and 3 best in our highest third; year-to-year direction against district yields", reference: "the farmer's best and worst years; MoALD district yields if found", independent: true, needs: "the farmer's answers; Bhaktapur district yields"}
+      source: "Owner, 2026-11-14 (item 1: the farmer's best and worst years as matches out of 6). Thirds by average rank of the year's harvest in the field's water case, 2002-2025 (Claude's choice, fixed before any answer exists). No published pass mark for year-to-year direction exists (research sub-agent: Mueller et al. 2017, GMD 10:1403, benchmark by correlation only); the owner's 92% is applied"
+    plan_cover_gap_beats_current:
+      value: {shown: "'Fill the empty months' grows more than today's plan", measure: "share of runs (today and 46 climate runs, two rain versions) in which its harvest beats today's plan", reference: "our own runs: the same crop model", independent: false, needs: "harvests measured on fields that tried it", rain_versions: [corrected, dhm]}
+      source: "Owner, 2026-11-14 (item 1: the plans as the share of ensemble runs in which each suggested plan beats the current one). Runs from data/checks/<field>/future.json (23 NEX-GDDP-CMIP6 models x SSP2-4.5 and SSP5-8.5, and the 2002-2025 replay) for the central rain and the DHM-scaled dry edge. Every run shares the twin, so this shows the advice is robust, not that its numbers are right: not independent"
+    plan_safest_beats_current:
+      value: {shown: "'Feed your soil' grows more than today's plan", measure: "share of runs (today and 46 climate runs, two rain versions) in which its harvest beats today's plan", reference: "our own runs: the same crop model", independent: false, needs: "harvests measured on fields that tried it", rain_versions: [corrected, dhm]}
+      source: "As plan_cover_gap_beats_current"
+    monsoon_start:
+      value: {shown: "When the monsoon usually starts, and whether it has shifted", measure: "our copy of DHM's onset dates, 2001-2024, equal to DHM's table on a second reading", reference: "DHM's own table (the record itself)", independent: true, needs: "a second reading of DHM's table"}
+      source: "Owner, 2026-11-14 ('fix the answer, not the method'): DHM's record is shown as DHM's; what we can get wrong is the copy"
+    groundwater:
+      value: {shown: "Water under the ground is falling", measure: "the regional trend's direction against well levels", reference: "none yet", independent: true, needs: "well-level records for the Kathmandu valley (Groundwater Resources Development Board)"}
+      source: "Owner, 2026-11-14 (item 4)"
+    part_soil_water:
+      value: {shown: "How wet each part is today", measure: "the twin's soil water before a reading within 0.04 m3/m3 of the weighed or calibrated value", reference: "weighed soil samples or the calibrated probe at the field", independent: true, needs: "probe readings and weighed samples at the field", tolerance_m3m3: 0.04}
+      source: "0.04 m3/m3 is NASA SMAP's accuracy requirement (Entekhabi et al. 2010, Proc. IEEE 98:704, Table 1; in practice an unbiased RMSE over core validation sites at 9-40 km, mountains excluded: Reichle et al. 2016, IGARSS, NTRS 20170007932). Applied here to each reading, bias included: stricter than SMAP's own use"
+    probe_water:
+      value: {shown: "The soil probe's water reading", measure: "each push-in, calibrated on the other cups, within 0.04 m3/m3 (4 water-% points) of the weighed water", reference: "the team's weighed cups", independent: true, needs: "the team's cup test", tolerance_m3m3: 0.04}
+      source: "Owner, 2026-11-14 (item 1: the probe against weighed water within 0.04 m3/m3, NASA SMAP's accuracy requirement; Entekhabi et al. 2010, Table 1). Leave one cup out (rules.yaml probe.bench)"
+    outlook_2040:
+      value: {shown: "Harvest by 2040", measure: "cannot be checked before 2040; its climate change lies inside published CMIP6 ranges for Nepal (VALIDATION 4.7)", reference: "a consistency check only", independent: false, needs: "time"}
+      source: "Owner, 2026-11-14 (item 4: ESTIMATE, shown with its range)"
+    plan_scores:
+      value: {shown: "The water, cover and soil-kept scores", measure: "model indices with no measured counterpart", reference: "none", independent: false, needs: "measured water use and soil loss on the field"}
+      source: "Owner, 2026-11-14 (item 4)"
