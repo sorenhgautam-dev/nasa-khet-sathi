@@ -501,7 +501,17 @@ def _month_names(months):
     return join_en([calendar.month_name[n] for n in nums]), ", ".join(_NE_MONTHS[n] for n in nums)
 
 
-def chart_dhm_2025(rain_vs_dhm):
+def rain_is_tuned(field):
+    """rules.yaml gpm_series.gauge_calibration: the field's central rain carries gauge factors fitted on DHM's 2023-2025 months."""
+    from pipeline.fetch.rules import load_rules
+    g = load_rules()["gpm_series"]["gauge_calibration"]
+    return bool(g["apply"]) and field in g["fields"]
+
+
+TUNED = ("Our rain was tuned on these gauges.", "हाम्रो वर्षा यिनै मापकमा मिलाइएको थियो")
+
+
+def chart_dhm_2025(rain_vs_dhm, tuned=False):
     lab = rain_vs_dhm["labels"]
     data = rain_vs_dhm["against_three_gauges"]
     fin_en, fin_ne = _month_names(lab["imerg_final_months"])
@@ -524,6 +534,9 @@ def chart_dhm_2025(rain_vs_dhm):
     if late_twin > SAME_LEVEL[1]:
         en.append(f"{late_en}: still too wet.")
         ne.append(f"{late_ne}: अझै धेरै बढी वर्षा")
+    if tuned:                                # in-sample: the gauge factors were fitted on these months (VALIDATION 3.9c)
+        en.append(TUNED[0])
+        ne.append(TUNED[1])
     rows = [{"months": cid, **{k: data[cid][k]["ratio"] for k in names}} for cid in ("imerg_final_months",
                                                                                     "imerg_late_months")]
     return chart(
@@ -984,6 +997,9 @@ def report_card(ctx):
     if rl > SAME_LEVEL[1]:
         en.append(f"The last {nl} still read too wet.")
         ne.append(f"अन्तिम {nl} महिना अझै धेरै बढी वर्षा देखाउँथे")
+    if ctx.get("rain_tuned"):
+        en.append(TUNED[0])
+        ne.append(TUNED[1])
     en.append(f"Yearly rain: {fmt(lvl, 2)} times the town's usual.")
     ne.append(f"वार्षिक वर्षा सहरको सामान्यको {fmt(lvl, 2)} गुणा")
     out.append(_line("rain", T("Rain on the field", "खेतमा परेको वर्षा"), conf, en, ne,
@@ -1351,7 +1367,7 @@ def build_story(inp, generated):
     c_seasons, _ = chart_seasons(inp["greenness"], inp["diary_seasons"])
     c_sure = chart_cover_sure(fj["diary"]["months"], month_words)
     c_events, ev_summary = chart_events(fj["replay"]["current"], inp["known_events"], inp.get("scorecard"))
-    c_dhm = chart_dhm_2025(inp["rain_vs_dhm"])
+    c_dhm = chart_dhm_2025(inp["rain_vs_dhm"], rain_is_tuned(field))
     c_other, _ = chart_other_checks(inp["smap"], inp["gldas"], inp["hls"], inp["fao"], inp["eco"])
     c_best = chart_best_worst()
     region_km = _region_km(fj)
@@ -1408,7 +1424,7 @@ def build_story(inp, generated):
         "n_final_months": len(lab["imerg_final_months"]), "n_late_months": len(lab["imerg_late_months"]),
         "fao": inp["fao"]["rain"]["corrected"],
         "placeholder": bool(inp["field_config"].get("placeholder", False)),
-        "events": ev_summary, "scorecard": inp.get("scorecard"), "groundwater": diary["groundwater"], "region_km": region_km,
+        "events": ev_summary, "scorecard": inp.get("scorecard"), "rain_tuned": rain_is_tuned(field), "groundwater": diary["groundwater"], "region_km": region_km,
         "monsoon_start": diary["monsoon_start"], "shift_low": diary.get("shift_days_low"),
         "shift_high": diary.get("shift_days_high"), "bench": inp["bench"],
         "n_models": len(fj["future"].get("models", [])), "plausible": inp["future"]["plausibility"]["all_inside"],
