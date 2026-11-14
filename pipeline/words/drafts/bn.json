@@ -2533,12 +2533,12 @@
    "bn": "বার, প্রতি 10 শীতে"
   },
   "screens.home.texts.rests_in": {
-   "en": "Your field rests in:",
-   "bn": "আপনার জমি এই মাসগুলোতে খালি থাকে:"
+   "en": "Your field usually rests in:",
+   "bn": "আপনার খেত সাধারণত এই মাসে খালি থাকে:"
   },
   "screens.home.texts.never_rests": {
-   "en": "Your field is green all year.",
-   "bn": "আপনার জমি সারা বছর সবুজ থাকে।"
+   "en": "Your field is usually green all year.",
+   "bn": "আপনার খেত সাধারণত সারা বছর সবুজ থাকে।"
   },
   "screens.last_years.texts.cmp_title": {
    "en": "How we compared",

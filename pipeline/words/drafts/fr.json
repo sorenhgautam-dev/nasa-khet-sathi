@@ -2533,12 +2533,12 @@
    "fr": "hivers sur 10"
   },
   "screens.home.texts.rests_in": {
-   "en": "Your field rests in:",
-   "fr": "Votre champ se repose en :"
+   "en": "Your field usually rests in:",
+   "fr": "Votre champ se repose d'habitude en :"
   },
   "screens.home.texts.never_rests": {
-   "en": "Your field is green all year.",
-   "fr": "Votre champ est vert toute l'année."
+   "en": "Your field is usually green all year.",
+   "fr": "Votre champ est d'habitude vert toute l'année."
   },
   "screens.last_years.texts.cmp_title": {
    "en": "How we compared",

@@ -359,25 +359,25 @@
     },
     {
      "id": "rests_in",
-     "en": "Your field rests in:",
-     "ne": "तपाईंको खेत यी महिना खाली रहन्छ:",
+     "en": "Your field usually rests in:",
+     "ne": "तपाईंको खेत प्रायः यी महिना खाली रहन्छ:",
      "ne_review": "needs native-speaker review",
-     "hi": "आपका खेत इन महीनों में खाली रहता है:",
-     "bn": "আপনার জমি এই মাসগুলোতে খালি থাকে:",
-     "es": "Su campo descansa en:",
-     "fr": "Votre champ se repose en :",
-     "sw": "Shamba lako hupumzika:"
+     "hi": "आपका खेत प्रायः इन महीनों ख़ाली रहता है:",
+     "bn": "আপনার খেত সাধারণত এই মাসে খালি থাকে:",
+     "es": "Su campo suele descansar en:",
+     "fr": "Votre champ se repose d'habitude en :",
+     "sw": "Shamba lako kwa kawaida hupumzika:"
     },
     {
      "id": "never_rests",
-     "en": "Your field is green all year.",
-     "ne": "तपाईंको खेत वर्षभरि हरियो रहन्छ।",
+     "en": "Your field is usually green all year.",
+     "ne": "तपाईंको खेत प्रायः वर्षभरि हरियो रहन्छ।",
      "ne_review": "needs native-speaker review",
-     "hi": "आपका खेत पूरे साल हरा रहता है।",
-     "bn": "আপনার জমি সারা বছর সবুজ থাকে।",
-     "es": "Su campo está verde todo el año.",
-     "fr": "Votre champ est vert toute l'année.",
-     "sw": "Shamba lako ni kijani mwaka mzima."
+     "hi": "आपका खेत प्रायः साल भर हरा रहता है।",
+     "bn": "আপনার খেত সাধারণত সারা বছর সবুজ থাকে।",
+     "es": "Su campo suele estar verde todo el año.",
+     "fr": "Votre champ est d'habitude vert toute l'année.",
+     "sw": "Shamba lako kwa kawaida ni kijani mwaka mzima."
     },
     {
      "id": "map_tag",

@@ -1369,3 +1369,24 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **For a person to review:** every new Nepali line and draft; the verbs (rice "planted", other crops "sown"); "Usually no
   big danger to crops." for a calm month.
 
+
+## 2026-11-14 (Saturday evening): the farmer flow made simple, How we know for judges (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- **What SI did:** on the owner's two rules (simple: one question per farmer screen, no numbers, years, counts or charts;
+  accurate: the wording follows each output's label), rebuilt the farmer screens in the teammate's style to show only the
+  sentences the back end picks (`site/data/simple/<id>.json`: `today.mode`, `guess`, `plan_words`, `actions`,
+  `weather_lines`; words `shared.farm`, months `shared.bs_months`): Today (one line per patch: drier or wetter than the
+  others until the cup test passes, then dry, fine or too wet), Photo (the crop guess as a question, yes or the other
+  rotation), Next 3 and 6 months (each plan's word against the farmer's own plan and its actions in Bikram Sambat months;
+  every "X of 10 winters" line, the step cards and the six-month chart removed), Weather ahead (this month and the five
+  after, one paragraph each; the Why? details moved). How we know is for judges only (one small link on Home, no button on
+  the other farmer screens): the field twin in three pictures, a ten-second animation of the 24 seasons for each plan
+  (green with a tick, red with a cross, then the winner, from `simple.animation`), every label and its status (and the
+  status of each farmer output, `labels_used`), the plans' detail sheets, each month's weather details and the rest of
+  the evidence. The separate "How we test each plan" page and its home line were removed. A field abroad (profile
+  "default", Madagascar) asks only for its own files, keeps Gregorian months, shows the coarse NASA world picture and
+  "not ready yet" where the Nepal-only files are missing. Nothing is computed on the page except which months follow today
+  and, after the cup test, the most common soil band (which picks the plan words' start).
+- **Words:** none added by SI (all from the coordinator's `shared.farm` and `shared.bs_months`, and existing texts).
+- **For a person to review:** the screenshots against the teammate's boards; whether the plan details (scores, five
+  tabs) are reachable enough for judges from How we know.

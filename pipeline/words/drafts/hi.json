@@ -2533,12 +2533,12 @@
    "hi": "बार, हर 10 सर्दियों में"
   },
   "screens.home.texts.rests_in": {
-   "en": "Your field rests in:",
-   "hi": "आपका खेत इन महीनों में खाली रहता है:"
+   "en": "Your field usually rests in:",
+   "hi": "आपका खेत प्रायः इन महीनों ख़ाली रहता है:"
   },
   "screens.home.texts.never_rests": {
-   "en": "Your field is green all year.",
-   "hi": "आपका खेत पूरे साल हरा रहता है।"
+   "en": "Your field is usually green all year.",
+   "hi": "आपका खेत प्रायः साल भर हरा रहता है।"
   },
   "screens.last_years.texts.cmp_title": {
    "en": "How we compared",

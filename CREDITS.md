@@ -47,6 +47,9 @@ server functions, no environment variables. GitHub Pages is not used.
 - **Weather ahead and How we test each plan (2026-11-14 evening):** the Choose screen's fourth card, the Weather ahead
   screen and its Why? sheet, and the four-step page for judges, built by SI in the teammate's styles (see SI_LOG.md,
   2026-11-14 evening, "Weather ahead and How we test each plan on the site").
+- **The farmer flow made simple (2026-11-14 evening):** the farmer screens show only the sentences the back end picks,
+  without numbers; How we know, for judges, gained the three pictures and the 24-season animation (see SI_LOG.md,
+  2026-11-14 evening, "the farmer flow made simple").
 
 ## Data and metadata services
 

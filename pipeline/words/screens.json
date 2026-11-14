@@ -199,14 +199,14 @@
     },
     {
      "id": "rests_in",
-     "en": "Your field rests in:",
-     "ne": "तपाईंको खेत यी महिना खाली रहन्छ:",
+     "en": "Your field usually rests in:",
+     "ne": "तपाईंको खेत प्रायः यी महिना खाली रहन्छ:",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "never_rests",
-     "en": "Your field is green all year.",
-     "ne": "तपाईंको खेत वर्षभरि हरियो रहन्छ।",
+     "en": "Your field is usually green all year.",
+     "ne": "तपाईंको खेत प्रायः वर्षभरि हरियो रहन्छ।",
      "ne_review": "needs native-speaker review"
     },
     {

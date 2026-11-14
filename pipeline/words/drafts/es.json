@@ -2533,12 +2533,12 @@
    "es": "de cada 10 inviernos"
   },
   "screens.home.texts.rests_in": {
-   "en": "Your field rests in:",
-   "es": "Su campo descansa en:"
+   "en": "Your field usually rests in:",
+   "es": "Su campo suele descansar en:"
   },
   "screens.home.texts.never_rests": {
-   "en": "Your field is green all year.",
-   "es": "Su campo está verde todo el año."
+   "en": "Your field is usually green all year.",
+   "es": "Su campo suele estar verde todo el año."
   },
   "screens.last_years.texts.cmp_title": {
    "en": "How we compared",

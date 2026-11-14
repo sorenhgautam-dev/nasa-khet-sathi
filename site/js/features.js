@@ -485,16 +485,23 @@
       h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:4px' }, ['part_status', 'part_wetness', 'part_sure'].map(function (o) { return K.labs(o); })),
       K.srcs(F, ['twin', 'smap']));
   }
+  // every label and its why; then the status of each farmer-screen output (simple/<id>.json labels_used): a NOT YET
+  // VERIFIABLE one is worded as an estimate on the farmer's screens (owner, 2026-11-14 evening)
   function labelsList() {
     var L_ = S.labels && S.labels.outputs; if (!L_) return null;
+    var used = h('div', { class: 'labtable' });
+    K.featData('simple').then(function (sd) {
+      var u = sd && sd.labels_used; if (!u) return;
+      Object.keys(u).forEach(function (id) { used.append(h('div', { class: 'lr' }, svg(I('hand', 16)), h('span', { class: 'lid', lang: 'en' }, id.replace(/_/g, ' ')), h('span', { class: 'small', lang: 'en' }, u[id]))); });
+    });
     return h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:8px' },
       K.lines([T('your_plan.lab_estimate_why'), T('your_plan.lab_verified_why')], 'sub'),
       K.lines(['field', 'neighbourhood', 'valley', 'region'].map(function (sc) { return T('your_plan.lab_' + sc + '_why'); }), 'small'),
       h('div', { class: 'labtable' }, Object.keys(L_).map(function (id) {
         var l = L_[id];
-        return h('div', { class: 'lr' }, h('span', { class: 'lid', lang: 'en' }, id.replace(/_/g, ' ')), K.labs(id),
+        return h('div', { class: 'lr' }, h('span', { class: 'lid', lang: 'en' }, id.replace(/_/g, ' ')), K.labs(id), l.status ? h('span', { class: 'small', lang: 'en' }, l.status) : null,
           l.n ? h('span', { class: 'small' }, T('your_plan.lab_checks') + ' ' + num(l.k) + ' / ' + num(l.n)) : null);
-      })));
+      })), used);
   }
 
   K.feat = { replay: replay, pulse: pulse, trial: trial, checkup: checkup, verdicts: verdicts, rainRisk: rainRisk, heatClock: heatClock, fertiliser: fertiliser, twinParts: twinParts, labelsList: labelsList };

@@ -28,56 +28,150 @@
     var root = h('div', { class: 'how' });
     var toc = h('nav', { class: 'prio', 'aria-label': T('btn.how_we_know') });
     root.append(h('div', { class: 'row wrap' }, K.isPlaceholder(F.field.name) ? K.sampleChip() : null, h('span', { class: 'small' }, F.field.name)),
-      // first, the four steps of how each plan is tested (the field twin explained; owner, 2026-11-14 evening)
-      K.btn2(T('twin.h1'), function () { K.go('twin'); }, 'pc'), toc);
+      // first, the field twin in three pictures, then the 24 seasons played for each plan (owner, 2026-11-14 evening)
+      twinPics(), animBox(F), toc);
     var storyBox = h('div', { style: 'display:flex;flex-direction:column;gap:16px' });
     var areaBox = h('div'), nr = h('div');
     // for judges: everything that is not on the farmer's seven screens (owner, 2026-11-14 evening), each from its own file
     var judges = h('div', { style: 'display:flex;flex-direction:column;gap:16px' });
-    var J = [['fields', T('home.prepared_title'), null], ['compare', T('last_years.cmp_title'), 'simple'], ['squares', T('last_years.replay_name', { year_count: (K.effPlans(F)[0].replay || []).length }), 'replay'],
+    // every label and its why first, then the numbers and evidence that left the farmer's screens
+    var J = [['labels', T('your_plan.lab_title'), null], ['plans', T('what_to_grow.three'), null], ['compare', T('last_years.cmp_title'), 'simple'],
+      ['squares', T('last_years.replay_name', { year_count: (K.effPlans(F)[0].replay || []).length }), 'replay'], ['weather', T('weather.title'), null],
       ['checkup', T('your_plan.check_name'), 'checkup'], ['rainrisk', T('last_years.rr_title'), 'rainrisk'], ['heatclock', T('last_years.hc_title'), 'heatclock'],
-      ['fertiliser', T('what_to_grow.fs_title'), 'fertiliser'], ['twin', T('each_part.twin_title'), null], ['pulse', T('from_space.pulse_name'), 'pulse'], ['labels', T('your_plan.lab_title'), null]];
+      ['fertiliser', T('what_to_grow.fs_title'), 'fertiliser'], ['twin', T('each_part.twin_title'), null], ['pulse', T('from_space.pulse_name'), 'pulse'],
+      ['fields', T('home.prepared_title'), null]];
     var BUILD = { compare: 'verdicts', squares: 'replay', checkup: 'checkup', rainrisk: 'rainRisk', heatclock: 'heatClock', fertiliser: 'fertiliser', pulse: 'pulse' };
     K.features().then(function () {
       J.forEach(function (j) {
         var sec = section(j[0], j[1], loadingEl()); judges.append(sec);
         var body = sec.lastChild;
         function put(el) { body.replaceWith(el || K.notReady()); }
-        if (j[0] === 'fields') { put(fieldsList()); return; }
+        if (j[0] === 'fields') { put(K.fieldsList()); return; }
         if (j[0] === 'twin') { put(K.feat.twinParts(F)); return; }
         if (j[0] === 'labels') { put(K.feat.labelsList()); return; }
+        if (j[0] === 'plans') { put(plansList(F)); return; }
+        if (j[0] === 'weather') { put(weatherDetails(F)); return; }
         K.featData(j[2]).then(function (d) { put(d ? K.feat[BUILD[j[0]]](F, d) : null); });
       });
     });
     function loadingEl() { return h('div', null, K.loading()); }
-    function fieldsList() {
-      var ix = (S.index && S.index.fields) || [];
-      return h('div', { class: 'prepared', style: 'display:flex;flex-direction:column;gap:8px' }, ix.map(function (f) {
-        return h('button', { type: 'button', class: 'pf', 'aria-pressed': String(f.id === S.fid), onclick: function () { K.chooseField(f.id); K.go('photo'); } },
-          h('span', null, h('b', null, f.name), h('br'), h('span', { class: 'small' }, f.country)), f.id === S.fid ? K.svg(K.I('tick', 18, 2.6)) : K.svg(K.I('arrow', 18)));
-      }));
-    }
     var mine = [judges, replay(F), future(F), method(F), areaBox, helped(), section('sources', T('your_plan.sources_title'), [K.sourcesList(F), version,
       // the acknowledgement NASA GIBS asks for, beside the map pictures (NASA HLS, NASA Blue Marble); kept in its own words
       h('p', { class: 'small', lang: 'en' }, 'We acknowledge the use of imagery provided by services from NASA\u2019s Global Imagery Browse Services (GIBS), part of NASA\u2019s Earth Science Data and Information System (ESDIS).')]), glossary(), nr];
-    root.append(storyBox);
+    // the labels and the evidence that left the farmer's screens first, then the chapters of story.json
+    mine.splice(1, 0, storyBox);
     mine.forEach(function (x) { root.append(x); });
     function addToc(id, title) { toc.append(h('a', { class: 'btn3', href: '#/how/' + id, style: 'min-height:40px;font-size:13px' }, title)); }
     K.getJSON('data/story.json').then(function (st) {
       if (!storyBox.isConnected) return;
       var hasArea = false;
+      J.forEach(function (j) { addToc(j[0], j[1]); });
       if (st) {
         story(F, st).forEach(function (x) { storyBox.append(x.el); addToc(x.id, x.title); });
         hasArea = (st.charts || []).some(function (c) { return c.kind === 'map' && c.link; });
       }
-      J.forEach(function (j) { addToc(j[0], j[1]); });
       [['replay', L(K.scr('last_years').title, { year_count: (K.effPlans(F)[0].replay || []).length })], ['future', T('your_plan.future_title')], ['method', T('your_plan.method_title')],
         ['sources', T('your_plan.sources_title')], ['notready', T('your_plan.not_ready_title')]].forEach(function (x) { addToc(x[0], x[1]); });
-      if (!hasArea) K.getJSON('data/area/' + encodeURIComponent(S.fid) + '.json').then(function (a) { if (a && areaBox.isConnected) areaBox.append(section('area', T('your_plan.area_title'), area(F, a))); });
+      var ar = K.indexEntry().area;   // the area map this field shares (index.json area), if any
+      if (!hasArea && ar) K.getJSON('data/area/' + encodeURIComponent(ar) + '.json').then(function (a) { if (a && areaBox.isConnected) areaBox.append(section('area', T('your_plan.area_title'), area(F, a))); });
     });
     K.getJSON('data/probe_log.json').then(function (log) { if (nr.isConnected) nr.append(notReady(F, log)); });
     return root;
   };
+
+  // ---------------- the field twin in three pictures (owner, 2026-11-14 evening); pictures drawn here, words from words.json ----------------
+  var TWIN_PIC = [
+    // 1 a copy of your field in the computer: soil, a crop and water
+    '<svg width="120" height="96" viewBox="0 0 120 96"><rect x="12" y="8" width="96" height="66" rx="8" fill="#14301E"/><rect x="18" y="14" width="84" height="54" rx="4" fill="#F3EAD8"/>' +
+      '<rect x="18" y="46" width="84" height="22" fill="#B08A5C"/><rect x="18" y="56" width="84" height="12" fill="#8A6640"/><path d="M60 46V30" stroke="#5E8A3A" stroke-width="2.4"/>' +
+      '<path d="M60 36c-6-1-9-5-9-10 6 0 9 4 9 10z" fill="#7FB24A"/><path d="M60 32c5-1 8-5 8-10-5 0-8 4-8 10z" fill="#93C258"/><path d="M84 22s-6 7-6 11a6 6 0 0012 0c0-4-6-11-6-11z" fill="#2F6E99"/>' +
+      '<path d="M46 82h28M60 74v8" stroke="#14301E" stroke-width="3" stroke-linecap="round"/></svg>',
+    // 2 NASA's weather replayed: a satellite over a grid of past years, one plan running through them
+    '<svg width="120" height="96" viewBox="0 0 120 96"><g transform="translate(96 12) rotate(-20)"><rect x="-5" y="-4" width="10" height="8" rx="1.5" fill="#14301E"/><rect x="-18" y="-3" width="11" height="6" fill="#2F6E99"/><rect x="7" y="-3" width="11" height="6" fill="#2F6E99"/></g>' + (function () {
+      var o = '';
+      for (var r = 0; r < 4; r++) for (var c = 0; c < 6; c++) o += '<rect x="' + (6 + c * 14) + '" y="' + (26 + r * 17) + '" width="11" height="13" rx="2.5" fill="' + ((r * 6 + c) % 7 === 3 ? '#F0AE4C' : '#C8E05A') + '" stroke="#14301E" stroke-width="1"/>';
+      return o;
+    })() + '<path d="M4 64 C24 52 40 74 58 60 S84 50 92 58" fill="none" stroke="#9A5426" stroke-width="3" stroke-linecap="round"/><path d="M90 20 L80 40" stroke="#9A5426" stroke-width="1.6" stroke-dasharray="3 3"/></svg>',
+    // 3 the plan that works most often wins; then what to do, on the phone
+    '<svg width="120" height="96" viewBox="0 0 120 96"><rect x="4" y="44" width="22" height="30" rx="4" fill="#E9B7A6" stroke="#14301E" stroke-width="1.4"/><path d="M10 54l10 10M20 54l-10 10" stroke="#B8432A" stroke-width="2.6" stroke-linecap="round"/>' +
+      '<rect x="30" y="30" width="26" height="44" rx="4" fill="#C8E05A" stroke="#14301E" stroke-width="1.6"/><path d="M36 52l5 5 9-11" stroke="#14301E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M43 14l3 6 6 1-4.5 4 1 6-5.5-3-5.5 3 1-6-4.5-4 6-1z" fill="#F0AE4C"/>' +
+      '<rect x="60" y="44" width="22" height="30" rx="4" fill="#E9B7A6" stroke="#14301E" stroke-width="1.4"/><path d="M66 54l10 10M76 54l-10 10" stroke="#B8432A" stroke-width="2.6" stroke-linecap="round"/>' +
+      '<rect x="88" y="18" width="28" height="56" rx="6" fill="#14301E"/><rect x="92" y="24" width="20" height="42" rx="3" fill="#FBF4EA"/><path d="M96 36h12M96 44h12M96 52h8" stroke="#5E8A3A" stroke-width="2.4" stroke-linecap="round"/></svg>'
+  ];
+  function twinPics() {
+    var n = (K.effPlans(K.S.field)[0].replay || []).length;
+    var said = [['farm.twin3_1', null], ['farm.twin3_2', 'farm.twin3_2b'], ['farm.twin3_3', 'farm.twin3_3b']];
+    return section('twinpics', T('twin.h1'), h('ol', { class: 'twinsteps three' }, said.map(function (x, i) {
+      return h('li', { class: 'tstep', style: 'animation-delay:' + (100 + i * 140) + 'ms' }, h('span', { class: 'tn' }, num(i + 1)), svg(TWIN_PIC[i], 'tpic'),
+        h('p', { class: 'tt' }, h('b', null, T(x[0], { year_count: n })), x[1] ? [' ', h('span', null, T(x[1]))] : null));
+    })));
+  }
+
+  // ---------------- the 24 seasons, played for each plan in about ten seconds (site/data/simple/<id>.json animation) ----------------
+  // One small field per plan, side by side: green with a tick when the plan did not fail that season, red with a cross when
+  // it failed; a dot for every season below it; at the end the winner (the back end's choice) is marked. Never colour alone.
+  var FIELD_PIC = '<svg width="96" height="64" viewBox="0 0 96 64"><path d="M4 50 L48 62 L92 50 L48 38Z" fill="currentColor" stroke="#14301E" stroke-width="1.6"/>' +
+    '<path d="M18 50l30 8M30 47l30 8M42 44l30 8M54 41l26 7" stroke="#14301E" stroke-opacity=".25" stroke-width="1.4"/></svg>';
+  function animBox(F) {
+    var box = section('seasons', T('farm.anim_title'), h('div', null, K.loading()));
+    K.featData('simple').then(function (sd) {
+      var an = sd && sd.animation, body = box.lastChild;
+      if (!an || !an.plans || !(an.seasons || []).length) { box.remove(); return; }   // a field without the replay (abroad): no animation
+      var n = an.seasons.length, i = -1, tiles = [];
+      // true: did not fail; false: failed; null: no result that season (grey, no mark)
+      function green(p, k) { var g = (p.green || [])[k]; return g == null ? null : !!g; }
+      var year = h('p', { class: 'anyear', 'aria-hidden': 'true' });
+      var row = h('div', { class: 'anrow' }, an.plans.map(function (p) {
+        var t = { p: p, tile: h('div', { class: 'antile' }), dots: h('div', { class: 'andots' }), cnt: h('span', { class: 'ancnt' }), ok: 0 };
+        t.tile.innerHTML = FIELD_PIC; t.mark = h('span', { class: 'anmark' }); t.tile.append(t.mark);
+        tiles.push(t);
+        return h('div', { class: 'ancol' }, h('b', { class: 'anname' }, K.planName(F.plans.filter(function (x) { return x.id === p.id; })[0] || { id: p.id })), t.tile, t.cnt, t.dots);
+      }));
+      var end = h('p', { class: 'lead anend', 'aria-live': 'polite' });
+      function stepTo(k) {
+        year.textContent = digits(an.seasons[k]);
+        tiles.forEach(function (t) {
+          var ok = green(t.p, k), cls = ok == null ? 'na' : ok ? 'ok' : 'bad'; if (ok) t.ok++;
+          t.tile.className = 'antile ' + cls; t.mark.innerHTML = ok == null ? '' : K.I(ok ? 'tick' : 'cross', 20, 3);
+          t.dots.append(h('i', { class: cls, title: digits(an.seasons[k]) }));
+          t.cnt.textContent = num(t.ok) + ' / ' + num(k + 1);
+        });
+      }
+      function finish() {
+        tiles.forEach(function (t) { t.tile.parentNode.classList.toggle('win', t.p.id === an.winner); t.tile.parentNode.classList.toggle('lose', t.p.id !== an.winner); });
+        end.textContent = T('farm.anim_winner') + ' ' + K.planName(K.S.field.plans.filter(function (p) { return p.id === an.winner; })[0] || { id: an.winner });
+      }
+      function play() {
+        i = -1; end.textContent = '';
+        tiles.forEach(function (t) { t.ok = 0; t.dots.textContent = ''; t.cnt.textContent = ''; t.tile.className = 'antile'; t.mark.textContent = ''; t.tile.parentNode.classList.remove('win', 'lose'); });
+        if (K.RM) { for (var k = 0; k < n; k++) stepTo(k); finish(); return; }
+        (function tick() { i++; if (i >= n) { finish(); return; } stepTo(i); K.later(tick, Math.round(10000 / n)); })();
+      }
+      body.replaceWith(h('div', { class: 'anim' }, year, row, end,
+        h('div', { class: 'row wrap', style: 'justify-content:space-between' }, h('p', { class: 'small', style: 'margin:0' }, svg(K.I('tick', 14, 3)), ' ', T('farm.anim_green'), ' · ', svg(K.I('cross', 14, 3)), ' ', T('farm.anim_red')),
+          h('button', { type: 'button', class: 'round', 'aria-label': T('farm.anim_title'), title: T('farm.anim_title'), onclick: play }, svg(K.I('redo', 20, 2.4))))));
+      play();
+    });
+    return box;
+  }
+
+  // ---------------- the three plans' full details (scores, five tabs, tips): the sheet each plan opens ----------------
+  function plansList(F) {
+    return h('div', { class: 'prepared', style: 'display:flex;flex-direction:column;gap:8px' }, K.effPlans(F).map(function (p) {
+      return h('button', { type: 'button', class: 'pf', onclick: function () { K.go('plan/' + p.id); } },
+        h('span', null, h('b', null, K.planName(p)), h('br'), h('span', { class: 'small' }, K.cropsLine(p))), K.svg(K.I('arrow', 18)));
+    }));
+  }
+  // ---------------- Weather ahead's details: the six blocks the farmer sees, each behind its Why? ----------------
+  function weatherDetails(F) {
+    var wx = F.weather; if (!wx || !wx.blocks) return null;
+    return h('div', { style: 'display:flex;flex-direction:column;gap:8px' }, h('p', { class: 'sub' }, T('weather.top', { year_count: wx.years }) + ' ' + T('weather.not_forecast')),
+      K.sixBlocks(wx).map(function (b) { return h('details', { class: 'why' }, h('summary', null, K.bsMonth(b.key)), K.weatherWhy(F, b)); }),
+      h('p', { class: 'small', style: 'margin:0;font-weight:700' }, T('weather.sources')),
+      K.lines((wx.sources || []).map(function (x) { return x.name + ' · ' + x.product + ' · ' + x.resolution + ' · ' + digits(x.years); }), 'small'),
+      K.lines((wx.limits || []).map(function (x) { return x.name; }), 'small'));
+  }
 
   // ---------------- the method in plain words ----------------
   var WAYS = { threshold: 'way_threshold', changepoint: 'way_changepoint', detective: 'way_detective' };

@@ -20,6 +20,33 @@ Every number and data-driven word the site shows (`site/index.html`, `site/js/ap
 | Status | The row of `data/checks/demo/scorecard.json` (its key in brackets) that the output's label points to; NYV = NOT YET VERIFIABLE; "null" = the label has no scorecard row. Then the chips as shown |
 | Fixed words | Text in `pipeline/words/screens.json`, published by `export/build_words.py: build_words`. Listed only where it states a fact |
 
+## Farmer sentences, their outputs and labels (owner's rules, 2026-11-14 late evening)
+
+Every sentence a farmer screen can show that comes from data, the file and key that feed it, the output whose label it
+carries (`site/data/labels/demo.json`), and the wording that label allows (rules.yaml `farmer_answers.wording`: VERIFIED
+a plain statement; ESTIMATE and NOT YET VERIFIABLE soft, "usually" or "may", never a plain promise). S =
+`site/data/simple/demo.json`. The back end picks the text key (`pipeline/export/build_simple.py`); the site only renders
+it. `tests/test_simple_cards.py` checks that no plain action or plan word is written while its output is not VERIFIED.
+Fixed screen words with no data behind them (titles, buttons, "You know your land best.", the soil test's steps, the
+Safe Trial sheet) carry no output and are not listed. How we know (judges only) shows every label and why.
+
+| Screen | Sentence (English, demo) | Words key | Fed by | Output | Label on the demo | Wording |
+| --- | --- | --- | --- | --- | --- | --- |
+| Photo | We think you grow rice, then potato. Is that right? | `farm.guess`, `farm.guess_ask` | S `guess` ← F `diary.guess` | rotation_guess | NOT YET VERIFIABLE | asked as a question for the farmer to confirm |
+| Photo | Your field usually rests in: Kartik and Mangsir. | `home.rests_in` + `bs_months` | S `pulse_card.growing` ← U `typical` | pulse_typical | NOT YET VERIFIABLE | soft: "usually" |
+| Today | Patch 3 is drier than the others. Water it first. | `farm.today_drier` + `farm.today_water_first` (also `_wetter`, `_same`, `_untested`) | S `today.mode` = compare; live.json / probe_log.json `relative` | part_status, probe_water | NOT YET VERIFIABLE, NOT YET VERIFIABLE | a comparison only, never a judgement, until the cup test passes (`farmer_answers.wording.today`) |
+| Today (after the cup test) | Patch 3 is dry. Water it today. | `farm.today_dry` + `farm.today_water_today` (also `_fine`, `_too_wet`) | S `today.mode` = band; live.json `band` | probe_water | NOT YET VERIFIABLE | shown only when `data/checks/probe/bench.json` passes; not shown today |
+| Next 3 / 6 months | Usually better than now. | `farm.word_better_usual` / `word_same` / `word_worse_usual` / `word_mixed` | S `plan_words[answer][m3|m6][start][plan]` ← R `results` | replay_window | NOT YET VERIFIABLE | soft: "usually" (plain `farm.word_better` only if VERIFIED) |
+| Next 3 / 6 months | Wheat is usually sown in Kartik. | `farm.act_sow_usual`, `act_plant_usual`, `act_harvest_usual`, `act_then_plant_usual` | S `actions[plan][window]` ← F `plans[].crops` (FAO crop calendar, crops.json) | plan_months | NOT YET VERIFIABLE | soft: "usually" (plain `farm.act_sow` only if VERIFIED) |
+| Next 3 / 6 months | Our suggestion: Wheat. Fill the empty months. | `what_to_grow.our_pick`, `lbl.what_to_grow.plan.<id>` | the plan with the best word (S `plan_words`) | replay_window | NOT YET VERIFIABLE | a name and a pick, no claim beyond the plan word |
+| Weather ahead | Mangsir: usually dry, cold. | `farm.wx_usual` {month, rain_word, temp_word} | S `weather_lines` ← F `weather.blocks[].usual` | weather block (no label entry yet; its method is that of rain_month_words and heat_month_words) | rain_month_words VERIFIED, heat_month_words VERIFIED on calendar months; blocks not verified (VALIDATION 4.10: 10 of 12) | always soft: "usually" |
+| Weather ahead | Cold nights may hurt potato. | `farm.wx_hurt_<check>` / `farm.wx_calm` | S `weather_lines` ← F `weather.blocks[].dangers` (rules `weather_ahead`, `heat_clock`) | heatclock_today, rainrisk_harvest, frost_month_words (the same limits) | NOT YET VERIFIABLE, NOT YET VERIFIABLE, NOT YET VERIFIABLE | always "may" |
+| Weather ahead | Cover young plants on clear, cold nights. Check with your local expert. | `weather.tip_<kind>` + `weather.tip_end` | S `weather_lines[...].tip` | plan_tips (advice) | ESTIMATE | advice, always ending "Check with your local expert." |
+
+Not on farmer screens any more (owner, 2026-11-14 evening; now on How we know only): the X-of-10-winters lines, the
+Replay squares, every chart, the plan scores and tabs, the Weather Why? details, the heat clock, rain at harvest, the
+fertiliser saver, the Record Check-up and the labels themselves.
+
 ## 0. On every screen
 
 | Screen | What is shown | JSON field | Computed by (file: function) | From (data file and step) | Dataset(s) | Rule (rules.yaml key) | Status |

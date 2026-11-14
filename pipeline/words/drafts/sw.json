@@ -2533,12 +2533,12 @@
    "sw": "kati ya kila baridi 10"
   },
   "screens.home.texts.rests_in": {
-   "en": "Your field rests in:",
-   "sw": "Shamba lako hupumzika:"
+   "en": "Your field usually rests in:",
+   "sw": "Shamba lako kwa kawaida hupumzika:"
   },
   "screens.home.texts.never_rests": {
-   "en": "Your field is green all year.",
-   "sw": "Shamba lako ni kijani mwaka mzima."
+   "en": "Your field is usually green all year.",
+   "sw": "Shamba lako kwa kawaida ni kijani mwaka mzima."
   },
   "screens.last_years.texts.cmp_title": {
    "en": "How we compared",

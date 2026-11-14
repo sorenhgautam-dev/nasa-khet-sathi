@@ -51,8 +51,8 @@ This page is made from the word files in this folder; change those, not this pag
 | Worse | कमजोर |
 | about | करिब |
 | of every 10 winters | पटक, हरेक १० हिउँदमा |
-| Your field rests in: | तपाईंको खेत यी महिना खाली रहन्छ: |
-| Your field is green all year. | तपाईंको खेत वर्षभरि हरियो रहन्छ। |
+| Your field usually rests in: | तपाईंको खेत प्रायः यी महिना खाली रहन्छ: |
+| Your field is usually green all year. | तपाईंको खेत प्रायः वर्षभरि हरियो रहन्छ। |
 | NASA map | नासाको नक्सा |
 | A top view of your farm | माथिबाट तपाईंको खेत |
 | What to grow | के लगाउने |
