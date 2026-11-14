@@ -7387,14 +7387,14 @@
     "sw": "Mvua kubwa inaweza kuharibu mavuno ya {crop}."
    },
    "wx_calm": {
-    "en": "Usually no big danger to crops.",
-    "ne": "प्रायः बालीलाई ठूलो खतरा हुँदैन।",
+    "en": "Usually no big danger.",
+    "ne": "प्रायः ठूलो खतरा हुँदैन।",
     "ne_review": "needs native-speaker review",
-    "hi": "आमतौर पर फ़सल को बड़ा ख़तरा नहीं।",
-    "bn": "সাধারণত ফসলের বড় বিপদ নেই।",
-    "es": "Normalmente sin gran peligro para los cultivos.",
-    "fr": "D'habitude, pas de grand danger pour les cultures.",
-    "sw": "Kwa kawaida hakuna hatari kubwa kwa mazao."
+    "hi": "आमतौर पर बड़ा ख़तरा नहीं।",
+    "bn": "সাধারণত বড় বিপদ নেই।",
+    "es": "Normalmente sin gran peligro.",
+    "fr": "D'habitude, pas de grand danger.",
+    "sw": "Kwa kawaida hakuna hatari kubwa."
    },
    "today_drier": {
     "en": "Patch {section} is drier than the others.",

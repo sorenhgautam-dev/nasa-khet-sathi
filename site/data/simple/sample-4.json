@@ -906,14 +906,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_dry_spell",
-      "fill": {
-       "crop": "wheat"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_dry_spell"
-     }
+     "tip": null
     },
     "Mar": {
      "usual": {
@@ -925,14 +920,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_big_rain_harvest",
-      "fill": {
-       "crop": "wheat"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_big_rain"
-     }
+     "tip": null
     },
     "Apr": {
      "usual": {
@@ -972,14 +962,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_big_rain_sowing",
-      "fill": {
-       "crop": "rice"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_big_rain"
-     }
+     "tip": null
     },
     "Jul": {
      "usual": {
@@ -1116,14 +1101,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_big_rain_harvest",
-      "fill": {
-       "crop": "wheat"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_big_rain"
-     }
+     "tip": null
     },
     "Mar": {
      "usual": {
@@ -1135,14 +1115,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_big_rain_harvest",
-      "fill": {
-       "crop": "wheat"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_big_rain"
-     }
+     "tip": null
     },
     "Apr": {
      "usual": {
@@ -1182,14 +1157,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_big_rain_sowing",
-      "fill": {
-       "crop": "rice"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_big_rain"
-     }
+     "tip": null
     },
     "Jul": {
      "usual": {
@@ -1394,14 +1364,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_big_rain_sowing",
-      "fill": {
-       "crop": "rice"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_big_rain"
-     }
+     "tip": null
     },
     "Jul": {
      "usual": {
@@ -1479,14 +1444,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_potato_cold",
-      "fill": {
-       "crop": "potato"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_cold"
-     }
+     "tip": null
     },
     "Dec": {
      "usual": {
@@ -1604,14 +1564,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_big_rain_sowing",
-      "fill": {
-       "crop": "rice"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_big_rain"
-     }
+     "tip": null
     },
     "Jul": {
      "usual": {
@@ -1689,14 +1644,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_potato_cold",
-      "fill": {
-       "crop": "potato"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_cold"
-     }
+     "tip": null
     },
     "Dec": {
      "usual": {
@@ -1708,14 +1658,9 @@
       }
      },
      "danger": {
-      "text": "farm.wx_hurt_potato_cold",
-      "fill": {
-       "crop": "potato"
-      }
+      "text": "farm.wx_calm"
      },
-     "tip": {
-      "text": "weather.tip_cold"
-     }
+     "tip": null
     }
    }
   }

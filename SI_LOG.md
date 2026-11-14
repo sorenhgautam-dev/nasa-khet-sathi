@@ -1390,3 +1390,15 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **Words:** none added by SI (all from the coordinator's `shared.farm` and `shared.bs_months`, and existing texts).
 - **For a person to review:** the screenshots against the teammate's boards; whether the plan details (scores, five
   tabs) are reachable enough for judges from How we know.
+
+## 2026-11-14 (Saturday night): the owner's three answers (Claude Opus 5.5 via Claude Code)
+
+- **What SI did:** applied the owner's answers 1-3 (commit fe1165c, rules first). Weather ahead says "Usually no big
+  danger." when a month has no danger for the farmer's own crop, never another crop's danger; rice has no "big rain at
+  sowing" danger (paddy is flooded at transplanting); the soil test and Today show only readings from a real serial port,
+  each with its date, with no "Tested: n / N" count and no practice chip. Rebuilt the weather block, the farmer files,
+  words.json and story.json for the demo and the four sample fields.
+- **Words:** `shared.farm.wx_calm` shortened to the owner's words, "Usually no big danger." The Nepali
+  ("प्रायः ठूलो खतरा हुँदैन।", "needs native-speaker review") and the Hindi, Bengali, Spanish, French and Swahili drafts are
+  SI's, each the old reviewed-for-length text with "to crops" dropped.
+- **For a person to review:** the Nepali line; that a fake-probe rehearsal now shows nothing on the phone.

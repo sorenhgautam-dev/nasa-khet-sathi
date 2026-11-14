@@ -5766,91 +5766,7 @@
       }
      ]
     },
-    "dangers": [
-     {
-      "check": "big_rain_sowing",
-      "kind": "big_rain",
-      "crop": "rice",
-      "sow": "06-23",
-      "window": [
-       "06-23",
-       "07-14"
-      ],
-      "years": 24,
-      "of": 24,
-      "often": "most",
-      "hit_years": [
-       2002,
-       2003,
-       2004,
-       2005,
-       2006,
-       2007,
-       2008,
-       2009,
-       2010,
-       2011,
-       2012,
-       2013,
-       2014,
-       2015,
-       2016,
-       2017,
-       2018,
-       2019,
-       2020,
-       2021,
-       2022,
-       2023,
-       2024,
-       2025
-      ],
-      "change": "about_same",
-      "change_basis": "days of 20 mm or more in the tested days",
-      "tip": "big_rain"
-     },
-     {
-      "check": "big_rain_sowing",
-      "kind": "big_rain",
-      "crop": "rice",
-      "sow": "06-15",
-      "window": [
-       "06-15",
-       "07-06"
-      ],
-      "years": 23,
-      "of": 24,
-      "often": "most",
-      "hit_years": [
-       2002,
-       2003,
-       2004,
-       2005,
-       2006,
-       2007,
-       2008,
-       2010,
-       2011,
-       2012,
-       2013,
-       2014,
-       2015,
-       2016,
-       2017,
-       2018,
-       2019,
-       2020,
-       2021,
-       2022,
-       2023,
-       2024,
-       2025
-      ],
-      "change": "about_same",
-      "change_basis": "days of 20 mm or more in the tested days",
-      "tip": "big_rain"
-     }
-    ],
+    "dangers": [],
     "none_seen": []
    },
    {
@@ -6508,15 +6424,6 @@
     ]
    },
    {
-    "check": "big_rain_sowing",
-    "crop": "rice",
-    "sow": "06-23",
-    "window": [
-     "06-23",
-     "07-14"
-    ]
-   },
-   {
     "check": "big_rain_harvest",
     "crop": "rice",
     "sow": "06-23",
@@ -6577,15 +6484,6 @@
     "window": [
      "07-29",
      "10-02"
-    ]
-   },
-   {
-    "check": "big_rain_sowing",
-    "crop": "rice",
-    "sow": "06-15",
-    "window": [
-     "06-15",
-     "07-06"
     ]
    },
    {
