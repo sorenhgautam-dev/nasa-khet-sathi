@@ -46,6 +46,21 @@
    "area": "demo"
   },
   {
+   "id": "sample-3",
+   "name": "Bhaktapur sample field 3 (PLACEHOLDER)",
+   "country": "Nepal",
+   "lat": 27.708292,
+   "lon": 85.407625,
+   "bbox": [
+    85.379227,
+    27.625034,
+    85.480773,
+    27.714966
+   ],
+   "sample": true,
+   "area": "demo"
+  },
+  {
    "id": "sample-4",
    "name": "Bhaktapur sample field 4 (PLACEHOLDER)",
    "country": "Nepal",
@@ -76,6 +91,7 @@
     "demo",
     "sample-1",
     "sample-2",
+    "sample-3",
     "sample-4"
    ]
   }

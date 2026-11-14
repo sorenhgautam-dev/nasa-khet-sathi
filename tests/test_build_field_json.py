@@ -430,3 +430,11 @@ def test_the_2040_outlook_fills_every_plan_and_option():
     assert out["current_options"]["options"][1]["future"]["harvest"] == [81]
     assert "future" not in out.get("mock", [])
     assert f["words"]["en"] and f["words"]["ne"]
+
+
+def test_smap_is_a_source_when_its_card_exists():
+    """TRACEABILITY gap: the parts' 'how sure' comes from NASA SMAP L4 (twin_state.sure_prior), so SMAP gets a tag."""
+    from pipeline.export.build_field_json import DEMO_CARDS, DEMO_FIELD, sources_block
+    rows = {x["name"]: x for x in sources_block(field=DEMO_FIELD, cards={**DEMO_CARDS, "smap": {"date_range": ["2015-03-31", "2025-12-31"]}})}
+    assert rows["NASA SMAP L4"]["years"] == "2015-2025" and rows["NASA SMAP L4"]["type"] == "model"
+    assert "NASA SMAP L4" not in {x["name"] for x in sources_block(field=DEMO_FIELD, cards=DEMO_CARDS)}

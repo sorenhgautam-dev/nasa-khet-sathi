@@ -114,3 +114,63 @@ def test_watered_paddy_irrigation_grows_by_the_losses_and_the_land_preparation()
     assert r_on["irrigation_mm"] == pytest.approx(r_on["pond_supply_mm"] + r_on["land_prep_mm"])
     assert r_on["pond_supply_mm"] > r_off["pond_supply_mm"] and r_on["harvest_pct"] == r_off["harvest_pct"] == 100.0
     assert max(abs(s["balance_residual_mm"]) for s in on["segments"].values()) < 1e-9
+
+
+# --- the paddy-aware water score (rules.yaml paddy_losses.water_score): the losses' share of the irrigation ---
+
+def test_the_top_up_that_replaces_yesterday_s_losses_is_booked_apart():
+    """Ponded, PERC 5, ETc 4. Day 1 rain 6: 0 - 6 + 4 + 5 = 3 (rain covered the crop: all 3 mm are losses). Day 2 top-up
+    3 (losses 3), no rain: 0 + 4 + 5 = 9. Day 3 top-up 9 = crop 4 + losses 5. Irrigation 0 + 3 + 9 = 12, of which losses
+    0 + 3 + 5 = 8 and the crop's 4: what the same field gets without the losses (day 1 drains, day 2 0, day 3 4)."""
+    out = sw.run_bucket(_days([6.0, 0.0, 0.0]), 100.0, 0.2, 70, ponded=np.ones(3, bool), sp_mm=5.0)
+    assert out["irrigation_mm"].tolist() == [0.0, 3.0, 9.0] and out["pond_loss_mm"].tolist() == [0.0, 3.0, 5.0]
+    plain = sw.run_bucket(_days([6.0, 0.0, 0.0]), 100.0, 0.2, 70, ponded=np.ones(3, bool))
+    assert plain["irrigation_mm"].sum() == out["irrigation_mm"].sum() - out["pond_loss_mm"].sum() == 4.0
+    assert "pond_loss_mm" not in plain.columns
+
+
+def test_season_and_year_carry_the_irrigation_losses_only_when_the_switch_is_on():
+    from pipeline.plans import simulate as sim
+    plan = [("rice", "2015-07-01"), ("potato", "2015-10-30")]
+    on = to.replay(_w(), ["rice", "potato"], LIB, SOIL, CN, _rules(True), irrigated=True, plan=plan)
+    off = to.replay(_w(), ["rice", "potato"], LIB, SOIL, CN, _rules(False), irrigated=True, plan=plan)
+    rice = next(s for s in on["seasons"] if s["crop"] == "rice")
+    pot = next(s for s in on["seasons"] if s["crop"] == "potato")
+    assert rice["irrigation_losses_mm"] == pytest.approx(rice["pond_loss_mm"] + rice["land_prep_mm"]) and rice["pond_loss_mm"] > 0
+    assert pot["irrigation_losses_mm"] == 0.0
+    y = next(y for y in on["years"] if y["year"] == 2015)
+    assert y["irrigation_losses_mm"] == pytest.approx(rice["irrigation_losses_mm"])
+    assert all("irrigation_losses_mm" not in s for s in off["seasons"]) and all("irrigation_losses_mm" not in y for y in off["years"])
+    assert "irrigation_losses_mm" not in sim.yearly([{k: v for k, v in s.items() if k != "irrigation_losses_mm"} for s in on["seasons"]])[0]
+
+
+def test_the_water_score_counts_the_crop_s_irrigation_not_the_losses():
+    """run_plans.evaluate: with the losses on, water = water_score(irrigation - irrigation_losses); off, unchanged."""
+    import sys
+    from pathlib import Path
+
+    from pipeline.plans import score as sc
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+    from run_plans import evaluate
+    d = pd.date_range("2001-01-01", "2004-12-31")
+    w = pd.DataFrame({"date": d, "et0_mm": 4.0, "rain_mm": np.where(d.month.isin([7, 8, 9]), 8.0, 0.2)})
+    specs = [{"crop": "rice", "window": 1, "position": "middle"}, {"crop": "potato", "window": 0, "position": "middle"}]
+    on = evaluate(specs, w, LIB, SOIL, CN, {**_rules(True), "ky_assumed": {"sensitivity": []}}, 1.0)
+    off = evaluate(specs, w, LIB, SOIL, CN, {**_rules(False), "ky_assumed": {"sensitivity": []}}, 1.0)
+    assert on["irrigation_losses_mm"] > 0 and "irrigation_losses_mm" not in off
+    assert on["water"] == sc.water_score(on["irrigation_mm"] - on["irrigation_losses_mm"], on["etc_mm"], 1.0)
+    assert off["water"] == sc.water_score(off["irrigation_mm"], off["etc_mm"], 1.0)
+    assert on["water"] > sc.water_score(on["irrigation_mm"], on["etc_mm"], 1.0)
+
+
+def test_the_paddy_losses_switch_on_the_command_line_and_its_label():
+    import argparse
+
+    from scripts.common import add_switches, set_switches, switch_labels
+    ap = argparse.ArgumentParser()
+    add_switches(ap)
+    rules = {**_rules(False), "bare_soil": {"kc": 0.3, "apply": False}}
+    set_switches(rules, ap.parse_args(["--paddy-losses", "on"]))
+    assert to.paddy_losses(rules)["perc_mm_day"] == 5.0 and "paddy_losses" in switch_labels(rules, SOIL)
+    set_switches(rules, ap.parse_args([]))
+    assert to.paddy_losses(rules) is None and "paddy_losses" not in switch_labels(rules, SOIL)

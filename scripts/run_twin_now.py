@@ -47,7 +47,8 @@ def run_to_as_of(w, specs, lib, soil, cn, rules, irrigated, seasons=None):
     plan, _, _ = to.dated_plan(plan, lib, rules, w, irrigated, farmer=True, seasons=seasons, last_day=max(last, w["date"].max()))
     w = w.assign(u2_ms=w["ws2m_ms"].to_numpy(), rhmin_pct=np.asarray(rhmin_pct(w["ea_kpa"], w["tmax_c"]), dtype=float))
     daily, _ = season.simulate(w[["date", "et0_mm", "rain_mm", "u2_ms", "rhmin_pct"]], plan, lib, soil, cn,
-                               to.bare_setting(rules, soil), irrigated, kc_climate=rules["kc_climate"]["apply"])
+                               to.bare_setting(rules, soil), irrigated, kc_climate=rules["kc_climate"]["apply"],
+                               **({"paddy_losses": to.paddy_losses(rules)} if to.paddy_losses(rules) else {}))
     return daily, plan
 
 

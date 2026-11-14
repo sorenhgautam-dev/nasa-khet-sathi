@@ -5,7 +5,9 @@ from pathlib import Path
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
-RAIN_DIRS = {"corrected": "", "uncorrected": "rain_uncorrected", "dhm": "rain_dhm"}   # data/checks/<field>/<dir>/
+RAIN_DIRS = {"corrected": "", "uncorrected": "rain_uncorrected", "dhm": "rain_dhm",    # data/checks/<field>/<dir>/
+             "untuned": "rain_untuned"}
+SOIL_DIRS = {"map": "", "measured": "soil_measured"}           # under the rain folder (rules.yaml field_capacity_measured)
 
 
 def dhm_rain(rules):
@@ -19,8 +21,20 @@ def dhm_rain(rules):
             "years": rules["gpm_series"]["dhm_scaling"]["years"]}
 
 
+def rain_kw(rules, version, field_id):
+    """with_rain's extra arguments for a rain version: DHM's normals for 'dhm'; for 'untuned', the gauge factors when
+    rules.yaml gpm_series.gauge_calibration is on for this field (else None: the central rain is not calibrated)."""
+    if version == "dhm":
+        return {"dhm": dhm_rain(rules)}
+    if version == "untuned":
+        cal = rules["gpm_series"].get("gauge_calibration") or {}
+        return {"gauge": cal["factors"] if cal.get("apply") and field_id in cal.get("fields", []) else None}
+    return {}
+
+
 def add_switches(ap):
-    """--bare-soil, --paddy-rainfed and --season-dates: each defaults to what rules.yaml says (pipeline/plans/twin_options.py)."""
+    """--bare-soil, --paddy-rainfed, --season-dates, --paddy-losses and --soil: each defaults to what rules.yaml says
+    (pipeline/plans/twin_options.py; --soil defaults to the map)."""
     ap.add_argument("--bare-soil", choices=("rules", "kc", "fao56"), default="rules",
                     help="bare-soil evaporation: as rules.yaml bare_soil.apply says (default), the constant Kc, or FAO-56's "
                          "surface layer (build step 2a)")
@@ -30,6 +44,13 @@ def add_switches(ap):
     ap.add_argument("--season-dates", choices=("rules", "calendar", "hls"), default="rules",
                     help="sowing of the farmer's plans: as rules.yaml season_dates.apply says (default), the calendar, or "
                          "the satellite's seasons (item 4a)")
+    ap.add_argument("--paddy-losses", choices=("rules", "off", "on"), default="rules",
+                    help="a paddy's seepage and percolation and its puddling water: as rules.yaml paddy_losses.apply says "
+                         "(default), or off, or on (owner's item 3)")
+    ap.add_argument("--soil", choices=tuple(SOIL_DIRS), default="map",
+                    help="field capacity: the soil map's (default), or the field team's measured one, written to "
+                         "<rain folder>/soil_measured/ (rules.yaml field_capacity_measured; nothing runs without its "
+                         "switch and data/field_visit/<field>/field_capacity.csv)")
 
 
 def set_switches(rules, a):
@@ -37,6 +58,17 @@ def set_switches(rules, a):
     rules.setdefault("season_dates", {})["force"] = a.season_dates
     rules["bare_soil"]["force"] = a.bare_soil
     rules.setdefault("paddy_rainfed", {})["force"] = a.paddy_rainfed
+    rules.setdefault("paddy_losses", {})["force"] = a.paddy_losses
+
+
+def soil_for(version, rules, field_id, soil, data=REPO / "data"):
+    """The twin's soil table for --soil: the map's, or the field team's measured field capacity with the map's wilting
+    point (owner's item 4; twin_options.soil_versions); None when 'measured' has no switch or no file (nothing to run)."""
+    if version == "map":
+        return soil
+    from pipeline.fetch.field_visit import load_field_capacity
+    from pipeline.plans import twin_options as to
+    return to.soil_versions(rules, soil, load_field_capacity(field_id, data)).get("measured")
 
 
 def switch_labels(rules, soil, season_dates=None):
@@ -50,6 +82,10 @@ def switch_labels(rules, soil, season_dates=None):
     if paddy:                                                  # item 4c (owner's decision 2026-11-14)
         out["paddy_rainfed"] = ("rain-fed transplanting rule (rules.yaml paddy_rainfed; calendar-dated paddy seasons only): "
                                 + str({k: v for k, v in paddy.items() if k not in ("force", "status")}))
+    if to.paddy_losses(rules):                                 # owner's item 3
+        out["paddy_losses"] = ("a paddy's seepage and percolation on its wet days and its puddling water (rules.yaml "
+                               f"paddy_losses): {to.paddy_losses(rules)}; the water score leaves out the irrigation that "
+                               "replaces them (irrigation_losses_mm)")
     return out
 
 

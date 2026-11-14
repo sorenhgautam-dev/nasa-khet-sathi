@@ -34,9 +34,10 @@ from pipeline.future import runs as ru  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
-from scripts.common import dhm_rain  # noqa: E402
+from scripts.common import rain_kw  # noqa: E402
 
-VERSIONS = ("corrected", "uncorrected", "dhm")   # dhm: owner's decision 4b (2026-11-14), the range's dry edge
+VERSIONS = ("corrected", "uncorrected", "dhm", "untuned")   # dhm: owner's decision 4b (2026-11-14), the range's dry edge;
+# untuned: the break-corrected rain before the gauge factors (owner, 2026-11-14 afternoon: the other versions are the range)
 ROLES = ("current", "cover_gap", "safest")
 
 
@@ -181,7 +182,7 @@ def main(argv=None):
 
     plans_out, grid = {pid: {} for pid in specs}, {}
     for v in VERSIONS:
-        wv = with_rain(w, v, dhm=dhm_rain(rules) if v == "dhm" else None)
+        wv = with_rain(w, v, **rain_kw(rules, v, field["id"]))
         base = {pid: ru.plan_run(sp, wv, lib, soil, cn, rules) for pid, sp in specs.items()}
         runs = {pid: [] for pid in specs}
         for (m, s), ch in changes.items():

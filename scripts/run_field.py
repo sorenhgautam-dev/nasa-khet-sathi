@@ -31,9 +31,13 @@ STEPS = [   # (name, command after the interpreter, which fields); --field <id> 
     ("replay", ["scripts/run_replay.py"], CORE),
     ("replay_uncorrected", ["scripts/run_replay.py", "--rain", "uncorrected"], FULL),
     ("replay_dhm", ["scripts/run_replay.py", "--rain", "dhm"], FULL),
+    ("replay_untuned", ["scripts/run_replay.py", "--rain", "untuned"], FULL),
     ("plans", ["scripts/run_plans.py"], CORE),
     ("plans_uncorrected", ["scripts/run_plans.py", "--rain", "uncorrected"], FULL),
     ("plans_dhm", ["scripts/run_plans.py", "--rain", "dhm"], CORE),
+    ("plans_untuned", ["scripts/run_plans.py", "--rain", "untuned"], CORE),
+    ("replay_soil_measured", ["scripts/run_replay.py", "--soil", "measured"], FULL),   # nothing runs without the team's
+    ("plans_soil_measured", ["scripts/run_plans.py", "--soil", "measured"], FULL),     # tins and the switch (item 4)
     ("memory", ["scripts/run_memory.py"], FULL),
     ("twin_now", ["scripts/run_twin_now.py"], FULL),
     ("sections", ["scripts/run_sections.py"], FULL),
@@ -47,10 +51,10 @@ STEPS = [   # (name, command after the interpreter, which fields); --field <id> 
     ("export", ["-m", "pipeline.export.build_field_json"], CORE),
     ("index", ["-m", "pipeline.export.build_index"], SITE),
     ("words", ["-m", "pipeline.export.build_words"], SITE),
+    ("verification", ["scripts/run_verification.py"], FULL),     # before story: the page shows this run's scorecard
     ("story", ["-m", "pipeline.export.build_story"], SITE),
     ("validate", ["-m", "pipeline.export.validate", "--final"], SITE),
     ("site_check", ["scripts/check_site.py", "--final"], SITE),
-    ("verification", ["scripts/run_verification.py"], FULL),
 ]
 
 

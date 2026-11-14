@@ -41,6 +41,14 @@ def paddy_losses(rules):
             "prep_days": int(rules["paddy_rainfed"]["prep_days"])}
 
 
+def irrigation_losses(years, rules):
+    """The mean yearly part of the watered case's irrigation that replaces a paddy's seepage and percolation and its
+    land-preparation water (rules.yaml paddy_losses.water_score), or None while the losses are off."""
+    if paddy_losses(rules) is None:
+        return None
+    return float(sum(y.get("irrigation_losses_mm", 0.0) for y in years) / len(years))
+
+
 def soil_versions(rules, soil, measured):
     """Owner's item 4 (rules.yaml field_capacity_measured): {'map': soil} and, when the switch is on and the field team's
     medians exist (pipeline/fetch/field_visit.load_field_capacity), 'measured': the same table with the measured field

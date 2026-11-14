@@ -207,6 +207,21 @@
     "१० मध्ये ४ खेतमा वर्षमा दुई बाली।",
     "१० मध्ये २ देखि ५ हुन सक्छ।"
    ]
+  },
+  {
+   "id": "this_field_bare_days",
+   "value": 62,
+   "low": 61,
+   "high": 67,
+   "unit": "days a year",
+   "en": [
+    "This sample field: bare about 62 days.",
+    "More than most fields nearby."
+   ],
+   "ne": [
+    "यो नमुना खेत: करिब ६२ दिन खाली।",
+    "नजिकका धेरैजसो खेतभन्दा बढी।"
+   ]
   }
  ],
  "ne_status": "needs native-speaker review",

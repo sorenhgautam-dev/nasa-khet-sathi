@@ -11,6 +11,7 @@ import statistics
 import sys
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
@@ -20,6 +21,8 @@ from pipeline.diary import onset_dhm as od  # noqa: E402
 from pipeline.diary import trends as tr  # noqa: E402
 from pipeline.fetch.fields import load_field  # noqa: E402
 from pipeline.fetch.rules import load_rules  # noqa: E402
+from pipeline.twin.inputs import with_rain  # noqa: E402
+from scripts.common import rain_kw  # noqa: E402
 
 MONTH_KEYS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -71,8 +74,9 @@ def run(field, rules, data=REPO / "data"):
         raise ValueError("the GPM cross-check needs the twin's GPM rain on every day")
     gpm = pd.Series(w["rain_uncorrected_mm"].to_numpy(float), index=pd.DatetimeIndex(w["date"]))
     gpm = gpm[gpm.index.year <= 2016]
-    if not (w.loc[w["date"].dt.year <= 2016, "rain_mm"].to_numpy() == gpm.to_numpy()).all():
-        raise ValueError("before 2017 the twin's rain should equal GPM as published")
+    untuned = with_rain(w, "untuned", **rain_kw(rules, "untuned", field["id"]))      # before the gauge factors, if any
+    if not np.allclose(untuned.loc[untuned["date"].dt.year <= 2016, "rain_mm"].to_numpy(), gpm.to_numpy(), rtol=1e-12, atol=1e-9):
+        raise ValueError("before 2017 the twin's break-corrected rain (before the gauge factors) should equal GPM as published")
     ch = pd.read_parquet(data / "clean" / field["id"] / "chirps.parquet")
     chirps = pd.Series(ch["rain_mm"].to_numpy(float), index=pd.DatetimeIndex(ch["date"]))
     cross = {"chirps": _cross(chirps, A, t_dhm, days, alpha,

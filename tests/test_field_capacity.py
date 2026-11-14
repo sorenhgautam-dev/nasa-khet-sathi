@@ -86,3 +86,16 @@ def test_the_file_gives_both_versions_when_the_switch_is_on(tmp_path):
     off = to.soil_versions({"field_capacity_measured": {"apply": False}}, SOIL, med)
     assert set(on) == {"map", "measured"} and set(off) == {"map"}
     assert on["measured"]["theta_fc_m3m3"].tolist()[:3] == pytest.approx([0.315, 0.315, 0.29])
+
+
+def test_the_runners_soil_for_map_and_measured(tmp_path):
+    """scripts/common.soil_for: 'map' is the map; 'measured' needs the switch AND the file, else None (nothing to run)."""
+    from scripts.common import SOIL_DIRS, soil_for
+    on, off = {"field_capacity_measured": {"apply": True}}, {"field_capacity_measured": {"apply": False}}
+    assert soil_for("map", on, "demo", SOIL, tmp_path) is SOIL and soil_for("measured", on, "demo", SOIL, tmp_path) is None
+    d = tmp_path / "field_visit" / "demo"
+    d.mkdir(parents=True)
+    _tins({"0-15": [0.30, 0.32, 0.34, 0.31], "15-30": [0.28, 0.30, 0.29]}).to_csv(d / "field_capacity.csv", index=False)
+    assert soil_for("measured", off, "demo", SOIL, tmp_path) is None
+    assert soil_for("measured", on, "demo", SOIL, tmp_path)["theta_fc_m3m3"].tolist()[2] == pytest.approx(0.29)
+    assert SOIL_DIRS == {"map": "", "measured": "soil_measured"}

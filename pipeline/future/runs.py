@@ -28,7 +28,9 @@ def plan_run(specs, weather, lib, soil, cn, rules):
     m = sc.harvest_metrics(rf_years)
     return {"harvest": m["harvest"], "stability": m["stability"], "dry_days": m["dry_days"],
             "irrigation_mm": float(np.mean([y["irrigation_mm"] for y in ir_years])),
-            "irrigated_harvest": float(np.mean([y["harvest"] for y in ir_years])), "years": sorted(ok)}
+            "irrigated_harvest": float(np.mean([y["harvest"] for y in ir_years])), "years": sorted(ok),
+            **({} if to.irrigation_losses(ir_years, rules) is None else
+               {"irrigation_losses_mm": to.irrigation_losses(ir_years, rules)})}
 
 
 def spread(runs, key):

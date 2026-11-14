@@ -121,6 +121,16 @@ def site_json(field, A, out, site_dir):
             {"id": "share_two_seasons", "value": r3(ts["value"]), "low": r3(ts["low"]), "high": r3(ts["high"]), "unit": "share of cropland",
              "en": [f"{_in10(ts['value'])} in 10 fields: two crops a year.", f"Could be {_in10(ts['low'])} to {_in10(ts['high'])} in 10."],
              "ne": [s.translate(NE_DIGITS) for s in [f"10 मध्ये {_in10(ts['value'])} खेतमा वर्षमा दुई बाली।", f"10 मध्ये {_in10(ts['low'])} देखि {_in10(ts['high'])} हुन सक्छ।"]]}]
+    fb = out["field_check"]["b_bare_days"]                 # the prepared field itself, beside the area (TRACEABILITY gap)
+    if fb.get("diary_mean_bare_days_hls_years") is not None:
+        d = round(fb["diary_mean_bare_days_hls_years"])
+        px_ = [round(x) for x in fb["field_pixels_mean_bare_days"]] + [d]
+        cmp_ = (("More than most fields nearby.", "नजिकका धेरैजसो खेतभन्दा बढी।") if d > round(mb["high"]) else
+                ("Fewer than most fields nearby.", "नजिकका धेरैजसो खेतभन्दा कम।") if d < round(mb["low"]) else
+                ("Like most fields nearby.", "नजिकका धेरैजसो खेतजस्तै।"))
+        nums.append({"id": "this_field_bare_days", "value": d, "low": min(px_), "high": max(px_), "unit": "days a year",
+                     "en": [f"This sample field: bare about {d} days.", cmp_[0]],
+                     "ne": [s.translate(NE_DIGITS) for s in [f"यो नमुना खेत: करिब {d} दिन खाली।", cmp_[1]]]})
     doc = {"id": field["id"], "placeholder": True,
            "note": "Map of the farmland around the PLACEHOLDER demo field (its fetch box). Proposal: not yet in the contract.",
            "bounds": [[box[1], box[0]], [box[3], box[2]]], "bbox": box,

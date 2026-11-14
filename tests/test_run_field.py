@@ -10,17 +10,17 @@ def _names(field, **kw):
 
 def test_every_step_runs_once_and_each_after_the_steps_it_reads():
     names = _names({"id": "demo"})
-    assert names == [s[0] for s in rf.STEPS] and names[-1] == "verification"
+    assert names == [s[0] for s in rf.STEPS] and names[-1] == "site_check"
     for before, after in (("weather", "rain_check"), ("diary", "replay"), ("plans", "plans_uncorrected"), ("plans", "plans_dhm"),
                           ("plans", "twin_now"), ("twin_now", "sections"), ("plans", "future"), ("replay_uncorrected",
                           "validation_checks"), ("area_map", "export"), ("export", "index"), ("export", "story"),
-                          ("story", "validate")):
+                          ("story", "validate"), ("export", "verification"), ("verification", "story")):
         assert names.index(before) < names.index(after), (before, after)
 
 
 def test_a_sample_runs_the_core_steps_and_its_break_test_before_the_weather_when_it_has_none():
     sample = {"id": "s", "sample_of": "demo"}
-    assert _names(sample) == ["weather", "rain_check", "diary", "replay", "plans", "plans_dhm", "export", "index", "words",
+    assert _names(sample) == ["weather", "rain_check", "diary", "replay", "plans", "plans_dhm", "plans_untuned", "export", "index", "words",
                               "story", "validate", "site_check"]
     assert _names(sample, has_break_test=False)[:3] == ["rain_check (break test first)", "weather", "rain_check"]
 

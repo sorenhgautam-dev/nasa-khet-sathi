@@ -159,10 +159,17 @@ def dhm_factors(rain, normals_mm, years):
     return {m: float(normals_mm[m] / mean[m]) for m in range(1, 13)}
 
 
-def with_rain(weather, version, dhm=None):
+def with_rain(weather, version, dhm=None, gauge=None):
     """The weather table with rain_mm set to one rain version: 'corrected' (the twin's rain, as built),
-    'uncorrected' (GPM as published, rain_uncorrected_mm), for the second run of every rain-based result, or 'dhm'
-    (item 4b: the corrected rain times dhm_factors; dhm = {'normals_mm': {month: mm}, 'years': [first, last]})."""
+    'uncorrected' (GPM as published, rain_uncorrected_mm), for the second run of every rain-based result, 'dhm'
+    (item 4b: the corrected rain times dhm_factors; dhm = {'normals_mm': {month: mm}, 'years': [first, last]}), or
+    'untuned' (the break-corrected rain before rules.yaml gpm_series.gauge_calibration: rain_mm divided by the month's
+    factor; gauge = its factors {jjas, other}, None when the field's rain is not calibrated, then rain_mm as built)."""
+    if version == "untuned":
+        if not gauge:
+            return weather
+        wet = pd.DatetimeIndex(weather["date"]).month.isin([6, 7, 8, 9])
+        return weather.assign(rain_mm=weather["rain_mm"].to_numpy(float) / np.where(wet, gauge["jjas"], gauge["other"]))
     if version == "corrected":
         return weather
     if version == "uncorrected":
@@ -175,4 +182,4 @@ def with_rain(weather, version, dhm=None):
         d = pd.DatetimeIndex(weather["date"])
         f = dhm_factors(pd.Series(weather["rain_mm"].to_numpy(float), index=d), dhm["normals_mm"], dhm["years"])
         return weather.assign(rain_mm=weather["rain_mm"].to_numpy(float) * np.array([f[m] for m in d.month]))
-    raise ValueError(f"unknown rain version '{version}' (corrected, uncorrected or dhm)")
+    raise ValueError(f"unknown rain version '{version}' (corrected, uncorrected, dhm or untuned)")

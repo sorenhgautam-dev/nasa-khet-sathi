@@ -111,9 +111,13 @@ def yearly(seasons):
         y["ky_assumed"] = y["ky_assumed"] or bool(s.get("ky_assumed"))
         y["irrigation_mm"] += float(s["irrigation_mm"])
         y["pond_supply_mm"] += float(s["pond_supply_mm"])
+        if "irrigation_losses_mm" in s:                # rules.yaml paddy_losses on: a paddy's losses within irrigation_mm
+            y["irrigation_losses_mm"] = y.get("irrigation_losses_mm", 0.0) + float(s["irrigation_losses_mm"])
     return [{"year": y["year"], "harvest": float(sum(y["h"]) / len(y["h"])), "dry_days": y["dry_days"],
              "crops": y["crops"], "ky_assumed": y["ky_assumed"], "irrigation_mm": y["irrigation_mm"],
-             "pond_supply_mm": y["pond_supply_mm"]} for y in sorted(out.values(), key=lambda r: r["year"])]
+             "pond_supply_mm": y["pond_supply_mm"],
+             **({"irrigation_losses_mm": y["irrigation_losses_mm"]} if "irrigation_losses_mm" in y else {})}
+            for y in sorted(out.values(), key=lambda r: r["year"])]
 
 
 def seasons_with_ky(seasons, lib, ky_value):

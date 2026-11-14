@@ -121,6 +121,10 @@ third look at the rain), `pipeline.fetch.gauge_evidence` (how many rain gauges s
 `scripts/run_memory.py` (does a small learned correction beat the physics twin on years it has not seen? On the demo
 field it does not, and we say so).
 
+## Next steps (after the deadline)
+
+The full list, with what each would need, is in [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md). First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil bucket, so water a bunded paddy holds above field capacity is not kept (METHOD_NOTES 103).
+
 ## Credits
 
 - **Data and methods:** NASA (POWER, GPM, HLS, MODIS, SMAP, NASADEM, ECOSTRESS, GRACE-FO, NEX-GDDP-CMIP6),

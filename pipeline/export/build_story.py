@@ -460,7 +460,17 @@ def chart_cover_sure(months, month_words):
 EVENT_CATS = [cat("none", "No event", "कुनै घटना छैन"), cat("drought", "Dry", "सुक्खा"), cat("flood", "Flood", "बाढी")]
 
 
-def chart_events(replay, known):
+def unconfirmed(card, kind):
+    """The scorecard's false alarms for flood_years or drought_years (scripts/run_verification.py events): sentences
+    for every page that shows them, so the events chart, the report card and the compliance table give one count."""
+    c = (card or {}).get(f"{kind}_years") or {}
+    if not c.get("flagged_seasons"):
+        return [], []
+    fa, fan = c["false_alarms"], c["flagged_seasons"]
+    return [f"{fa} of {fan} flagged seasons were not confirmed."], [f"{fan} सङ्केतमध्ये {fa} पुष्टि भएनन्"]
+
+
+def chart_events(replay, known, card=None):
     rows, summary = match_events(replay, known)
     kf, nf = summary["valley_floods"]
     kd, nd = summary["valley_droughts"]
@@ -470,6 +480,7 @@ def chart_events(replay, known):
     if failed:
         en.append(f"It called {failed} normal or wet {'monsoon' if failed == 1 else 'monsoons'} dry.")
         ne.append(f"सामान्य वा बढी पानीका {failed} बर्खालाई सुक्खा भन्यो")
+    en, ne = en + unconfirmed(card, "drought")[0], ne + unconfirmed(card, "drought")[1]
     records = sorted(((r["year"], rec["category"]) for r in rows for rec in r["records"]))
     return chart(
         "events", "checks", T("Floods and dry years: our model against records", "बाढी र सुक्खा वर्ष: मोडेल र अभिलेख"),
@@ -574,6 +585,12 @@ def chart_other_checks(smap, gldas, hls, fao, eco):
     untestable = [cid for cid, *_ in items if cid not in {s[0] for s in shown}]
     en = ["1 means they rise and fall together."]
     ne = ["१ भनेको सँगै बढ्छन् र घट्छन्"]
+    crops = {"wheat": ("Wheat", "गहुँका"), "potato": ("Potato", "आलुका"), "rice": ("Rice", "धानका")}
+    for row in rows:                        # a clear opposite movement gets words, not just a bar (TRACEABILITY gap)
+        crop = row["id"][4:] if row["id"].startswith("fao_") else None
+        if crop and row["high"] is not None and row["high"] < 0:
+            en += [f"{crops[crop][0]} years move against Nepal's yields.", "So this check does not hold up."]
+            ne += [f"{crops[crop][1]} वर्ष नेपालको उब्जनीको उल्टो चल्छन्", "त्यसैले यो जाँच मिलेन"]
     if "fao_rice" in untestable and "hls_rice" in untestable:
         en.append("Rice cannot be tested: it never runs short.")
         ne.append("धान जाँच्न मिल्दैन: यसमा पानी कहिल्यै कम हुँदैन")
@@ -682,13 +699,26 @@ def chart_area(area_site, area_check, field):
         note=T("A sample area: no pixel is a known farm.", "नमुना क्षेत्र: कुनै पिक्सेल चिनिएको खेत होइन।"))
 
 
+def rain_alts(o, base):
+    """The other rain versions a range spans, as the site's alts() (app.js): dhm and untuned; uncorrected only when
+    neither is there."""
+    a = [o[base + k] for k in ("dhm_rain", "untuned_rain") if o.get(base + k)]
+    return a or ([o[base + "uncorrected_rain"]] if o.get(base + "uncorrected_rain") else [])
+
+
+def future_range(p):
+    """The 2040 range over every model and every rain version, the same numbers as the 2040 dial (how.js future)."""
+    fs = [p["future"]] + rain_alts(p, "future_")
+    return min(f["harvest_low"][-1] for f in fs), max(f["harvest_high"][-1] for f in fs)
+
+
 def chart_outlook(field_json, plan_names):
     fut = field_json["future"]
     plans = field_json["plans"]
     cats = [cat(p["id"], plan_names[p["id"]]["en"], plan_names[p["id"]]["ne"]) for p in plans]
     today = [[p["id"], p["score"]["harvest"]] for p in plans]
     mid = [[p["id"], p["future"]["harvest"][-1]] for p in plans]
-    rng = [[p["id"], [p["future"]["harvest_low"][-1], p["future"]["harvest_high"][-1]]] for p in plans]
+    rng = [[p["id"], list(future_range(p))] for p in plans]
     inside = all(lo <= t[1] <= hi for t, (_, (lo, hi)) in zip(today, rng))
     year = fut["years"][-1]
     n = len(fut.get("models", []))
@@ -696,8 +726,9 @@ def chart_outlook(field_json, plan_names):
         (f"By {year}, some plans change.", f"{year} सम्म केही योजना फेरिन्छन्।")
     rows = []
     for p in plans:
+        lo, hi = future_range(p)
         row = {"plan": p["id"], "today": p["score"]["harvest"], "by": year, "middle": p["future"]["harvest"][-1],
-               "low": p["future"]["harvest_low"][-1], "high": p["future"]["harvest_high"][-1]}
+               "low": lo, "high": hi, "range_spans": "every climate model and every rain version (as the 2040 dial)"}
         if p.get("future_uncorrected_rain"):
             u = p["future_uncorrected_rain"]
             row["uncorrected_rain"] = {"middle": u["harvest"][-1], "low": u["harvest_low"][-1],
@@ -705,9 +736,9 @@ def chart_outlook(field_json, plan_names):
         rows.append(row)
     for o in (field_json.get("current_options") or {}).get("options", []):
         if o.get("future"):
+            lo, hi = future_range(o)
             rows.append({"plan": "current", "option": o["id"], "today": o["score"]["harvest"], "by": year,
-                         "middle": o["future"]["harvest"][-1], "low": o["future"]["harvest_low"][-1],
-                         "high": o["future"]["harvest_high"][-1]})
+                         "middle": o["future"]["harvest"][-1], "low": lo, "high": hi})
     scen = " and ".join(s.upper().replace("245", "2-4.5").replace("585", "5-8.5") for s in fut.get("scenarios", []))
     return chart(
         "outlook_2040", "future", T(f"Harvest today and by {year}", f"आज र {year} सम्मको उब्जनी"),
@@ -719,7 +750,7 @@ def chart_outlook(field_json, plan_names):
         y=axis_y(T("Harvest, out of 100", "उब्जनी, १०० मध्ये"), "% of the field's best"),
         series=[S(T("Today (weather of 2002-2025)", "आज (२००२–२०२५ को मौसम)"), "main", today),
                 S(T(f"By {year}, middle of the models", f"{year} सम्म, मोडेलहरूको बीच"), "compare", mid),
-                S(T(f"By {year}, lowest to highest model", f"{year} सम्म, सबैभन्दा कम देखि बढी"), "range", rng)],
+                S(T(f"By {year}, lowest to highest (models and rain)", f"{year} सम्म, सबैभन्दा कम देखि बढी (मोडेल र वर्षा)"), "range", rng)],
         rows=rows, words=fut.get("words")), inside
 
 
@@ -822,8 +853,10 @@ STATUS_WORDS = {"VERIFIED": T("Verified", "प्रमाणित"), "ESTIMATE
 # owner's item 4 (2026-11-14): what we measured, with its number; the yardsticks are rules.yaml verification
 COMPLIANCE = {
     "rain_months": (("Rain on the field", "खेतमा परेको वर्षा"),
-                    ["We checked our rain against Nepal's rain gauges.", "It was within 19% in {k} of {n} months."],
-                    ["हामीले हाम्रो वर्षा नेपालका वर्षा मापकसँग जाँच्यौं", "{n} मध्ये {k} महिना १९% भित्र मिल्यो"]),
+                    ["We checked our rain against Nepal's rain gauges.", "It was within {tol}% in {k} of {n} months.",
+                     "Our rain was tuned on these months."],
+                    ["हामीले हाम्रो वर्षा नेपालका वर्षा मापकसँग जाँच्यौं", "{n} मध्ये {k} महिना {tol}% भित्र मिल्यो",
+                     "हाम्रो वर्षा यिनै महिनामा मिलाइएको थियो"]),
     "rain_month_words": (("Rainy and dry months", "वर्षा हुने र सुक्खा महिना"),
                          ["They match Nepal's weather office.", "{k} of {n} months match."],
                          ["नेपालको मौसम कार्यालयसँग मिल्छन्", "{n} मध्ये {k} महिना मिल्छन्"]),
@@ -841,16 +874,16 @@ COMPLIANCE = {
     "season_dates": (("Planting and harvest dates", "रोप्ने र काट्ने मिति"),
                      ["Waiting for the farmer's dates."], ["किसानका मिति पर्खिरहेका छौं"]),
     "rotation_guess": (("Our guess of your crops", "तपाईंका बालीको हाम्रो अनुमान"),
-                       ["Needs answers from at least 10 farmers."], ["कम्तीमा १० किसानको उत्तर चाहिन्छ"]),
+                       ["Needs answers from at least {nmin} farmers."], ["कम्तीमा {nmin} किसानको उत्तर चाहिन्छ"]),
     "flood_years": (("Flood years", "बाढी आएका वर्ष"),
                     ["Found {k} of {n} valley floods.", "{fa} of {fan} flags had no recorded flood.",
                      "We knew these floods before setting the rule."],
                     ["उपत्यकाका {n} मध्ये {k} बाढी भेटियो", "{fan} सङ्केतमध्ये {fa} मा बाढीको अभिलेख छैन",
                      "नियम बनाउनुअघि नै यी बाढी थाहा थिए"]),
     "drought_years": (("Dry years", "सुक्खा वर्ष"),
-                      ["Found {k} of {n} valley dry seasons.", "{fa} of {fan} flags were not dry seasons.",
+                      ["Found {k} of {n} valley dry seasons.", "{fa} of {fan} flagged seasons were not confirmed.",
                        "The rule was chosen after seeing some of them."],
-                      ["उपत्यकाका {n} मध्ये {k} सुक्खा याम भेटियो", "{fan} सङ्केतमध्ये {fa} सुक्खा याम थिएनन्",
+                      ["उपत्यकाका {n} मध्ये {k} सुक्खा याम भेटियो", "{fan} सङ्केतमध्ये {fa} पुष्टि भएनन्",
                        "केही देखिसकेपछि नियम छानिएको हो"]),
     "harvest_years": (("Good and bad harvest years", "राम्रो र नराम्रो उब्जनीका वर्ष"),
                       ["Waiting for the farmer's best and worst years."], ["किसानका राम्रा र नराम्रा वर्ष पर्खिरहेका छौं"]),
@@ -881,16 +914,35 @@ COMPLIANCE = {
 }
 
 
-def compliance(card):
-    """The compliance table (owner's item 4): one line per shown output from data/checks/<field>/scorecard.json."""
+def yardsticks():
+    """The numbers the words quote, from rules.yaml verification (never typed into a sentence)."""
+    from pipeline.fetch.rules import load_rules
+    v = load_rules()["verification"]
+    return {"pct": round(v["common"]["threshold"] * 100), "nmin": v["common"]["n_min"],
+            "tol": round(v["outputs"]["rain_months"]["tolerance_rel"] * 100)}
+
+
+def _fill(xs, vals):
+    """Format each sentence; with no cases yet, sentences that need a count are left out."""
     out = []
+    for x in xs:
+        try:
+            out.append(x.format(**vals))
+        except KeyError:
+            pass
+    return out
+
+
+def compliance(card, ys=None):
+    """The compliance table (owner's item 4): one line per shown output from data/checks/<field>/scorecard.json."""
+    out, ys = [], ys or yardsticks()
     for cid, c in (card or {}).items():
         (thing_en, thing_ne), en, ne = COMPLIANCE[cid]
-        vals = {"k": c["k"], "n": c["n"], "fa": c.get("false_alarms", 0), "fan": c.get("flagged_seasons", 0)}
-        show = (lambda xs: [x.format(**vals) for x in xs]) if c["n"] else (lambda xs: [x for x in xs if "{" not in x])
+        vals = ys | ({"k": c["k"], "n": c["n"], "fa": c.get("false_alarms", 0), "fan": c.get("flagged_seasons", 0)}
+                     if c["n"] else {})
         out.append({"id": cid, "thing": T(thing_en, thing_ne), "status": c["status"], "status_words": STATUS_WORDS[c["status"]],
                     "k": c["k"], "n": c["n"], "share": c["share"], "ci95": c["ci95"], "independent": c["independent"],
-                    "said": T(" ".join(show(en)), "। ".join(show(ne)) + "।")})
+                    "said": T(" ".join(_fill(en, vals)), "। ".join(_fill(ne, vals)) + "।")})
     order = {"VERIFIED": 0, "ESTIMATE": 1, "NOT YET VERIFIABLE": 2}
     return sorted(out, key=lambda r: order[r["status"]])
 
@@ -983,6 +1035,7 @@ def report_card(ctx):
     if failed:
         en.append(f"It called {failed} normal or wet {'monsoon' if failed == 1 else 'monsoons'} dry.")
         ne.append(f"सामान्य वा बढी पानीका {failed} बर्खालाई सुक्खा भन्यो")
+    en, ne = en + unconfirmed(ctx.get("scorecard"), "drought")[0], ne + unconfirmed(ctx.get("scorecard"), "drought")[1]
     en.append("The rain fix cannot reorder the years.")
     ne.append("वर्षा सच्याउँदा वर्षहरूको क्रम फेरिँदैन")
     good = nd and kd / nd >= 0.75 and failed == 0
@@ -1297,7 +1350,7 @@ def build_story(inp, generated):
     c_fixed, level_ratio = chart_rain_fixed(inp["weather"], normal, by)
     c_seasons, _ = chart_seasons(inp["greenness"], inp["diary_seasons"])
     c_sure = chart_cover_sure(fj["diary"]["months"], month_words)
-    c_events, ev_summary = chart_events(fj["replay"]["current"], inp["known_events"])
+    c_events, ev_summary = chart_events(fj["replay"]["current"], inp["known_events"], inp.get("scorecard"))
     c_dhm = chart_dhm_2025(inp["rain_vs_dhm"])
     c_other, _ = chart_other_checks(inp["smap"], inp["gldas"], inp["hls"], inp["fao"], inp["eco"])
     c_best = chart_best_worst()
@@ -1355,12 +1408,13 @@ def build_story(inp, generated):
         "n_final_months": len(lab["imerg_final_months"]), "n_late_months": len(lab["imerg_late_months"]),
         "fao": inp["fao"]["rain"]["corrected"],
         "placeholder": bool(inp["field_config"].get("placeholder", False)),
-        "events": ev_summary, "groundwater": diary["groundwater"], "region_km": region_km,
+        "events": ev_summary, "scorecard": inp.get("scorecard"), "groundwater": diary["groundwater"], "region_km": region_km,
         "monsoon_start": diary["monsoon_start"], "shift_low": diary.get("shift_days_low"),
         "shift_high": diary.get("shift_days_high"), "bench": inp["bench"],
         "n_models": len(fj["future"].get("models", [])), "plausible": inp["future"]["plausibility"]["all_inside"],
         "future_year": fj["future"]["years"][-1],
     }
+    ys = yardsticks()
     order = [c["id"] for c in charts]
     for _, _, ids in SECTIONS:
         assert set(ids) <= set(order), ids
@@ -1368,10 +1422,10 @@ def build_story(inp, generated):
         "generated": generated, "field": field, "placeholder": ctx["placeholder"], "ne_review": NE_REVIEW,
         "sections": [{"id": sid, "title": title, "charts": ids} for sid, title, ids in SECTIONS],
         "inputs": inputs, "charts": charts, "report_card": report_card(ctx),
-        "compliance": compliance(inp.get("scorecard")),
-        "compliance_note": T("Verified means right at least 92 times in 100, on 10 or more checks. "
+        "compliance": compliance(inp.get("scorecard"), ys),
+        "compliance_note": T(f"Verified means right at least {ys['pct']} times in 100, on {ys['nmin']} or more checks. "
                              "The range shows how sure that number is.",
-                             "प्रमाणित भनेको कम्तीमा १० जाँचमा १०० मा ९२ पटक सही। दायराले त्यो अङ्क कति पक्का छ देखाउँछ।"),
+                             f"प्रमाणित भनेको कम्तीमा {ys['nmin']} जाँचमा १०० मा {ys['pct']} पटक सही। दायराले त्यो अङ्क कति पक्का छ देखाउँछ।"),
         "satellites": SATELLITES, "resources": RESOURCES,
     }
 

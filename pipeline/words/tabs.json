@@ -106,7 +106,7 @@
     ],
     "en": "Stored water in this area is falling.",
     "ne": "यस क्षेत्रमा जम्मा भएको पानी घट्दै छ।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "reviewed by Pratik and Vision, 2026-11-14"
    },
    {
     "id": "why_less_water",
@@ -136,7 +136,7 @@
     ],
     "en": "We replayed the weather from {year_first} to {year_last}.",
     "ne": "{year_first} देखि {year_last} सम्मको मौसम दोहोर्‍याएर हेर्‍यौं।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "reviewed by Pratik and Vision, 2026-11-14"
    },
    {
     "id": "ev_harvest",
@@ -384,7 +384,7 @@
     ],
     "en": "If you can water, rice stands in water.",
     "ne": "पानी लगाउन सक्नुहुन्छ भने धान पानीमा रहन्छ।",
-    "ne_review": "needs native-speaker review",
+    "ne_review": "reviewed by Pratik and Vision, 2026-11-14",
     "basis": "CLAUDE.md 'Rice' as implemented (REVIEW_NOTES H1): only the watered case keeps a pond"
    },
    {
@@ -464,7 +464,7 @@
     ],
     "en": "Near here, those gauge reports stopped in {rain_fix_year}.",
     "ne": "यहाँ नजिकका मापकबाट {rain_fix_year} देखि नाप आएनन्।",
-    "ne_review": "needs native-speaker review",
+    "ne_review": "reviewed by Pratik and Vision, 2026-11-14",
     "basis": "GPCC stations in the field's 1-degree box: about 50 a month to about 1 from January 2017 (VALIDATION 3.9b)"
    },
    {
@@ -513,7 +513,7 @@
     ],
     "en": "Stored water is measured for a wide area.",
     "ne": "जम्मा भएको पानी ठूलो क्षेत्रभरिको नाप हो।",
-    "ne_review": "needs native-speaker review",
+    "ne_review": "reviewed by Pratik and Vision, 2026-11-14",
     "basis": "rules.yaml groundwater.caveat (owner: say it in every explanation)"
    },
    {
@@ -688,7 +688,7 @@
    ],
    "en": "On part {section}, plant across the slope.",
    "ne": "भाग {section}मा भिरालोमा तेर्सो हार बनाएर लगाउनुहोस्।",
-   "ne_review": "needs native-speaker review",
+   "ne_review": "reviewed by Pratik and Vision, 2026-11-14",
    "basis": "CLAUDE.md 'Tips' (contour planting); a sourced slope threshold is still needed (step 8)"
   }
  ],
@@ -710,7 +710,7 @@
     ],
     "en": "Around this field, gauge reports stopped in {rain_fix_year}.",
     "ne": "यो खेत वरिपरि {rain_fix_year} देखि मापकका नाप आएनन्।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "reviewed by Pratik and Vision, 2026-11-14"
    },
    {
     "id": "mp_rain_before",
@@ -719,7 +719,7 @@
     ],
     "en": "Before, the gauges set almost all of it.",
     "ne": "पहिले, वर्षाको नाप लगभग सबै मापकबाटै आउँथ्यो।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "reviewed by Pratik and Vision, 2026-11-14"
    },
    {
     "id": "mp_rain_after",
@@ -764,7 +764,7 @@
     ],
     "en": "We scaled each month from {rain_fix_year} back down.",
     "ne": "हामीले {rain_fix_year} देखिको हरेक महिनाको वर्षा घटायौं।",
-    "ne_review": "needs native-speaker review"
+    "ne_review": "reviewed by Pratik and Vision, 2026-11-14"
    },
    {
     "id": "mp_rain_match",

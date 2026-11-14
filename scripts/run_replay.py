@@ -33,7 +33,7 @@ from pipeline.plans import events as ev  # noqa: E402
 from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin.inputs import covered_year_runs, with_rain  # noqa: E402
-from scripts.common import RAIN_DIRS, add_switches, dhm_rain, set_switches, switch_labels, write_json  # noqa: E402
+from scripts.common import RAIN_DIRS, SOIL_DIRS, add_switches, rain_kw, set_switches, soil_for, switch_labels, write_json  # noqa: E402
 
 
 def _case(res):
@@ -73,10 +73,14 @@ def main(argv=None):
     field, rules, lib, data = load_field(a.field), load_rules(), load_crops(), REPO / "data"
     set_switches(rules, a)
     clean = data / "clean" / field["id"]
-    w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain, dhm=dhm_rain(rules) if a.rain == "dhm" else None)
+    w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain, **rain_kw(rules, a.rain, field["id"]))
     base = (REPO / a.out_dir) if a.out_dir else data / "checks" / field["id"]
-    out_dir = base / RAIN_DIRS[a.rain]
-    soil = pd.read_parquet(clean / "soilgrids.parquet")
+    out_dir = base / RAIN_DIRS[a.rain] / SOIL_DIRS[a.soil]
+    soil = soil_for(a.soil, rules, field["id"], pd.read_parquet(clean / "soilgrids.parquet"), data)
+    if soil is None:
+        print("NOTHING TO RUN: --soil measured needs rules.yaml field_capacity_measured.apply and "
+              f"data/field_visit/{field['id']}/field_capacity.csv")
+        return 0
     try:
         rotation, rot_label = sim.rotation_for(field, rules)
     except ValueError as e:
@@ -108,6 +112,9 @@ def main(argv=None):
                     f"{rules['ky_assumed']['sensitivity']}"}
 
     labels.update(switch_labels(rules, soil))                 # builds 2a and 4c; nothing while the switches are off
+    if a.soil == "measured":                                   # owner's item 4
+        labels["soil"] = ("field capacity measured by the field team (data/cards/<field>/field_capacity.json) where "
+                          "measured, SoilGrids 2.0 below; SoilGrids' wilting point (rules.yaml field_capacity_measured)")
     if not a.temporary_station_rain:
         problems = sim.rain_record_problems(w)
         if problems:
@@ -125,7 +132,10 @@ def main(argv=None):
                                   "the break-corrected rain scaled month by month to DHM Bhaktapur's 1991-2020 normals (item 4b; "
                                   "rules.yaml gpm_series.dhm_scaling; a check run)" if a.rain == "dhm" else
                                   "GPM IMERG with Final days from 2017 scaled back to GPM's own 2001-2016 level month by month "
-                                  "(owner's decision 1, 2026-11-13; rules.yaml gpm_series.correction)"))
+                                  "(owner's decision 1, 2026-11-13; rules.yaml gpm_series.correction)"
+                                  + (", before the gauge factors (the range's 'untuned' version)" if a.rain == "untuned" else
+                                     ", then times the gauge factors (rules.yaml gpm_series.gauge_calibration; owner, 2026-11-14)"
+                                     if rain_kw(rules, "untuned", field["id"])["gauge"] else "")))
         labels["rain_days"] = {k: int(v) for k, v in w["rain_source"].value_counts().items()}
         labels["partial_years"] = cases[export_case]["partial_years"]
         out = {"labels": labels, **cases,

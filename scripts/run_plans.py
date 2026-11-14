@@ -30,7 +30,7 @@ from pipeline.plans import simulate as sim  # noqa: E402
 from pipeline.plans import twin_options as to  # noqa: E402
 from pipeline.twin.crops import season_length, simulatable_crops  # noqa: E402
 from pipeline.twin.inputs import with_rain  # noqa: E402
-from scripts.common import RAIN_DIRS, add_switches, dhm_rain, set_switches, switch_labels, write_json  # noqa: E402
+from scripts.common import RAIN_DIRS, SOIL_DIRS, add_switches, rain_kw, set_switches, soil_for, switch_labels, write_json  # noqa: E402
 
 
 def _by_slot(sj):
@@ -64,13 +64,15 @@ def evaluate(specs, w, lib, soil, cn, rules, strict, erosion=None, years_max=Non
         if s["year"] in ok:
             etc[s["year"]] = etc.get(s["year"], 0.0) + float(s["sum_etc_mm"])
     irr = float(np.mean([y["irrigation_mm"] for y in ir_years]))
+    losses = to.irrigation_losses(ir_years, rules)  # rules.yaml paddy_losses.water_score: None while the losses are off
     etc_mm = float(np.mean(list(etc.values())))
     cover_days = sum(season_length(lib[c]["stages_days"]) for c in crops)
     row = {"id": ge.plan_id(specs), "specs": specs, "crops": crops,
            "spans": [{"crop": sp["crop"], "start": _mmdd(a), "end": _mmdd(b)}
                      for sp in specs for a, b in [ge.season_in_year(sp, lib, ge.REF_YEAR)]],
            "years": sorted(ok), **sc.harvest_metrics(rf_years), "irrigation_mm": round(irr, 1), "etc_mm": round(etc_mm, 1),
-           "water": sc.water_score(irr, etc_mm, strict), "cover": round(sc.cover_score(cover_days), 1),
+           "water": sc.water_score(irr if losses is None else irr - losses, etc_mm, strict),
+           **({} if losses is None else {"irrigation_losses_mm": round(losses, 1)}), "cover": round(sc.cover_score(cover_days), 1),
            "pest_break": int(sc.pest_break(crops, lib)), "nitrogen": int(sc.has_legume(crops, lib)),
            "needs_water_window": any("irrigat" in str(lib[sp["crop"]]["calendar"]["windows"][sp["window"]].get("note", "")).lower()
                                      and "rainfed" not in str(lib[sp["crop"]]["calendar"]["windows"][sp["window"]].get("note", "")).lower()
@@ -148,12 +150,16 @@ def main(argv=None):
     clean = REPO / "data" / "clean" / field["id"]
     out_dir = REPO / "data" / "checks" / field["id"]                 # inputs (diary) are always read here
     dest = (REPO / a.out_dir) if a.out_dir else out_dir
-    w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain, dhm=dhm_rain(rules) if a.rain == "dhm" else None)
+    w = with_rain(pd.read_parquet(clean / "weather.parquet"), a.rain, **rain_kw(rules, a.rain, field["id"]))
     problems = sim.rain_record_problems(w)
     if problems:
         print("NOT YET POSSIBLE: " + "; ".join(problems))
         return 2
-    soil = pd.read_parquet(clean / "soilgrids.parquet")
+    soil = soil_for(a.soil, rules, field["id"], pd.read_parquet(clean / "soilgrids.parquet"), REPO / "data")
+    if soil is None:
+        print("NOTHING TO RUN: --soil measured needs rules.yaml field_capacity_measured.apply and "
+              f"data/field_visit/{field['id']}/field_capacity.csv")
+        return 0
     cov, by = rules["curve_numbers"]["crop_cover"], rules["curve_numbers"]["by_cover"]
     cn = {"bare": by["bare"], **{c: by[cov[c]] for c in cov}}
     diary = json.loads((out_dir / "diary.json").read_text())
@@ -193,7 +199,7 @@ def main(argv=None):
         checks[f"ky_{v}"] = sc.choose_three(alt, current_id, keys, must)
     by_id = {r["id"]: r for r in rows}
     corrected_path = dest / "plans.json"                         # the corrected run of the same destination
-    if a.rain != "corrected" and corrected_path.exists():   # the plans shown are chosen on the corrected rain
+    if (a.rain != "corrected" or a.soil != "map") and corrected_path.exists():   # chosen on the corrected rain, map soil
         shown = json.loads(corrected_path.read_text())["picks"]
     else:
         shown = picks
@@ -246,7 +252,9 @@ def main(argv=None):
     out["labels"].update(switch_labels(rules, soil, season_dates=to.season_dates_on(rules) and (       # 2a, 4a and 4c
         f"rules.yaml season_dates: the farmer's plans {sorted(farmer_ids)} sown from the satellite's seasons in the HLS "
         "years; suggested plans keep their calendar")))
-    path = write_json(dest / RAIN_DIRS[a.rain] / "plans.json", out)
+    if a.soil == "measured":                                   # owner's item 4
+        out["labels"]["soil"] = "field capacity measured by the field team; SoilGrids' wilting point (rules.yaml field_capacity_measured)"
+    path = write_json(dest / RAIN_DIRS[a.rain] / SOIL_DIRS[a.soil] / "plans.json", out)
     print(f"{len(rows)} plans, {picks['eligible']} with rice, Pareto {len(picks['pareto'])}; safest from the "
           f"{picks['safest_from']}; {time.time() - t0:.0f} s")
     for role in ("current", "cover_gap", "safest"):

@@ -177,13 +177,18 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False,
                 **{k: kc_used[k] for k in ("u2_mid_ms", "rhmin_mid_pct", "u2_late_ms", "rhmin_late_pct")}})
             if losses:                                  # rules.yaml paddy_losses (owner's item 3)
                 seasons[-1]["seepage_percolation_mm"] = float(out["sp_mm"].sum())
+                seasons[-1]["pond_loss_mm"] = float(out["pond_loss_mm"].sum())
+                seasons[-1]["irrigation_losses_mm"] = seasons[-1]["pond_loss_mm"]
                 if irrigated:
                     first = weather["date"].iloc[a] - pd.Timedelta(int(losses["prep_days"]), unit="D")
                     w_prep = weather[(weather["date"] >= first) & (weather["date"] < weather["date"].iloc[a])]
                     refill = float(out["pond_supply_mm"].iloc[0])
                     lp = land_prep_irrigation_mm(losses["sat_mm"], w_prep["rain_mm"].sum(), refill)
                     seasons[-1].update(land_prep_mm=lp, first_refill_mm=refill, prep_rain_mm=float(w_prep["rain_mm"].sum()),
-                                       irrigation_mm=seasons[-1]["irrigation_mm"] + lp)
+                                       irrigation_mm=seasons[-1]["irrigation_mm"] + lp,
+                                       irrigation_losses_mm=seasons[-1]["pond_loss_mm"] + lp)
+            elif paddy_losses:                          # other crops have no paddy losses, but the key is there to sum
+                seasons[-1]["irrigation_losses_mm"] = 0.0
             if crops_in_plan.count(crop) == 1:
                 summary[crop] = seasons[-1]
         dr, taw_prev = out["dr_mm"].iloc[-1], taw

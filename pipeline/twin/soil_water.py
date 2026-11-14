@@ -79,7 +79,8 @@ def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None,
     de0_mm}; then df's kc is not used (see _run_bare_surface).
     sp_mm: a paddy's daily seepage and percolation (rules.yaml paddy_losses), lost on its wet days: a day that starts
     at field capacity (every ponded day, after the morning refill) or that the day's rain brings back to it; column
-    sp_mm then holds the day's loss."""
+    sp_mm then holds the day's loss, and pond_loss_mm the part of a ponded day's refill that replaces the previous day's
+    loss (the refill less what the crop alone used beyond the rain: rules.yaml paddy_losses.water_score)."""
     if surface is not None:
         if irrigate or (ponded is not None and np.asarray(ponded, dtype=bool).any()):
             raise ValueError("the FAO-56 surface layer is for bare soil, which is never irrigated or ponded")
@@ -87,7 +88,7 @@ def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None,
     n = len(df)
     cn = np.broadcast_to(np.asarray(cn, dtype=float), (n,))
     ponded = np.zeros(n, dtype=bool) if ponded is None else np.asarray(ponded, dtype=bool)
-    rows, dr = [], dr0_mm
+    rows, dr, pending = [], dr0_mm, 0.0
     for i, (rain, et0, kc) in enumerate(df[["rain_mm", "et0_mm", "kc"]].itertuples(index=False)):
         etc = kc * et0
         p = adjust_p(p_table, etc)
@@ -105,6 +106,8 @@ def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None,
             start = dr - irr
             wet = start <= 0.0 or start - (rain - q) <= 0.0
             s = step(start, rain, q, 0.0, etc, taw_mm, p, loss_mm=float(sp_mm) if wet else 0.0)
+            s["pond_loss_mm"] = pending if ponded[i] else 0.0
+            pending = max(0.0, s["dr_mm"] - max(0.0, s["eta_mm"] - (rain - q))) if ponded[i] else 0.0
         rows.append({**s, "irrigation_mm": irr, "pond_supply_mm": irr if ponded[i] else 0.0})
         rows[-1].update(rain_mm=rain, runoff_mm=q, etc_mm=etc, p=p, raw_mm=p * taw_mm, ponded=bool(ponded[i]))
         dr = rows[-1]["dr_mm"]

@@ -287,6 +287,9 @@ def sources_block(soil_distance_m=None, soil_around=None, field=None, cards=None
         {"name": "ISRIC SoilGrids", "product": "2.0: water the soil holds at field capacity and wilting point "
          f"(machine-learning map){soil_where}", "resolution": "250 m", "years": "one map", "type": "model"},
         {"name": "NASADEM", "product": "v001 elevation", "resolution": "30 m", "years": "2000", "type": "satellite"},
+    ] + ([{"name": "NASA SMAP L4", "product": "SPL4SMGP v008 root-zone soil moisture, model-assisted: sets only how sure "
+           "the twin is before any probe reading", "resolution": "9 km", "years": _years(cards["smap"], "2015-2025"),
+           "type": "model"}] if "smap" in cards else []) + [
         {"name": "Khet Sathi field twin", "product": "FAO-56 soil water, FAO-33 harvest, from the data above",
          "resolution": "the field", "years": _years(cards.get("weather"), "2001-2025"), "type": "model"},
     ]
@@ -299,7 +302,7 @@ DEMO_CARDS = {"power": {"version": "v2.10.3"}, "modis": {},
               "gpm": {"segments": [{"product": "late", "from": "2025-10-01", "to": "2025-12-31"}]},
               "weather": {"corrections": {"tmin_c": {"applied": True},
                                           "rain_break": {"applied": True, "from": "2017-01-01", "reference_years": [2001, 2016]}}}}
-CARD_NAMES = {"power": "power", "gpm": "gpm", "grace": "grace", "modis": "modis", "weather": "weather"}
+CARD_NAMES = {"power": "power", "gpm": "gpm", "grace": "grace", "modis": "modis", "weather": "weather", "smap": "smap"}
 
 
 def load_cards(field):
