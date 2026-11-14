@@ -113,6 +113,9 @@ a{color:#14301E}a:hover{color:#0B1F12}
     <sc-if value="{{is.W7}}" hint-placeholder-val="{{ false }}">
       <div style="{{wrap}}"><dc-import name="W7_Future" embedded="{{ true }}" on-nav="{{nav}}" hint-size="100%,900px"></dc-import></div>
     </sc-if>
+    <sc-if value="{{is.W8}}" hint-placeholder-val="{{ false }}">
+      <div style="{{wrap}}"><dc-import name="W8_Future6" embedded="{{ true }}" on-nav="{{nav}}" hint-size="100%,900px"></dc-import></div>
+    </sc-if>
   </div>
 
   <div aria-hidden="true" style="{{loaderStyle}}">
@@ -151,14 +154,14 @@ class Component extends DCLogic {
   renderVals() {
     var self = this;
     var st = this.state;
-    var SUN = { W1: [4, 460], W2: [16, 280], W3: [31, 160], W4: [47, 102], W5: [62, 125], W6: [77, 221], W7: [88, 319] };
-    var TINT = { W1: 0, W2: 0, W3: 0, W4: 0.05, W5: 0.15, W6: 0.4, W7: 0.65 };
-    var SET = { W1: 0, W2: 0, W3: 0, W4: 0.1, W5: 0.3, W6: 0.65, W7: 0.95 };
+    var SUN = { W1: [4, 460], W2: [16, 280], W3: [31, 160], W4: [47, 102], W5: [62, 125], W6: [77, 221], W7: [88, 319], W8: [94, 380] };
+    var TINT = { W1: 0, W2: 0, W3: 0, W4: 0.05, W5: 0.15, W6: 0.4, W7: 0.65, W8: 0.8 };
+    var SET = { W1: 0, W2: 0, W3: 0, W4: 0.1, W5: 0.3, W6: 0.65, W7: 0.95, W8: 1 };
     var land = st.bg !== 'W1';
     var sp = SUN[st.bg];
     var is = {};
-    ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7'].forEach(function (k) { is[k] = st.screen === k; });
-    var PROG = { W1: 0, W2: 0.16, W3: 0.32, W4: 0.5, W5: 0.66, W6: 0.84, W7: 1 };
+    ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'].forEach(function (k) { is[k] = st.screen === k; });
+    var PROG = { W1: 0, W2: 0.16, W3: 0.32, W4: 0.5, W5: 0.66, W6: 0.84, W7: 1, W8: 1 };
     var WORDS = ['\u0928\u092e\u0938\u094d\u0924\u0947', 'Namaste', '\u0916\u0947\u0924 \u0938\u093e\u0925\u0940', 'Know your land', '\u092e\u094c\u0938\u092e', 'Plan your season'];
     return {
       blades: this.blades,

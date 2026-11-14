@@ -126,6 +126,9 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
     <sc-if value="{{is.Future}}" hint-placeholder-val="{{ false }}">
       <div style="{{wrap}}"><dc-import name="Future" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
     </sc-if>
+    <sc-if value="{{is.Future6}}" hint-placeholder-val="{{ false }}">
+      <div style="{{wrap}}"><dc-import name="Future6" embedded="{{ true }}" on-nav="{{nav}}" hint-size="390px,844px"></dc-import></div>
+    </sc-if>
   </div>
 
   <div aria-hidden="true" style="{{loaderStyle}}">
@@ -154,15 +157,15 @@ class Component extends DCLogic {
   renderVals() {
     var self = this;
     var st = this.state;
-    var SUN = { Main: [30, 300], Photo: [79, 197], Parts: [131, 119], Robot: [183, 81], Choose: [236, 96], Today: [288, 159], Future: [325, 223] };
-    var TINT = { Main: 0, Photo: 0, Parts: 0, Robot: 0.05, Choose: 0.15, Today: 0.4, Future: 0.65 };
-    var SET = { Main: 0, Photo: 0, Parts: 0, Robot: 0.1, Choose: 0.3, Today: 0.65, Future: 0.95 };
-    var PROG = { Main: 0, Photo: 0.16, Parts: 0.33, Robot: 0.5, Choose: 0.66, Today: 0.84, Future: 1 };
+    var SUN = { Main: [30, 300], Photo: [79, 197], Parts: [131, 119], Robot: [183, 81], Choose: [236, 96], Today: [288, 159], Future: [325, 223], Future6: [352, 300] };
+    var TINT = { Main: 0, Photo: 0, Parts: 0, Robot: 0.05, Choose: 0.15, Today: 0.4, Future: 0.65, Future6: 0.8 };
+    var SET = { Main: 0, Photo: 0, Parts: 0, Robot: 0.1, Choose: 0.3, Today: 0.65, Future: 0.95, Future6: 1 };
+    var PROG = { Main: 0, Photo: 0.16, Parts: 0.33, Robot: 0.5, Choose: 0.66, Today: 0.84, Future: 1, Future6: 1 };
     var WORDS = ['\u0928\u092e\u0938\u094d\u0924\u0947', 'Namaste', '\u0916\u0947\u0924 \u0938\u093e\u0925\u0940', 'Know your land', '\u092e\u094c\u0938\u092e', 'Plan your season'];
     var land = st.bg !== 'Main';
     var sp = SUN[st.bg];
     var is = {};
-    ['Main', 'Photo', 'Parts', 'Robot', 'Choose', 'Today', 'Future'].forEach(function (k) { is[k] = st.screen === k; });
+    ['Main', 'Photo', 'Parts', 'Robot', 'Choose', 'Today', 'Future', 'Future6'].forEach(function (k) { is[k] = st.screen === k; });
     return {
       is: is,
       homeSky: 'position: absolute; inset: 0; transition: opacity 900ms ease; opacity: ' + (land ? 0 : 1),

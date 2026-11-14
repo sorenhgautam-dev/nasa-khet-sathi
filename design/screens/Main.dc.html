@@ -79,7 +79,7 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
       </div>
       <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">{{t.brand}}</span>
     </div>
-    <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 0 #E8DCC8">
+    <div style="display: flex; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 1px 0 #E8DCC8">
       <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
       <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
     </div>
@@ -133,7 +133,7 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
         </sc-if>
       </sc-for>
     </div>
-    <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+    <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
     </button>
   </div>
@@ -182,7 +182,7 @@ class Component extends DCLogic {
       : [[t.lead, t.sub], ['Soil robot', 'Our robot drives to every part of your field, tests the soil, and tells you what to fix today.'], ['NASA data', 'We read 20 years of NASA satellite records to show what the next 3 months bring, and what to grow.']];
     var cardBase = 'border: 0; text-align: left; cursor: pointer; font: inherit; border-radius: 20px; padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 4px; transition: background 300ms ease, color 300ms ease, transform 300ms cubic-bezier(.34,1.56,.64,1), box-shadow 300ms ease; ';
     var cardOn = 'background: #EEF5D6; color: #14301E; transform: translateY(-4px); box-shadow: inset 0 0 0 2px #14301E, 0 16px 28px -14px rgba(20,48,30,0.5)';
-    var cardOff = 'background: #FFFFFF; color: #14301E';
+    var cardOff = 'background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); color: #14301E';
     var WORDS = ['\u0928\u092e\u0938\u094d\u0924\u0947', 'Namaste', '\u0916\u0947\u0924 \u0938\u093e\u0925\u0940', 'Know your land', '\u092e\u094c\u0938\u092e', 'Plan your season'];
     var ls = this.state;
     return {

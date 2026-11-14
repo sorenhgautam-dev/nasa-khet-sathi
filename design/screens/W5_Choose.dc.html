@@ -54,14 +54,14 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
   <div style="position: relative; z-index: 1; max-width: 1360px; margin: 0 auto; min-height: 852px; box-sizing: border-box; border-radius: 32px; padding: 26px clamp(20px, 3.4vw, 48px) 40px; border: 2px solid rgba(255,255,255,0.85); background: rgba(255,250,242,0.18); display: flex; flex-direction: column; gap: 32px">
     <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
       <div style="display: flex; align-items: center; gap: 12px">
-        <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W4_Robot.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+        <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W4_Robot.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
-        </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W4}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+        </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W4}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
         </button></sc-if>
         <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: 22px">{{t.brand}}</span>
       </div>
-      <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF">
+      <div style="display: flex; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7)">
         <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
         <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
       </div>
@@ -72,50 +72,50 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
         <span style="display: block; color: #14301E">{{t.h1}}</span>
         <span style="display: block; color: #9A5426">{{t.h2}}</span>
       </h1>
-      <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 56px; height: 56px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+      <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 56px; height: 56px; flex-shrink: 0; border-radius: 999px; border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
       </button>
     </div>
 
     <div style="flex: 1; display: flex; flex-wrap: wrap; gap: 24px">
-      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W6_Today.dc.html" onMouseEnter="{{hv1}}" onMouseLeave="{{hv0}}" style="flex: 1 1 420px; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: #FFFFFF; text-decoration: none; color: #14301E; padding: 32px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -32px rgba(40,50,20,0.55); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 150ms both">
+      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W6_Today.dc.html" onMouseEnter="{{hv1}}" onMouseLeave="{{hv0}}" style="flex: 1 1 300px; min-width: 0; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); text-decoration: none; color: #14301E; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -32px rgba(40,50,20,0.55); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 150ms both">
         <div style="display: flex; align-items: center; justify-content: space-between">
           <span style="height: 34px; padding: 0 14px; border-radius: 999px; background: #F3EAD8; color: #7A4A20; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="9" rx="2"></rect><path d="M12 7V4M7 16v2M17 16v2"></path></svg>{{t.tagA}}
           </span>
           <div style="display: flex; gap: 8px" aria-hidden="true">
-            <svg width="40" height="52" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#9B7048" stroke="#25362B" stroke-width="3"></path></svg>
-            <svg width="40" height="52" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
-            <svg width="40" height="52" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#6B4A2E" stroke="#25362B" stroke-width="3"></path></svg>
-            <svg width="40" height="52" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
+            <svg width="32" height="42" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#9B7048" stroke="#25362B" stroke-width="3"></path></svg>
+            <svg width="32" height="42" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
+            <svg width="32" height="42" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#6B4A2E" stroke="#25362B" stroke-width="3"></path></svg>
+            <svg width="32" height="42" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
           </div>
         </div>
         <div style="flex: 1"></div>
         <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(30px, 3vw, 44px); text-transform: uppercase; line-height: 1">{{t.titleA}}</span>
+            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(26px, 2.3vw, 36px); text-transform: uppercase; line-height: 1">{{t.titleA}}</span>
             <span style="font-size: 18px; line-height: 1.4; color: #4A5646">{{t.subA}}</span>
           </div>
           <span style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 999px; background: #14301E; display: flex; align-items: center; justify-content: center">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
           </span>
         </div>
-      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W6}}" onMouseEnter="{{hv1}}" onMouseLeave="{{hv0}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; flex: 1 1 420px; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: #FFFFFF; text-decoration: none; color: #14301E; padding: 32px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -32px rgba(40,50,20,0.55); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 150ms both">
+      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W6}}" onMouseEnter="{{hv1}}" onMouseLeave="{{hv0}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; flex: 1 1 300px; min-width: 0; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); text-decoration: none; color: #14301E; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -32px rgba(40,50,20,0.55); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 150ms both">
         <div style="display: flex; align-items: center; justify-content: space-between">
           <span style="height: 34px; padding: 0 14px; border-radius: 999px; background: #F3EAD8; color: #7A4A20; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="9" rx="2"></rect><path d="M12 7V4M7 16v2M17 16v2"></path></svg>{{t.tagA}}
           </span>
           <div style="display: flex; gap: 8px" aria-hidden="true">
-            <svg width="40" height="52" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#9B7048" stroke="#25362B" stroke-width="3"></path></svg>
-            <svg width="40" height="52" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
-            <svg width="40" height="52" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#6B4A2E" stroke="#25362B" stroke-width="3"></path></svg>
-            <svg width="40" height="52" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
+            <svg width="32" height="42" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#9B7048" stroke="#25362B" stroke-width="3"></path></svg>
+            <svg width="32" height="42" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
+            <svg width="32" height="42" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#6B4A2E" stroke="#25362B" stroke-width="3"></path></svg>
+            <svg width="32" height="42" viewBox="0 0 64 84"><path d="M13 15h38v57a7 7 0 01-7 7H20a7 7 0 01-7-7z" fill="#D4AD74" stroke="#25362B" stroke-width="3"></path></svg>
           </div>
         </div>
         <div style="flex: 1"></div>
         <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(30px, 3vw, 44px); text-transform: uppercase; line-height: 1">{{t.titleA}}</span>
+            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(26px, 2.3vw, 36px); text-transform: uppercase; line-height: 1">{{t.titleA}}</span>
             <span style="font-size: 18px; line-height: 1.4; color: #4A5646">{{t.subA}}</span>
           </div>
           <span style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 999px; background: #14301E; display: flex; align-items: center; justify-content: center">
@@ -124,7 +124,7 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
         </div>
       </button></sc-if>
 
-      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W7_Future.dc.html" onMouseEnter="{{hv2}}" onMouseLeave="{{hv0}}" style="flex: 1 1 420px; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: #14301E; text-decoration: none; color: #FFFFFF; padding: 32px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -28px rgba(20,48,30,0.7); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 300ms both">
+      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W7_Future.dc.html" onMouseEnter="{{hv2}}" onMouseLeave="{{hv0}}" style="flex: 1 1 300px; min-width: 0; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: #14301E; text-decoration: none; color: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -28px rgba(20,48,30,0.7); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 300ms both">
         <svg width="340" height="340" viewBox="0 0 230 230" aria-hidden="true" style="position: absolute; right: -90px; top: -100px">
           <circle cx="115" cy="115" r="110" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"></circle>
           <circle cx="115" cy="115" r="78" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"></circle>
@@ -144,14 +144,14 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
         <div style="flex: 1"></div>
         <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; position: relative">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(30px, 3vw, 44px); text-transform: uppercase; line-height: 1">{{t.titleB}}</span>
+            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(26px, 2.3vw, 36px); text-transform: uppercase; line-height: 1">{{t.titleB}}</span>
             <span style="font-size: 18px; line-height: 1.4; color: #D5E3D2">{{t.subB}}</span>
           </div>
           <span style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 999px; background: #C8E05A; display: flex; align-items: center; justify-content: center">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
           </span>
         </div>
-      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W7}}" onMouseEnter="{{hv2}}" onMouseLeave="{{hv0}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; flex: 1 1 420px; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: #14301E; text-decoration: none; color: #FFFFFF; padding: 32px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -28px rgba(20,48,30,0.7); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 300ms both">
+      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W7}}" onMouseEnter="{{hv2}}" onMouseLeave="{{hv0}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; flex: 1 1 300px; min-width: 0; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: #14301E; text-decoration: none; color: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -28px rgba(20,48,30,0.7); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 300ms both">
         <svg width="340" height="340" viewBox="0 0 230 230" aria-hidden="true" style="position: absolute; right: -90px; top: -100px">
           <circle cx="115" cy="115" r="110" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"></circle>
           <circle cx="115" cy="115" r="78" fill="none" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="2"></circle>
@@ -171,10 +171,66 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
         <div style="flex: 1"></div>
         <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; position: relative">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(30px, 3vw, 44px); text-transform: uppercase; line-height: 1">{{t.titleB}}</span>
+            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(26px, 2.3vw, 36px); text-transform: uppercase; line-height: 1">{{t.titleB}}</span>
             <span style="font-size: 18px; line-height: 1.4; color: #D5E3D2">{{t.subB}}</span>
           </div>
           <span style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 999px; background: #C8E05A; display: flex; align-items: center; justify-content: center">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </span>
+        </div>
+      </button></sc-if>
+
+      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="W8_Future6.dc.html" onMouseEnter="{{hv3}}" onMouseLeave="{{hv0}}" style="flex: 1 1 300px; min-width: 0; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: #5F8A4B; text-decoration: none; color: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -28px rgba(40,70,30,0.6); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 450ms both">
+        <svg width="320" height="200" viewBox="0 0 200 120" aria-hidden="true" style="position: absolute; right: -60px; top: -50px; opacity: 0.16">
+          <path d="M10 110 Q 60 20 100 70 T 190 30" fill="none" stroke="#FBF4EA" stroke-width="2" stroke-dasharray="4 7"></path>
+        </svg>
+        <div style="display: flex; align-items: center; gap: 10px; position: relative">
+          <span style="height: 34px; padding: 0 14px; border-radius: 999px; background: rgba(251,244,234,0.16); color: #F3EAD8; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path></svg>{{t.tagC}}
+          </span>
+        </div>
+        <div style="display: flex; gap: 6px; position: relative" aria-hidden="true">
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #C8E05A; color: #14301E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m1}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #C8E05A; color: #14301E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m2}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #C8E05A; color: #14301E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m3}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #F0AE4C; color: #3A2410; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m4}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #F0AE4C; color: #3A2410; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m5}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #F0AE4C; color: #3A2410; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m6}}</span>
+        </div>
+        <div style="flex: 1"></div>
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; position: relative">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(26px, 2.3vw, 36px); text-transform: uppercase; line-height: 1">{{t.titleC}}</span>
+            <span style="font-size: 18px; line-height: 1.4; color: #EAF2DC">{{t.subC}}</span>
+          </div>
+          <span style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </span>
+        </div>
+      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.W8}}" onMouseEnter="{{hv3}}" onMouseLeave="{{hv0}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; flex: 1 1 300px; min-width: 0; min-height: 420px; position: relative; overflow: hidden; border-radius: 32px; background: #5F8A4B; text-decoration: none; color: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 60px -28px rgba(40,70,30,0.6); animation: ks-rise 700ms cubic-bezier(.2,.8,.2,1) 450ms both">
+        <svg width="320" height="200" viewBox="0 0 200 120" aria-hidden="true" style="position: absolute; right: -60px; top: -50px; opacity: 0.16">
+          <path d="M10 110 Q 60 20 100 70 T 190 30" fill="none" stroke="#FBF4EA" stroke-width="2" stroke-dasharray="4 7"></path>
+        </svg>
+        <div style="display: flex; align-items: center; gap: 10px; position: relative">
+          <span style="height: 34px; padding: 0 14px; border-radius: 999px; background: rgba(251,244,234,0.16); color: #F3EAD8; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path></svg>{{t.tagC}}
+          </span>
+        </div>
+        <div style="display: flex; gap: 6px; position: relative" aria-hidden="true">
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #C8E05A; color: #14301E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m1}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #C8E05A; color: #14301E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m2}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #C8E05A; color: #14301E; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m3}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #F0AE4C; color: #3A2410; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m4}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #F0AE4C; color: #3A2410; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m5}}</span>
+          <span style="flex: 1; height: 40px; border-radius: 10px; background: #F0AE4C; color: #3A2410; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{t.m6}}</span>
+        </div>
+        <div style="flex: 1"></div>
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; position: relative">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(26px, 2.3vw, 36px); text-transform: uppercase; line-height: 1">{{t.titleC}}</span>
+            <span style="font-size: 18px; line-height: 1.4; color: #EAF2DC">{{t.subC}}</span>
+          </div>
+          <span style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
           </span>
         </div>
@@ -188,8 +244,8 @@ class Component extends DCLogic {
   constructor(p) { super(p); this.state = { lang: 'en', hv: 0 }; }
   renderVals() {
     var S = {
-      en: { brand: 'Khet Sathi', back: 'Back', h1: 'Soil tested.', h2: 'What next?', listen: 'Listen', tagA: 'From the robot', titleA: 'Your field today', subA: 'How each part is doing, and what to fix now.', tagB: 'From NASA data', titleB: 'Next 3 months', subB: 'Rain and cold ahead, and what crops to grow.', m1: 'Dec', m2: 'Jan', m3: 'Feb', say: 'Soil tested. What next? Your field today, or the next 3 months.' },
-      ne: { brand: 'खेत साथी', back: 'पछाडि', h1: 'माटो जाँचियो।', h2: 'अब के?', listen: 'सुन्नुहोस्', tagA: 'रोबोटबाट', titleA: 'आजको खेत', subA: 'हरेक भाग कस्तो छ, र अहिले के सुधार्ने।', tagB: 'नासा डाटाबाट', titleB: 'अर्को ३ महिना', subB: 'आउने वर्षा र जाडो, र कुन बाली लगाउने।', m1: 'पुस', m2: 'माघ', m3: 'फागुन', say: 'माटो जाँचियो। अब के? आजको खेत, वा अर्को ३ महिना।' }
+      en: { brand: 'Khet Sathi', back: 'Back', h1: 'Soil tested.', h2: 'What next?', listen: 'Listen', tagA: 'From the robot', titleA: 'Your field today', subA: 'How each part is doing, and what to fix now.', tagB: 'From NASA data', titleB: 'Next 3 months', subB: 'Rain and cold ahead, and what crops to grow.', m1: 'Dec', m2: 'Jan', m3: 'Feb', m4: 'Mar', m5: 'Apr', m6: 'May', tagC: 'NASA data + soil test', titleC: 'Next 6 months', subC: 'Two crops in a row, so your field is never empty.', say: 'Soil tested. What next? Your field today, the next 3 months, or the next 6 months.' },
+      ne: { brand: 'खेत साथी', back: 'पछाडि', h1: 'माटो जाँचियो।', h2: 'अब के?', listen: 'सुन्नुहोस्', tagA: 'रोबोटबाट', titleA: 'आजको खेत', subA: 'हरेक भाग कस्तो छ, र अहिले के सुधार्ने।', tagB: 'नासा डाटाबाट', titleB: 'अर्को ३ महिना', subB: 'आउने वर्षा र जाडो, र कुन बाली लगाउने।', m1: 'पुस', m2: 'माघ', m3: 'फागुन', m4: 'चैत', m5: 'बैसाख', m6: 'जेठ', tagC: 'नासा डाटा + माटो जाँच', titleC: 'अर्को ६ महिना', subC: 'लगातार दुई बाली, खेत कहिल्यै खाली हुँदैन।', say: 'माटो जाँचियो। अब के? आजको खेत, अर्को ३ महिना, वा अर्को ६ महिना।' }
     };
     var lang = this.state.lang;
     var t = S[lang];
@@ -200,12 +256,13 @@ class Component extends DCLogic {
       hv0: () => this.setState({ hv: 0 }),
       hv1: () => this.setState({ hv: 1 }),
       hv2: () => this.setState({ hv: 2 }),
-      hvLayer: 'position: absolute; inset: 0; z-index: 0; pointer-events: none; transition: background 700ms ease, opacity 700ms ease; opacity: ' + (this.state.hv ? 1 : 0) + '; background: ' + (this.state.hv === 2 ? 'radial-gradient(80% 70% at 75% 55%, rgba(20,48,30,0.55), rgba(20,48,30,0.15))' : 'radial-gradient(80% 70% at 25% 55%, rgba(251,241,228,0.75), rgba(251,241,228,0.2))'),
+      hv3: () => this.setState({ hv: 3 }),
+      hvLayer: 'position: absolute; inset: 0; z-index: 0; pointer-events: none; transition: background 700ms ease, opacity 700ms ease; opacity: ' + (this.state.hv ? 1 : 0) + '; background: ' + (this.state.hv === 2 ? 'radial-gradient(80% 70% at 50% 55%, rgba(20,48,30,0.55), rgba(20,48,30,0.15))' : this.state.hv === 3 ? 'radial-gradient(80% 70% at 80% 55%, rgba(95,138,75,0.5), rgba(95,138,75,0.15))' : 'radial-gradient(80% 70% at 25% 55%, rgba(251,241,228,0.75), rgba(251,241,228,0.2))'),
       rootClass: this.props.embedded ? '' : 'ks-wbg',
       showSky: !this.props.embedded,
       standalone: !this.props.embedded,
       embedded: !!this.props.embedded,
-      navTo: {W1: function () { if (self_.props.onNav) self_.props.onNav('W1'); }, W2: function () { if (self_.props.onNav) self_.props.onNav('W2'); }, W3: function () { if (self_.props.onNav) self_.props.onNav('W3'); }, W4: function () { if (self_.props.onNav) self_.props.onNav('W4'); }, W5: function () { if (self_.props.onNav) self_.props.onNav('W5'); }, W6: function () { if (self_.props.onNav) self_.props.onNav('W6'); }, W7: function () { if (self_.props.onNav) self_.props.onNav('W7'); }},
+      navTo: {W1: function () { if (self_.props.onNav) self_.props.onNav('W1'); }, W2: function () { if (self_.props.onNav) self_.props.onNav('W2'); }, W3: function () { if (self_.props.onNav) self_.props.onNav('W3'); }, W4: function () { if (self_.props.onNav) self_.props.onNav('W4'); }, W5: function () { if (self_.props.onNav) self_.props.onNav('W5'); }, W6: function () { if (self_.props.onNav) self_.props.onNav('W6'); }, W7: function () { if (self_.props.onNav) self_.props.onNav('W7'); }, W8: function () { if (self_.props.onNav) self_.props.onNav('W8'); }},
       t: t,
       isEn: lang === 'en' ? 'true' : 'false',
       isNe: lang === 'ne' ? 'true' : 'false',

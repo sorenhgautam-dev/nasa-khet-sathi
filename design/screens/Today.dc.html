@@ -60,14 +60,14 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
 
   <header style="display: flex; align-items: center; justify-content: space-between; height: 48px">
     <div style="display: flex; align-items: center; gap: 10px">
-      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="Choose.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E5D8C2; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
+      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="Choose.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; box-sizing: border-box">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
-      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.Choose}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E5D8C2; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
+      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.Choose}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; box-sizing: border-box">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
       </button></sc-if>
       <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">{{t.brand}}</span>
     </div>
-    <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 0 #E8DCC8">
+    <div style="display: flex; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 1px 0 #E8DCC8">
       <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
       <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
     </div>
@@ -96,12 +96,12 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
 
   <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px">
     <h2 style="margin: 0; font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 900; font-size: 24px; letter-spacing: -0.02em">{{t.todoH}}</h2>
-    <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+    <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
     </button>
   </div>
 
-  <div style="background: #FFFFFF; border-radius: 22px; padding: 6px 16px; animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 600ms both">
+  <div style="background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border-radius: 22px; padding: 6px 16px; animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 600ms both">
     <sc-for list="{{todo}}" as="d" hint-placeholder-count="3">
       <div style="{{d.row}}">
         <span style="width: 30px; height: 30px; flex-shrink: 0; border-radius: 999px; background: #14301E; color: #C8E05A; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">{{d.n}}</span>
@@ -154,7 +154,7 @@ class Component extends DCLogic {
       setEn: () => this.setState({ lang: 'en' }),
       setNe: () => this.setState({ lang: 'ne' }),
       parts: GOOD.map(function (g, i) {
-        return { card: 'background: #FFFFFF; border-radius: 22px; padding: 18px 16px; min-height: 124px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; animation: ks-reveal 700ms cubic-bezier(.2,.8,.2,1) ' + (i * 110 + 100) + 'ms both', name: t.part + num(i + 1), word: t.words[i], good: g, care: !g, dot: 'width: 40px; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: ' + (g ? '#14301E' : '#9A5426') };
+        return { card: 'background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border-radius: 22px; padding: 18px 16px; min-height: 124px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; animation: ks-reveal 700ms cubic-bezier(.2,.8,.2,1) ' + (i * 110 + 100) + 'ms both', name: t.part + num(i + 1), word: t.words[i], good: g, care: !g, dot: 'width: 40px; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: ' + (g ? '#14301E' : '#9A5426') };
       }),
       todo: t.todo.map(function (x, i) {
         return { n: num(i + 1), text: x, row: 'display: flex; align-items: center; gap: 14px; padding: 14px 0; ' + (i > 0 ? 'border-top: 1px solid #EFE6D4' : '') };

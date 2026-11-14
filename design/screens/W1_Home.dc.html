@@ -70,14 +70,14 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
           <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #6B5D42">{{t.tagline}}</span>
         </div>
       </div>
-      <nav aria-label="{{t.navAria}}" style="display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 6px 20px -12px rgba(122,74,32,0.35)">
+      <nav aria-label="{{t.navAria}}" style="display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 6px 20px -12px rgba(122,74,32,0.35)">
         <a href="#how" style="height: 40px; padding: 0 18px; border-radius: 999px; display: inline-flex; align-items: center; text-decoration: none; font-size: 15px; font-weight: 600">{{t.nav1}}</a>
         <span aria-hidden="true" style="width: 5px; height: 5px; border-radius: 999px; background: #C8A06A"></span>
         <a href="#data" style="height: 40px; padding: 0 18px; border-radius: 999px; display: inline-flex; align-items: center; text-decoration: none; font-size: 15px; font-weight: 600">{{t.nav2}}</a>
         <span aria-hidden="true" style="width: 5px; height: 5px; border-radius: 999px; background: #C8A06A"></span>
         <a href="#robot" style="height: 40px; padding: 0 18px; border-radius: 999px; display: inline-flex; align-items: center; text-decoration: none; font-size: 15px; font-weight: 600">{{t.nav3}}</a>
       </nav>
-      <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 0 #E8DCC8">
+      <div style="display: flex; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 1px 0 #E8DCC8">
         <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
         <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
       </div>
@@ -85,7 +85,7 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
 
     <div style="flex: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
       <div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 22px; {{fadeA}}">
-        <span style="align-self: flex-start; height: 32px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,0.8); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px">
+        <span style="align-self: flex-start; height: 32px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px">
           <span style="width: 8px; height: 8px; border-radius: 999px; background: #4E7A3A"></span>{{t.chip}}
         </span>
         <h1 style="margin: 0; font-family: Archivo, Mukta, sans-serif; font-stretch: 125%; font-weight: 900; font-size: clamp(44px, 5.2vw, 84px); line-height: 0.95; letter-spacing: -0.015em; text-transform: uppercase; color: #14301E">
@@ -94,7 +94,7 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
         </h1>
         <div style="display: flex; align-items: flex-start; gap: 14px; max-width: 520px">
           <p style="margin: 0; font-size: 19px; line-height: 1.5; color: #3F4A3C">{{t.sub}}</p>
-          <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+          <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
           </button>
         </div>
@@ -143,10 +143,10 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
       </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; padding: 14px; border-radius: 24px; background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); {{fadeB}}">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; padding: 14px; border-radius: 24px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); {{fadeB}}">
       <sc-for list="{{stats}}" as="s" hint-placeholder-count="3">
         <div style="display: flex; align-items: center; gap: 14px; padding: 6px 10px">
-          <span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 3px solid #C8E05A; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 13px">{{s.badge}}</span>
+          <span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 3px solid #C8E05A; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; font-family: Archivo, Mukta, sans-serif; font-stretch: 112%; font-weight: 800; font-size: 13px">{{s.badge}}</span>
           <span style="display: flex; flex-direction: column; gap: 2px">
             <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6A4A">{{s.tag}}</span>
             <span style="font-size: 16px; font-weight: 700">{{s.text}}</span>

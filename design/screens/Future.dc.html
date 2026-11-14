@@ -60,14 +60,14 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
 
   <header style="display: flex; align-items: center; justify-content: space-between; height: 48px">
     <div style="display: flex; align-items: center; gap: 10px">
-      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="Choose.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E5D8C2; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
+      <sc-if value="{{standalone}}" hint-placeholder-val="{{ true }}"><a href="Choose.dc.html" aria-label="{{t.back}}" style="width: 48px; height: 48px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; box-sizing: border-box">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
-      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.Choose}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E5D8C2; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
+      </a></sc-if><sc-if value="{{embedded}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{navTo.Choose}}" aria-label="{{t.back}}" style="border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; width: 48px; height: 48px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; box-sizing: border-box">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14301E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
       </button></sc-if>
       <span style="font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em">{{t.brand}}</span>
     </div>
-    <div style="display: flex; padding: 4px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 0 #E8DCC8">
+    <div style="display: flex; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 1px 0 #E8DCC8">
       <button aria-pressed="{{isEn}}" onClick="{{setEn}}" style="{{enStyle}}">EN</button>
       <button aria-pressed="{{isNe}}" onClick="{{setNe}}" style="{{neStyle}}">नेपाली</button>
     </div>
@@ -81,15 +81,15 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
   
   <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
     <p style="margin: 0; font-size: 15px; line-height: 1.4; color: #14301E; font-weight: 500">{{t.source}}</p>
-    <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid #E5D8C2; background: #FFFFFF; color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
+    <button aria-label="{{t.listen}}" onClick="{{speak}}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 999px; border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); color: #14301E; display: flex; align-items: center; justify-content: center; cursor: pointer">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
     </button>
   </div>
 
-  <div style="background: #FFFFFF; border-radius: 22px; padding: 4px 16px; animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 100ms both">
+  <div style="background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border-radius: 22px; padding: 4px 16px; animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 100ms both">
     <div style="display: flex; align-items: center; gap: 14px; padding: 14px 0">
       <span style="width: 64px; flex-shrink: 0; font-family: 'Inter Tight', Mukta, sans-serif; font-weight: 800; font-size: 18px">{{t.m1}}</span>
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9A5426" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D27A2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
       <span style="font-size: 16px; line-height: 1.35">{{t.d1}}</span>
     </div>
     <div style="display: flex; align-items: center; gap: 14px; padding: 14px 0; border-top: 1px solid #EFE6D4">
@@ -119,7 +119,7 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
 
   <div style="display: flex; flex-direction: column; gap: 8px">
     <span style="font-size: 14px; font-weight: 700; color: #14301E">{{t.otherH}}</span>
-    <div style="background: #FFFFFF; border-radius: 22px; padding: 4px 16px; animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 460ms both">
+    <div style="background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border-radius: 22px; padding: 4px 16px; animation: ks-reveal 800ms cubic-bezier(.2,.8,.2,1) 460ms both">
       <div style="display: flex; flex-direction: column; gap: 2px; padding: 14px 0">
         <span style="font-weight: 700; font-size: 17px">{{t.o1}}</span>
         <span style="font-size: 14px; color: #4A5646">{{t.o1s}}</span>
@@ -131,7 +131,7 @@ button:hover path[d^="M18.5"]{animation-delay:.18s}
     </div>
   </div>
 
-  <p style="margin: 0; font-size: 14px; line-height: 1.45; color: #14301E; font-weight: 600; text-align: center; background: rgba(255,255,255,0.75); border-radius: 16px; padding: 12px 14px">{{t.note}}</p>
+  <p style="margin: 0; font-size: 14px; line-height: 1.45; color: #14301E; font-weight: 600; text-align: center; background: rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255,255,255,0.7); border-radius: 16px; padding: 12px 14px">{{t.note}}</p>
 
   <div style="flex: 1"></div>
 
@@ -170,7 +170,7 @@ class Component extends DCLogic {
       showSky: !this.props.embedded,
       standalone: !this.props.embedded,
       embedded: !!this.props.embedded,
-      navTo: {Main: function () { if (self_.props.onNav) self_.props.onNav('Main'); }, Photo: function () { if (self_.props.onNav) self_.props.onNav('Photo'); }, Parts: function () { if (self_.props.onNav) self_.props.onNav('Parts'); }, Robot: function () { if (self_.props.onNav) self_.props.onNav('Robot'); }, Choose: function () { if (self_.props.onNav) self_.props.onNav('Choose'); }, Today: function () { if (self_.props.onNav) self_.props.onNav('Today'); }, Future: function () { if (self_.props.onNav) self_.props.onNav('Future'); }},
+      navTo: {Main: function () { if (self_.props.onNav) self_.props.onNav('Main'); }, Photo: function () { if (self_.props.onNav) self_.props.onNav('Photo'); }, Parts: function () { if (self_.props.onNav) self_.props.onNav('Parts'); }, Robot: function () { if (self_.props.onNav) self_.props.onNav('Robot'); }, Choose: function () { if (self_.props.onNav) self_.props.onNav('Choose'); }, Today: function () { if (self_.props.onNav) self_.props.onNav('Today'); }, Future: function () { if (self_.props.onNav) self_.props.onNav('Future'); }, Future6: function () { if (self_.props.onNav) self_.props.onNav('Future6'); }},
       t: t,
       isEn: lang === 'en' ? 'true' : 'false',
       isNe: lang === 'ne' ? 'true' : 'false',
