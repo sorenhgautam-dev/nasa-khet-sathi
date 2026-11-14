@@ -137,6 +137,13 @@ TODO-VERIFY on the FAOSTAT site.
   Nepal 6(1):87-94; Adhikari, Mehera & Haefele (2013). American Journal of Plant Sciences 4(12C):146-155; Brouwer, Prins
   & Heibloem (1989). Irrigation Water Management Training Manual 4, Irrigation Scheduling, FAO, sec. 4.4; Sri Lanka
   Department of Agriculture (RRDI), land preparation page.
+- A paddy's seepage and percolation and its puddling water (owner's item 3; rules.yaml paddy_losses, switch off; pages
+  read as text by Claude on 2026-11-14): Brouwer, C., Heibloem, M. (1986). Irrigation Water Management Training Manual 3,
+  Irrigation Water Needs, FAO, sec. 4.4 (https://www.fao.org/4/s2022e/s2022e08.htm); Brouwer, C., Prins, K., Heibloem,
+  M. (1989). Training Manual 4, Irrigation Scheduling, FAO, ch. 4, sec. 4.2 and 4.4
+  (https://www.fao.org/4/t7202e/t7202e07.htm); FAO (1985). Guidelines: land evaluation for irrigated agriculture, FAO
+  Soils Bulletin 55, the section on seepage and percolation, citing Chin and Lee (1961) for Taiwan soils by clay content
+  (https://www.fao.org/4/x5648e/x5648e0e.htm).
 - FAO-66: Steduto, P., Hsiao, T.C., Fereres, E., Raes, D. (2012). Crop yield response to water. FAO
   Irrigation and Drainage Paper 66, Table 1 (Ky from FAO-33). https://www.fao.org/4/i2800e/i2800e02.pdf
 - ASCE-EWRI: Allen, R.G., Walter, I.A., Elliott, R.L., Howell, T.A., Itenfisu, D., Jensen, M.E., Snyder,
@@ -211,6 +218,22 @@ TODO-VERIFY on the FAOSTAT site.
   doi:10.5281/zenodo.7254221 (TODO-VERIFY the DOI on the landing page).
 - DHM (Department of Hydrology and Meteorology, Nepal): monthly "Preliminary Precipitation and Temperature Summary"
   bulletins of 2025 (six months; (c) DHM, preliminary data; validation only, kept under `data/`, not in this repository).
+- DHM Climate Division, every monthly "Preliminary Precipitation and Temperature Summary" online on 2026-11-14 (38 issues,
+  June 2023 to July 2026; the series starts June 2023), https://dhm.gov.np/climate-services/climate%20reports/monthly-reports,
+  Annex 1 monthly totals and wettest days of 10 Kathmandu-valley gauges, and DHM's "Meteorological station list"
+  (https://dhm.gov.np/uploads/dhm/downloads/Meteorological_station_list.pdf) for the station index numbers. (c) DHM, no open
+  licence found; preliminary data; **validation only, not redistributed** (kept under `data/`; locked accuracy test set,
+  `data/clean/demo/dhm_bulletin_months.csv`).
+- DHM Climate Division, Monsoon Season (June-September) reports 2022 to 2025
+  (https://dhm.gov.np/climate-services/climate%20reports/seasonal-reports), the archived 2019 and 2020 monsoon reports (Internet
+  Archive copies of dhm.gov.np/uploads/climatic/, maps only, nothing read), and the "State of the Climate of Nepal 2024" and
+  "State of the Nepal Climate 2025" (Annex 2, a cross-check). (c) DHM, no open licence found; preliminary data;
+  **validation only, not redistributed** (`data/clean/demo/dhm_monsoon_years.csv`).
+- MoALD (Ministry of Agriculture and Livestock Development, Nepal; earlier MoAD), "Statistical Information on Nepalese
+  Agriculture", editions 2072/73, 2075/76, 2076/77, 2078/79, 2079/80, 2080/81 and 2081/82,
+  https://moald.gov.np/category/statistics-related-to-agriculture (PDFs on giwmscdnone.gov.np), district tables for
+  Bhaktapur paddy, wheat and potato. No licence stated; **validation only, not redistributed** (kept under `data/`; locked
+  accuracy test set, `data/clean/demo/district_yields_bhaktapur.csv`).
 
 - ISRIC SoilGrids 2.0 through its WCS (maps.isric.org), 2026-11-12, for the whole fetch box: Poggio, L., de Sousa,
   L. M., Batjes, N. H., et al. (2021). SoilGrids 2.0: producing soil information for the globe with quantified
@@ -391,6 +414,8 @@ Licences are read from each package's installed metadata.
 
 | Tool | Date | What it produced | Reviewed by |
 | --- | --- | --- | --- |
+| Perplexity (Perplexity AI), used by the team | 2026-11 | Background research questions asked by the team (owner, 2026-11-14: "Perplexity for research"). Not logged per question; nothing from it enters the pipeline or the site unless a person or a research sub-agent opened the cited source, which is then cited directly in `config/rules.yaml` or here | The team |
+| Claude Fable 5.2 (Anthropic), the independent review REVIEW_2.md | 2026-11-13 | An independent review of the 13 November version: it recomputed the checks from the primary sources; the model changes of 14 November came after it | The owner |
 | Claude Opus 5.5 (Anthropic), via Claude Code | 2026-11-11 | Step 1 code and tests, `schema.json`, `index_schema.json`, mock data, data guards, backup and review-pack scripts, DATA_AUDIT.md, VALIDATION.md. Details in SI_LOG.md | Owner: to fill in after review |
 | Claude Opus 5.5 (Anthropic), via Claude Code | 2026-11-11 | Contract changes (A13, D7), guard change (D2), step 2 POWER fetch, GHCN fetch, layer-3 checks and cross-checks, CLAUDE.md edits (D1 to D7, SI components, build order), MASTER_PROMPT.md (owner's text, copied), VALIDATION.md and DATA_AUDIT.md rewrites. Details in SI_LOG.md | Owner: to fill in after review |
 | Claude Opus 5.5 (Anthropic), via Claude Code, with two research sub-agents | 2026-11-12 | Step-3 review items (quantile mapping, rain vote, SoilGrids fetch), build step 4 (crop library, bucket, runoff, yield, season test). Two sub-agents opened FAO-56/FAO-66, TR-55/NEH, FAO Crop Calendar, ASCE-EWRI and quantile-mapping sources. Details in SI_LOG.md | Owner: to fill in after review |
@@ -407,6 +432,7 @@ Licences are read from each package's installed metadata.
 | Claude Fable 5.2 (Anthropic), via Claude Code (session 9f5addf3), with ten read-only sub-reviewers | 2026-11-13 (Friday, afternoon) | Independent AI review of the whole project. Phase 1: every equation, correction, rule and exported number recomputed from the primary sources; data handling, the rain break, the export, licences, security and the probe checked (`REVIEW_2.md`). Phase 2: fixes with tests first (method-page approval labels, the leap-year count of pinned onset years, the hot-day trend caveat, `sources` rows, validator checks and `--final`, the mock-overwrite guard, GPM card flags) and the stale documents brought up to date. Phase 3: SMAP cleaned and compared with the twin (`pipeline/fetch/smap.py`, `scripts/run_smap_check.py`), DHM's 2025 gauge totals as an independent rain check (`scripts/run_dhm_bulletin_check.py`), the gauge evidence made reproducible (`pipeline/fetch/gauge_evidence.py`), sensitivity and switch-off runs. Phase 4: the plan in `REVIEW_2.md`. No scientific method, rule, threshold or exported result was changed; those questions are listed for the owner | Owner: not reviewed by a person yet |
 | Claude Opus 5.5 (Anthropic), via Claude Code (parallel agent) | 2026-11-13 (night) | Draft machine translations of the site's words (screens, shared words, glossary, crop explainers; 269 texts each) into Hindi, Bengali, Spanish, French and Swahili, translated from the English (`pipeline/words/drafts/`), published beside English and Nepali in `site/data/words.json`, each language flagged as a draft with a 'Draft translation' label. Source quotations kept in their original English, untranslated. Nothing calls an AI service from the site. Details in SI_LOG.md | Not reviewed: every draft language needs native-speaker review |
 | Claude Opus 5.5 (Anthropic), via Claude Code (parallel agent) | 2026-11-14 (Saturday morning) | The "How we know" data story (`pipeline/export/build_story.py` -> `site/data/story.json`: 17 charts from finished outputs), the accuracy report card (VALIDATION.md), the satellite inventory and the challenge's resource list (DATA_AUDIT.md 7-8), the Sentinel-1 assessment (DATA_AUDIT 8.1, ASF metadata only); English and Nepali captions drafted by SI. Details in SI_LOG.md | Not reviewed yet: the owner reviews the report card and the confidence rules (METHOD_NOTES 98); a native speaker reviews the Nepali |
+| Claude Opus 5.5 (Anthropic), via Claude Code (session 9f5addf3, a sub-agent) | 2026-11-14 (Saturday) | Locked accuracy test set, reference data only: downloaded and transcribed DHM's 38 monthly bulletins (10 valley gauges, 358 station-months, with each month's wettest day), DHM's monsoon-season station totals (2022-2025, 36 rows) and MoALD's district yields for Bhaktapur (7 editions, 21 rows), with data cards and image spot-checks; not compared with any model output. Details in SI_LOG.md | Not reviewed by a person yet |
 
 ## Data fetched by the pipeline
 
@@ -442,3 +468,13 @@ Licences are read from each package's installed metadata.
 - CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `sample-2`'s fetch box, 2001-2025, fetched 2026-11-14 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
 - NASA POWER Daily API v2.10.3 (model-based), field `sample-2`, 2001-01-01 to 2025-12-31, fetched 2026-11-14
 - NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `sample-2`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-14 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
+- NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation; temperature correction A), field `sample-2`, 2001-01-01 to 2025-08-24, fetched 2026-11-14
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `sample-3`'s fetch box, 2001-2025, fetched 2026-11-14 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
+- NASA POWER Daily API v2.10.3 (model-based), field `sample-3`, 2001-01-01 to 2025-12-31, fetched 2026-11-14
+- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `sample-3`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-14 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
+- NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation; temperature correction A), field `sample-3`, 2001-01-01 to 2025-08-24, fetched 2026-11-14
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `sample-4`'s fetch box, 2001-2025, fetched 2026-11-14 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
+- NASA POWER Daily API v2.10.3 (model-based), field `sample-4`, 2001-01-01 to 2025-12-31, fetched 2026-11-14
+- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `sample-4`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-14 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
+- NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation; temperature correction A), field `sample-4`, 2001-01-01 to 2025-08-24, fetched 2026-11-14
+- NASA GPM IMERG V07 daily (GPM_3IMERGDF Final for 2025-09-30, its last day in CMR; GPM_3IMERGDL Late for 2025-10-01 to 2026-07-31; GES DISC OPeNDAP, the field `demo`'s box), fetched 2026-11-14 by pipeline/fetch/gpm.py into `data/rain2026/` (never `data/clean/demo/gpm.parquet`): the locked 2026 test of the central rain version only (`scripts/run_rain_selection.py`; rules.yaml verification.rain_selection); never the twin's rain

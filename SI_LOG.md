@@ -1038,3 +1038,38 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   `robot.bridge --fake` and a test `probe_log.json`, both kept in the scratchpad, never in `site/data/`.
 - **For a person to review:** every new Nepali text and every draft translation; the wording that replaces the design's
   claims; the designer's review of the look (see the hand-over report).
+
+## 2026-11-14: the locked test set's reference data, DHM gauges and Bhaktapur yields (Claude Opus 5.5 via Claude Code, session 9f5addf3, sub-agent)
+
+- **What SI did:** downloaded every DHM monthly "Preliminary Precipitation and Temperature Summary" online (38 issues, June
+  2023 to July 2026; none exists before June 2023) and transcribed Annex 1 monthly rain for 10 valley gauges
+  (`data/clean/demo/dhm_bulletin_months.csv`, 358 rows, 340 with a value; card `data/cards/demo/dhm_bulletin_months.json`);
+  downloaded 7 editions of MoALD's "Statistical Information on Nepalese Agriculture" and transcribed Bhaktapur paddy,
+  wheat and potato (`data/clean/demo/district_yields_bhaktapur.csv`, 21 rows, 2015/16 and 2018/19-2024/25; card
+  `data/cards/demo/district_yields_bhaktapur.json`). Reference data only: no model output was opened or compared.
+- **Checked by SI:** each DHM value's position in the Total column (pdftotext boxes); 44 DHM values and 12 SINA rows re-read
+  on the page images. The checks found one parser error (Khumaltar July 2026: the Normal taken for an empty Total, now
+  missing) and two DHM errors (December 2024's second annex page repeats October 2024's; Bhaktapur April 2026 printed 0.0).
+- **For a person to review:** the station choice (valley and rim, 2.4-21.8 km), the notes "NOT USED" and "SUSPECT", and the
+  missing SINA years (2001/02-2014/15, 2016/17, 2017/18, 2020/21).
+- **Added the same day (second request):** each month's wettest day (`max_24h_mm`, `max_24h_date`, 340 values; each
+  checked against the month's rainy-day counts and total, 35 re-read on the page images, no disagreement) in
+  `dhm_bulletin_months.csv`; June-September totals from DHM's monsoon reports 2022-2025 for 10 valley gauges
+  (`data/clean/demo/dhm_monsoon_years.csv`, 36 rows; card `data/cards/demo/dhm_monsoon_years.json`; 19 rows re-read on the
+  images, 2023-2025 equal to the summed monthly bulletins); no station table was found for 2001-2021 (archived
+  monitoring PDFs could not be downloaded: Internet Archive HTTP 429). The card of the 2025 check
+  (`data/cards/demo/dhm_bulletins.json`, overwritten earlier the same day) was restored to its 2026-11-13 content.
+
+## 2026-11-14: choosing the central rain version on gauges it never saw, and the year order (Claude Opus 5.5 via Claude Code, session 9f5addf3, sub-agent)
+
+- **What SI did:** followed rules.yaml verification.rain_selection and year_order (committed eb3a57d before any score);
+  wrote `pipeline/checks/rain_selection.py` with tests first (`tests/test_rain_selection.py`, worked numbers) and
+  `scripts/run_rain_selection.py` (writes `data/checks/demo/rain_selection/`); fetched IMERG Late for January-July 2026
+  into `data/rain2026/` with the existing fetcher (no code change, existing Earthdata login). The leave-one-gauge-out
+  selection was run and saved before the 2026 file existed; the locked 2026 test was then run once. Nothing switched or
+  exported.
+- **SI's own reading of the rule:** the gauge-calibrated factors are fitted on every selection month with a gauge value,
+  including months under 10 mm (not scored, but selection months). Fitted only on scored months, the corrected rain would
+  have won instead (38 against 36 of 83); reported, not used.
+- **For a person to review:** the winner (gauge-calibrated, 40 of 83 against corrected 38 of 83), the 2026 result, and
+  January 2026 (IMERG Late 130 mm at the field's cell against 2-3 mm at the gauges).
