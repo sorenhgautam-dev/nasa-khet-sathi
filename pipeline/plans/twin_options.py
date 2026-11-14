@@ -30,6 +30,28 @@ def paddy_rule(rules):
     return pr
 
 
+def paddy_losses(rules):
+    """rules.yaml paddy_losses (owner's item 3) when its switch is on (or forced 'on'): {perc_mm_day, sat_mm, prep_days},
+    prep_days being paddy_rainfed's (the nursery's age, the same land-preparation days); else None."""
+    pl = rules.get("paddy_losses") or {}
+    force = pl.get("force", "rules")
+    if force == "off" or (force == "rules" and not pl.get("apply")):
+        return None
+    return {"perc_mm_day": float(pl["perc_mm_day"]), "sat_mm": float(pl["sat_mm"]),
+            "prep_days": int(rules["paddy_rainfed"]["prep_days"])}
+
+
+def soil_versions(rules, soil, measured):
+    """Owner's item 4 (rules.yaml field_capacity_measured): {'map': soil} and, when the switch is on and the field team's
+    medians exist (pipeline/fetch/field_visit.load_field_capacity), 'measured': the same table with the measured field
+    capacity and the map's wilting point (pipeline/twin/field_capacity.soil_with_measured_fc). Runners run both."""
+    from pipeline.twin.field_capacity import soil_with_measured_fc
+    out = {"map": soil}
+    if measured is not None and (rules.get("field_capacity_measured") or {}).get("apply"):
+        out["measured"] = soil_with_measured_fc(soil, measured)
+    return out
+
+
 def season_dates_on(rules):
     sd = rules.get("season_dates") or {}
     force = sd.get("force", "rules")
@@ -65,6 +87,9 @@ def dated_plan(plan, lib, rules, w, irrigated, farmer=False, seasons=None, last_
     if farmer and season_dates_on(rules) and seasons:
         plan, info4a = season.plan_from_seasons(plan, seasons, lib, end)
     rule = None if irrigated else paddy_rule(rules)
+    losses = paddy_losses(rules)
+    if rule is not None and losses is not None:     # FAO's puddling water IS the land-preparation rain: one threshold
+        rule = {**rule, "prep_mm": losses["sat_mm"]}
     info4c = []
     if rule is not None:
         keep = {(x["crop"], x["sow"]) for x in info4a if x["source"] == "hls" and not x["dropped"]}
@@ -82,6 +107,8 @@ def replay(w, crops, lib, soil, cn, rules, irrigated, plan=None, farmer=False, s
         plan = sim.rotation_plan(crops, lib, w["date"].min(), w["date"].max())
     plan, info4a, info4c = dated_plan(plan, lib, rules, w, irrigated, farmer, seasons, last_day)
     kw = dict(bare_kc=bare_setting(rules, soil), kc_climate=rules["kc_climate"]["apply"])
+    if paddy_losses(rules):
+        kw["paddy_losses"] = paddy_losses(rules)
     res = sim.replay(w, crops, lib, soil, cn, irrigated=irrigated, plan=plan, **kw)
     if info4c:
         res["seasons"] = season.paddy_outcome(res["seasons"], info4c)

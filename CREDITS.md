@@ -144,6 +144,15 @@ TODO-VERIFY on the FAOSTAT site.
   (https://www.fao.org/4/t7202e/t7202e07.htm); FAO (1985). Guidelines: land evaluation for irrigated agriculture, FAO
   Soils Bulletin 55, the section on seepage and percolation, citing Chin and Lee (1961) for Taiwan soils by clay content
   (https://www.fao.org/4/x5648e/x5648e0e.htm).
+- The field team's field-capacity test (owner's item 4; notes/FIELD_CAPACITY_PROTOCOL.md; rules.yaml
+  field_capacity_measured; opened 2026-11-14 by a research sub-agent, the first two re-read by Claude): FAO-56 chapter 8
+  (https://www.fao.org/4/x0490e/x0490e0e.htm); Shaxson, F., Barber, R. (2003). Optimizing soil moisture for plant
+  production, FAO Soils Bulletin 79, glossary of soil moisture terms (https://www.fao.org/4/y4690e/y4690e04.htm); Ottoni
+  Filho, T.B. et al. (2014). Revisiting field capacity (FC). Revista Brasileira de Ciência do Solo 38(6):1750-1764
+  (https://www.redalyc.org/pdf/1802/180232852010.pdf), describing Cassel & Nielsen (1986, not opened); FAO (2023).
+  GLOSOLAN-SOP-22, Standard operating procedure for soil bulk density, cylinder method (doi:10.4060/cc7568en); USDA
+  ARS/NRCS (2001). Soil Quality Test Kit Guide, ch. 4; USDA-NRCS (2014). Soil Survey Field and Laboratory Methods
+  Manual, SSIR 51 v2, sec. 2.3.1.
 - FAO-66: Steduto, P., Hsiao, T.C., Fereres, E., Raes, D. (2012). Crop yield response to water. FAO
   Irrigation and Drainage Paper 66, Table 1 (Ky from FAO-33). https://www.fao.org/4/i2800e/i2800e02.pdf
 - ASCE-EWRI: Allen, R.G., Walter, I.A., Elliott, R.L., Howell, T.A., Itenfisu, D., Jensen, M.E., Snyder,

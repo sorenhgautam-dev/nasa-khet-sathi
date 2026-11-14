@@ -46,26 +46,40 @@ def ks(dr_mm, taw, raw):                                  # eq. 84
     return max(0.0, (taw - dr_mm) / (taw - raw))
 
 
-def step(dr_prev, rain_mm, runoff_mm, irrigation_mm, etc_mm, taw_mm, p):
-    """One day. Ks from the start-of-day depletion; ETa limited so depletion never passes TAW."""
+def step(dr_prev, rain_mm, runoff_mm, irrigation_mm, etc_mm, taw_mm, p, loss_mm=None):
+    """One day. Ks from the start-of-day depletion; ETa limited so depletion never passes TAW.
+    loss_mm: a paddy's seepage and percolation that day (rules.yaml paddy_losses): taken first out of the water above
+    field capacity, which drains anyway (eq. 88), then out of the root zone; at the wilting point it gives way first."""
     raw = p * taw_mm
     k = ks(dr_prev, taw_mm, raw)
     eta = k * etc_mm
     dr = dr_prev - (rain_mm - runoff_mm) - irrigation_mm + eta
+    if loss_mm is not None:
+        dr += loss_mm
     dp = 0.0
     if dr < 0:                                            # eq. 88: water above field capacity drains
         dp, dr = -dr, 0.0
     if dr > taw_mm:                                       # eq. 86: cannot dry past wilting point
-        eta -= dr - taw_mm
+        over = dr - taw_mm
+        if loss_mm is not None:
+            cut = min(over, loss_mm)
+            loss_mm, over = loss_mm - cut, over - cut
+        eta -= over
         dr = taw_mm
-    return {"dr_mm": dr, "ks": k, "eta_mm": eta, "dp_mm": dp}
+    out = {"dr_mm": dr, "ks": k, "eta_mm": eta, "dp_mm": dp}
+    if loss_mm is not None:
+        out["sp_mm"] = loss_mm
+    return out
 
 
-def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None, surface=None):
+def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None, surface=None, sp_mm=None):
     """df: rain_mm, et0_mm, kc (one row per day). cn: number or per-day array. ponded: per-day flags (irrigated
     paddy only). Returns a new frame; irrigation_mm includes the pond refill, pond_supply_mm is that part.
     surface: bare soil only, FAO-56's surface layer (build step 2a; rules.yaml bare_soil): {tew_mm, rew_mm, kc_max,
-    de0_mm}; then df's kc is not used (see _run_bare_surface)."""
+    de0_mm}; then df's kc is not used (see _run_bare_surface).
+    sp_mm: a paddy's daily seepage and percolation (rules.yaml paddy_losses), lost on its wet days: a day that starts
+    at field capacity (every ponded day, after the morning refill) or that the day's rain brings back to it; column
+    sp_mm then holds the day's loss."""
     if surface is not None:
         if irrigate or (ponded is not None and np.asarray(ponded, dtype=bool).any()):
             raise ValueError("the FAO-56 surface layer is for bare soil, which is never irrigated or ponded")
@@ -85,7 +99,12 @@ def run_bucket(df, taw_mm, p_table, cn, dr0_mm=0.0, irrigate=False, ponded=None,
         else:
             irr = 0.0
         # the refill comes at the start of the day, before the day's water use, so Ks is taken after it
-        s = step(dr - irr, rain, q, 0.0, etc, taw_mm, p)
+        if sp_mm is None:
+            s = step(dr - irr, rain, q, 0.0, etc, taw_mm, p)
+        else:
+            start = dr - irr
+            wet = start <= 0.0 or start - (rain - q) <= 0.0
+            s = step(start, rain, q, 0.0, etc, taw_mm, p, loss_mm=float(sp_mm) if wet else 0.0)
         rows.append({**s, "irrigation_mm": irr, "pond_supply_mm": irr if ponded[i] else 0.0})
         rows[-1].update(rain_mm=rain, runoff_mm=q, etc_mm=etc, p=p, raw_mm=p * taw_mm, ponded=bool(ponded[i]))
         dr = rows[-1]["dr_mm"]

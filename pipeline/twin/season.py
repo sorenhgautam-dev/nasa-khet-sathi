@@ -85,9 +85,17 @@ def _segments(dates, plan, lib):
     return segs
 
 
-def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False):
+def land_prep_irrigation_mm(sat_mm, prep_rain_mm, first_refill_mm):
+    """A watered paddy's land-preparation water beyond what the rain gave (rules.yaml paddy_losses.watered_case): FAO's
+    SAT less the rain of the preparation days and less the pond's first refill of the root zone (part of saturating it)."""
+    return max(0.0, float(sat_mm) - float(prep_rain_mm) - float(first_refill_mm))
+
+
+def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False, paddy_losses=None):
     """weather: date, et0_mm, rain_mm (one row per day), plus u2_ms and rhmin_pct when kc_climate is True.
-    plan: [(crop, 'YYYY-MM-DD'), ...] in date order."""
+    plan: [(crop, 'YYYY-MM-DD'), ...] in date order. paddy_losses: {perc_mm_day, sat_mm, prep_days} (rules.yaml
+    paddy_losses, owner's item 3): a paddy loses perc_mm_day on its wet days (soil_water.run_bucket sp_mm); a watered
+    paddy also gets its land-preparation water (land_prep_irrigation_mm) as irrigation on its first day."""
     weather = weather.reset_index(drop=True)
     check_daily_inputs(weather)
     if kc_climate:
@@ -125,12 +133,16 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False)
         if surface is not None and not crop:
             layer = {"tew_mm": surface["tew_mm"], "rew_mm": surface["rew_mm"], "kc_max": surface["kc_max"],
                      "de0_mm": ev.de_start_mm(dr, taw, surface["tew_mm"])}
+        losses = paddy_losses if (paddy and paddy_losses) else None
         out = sw.run_bucket(seg, taw_mm=taw, p_table=p_tab, cn=cn[crop or "bare"], dr0_mm=dr, irrigate=irrigate,
-                            ponded=ponded, surface=layer)
+                            ponded=ponded, surface=layer,
+                            **({"sp_mm": losses["perc_mm_day"]} if losses else {}))
         out.insert(0, "date", seg["date"].to_numpy())
         out["segment"], out["crop"], out["taw_mm"] = name, crop, taw
         inflow = (out["rain_mm"] - out["runoff_mm"] + out["irrigation_mm"]).sum()   # pond water is inside irrigation
         outflow = (out["eta_mm"] + out["dp_mm"]).sum()
+        if losses:
+            outflow += out["sp_mm"].sum()
         residual = float(inflow - outflow - (dr - out["dr_mm"].iloc[-1]))
         if crop:                                   # a crop grown more than once is keyed by its start date
             key = name if crops_in_plan.count(crop) == 1 else f"{name}_{seg['date'].iloc[0].date()}"
@@ -163,6 +175,15 @@ def simulate(weather, plan, lib, soil, cn, bare_kc, irrigated, kc_climate=False)
                 "ky": ky, "ky_assumed": bool(lib[crop].get("ky_assumed")), "harvest_note": note,
                 "kc_climate_adjusted": bool(kc_climate), "kc_mid_used": kc_used["mid"], "kc_end_used": kc_used["end"],
                 **{k: kc_used[k] for k in ("u2_mid_ms", "rhmin_mid_pct", "u2_late_ms", "rhmin_late_pct")}})
+            if losses:                                  # rules.yaml paddy_losses (owner's item 3)
+                seasons[-1]["seepage_percolation_mm"] = float(out["sp_mm"].sum())
+                if irrigated:
+                    first = weather["date"].iloc[a] - pd.Timedelta(int(losses["prep_days"]), unit="D")
+                    w_prep = weather[(weather["date"] >= first) & (weather["date"] < weather["date"].iloc[a])]
+                    refill = float(out["pond_supply_mm"].iloc[0])
+                    lp = land_prep_irrigation_mm(losses["sat_mm"], w_prep["rain_mm"].sum(), refill)
+                    seasons[-1].update(land_prep_mm=lp, first_refill_mm=refill, prep_rain_mm=float(w_prep["rain_mm"].sum()),
+                                       irrigation_mm=seasons[-1]["irrigation_mm"] + lp)
             if crops_in_plan.count(crop) == 1:
                 summary[crop] = seasons[-1]
         dr, taw_prev = out["dr_mm"].iloc[-1], taw

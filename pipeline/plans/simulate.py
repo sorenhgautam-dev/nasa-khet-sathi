@@ -137,7 +137,7 @@ def ky_sensitivity(seasons, lib, values):
     return res
 
 
-def replay(weather, rotation, lib, soil, cn, bare_kc, irrigated, kc_climate=False, plan=None):
+def replay(weather, rotation, lib, soil, cn, bare_kc, irrigated, kc_climate=False, plan=None, paddy_losses=None):
     """weather: date, et0_mm, rain_mm, one row per day, no gaps; with kc_climate also ws2m_ms, ea_kpa and
     tmax_c (other columns are ignored). `plan` ([(crop, 'YYYY-MM-DD')], e.g. from generate.plan_dates) replaces
     the default sowing of `rotation` (step 7: other windows and sowing positions)."""
@@ -153,7 +153,8 @@ def replay(weather, rotation, lib, soil, cn, bare_kc, irrigated, kc_climate=Fals
             raise ValueError(f"kc_climate needs the weather table's ws2m_ms, ea_kpa and tmax_c; missing: {lacking}")
         w = w.assign(u2_ms=w["ws2m_ms"], rhmin_pct=rhmin_pct(w["ea_kpa"], w["tmax_c"]))
         cols += ["u2_ms", "rhmin_pct"]
-    daily, summary = season.simulate(w[cols], plan, lib, soil, cn, bare_kc, irrigated, kc_climate=kc_climate)
+    daily, summary = season.simulate(w[cols], plan, lib, soil, cn, bare_kc, irrigated, kc_climate=kc_climate,
+                                     **({"paddy_losses": paddy_losses} if paddy_losses else {}))
     idx = w.set_index("date")
     seasons = []
     for s in summary["seasons"]:
