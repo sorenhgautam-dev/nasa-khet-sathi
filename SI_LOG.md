@@ -1439,3 +1439,15 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **Words:** `your_plan.nr_outlook`, `nr_outlook_why1`, `nr_outlook_why2` and the new field note: Nepali and five drafts by
   SI, "needs native-speaker review". The short Nepali sheet now has 155 lines (adds "Watch out:", "Do this:" and the note).
 - **For a person to review:** the three outlook lines and the note, in Nepali.
+
+## 2026-11-14 (Saturday, late night): hosting back on GitHub Pages; two home-island options (Claude Opus 5.5 via Claude Code, one helper agent)
+
+- **Hosting:** on the owner's word ("GitHub Pages from this repository; no Vercel"), the Pages workflow removed in 6744afe
+  was restored and every document that said the site is on Vercel now says GitHub Pages, with the live address. Switching
+  Pages on in the repository's settings is left to the owner (Claude's attempt through the GitHub API was not permitted).
+- **Home island, two options for the team (nothing in `site/` changed):** a helper agent drew
+  `design/island_options/island_vector.svg` after `farm.webp`, in the style and colours of the background art; Claude
+  ran Real-ESRGAN (`realesrgan-x4plus-anime`; BSD 3-Clause, program MIT; CREDITS.md "Site design") once, in a temporary
+  folder, on `farm.webp` and saved `design/island_options/island_upscaled.webp`. Screenshots of the home screen with
+  each, next to the current one, phone and web.
+- **For a person to review:** the team chooses one; until then the site keeps `farm.webp`.

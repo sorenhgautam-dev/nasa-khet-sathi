@@ -18,6 +18,16 @@ server functions, no environment variables. Live: https://sorenhgautam-dev.githu
 - **Images:** `site/img/bg-phone.svg`, `bg-web.svg`, `bg-home.svg` and `farm.webp` are our UI teammate's images from
   `design/assets/` (the farm illustration re-encoded smaller with cwebp; no other change). `site/img/icon.svg` redraws the
   design's leaf logo.
+- **Home island, two candidate replacements (2026-11-14 night; the original high-resolution file is lost; not in the site
+  until the team chooses):** `design/island_options/island_vector.svg`, a new flat vector drawing by SI after
+  `farm.webp`, in the colours and style of the background art above; and `design/island_options/island_upscaled.webp`,
+  `farm.webp` enlarged four times with **Real-ESRGAN** (Wang, Xie, Dong and Shan, "Real-ESRGAN: Training Real-World Blind
+  Super-Resolution with Pure Synthetic Data", ICCVW 2021; github.com/xinntao/Real-ESRGAN, **BSD 3-Clause licence**, read
+  2026-11-14), its ready-made program `realesrgan-ncnn-vulkan` from release v0.2.5.0
+  (`realesrgan-ncnn-vulkan-20220424-macos.zip`, SHA-256 e0ad0558...cc333a; github.com/xinntao/Real-ESRGAN-ncnn-vulkan,
+  **MIT licence**, which includes nihui's realsr-ncnn-vulkan, MIT) with the model `realesrgan-x4plus-anime`, then resized
+  to 1080 px wide (Lanczos) and saved as WebP quality 80 with Pillow. Run once in a temporary folder outside the project;
+  it is not in `requirements.txt` and is not installed in `.venv`.
 - **Fonts:** Inter Tight, Inter (The Inter Project Authors) and Mukta (Ek Type, Girish Dalvi) (SIL Open Font License 1.1),
   loaded after the first screen (`site/fonts/fonts.css`, `font-display: optional`, so text never jumps when a font
   arrives late) with system fallbacks. **Self-hosted from 2026-11-14** (owner's
@@ -536,6 +546,7 @@ Licences are read from each package's installed metadata.
 
 | Tool | Date | What it produced | Reviewed by |
 | --- | --- | --- | --- |
+| Real-ESRGAN `realesrgan-x4plus-anime` (a neural-network upscaler; BSD 3-Clause, program MIT) | 2026-11-14 | One image: the home island `farm.webp` enlarged four times, as a candidate replacement (`design/island_options/island_upscaled.webp`); run once in a temporary folder, not a project dependency | The team chooses between it and the vector drawing |
 | Perplexity (Perplexity AI), used by the team | 2026-11 | Background research questions asked by the team (owner, 2026-11-14: "Perplexity for research"). Not logged per question; nothing from it enters the pipeline or the site unless a person or a research sub-agent opened the cited source, which is then cited directly in `config/rules.yaml` or here | The team |
 | Claude Fable 5.2 (Anthropic), the independent review REVIEW_2.md | 2026-11-13 | An independent review of the 13 November version: it recomputed the checks from the primary sources; the model changes of 14 November came after it | The owner |
 | Claude Opus 5.5 (Anthropic), via Claude Code | 2026-11-11 | Step 1 code and tests, `schema.json`, `index_schema.json`, mock data, data guards, backup and review-pack scripts, DATA_AUDIT.md, VALIDATION.md. Details in SI_LOG.md | Owner: to fill in after review |
