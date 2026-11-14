@@ -1585,8 +1585,8 @@ weather_ahead:                    # owner, 2026-11-14 evening: the team's weathe
     value: "per block, the 24 latest blocks lying wholly in the twin's record (weather.parquet, 2001-01-01 to 2025-12-31): blocks starting in 2002-2025, and Poush (starting 15 December) 2001-2024. A block's year is the year it starts"
     source: "Owner: 'from 24 years of records'; the replay's 24 complete years (CLAUDE.md). Claude's reading for the block that crosses 1 January"
   next_six:
-    value: "the screen shows the six blocks after the one holding the viewer's date (on 14 Nov 2026: Mangsir to Baisakh, about 15 Nov 2026 to 14 May 2027); the file holds all twelve, so the screen stays right in any month"
-    source: "Owner: 'one block per month for the next 6 months'; the team's spec (Nov 2026 - Apr 2027). The Choose screen's month strip also starts at the next month (site/js/app.js nextMonths)"
+    value: "the screen shows the block holding the viewer's date and the five after it (on 14 Nov 2026: Kartik to Chaitra; from 15 Nov 2026: Mangsir to Baisakh); the file holds all twelve, so the screen stays right in any month (site/js/app.js blockKeys)"
+    source: "Owner: 'one block per month for the next 6 months'; the team's spec (Nov 2026 - Apr 2027). The Choose screen's month strip also starts at the next month (site/js/app.js nextMonths) Owner, 2026-11-14 evening, farmer screens: 'Weather: one block for this month and each coming month' (the screen follows this; this text corrected the same night)"
   rain:
     value: "the twin's central rain (weather.parquet rain_mm: break-corrected and gauge-tuned): the block's total in each of its 24 years, given as the median, lowest and highest year; the median under each other rain version (untuned, dhm, uncorrected; pipeline/twin/inputs.with_rain with scripts/common.rain_kw) is the range in Why?"
     source: "Team spec ('Rain: the twin's central rain (break-corrected + gauge-tuned), with the other rain versions as a range'); rain_risk.rain"

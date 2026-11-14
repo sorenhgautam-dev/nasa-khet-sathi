@@ -1,18 +1,21 @@
 # Khet Sathi: project page texts (draft)
 
-Draft for the Space Apps 2026 project page, rewritten 14 November 2026 (afternoon) around the farmer's question and the
-four features. Every number has an ID in square brackets, e.g. [A2]: its source is in `docs/PITCH_FACTS.md`. Refresh
-numbers there first. The IDs are for us, not for the page: remove them before pasting.
+Draft for the Space Apps 2026 project page, rewritten 14 November 2026 (afternoon) around the farmer's question, and
+brought in line with the final app that night: seven farmer steps, four answers, and "How we know" for judges. Every
+number has an ID in square brackets, e.g. [A2]: its source is in `docs/PITCH_FACTS.md`, or in the file named beside it.
+Refresh numbers there first. The IDs are for us, not for the page: remove them before pasting.
 
 ## Summary
 
 Khet Sathi ("field friend" in Nepali) is a phone website for smallholder farmers. It answers one question: "What can I
 grow in my field's empty months without risking the harvest I depend on?" [B1]. Seen from space, about 15 in every 100
 farm squares around Bhaktapur, Nepal lie bare for more than two months a year (could be 0 to 31) [A2], and only about 4
-in 10 grow two crops [A4]. For one field, Khet Sathi runs each crop plan through every past season in our record, shows
-the field's greenness history, lets a farmer try a plan on one quarter of the field, and shows how we checked the field's
-rain record. Every number carries two labels: how sure we are, and how close the data is to the field. It is plain files,
-Nepali first, with no account and no server.
+in 10 grow two crops [A4]. For one field, Khet Sathi runs each crop plan through every past season in our record. The
+farmer gets four short answers in plain words: how each part of the field is doing today, what to grow in the next 3
+and the next 6 months, and what each coming month usually brings. A farmer can try a plan on one part of the field
+first. Farmer screens show no numbers or charts. A "How we know" page, for judges, shows the evidence: the field's
+greenness history, the replay, and how we checked the field's rain record. Every number there carries two labels: how
+sure we are, and how close the data is to the field. It is plain files, Nepali first, with no account and no server.
 
 ## Project details
 
@@ -20,27 +23,67 @@ Nepali first, with no account and no server.
 winter crop could fill them, but it could also fail, or take water the rice needs. Khet Sathi shows the evidence for one
 field, one plan at a time, and leaves the choice to the farmer.
 
-**Four features.**
-1. **25-Year Replay.** Each plan's coming season is run through every past season in our record: 24 complete years,
-   2002-2025 [B3, C1]. One square per year, marked worked, struggled or failed, with the reason (a flood year, a dry
-   year) [C2]. Years with the same El Niño or La Niña state as this year are highlighted (NOAA ONI). The run starts from
-   the field's soil water today, dry, medium or wet, picked with the soil probe [C6]. Tabs show the next 3 and 6 months.
-   Every square is an estimate.
-2. **Field Pulse (खेतको नाडी).** The field's greenness history from space, drawn as a heartbeat line in Bikram Sambat
-   months. HLS at 30 m is field scale; MODIS at 250 m is neighbourhood scale [D1]. It finds two green seasons a year
-   [D2]. The farmer confirms or corrects planting and harvest dates; the answers stay on the phone [D6]. Nearby fields
-   are shown as totals from our area map [A1-A4].
-3. **Safe Trial.** Try a plan on one quarter of the field [E1]. The probe's four spots become the experiment: one in the
-   trial quarter, three in the rest. A weekly photo diary stays on the phone. After harvest the trial is compared with
-   the rest of the field and with the Replay's estimate. Results come after the season [E4].
-4. **Data Check-up.** How we checked the field's rain record. NASA's daily rain (IMERG Final) blends satellite estimates
-   with monthly rain-gauge totals. Around this field, the gauges' share fell from 96-98% to 56-72% a year from 2017
-   [F1], as reporting gauges went from about 50 a month to about 1 [F2]. CHIRPS shows no step [F4]. Our correction
-   scales the rain back, and each field runs its own check [F7, F13]. Numbers that depend on the corrected rain are
-   flagged and shown as a range [F14].
+**What the farmer sees: seven steps** (`site/js/app.js` `STEPS`). Short answers only: no numbers, years, counts or
+charts on these screens. Nepali first, with Bikram Sambat months.
+1. **Home.** "Know your land. Plan your season." and "Try our sample field".
+2. **Your farm from the sky.** NASA's map picture of the field (HLS, via NASA GIBS), not a drone photo. Then a question:
+   "We think you grow rice, then potato. Is that right?" The answer stays on the phone. Then the months the field
+   usually rests.
+3. **Your farm, in 4 parts.**
+4. **Your soil, part by part.** A person carries our prototype soil stick to the middle of each part. No real readings
+   exist yet, so on the public site every part says "Not tested yet" (see "The soil probe's proof").
+5. **What do you want to see?** The four answers below.
+6. **Your field today.**
+7. **Next 3 months** or **Next 6 months.** Each ends: "You know your land best. Talk to a farm advisor before changing."
 
-**Two labels on every number.** *How sure:* Verified, Estimate or Not yet checkable, from a scorecard fixed before any
-score [G1-G4]. *How close:* your field, neighbourhood, valley or region, from each source's resolution [G5].
+**Four answers** (the "What do you want to see?" screen). The back end picks every sentence
+(`site/data/simple/demo.json`), worded by the output's label: "usually" or "may" while it is an estimate, never a
+promise.
+1. **Your field today** (from the soil test). One line per part. Until the soil stick passes its cup test, a part can
+   only be drier or wetter than the others: "Patch 3 is drier than the others. Water it first." With no reading, as
+   now: "Patch 1 is not tested yet."
+2. **Next 3 months** (NASA records). Our suggestion against what the farmer grows now, in one word, then plain actions.
+   On the sample field, for a potato grower: "Wheat. Fill the empty months. Usually better than now. Wheat is usually
+   sown in Kartik. Wheat is usually harvested in Falgun. Then rice is usually planted in Asar." The other plans follow,
+   then the farmer's own. A button, "Try it in one part first", opens the Safe Trial: one quarter of the field [E1], the
+   rest as now, the soil stick's four spots (one in the trial quarter, three in the rest), and a weekly photo diary
+   kept on the phone. After harvest the trial quarter is compared with the rest. Results come after the season [E4].
+3. **Next 6 months** (NASA records). The same, over six months.
+4. **Weather ahead** (NASA records; Nepal's fields only). This month and the five after, one short paragraph each:
+   "Mangsir: usually dry, cold. Cold nights may hurt potato. Cover young plants on clear, cold nights. Check with your
+   local expert." It names only a danger to the farmer's own crop (and rice from June to October); otherwise it says
+   "Usually no big danger." Rice has no "big rain at sowing" danger: paddy is flooded at transplanting. Not a forecast
+   [O1].
+
+**For judges: "How we know".** One small link on Home, "For judges: how we know"; no other farmer screen links to it
+(`site/js/how.js`). It opens with the field twin in three pictures, "How we test each plan": "We copy your field into a
+computer." / "We replay 24 years of NASA weather. Each crop plan, in every year." / "We keep the plan that works most
+often. Then we tell you what to do." Then a 10-second animation, "Each plan in every past season": one small field per
+plan steps through 24 seasons (2001-02 to 2024-25; the next 6 months' window, rain only), green with a tick when the
+plan did not fail, red with a cross when it failed (under half its water need met), then "Works most often:" names the
+winner (on the sample field, "Fill the empty months") (`site/data/simple/demo.json` `animation`). Every season is an
+estimate. Then every label with its why, and the evidence that left the farmer's screens:
+- **24-Year Replay.** Each plan's next 3 or 6 months run through every past season in our record: 24 complete years
+  [B3, C1]. One square per season, marked worked, struggled or failed; a tap gives the reason (the longest dry spell,
+  for example). Seasons with the same El Niño or La Niña state as this year are ringed (NOAA ONI). The run starts from
+  dry, medium or wet soil: the computer's guess for today, until a soil-stick reading can pick it [C6]. A second view,
+  "Your field's last 24 years", gives each year's harvest out of 100, with its flood or dry year [C2]. Every square is
+  an estimate.
+- **Field Pulse (खेतको नाडी).** The field's greenness history from space, drawn as a heartbeat line. HLS at 30 m is
+  field scale; MODIS at 250 m is neighbourhood scale [D1]. It finds two green seasons a year [D2]. Nearby fields are
+  shown as totals from our area map [A1-A4].
+- **Record Check-up.** How we checked the field's rain record. NASA's daily rain (IMERG Final) blends satellite
+  estimates with monthly rain-gauge totals. Around this field, the gauges' share fell from 96-98% to 56-72% a year from
+  2017 [F1], as reporting gauges went from about 50 a month to about 1 [F2]. CHIRPS shows no step [F4]. Our correction
+  scales the rain back, and each field runs its own check [F7, F13]. Numbers that depend on the corrected rain are
+  flagged and shown as a range [F14].
+- Also: each plan's scores, five tabs and tips; Weather ahead's details for each month; rain at harvest, heat and cold,
+  and the fertiliser saver; the computer's guess for each part; the 2040 outlook; the method; the sources; and "What is
+  not ready yet".
+
+**Two labels on every number** (on How we know; the farmer screens show no numbers). *How sure:* Verified or Estimate,
+from a scorecard fixed before any score; an output not yet checkable shows as an Estimate, with its status beside it
+[G1-G4]. *How close:* your field, around your field, your valley or your region, from each source's resolution [G5].
 
 **How.** A Python pipeline downloads public data around the field. A small model of the field (the "twin": FAO-56 soil
 water, FAO-33 harvest) runs day by day on rain alone and with water whenever needed, and scores 165 crop plans on
@@ -49,13 +92,19 @@ only reads the files this writes.
 
 **Who it is for.** Smallholder farmers, Nepal first, and the extension workers and co-operatives who advise them.
 
-**Real:** the replay of three plans; the tabs in English and Nepali; the greenness history and seasons; the area map;
-the rain check and its correction; the 2040 outlook (23 climate models) [H11]; four field parts with their own
-greenness [E1]; and a "How we know" page that labels every output.
+**Real:** the seven farmer steps and their four answers, every sentence picked by the back end; the field twin's three
+pictures and its 10-second animation; the replay of three plans; the tabs in English and Nepali; the greenness history
+and seasons; the area map; the rain check and its correction; the 2040 outlook (23 climate models) [H11]; four field
+parts with their own greenness [E1]; and a "How we know" page that labels every output.
 
 **Placeholder:** the demo field is a labelled sample: a 60 m square of mapped cropland near Bhaktapur, chosen by us from
 maps [B4]. It is not a farmer's field yet. Its crops (rice, then potato), dates, water source (unknown) and soil (a map
 cell 859 m away [B6]) are placeholders, as are the four nearby sample fields [B5]. No farmer has checked any number.
+
+**Prototype, plan, not built:** the soil stick is a prototype, carried by hand, with no real readings yet; the public
+site says "Not tested yet". The robot that would carry it ("Krishi Scout") is a plan: it is only drawn on the soil-test
+screen. The field's picture is NASA's map (HLS), not a drone photo; a real photo comes when we visit. How we know lists
+these under "What is not ready yet".
 
 ## Use of AI (SI)
 
@@ -75,8 +124,8 @@ code and listed fixes. We used Perplexity for research.
 
 **How people checked it:** Claude proposed; we decided every method, rule and threshold, and each rule is committed
 before its first run [J6]. The physics is tested against published worked examples [J2]. `SI_LOG.md` lists what a person
-must still review: most of the Nepali (32 of 385 texts checked so far [I5]), the draft translations and the newest
-English lines.
+must still review: most of the Nepali (32 of 789 texts checked so far [I5; `site/data/story.json` `ai_words`, 14 Nov
+night]), the draft translations and the newest English lines.
 
 ## Data
 
@@ -84,7 +133,7 @@ English lines.
 | --- | --- | --- |
 | GPM IMERG | V07 Final daily (GPM_3IMERGDF); Late daily (GPM_3IMERGDL); Final monthly (GPM_3IMERGM) | The model's rain; the rain check |
 | NASA POWER | Daily API v2.10.3 (MERRA-2, GEOS-IT, CERES) | Temperature, humidity, wind, sunshine |
-| HLS | HLSL30_VI, HLSS30_VI v2.0, 30 m | Field Pulse, seasons, bare days, the area map, the field's parts |
+| HLS | HLSL30_VI, HLSS30_VI v2.0, 30 m | Field Pulse, seasons, bare days, the area map, the field's parts; the field's map picture (via NASA GIBS) |
 | MODIS | MOD13Q1 v061 | Older greenness, compared with HLS only |
 | SMAP | SPL4SMGP v008, SPL3SMP_E v006 | Checks the model's soil water; sets how sure it is |
 | GRACE / GRACE-FO | JPL mascon CRI RL06.3 v04 | Regional stored water, as context |
@@ -100,12 +149,13 @@ LANDFIRE, Ag Data Commons, AMS Market News (no money figures), GEDI (forest cano
 non-commercial licence).
 
 **Other data:** DHM (normals, bulletins, onset dates, event reports), ISRIC SoilGrids 2.0, ESA WorldCover, NOAA
-GHCN-Daily, FAOSTAT, CHIRPS v3.0, GPCC, OpenStreetMap. Citations: `CREDITS.md`.
+GHCN-Daily, FAOSTAT, CHIRPS v3.0, GPCC, NASA Blue Marble (the world map picture, via NASA GIBS). Citations:
+`CREDITS.md`.
 
 ## Case study: a flood, then a winter without rain
 
-The sample field, 2024-2025, from the 25-Year Replay. Harvest is out of 100; a year holds that spring's winter crop and
-that year's rice [M1, M2, C5, H1-H3].
+The sample field, 2024-2025, from the replay on How we know ("Your field's last 24 years"). Harvest is out of 100; a
+year holds that spring's winter crop and that year's rice [M1, M2, C5, H1-H3].
 
 | Harvest (dry days) | Today: rice, then potato | Fill the empty months: rice, then wheat | Feed your soil: rice, then lentil |
 | --- | --- | --- | --- |
@@ -157,8 +207,15 @@ check itself: in Madagascar it found no change and kept NASA's rain as published
 ## The soil probe's proof
 
 **WAITING FOR THE BENCH TEST:** "readings agree within X points; drier soil always reads drier; against weighed water
-the probe is off by about Y." Until then the site gives no water number from the probe [E3]. Safe Trial uses the
-probe's four spots only to compare parts of the same field.
+the probe is off by about Y." Until then the site gives no water number from the probe [E3]: a part can only be drier
+or wetter than the others. The probe is our prototype soil stick, carried by hand. There are no real readings yet, so
+the public site says "Not tested yet" for every part. A garden or indoor test of the stick is planned before the freeze
+(`docs/PROBE_RECORDING.md` 4b). Its readings will show only with their date and their label, "Garden test of our soil
+stick, recorded on <date>" (or "Indoor test of our soil stick. 4 bowls of soil, recorded on <date>"). It is not the demo
+field: the twin is never updated with it, and it never changes the field's plans. A practice run with our fake probe
+shows only at the in-person demo, on our laptop's hotspot, under a big "Practice: made-up numbers" banner; never on the
+public site. The robot that would carry the stick (Krishi Scout) is a plan, drawn only. Safe Trial uses the stick's four
+spots only to compare parts of the same field.
 
 ## The awards we aim at
 
@@ -176,8 +233,9 @@ output labelled against a yardstick fixed in advance [G1]; a learned model that 
 (r 0.55) [J5]. The model cannot show a bad rice year [H10]. Dry years: 2 of 4 found [C2].
 
 **Best Use of Technology.** *For:* no backend: plain files on Vercel, no login, no keys [I1]. A test-first pipeline
-(1,494 tests collected [J1]) and a validator that refuses made-up numbers. An open probe (ESP32, two sensors) and a
-Kalman update that passes hand-worked tests [M8]. *Not yet:* the bench test; offline use [I6]; a test with new users
+(1,687 tests collected [J1, recounted 14 Nov night with `pytest --collect-only`]) and a validator that refuses made-up
+numbers. An open prototype soil stick (ESP32, two sensors) and a Kalman update that passes hand-worked tests [M8]. *Not
+yet:* the bench test; real soil-stick readings; the robot (a plan, drawn only); offline use [I6]; a test with new users
 (`docs/FARMER_TEST.md`).
 
 **Local Impact.** *For:* Nepali first, Bikram Sambat months, Nepal's own data, valley floods and droughts checked by
@@ -187,8 +245,8 @@ has used it; the field is a placeholder; most of the Nepali awaits a native spea
 
 **Galactic Impact.** *For:* the model's inputs are global datasets, and one command builds a field [I3, I4]. The rain
 check runs per field: in Madagascar it found no change and kept NASA's rain as published [F13]. Open code (MIT) and
-probe design; drafts in five more languages. *Not yet:* no field outside Nepal is on the site (one is built, VALIDATION 3.26);
-the translations are unreviewed.
+probe design; drafts in five more languages. *Not yet:* the field in Madagascar is on the site, but its answers for the
+coming months are not made yet; the translations are unreviewed.
 
 ## Global, usable everywhere
 
@@ -209,8 +267,11 @@ about 3 to 4 hours, nearly all of it downloads (`docs/DEPLOY_ANYWHERE.md`).
 **A field on another continent.** A placeholder field in Madagascar's central highlands was built with the kit on the
 global defaults: its own rain check (no gauge change found, so NASA's rain is used as published), its own FAO crop
 calendar (rainy-season rice, then dry-season potato), and labels that say "not yet verifiable" wherever no local check
-exists. It never borrows Nepal's checks. It is not on the live site yet: the third plan's words and name were written
-for Nepal's pulse crop and must first follow the field (VALIDATION 3.26).
+exists. It never borrows Nepal's checks. It is on the site, folded under "Fields we have looked at", with its note: "A
+field on another continent. Built with the global settings, not checked against local rain gauges yet."
+(`site/data/index.json`). Its third plan is rice alone, named "Safest in bad years". Its answers for the coming months
+are not made yet: Next 3 and Next 6 months say "Not ready yet.", and Weather ahead is for Nepal's fields only. Its
+plans, rain check and greenness are on How we know.
 
 ## How farmers would get this
 
@@ -220,10 +281,12 @@ member.
 1. **A co-operative names its fields:** corners, crops and dates, and whether each can be watered: what our placeholder
    lacks.
 2. **We prepare each field** on a laptop; the site itself never computes.
-3. **The helper sits with the farmer:** Field Pulse first ("is this when your field turns green?"), then the Replay
-   ("were these your bad years?"), then the plans and the "check locally" tab. The answers become our first ground
-   truth.
-4. **A Safe Trial on one quarter,** if the farmer wants one. The result comes after harvest.
+3. **The helper sits with the farmer:** the field from the sky and the crop question first ("We think you grow rice,
+   then potato. Is that right?"), then the soil test, then the four answers. For the evidence, the helper opens How we
+   know: Field Pulse ("is this when your field turns green?"), the Replay ("were these your bad years?") and each plan's
+   "Ask someone who knows" tab. The answers become our first ground truth.
+4. **A Safe Trial on one quarter** ("Try it in one part first"), if the farmer wants one. The result comes after
+   harvest.
 
 Every plan says "try it on one small part first" [E2]. The tool supports the farmer's judgment; it never replaces it.
 
@@ -231,12 +294,12 @@ Every plan says "try it on one small part first" [E2]. The tool supports the far
 
 See `docs/VIDEO_SCRIPT.md`; every number there is in `docs/PITCH_FACTS.md`. Do not say: any probe accuracy, any El Niño
 number, "works offline" (not yet), "2 of 2 floods" as a blind test, or a single "percent verified" (PITCH_FACTS
-section K).
+section K). Do not say a robot or a drone did anything, or that the soil stick has tested the field.
 
 ## Three small checks on the plans (added 14 November, evening)
 
-Behind the "How do we know?" buttons, three checks answer the farmer's question with past years and published limits,
-each with its two labels and a "Why?" that names the source:
+On How we know (for judges), three checks answer the farmer's question with past years and published limits, each
+with its two labels and a "Why this?" that names the source:
 
 - **Rain at harvest.** In how many of the last 24 years did a day of heavy rain (50 mm or more, the Nepal weather
   office's class) fall in each crop's harvest weeks? Rice: 8 of 24 (5 to 8 with our other rain records). The winter

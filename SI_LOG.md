@@ -1415,3 +1415,15 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   ("अभ्यास: नक्कली अङ्क", "हाम्रो यन्त्रको बगैंचामा गरिएको जाँच, नापिएको मिति:", both "needs native-speaker review") and the
   Hindi, Bengali, Spanish, French and Swahili drafts are SI's.
 - **For a person to review:** the two Nepali lines.
+
+## 2026-11-14 (Saturday night, finishing list) (Claude Opus 5.5 via Claude Code, and one helper agent)
+
+- **What SI did:** the indoor test of the soil stick (commit eb7f4ff, rules first: `--test indoor`, label "Indoor test of
+  our soil stick. 4 bowls of soil, recorded on <date>", in two short sentences for the 8-word rule); the short Nepali
+  sheet `pipeline/words/nepali_farmer_screens.xlsx` (153 lines: every Nepali line the farmer screens showed in a scratch
+  walk of every screen, both winter crops, both watering answers and every soil-test state, plus the lines the back end
+  can pick for other answers; already-reviewed lines left out); `docs/TOMORROW_MORNING.md` for the team; a helper agent
+  brought `docs/PROJECT_PAGE.md` and `docs/VIDEO_SCRIPT.md` in line with the final app (numbers re-checked: 1,687 tests
+  collected; 32 of 789 Nepali texts checked); `rules.yaml` `weather_ahead.next_six` text corrected to what the screen shows.
+- **Words:** `check_soil.indoor_title`, `check_soil.indoor_on` (Nepali and five drafts by SI, "needs native-speaker review").
+- **For a person to review:** the project page and video script (the owner), the Nepali sheet (a native speaker).
