@@ -727,6 +727,9 @@ season_detection:                 # diary, build step 6b (pipeline/diary/seasons
   bare_max_from: 
     value: "bare_days.ndvi_max"
     source: "Between seasons a day is bare below the bare-day threshold (CLAUDE.md 0.25), harvested (stubble, residue or weeds) at or above it"
+  no_dense_years:                 # owner's item 3 (2026-11-14): a cloudy field abroad. Written and committed BEFORE its first run
+    value: "when no full HLS year has held_out_min_clear_obs clear observations, the held-out comparison cannot run: the threshold method sets the seasons (the comparison's own default, which another method replaces only by beating it by best_margin), the season detective is not trained (so no 'less sure' months), and the method page's comparison is null ('could not run: too few clear images a year'). The minimum is not lowered"
+    source: "Claude's choice, fixed before its first run on such a field; put to the owner. The field in Madagascar has 30-49 clear HLS observations a year (data/clean/ambohidratrimo/greenness_field.parquet, counted on a shorter-record test copy, 2026-11-14), under the 90 that held_out_min_clear_obs (owner-approved 2026-11-13) asks; lowering the minimum after seeing those counts would be choosing the rule from the data. Nepal's five fields have qualifying years: unchanged"
 
   cover_sure:
     value: "per calendar month, the share of the days in the HLS years on which the season detective (SI) and the threshold method give the same day label (growing, harvested, bare)"
