@@ -139,8 +139,8 @@ We publish only the walk you name.
 
 ## 4b. The garden test (about 45 minutes, before the freeze)
 
-The owner's test of the probe in a garden mini-field (2026-11-14 night). The public site then replays it, labelled "A
-garden test of our probe, recorded on <date>". It is not the demo field, so the twin is never updated with it.
+The owner's test of the probe in a garden mini-field (2026-11-14 night). The public site then replays it, labelled "Garden
+test of our soil stick, recorded on <date>". It is not the demo field, so the twin is never updated with it.
 
 1. **Mark the mini-field.** On bare garden soil, mark a square 2 m by 2 m with four sticks and string. Split it with
    string into four patches of 1 m by 1 m. Name them like the field and put a label on a stick in each:

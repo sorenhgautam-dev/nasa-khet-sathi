@@ -7,7 +7,7 @@ holds no numbers.
 ## 2026-11-14 (Saturday, night): `probe_log.json` may say it is a garden test; practice readings only on the hotspot
 
 - `probe_log.json` gains an optional `kind: "garden_test"` (`scripts/build_probe_log.py --garden`; rules.yaml
-  `probe.live.garden_test`). Then the site labels the walk "A garden test of our probe, recorded on <date>"
+  `probe.live.garden_test`). Then the site labels the walk "Garden test of our soil stick, recorded on <date>"
   (`check_soil.garden_on`), every part's `before` and `after` are null and `twin_date` is null, and its bands never set
   the field's soil at the start. Files without `kind` are unchanged.
 - `live.json` from the fake probe (`source: "fake_probe"`) is shown only when the page is opened from this laptop or its

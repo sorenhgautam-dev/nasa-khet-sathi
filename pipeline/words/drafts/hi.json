@@ -1913,8 +1913,8 @@
    "hi": "दर्ज करने की तारीख़:"
   },
   "screens.check_soil.texts.garden_on": {
-   "en": "A garden test of our probe, recorded on",
-   "hi": "हमारे यंत्र की बगीचे में जाँच, दर्ज करने की तारीख़:"
+   "en": "Garden test of our soil stick, recorded on",
+   "hi": "बगीचे में हमारे यंत्र की जाँच, तारीख़:"
   },
   "screens.last_years.texts.replay_h1": {
    "en": "{year_count}-Year",

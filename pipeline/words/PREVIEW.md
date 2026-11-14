@@ -298,7 +298,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Remove | हटाउनुहोस् |
 | This phone cannot keep photos here. | यो फोनले यहाँ फोटो राख्न सक्दैन। |
 | Recorded on | नापिएको मिति: |
-| A garden test of our probe, recorded on | हाम्रो यन्त्रको बगैंचामा गरिएको जाँच, नापिएको मिति: |
+| Garden test of our soil stick, recorded on | हाम्रो यन्त्रको बगैंचामा गरिएको जाँच, नापिएको मिति: |
 | Practice: made-up numbers | अभ्यास: नक्कली अङ्क |
 | Your soil, | तपाईंको माटो, |
 | part by part | भाग भाग गरी |

@@ -1407,7 +1407,7 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 
 - **What SI did:** on the owner's answers 2 and 4 (commit 4f784a6, rules first): practice readings from the fake probe
   show on the phone only from the laptop's hotspot, under a big "Practice: made-up numbers" banner, and are never used for
-  the field; `scripts/build_probe_log.py --garden` labels a garden walk "A garden test of our probe, recorded on <date>"
+  the field; `scripts/build_probe_log.py --garden` labels a garden walk "Garden test of our soil stick, recorded on <date>"
   and drops the twin before and after; `docs/PROBE_RECORDING.md` 4b gives the team the garden test step by step. Checked
   in a scratch copy of the site: the banner on the hotspot address, no practice reading on a public address, and the
   garden label (a made-up preview walk in the scratch folder only, never in site/data).
