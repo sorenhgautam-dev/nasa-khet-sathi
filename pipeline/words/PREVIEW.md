@@ -3,9 +3,9 @@
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
 - Screens, and the words shared by many screens (screens.json, 296 texts): needs native-speaker review.
-- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 94 texts): needs native-speaker review.
-- Glossary (glossary.json, 64 texts): needs native-speaker review.
-- Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
+- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 94 texts): 85 needs native-speaker review; 9 reviewed by Pratik and Vision, 2026-11-14.
+- Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
+- Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
 
 Each table below starts with the review status of its own lines.
 Words in {curly brackets} are filled in later with numbers or names for each field.
@@ -291,7 +291,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 #### Tab: Why this? / किन यो?
 
-*Nepali: needs native-speaker review.*
+*Nepali: 12 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -311,7 +311,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 #### Tab: How do we know? / हामीलाई कसरी थाहा भयो?
 
-*Nepali: needs native-speaker review.*
+*Nepali: 5 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -342,7 +342,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 #### Tab: What we don't know / हामीलाई के थाहा छैन
 
-*Nepali: needs native-speaker review.*
+*Nepali: 23 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -394,7 +394,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 #### Tips / सुझाव
 
-*Nepali: needs native-speaker review.*
+*Nepali: 2 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -472,7 +472,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Rain correction
 
-*Nepali: needs native-speaker review.*
+*Nepali: 12 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -563,7 +563,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 Science words appear only here, never on the screens.
 
-*Nepali: needs native-speaker review.*
+*Nepali: 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -606,7 +606,7 @@ Science words appear only here, never on the screens.
 
 Glossary word: nitrogen-fixing crop / नाइट्रोजन स्थिर गर्ने बाली (कोसे बाली). Our examples: lentil / मसुर.
 
-*Nepali: needs native-speaker review.*
+*Nepali: 6 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -631,7 +631,7 @@ Sources:
 
 Glossary word: cover crop / ढाक्ने बाली. Our examples: lentil / मसुर, mustard / तोरी.
 
-*Nepali: needs native-speaker review.*
+*Nepali: 4 needs native-speaker review; 2 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -654,7 +654,7 @@ Sources:
 
 Glossary word: deep-rooting crop / गहिरो जरा भएको बाली. Our examples: finger millet / कोदो, maize / मकै, wheat / गहुँ.
 
-*Nepali: needs native-speaker review.*
+*Nepali: 5 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -677,7 +677,7 @@ Sources:
 
 Glossary word: drought-tolerant crop / खडेरी सहने बाली. Our examples: finger millet / कोदो.
 
-*Nepali: needs native-speaker review.*
+*Nepali: 5 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
