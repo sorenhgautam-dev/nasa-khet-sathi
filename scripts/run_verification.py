@@ -26,7 +26,7 @@ def _json(p):
 
 def _normals(station, variable):
     rows = [r for r in csv.DictReader(open(ROOT / "config/dhm_normals_1991_2020.csv"))
-            if r["station"] == station and r["variable"] == variable]
+            if r["station"] == station and r["variable"] == variable and r["month"].isdigit()]
     return [float(r["value"]) for r in sorted(rows, key=lambda r: int(r["month"]))]
 
 

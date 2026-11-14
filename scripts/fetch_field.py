@@ -51,7 +51,8 @@ STEPS = [
 ]
 
 
-SHARED = ("gpm", "chirps", "hls_l30", "hls_s30", "nasadem", "worldcover", "soilgrids", "gauge_evidence")   # data/raw/<x>/
+SHARED = ("gpm", "chirps", "hls_l30", "hls_s30", "nasadem", "worldcover", "soilgrids", "gauge_evidence",
+          "appeears")   # data/raw/<x>/ (appeears: the box's MODIS, read by the diary)
 BOX_FETCH = ("worldcover", "hls_recent", "gpm", "chirps", "hls")
 
 

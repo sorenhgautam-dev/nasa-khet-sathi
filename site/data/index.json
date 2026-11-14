@@ -14,6 +14,51 @@
    ],
    "sample": false,
    "area": "demo"
+  },
+  {
+   "id": "sample-1",
+   "name": "Bhaktapur sample field 1 (PLACEHOLDER)",
+   "country": "Nepal",
+   "lat": 27.688458,
+   "lon": 85.475542,
+   "bbox": [
+    85.379227,
+    27.625034,
+    85.480773,
+    27.714966
+   ],
+   "sample": true,
+   "area": "demo"
+  },
+  {
+   "id": "sample-2",
+   "name": "Bhaktapur sample field 2 (PLACEHOLDER)",
+   "country": "Nepal",
+   "lat": 27.659292,
+   "lon": 85.467708,
+   "bbox": [
+    85.379227,
+    27.625034,
+    85.480773,
+    27.714966
+   ],
+   "sample": true,
+   "area": "demo"
+  },
+  {
+   "id": "sample-4",
+   "name": "Bhaktapur sample field 4 (PLACEHOLDER)",
+   "country": "Nepal",
+   "lat": 27.649125,
+   "lon": 85.391708,
+   "bbox": [
+    85.379227,
+    27.625034,
+    85.480773,
+    27.714966
+   ],
+   "sample": true,
+   "area": "demo"
   }
  ],
  "areas": [
@@ -28,7 +73,10 @@
    ],
    "map": "data/area/demo.json",
    "fields": [
-    "demo"
+    "demo",
+    "sample-1",
+    "sample-2",
+    "sample-4"
    ]
   }
  ]
