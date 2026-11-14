@@ -3021,6 +3021,36 @@
      "ne_review": "needs native-speaker review"
     },
     {
+     "id": "drone_title",
+     "en": "What our drone step will look like",
+     "ne": "हाम्रो ड्रोन चरण यस्तो देखिनेछ",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "drone_lead",
+     "en": "A real drone photo of another farm. It is in Dhulikhel.",
+     "ne": "धुलिखेलको अर्को खेतको साँचो ड्रोन तस्बिर।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "drone_label",
+     "en": "Real farm in Dhulikhel. Drone photo from 2023 (OpenAerialMap). No farmer's answers yet.",
+     "ne": "धुलिखेलको साँचो खेत। सन् २०२३ को ड्रोन तस्बिर (OpenAerialMap)। किसानका जवाफ अझै छैनन्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "drone_patches",
+     "en": "{section_count} patches of about 10 by 10 m.",
+     "ne": "करिब १० × १० मिटरका {section_count} टुक्रा।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "drone_sat",
+     "en": "From space, we see 30 m squares. About 2 squares cover this farm. So that history is for the whole area. The soil stick tests each 10 m patch.",
+     "ne": "अन्तरिक्षबाट हामी ३० मिटरका वर्ग देख्छौं। यो खेतमा करिब २ वर्ग पर्छन्। त्यसैले अन्तरिक्षबाट देखिएको इतिहास वरपरको क्षेत्रको हो। माटो जाँच्ने यन्त्रले हरेक १० मिटरको टुक्रा जाँच्छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
      "id": "report_card",
      "en": "How sure are we?",
      "ne": "हामी कति पक्का छौं?",

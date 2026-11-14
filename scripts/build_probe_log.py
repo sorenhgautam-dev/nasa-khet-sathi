@@ -172,7 +172,7 @@ def main(argv=None):
     ap.add_argument("--watered", help="with --test: the part that got water, e.g. s3 (bowl 3)")
     ap.add_argument("--watered-at", help="with --watered: the local time the water went in, HH:MM")
     a = ap.parse_args(argv)
-    if (a.watered or a.watered_at) and not (a.test and a.watered and a.watered_at and re.fullmatch(r"s\d+", a.watered)
+    if (a.watered or a.watered_at) and not (a.test and a.watered and a.watered_at and re.fullmatch(r"[sp]\d+", a.watered)
                                              and re.fullmatch(r"([01]\d|2[0-3]):[0-5]\d", a.watered_at)):
         ap.error("--watered sN and --watered-at HH:MM go together, with --test")
     rules = load_rules()["probe"]

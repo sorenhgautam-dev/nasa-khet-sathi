@@ -99,9 +99,19 @@
             "required": ["en"],
             "properties": {"en": {"type": "string", "minLength": 1}, "ne": {"type": "string", "minLength": 1}},
             "description": "a short line the field list shows beside such a field (with `profile`)"
+          },
+          "drone": {
+            "type": "string",
+            "pattern": "^data/drone/[a-z0-9-]+\\.json$",
+            "description": "a drawn field's drone photo and patches (pipeline/export/build_drone.py): the parts and soil screens draw them on the photo (owner, 2026-11-15)"
           }
         }
       }
+    },
+    "drone_previews": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^data/drone/[a-z0-9-]+\\.json$"},
+      "description": "drone files of fields not listed yet: How we know shows them as 'What our drone step will look like' (owner, 2026-11-15)"
     },
     "areas": {
       "type": "array",

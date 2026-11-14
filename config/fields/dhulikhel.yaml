@@ -46,10 +46,15 @@ current_rotation_source: "PLACEHOLDER (Claude's choice, 2026-11-15, as the demo'
 # east of the station, outside the valley floor (pipeline/fetch/weather.py: a station without a label is for validation).
 validation_station: NP000444540     # NOAA GHCN-Daily KATHMANDU AIRPORT (27.700 N, 85.367 E), 19.5 km west-north-west (great-circle). S-flag 'S' records
 drone_photo:                        # the 'from the sky' picture of this field (owner, 2026-11-15)
-  file: one_farm_clean.jpg          # in design/dhulikhel_farm_package.zip; copied to site/data/basemap/dhulikhel_drone.jpg
+  package: design/dhulikhel_farm_package.zip
+  file: one_farm_clean.jpg          # copied unchanged to site/data/drone/dhulikhel.jpg (pipeline/export/build_drone.py)
   bounds: [[27.617742, 85.541568], [27.618124, 85.542265]]   # [[south, west], [north, east]] (package; north-up within 1 m)
   size_px: [536, 338]
   date: "2023-09-08"
   source: "OpenAerialMap drone orthomosaic 'Land Management Training Center', 8 Sep 2023, DJI Mavic Pro, Pix4Dmapper, 12.7 cm per pixel, CC-BY 4.0"
-  provider: null                    # TODO: the provider's name on the image's OpenAerialMap page (for the credit line)
+  resolution: "12.7 cm per pixel (drone); the picture here is the farm cut out at 536 x 338 pixels"
+  oam_id: 64fac6d25ee57100013326fb  # https://api.openaerialmap.org/meta?title=Land%20Management%20Training%20Center (read 2026-11-15)
+  # The record's 'provider' field reads "Dji Mavic Pro" (the drone model, not a name); its uploader and contact is
+  # Anil Basnet (user.name). The credit names the uploader. TODO(owner): confirm.
+  credit: "Drone imagery: Anil Basnet, OpenAerialMap, CC-BY 4.0"
 patches: {cell_m: 10, min_piece_m2: 50, ids: p}   # the package README's method: a 10 m grid centred on the field, pieces under 50 m2 joined to the nearest patch, numbered from the south-west (pipeline/sections/grid.patches)

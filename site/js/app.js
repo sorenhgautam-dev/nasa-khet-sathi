@@ -197,7 +197,10 @@
   function fieldReady() {
     if (S.fieldP) return S.fieldP;
     var id = encodeURIComponent(S.fid);
-    S.fieldP = Promise.all([getJSON('data/fields/' + id + '.json'), getJSON('data/labels/' + id + '.json')]).then(function (r) { S.field = r[0]; S.labels = r[1]; return r[0]; });
+    var dr = indexEntry().drone;
+    S.fieldP = Promise.all([getJSON('data/fields/' + id + '.json'), getJSON('data/labels/' + id + '.json'), dr ? getJSON(dr) : null]).then(function (r) {
+      S.field = r[0]; S.labels = r[1]; if (r[0] && r[2]) r[0]._drone = r[2]; return r[0];
+    });
     return S.fieldP;
   }
   function mocked(F, block) { return (F.mock || []).indexOf(block) >= 0; }
@@ -311,6 +314,8 @@
   function btn2(label, onclick, icon) { return h('button', { type: 'button', class: 'btn2', onclick: onclick }, icon ? svg(I(icon, 18)) : null, label); }
   function btn3(label, onclick, icon) { return h('button', { type: 'button', class: 'btn3', onclick: onclick }, icon ? svg(I(icon, 18)) : null, label); }
   function sampleChip() { return h('span', { class: 'chip sample' }, svg(I('pin', 14)), T('btn.sample_field')); }
+  // a real farm from a drone photo (owner, 2026-11-15): its own label where a sample field shows its chip
+  function fieldChip(F) { return F._drone ? h('p', { class: 'small dronelabel' }, svg(I('pin', 14)), ' ', T('your_plan.drone_label')) : isPlaceholder(F.field.name) ? sampleChip() : null; }
   function loading() { return h('div', { class: 'loading', role: 'status' }, h('span', { class: 'dots' }, h('i'), h('i'), h('i'))); }
   function notReady(extra) { return h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('btn.not_ready')), extra || null); }
   function stepsBar(n) { return h('div', { class: 'steps', 'aria-hidden': 'true' }, [1, 2, 3].map(function (i) { return h('span', { class: i <= n ? 'on' : '' }); })); }
@@ -339,13 +344,47 @@
     return secs.map(function (s) {
       var a = 1e9, b = -1e9, c = 1e9, d = -1e9;
       s.polygon.forEach(function (p) { a = Math.min(a, p[0]); b = Math.max(b, p[0]); c = Math.min(c, p[1]); d = Math.max(d, p[1]); });
-      var g = { s: s, l: (a - x0) / dx * 100, r: (b - x0) / dx * 100, t: (y1 - d) / dy * 100, b: (y1 - c) / dy * 100, n: String(s.id).replace(/^s/, '') };
+      var g = { s: s, l: (a - x0) / dx * 100, r: (b - x0) / dx * 100, t: (y1 - d) / dy * 100, b: (y1 - c) / dy * 100, n: String(s.id).replace(/^[sp]/, '') };
       g.cx = (g.l + g.r) / 2; g.cy = (g.t + g.b) / 2;
       return g;
     }).sort(function (p, q) { return (Math.round(p.t) - Math.round(q.t)) || (p.l - q.l); });
   }
+  // a drawn field's drone photo (data/drone/<id>.json; owner, 2026-11-15): the picture, the outline and the lines between
+  // patches drawn over it as vector lines (crisp at any size), a number at each patch's centre. G: each patch in percent of
+  // the picture, as geom() gives it, so the soil screen's robot walks on the photo.
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function droneView(d, sections) {
+    var W0 = d.size_px[0], H0 = d.size_px[1], s0 = d.bounds[0][0], w0 = d.bounds[0][1], n0 = d.bounds[1][0], e0 = d.bounds[1][1];
+    function px(p) { return [(p[0] - w0) / (e0 - w0) * W0, (n0 - p[1]) / (n0 - s0) * H0]; }
+    function pathOf(ring) { return 'M' + ring.map(function (p) { var q = px(p); return q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('L') + 'Z'; }
+    var box = h('div', { class: 'dronebox', style: 'aspect-ratio:' + W0 + '/' + H0 }, h('img', { src: d.image, alt: '', decoding: 'async' }));
+    var sv = D.createElementNS(SVGNS, 'svg');
+    sv.setAttribute('viewBox', '0 0 ' + W0 + ' ' + H0); sv.setAttribute('preserveAspectRatio', 'none'); sv.setAttribute('aria-hidden', 'true');
+    function el(tag, attrs) { var e = D.createElementNS(SVGNS, tag); Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); }); sv.append(e); return e; }
+    var byId = {}; (sections || []).forEach(function (s) { byId[s.id] = s; });
+    var G = d.patches.map(function (p) {
+      var xs = p.polygon.map(function (q) { return px(q)[0] / W0 * 100; }), ys = p.polygon.map(function (q) { return px(q)[1] / H0 * 100; }), c = px(p.centre);
+      return { s: byId[p.id] || { id: p.id, polygon: p.polygon }, n: p.id.replace(/^[sp]/, ''), q: el('path', { d: pathOf(p.polygon), class: 'dq' }),
+               l: Math.min.apply(null, xs), r: Math.max.apply(null, xs), t: Math.min.apply(null, ys), b: Math.max.apply(null, ys), cx: c[0] / W0 * 100, cy: c[1] / H0 * 100 };
+    });
+    d.lines.forEach(function (ln) { var a = px(ln[0]), b = px(ln[1]); el('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], class: 'dl' }); });
+    el('path', { d: pathOf(d.outline), class: 'do' });
+    box.append(sv);
+    return { el: box, G: G };
+  }
   function fieldBox(F, mode, opt) {
     opt = opt || {};
+    if (F._drone) {
+      var dv = droneView(F._drone, F.field.sections), dbox = dv.el;
+      dbox.classList.add('fieldbox', 'drone'); dbox.setAttribute('role', 'img'); dbox.setAttribute('aria-label', T('parts.split', { section_count: dv.G.length }));
+      dv.G.forEach(function (g, i) {
+        g.num = h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + g.cy + '%;width:24px;height:24px;margin:-12px 0 0 -12px;font-size:12px;border-width:2px;' +
+          (mode === 'grow' ? 'animation-delay:' + (300 + i * 60) + 'ms' : 'animation:none') }, digits(g.n));
+        dbox.append(g.num);
+      });
+      dbox._g = dv.G;
+      return dbox;
+    }
     var G = geom(F), box = h('div', { class: 'fieldbox', role: 'img', 'aria-label': T('parts.split', { section_count: G.length }) });
     box.append(h('div', { class: 'wm', 'aria-hidden': 'true' }, T('where.your_farm')));
     var colour = { green: 'rgba(63,122,46,.16)', yellow: 'rgba(201,138,27,.2)', red: 'rgba(184,67,42,.2)', grey: 'rgba(139,143,134,.14)' };
@@ -661,29 +700,35 @@
   function leadRow(lead, sub) { return h('div', { class: 'leadrow' }, h('div', { class: 'grow', style: 'display:flex;flex-direction:column;gap:4px' }, lead, sub)); }
   SCREENS.photo = function () {
     return withField('photo', function (F) {
-      var sample = isPlaceholder(F.field.name);
+      var sample = isPlaceholder(F.field.name) && !F._drone, dr = F._drone;
       var mapEl = h('div', { style: 'position:absolute;inset:0' });
       var mbox = h('div', { class: 'mapbox photo' }, h('div', { class: 'msg' }, svg(DRONE), h('span', { class: 'yf' }, T('where.your_farm')), h('span', { class: 'hint' }, T('where.photo_later'))), mapEl,
-        sample ? h('div', { class: 'mapnote' }, sampleChip()) : null);
+        sample ? h('div', { class: 'mapnote' }, sampleChip()) : null, dr ? h('div', { class: 'mapnote' }, fieldChip(F)) : null);
       var drawbar = h('div', { class: 'drawbar', hidden: true }), msg = h('div', { 'aria-live': 'polite' });
       var map = null, Lf = null, draw = null;
       loadLeaflet().then(function (L) {
         if (!mapEl.isConnected) return;
         Lf = L; mbox.querySelector('.msg').remove();
-        map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 0.5 });
+        map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 0.5, maxZoom: dr ? 21 : 18 });
         osm(L, map);
+        if (dr) {   // the drone photo, its outline and the lines between its patches (vector: crisp when zoomed)
+          L.imageOverlay(dr.image, dr.bounds, { attribution: dr.credit, interactive: false }).addTo(map);
+          dr.lines.forEach(function (ln) { L.polyline(ln.map(function (p) { return [p[1], p[0]]; }), { color: '#FBF4EA', weight: 1.5, interactive: false }).addTo(map); });
+          var dro = L.polygon(dr.outline.map(function (p) { return [p[1], p[0]]; }), { color: '#C8E05A', weight: 3, fill: false, interactive: false }).addTo(map);
+          map.fitBounds(dro.getBounds(), { padding: [24, 24], maxZoom: 21 });
+        }
         var pts = [];
-        (F.field.sections || []).forEach(function (s) {
+        (dr ? [] : F.field.sections || []).forEach(function (s) {
           var ll = s.polygon.map(function (p) { return [p[1], p[0]]; }); pts = pts.concat(s.polygon);
           L.polygon(ll, { color: '#FBF4EA', weight: 1.5, dashArray: '4 5', fill: false, interactive: false }).addTo(map);
         });
-        if (pts.length) {
+        if (pts.length && !dr) {
           var hl = hull(pts).map(function (p) { return [p[1], p[0]]; });
           L.polygon(hl, { color: '#14301E', weight: 7, opacity: .35, fill: false, interactive: false }).addTo(map);
           var outline = L.polygon(hl, { color: '#C8E05A', weight: 4, fillColor: '#C8E05A', fillOpacity: .12, interactive: false }).addTo(map);
           map.fitBounds(outline.getBounds(), { padding: [60, 60], maxZoom: abroad() ? 9 : 16 });   // abroad: only the coarse world picture
           if (!abroad()) getJSON('data/basemap/' + encodeURIComponent(S.fid) + '.json').then(function (b) { if (b && b.bounds && !draw) map.setMaxBounds(L.latLngBounds(b.bounds).pad(0.1)); });
-        } else map.setView([F.field.lat, F.field.lon], 17);
+        } else if (!dr) map.setView([F.field.lat, F.field.lon], 17);
       }).catch(function () { /* the drone picture and "a real photo comes when we visit" stay */ });
       function startDraw() {
         if (!map) return;
@@ -720,7 +765,8 @@
       return screen('photo', {
         head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2'))],
         scene: mbox,
-        body: [msg, leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('where.split_next'))), guess, rests],
+        body: [msg, leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('where.split_next'))), guess, rests,
+          dr ? lines([T('your_plan.drone_sat')], 'sub') : null, dr ? h('p', { class: 'small', lang: 'en' }, dr.credit) : null],
         cta: h('div', { class: 'ctarow' }, roundBtn(T('where.draw_own'), 'pin', startDraw), cta(T('where.yes_parts'), function () { go('parts'); }))
       });
     });
@@ -733,7 +779,7 @@
       var lead = h('p', { class: 'lead', 'aria-live': 'polite' }, T('parts.making'));
       later(function () { lead.textContent = T('parts.here', { section_count: n }); }, 2000);
       return screen('parts', {
-        head: [stepsBar(2), bigTitle(T('parts.h1'), T('parts.h2', { section_count: n })), isPlaceholder(F.field.name) ? sampleChip() : null],
+        head: [stepsBar(2), bigTitle(T('parts.h1'), T('parts.h2', { section_count: n })), fieldChip(F)],
         scene: fieldBox(F, 'grow'),
         body: leadRow(lead, h('p', { class: 'sub' }, T('parts.middle'))),
         cta: cta(T('parts.start_test'), function () { go('soil'); })
@@ -843,8 +889,9 @@
           rows.append(h('div', { class: 'prow ' + (done ? 'done' : r ? 'now' : 'wait') + (cur === g.s.id ? ' cur' : '') },
             h('span', { class: 'pn' }, T('each_part.part_name', { section: g.n })),
             h('span', { class: 'ps' }, done ? [T('check_soil.tested'), ' ', svg(I('tick', 14, 3))] : w.word)));
-          if (g.q.dataset.bg == null) g.q.dataset.bg = g.q.style.background;
-          g.q.style.background = done ? 'rgba(200,224,90,.28)' : g.q.dataset.bg;   // the design's tested quarter
+          var prop = g.q.namespaceURI === SVGNS ? 'fill' : 'background';
+          if (g.q.dataset.bg == null) g.q.dataset.bg = g.q.style[prop];
+          g.q.style[prop] = done ? 'rgba(200,224,90,' + (prop === 'fill' ? '.45' : '.28') + ')' : g.q.dataset.bg;   // the design's tested quarter
           if (g.num) { g.num.classList.toggle('ok', done); g.num.textContent = done ? '' : digits(g.n); if (done) g.num.append(svg(I('tick', 16, 3.2))); }
         });
       }
@@ -899,7 +946,7 @@
       });
       var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub')), tbox = h('div');
       return screen('soil', {
-        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null, pbox],
+        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), fieldChip(F), pbox],
         scene: box,
         body: [rows, info, tbox, honest],
         cta: ctaBox
@@ -1443,7 +1490,7 @@
     btn2: btn2, cta: cta, screen: screen, labs: labs, rainMark: rainMark, closeSheet: closeSheet, bigTitle: bigTitle, store: store, fmtDate: fmtDate, geom: geom, fieldBox: fieldBox,
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
-    gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
+    gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
     say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy };
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 })();

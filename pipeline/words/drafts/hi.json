@@ -3335,6 +3335,26 @@
   "screens.check_soil.texts.bowl_watered_no": {
    "en": "Bowl {section} got water. It was not clearly wetter.",
    "hi": "कटोरा {section} में पानी डाला। यह साफ़ गीला नहीं दिखा।"
+  },
+  "screens.your_plan.texts.drone_title": {
+   "en": "What our drone step will look like",
+   "hi": "हमारा ड्रोन चरण ऐसा दिखेगा"
+  },
+  "screens.your_plan.texts.drone_lead": {
+   "en": "A real drone photo of another farm. It is in Dhulikhel.",
+   "hi": "दूसरे खेत की असली ड्रोन तस्वीर। यह धुलीखेल में है।"
+  },
+  "screens.your_plan.texts.drone_label": {
+   "en": "Real farm in Dhulikhel. Drone photo from 2023 (OpenAerialMap). No farmer's answers yet.",
+   "hi": "धुलीखेल का असली खेत। 2023 की ड्रोन तस्वीर (OpenAerialMap)। किसान के जवाब अभी नहीं।"
+  },
+  "screens.your_plan.texts.drone_patches": {
+   "en": "{section_count} patches of about 10 by 10 m.",
+   "hi": "लगभग 10 × 10 मी के {section_count} टुकड़े।"
+  },
+  "screens.your_plan.texts.drone_sat": {
+   "en": "From space, we see 30 m squares. About 2 squares cover this farm. So that history is for the whole area. The soil stick tests each 10 m patch.",
+   "hi": "अंतरिक्ष से 30 मी के वर्ग दिखते हैं। लगभग 2 वर्ग इस खेत पर हैं। अंतरिक्ष वाला इतिहास आसपास के इलाके का है। यंत्र हर 10 मी टुकड़ा जाँचता है।"
   }
  }
 }

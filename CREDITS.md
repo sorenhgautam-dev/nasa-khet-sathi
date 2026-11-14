@@ -406,6 +406,19 @@ for each claim (copied from notes/parallel_session.md).
   map, marked colour-blind safe there.
 - Data reused, nothing downloaded: HLS-VI v2.0 box windows and ESA WorldCover 10 m 2021 v200 (CC BY 4.0), as listed above.
 
+### The real farm in Dhulikhel (2026-11-15; `config/fields/dhulikhel.yaml`, `design/dhulikhel_farm_package.zip`)
+
+- **Drone imagery: Anil Basnet, OpenAerialMap, CC-BY 4.0.** The orthomosaic "Land Management Training Center"
+  (OpenAerialMap id 64fac6d25ee57100013326fb; acquired 2023-09-07 18:15 UTC, 8 Sep 2023 in Nepal; DJI Mavic Pro, UAV;
+  0.12746 m per pixel; EPSG:32645; licence "CC-BY 4.0"), read from api.openaerialmap.org/meta on 2026-11-15. The
+  record's `provider` field reads "Dji Mavic Pro" (the drone model, not a name); its uploader and contact is Anil Basnet,
+  so the credit names him (TODO(owner): confirm). The site shows `site/data/drone/dhulikhel.jpg`, the farm cut out of
+  the orthomosaic by our teammate (536 x 338 pixels), unchanged.
+- The teammate's package: the farm's outline traced by eye on the orthomosaic, georeferenced from the GeoTIFF and
+  checked by hand in Google Earth (no Google imagery is in the package or on the site), and a 14-patch layout. Our own
+  code cuts the patches again (`pipeline/sections/grid.patches`; VALIDATION 3.27).
+- Data for its 5 km box: the same NASA and partner datasets as the demo field, listed above, fetched for the new box.
+
 ### The data story, the inventories and the Sentinel-1 assessment (2026-11-14; metadata and documentation only)
 
 - *metadata* ASF Search API, Alaska Satellite Facility DAAC (https://api.daac.asf.alaska.edu/services/search/param):

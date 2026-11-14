@@ -50,6 +50,7 @@ STEPS = [   # (name, command after the interpreter, which fields); --field <id> 
     ("area_map", ["scripts/run_area_map.py"], FULL),
     ("export", ["-m", "pipeline.export.build_field_json"], CORE),
     ("weather_ahead", ["scripts/run_weather.py"], CORE),   # the optional weather block (2026-11-14 evening), right after export
+    ("drone", ["-m", "pipeline.export.build_drone"], FULL),   # a drawn field's drone photo and patches (owner, 2026-11-15)
     ("index", ["-m", "pipeline.export.build_index"], SITE),
     ("words", ["-m", "pipeline.export.build_words"], SITE),
     ("replay_window", ["-m", "pipeline.export.build_replay"], CORE),   # the farmer's question (2026-11-14): 25-Year Replay,

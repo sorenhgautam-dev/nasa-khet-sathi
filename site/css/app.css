@@ -325,6 +325,17 @@ label.btn2 { cursor: pointer; align-self: flex-start; }
 .fieldbox .n { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 999px; background: var(--ink); color: var(--lime);
   border: 3px solid var(--cream); display: flex; align-items: center; justify-content: center; font-family: var(--f-head); font-weight: 800; font-size: 18px;
   animation: ks-pop 500ms var(--spring) both; z-index: 3; }
+/* a drawn field's drone photo (owner, 2026-11-15): the picture, then its outline and patch lines as vector lines */
+.dronebox { position: relative; width: 100%; max-width: 640px; border-radius: 18px; overflow: hidden; background: #6E7F55; }
+.fieldbox.drone { aspect-ratio: auto; border-radius: 22px; }
+.dronebox img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; display: block; }
+.dronebox svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.dronebox .dq { fill: transparent; transition: fill 500ms; }
+.dronebox .dl { stroke: #FBF4EA; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.dronebox .do { fill: none; stroke: #C8E05A; stroke-width: 3; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.dronebox .n { position: absolute; border-radius: 999px; background: var(--ink); color: var(--lime); display: flex; align-items: center;
+  justify-content: center; font-weight: 800; border: 2px solid #FBF4EA; z-index: 2; }
+.dronelabel { margin: 0; font-weight: 700; color: var(--ink); }
 .fieldbox .sprout { position: absolute; width: 18px; height: 21px; margin: -17px 0 0 -9px; transform-origin: 50% 100%; }
 .fieldbox .sprout.g { animation: ks-grow 600ms var(--spring) both, ks-sway2 3.2s ease-in-out infinite; }
 .fieldbox .sprout.s { animation: ks-sway2 3s ease-in-out infinite; }

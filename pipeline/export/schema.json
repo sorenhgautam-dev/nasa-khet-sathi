@@ -1596,7 +1596,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "pattern": "^s[0-9]+$"
+     "pattern": "^[sp][0-9]+$"
     },
     "polygon": {
      "type": "array",

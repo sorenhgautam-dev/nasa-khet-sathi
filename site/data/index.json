@@ -115,5 +115,8 @@
     "sample-4"
    ]
   }
+ ],
+ "drone_previews": [
+  "data/drone/dhulikhel.json"
  ]
 }

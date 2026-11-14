@@ -4,6 +4,18 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, after midnight): a drawn field's drone photo and patches (additions only)
+
+- `field.sections[].id` may be `p1`.. as well as `s1`.. (`schema.json` pattern `^[sp][0-9]+$`): a drawn field's patches
+  (config `patches`; `pipeline/sections/grid.patches`). `probe_log.json` part ids likewise.
+- New file per drawn field: `site/data/drone/<id>.json` (+ `<id>.jpg`): `image`, `bounds` [[S, W], [N, E]], `size_px`,
+  `date`, `credit` (shown as given), `source`, `resolution`, `outline` ([lon, lat] ring), `patches` (id, area_m2, centre
+  [lon, lat], polygon, whole), `lines` (the edges between different patches, [[lon, lat], [lon, lat]]), `method`,
+  `package_check` (`pipeline/export/build_drone.py`).
+- `index.json`: `fields[].drone` (the field's drone file, when it has one) and top-level `drone_previews` (drone files of
+  fields not built yet). The site draws the photo with the outline and patch lines on the photo, parts and soil screens of
+  a listed field, and on How we know as "What our drone step will look like" for a preview.
+
 ## 2026-11-14 (Saturday, near midnight): the indoor test's per-bowl lines and watered-bowl check (`probe_log.json`, addition only)
 
 - `probe_log.json` `sessions[]` gains an optional `check` (only with `--test` and `--watered sN --watered-at HH:MM`):
