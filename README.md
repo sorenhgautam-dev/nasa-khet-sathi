@@ -125,6 +125,9 @@ field it does not, and we say so).
 **Built and verified in Nepal; any organisation can set it up for any field on Earth with one command; better wherever
 a country adds its profile. Next step: a hosted service for instant check-ups.**
 
+**Works today: the same pipeline already runs a field in Madagascar**, and it is on the site. **Next steps:** the hosted
+service; the Nepal-only parts for other countries (below); and a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May (`docs/NEXT_STEPS.md` 9).
+
 - **Global core, local plug-ins.** The twin, the plans and the site are the same everywhere. What is country-specific
   (rain classes, dry day and dry spell, drought seasons, rain gauges, crop-calendar zone, calendar, language, area units,
   fertiliser notes) lives in one profile file per country, each setting with its value and its source:
@@ -141,15 +144,20 @@ a country adds its profile. Next step: a hosted service for instant check-ups.**
   It writes the field's settings (anything unknown is left as a TODO, never guessed), downloads the public data, runs
   every step, and writes a folder of plain files to host free on GitHub Pages, Vercel or Netlify. It needs a free NASA
   Earthdata login and the GES DISC data agreement. A new field takes about 3 to 4 hours, nearly all of it downloads.
+  **Status: built, and used for the Madagascar field.** Partly done: on the global defaults it leaves out the Nepal-only
+  steps (the DHM-scaled and gauge-tuned rain, rain at harvest, the fertiliser saver, the heat clock, the Replay window
+  and the farmer answers for the coming months), so those say "not ready yet"; and `--short-record` is not ready.
 - **A field on another continent.** `config/fields/ambohidratrimo.yaml`, a PLACEHOLDER square in Madagascar's central
   highlands, was built with the kit on the global defaults: its own rain check (no gauge break, so NASA's rain is used as
-  published), its own FAO crop calendar, and labels that say NOT YET VERIFIABLE where no local check exists. It is
-  not on the live site yet: the third plan's words and name were written for Nepal's pulse crop and must first
-  follow the field (VALIDATION 3.26, docs/DEPLOY_ANYWHERE.md).
+  published), its own FAO crop calendar, and labels that say NOT YET VERIFIABLE where no local check exists. **It is on
+  the site:** open it from "Fields we have looked at" on Home (its farmer steps) or on How we know (its own evidence and
+  labels), where it reads "A field on another continent, run by the same pipeline." Not made for it yet: the answers
+  for the coming months (Next 3 and 6 months, Weather ahead) and the Nepal-only checks; those screens say "Not ready yet".
 
 ## Next steps (after the deadline)
 
-The full list, with what each would need, is in [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md). First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil bucket, so water a bunded paddy holds above field capacity is not kept (METHOD_NOTES 103).
+The full list, with what each would need, is in [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md). Among them: a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May (`docs/NEXT_STEPS.md` 9).
+First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil bucket, so water a bunded paddy holds above field capacity is not kept (METHOD_NOTES 103).
 
 ## Credits
 

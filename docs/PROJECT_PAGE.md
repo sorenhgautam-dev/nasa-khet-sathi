@@ -253,6 +253,10 @@ coming months are not made yet; the translations are unreviewed.
 **Built and verified in Nepal; any organisation can set it up for any field on Earth with one command; better wherever
 a country adds its profile. Next step: a hosted service for instant check-ups.**
 
+**Works today: the same pipeline already runs a field in Madagascar**, and it is on the site. **Next steps:** the hosted
+service; the Nepal-only parts for other countries; and a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May (`docs/NEXT_STEPS.md` 9). Until then, Weather ahead says what usually
+happened in the field's own 24 years, never a forecast.
+
 **Global core, local plug-ins.** The twin, the plans and the site are the same everywhere. What is country-specific
 lives in one profile file per country, each setting with its source: rain classes, dry day and dry spell, drought
 seasons, rain gauges, crop-calendar zone, calendar, language, area units and fertiliser notes. Nepal's profile is the
@@ -262,14 +266,16 @@ GHCN-Daily and GPCC rain gauges, the FAO Crop Calendar for its zone, Gregorian m
 **One command.** `scripts/make_site.py` takes a point, a size, a name and a country. It writes the field's settings
 (anything unknown is left as a question, never guessed), downloads the public data, runs every step and writes a folder
 of plain files to host free on GitHub Pages, Vercel or Netlify. It needs a free NASA Earthdata login. A new field takes
-about 3 to 4 hours, nearly all of it downloads (`docs/DEPLOY_ANYWHERE.md`).
+about 3 to 4 hours, nearly all of it downloads (`docs/DEPLOY_ANYWHERE.md`). **Status: built, and used for the
+Madagascar field.** Partly done: on the global defaults it leaves out the Nepal-only steps, which say "not ready yet",
+and its 10-year short record is not ready.
 
 **A field on another continent.** A placeholder field in Madagascar's central highlands was built with the kit on the
 global defaults: its own rain check (no gauge change found, so NASA's rain is used as published), its own FAO crop
 calendar (rainy-season rice, then dry-season potato), and labels that say "not yet verifiable" wherever no local check
-exists. It never borrows Nepal's checks. It is on the site, folded under "Fields we have looked at", with its note: "A
-field on another continent. Built with the global settings, not checked against local rain gauges yet."
-(`site/data/index.json`). Its third plan is rice alone, named "Safest in bad years". Its answers for the coming months
+exists. It never borrows Nepal's checks. It is on the site under "Fields we have looked at", on Home (it opens its farmer
+steps) and on How we know (it opens its own evidence and labels), with its note: "A field on another continent, run by
+the same pipeline. Not checked against local rain gauges yet." (`site/data/index.json`). Its third plan is rice alone, named "Safest in bad years". Its answers for the coming months
 are not made yet: Next 3 and Next 6 months say "Not ready yet.", and Weather ahead is for Nepal's fields only. Its
 plans, rain check and greenness are on How we know.
 

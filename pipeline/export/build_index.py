@@ -21,8 +21,9 @@ def _area_of(cfg):
     return cfg.get("sample_of") or cfg["id"]
 
 
-GLOBAL_NOTE = {"en": "A field on another continent. Built with the global settings, not checked against local rain gauges yet.",
-               "ne": "अर्को महादेशको खेत। विश्वव्यापी सेटिङले बनाइएको, स्थानीय वर्षा मापकसँग अझै जाँच गरिएको छैन।"}
+GLOBAL_NOTE = {   # owner, 2026-11-14 night: "A field on another continent, run by the same pipeline"
+    "en": "A field on another continent, run by the same pipeline. Not checked against local rain gauges yet.",
+    "ne": "अर्को महादेशको खेत, उही प्रणालीले चलाएको। स्थानीय वर्षा मापकसँग अझै जाँच गरिएको छैन।"}
 
 
 def _profile_flag(cfg):

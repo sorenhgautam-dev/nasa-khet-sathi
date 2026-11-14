@@ -533,10 +533,15 @@
     });
   };
   // the prepared fields (index.json); a field built with the global settings carries its note (owner, 2026-11-14 evening)
-  function fieldsList() {
+  function fieldsList(target) {
     var ix = (S.index && S.index.fields) || [];
     return h('div', { class: 'prepared', style: 'display:flex;flex-direction:column;gap:8px' }, ix.map(function (f) {
-      return h('button', { type: 'button', class: 'pf', 'aria-pressed': String(f.id === S.fid), onclick: function () { chooseField(f.id); go('photo'); } },
+      // from How we know a field opens its own How we know (its own labels); from Home, its farmer steps
+      return h('button', { type: 'button', class: 'pf', 'aria-pressed': String(f.id === S.fid), onclick: function () {
+        chooseField(f.id);
+        if (target !== 'how') { go(target || 'photo'); return; }
+        try { W.history.replaceState(null, '', '#/how'); } catch (e) { /* old browsers */ }
+        show('how'); } },   // the field's own How we know, from its top; the old page's timers stop
         h('span', null, h('b', null, f.name), h('br'), h('span', { class: 'small' }, f.country), f.profile === 'default' && f.note ? [h('br'), h('span', { class: 'small' }, P(f.note))] : null),
         f.id === S.fid ? svg(I('tick', 18, 2.6)) : svg(I('arrow', 18)));
     }));
@@ -1140,12 +1145,16 @@
         wl = wl && wl[canWater(F) ? 'yes' : 'no'];
         list.textContent = '';
         if (!wl) { list.append(notReady()); return; }
-        // one short paragraph a month: "[Month]: usually [weather]. [Danger] may hurt [crop]. [Tip] Check with your local expert."
+        // three short lines a month (owner, 2026-11-14 night): "[Month]: usually [weather]." / "Watch out: [the farmer's own
+        // crop's biggest danger]" or "Usually no big danger." / "Do this: [its tip] Check with your local expert." (no danger,
+        // no tip: the back end gives none, so a calm month has two lines)
         sixBlocks(wx).forEach(function (b, i) {
           var x = wl[b.key] || {}, icon = blockIcon(b.usual);
           list.append(h('div', { class: 'card wblock', style: 'animation-delay:' + (120 + i * 70) + 'ms' },
             h('span', { class: 'wbi', style: icon === 'sun' ? 'color:#D27A2C' : '' }, svg(I(icon, 28))),
-            h('p', { class: 'wpara' }, h('b', null, say(x.usual)), ' ', [say(x.danger), say(x.tip), x.tip ? T('weather.tip_end') : ''].filter(Boolean).join(' '))));
+            h('div', { class: 'wpara' }, h('p', null, h('b', null, say(x.usual))),
+              h('p', null, x.tip ? [h('b', null, T('weather.watch')), ' ', say(x.danger)] : say(x.danger)),
+              x.tip ? h('p', null, h('b', null, T('weather.do')), ' ', say(x.tip) + ' ' + T('weather.tip_end')) : null)));
         });
       });
       return screen('weather', {

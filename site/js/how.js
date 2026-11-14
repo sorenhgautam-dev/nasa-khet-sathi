@@ -46,7 +46,7 @@
         var sec = section(j[0], j[1], loadingEl()); judges.append(sec);
         var body = sec.lastChild;
         function put(el) { body.replaceWith(el || K.notReady()); }
-        if (j[0] === 'fields') { put(K.fieldsList()); return; }
+        if (j[0] === 'fields') { put(K.fieldsList('how')); return; }
         if (j[0] === 'twin') { put(K.feat.twinParts(F)); return; }
         if (j[0] === 'labels') { put(K.feat.labelsList()); return; }
         if (j[0] === 'plans') { put(plansList(F)); return; }
@@ -140,13 +140,13 @@
       }
       function finish() {
         tiles.forEach(function (t) { t.tile.parentNode.classList.toggle('win', t.p.id === an.winner); t.tile.parentNode.classList.toggle('lose', t.p.id !== an.winner); });
-        end.textContent = T('farm.anim_winner') + ' ' + K.planName(K.S.field.plans.filter(function (p) { return p.id === an.winner; })[0] || { id: an.winner });
+        end.textContent = T('farm.anim_winner') + ' ' + K.planName((F.plans || []).filter(function (p) { return p.id === an.winner; })[0] || { id: an.winner });
       }
       function play() {
         i = -1; end.textContent = '';
         tiles.forEach(function (t) { t.ok = 0; t.dots.textContent = ''; t.cnt.textContent = ''; t.tile.className = 'antile'; t.mark.textContent = ''; t.tile.parentNode.classList.remove('win', 'lose'); });
         if (K.RM) { for (var k = 0; k < n; k++) stepTo(k); finish(); return; }
-        (function tick() { i++; if (i >= n) { finish(); return; } stepTo(i); K.later(tick, Math.round(10000 / n)); })();
+        (function tick() { if (!box.isConnected) return; i++; if (i >= n) { finish(); return; } stepTo(i); K.later(tick, Math.round(10000 / n)); })();   // stops when its page is gone
       }
       body.replaceWith(h('div', { class: 'anim' }, year, row, end,
         h('div', { class: 'row wrap', style: 'justify-content:space-between' }, h('p', { class: 'small', style: 'margin:0' }, svg(K.I('tick', 14, 3)), ' ', T('farm.anim_green'), ' · ', svg(K.I('cross', 14, 3)), ' ', T('farm.anim_red')),
@@ -358,6 +358,7 @@
     if (!log) items.push(T('your_plan.nr_readings'));
     if (K.isPlaceholder(F.field.name)) items.push(T('your_plan.nr_own_field'));
     items.push(T('your_plan.nr_robot'));
+    items.push(T('your_plan.nr_outlook') + ' ' + T('your_plan.nr_outlook_why1') + ' ' + T('your_plan.nr_outlook_why2'));   // rules.yaml weather_ahead.season_outlook
     return section('notready', T('your_plan.not_ready_title'), K.lines(items, 'sub'));
   }
 

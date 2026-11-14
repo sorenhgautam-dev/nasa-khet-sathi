@@ -595,7 +595,8 @@ details.why { background: rgba(255,255,255,.6); }
 .andots i.na { background: #C9C2B3; }
 .antile.na { color: #D8D3C8; }
 .anend { min-height: 26px; }
-.wpara { margin: 0; font-size: 17px; line-height: 1.45; }
+.wpara { margin: 0; font-size: 17px; line-height: 1.45; display: flex; flex-direction: column; gap: 4px; }
+.wpara p { margin: 0; }
 .tcards.lines1 { grid-template-columns: minmax(0, 1fr); }
 .tcards.lines1 .tcard { min-height: 0; flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; }
 .guess { display: flex; flex-direction: column; gap: 10px; }

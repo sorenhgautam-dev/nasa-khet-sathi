@@ -5272,6 +5272,39 @@
      "sw": "Roboti inayobeba kijiti."
     },
     {
+     "id": "nr_outlook",
+     "en": "A NASA season outlook: a next step.",
+     "ne": "नासाको मौसमी पूर्वानुमान: अर्को चरण।",
+     "ne_review": "needs native-speaker review",
+     "hi": "नासा का मौसमी पूर्वानुमान: अगला कदम।",
+     "bn": "নাসার মৌসুমি পূর্বাভাস: পরের ধাপ।",
+     "es": "Un pronóstico estacional de la NASA: próximo paso.",
+     "fr": "Prévision saisonnière de la NASA : prochaine étape.",
+     "sw": "Utabiri wa msimu wa NASA: hatua inayofuata."
+    },
+    {
+     "id": "nr_outlook_why1",
+     "en": "NASA's outlook gives raw numbers, no ready signals.",
+     "ne": "नासाको पूर्वानुमानले कच्चा अङ्क मात्र दिन्छ, तयार सङ्केत होइन।",
+     "ne_review": "needs native-speaker review",
+     "hi": "नासा कच्चे आँकड़े देता है, तैयार संकेत नहीं।",
+     "bn": "নাসা কাঁচা সংখ্যা দেয়, তৈরি সংকেত নয়।",
+     "es": "La NASA da cifras brutas, no señales listas.",
+     "fr": "La NASA donne des chiffres bruts, sans signaux.",
+     "sw": "NASA inatoa namba ghafi, si ishara tayari."
+    },
+    {
+     "id": "nr_outlook_why2",
+     "en": "Forecast skill here is near zero, December to May.",
+     "ne": "यहाँ डिसेम्बरदेखि मेसम्म यसको भरोसा लगभग शून्य छ।",
+     "ne_review": "needs native-speaker review",
+     "hi": "यहाँ दिसंबर से मई तक कौशल लगभग शून्य।",
+     "bn": "এখানে ডিসেম্বর থেকে মে দক্ষতা প্রায় শূন্য।",
+     "es": "Acierto casi nulo aquí, de diciembre a mayo.",
+     "fr": "Ici, fiabilité presque nulle de décembre à mai.",
+     "sw": "Hapa usahihi ni karibu sifuri, Desemba hadi Mei."
+    },
+    {
      "id": "report_card",
      "en": "How sure are we?",
      "ne": "हामी कति पक्का छौं?",

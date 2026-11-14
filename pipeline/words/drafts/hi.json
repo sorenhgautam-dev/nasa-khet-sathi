@@ -1612,6 +1612,18 @@
    "en": "The robot that carries the stick.",
    "hi": "छड़ी ले जाने वाला रोबोट।"
   },
+  "screens.your_plan.texts.nr_outlook": {
+   "en": "A NASA season outlook: a next step.",
+   "hi": "नासा का मौसमी पूर्वानुमान: अगला कदम।"
+  },
+  "screens.your_plan.texts.nr_outlook_why1": {
+   "en": "NASA's outlook gives raw numbers, no ready signals.",
+   "hi": "नासा कच्चे आँकड़े देता है, तैयार संकेत नहीं।"
+  },
+  "screens.your_plan.texts.nr_outlook_why2": {
+   "en": "Forecast skill here is near zero, December to May.",
+   "hi": "यहाँ दिसंबर से मई तक कौशल लगभग शून्य।"
+  },
   "screens.your_plan.texts.report_card": {
    "en": "How sure are we?",
    "hi": "हम कितने पक्के हैं?"

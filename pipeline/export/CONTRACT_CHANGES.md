@@ -4,6 +4,17 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, late night): wording only, no number changed
+
+- `index.json` `fields[].note` (a field on the global defaults) now reads "A field on another continent, run by the same
+  pipeline. Not checked against local rain gauges yet." (owner). On How we know, "Fields we have looked at" opens the
+  chosen field's own How we know; on Home it opens its farmer steps, as before.
+- Weather ahead shows each month as three short lines (the usual weather; "Watch out:" and the farmer's own crop's
+  danger, or "Usually no big danger."; "Do this:" and its tip, then "Check with your local expert."). A month with no
+  danger has no tip, so two lines. The words were already in `words.json` (`weather.watch`, `weather.do`).
+- How we know's "What is not ready yet" lists the NASA season outlook as a next step with its reason
+  (`your_plan.nr_outlook`, `nr_outlook_why1`, `nr_outlook_why2`; rules.yaml `weather_ahead.season_outlook`).
+
 ## 2026-11-14 (Saturday, night): `probe_log.json` may say it is a garden or indoor test; practice readings only on the hotspot
 
 - `probe_log.json` gains an optional `kind: "garden_test"` or `"indoor_test"` (`scripts/build_probe_log.py --test garden|indoor`; rules.yaml

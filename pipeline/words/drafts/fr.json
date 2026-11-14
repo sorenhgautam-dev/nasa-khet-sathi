@@ -1612,6 +1612,18 @@
    "en": "The robot that carries the stick.",
    "fr": "Le robot qui porte la tige."
   },
+  "screens.your_plan.texts.nr_outlook": {
+   "en": "A NASA season outlook: a next step.",
+   "fr": "Prévision saisonnière de la NASA : prochaine étape."
+  },
+  "screens.your_plan.texts.nr_outlook_why1": {
+   "en": "NASA's outlook gives raw numbers, no ready signals.",
+   "fr": "La NASA donne des chiffres bruts, sans signaux."
+  },
+  "screens.your_plan.texts.nr_outlook_why2": {
+   "en": "Forecast skill here is near zero, December to May.",
+   "fr": "Ici, fiabilité presque nulle de décembre à mai."
+  },
   "screens.your_plan.texts.report_card": {
    "en": "How sure are we?",
    "fr": "Sommes-nous sûrs ?"

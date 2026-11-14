@@ -1635,7 +1635,7 @@ weather_ahead:                    # owner, 2026-11-14 evening: the team's weathe
     value: "left out: no recent-weeks section. Recent rain is dropped (owner's change 3). Recent temperature cannot be checked: the Kathmandu Airport record on disk (GHCN-Daily NP000444540, downloaded 2026-11-11) ends 2025-08-24, and DHM's monthly bulletins on disk give rain only"
     source: "Owner's change 3, 2026-11-14 evening: 'drop recent rain ... Keep recent temperature with its as of date, or drop the section if it can't be checked'"
   season_outlook:
-    value: "left out of the app; a next step 'once its skill for Nepal is verified' (docs/NEXT_STEPS.md)"
+    value: "left out of the app's answers; a next step 'once its skill for Nepal is verified' (docs/NEXT_STEPS.md), listed with its reason on How we know under 'What is not ready yet' (your_plan.nr_outlook, owner 2026-11-14 night) and in README and docs/PROJECT_PAGE.md"
     source: "Owner's answer 3, 2026-11-14 evening; notes/SOURCES_CHECK.md 9b (IRI's skill at the field's cell for Dec-May is about zero)"
   checks:
     value:

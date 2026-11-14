@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 700 texts): 677 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 703 texts): 680 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -638,7 +638,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 10. Your plan / तपाईंको योजना
 
-*Nepali: 96 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 99 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -676,6 +676,9 @@ This page is made from the word files in this folder; change those, not this pag
 | Soil stick readings from the field. | खेतबाट माटो जाँचका नाप। |
 | Your own field: today we show a sample. | तपाईंको आफ्नै खेत: अहिले नमुना देखाउँछौं। |
 | The robot that carries the stick. | यन्त्र बोक्ने रोबोट। |
+| A NASA season outlook: a next step. | नासाको मौसमी पूर्वानुमान: अर्को चरण। |
+| NASA's outlook gives raw numbers, no ready signals. | नासाको पूर्वानुमानले कच्चा अङ्क मात्र दिन्छ, तयार सङ्केत होइन। |
+| Forecast skill here is near zero, December to May. | यहाँ डिसेम्बरदेखि मेसम्म यसको भरोसा लगभग शून्य छ। |
 | How sure are we? | हामी कति पक्का छौं? |
 | Quite sure | धेरै पक्का |
 | Fairly sure | केही पक्का |

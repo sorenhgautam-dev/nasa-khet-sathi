@@ -1427,3 +1427,15 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   collected; 32 of 789 Nepali texts checked); `rules.yaml` `weather_ahead.next_six` text corrected to what the screen shows.
 - **Words:** `check_soil.indoor_title`, `check_soil.indoor_on` (Nepali and five drafts by SI, "needs native-speaker review").
 - **For a person to review:** the project page and video script (the owner), the Nepali sheet (a native speaker).
+
+## 2026-11-14 (Saturday, late night): the owner's four checks on the real screens (Claude Opus 5.5 via Claude Code)
+
+- **What SI did:** checked the screens in a browser, then built only what was missing. Weather ahead now shows three
+  short lines a month ("Watch out:", "Do this:", words already reviewed for length); the 2040 heat and cold comparison
+  was already on How we know ("Heat and cold", "Around 2040"), so nothing was added; Madagascar opens from How we know
+  as "A field on another continent, run by the same pipeline" (its own How we know and labels), and the old page's
+  animation now stops when its page is gone (it threw an error after the switch); the NASA season outlook is listed as a
+  next step with its reason on How we know, in README and in docs/PROJECT_PAGE.md. No result changed.
+- **Words:** `your_plan.nr_outlook`, `nr_outlook_why1`, `nr_outlook_why2` and the new field note: Nepali and five drafts by
+  SI, "needs native-speaker review". The short Nepali sheet now has 155 lines (adds "Watch out:", "Do this:" and the note).
+- **For a person to review:** the three outlook lines and the note, in Nepali.
