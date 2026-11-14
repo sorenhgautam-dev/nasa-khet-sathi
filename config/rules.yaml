@@ -108,8 +108,17 @@ paddy_rice:
 season_dates:                     # item 4a (owner's queue, 2026-11-14): the farmer's sowing dates from the satellite's seasons
   # Written and committed BEFORE its first run. pipeline/twin/season.py plan_from_seasons; scripts/run_replay.py --season-dates.
   apply:
-    value: false
-    source: "Owner's queue item 4a, 2026-11-14: behind a switch until the integrator or the owner turns it on; scripts/run_replay.py takes --season-dates hls for the check (data/checks/<field>/seasons_from_hls/)"
+    value: true
+    source: "Owner's decision, 2026-11-14: '4a: yes, drive sowing and harvest from the HLS seasons each year, with calendar defaults otherwise. Since the twin now uses the satellite's dates, twin-satellite agreement is no longer an independent check: say so in VALIDATION and rely on the events, DHM gauges and the farmer's years.' Switched on 2026-11-14 on that decision (the integrator's instruction), with the rule below as committed in 7538f10 (harvest = sowing + the crop's own length, see `length`). Off from 2026-11-14 morning until this switch; the comparison run before it: data/checks/<field>/seasons_from_hls/ (VALIDATION 4.2c). --season-dates calendar gives the calendar run"
+  farmer_plans:
+    value: "a plan is the farmer's when its id (plans.generate.plan_id) is the current plan's or a current-plan option's (the field's current_rotation_options, built by plans/options.option_specs); the field's rotation as run by scripts/run_replay.py, run_diary.py (soil words), run_memory.py, run_smap_check.py, run_twin_now.py and run_validation_checks.py is the farmer's. Code: pipeline/plans/twin_options.py"
+    source: "Claude's choice, fixed before the first run with the switch on (the satellite sees only what the farmer grows, `match`); put to the owner"
+  suggested_plans:
+    value: "every other plan (the suggested plans and every plan generated for the choice) keeps the calendar sowing of its season options (plans.generate.plan_dates) in every year. So in the HLS years the current plan is sown on the observed days and a suggested plan on the calendar's: their harvest difference holds the date difference as well as the crop difference"
+    source: "`match` as committed (7538f10: 'suggested plans keep their calendars'), restated for scripts/run_plans.py evaluate() and plan_export() and pipeline/future/runs.plan_run before the first run; Claude's choice, put to the owner"
+  with_paddy_rainfed:
+    value: "order: the farmer's plan takes the satellite's dates first; then, in the rain-fed case only, every paddy season still on a calendar day (a year with no HLS monsoon season, the years before HLS, every suggested plan, the twin's run past the last HLS year) waits for its land-preparation rain (paddy_rainfed). A paddy dated by the satellite keeps its day: the observed green-up already holds that year's transplanting delay. Code: pipeline/plans/twin_options.dated_plan"
+    source: "Claude's choice, fixed before the first run with both switches on (owner's decisions of 2026-11-14 on 4a and 4c); put to the owner"
   seasons:
     value: "the chosen season method's seasons with source 'hls' (data/checks/<field>/diary_seasons.json chosen.seasons_by_year; 2014-2025 on the demo field); each in its slot by its peak month (rotation_guess: monsoon June-November, winter December-May). MODIS-year seasons are not used"
     source: "Owner's queue item 4a: 'Drive each year's sowing and harvest in the twin from the HLS seasons detected for that year (2014-2025) ... with source hls'. Slots: rules.yaml rotation_guess (pipeline/diary/guess.py SLOTS)"
@@ -129,14 +138,14 @@ season_dates:                     # item 4a (owner's queue, 2026-11-14): the far
 paddy_rainfed:                    # proposal 2c (called 4c in the owner's queue): written and committed BEFORE the what-if run
   # Sources opened 2026-11-14 by a research sub-agent (quotes in SI_LOG). pipeline/twin/season.py paddy_transplant, paddy_outcome.
   status:
-    value: "PROPOSED, awaiting the owner"
-    source: "Brief for 2c (2026-11-13): propose, show the what-if, wait for the owner's yes. notes/proposal_2c_rainfed_rice.md"
+    value: "ON: the owner said yes on 2026-11-14 (values unchanged from the proposal committed in abbe701)"
+    source: "Owner's decision, 2026-11-14: '4c: yes, apply the sourced rain-fed rice rule. Report honestly whether it catches the 2009 and 2015 monsoon droughts; don't tune it to them.' Proposal: notes/proposal_2c_rainfed_rice.md. No value below was changed after the what-if or after looking at any drought year"
   apply:
-    value: false
-    source: "Off until the owner says yes; scripts/run_replay.py and run_plans.py take --paddy-rainfed proposal for the what-if (data/checks/<field>/rainfed_rice_proposal/)"
+    value: true
+    source: "Owner's decision, 2026-11-14 (status above); switched on that day on the integrator's instruction. Off from 2026-11-13 night until this switch; the what-if before it: data/checks/<field>/rainfed_rice_proposal/. scripts/run_replay.py and run_plans.py take --paddy-rainfed off for the plain bucket. Scope: rain-fed case only, paddy seasons on a calendar day only (season_dates.with_paddy_rainfed)"
   rule:
     value: "a RAIN-FED paddy is transplanted on the first day, on or after its planned day, by which the rain since prep_days before the planned day (the nursery's sowing) reaches prep_mm (soaking and puddling); later than max_delay_days after the planned day the season fails: harvest 0 (the field is left fallow or the seedlings are lost). A late paddy is simulated from its actual day as the same plain bucket; a later crop that would overlap moves to the day after it ends. No extra loss per day of delay. Irrigated paddy is unchanged"
-    source: "Structure of the rain-fed transplanting rules in Balwinder-Singh et al. 2019, Field Crops Research 239:92-103, sec. 2.3.2 (APSIM, Bihar: seedlings 'at least 21 days old', transplanting when 'surface water ponding exceeded 50 mm', no crop 'if these conditions were not met by 15 August') and Han, Montes, Hussain & Krupnik 2024, Climatic Change 177:77 (DSSAT, Bangladesh: transplanting when a 'threshold ponding water depth (30 mm) was reached by rainfall'). A rain total stands in for the ponding depth because the twin has no pond for rain-fed paddy (METHOD_NOTES 2). Claude's reading, fixed before the run; put to the owner"
+    source: "Structure of the rain-fed transplanting rules in Balwinder-Singh et al. 2019, Field Crops Research 239:92-103, sec. 2.3.2 (APSIM, Bihar: seedlings 'at least 21 days old', transplanting when 'surface water ponding exceeded 50 mm', no crop 'if these conditions were not met by 15 August') and Han, Montes, Hussain & Krupnik 2024, Climatic Change 177:77 (DSSAT, Bangladesh: transplanting when a 'threshold ponding water depth (30 mm) was reached by rainfall'). A rain total stands in for the ponding depth because the twin has no pond for rain-fed paddy (METHOD_NOTES 2). Claude's reading, fixed before the run; owner-approved 2026-11-14 ('4c: yes, apply the sourced rain-fed rice rule')"
   prep_mm:
     value: 150
     source: "Bouman, Barker, Humphreys, Tuong et al. 2007, 'Rice: feeding the billions', ch. 14 of Water for Food, Water for Life (IWMI/Earthscan), Box 14.2, p. 524: land preparation water 'as low as 100-150 mm ... when the time lag between soaking and transplanting is only a few days' (the upper end, since a rain-fed farmer cannot time the rain); Sri Lanka Department of Agriculture (RRDI), land preparation: '~150 mm' for low-humic-gley soils. Sensitivity: 100 (Bouman's lower end) and 200 mm (FAO Training Manual 4, Irrigation Scheduling, sec. 4.4: 'the amount of water needed to saturate the root zone is 200 mm')"
