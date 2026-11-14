@@ -159,6 +159,41 @@ paddy_rainfed:                    # proposal 2c (called 4c in the owner's queue)
     value: {prep_mm: [100, 200], max_delay_days: [20, 40]}
     source: "Declared with the rule, before the run: each value at the ends of its sourced range above; reported only, never used to choose"
 
+paddy_losses:                     # owner's item 3 (2026-11-14 afternoon): the water a real paddy loses. Written and committed BEFORE its first run
+  # Sources opened 2026-11-14 by Claude (pages read as text from fao.org): FAO Training Manual 3, Irrigation Water Needs
+  # (Brouwer & Heibloem 1986, sec. 4.4, https://www.fao.org/4/s2022e/s2022e08.htm); FAO Training Manual 4, Irrigation
+  # Scheduling (Brouwer, Prins & Heibloem 1989, ch. 4, sec. 4.4, https://www.fao.org/4/t7202e/t7202e07.htm); FAO Soils
+  # Bulletin 55, Guidelines: land evaluation for irrigated agriculture (1985, https://www.fao.org/4/x5648e/x5648e0e.htm).
+  # FAO-56 has no paddy balance (paddy_rice.ponding). Code: soil_water.step/run_bucket (sp_mm), season.simulate
+  # (paddy_losses, land_prep_irrigation_mm), pipeline/plans/twin_options.py (paddy_losses). Not tuned to any event.
+  apply:
+    value: false
+    source: "Off until the integrator or the owner switches it on (coordinator, 2026-11-14 afternoon: new behaviour behind switches that stay off); the what-if forces it on in memory only (data/checks/demo/paddy_losses/)"
+  perc_mm_day:
+    value: 5
+    source: "FAO Training Manual 4 (1989), sec. 4.4, Step 5: 'The percolation and seepage losses depend on the type of soil. They will be low in very heavy, well-puddled clay soils and high in the case of more sandy soils. They can best be determined locally. If no local data can be obtained, the following values may be used: for heavy clay: PERC = 2 mm/day = 60 mm/month; for more sandy soils: PERC = 8 mm/day = 240 mm/month; on average: PERC = 5 mm/day = 150 mm/month'. The demo's topsoil is loam (VALIDATION 2.5), neither heavy clay nor sandy, so the 'average' value. (Manual 3, 1986, sec. 4.4, Step 5: heavy clay 4, sandy 8, average 6 mm/day.) Reading 'this soil type' as FAO's average class is Claude's choice, fixed before the first run; put to the owner"
+  perc_sensitivity_mm_day:
+    value: [2, 9]
+    source: "Declared before the run; reported only, never used to choose. 2 = Manual 4's heavy clay (an old, well-puddled paddy). 9 = FAO Soils Bulletin 55 (1985), on seepage and percolation: 'Chin and Lee (1961) reported 7, 9, 10 and 12 mm/day for Taiwan soils having 25-30%, 15-25%, 10-15%, 5-10% clay content respectively'; the demo's topsoil has 20.6 % clay (SoilGrids 0-5 cm), in the 15-25 % class"
+  sat_mm:
+    value: 200
+    source: "FAO Training Manual 3 (1986), sec. 4.4, Step 4, and Manual 4 (1989), sec. 4.4, Step 4: 'In the month before sowing or transplanting, water is needed to saturate the root zone. The amount of water needed depends on the soil type and rooting depth. For the purpose of this manual it is however assumed that the amount of water needed to saturate the root zone is 200 mm. Thus: SAT = 200 mm'. FAO gives no figure by soil type"
+  wet_days:
+    value: "a paddy day is wet when its root zone starts the day at field capacity (every ponded day, after the morning top-up) or the day's rain, less runoff, brings it back to field capacity. On a wet day perc_mm_day leaves the field: first out of the water above field capacity, which the bucket drains anyway (that deep percolation is counted as seepage and percolation, so no water is counted twice), the rest out of the root zone; at the wilting point the loss gives way first. A day that starts below field capacity and is not refilled loses nothing"
+    source: "FAO's PERC is the loss of a flooded field ('A water layer is established ... and maintained throughout the growing season. The amount of water needed for maintaining the water layer has already been taken into account with the determination of the percolation and seepage losses', Manual 3, Step 6); the bucket has no water above field capacity (METHOD_NOTES 2), so 'at field capacity' stands for flooded or saturated. Manual 4, sec. 4.2: 'Puddling reduces the permeability of the soil and therefore also reduces the percolation losses'. Claude's reading, fixed before the first run; put to the owner"
+  land_preparation:
+    value: "the puddling water IS paddy_rainfed's land-preparation rain, counted once: with this switch on, paddy_rainfed's prep_mm (150 mm, Bouman et al. 2007) is replaced by sat_mm (200 mm, FAO); the rest of that rule is unchanged (rain counted from the nursery's sowing prep_days before the planned day; more than max_delay_days late, the season fails) and it applies where paddy_rainfed applies (rain-fed paddy on a calendar day, season_dates.with_paddy_rainfed). In the bucket that rain is not taken a second time: what it puts into the root zone is part of saturating it, the rest already leaves as deep percolation"
+    source: "FAO's SAT (above) and paddy_rainfed's prep_mm are the same water, the soaking and puddling before transplanting; 200 mm was already paddy_rainfed's declared upper sensitivity (FAO Training Manual 4). Claude's combination, fixed before the first run; put to the owner"
+  watered_case:
+    value: "irrigated paddy: every ponded day is wet, so the pond's morning top-up (irrigation) also replaces the previous day's seepage and percolation. On its first day it also gets, as irrigation (land_prep_mm), the land-preparation water the rain did not give: max(0, sat_mm - the rain of the prep_days before that day - the pond's first top-up of the root zone, which is part of saturating it). Kept outside the root-zone balance, like the water above field capacity"
+    source: "FAO Training Manual 3, sec. 4.4, Step 8: 'IN = ET crop + SAT + PERC + WL - Pe'; the coordinator's brief (2026-11-14 afternoon): 'the pond top-up is irrigation, so its irrigation total should grow by the same losses'. Claude's daily form, fixed before the first run"
+  water_layer:
+    value: "not modelled: FAO's 100-mm water layer (Manual 4, sec. 4.4, Step 6) is water held above the soil, a store the bucket has no room for (METHOD_NOTES 2); keeping it up is inside perc_mm_day (Step 6, quoted above). So a watered paddy's irrigation is short by up to 100 mm a season, and a rain-fed paddy's rain above field capacity is lost the same day instead of being held by the bunds"
+    source: "FAO Training Manual 4, sec. 4.4, Step 6: 'Sometimes a water layer of 100 mm is established after transplant and maintained throughout the growing season. In other cases the water layer is reduced to 20 to 50 mm ...'. Claude's choice, stated before the first run"
+  failure:
+    value: "no new failure rule: rice fails only as paddy_rainfed says (land preparation more than max_delay_days late); otherwise the losses act through Ks and Ky"
+    source: "Coordinator's brief (2026-11-14): a failure outcome needs a published source or the existing rules; none other is added"
+
 bare_soil:
   kc:
     value: 0.3
