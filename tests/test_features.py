@@ -45,7 +45,7 @@ def test_a_label_takes_the_coarsest_scale_of_the_inputs_that_mainly_drive_it():
     assert bl.label_for("pulse_curve", valley, RULES, {})["scale"] == "neighbourhood"           # HLS 30 m and MODIS 250 m
     assert bl.label_for("plan_harvest", valley, RULES, {})["scale"] == "valley"                 # twin: GPM, corrected POWER, SoilGrids
     assert bl.label_for("plan_harvest", abroad, RULES, {})["scale"] == "region"                 # uncorrected POWER, 55 km
-    assert bl.label_for("plan_water", valley, RULES, {})["sources"] == ["gpm", "power", "soilgrids", "grace"]  # GRACE listed, not scaling
+    assert bl.label_for("plan_water", valley, RULES, {})["sources"] == ["gpm", "power", "soilgrids"]  # groundwater out (owner, decision 5)
     assert bl.label_for("groundwater", valley, RULES, {})["scale"] == "region"
 
 
