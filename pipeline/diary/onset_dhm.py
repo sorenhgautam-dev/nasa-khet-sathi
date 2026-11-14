@@ -114,7 +114,8 @@ def words(shift_res, window, late, xcheck, first_year, bs_names, greg_names, sta
     all_agree = (not shift_res["clear"]) and all(xcheck.values())
     n_bad = sum(1 for ok in xcheck.values() if not ok)
     if all_agree:
-        agree_en, agree_ne = "Three independent records agree.", "तीनवटा छुट्टाछुट्टै अभिलेख एउटै कुरा भन्छन्।"
+        agree_en, agree_ne = ("Both satellite rain checks show no clear change.",
+                              "भू-उपग्रहका दुवै वर्षा जाँचमा पनि स्पष्ट फरक देखिँदैन।")
     elif n_bad == 1:
         agree_en, agree_ne = "One satellite rain check does not agree.", "भू-उपग्रहको एउटा वर्षा जाँच मिल्दैन।"
     elif n_bad >= 2:
@@ -126,13 +127,15 @@ def words(shift_res, window, late, xcheck, first_year, bs_names, greg_names, sta
         n = abs(round(shift_res["shift_days"]))
         way_en = shift_res["direction"]
         way_ne = "चाँडो" if way_en == "earlier" else "ढिलो"
-        result_en = [f"The rains now start about {n} days {way_en}.", f"Measured since {first_year}."]
-        result_ne = [f"मनसुन अहिले करिब {ne_digits(n)} दिन {way_ne} सुरु हुन्छ।", f"सन् {fy} देखिको नाप।"]
+        result_en = [f"The rains now start about {n} days {way_en}.",
+                     f"Measured since {first_year}, in Nepal's weather office records."]
+        result_ne = [f"मनसुन अहिले करिब {ne_digits(n)} दिन {way_ne} सुरु हुन्छ।",
+                     f"नेपालको मौसम कार्यालयको अभिलेखमा सन् {fy} देखिको नाप।"]
     else:
-        result_en = ["The rains start when they used to.", f"No clear change since {first_year}."]
-        result_ne = ["मनसुन पहिलेकै समयमा सुरु हुन्छ।", f"सन् {fy} यता स्पष्ट फरक छैन।"]
-    diary = {"en": result_en + ["From Nepal's weather office records.", agree_en],
-             "ne": result_ne + ["स्रोत: जल तथा मौसम विज्ञान विभाग।", agree_ne], "ne_review": NE_REVIEW}
+        # owner, 2026-11-14 afternoon: exactly this sentence (rules.yaml monsoon_onset_dhm.words_rule)
+        result_en = [f"No clear change since {first_year}, in Nepal's weather office records."]
+        result_ne = [f"नेपालको मौसम कार्यालयको अभिलेखमा सन् {fy} यता स्पष्ट फरक छैन।"]
+    diary = {"en": list(result_en), "ne": list(result_ne), "ne_review": NE_REVIEW}
 
     bs_from, bs_to = _bs(window["from"], bs_names, start_day), _bs(window["to"], bs_names, start_day)
     gf, gt = window["from"], window["to"]
@@ -157,12 +160,12 @@ def words(shift_res, window, late, xcheck, first_year, bs_names, greg_names, sta
 
     how_en = ["We tested two ways with satellite rain.", "Neither could show a change in timing.",
               "In 2017, rain gauges stopped feeding it.", "After that, its rain is not steady.",
-              "So we use Nepal's official monsoon record.", result_en[0] if shift_res["clear"] else result_en[1],
+              "So we use Nepal's official monsoon record.", *result_en,
               agree_en, "These records share some rain gauges."]
     how_ne = ["हामीले भू-उपग्रहको वर्षाबाट दुई तरिका जाँच्यौं।", "कुनैले पनि समयको फरक देखाउन सकेन।",
               "सन् २०१७ मा वर्षा मापन केन्द्रको जानकारी रोकियो।", "त्यसपछि भू-उपग्रहको वर्षा भरपर्दो रहेन।",
               "त्यसैले हामी नेपाल सरकारको आधिकारिक मनसुन अभिलेख हेर्छौं।",
-              result_ne[0] if shift_res["clear"] else result_ne[1], agree_ne,
+              *result_ne, agree_ne,
               "यी अभिलेखले केही वर्षा मापन केन्द्र साझा गर्छन्।"]
     return {"diary_shift": diary, "next3_rice": next3,
             "how_we_know": {"en": how_en, "ne": how_ne, "ne_review": NE_REVIEW}}

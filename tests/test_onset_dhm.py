@@ -113,6 +113,10 @@ LATE = {"after": "06-20", "years": [2009], "count": 1, "of": 24, "share": 1 / 24
 NOSHIFT = {"clear": False, "direction": "no clear shift", "shift_days": -2.2}
 
 
+OWNER_EXACT = {"No clear change since 2001, in Nepal's weather office records",     # as _sentences returns them
+               "नेपालको मौसम कार्यालयको अभिलेखमा सन् २००१ यता स्पष्ट फरक छैन"}
+
+
 def _words(shift=NOSHIFT, xcheck=None, late=LATE):
     return od.words(shift, WIN, late, xcheck or {"chirps": True, "gpm_2001_2016": True}, first_year=2001,
                     bs_names=BS, greg_names=GREG, start_day=15)
@@ -123,7 +127,8 @@ def test_words_are_short_in_both_languages():
     for screen in ("diary_shift", "next3_rice", "how_we_know"):
         for lang in ("en", "ne"):
             text = " ".join(w[screen][lang])
-            assert all(len(s.split()) <= 8 for s in _sentences(text)), (screen, lang, text)
+            # the owner's exact sentence (2026-11-14 afternoon) is the one recorded exception to the 8-word rule
+            assert all(len(s.split()) <= 8 or s.strip() in OWNER_EXACT for s in _sentences(text)), (screen, lang, text)
         assert w[screen]["ne_review"] == "needs native-speaker review"
 
 
@@ -133,13 +138,17 @@ def test_words_say_the_numbers():
     assert "9–16 June" in en and "In 24 years, 1 came after 20 June." in en and "2009" in en
     ne = " ".join(w["next3_rice"]["ne"])
     assert "जेठ २६ देखि असार २ तिर (जुन ९–१६)" in ne and "असार ६ तिर (जुन २०)" in ne and "२००९" in ne
-    assert "No clear change since 2001." in " ".join(w["diary_shift"]["en"])
+    assert w["diary_shift"]["en"] == ["No clear change since 2001, in Nepal's weather office records."]
+    assert w["diary_shift"]["ne"] == ["नेपालको मौसम कार्यालयको अभिलेखमा सन् २००१ यता स्पष्ट फरक छैन।"]
 
 
-def test_three_records_agree_only_when_all_do():
-    assert "Three independent records agree." in " ".join(_words()["diary_shift"]["en"])
-    one = " ".join(_words(xcheck={"chirps": False, "gpm_2001_2016": True})["diary_shift"]["en"])
-    assert "Three" not in one and "One satellite rain check does not agree." in one
+def test_cross_checks_are_reported_on_the_how_we_know_page_only():
+    w = _words()
+    assert "Three" not in " ".join(w["diary_shift"]["en"] + w["how_we_know"]["en"])      # owner, 2026-11-14 afternoon
+    assert "Both satellite rain checks show no clear change." in " ".join(w["how_we_know"]["en"])
+    one = _words(xcheck={"chirps": False, "gpm_2001_2016": True})
+    assert "One satellite rain check does not agree." in " ".join(one["how_we_know"]["en"])
+    assert "agree" not in " ".join(one["diary_shift"]["en"])
     both = " ".join(_words(xcheck={"chirps": False, "gpm_2001_2016": False})["how_we_know"]["en"])
     assert "The two satellite rain checks do not agree." in both
 
