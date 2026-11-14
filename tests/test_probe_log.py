@@ -95,7 +95,64 @@ def test_before_the_bench_test_a_part_has_no_water_and_no_after(tmp_path):
     assert doc["bench"] is None
 
 
+def test_the_file_says_when_and_where_it_was_recorded(tmp_path):
+    log = tmp_path / "readings_2026-11-16.jsonl"
+    _session(log, "serial:COM3", "r")
+    doc = bpl.build([log], field="demo", place="four pots of field soil at the event")
+    Draft202012Validator(SCHEMA).validate(doc)
+    assert doc["recorded_on"] == ["2026-11-16"] and doc["place"] == "four pots of field soil at the event"
+    assert doc["note"].startswith("Recorded on 16 November 2026 ") and "four pots of field soil at the event" in doc["note"]
+    assert bpl.build([log], field="demo")["place"] is None
+
+
+def test_every_reading_keeps_its_date_and_time_settling_lines_included(tmp_path):
+    log = tmp_path / "readings.jsonl"
+    _session(log, "serial:COM3", "r")
+    doc = bpl.build([log], field="demo")
+    Draft202012Validator(SCHEMA).validate(doc)
+    for p in doc["sessions"][0]["parts"]:
+        lines = p["lines"]
+        assert len(lines) == RULES["settle_lines"] + RULES["measure_lines"]          # 20 settle, then 10 measured
+        assert [x["phase"] for x in lines] == ["settle"] * 20 + ["measure"] * 10
+        assert all(x["time"].startswith("2026-11-16T") and x["time"].endswith("+05:45") for x in lines)
+        assert [x["time"] for x in lines] == sorted(x["time"] for x in lines) and lines[-1]["time"] <= p["time"]
+        measured = sorted(x["moisture"] for x in lines if x["phase"] == "measure")
+        assert p["wetness"] == int(round((measured[4] + measured[5]) / 2))          # the median of the 10 measured
+
+
+def test_a_part_measured_again_keeps_only_the_lines_of_its_own_attempt(tmp_path):
+    """A pulled cable restarts a part: the lines of the broken attempt are not the reading's lines."""
+    log_path = tmp_path / "readings.jsonl"
+    ctx = bridge.Context("serial:COM3", RULES, None, None)
+    log = bridge.Log(log_path, "r")
+    log({"kind": "session", "time": "2026-11-16T10:00:00+05:45", "source": "serial:COM3", "sections": ["s1"]})
+    clock = Clock()
+    for i, l in enumerate(fake_probe.lines(n=7, scenario="settling", target=60)):     # 7 lines, then the cable is pulled
+        log({"kind": "line", "time": clock(), "section": "s1", "source": "serial:COM3", "line": l, "ok": True,
+             "parsed": {"moisture_pct": 99.0, "temp_c": 20.0, "temp_status": "ok"}, "state": "settling"})
+    log({"kind": "stale", "time": clock(), "section": "s1", "reason": "the probe's USB cable was pulled"})
+    lines = [(l + "\r\n").encode() for l in fake_probe.lines(n=30, seed=1, scenario="settling", target=40)]
+    bridge.walk(bridge.IterSource(lines), ["s1"], tmp_path / "live.json", log, ctx, lambda *a: "", clock=clock)
+    p = bpl.build([log_path], field="demo")["sessions"][0]["parts"][0]
+    assert len(p["lines"]) == 30 and 99.0 not in [x["moisture"] for x in p["lines"]]
+
+
+def test_only_the_chosen_sessions_are_published(tmp_path):
+    log = tmp_path / "readings_2026-11-16.jsonl"
+    _session(log, "serial:COM3", "rehearsal")
+    _session(log, "serial:COM3", "demo-walk")
+    doc = bpl.build([log], field="demo", only=["demo-walk"])
+    assert [s["id"] for s in doc["sessions"]] == ["demo-walk"]
+    with pytest.raises(ValueError, match="no-such"):
+        bpl.build([log], field="demo", only=["no-such"])
+    out = tmp_path / "probe_log.json"
+    assert bpl.main(["--field", "demo", "--dir", str(tmp_path), "--out", str(out), "--session", "demo-walk",
+                     "--place", "the demo field"]) == 0
+    got = json.loads(out.read_text())
+    assert [s["id"] for s in got["sessions"]] == ["demo-walk"] and got["place"] == "the demo field"
+
+
 def test_the_schema_itself_refuses_a_fake_source():
-    doc = {"field": "demo", "note": "x", "built": "t", "twin_date": None, "bench": None, "skipped": [],
-           "sessions": [{"id": "a", "source": "fake_probe", "start": "t", "end": "t", "parts": []}]}
+    doc = {"field": "demo", "note": "x", "built": "t", "recorded_on": ["2026-11-16"], "place": None, "twin_date": None,
+           "bench": None, "skipped": [], "sessions": [{"id": "a", "source": "fake_probe", "start": "t", "end": "t", "parts": []}]}
     assert list(Draft202012Validator(SCHEMA).iter_errors(doc))

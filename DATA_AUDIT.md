@@ -381,6 +381,34 @@ touched. Read by `scripts/run_twin_now.py` (the twin's state, METHOD_NOTES 60).
 | Levels | ET 779 mm a year (twin ETa 692); potential evaporation 2,108 mm a year (twin ET0 1,325: Noah's PotEvap is not grass-reference ET0); rain 1,027 mm a year (twin 1,853): GPCP-forced, **no 2017 step** | FOUND |
 | Independence | GPCP v1.3 is gauge-adjusted (GPCC), so GLDAS may share some gauges with IMERG Final; its rain shows no 2017 jump | caveat |
 
+### 1.22 NOAA CPC Oceanic Nino Index (ONI): DOWNLOADED (added 2026-11-14, the 25-Year Replay's El Nino / La Nina highlight)
+
+`pipeline/fetch/oni.py` (`scripts/fetch_field.py` step `oni`); raw `data/raw/oni/oni.ascii.txt` (one copy for every field), table `data/clean/<field>/oni.parquet`, card `data/cards/<field>/oni.json`. **Use:** only to mark which past seasons of the 25-Year Replay had the same El Nino / La Nina state as this year (rules.yaml `window_replay.enso`); it changes no number.
+
+| Item | Value | Status |
+| --- | --- | --- |
+| Product | NOAA Climate Prediction Center, `https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt`: 3-month running means of ERSST.v5 sea-surface temperature in the Nino-3.4 region (5N-5S, 170W-120W) and their anomalies; US government work, public domain | FOUND (file header; CPC page cited from memory) |
+| Format, units | header `SEAS YR TOTAL ANOM`, one line per overlapping season DJF ... NDJ; TOTAL and ANOM in deg C; no scale, offset or fill value. Any line that does not fit stops the read | VERIFIED: the file, 2026-11-14 |
+| Coverage | DJF 1950 to ASO 2026 (922 lines); ASO 2026 anomaly +2.46 C | FOUND |
+| Guards | rule 12 temperature range (-30 to 50 C) on TOTAL and ANOM, 0 warnings; repeated seasons refused | FOUND |
+| Caveat | anomalies are against 30-year base periods that CPC updates every 5 years; one season's value is used, not NOAA's 5-season episode rule (stated in the file) | caveat |
+
+### 1.23 NASA GIBS map backgrounds: HLS true colour and Blue Marble: DOWNLOADED (added 2026-11-14, owner's launch brief: no outside request at runtime)
+
+`pipeline/fetch/basemap.py`; raw PNGs `data/raw/basemap/<area>/` and `data/raw/basemap/world/`; outputs
+`site/data/basemap/<area>.jpg`, one `site/data/basemap/<field>.json` per prepared field
+(`pipeline/export/basemap_schema.json`), `site/data/basemap/world.{jpg,json}`; cards `data/cards/<field>/basemap.json`,
+`data/cards/world/basemap.json`. **Use:** the map's background picture only. It is not data: no number comes from it.
+
+| Item | Value | Status |
+| --- | --- | --- |
+| Service | NASA GIBS WMS, `https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi`, GetMap in EPSG:3857 (the projection Leaflet uses, so `L.imageOverlay` lines up). No login. NASA open data; GIBS asks for an acknowledgement (CREDITS.md, Site design) | VERIFIED: capabilities and API docs read 2026-11-14 |
+| Field picture | `HLS_L30_Nadir_BRDF_Adjusted_Reflectance` (HLSL30 v2.0, Landsat 8/9 OLI; layer metadata: "Reflectance (Nadir BRDF-Adjusted)", concept C2021957657-LPCLOUD), or the S30 layer for Sentinel-2. 30 m data; GIBS serves it in EPSG:3857 at zoom 12 (`GoogleMapsCompatible_Level12`, 38.2 m Mercator pixels, **about 34 m on the ground at 27.7 N**). Fetched at that size: asking for more pixels only repeats them (checked: 67 % of rows identical at 3x) | VERIFIED |
+| Date rule | Claude's choice, written in the module before any picture was looked at (the Fmask ranking was printed first). The field's own cached HLS box windows; November-February of the last three cached years (2023-2025); whole box covered (at least 99.9 %); at least 99 % clear (Fmask bits 0-5 zero, as `pipeline/diary/ndvi.py`). Then the least hazy (Fmask bits 6-7 moderate or high), then the clearer, then the more recent. A transparent (no-data) answer from GIBS moves on to the next date, listed in the card | FOUND |
+| Demo box result | **2025-11-11, Landsat (HLSL30)**: 99.94 % clear, 4.6 % moderate or high aerosol; 296 x 296 px, 4 transparent pixels; JPEG quality 90, **32 KB**. One picture for all five prepared fields (they share the fetch box) | FOUND |
+| World | `BlueMarble_NextGeneration` ("Blue Marble (August 2004)", MODIS / NASA Earth Observatory), the whole Web-Mercator square (85.05 S to 85.05 N) at 1024 x 1024 px (about 39 km per pixel at the equator); JPEG quality 90, **192 KB** | FOUND |
+| Guards | the raw picture's format, mode, size and bytes are printed; a picture with more than 1 % without data, or an all-black one, fails loudly; the JPEG must fit 300 KB (field) or 400 KB (world) by quality 60, or it fails; `validate` checks the schema, the JPEG, its size and that the field lies inside the bounds, and `--final` wants a picture for every listed field and the world | FOUND |
+
 ## 2. Field outline over pixels
 
 Rerun 2026-11-12 for the current placeholder field (60 m square at 27.690767 N, 85.441792 E;

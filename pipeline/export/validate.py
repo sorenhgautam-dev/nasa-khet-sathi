@@ -214,6 +214,100 @@ def words_problems(doc):
     return errors
 
 
+# The four features of the farmer's question (2026-11-14): site/data/<kind>/<field>.json, each with its own schema.
+FEATURES = {"labels": "labels_schema.json", "replay": "replay_schema.json", "pulse": "pulse_schema.json",
+            "checkup": "checkup_schema.json"}
+LABEL_IDS = ("rain_months", "rain_month_words", "heat_month_words", "frost_month_words", "soil_month_words", "cover_months",
+             "season_dates", "rotation_guess", "flood_years", "drought_years", "harvest_years", "plan_cover_gap_beats_current",
+             "plan_safest_beats_current", "monsoon_start", "groundwater", "part_soil_water", "probe_water", "outlook_2040",
+             "plan_scores", "bare_days", "plan_harvest", "plan_water", "plan_cover", "plan_soil_kept", "replay_year",
+             "part_wetness", "part_sure", "part_status", "pulse_hls", "pulse_modis", "nearby_fields", "replay_window",
+             "checkup_rain")       # the scorecard's 19 rows and the ids the brief asks for at least
+
+
+def _labels_errors(doc, field_doc, labels_doc):
+    errors = [f"outputs: {k} is missing" for k in LABEL_IDS if k not in doc["outputs"]]
+    for k, o in doc["outputs"].items():
+        if (o["sure"] == "verified") != (o["status"] == "VERIFIED"):
+            errors.append(f"outputs/{k}: sure is 'verified' exactly when status is VERIFIED")
+        if o["k"] > o["n"]:
+            errors.append(f"outputs/{k}: k above n")
+        if missing := [s for s in o["sources"] if s not in doc["sources"]]:
+            errors.append(f"outputs/{k}: sources {missing} are not described in sources")
+    return errors
+
+
+def _replay_errors(doc, field_doc, labels_doc):
+    errors, n, th = [], doc["year_count"], doc["thresholds"]
+    if len(doc["seasons"]) != n:
+        errors.append("seasons: one per past season (year_count)")
+    if field_doc is not None:
+        want = {p["id"] for p in field_doc["plans"]} | {o["id"] for o in (field_doc.get("current_options") or {}).get("options", [])}
+        if {p["id"] for p in doc["plans"]} != want:
+            errors.append(f"plans: must be the field file's plans and current options {sorted(want)}")
+    wins = [w["id"] for w in doc["windows"]]
+    if d := _dupes(wins):
+        errors.append(f"windows: duplicate ids {d}")
+    for p in doc["plans"]:
+        if sorted(p["results"]) != sorted(wins) or sorted(p["summary"]) != sorted(wins):
+            errors.append(f"plans/{p['id']}: results and summary need every window {wins}")
+            continue
+        for k, by_start in p["results"].items():
+            for s, rows in by_start.items():
+                where = f"plans/{p['id']}/{k}/{s}"
+                if [r["season"] for r in rows] != doc["seasons"]:
+                    errors.append(f"{where}: one result per past season, in order")
+                for r in rows:
+                    want = (None if r["score"] is None else "worked" if r["score"] >= th["worked_min"]
+                            else "failed" if r["score"] < th["failed_below"] else "struggled")
+                    if r["result"] != want:
+                        errors.append(f"{where}/{r['season']}: result {r['result']} does not follow its score {r['score']}")
+                    if r["sensitive"] != any(o["result"] != r["result"] for o in r["other_versions"].values()):
+                        errors.append(f"{where}/{r['season']}: sensitive must say whether another rain version's result differs")
+                    if r["enso"] != (doc["enso"]["by_season"].get(r["season"]) or {}).get("state"):
+                        errors.append(f"{where}/{r['season']}: enso differs from enso.by_season")
+                cnt = p["summary"][k][s]
+                if (cnt["worked"], cnt["struggled"], cnt["failed"], cnt["no_crop"], cnt["sensitive"]) != (
+                        *(sum(r["result"] == w for r in rows) for w in ("worked", "struggled", "failed")),
+                        sum(r["result"] is None for r in rows), sum(r["sensitive"] for r in rows)):
+                    errors.append(f"{where}: summary does not count its results")
+    same = [k for k, v in doc["enso"]["by_season"].items() if v["state"] == doc["enso"]["now"]["state"]]
+    if sorted(same) != sorted(doc["enso"]["same_as_now"]):
+        errors.append("enso/same_as_now: must list the past seasons in the same state as now")
+    return errors
+
+
+def _pulse_errors(doc, field_doc, labels_doc):
+    errors = []
+    for src, pts in doc["points"].items():
+        if [p[0] for p in pts] != sorted(p[0] for p in pts):
+            errors.append(f"points/{src}: dates must run in order")
+    for s in doc["seasons"]:
+        if not s["greenup"] <= s["peak"] <= s["end"]:
+            errors.append(f"seasons/{s['year']}/{s['slot']}: needs greenup <= peak <= end")
+    return errors
+
+
+def _checkup_errors(doc, field_doc, labels_doc):
+    errors, y = [], doc["yearly"]
+    if not len(y["years"]) == len(y["gpm"]) == len(y["twin"]) == len(y["chirps"]):
+        errors.append("yearly: years, gpm, twin and chirps need one value per year")
+    if [v["id"] for v in doc["versions"] if v["central"]] != ["tuned"]:
+        errors.append("versions: exactly one central version, 'tuned'")
+    if labels_doc is not None and (bad := [k for k in doc["depends_on_corrected_rain"] if k not in labels_doc["outputs"]]):
+        errors.append(f"depends_on_corrected_rain: {bad} are not output ids of labels")
+    return errors
+
+
+def validate_feature(kind, doc, field_doc=None, labels_doc=None):
+    """One feature file (FEATURES): its schema, then what a schema cannot say."""
+    errors = _schema_errors(doc, FEATURES[kind])
+    if errors:
+        return errors
+    return {"labels": _labels_errors, "replay": _replay_errors, "pulse": _pulse_errors,
+            "checkup": _checkup_errors}[kind](doc, field_doc, labels_doc)
+
+
 def _inside(bbox, lon, lat):
     return bbox[0] <= lon <= bbox[2] and bbox[1] <= lat <= bbox[3]
 
@@ -246,6 +340,93 @@ def validate_index(doc):
         if f.get("area") is not None and f["area"] not in areas:
             errors.append(f"fields/{f['id']}: area {f['area']} is not in areas")
     return errors
+
+
+def probe_log_problems(doc, index=None, field_doc=None):
+    """site/data/probe_log.json (CLAUDE.md "How judges will see it" 4): real sessions only (the schema), a listed field,
+    its own parts, the dates it says, and each reading's own lines (owner's launch brief, 2026-11-14)."""
+    errors = _schema_errors(doc, "probe_log_schema.json")
+    if errors:
+        return errors
+    if index is not None and doc["field"] not in {f["id"] for f in index["fields"]}:
+        errors.append(f"field {doc['field']} is not listed in index.json")
+    sections = {s["id"] for s in field_doc["field"]["sections"]} if field_doc else None
+    dates = sorted({p["time"][:10] for s in doc["sessions"] for p in s["parts"]})
+    if doc["recorded_on"] != dates:
+        errors.append(f"recorded_on {doc['recorded_on']} must list the readings' dates {dates}")
+    for s in doc["sessions"]:
+        for p in s["parts"]:
+            where = f"sessions/{s['id']}/{p['section']}"
+            if sections is not None and p["section"] not in sections:
+                errors.append(f"{where}: the field has no part {p['section']}")
+            measured = sum(x["phase"] == "measure" for x in p["lines"])
+            if p["lines"] and measured != p["n"]:
+                errors.append(f"{where}: {measured} measure lines, but n is {p['n']}")
+            if any(x["time"] > p["time"] for x in p["lines"]):
+                errors.append(f"{where}: a line is timed after the part's reading")
+    return errors
+
+
+def version_problems(doc):
+    """site/data/version.json, written by scripts/final_check.py."""
+    errors = _schema_errors(doc, "version_schema.json")
+    if not errors and not doc["commit"].startswith(doc["commit_short"]):
+        errors.append("commit_short is not the start of commit")
+    return errors
+
+
+def basemap_problems(doc, path, data_dir, index):
+    """site/data/basemap/<id>.json and its picture (pipeline/fetch/basemap.py): small, a JPEG, around its field."""
+    from pipeline.fetch.basemap import MAX_FIELD_BYTES, MAX_WORLD_BYTES
+    errors = _schema_errors(doc, "basemap_schema.json")
+    if errors:
+        return errors
+    if doc["id"] != Path(path).stem:
+        errors.append(f"id {doc['id']} is not the file's name")
+    (s, w), (n, e) = doc["bounds"]
+    if not (s < n and w < e):
+        errors.append("bounds must be [[south, west], [north, east]]")
+    img = Path(data_dir) / doc["image"][len("data/"):]
+    limit = MAX_WORLD_BYTES if doc["id"] == "world" else MAX_FIELD_BYTES
+    if not img.exists():
+        errors.append(f"{doc['image']} does not exist")
+    elif img.read_bytes()[:3] != b"\xff\xd8\xff":
+        errors.append(f"{doc['image']} is not a JPEG")
+    elif img.stat().st_size > limit:
+        errors.append(f"{doc['image']} is {img.stat().st_size} bytes, over the {limit // 1000} KB limit")
+    if doc["id"] != "world" and index is not None:
+        entry = next((f for f in index["fields"] if f["id"] == doc["id"]), None)
+        if entry is None:
+            errors.append(f"{doc['id']} is not listed in index.json")
+        elif not (s <= entry["lat"] <= n and w <= entry["lon"] <= e):
+            errors.append(f"field {doc['id']} lies outside the picture's bounds")
+    return errors
+
+
+def launch_problems(data_dir, index, final=False):
+    """{path: problems} for the launch files (owner's launch brief, 2026-11-14): probe_log.json and version.json when
+    they exist (no probe_log until real readings exist: the site says 'not ready yet'), and every basemap/*.json;
+    --final also wants a basemap for every listed field and the world."""
+    data_dir, out = Path(data_dir), {}
+    log_path = data_dir / "probe_log.json"
+    if log_path.exists():
+        doc = json.loads(log_path.read_text())
+        fpath = data_dir / "fields" / f"{doc.get('field')}.json"
+        field_doc = json.loads(fpath.read_text()) if fpath.exists() else None
+        if errs := probe_log_problems(doc, index, field_doc):
+            out[str(log_path)] = errs
+    ver = data_dir / "version.json"
+    if ver.exists() and (errs := version_problems(json.loads(ver.read_text()))):
+        out[str(ver)] = errs
+    for path in sorted((data_dir / "basemap").glob("*.json")):
+        if errs := basemap_problems(json.loads(path.read_text()), path, data_dir, index):
+            out[str(path)] = errs
+    if final:
+        for fid in [f["id"] for f in (index or {}).get("fields", [])] + ["world"]:
+            p = data_dir / "basemap" / f"{fid}.json"
+            if not p.exists():
+                out.setdefault(str(p), []).append("missing (python -m pipeline.fetch.basemap)")
+    return out
 
 
 def main(argv=None):
@@ -293,11 +474,31 @@ def main(argv=None):
             problems[str(words_path)] = errs
     elif args.final:
         problems[str(words_path)] = ["missing (python -m pipeline.export.build_words)"]
+    problems.update(launch_problems(data_dir, index, final=args.final))     # probe_log, version, basemap (2026-11-14)
+
+    feature_files = 0
+    for kind in FEATURES:                     # the four features (2026-11-14); --final wants one per listed field
+        for path in sorted((data_dir / kind).glob("*.json")):
+            feature_files += 1
+            doc = json.loads(path.read_text())
+            fp, lp = data_dir / "fields" / f"{path.stem}.json", data_dir / "labels" / f"{path.stem}.json"
+            errs = validate_feature(kind, doc, json.loads(fp.read_text()) if fp.exists() else None,
+                                    json.loads(lp.read_text()) if lp.exists() else None)
+            if doc.get("field") != path.stem:
+                errs.append(f"field '{doc.get('field')}' is not the file's name")
+            if kind == "pulse" and doc.get("nearby") and not (data_dir / doc["nearby"]["map"][len("data/"):]).exists():
+                errs.append(f"nearby/map: {doc['nearby']['map']} does not exist")
+            if errs:
+                problems[str(path)] = errs
+        if args.final:
+            for f in (index or {}).get("fields", []):
+                if not (data_dir / kind / f"{f['id']}.json").exists():
+                    problems.setdefault(str(data_dir / kind), []).append(f"{f['id']}: listed in index.json but no {kind}/{f['id']}.json")
 
     for path, errs in problems.items():
         for e in errs:
             print(f"FAIL {path}: {e}")
-    checked = len(field_files) + (index is not None) + words_path.exists()
+    checked = len(field_files) + (index is not None) + words_path.exists() + feature_files
     print(f"{checked} file(s) checked, {len(problems)} with problems")
     return 1 if problems else 0
 

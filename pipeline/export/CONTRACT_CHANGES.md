@@ -4,6 +4,44 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, evening): launch files: map pictures, a version stamp, and the probe replay's date and lines (additions only)
+
+The owner wants no outside request at runtime. `fields/<id>.json` is unchanged.
+
+- **`data/basemap/<field>.json` and `data/basemap/world.json`** (new; `basemap_schema.json`, made by
+  `pipeline/fetch/basemap.py`). Each has `image` (relative: `data/basemap/<name>.jpg`), `bounds` (`[[south, west],
+  [north, east]]` for `L.imageOverlay`), `crs` (EPSG:3857), `size_px`, `native_zoom`, `layer`, `product`, `date`,
+  `resolution`, `attribution`, `chosen_by` and `source`.
+  - The demo's five fields share `demo.jpg`: NASA HLS, 11 Nov 2025, 32 KB.
+  - `world.jpg` is Blue Marble, August 2004, 192 KB.
+- **`data/version.json`** (new; `version_schema.json`, written by `scripts/final_check.py`). It has `commit`,
+  `commit_short`, `commit_date`, `checked_on`, `uncommitted_changes` and `made_by`.
+  - It is for the How-we-know page.
+  - It may be missing until `final_check` has run: show nothing then.
+- **`data/probe_log.json`** (still absent until real readings exist) gains:
+  - `recorded_on`: the readings' local dates. The `note` now starts "Recorded on <date>".
+  - `place`: where it was recorded, in the team's words, or null.
+  - per part, `lines`: the reading's 30 probe lines, `{time, moisture, temp, phase: settle | measure}`.
+- **Fonts:** `site/fonts/` holds the four woff2 files the site used from Google Fonts, with their licences. The site
+  agent wires them in.
+
+## 2026-11-14 (Saturday, evening): four new files for the farmer's question (additions only; fields/<id>.json unchanged)
+
+"What can I grow in my field's empty months without risking the harvest I depend on?" Four new files per prepared
+field (demo, sample-1..4), each with its own schema in `pipeline/export/` and checked by `validate --final`:
+
+| File | Schema | What it holds |
+| --- | --- | --- |
+| `data/labels/<id>.json` | `labels_schema.json` | Two labels on every number: `outputs.<output_id>` = `sure` (verified / estimate; verified only when the scorecard says VERIFIED), `status`, `k`, `n`, `scale` (field / neighbourhood / valley / region), `rain_corrected`, `sources`; `scales` with en, ne and "about" words. 46 output ids |
+| `data/replay/<id>.json` | `replay_schema.json` | The 25-Year Replay: each plan and current option, the next 3 and 6 months from a fixed `start`, run through every past season (`year_count`, 24 on the demo) from a dry, medium and wet start; per season `result` worked / struggled / failed, `score` (WRSI 0-100), `reason` code, `enso`, `sensitive`, `other_versions` |
+| `data/pulse/<id>.json` | `pulse_schema.json` | Field Pulse: HLS and MODIS greenness points, the weekly smoothed curve, the seasons, the bare threshold, the typical planting / harvest dates, and `nearby` (demo only) |
+| `data/checkup/<id>.json` | `checkup_schema.json` | Data Check-up: the field's own break test, the evidence items, the correction, the rain versions, a yearly gpm / twin / chirps series, and `depends_on_corrected_rain` (output ids of labels) |
+
+- Every key is described in `notes/ui_note.md` section "Four new files". Words are not in these files: render the codes.
+- `scripts/check_site.py` refuses any absolute path or outside address inside these four folders.
+- The labels' statuses come from this run's scorecard (`scripts/run_verification.py`); `labels` runs after it and
+  refreshes the `label` blocks inside the other three files.
+
 ## 2026-11-14 (Saturday, afternoon): a third rain version in the range; groundwater out of the water score (owner's decisions)
 
 - **The central rain is now gauge-tuned:** the break-corrected GPM rain times 1.053 in June-September and 0.746 in the

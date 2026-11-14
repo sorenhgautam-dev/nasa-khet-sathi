@@ -1,0 +1,27 @@
+{
+ "id": "sample-3",
+ "image": "data/basemap/demo.jpg",
+ "bounds": [
+  [
+   27.625034,
+   85.379227
+  ],
+  [
+   27.714966,
+   85.480773
+  ]
+ ],
+ "crs": "EPSG:3857",
+ "size_px": [
+  296,
+  296
+ ],
+ "native_zoom": 12,
+ "layer": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+ "product": "HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour",
+ "date": "2025-11-11",
+ "resolution": "30 m (HLS); about 34 m per picture pixel here (GIBS, Web Mercator zoom 12)",
+ "attribution": "NASA HLS (Landsat 8/9), 11 Nov 2025, via NASA GIBS",
+ "chosen_by": "the least hazy November-February HLS picture of 2023-2025 that covers the whole box at least 99% clear (HLS Fmask): 99.94% clear, 4.6% moderate or high aerosol",
+ "source": "https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi"
+}

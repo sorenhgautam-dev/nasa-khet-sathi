@@ -51,7 +51,11 @@ STEPS = [   # (name, command after the interpreter, which fields); --field <id> 
     ("export", ["-m", "pipeline.export.build_field_json"], CORE),
     ("index", ["-m", "pipeline.export.build_index"], SITE),
     ("words", ["-m", "pipeline.export.build_words"], SITE),
+    ("replay_window", ["-m", "pipeline.export.build_replay"], CORE),   # the farmer's question (2026-11-14): 25-Year Replay,
+    ("pulse", ["-m", "pipeline.export.build_pulse"], CORE),            # Field Pulse and Data Check-up, before verification
+    ("checkup", ["-m", "pipeline.export.build_checkup"], CORE),        # (it scores them once the farmer's files exist)
     ("verification", ["scripts/run_verification.py"], FULL),     # before story: the page shows this run's scorecard
+    ("labels", ["-m", "pipeline.export.build_labels"], CORE),         # after verification: this run's scorecard
     ("story", ["-m", "pipeline.export.build_story"], SITE),
     ("validate", ["-m", "pipeline.export.validate", "--final"], SITE),
     ("site_check", ["scripts/check_site.py", "--final"], SITE),

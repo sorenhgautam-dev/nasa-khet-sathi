@@ -1,0 +1,224 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Khet Sathi labels file",
+ "description": "site/data/labels/<field>.json (2026-11-14, rules.yaml labels): how sure and at what scale, for every number the site shows.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "field",
+  "placeholder",
+  "made_by",
+  "sources",
+  "scorecard_of",
+  "scales",
+  "outputs"
+ ],
+ "properties": {
+  "field": {
+   "type": "string",
+   "minLength": 1
+  },
+  "placeholder": {
+   "type": "boolean"
+  },
+  "made_by": {
+   "type": "string"
+  },
+  "sources": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "name",
+     "resolution",
+     "scale"
+    ],
+    "properties": {
+     "name": {
+      "type": "string"
+     },
+     "resolution": {
+      "type": "string"
+     },
+     "scale": {
+      "enum": [
+       "field",
+       "neighbourhood",
+       "valley",
+       "region"
+      ]
+     }
+    }
+   }
+  },
+  "scorecard_of": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "scales": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "field",
+    "neighbourhood",
+    "valley",
+    "region"
+   ],
+   "properties": {
+    "field": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "en",
+      "ne",
+      "about"
+     ],
+     "properties": {
+      "en": {
+       "type": "string"
+      },
+      "ne": {
+       "type": "string"
+      },
+      "about": {
+       "type": "string"
+      }
+     }
+    },
+    "neighbourhood": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "en",
+      "ne",
+      "about"
+     ],
+     "properties": {
+      "en": {
+       "type": "string"
+      },
+      "ne": {
+       "type": "string"
+      },
+      "about": {
+       "type": "string"
+      }
+     }
+    },
+    "valley": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "en",
+      "ne",
+      "about"
+     ],
+     "properties": {
+      "en": {
+       "type": "string"
+      },
+      "ne": {
+       "type": "string"
+      },
+      "about": {
+       "type": "string"
+      }
+     }
+    },
+    "region": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "en",
+      "ne",
+      "about"
+     ],
+     "properties": {
+      "en": {
+       "type": "string"
+      },
+      "ne": {
+       "type": "string"
+      },
+      "about": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  },
+  "outputs": {
+   "type": "object",
+   "minProperties": 1,
+   "additionalProperties": {
+    "$ref": "#/$defs/label"
+   }
+  }
+ },
+ "$defs": {
+  "label": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "sure",
+    "status",
+    "k",
+    "n",
+    "scale",
+    "rain_corrected",
+    "sources",
+    "scorecard"
+   ],
+   "properties": {
+    "sure": {
+     "enum": [
+      "verified",
+      "estimate"
+     ],
+     "description": "verified only when status is VERIFIED"
+    },
+    "status": {
+     "enum": [
+      "VERIFIED",
+      "ESTIMATE",
+      "NOT YET VERIFIABLE"
+     ]
+    },
+    "k": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "n": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "scale": {
+     "enum": [
+      "field",
+      "neighbourhood",
+      "valley",
+      "region"
+     ]
+    },
+    "rain_corrected": {
+     "type": "boolean"
+    },
+    "sources": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "scorecard": {
+     "type": [
+      "string",
+      "null"
+     ]
+    }
+   }
+  }
+ }
+}

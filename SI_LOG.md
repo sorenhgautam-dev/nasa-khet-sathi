@@ -1080,6 +1080,10 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   images, 2023-2025 equal to the summed monthly bulletins); no station table was found for 2001-2021 (archived
   monitoring PDFs could not be downloaded: Internet Archive HTTP 429). The card of the 2025 check
   (`data/cards/demo/dhm_bulletins.json`, overwritten earlier the same day) was restored to its 2026-11-13 content.
+- **Retry (owner's decision 6, same day):** the Internet Archive answered this time; all eight archived monsoon-monitoring
+  PDFs of 2013-2020 were saved (`data/raw/dhm_bulletins/demo/monsoon/wayback/`). Each is accumulated-rain charts per
+  station with no printed number for any valley gauge and no station table, so nothing was read from them (a value off a
+  chart curve would be a guess); no row was added and the card says so.
 
 ## 2026-11-14: choosing the central rain version on gauges it never saw, and the year order (Claude Opus 5.5 via Claude Code, session 9f5addf3, sub-agent)
 
@@ -1148,3 +1152,70 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   after the glass change, the tab and Back behaviour, and the range helpers on a made-up plan with all three versions.
 - **For a person to review:** the new Nepali texts and drafts; the darker greens (#4A7539 for the design's #5F8A4B, and a
   darker grey for small text) chosen for readable white and grey text on glass.
+
+## 2026-11-14: the four features of the farmer's question, data side (Claude Opus 5.5 via Claude Code, session 9f5addf3, sub-agent)
+
+- **What SI did:** wrote the rules first (rules.yaml `labels`, `window_replay`, `pulse`, `checkup`, committed 8abdfe5
+  before any run), then `pipeline/fetch/oni.py`, `pipeline/plans/window.py`, `pipeline/export/build_{replay,pulse,
+  checkup,labels}.py`, their four schemas, the checks in `validate.py` and `scripts/check_site.py`, the farmer scoring in
+  `scripts/run_verification.py` and `pipeline/checks/verify.py`, tests (`tests/test_window.py`, `tests/test_features.py`)
+  and the run_field steps. Chose the window score (WRSI over the window's crop days), the dry / medium / wet starts, the
+  scale bounds and the output-to-scorecard mapping, all stated as Claude's choices in rules.yaml.
+- **Sources looked up by SI:** the FEWS NET WRSI classes (below 50 failure ... 80-95 average) and "a WRSI below 50 is
+  a crop failure (Smith 1992)" came from one web-search summary (World Bank Data Catalog metadata; USGS WRSI readme),
+  not opened; NOAA CPC's +/-0.5 C ONI threshold is cited from memory. Marked so in rules.yaml.
+- **Checked by SI:** a window run reproduces `twin/season.simulate` day by day (from field capacity, and restarted
+  mid-season from the twin's own state; constant bare Kc, FAO-56 surface layer, Kc climate adjustment); the scorecard is
+  byte-identical without farmer files; `validate --final` and `check_site --final` pass for all five fields.
+- **For a person to review:** the Nepali scale names (`labels.scales.*.ne`, Claude's drafts); whether "worked /
+  struggled / failed" by WRSI 80 / 50 reads right for a window that ends before harvest; the scale given to each output
+  (rules.yaml `labels.outputs`).
+
+## 2026-11-14: launch tooling and the probe's recorded demo (Claude Opus 5.5 via Claude Code, session 9f5addf3, sub-agent)
+
+- **What SI did (owner's launch brief: no outside requests at runtime; settle then measure, bench, calibration, bands,
+  the recorded log; one final-check command; the live demo as one command):** tests first, then:
+  - `site/fonts/`: downloaded the four woff2 files the site loaded from Google Fonts, byte for byte, with each family's
+    OFL text. The `@font-face` block is handed to the site agent; no file in `site/js`, `site/css` or `index.html` was
+    edited.
+  - `pipeline/fetch/basemap.py`: map backgrounds from NASA GIBS in Web Mercator. HLS true colour for each prepared
+    field's fetch box, and Blue Marble (August 2004) for the world. Written to `site/data/basemap/`, with a data card
+    per field and CREDITS lines.
+  - The date rule is Claude's choice, written in the module before any picture was looked at. Granules of
+    November-February of the last three cached years qualify if they cover the whole box and are at least 99 % clear by
+    Fmask. Among those, the least hazy wins (Fmask aerosol), then the clearer, then the more recent. It picked
+    2025-11-11, Landsat. The Fmask ranking was printed before the rule was coded, so the rule was written knowing which
+    dates rank high.
+  - `scripts/final_check.py`, which runs, in order:
+    - the version stamp `site/data/version.json`;
+    - the full test suite;
+    - `validate --final`;
+    - `check_site --final`;
+    - a scan of `site/` for outside requests at runtime (its patterns are Claude's choice);
+    - `scan_history.py`;
+    - with `--live`, a byte-for-byte comparison of every published file with the live site.
+  - `scripts/demo_probe.py`: one command for the server, the bridge and the phone's address. `--fake` keeps the made-up
+    numbers out of `site/data/`.
+  - `scripts/build_probe_log.py`: now records the date (`recorded_on`, and the note starts "Recorded on ..."), the place
+    (`--place`) and each reading's own 30 lines with their times, and can publish chosen sessions only (`--session`).
+  - Schemas: `basemap_schema.json` and `version_schema.json` are new, and `probe_log_schema.json` is extended. Their
+    checks are in `pipeline/export/validate.py` (`launch_problems`).
+  - Docs: `docs/PROBE_RECORDING.md` (reusing `robot/CUPS_PROTOCOL.md`), `docs/DEMO_CHECKLIST.md` and
+    `docs/LAUNCH_CHECKLIST.md`.
+- **Sources opened by SI:**
+  - GIBS: the WMTS capabilities, the layer metadata JSON and the API docs' acknowledgement sentence (read 2026-11-14).
+  - The Google Fonts CSS, for the exact files and unicode ranges.
+  - From memory, not opened: the HLS v2.0 DOIs (`10.5067/HLS/HLSL30.002`, `HLSS30.002`) and the Blue Marble NG
+    citation.
+- **Checked by SI:**
+  - The basemaps are aligned to Leaflet's projection: EPSG:3857 bounds, checked against the formulas in the tests.
+  - Asking GIBS for more pixels only repeats pixels, so the native size is kept.
+  - The pictures are small: demo 32 KB, world 192 KB.
+  - The scan finds the site's Google Fonts requests and no false hits in Leaflet.
+  - A fake walk runs end to end through `demo_probe.py`.
+  - The full test suite passes.
+- **For a person to review:**
+  - the HLS date rule and the picture;
+  - whether a 30 m picture is acceptable at the field map's zoom;
+  - the wording of `docs/PROBE_RECORDING.md` for the team;
+  - whether the replay should show `place`.

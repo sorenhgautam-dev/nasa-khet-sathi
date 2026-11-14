@@ -1,245 +1,253 @@
-# Tough questions: a skeptical judge's 15 objections
+# Tough questions: a skeptical judge panel's 15 hardest
 
-Written 2026-11-14 by Claude (Opus 5.5) as an adversarial judge. Strongest first. Numbers cite `VALIDATION.md` rows
-(e.g. 3.9c) and `METHOD_NOTES.md` items (MN 35); refresh them from those rows after today's reruns. "Pre-switch" marks
-runs before the 2026-11-14 switches (bare soil, satellite sowing dates, rain-fed paddy rule).
+Rewritten 14 November 2026 (afternoon) for the four features and the outputs after the owner's decisions of that
+afternoon (tuned rain, rice water losses on, satellite planting dates and "rice waits for rain" undone, groundwater out
+of the water score). Hardest first. Each answer cites `VALIDATION.md` rows (e.g. 3.9b), `METHOD_NOTES.md` items (MN 35),
+`docs/TRACEABILITY.md` ("Gaps found") and `docs/PITCH_FACTS.md` IDs in square brackets. Where we have no good answer, we
+say so, and say what would fix it.
 
-## 1. The suggested plan wins partly because of how the comparison is set up
+## 1. The model never shows a bad rice year
 
-**Question.** "Fill the empty months" shows "about 10 to 24 more" harvest than the farmer's plan. Is that the crop, or
-the rules of your comparison?
+**Question.** Rice is half of every plan and the harvest the farmer depends on. Does your model ever show rice failing?
 
-**Our answer.** Suggested plans keep calendar dates and the best of three sowing days. The farmer's plan is sown on the
-satellite's dates (`rules.yaml season_dates.suggested_plans`: the difference "holds the date difference as well as the
-crop difference"). That switch alone cost the farmer's plan 5 points (4.2c, 2014-2025: 72.1 to 66.8; potato 44.1 to 36.6).
-Harvest is a percentage of each crop's own potential, so 86 against 67 compares wheat with potato, not weight or
-money (MN 37). The gain exists only without water: watered, every plan scores 100 (MN 38). FAO's wheat window here is for
-irrigated wheat (3.19). The third plan's rule was changed after the first run, and "Safest in bad years" was renamed
-"Feed your soil" when it proved not safest (3.19, MN 33). The picked rotations do hold across years, Ky and rain (4.4).
+**Our answer.** No. Rain-fed rice runs as a soil-water bucket with no water held behind the bunds (MN 2, 103). With its
+seepage and percolation now counted, its lowest year is 91.2 out of 100; the sourced monsoon droughts of 2009 and 2015
+give 92.9 and 96.4 [H10]. A rule that made rice wait for 150 mm of rain before transplanting caught neither drought and
+was undone (4.9). Rice's years do not follow Nepal's national rice yields (r 0.29, interval reaching 0) [J5]. So the
+winter crop alone ranks the plans (MN 36), and the farmer's own question, "without risking the harvest I depend on", is
+answered for the winter crop only.
 
-**No good answer.** The benefits tab states the gain with no "if you can't water". Fix: rerun the gain range with the
-farmer's plan on calendar dates too (`--season-dates calendar` exists), and add "if you can't water" to that line.
-
-**Verdict:** not answered.
-
-## 2. The planned "92% verified accuracy" scorecard
-
-**Question.** Verified against what, with which tolerances, set when, on how many cases?
-
-**Our answer.** No such number is in the repository yet. VALIDATION's own Totals give 22 PASS and 9 FAIL (71%), plus 30
-"run with findings" and 6 waiting or not possible. Half the PASSes (11 of 22) are software or equation checks (1.1, 1.2,
-1.2b, 1.5, 2.1-2.5), not accuracy against the world. Others are fitted reference (3.4, 3.5) or not blind (4.1c). A tolerance moved
-after data: the January-nights band went from 0 ± 3 C to 0-5 C on the day the first results were reported (SI_LOG,
-2026-11-11); under the old band 3.4 fails. The report card's rain rule (MN 98) was written on 14 November, after 3.9c's
-0.88 was known. Many checks have tiny n: 3 months (3.9c), 12 years (4.2), 2 valley floods (4.1), 1 frost night
-(4.1c). Secondary passes were picked among several (the wheat option in 4.2 and 4.3; potato fails, rice not testable).
-Dropping "not testable" rows from a denominator raises any percentage.
-
-**No good answer.** Any single percentage can be gamed by the choice of denominator. Fix: drop "92%". Show counts by
-class (independent / fitted reference / code check), each with pass, fail, not testable and n.
+**No good answer.** Fix: the rice pond (`docs/NEXT_STEPS.md` 1: standing water, bund height, a measured percolation
+rate). Until then we say: "Our model cannot show a bad rice year."
 
 **Verdict:** not answered.
 
-## 3. The field is a placeholder: nothing has ground truth
+## 2. Is the gain the crop, or the way you compare?
 
-**Question.** Whose field is this, and has anyone checked a single number against it?
+**Question.** "Fill the empty months" scores 83 against 65 for today's plan. How much of that is your set-up?
 
-**Our answer.** Nobody's. A 60 m square picked from WorldCover 2021 and an NDVI test that grass also passes, then
-moved 25 m by eye; the first pick was a construction plot (1.4, MN 13). Rotation, dates, water and soil are
-placeholders, and the twin's winter potato (30 Oct-21 Feb) is not the season the satellite sees (Jan-May; MN 40). The
-field-visit form is empty (`notes/FIELD_VISIT_FINDINGS.md`). Every output says "placeholder".
+**Our answer.** Some of it. Both plans now use crop-calendar dates (the satellite dates were undone, 4.9), so that tilt
+is gone. But the suggestions may pick the best of three sowing dates, while today's plan sits mid-window. Given the
+same choice, today's crops would score 68.1 [H12]. Harvest is a share of each crop's own potential, so 83 against 65
+compares wheat with potato as percentages, not weight or money (MN 37). The gain exists only without water: with water
+every plan scores 100 [C5, H8]. FAO's wheat window here is for irrigated wheat (3.19), and the wheat plan's own tab says
+wheat here usually needs watering.
 
-**No good answer.** Fix: run the farmer interview (`notes/REAL_FIELD_RECORDING.md`) and compare the farmer's worst years
-with the replay. Otherwise state: "This is a sample field. No farmer has checked its crops, dates, water or soil."
-
-**Verdict:** not answered.
-
-## 4. Root depth and soil decide the size of the gain
-
-**Question.** The wheat plan's lead needs roots at 1.5 m in soil from a map cell 859 m away. Why believe either?
-
-**Our answer.** Depths are the larger end of FAO-56 Table 22 (MN 35), never measured here. With wheat at 1.0 m the gain
-falls from +17 to +8. With winter roots stopped at 0.6 m by a plough pan under the paddy, the wheat plan falls below
-today's (71.7 against 72.3; 4.4, REVIEW_2 H2; pre-switch). The site's "+10 to +24" spans Table 22 only, so it leaves out
-the case where the gain vanishes. Soil: the field's own SoilGrids cell is masked as urban, and the cell used is the
-driest of 56 within 2 km (MN 7). The neighbourhood median adds 2-3 points (4.4c). The picks hold in every case (4.4).
-
-**No good answer** for the plough pan. Fix: add the 0.6 m case as the low end of the gain range ("from about 0").
+**No good answer** for the wording. The benefits tab says "Harvest: about 8 to 22 more" with no "if you can't water",
+and the gain is measured against today's plan at a fixed date. Fix: compare like with like (today's crops at their best
+date too) and add "if you can't water" to that line.
 
 **Verdict:** partly answered.
 
-## 5. The model cannot see a bad rice year
+## 3. Root depth and soil decide the size of the gain
 
-**Question.** Rice is half of every rotation. Does your model ever show a rice failure?
+**Question.** Why believe the wheat plan's lead, when it needs deep roots in soil from a map cell 859 m away?
 
-**Our answer.** No. Rain-fed paddy has no bund storage (MN 2) and scores about 96-99% after the switches (3.21, 4.2c).
-No paddy season fails in any plan or rain version (4.1). The land-preparation rule (MN 69) misses the sourced 2009 and
-2015 monsoon droughts. In 2015 FAOSTAT rice fell 205 kg/ha while the twin rose 4.9 points (4.1). Rice is "not testable"
-against HLS (4.2), FAOSTAT (4.3) and ECOSTRESS (4.2e). So each year is about (100 + winter crop) / 2, and the winter crop
-alone ranks the plans (MN 36).
+**Our answer.** We don't fully. Root depths are the larger end of FAO-56 Table 22, never measured here (MN 35). The site
+shows the gain as a range over Table 22's depths: about 8 to 22 for the wheat plan, 5 to 14 for the lentil plan [H2,
+H3]. The soil is the nearest SoilGrids cell with values, 859 m away; it is the driest of 56 cells within 2 km (MN 7,
+[B6]); the neighbourhood median soil added 2 to 3 points in an earlier run (4.4c). A plough pan under the paddy that
+stops winter roots at 0.6 m put the wheat plan below today's plan (71.7 against 72.3; 4.4, run before this afternoon's
+changes). The same three plans win with fewer years and with other crop sensitivities [H7]; potato and wheat
+sensitivities were never varied.
 
-**No good answer.** Limitation: "Our model cannot show a bad rice year. Its rice numbers say nothing about rice
-drought."
+**No good answer** for the plough pan: the range leaves out the case where the gain vanishes. Fix: rerun the 0.6 m case
+on today's model and show it as the low end; measure the field's own field capacity with the soil tins
+(`notes/FIELD_CAPACITY_PROTOCOL.md`; the site then shows both results).
+
+**Verdict:** partly answered.
+
+## 4. Whose field is this?
+
+**Question.** Has anyone checked a single number against a real field?
+
+**Our answer.** No one. The demo field is a 60 m square we picked from maps; our first pick was a construction plot
+(1.4). Its crops, dates, water source and soil are placeholders, and so are the four sample fields [B4, B5]. The
+field-visit notes are empty (`notes/FIELD_VISIT_FINDINGS.md`). Every screen says "Sample field". The scorecard lists, for
+every output, the data that would check it [G4].
+
+**No good answer.** Fix: the farmer interview (`notes/REAL_FIELD_RECORDING.md`: the best and worst years are asked before
+the farmer sees the app), the farmer test (`docs/FARMER_TEST.md`) and a co-operative pilot (`docs/NEXT_STEPS.md` 7).
 
 **Verdict:** not answered.
 
-## 6. Rain level: the central case is a third above the nearest gauge
+## 5. Your hook says the land sits empty. Your own map says a typical field is bare about a week
 
-**Question.** DHM's Bhaktapur gauge, 2.3 km away, averages 1,375 mm. Your model uses 1,853 mm. Why is the gauge only
-the "edge"?
+**Question.** Which is it?
 
-**Our answer.** The fix restores GPM's own 2001-2016 level, already 1.34 x Bhaktapur's normal while the gauges were in it
-(3.9b, 3.1). Against DHM's 2025 gauges the corrected rain reads 0.88 x in three IMERG Final months, the DHM-scaled rain
-0.61 x; Late months read 1.64 x (3.9c, 3.9d). The rain version moves harvest 3-4 points and water scores about 9, not
-the picks (3.9d). The dry edge is GPM scaled to 1991-2020 monthly normals, not "the nearby station's rain level" as the
-evidence tab says.
+**Our answer.** Both, and we show both. The typical farm square is bare about 7 days a year (0 to 30) [A3]. About 15 in
+100 are bare for more than two months (0 to 31) [A2]. Only about 37 in 100 show two crop seasons (19 to 48) [A4]. So most
+"empty months" are green with something other than a second crop: weeds, grass or fallow. Space sees green, not which
+crop. The bare line (NDVI 0.25) is not tuned, which is why the range is wide [A7] and why bare days are graded "low" on
+the report card. Our sample field, bare about 62 days, is barer than most around it [A5]: it is not typical.
 
-**No good answer.** Three months of one year are the only support for the central level. The report card grades rain
-"medium" on exactly that test (MN 98); the 1.35 x long-term level fails the same 0.8-1.25 band. Fix: grade rain "low",
-or apply the band to the long-term level too.
+**No good answer** for the bare line: there is no ground record of bare days. Fix: farmers' calendars for at least 10
+fields (scorecard `cover_months`), then tune the line on half and test on the rest.
 
 **Verdict:** partly answered.
 
-## 7. Satellite dates now drive the model: circular checks
+## 6. You tuned the rain on Nepal's gauges, then scored it on the same gauges
 
-**Question.** You sow the model's crops on the satellite's green-up. How can twin-satellite agreement still count?
+**Question.** Isn't your rain check circular now?
 
-**Our answer.** It cannot, and we say so (4.2c, report card). But 4.2 still reports the winter crop as "agrees" (rho
-0.64, n 12) on dates taken from the same seasons. The seasons' "high" grade rests on three methods: two built the
-reference, the third was trained on their agreement (3.15). No field calendar exists, and the NDVI rise may be weeds
-or the nursery (4.2c). The circular input also moves the ranking: satellite dates push potato into the dry spring while
-suggested plans keep calendars (objection 1). The unknown tab still says "Planting dates are typical ones, not yours".
+**Our answer.** Yes, and the scorecard says so: the rain-months row (13 of 20 within 19%) is marked in-sample, not
+independent [F11]. The out-of-sample evidence is thin. Leaving one gauge out, the tuned rain scored 40 of 83 months
+against 38 of 83 for the untuned: within the noise. On the locked 2026 months every version scored 3 of 15, and 2026 is
+IMERG Late only, so that test mostly measures Late's own errors [F9]. The level is still 1.33 times Bhaktapur's usual
+[F10]. The "0.88 times the gauges" for 2025 is the untuned rain, and its script runs outside the one-command chain
+(TRACEABILITY "Gaps found") [F12].
 
-**Fix:** drop 4.2's winter result as evidence; grade seasons "high for when the field is green, not tested for crops";
-correct the unknown-tab line.
-
-**Verdict:** partly answered.
-
-## 8. The 2017 correction removes real change by construction
-
-**Question.** You scaled 2017-2025 back to 2001-2016. What if the monsoon really changed?
-
-**Our answer.** The break is well shown: IMERG's gauge weight drops from 96-98% to 56-72% in January 2017, GPCC
-stations from about 50 to about 1 a month, CHIRPS has no step (p 0.24), and IMERG Late steps 1.13 against Final's 1.62
-(3.9b). The correction does remove any real change, and we say so. Its held-out test is weak: only post-2017 years are
-split, the even half has 12 station months, one synoptic station scores it, and the same months chose the method.
-A single yearly factor scores the same (32.2 against 31.4 mm), and November's factor of 2.40 rests on 7 mm against 3
-(3.9b). The fix restores the level, not the order of years: both negative controls fail (4.1).
-
-**Limitation:** "The fix restores the average after 2016, not which years were wet or dry."
-
-**Verdict:** partly answered (the break itself: answered).
-
-## 9. Monsoon onset: the source changed after two failures
-
-**Question.** Your onset rule failed, your second measure failed, then you used DHM's dates. Is that shopping for an
-answer?
-
-**Our answer.** Both our methods fail DHM's window and stay shown as failing (4.1d: median 16 May; 4.1e, 3.22: 27 May).
-DHM's official dates are the right record, and the rule was committed before the run (3.22b). DHM gives -2.2 days over
-2001-2024 (-11.5 to +7.7): no clear shift.
-
-**No good answer for the words.** The site says "The rains start when they used to" and "Three independent records
-agree" (`diary.shift_note`), yet the range allows 11 days earlier or 8 later, CHIRPS's onset does not follow DHM's years
-(Spearman 0.17), and CHIRPS and IMERG may share DHM's gauges (3.22b). "Usually 10-16 June" is only the middle half of
-years. Fix: "No clear change since 2001, in DHM's records"; drop the other two lines.
-
-**Verdict:** partly answered.
-
-## 10. A 300 km GRACE signal lowers the plans' water scores
-
-**Question.** GRACE's mascon runs from the Bihar plain to Everest. Why does it change your field's scores?
-
-**Our answer.** The cell is in JPL mascon 1213 (25.5-28.5 N, 85.0-88.5 E), glaciers and snow included (3.16, MN 26).
-The trend is clear (-2.57 cm/yr); `confidence` 1.0 is 1 - p, not knowledge of the field. "Falling" makes irrigation
-count 1.5 x, lowering water scores by 14-21 points (4.4: 58.8 / 67.2 / 63.0 without it against 38.2 / 50.8 / 44.5;
-pre-switch). The 1.5 x is an owner-approved choice with no published source. The why tab says "Stored water in this
-area is falling". No well data check it.
-
-**No good answer.** Fix: take the 1.5 x out of the score and show the trend as context only. Otherwise state: "Regional,
-glaciers included, not your well. It lowers water scores by up to 21 points."
+**No good answer:** no rain version comes within 19% in most months. Fix: IMERG Final for 2026 and more of DHM's monthly
+bulletins, then score once on months the tuning never saw (3.9e).
 
 **Verdict:** not answered.
+
+## 7. The 2017 correction removes any real change by construction
+
+**Question.** What if the monsoon really did get wetter after 2016?
+
+**Our answer.** The change in NASA's inputs is well shown: the gauges' share falls from 96-98% to 56-72% a year, GPCC's
+stations from about 50 a month to about 1, CHIRPS has no step (p 0.24), and IMERG Late steps 1.13 where Final steps
+1.62 [F1-F5]. A real change would be removed too, and the "unknown" tab says so. The correction's held-out test is weak:
+only the years after 2016 are split, one synoptic station scores it, and the same months chose the method; a single
+yearly factor scores the same (3.9b). It restores the level, not the order of wet and dry years: both negative controls
+fail (4.1).
+
+**Limitation** we state: "The fix restores the average after 2016, not which years were wet or dry." Fix: DHM's gauge
+data for 2017-2023, the only thing that could reorder the years (3.9e).
+
+**Verdict:** partly answered (the change itself: answered).
+
+## 8. "Verified" sounds strong. Verified what?
+
+**Question.** What exactly is verified, against what, decided when?
+
+**Our answer.** Three things, on a yardstick written and committed before any score: an independent reference, at least
+10 cases, at least 92% within tolerance [G1]. The rain word of each month (12 of 12) and the heat word (12 of 12) test
+the shape of the year, not any single year. The monsoon row tests our copy of DHM's own table (24 of 24), not a method
+of ours [G2]. Everything a farmer would act on, each year's square, each plan's harvest and gain, is an estimate or not
+yet checkable [G3, G4]. We report the three classes, never one percentage.
+
+**Verdict:** answered, with the warning that the three verified rows are easy passes.
+
+## 9. You changed the model on the last day. Did you tune it to your checks?
+
+**Question.** Satellite dates on, then off; rice rule on, then off; rain version switched. How is that not tuning?
+
+**Our answer.** Partly it is. Each rule is committed before its first run [J6]. The rice water losses had a keep rule
+fixed before the comparison, and passed: no independent check got worse [H9]. But the satellite planting dates were
+undone after the independent checks got weaker (`config/rules.yaml` `season_dates.apply`), and the rain version was
+chosen on gauge months [F9]. Choosing by the checks after seeing them is a mild form of tuning. Every undone run is kept
+and described (4.9), so a reader can see both. The flood rule's earlier versions were also run before it was set (4.1).
+
+**No good answer** for the undo itself. Fix: freeze the model now; any later change names in advance the check that
+decides it.
+
+**Verdict:** partly answered.
+
+## 10. The replay "finds" known floods and droughts. Was it blind?
+
+**Question.** How many did it find, and how many did it invent?
+
+**Our answer.** Not blind. Valley floods: 2 of 2, but the 100 mm and 200 mm flood rules were run before the final rule,
+so those floods were known to be among the wettest days (4.1). One flagged flood year, 2004, has no recorded flood.
+Valley dry seasons: 2 of 4; 3 of 9 flagged seasons were not confirmed; both negative controls fail (the 2023 and 2025
+monsoons, which DHM had at 107% and 117% of normal) [C2]. The rules are quotas: the driest fifth of seasons is flagged,
+whatever the rain.
+
+**Limitation** we state: "'Dry year' means our driest fifth of seasons." Fix: more sourced valley events (scorecard
+`needs`).
+
+**Verdict:** partly answered.
 
 ## 11. The probe is untested and reads the wrong depth
 
-**Question.** How accurate is the probe, and how can a few centimetres of soil update a 0.6-1.5 m root zone?
+**Question.** How accurate is it, and how can a few centimetres of soil update a root zone of 0.6 to 1.5 m?
 
-**Our answer.** It is untested: the bench test (5.1-5.3) waits for the team's cups. The capacitive sensor's 0-100 scale
-(air to water) is not soil water (`robot/README.md`), and such sensors respond to texture, salt, temperature and
-packing. The Kalman R is repeatability only, without fit error or depth mismatch, so `sure` after a reading "is too
-high" (5.4, MN 62). The site already shows `sure` 0.21 and wetness 96 on every part with no probe reading: the twin on
-3 November, for a calendar-sown potato. By the project's own ageing rule `sure` is 0 today
-(`data/clean/demo/twin_state.json`; row 5.4's P0, r and sure_prior are stale against it).
+**Our answer.** It is untested: the cup test waits for the team (5.1-5.3) [E3]. The sensor's 0-100 scale runs from air
+to water; it is not soil water, and such sensors respond to texture, salt, temperature and packing (`robot/README.md`).
+Its error R would be repeatability only, so "how sure" after a reading would be too high (5.4, MN 62). Each part already
+shows "how sure" 0.28 and wetness 96 from the model alone, as of 3 November [C6]; aged to 14 November the model alone
+would be at 0.05 (5.4). In Safe Trial the probe only compares parts of the same field, never gives a water number.
 
-**Fix:** run the six cups (`robot/CUPS_PROTOCOL.md`, about two hours). Until then: "The probe is a prototype. Its
-readings are not yet checked against weighed soil water."
+**No good answer.** Fix: run the six cups (`robot/CUPS_PROTOCOL.md`, about two hours) and the soil tins
+(`notes/FIELD_CAPACITY_PROTOCOL.md`). Until then: "The probe is a prototype."
 
 **Verdict:** not answered.
 
-## 12. The 2040 range leaves out the model's own doubt
+## 12. Why should El Niño or La Niña years matter for this field?
 
-**Question.** Today's plan scores 61-74 by 2040. Does that band include your own uncertainty?
+**Question.** The Replay highlights years with the same ONI state as this year. Where is the evidence that ONI tells
+anything about rain in the Kathmandu valley?
 
-**Our answer.** No. It is the lowest to highest of 46 runs (23 models, two scenarios) that change only monthly mean
-rain and temperature on the observed 2002-2025 weather (MN 50, 54). Dry spells, storm intensity, heat damage, CO2 and
-crop timing stay fixed (MN 50-53). Root depth alone spans 14 points of gain (objection 4), as wide as the whole climate
-band. The plausibility test (4.7) compares one 25 km cell with a Nepal-wide range that may come from the same NEX-GDDP
-data: it catches unit errors, not bias. Row 4.7 still shows 5 models; `data/checks/demo/future.json` has 23.
+**Our answer.** There is none in our outputs [C8]. We have not tested ONI against this field's rain or the replay's
+harvests. The highlight groups similar years for the farmer to look at; it is not a forecast. With 24 years, each ENSO
+state holds only a handful of them, so any test would be weak.
 
-**Limitation:** "The range shows only how climate models differ. Our model's own doubts are larger."
+**No good answer.** Fix: a rule fixed before the run: compare the field's monsoon and winter rain, and the replay's
+harvests, across ONI states with a permutation test, and against DHM's gauges. Until then the screen should say
+"similar years, not a forecast".
 
-**Verdict:** partly answered.
+**Verdict:** not answered.
 
-## 13. Ky and FAO-33 are pushed past their range
+## 13. Safe Trial: one quarter, one probe spot, one season. What can that show?
 
-**Question.** Where do the crop sensitivities come from, and do they hold at large water shortfalls?
+**Question.** Is a quarter of a 60 m field an experiment?
 
-**Our answer.** Wheat 1.15 and potato 1.1 are FAO-33 seasonal values; rice and lentil are assumed 1.0 (MN 5). Ky 0.8 and
-1.2 for the assumed crops keep the same picks (4.4b). But FAO-33's straight line is applied beyond its range: 12 of 24
-rain-fed potato seasons get less than half their water (MN 19, pre-switch). Potato and wheat Ky were never varied, and
-the lentil plan's harvest rests on an assumed value.
+**Our answer.** Not a powered one. A quarter is about 900 m² [E1], with one probe spot, one season, and a probe without
+a bench test [E3]. What it does: it lets a farmer see a plan on their own land before risking the whole field, which is
+what every plan's "check" tab already asks [E2]. It also gives us a first measured harvest to compare with the Replay's
+estimate. We will report each trial as one case, never as proof [E4].
 
-**Fix:** rerun the picks with potato and wheat Ky at ±20% (one `scripts/run_plans.py` run). Limitation: "In very dry
-seasons the harvest numbers are an extrapolation."
-
-**Verdict:** partly answered.
-
-## 14. Event years: not blind, quotas, failed controls
-
-**Question.** Your replay "finds" the known floods and droughts. Was the test blind?
-
-**Our answer.** No. The 100 mm and 200 mm flood rules ran before the decile rule; drought deciles 1-2 were preferred
-partly because they matched more events (MN 14). Both rules are quotas: a fifth of years is flagged whatever the rain.
-Valley floods 2 of 2, valley droughts 2 of 4; both negative controls fail (the 2023 and 2025 monsoons flagged dry, DHM
-107% and 117%; 4.1). Four of the five worst years are listed droughts, but so are 12 of 24 years: 16% by chance. The
-report card still grades floods "medium".
-
-**Limitation:** "'Drier than usual' means our driest fifth of years. After 2016 the order of years is less sure."
+**What would fix it:** many farmers' trials pooled through a co-operative, with the comparison rule written before the
+season (`docs/NEXT_STEPS.md` 7).
 
 **Verdict:** partly answered.
 
-## 15. The FAO-56 shortcuts
+## 14. Does the 2040 range include your own model's doubt?
 
-**Question.** Which simplifications could change your numbers?
+**Question.** Today's plan stays about 65 by 2040, give or take. Is that band honest?
 
-**Our answer.** The equations reproduce FAO-56's printed examples (2.1b-2.1d, 2.5). Listed shortcuts: full root depth
-from sowing (MN 35); depletion carried as a fraction at crop changes, creating 870 mm over the record (MN 39); unlimited
-water in the watered case (MN 38). Not listed anywhere: capillary rise from a shallow valley-floor water table, which
-would feed winter crops. Outside checks are weak: GLDAS soil r 0.34, below the bar set (4.2d); ECOSTRESS sees no dry
-season while the twin is short of water on 39% of overpass days (4.2e). The bare-soil method, switched on today, moved
-harvest 72 to 69 (3.21).
+**Our answer.** It is honest about what it is: the spread of 23 climate models, two futures and our rain versions,
+changing only monthly means on the observed weather [H11] (MN 50). Dry spells, storm intensity, heat damage and CO2 stay
+as observed, and warming reaches the crops only through water (MN 53). Root depth alone moves the wheat plan's gain by
+about 14 points [H2], as wide as the whole climate band. The plausibility check (4.7) catches unit and sign errors, not
+bias.
 
-**Fix:** add "We assume no shallow water table" to the unknown tab and METHOD_NOTES.
+**Limitation** we state: "The range shows how climate models differ. Our model's own doubts are larger."
 
 **Verdict:** partly answered.
+
+## 15. "Made for any field on Earth." Where is the proof?
+
+**Question.** Every field on your site is near Bhaktapur.
+
+**Our answer.** True. The twin's inputs are global datasets, and two commands download and build a field [I3, I4]. Four
+sample fields were built by the same command, all 3 to 7 km from the demo field [B5]. A field in Madagascar ran its rain
+check with no code change and found no gauge change, so it kept NASA's rain as published [F13]; its replay and plans
+are not on the site. The crop calendars are Nepal's, DHM's records are Nepal's, and the temperature correction needs a
+nearby station.
+
+**No good answer** yet. Fix: build the Madagascar field end to end (its config exists) with its own crop calendar, and
+put it on the site.
+
+**Verdict:** not answered.
+
+## Fixed since the last version of this list
+
+- **Groundwater lowered the water scores by up to 21 points.** Now context only: irrigation counts once whatever the
+  regional trend (`config/rules.yaml` `plans.water_strict_when_falling` 1.0, owner's decision).
+- **Satellite planting dates made the twin-satellite check circular.** Undone; the check is independent again (4.2c,
+  4.9).
+- **"Three independent records agree" on the monsoon.** Removed. The site says "No clear change since 2001, in Nepal's
+  weather office records" and "These records share some rain gauges" (`F` `diary.shift_note`, `method.onset`).
+- **A single "92% verified" number.** Replaced by the compliance table's three classes [G2-G4].
+- **"How sure" came from SMAP with no source tag.** SMAP L4 is now in the field's sources (`F` `sources`).
 
 ## The three fixes that would most improve our answers
 
-1. **Compare like with like** (objections 1, 4, 7). Rerun the gain with the farmer's plan on calendar dates and with a
-   0.6 m plough-pan case. Show the range that results, and add "if you can't water" to every harvest-gain line.
-2. **Replace any "92%" with a classed tally** (objection 2): independent / fitted reference / code check, each with
-   pass, fail, not testable and n, taken from VALIDATION's rows as they stand.
-3. **One wording pass on overclaims** (objections 6, 9, 10, 11): grade rain "low" (or test the long-term level); remove
-   "three independent records agree" and "the rains start when they used to"; make the groundwater line name its
-   1.5 x effect on water scores; show no `sure` on a part until the probe has read it.
+1. **Ground truth** (questions 3, 4, 5, 11): the farmer interview, the farmer test, the soil tins and the probe's cups.
+   Each takes hours, not weeks.
+2. **The rice pond** (question 1): the one model change that could let a bad rice year show at all.
+3. **One honest wording pass** (questions 2, 6, 12): "if you can't water" on every harvest gain; today's crops at their
+   best date in the comparison; "similar years, not a forecast" beside the El Niño highlight.

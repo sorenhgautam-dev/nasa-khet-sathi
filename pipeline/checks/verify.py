@@ -91,3 +91,24 @@ def same_direction(a, b):
         if da and db:
             out.append((da > 0) == (db > 0))
     return out
+
+
+def _slot(month):
+    """rules.yaml rotation_guess slots (pipeline/diary/guess.py SLOTS): monsoon June-November, winter December-May."""
+    return "monsoon" if 6 <= month <= 11 else "winter"
+
+
+def season_date_passes(farmer, seasons, ini_days, tol_days):
+    """rules.yaml pulse.farmer_scoring. farmer: [(crop, year, planted, harvested)] (datetime.date; year = the harvest
+    year); seasons: the Pulse's [{year, slot, source, greenup, end}] (ISO dates); ini_days: {crop: initial stage, days}.
+    Two bools per row, planted then harvested: within tol_days of the matched HLS season's planting (green-up minus the
+    crop's initial stage) and end. The slot is the middle day's; no season of that slot and year fails both."""
+    from datetime import date, timedelta
+    out = []
+    for crop, year, planted, harvested in farmer:
+        mid = planted + (harvested - planted) / 2
+        s = next((x for x in seasons if x["source"] == "hls" and x["slot"] == _slot(mid.month) and x["year"] == year), None)
+        ours = (None, None) if s is None else (date.fromisoformat(s["greenup"]) - timedelta(days=ini_days[crop]),
+                                               date.fromisoformat(s["end"]))
+        out += [o is not None and abs((o - t).days) <= tol_days for o, t in zip(ours, (planted, harvested))]
+    return out

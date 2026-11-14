@@ -12,7 +12,9 @@ What it refuses in site/:
 - calling a server function (`fetch('api/...')`), or files that would make Vercel run code or a build: an `api/`
   folder, `middleware.*`, `package.json`, `.env*`, files that need compiling (.ts, .tsx, .jsx, .vue, .svelte, .scss),
   or a `vercel.json` that sets functions, env, crons, builds or a build or install command.
-The JSON under site/data/ is data and is not searched for paths.
+The JSON under site/data/ is data and is not searched for code paths; the four feature folders (replay, pulse, checkup,
+labels; 2026-11-14) are searched for links: any text that starts at the domain root ('/...') or names another site
+('https://...') is refused, so their files point only at other files of the site, relatively.
 """
 import json
 import re
@@ -60,6 +62,23 @@ def _vercel_json_problems(name, text):
              "text": f"sets {bad}: the site has no functions, no environment variables and no build step"}] if bad else []
 
 
+FEATURE_DIRS = ("replay", "pulse", "checkup", "labels")
+
+
+def data_link_problems(name, doc):
+    """[{file, line, kind, text}] for every string in a feature file that is an absolute path or another site's address."""
+    out, stack = [], [doc]
+    while stack:
+        x = stack.pop()
+        if isinstance(x, dict):
+            stack += list(x.values())
+        elif isinstance(x, list):
+            stack += x
+        elif isinstance(x, str) and (x.startswith("/") or "://" in x):
+            out.append({"file": name, "line": 0, "kind": "data link", "text": f"{x[:100]!r}: only relative links to the site's own files"})
+    return out
+
+
 def site_problems(site_dir=REPO / "site", final=False):
     site_dir = Path(site_dir)
     out = []
@@ -80,6 +99,8 @@ def site_problems(site_dir=REPO / "site", final=False):
             out += _vercel_json_problems(name, f.read_text(errors="replace"))
         elif f.suffix in CODE_EXT:
             out += text_problems(name, f.read_text(errors="replace"))
+        elif f.suffix == ".json" and len(parts) == 3 and parts[0] == "data" and parts[1] in FEATURE_DIRS:
+            out += data_link_problems(name, json.loads(f.read_text()))
     if final and not (site_dir / "index.html").is_file():
         out.append({"file": "index.html", "line": 0, "kind": "missing", "text": "site/index.html is the page the live address opens"})
     return out

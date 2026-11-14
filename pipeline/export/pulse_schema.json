@@ -1,0 +1,537 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Khet Sathi Field Pulse",
+ "description": "site/data/pulse/<field>.json (2026-11-14, rules.yaml pulse): the greenness history as a heartbeat line.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "field",
+  "placeholder",
+  "made_by",
+  "sources",
+  "points",
+  "point_scale",
+  "curve",
+  "seasons",
+  "bare_threshold",
+  "typical",
+  "nearby",
+  "labels"
+ ],
+ "properties": {
+  "field": {
+   "type": "string",
+   "minLength": 1
+  },
+  "placeholder": {
+   "type": "boolean"
+  },
+  "made_by": {
+   "type": "string"
+  },
+  "sources": {
+   "type": "array",
+   "items": {
+    "$ref": "#/$defs/source"
+   }
+  },
+  "points": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "hls",
+    "modis"
+   ],
+   "properties": {
+    "hls": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "prefixItems": [
+       {
+        "type": "string",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+       },
+       {
+        "type": "number",
+        "minimum": -1,
+        "maximum": 1
+       }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+     }
+    },
+    "modis": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "prefixItems": [
+       {
+        "type": "string",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+       },
+       {
+        "type": "number",
+        "minimum": -1,
+        "maximum": 1
+       }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+     }
+    }
+   }
+  },
+  "point_scale": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "hls",
+    "modis"
+   ],
+   "properties": {
+    "hls": {
+     "enum": [
+      "field",
+      "neighbourhood",
+      "valley",
+      "region"
+     ]
+    },
+    "modis": {
+     "enum": [
+      "field",
+      "neighbourhood",
+      "valley",
+      "region"
+     ]
+    }
+   }
+  },
+  "curve": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "step_days",
+    "points"
+   ],
+   "properties": {
+    "step_days": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "points": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+       {
+        "type": "string",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+       },
+       {
+        "type": "number",
+        "minimum": -1,
+        "maximum": 1
+       },
+       {
+        "enum": [
+         "hls",
+         "modis"
+        ]
+       }
+      ]
+     }
+    }
+   }
+  },
+  "seasons": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "year",
+     "slot",
+     "source",
+     "greenup",
+     "peak",
+     "end",
+     "peak_ndvi"
+    ],
+    "properties": {
+     "year": {
+      "type": "integer"
+     },
+     "slot": {
+      "enum": [
+       "monsoon",
+       "winter"
+      ]
+     },
+     "source": {
+      "enum": [
+       "hls",
+       "modis"
+      ]
+     },
+     "greenup": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+     },
+     "peak": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+     },
+     "end": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+     },
+     "peak_ndvi": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+     }
+    }
+   }
+  },
+  "bare_threshold": {
+   "type": "number",
+   "minimum": -1,
+   "maximum": 1
+  },
+  "typical": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "slot",
+     "crop",
+     "planting",
+     "greenup",
+     "peak",
+     "harvest",
+     "years",
+     "n"
+    ],
+    "properties": {
+     "slot": {
+      "enum": [
+       "monsoon",
+       "winter"
+      ]
+     },
+     "crop": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "planting": {
+      "oneOf": [
+       {
+        "type": "string",
+        "pattern": "^\\d{2}-\\d{2}$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "greenup": {
+      "type": "string",
+      "pattern": "^\\d{2}-\\d{2}$"
+     },
+     "peak": {
+      "type": "string",
+      "pattern": "^\\d{2}-\\d{2}$"
+     },
+     "harvest": {
+      "type": "string",
+      "pattern": "^\\d{2}-\\d{2}$"
+     },
+     "years": {
+      "type": "array",
+      "items": {
+       "type": "integer"
+      },
+      "minItems": 2,
+      "maxItems": 2
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1
+     }
+    }
+   }
+  },
+  "nearby": {
+   "oneOf": [
+    {
+     "type": "null"
+    },
+    {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "cropland_ha",
+      "years",
+      "area",
+      "median_bare_days",
+      "share_long_bare",
+      "share_two_seasons",
+      "this_field",
+      "map",
+      "label"
+     ],
+     "properties": {
+      "cropland_ha": {
+       "type": "number",
+       "minimum": 0
+      },
+      "years": {
+       "type": "string"
+      },
+      "area": {
+       "type": "string"
+      },
+      "median_bare_days": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "value",
+        "low",
+        "high",
+        "unit"
+       ],
+       "properties": {
+        "value": {
+         "type": "number"
+        },
+        "low": {
+         "type": "number"
+        },
+        "high": {
+         "type": "number"
+        },
+        "unit": {
+         "type": "string"
+        }
+       }
+      },
+      "share_long_bare": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "value",
+        "low",
+        "high",
+        "unit"
+       ],
+       "properties": {
+        "value": {
+         "type": "number"
+        },
+        "low": {
+         "type": "number"
+        },
+        "high": {
+         "type": "number"
+        },
+        "unit": {
+         "type": "string"
+        }
+       }
+      },
+      "share_two_seasons": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "value",
+        "low",
+        "high",
+        "unit"
+       ],
+       "properties": {
+        "value": {
+         "type": "number"
+        },
+        "low": {
+         "type": "number"
+        },
+        "high": {
+         "type": "number"
+        },
+        "unit": {
+         "type": "string"
+        }
+       }
+      },
+      "this_field": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "mean_bare_days",
+        "mean_seasons_a_year"
+       ],
+       "properties": {
+        "mean_bare_days": {
+         "type": [
+          "number",
+          "null"
+         ]
+        },
+        "mean_seasons_a_year": {
+         "type": [
+          "number",
+          "null"
+         ]
+        }
+       }
+      },
+      "map": {
+       "type": "string",
+       "pattern": "^data/area/[^/]+\\.json$"
+      },
+      "label": {
+       "$ref": "#/$defs/label"
+      }
+     }
+    }
+   ]
+  },
+  "labels": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "pulse_hls",
+    "pulse_modis",
+    "pulse_curve",
+    "pulse_seasons",
+    "pulse_typical"
+   ],
+   "properties": {
+    "pulse_hls": {
+     "$ref": "#/$defs/label"
+    },
+    "pulse_modis": {
+     "$ref": "#/$defs/label"
+    },
+    "pulse_curve": {
+     "$ref": "#/$defs/label"
+    },
+    "pulse_seasons": {
+     "$ref": "#/$defs/label"
+    },
+    "pulse_typical": {
+     "$ref": "#/$defs/label"
+    }
+   }
+  }
+ },
+ "$defs": {
+  "source": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "name",
+    "product",
+    "resolution",
+    "years",
+    "type"
+   ],
+   "properties": {
+    "name": {
+     "type": "string",
+     "minLength": 1
+    },
+    "product": {
+     "type": "string",
+     "minLength": 1
+    },
+    "resolution": {
+     "type": "string",
+     "minLength": 1
+    },
+    "years": {
+     "type": "string",
+     "minLength": 1
+    },
+    "type": {
+     "enum": [
+      "satellite",
+      "model",
+      "station",
+      "probe"
+     ],
+     "description": "Golden rule 8: model-based data must be labelled model."
+    }
+   }
+  },
+  "label": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "sure",
+    "status",
+    "k",
+    "n",
+    "scale",
+    "rain_corrected",
+    "sources",
+    "scorecard"
+   ],
+   "properties": {
+    "sure": {
+     "enum": [
+      "verified",
+      "estimate"
+     ],
+     "description": "verified only when status is VERIFIED"
+    },
+    "status": {
+     "enum": [
+      "VERIFIED",
+      "ESTIMATE",
+      "NOT YET VERIFIABLE"
+     ]
+    },
+    "k": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "n": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "scale": {
+     "enum": [
+      "field",
+      "neighbourhood",
+      "valley",
+      "region"
+     ]
+    },
+    "rain_corrected": {
+     "type": "boolean"
+    },
+    "sources": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "scorecard": {
+     "type": [
+      "string",
+      "null"
+     ]
+    }
+   }
+  }
+ }
+}

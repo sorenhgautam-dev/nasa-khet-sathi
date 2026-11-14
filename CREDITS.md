@@ -17,11 +17,22 @@ server functions, no environment variables. GitHub Pages is not used.
 - **Images:** `site/img/bg-phone.svg`, `bg-web.svg`, `bg-home.svg` and `farm.webp` are our UI teammate's images from
   `design/assets/` (the farm illustration re-encoded smaller with cwebp; no other change). `site/img/icon.svg` redraws the
   design's leaf logo.
-- **Fonts:** Inter Tight, Inter and Mukta (SIL Open Font License 1.1), loaded from Google Fonts after the first screen,
-  with `font-display: swap` and system fallbacks. Not self-hosted: the woff2 files the site uses (about 220 KB: Inter and Inter Tight
-  variable, Mukta 400 and 700) would not fit the first screen's 300 KB.
-- **Map:** Leaflet 1.9.4 (BSD 2-Clause; self-hosted in `site/vendor/leaflet/` with its LICENSE), with map tiles from
-  OpenStreetMap (© OpenStreetMap contributors, ODbL; https://www.openstreetmap.org/copyright), credited on every map.
+- **Fonts:** Inter Tight, Inter (The Inter Project Authors) and Mukta (Ek Type, Girish Dalvi) (SIL Open Font License 1.1),
+  loaded after the first screen (`site/fonts/fonts.css`, `font-display: optional`, so text never jumps when a font
+  arrives late) with system fallbacks. **Self-hosted from 2026-11-14** (owner's
+  launch brief: no outside request at runtime): `site/fonts/` holds the four woff2 files the site used from Google Fonts,
+  byte for byte (Inter v20 and Inter Tight v9 latin variable, Mukta v17 devanagari 400 and 700; 223 KB together), each
+  family's OFL text beside them (`OFL-*.txt`, from github.com/google/fonts). Downloaded 2026-11-14 from fonts.gstatic.com.
+  Wired into the site on 2026-11-14; the Google Fonts links are gone.
+- **Map:** Leaflet 1.9.4 (BSD 2-Clause; self-hosted in `site/vendor/leaflet/` with its LICENSE). Map backgrounds from
+  2026-11-14 (owner's launch brief: no outside request at runtime): NASA pictures served with the site, made by
+  `pipeline/fetch/basemap.py` from NASA GIBS (no login; NASA open data). For the fields: HLS Nadir BRDF-Adjusted
+  Reflectance, true colour (HLSL30 v2.0, doi:10.5067/HLS/HLSL30.002, or HLSS30 v2.0, doi:10.5067/HLS/HLSS30.002; NASA LP
+  DAAC), the demo box on 11 Nov 2025. For the world: Blue Marble: Next Generation, August 2004 (Stöckli, R., Vermote, E.,
+  Saleous, N., Simmon, R. and Herring, D., 2005, NASA Earth Observatory). GIBS acknowledgement: "We acknowledge the use of
+  imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and
+  Information System (ESDIS)." (nasa-gibs.github.io/gibs-api-docs, read 2026-11-14). The site used OpenStreetMap tiles
+  (© OpenStreetMap contributors, ODbL) before this.
 - **Charts:** drawn as inline SVG and HTML by `site/js/how.js`; no chart library and no outside chart service.
 - **Design update (2026-11-14):** our UI teammate's frosted-glass cards, warmer sun colour and the new "Next 6 months"
   screen (`design/screens/Future6.dc.html`, `W8_Future6.dc.html`), built into the site by SI (see SI_LOG.md, 2026-11-14,
@@ -242,7 +253,8 @@ TODO-VERIFY on the FAOSTAT site.
   `data/clean/demo/dhm_bulletin_months.csv`).
 - DHM Climate Division, Monsoon Season (June-September) reports 2022 to 2025
   (https://dhm.gov.np/climate-services/climate%20reports/seasonal-reports), the archived 2019 and 2020 monsoon reports (Internet
-  Archive copies of dhm.gov.np/uploads/climatic/, maps only, nothing read), and the "State of the Climate of Nepal 2024" and
+  Archive copies of dhm.gov.np/uploads/climatic/, maps only, nothing read), eight archived "monsoon monitoring" PDFs of
+  2013-2020 (charts only, nothing read), and the "State of the Climate of Nepal 2024" and
   "State of the Nepal Climate 2025" (Annex 2, a cross-check). (c) DHM, no open licence found; preliminary data;
   **validation only, not redistributed** (`data/clean/demo/dhm_monsoon_years.csv`).
 - MoALD (Ministry of Agriculture and Livestock Development, Nepal; earlier MoAD), "Statistical Information on Nepalese
@@ -381,6 +393,17 @@ for each claim (copied from notes/parallel_session.md).
   non-commercial and share-alike). Nothing from it is in the repository or the export.
 - `site/data/story.json` reuses only the project's own outputs listed above (each chart names its sources); no new dataset.
 
+### The four features of the farmer's question (2026-11-14; cited in `config/rules.yaml` `labels`, `window_replay`, `pulse`, `checkup`)
+
+- NOAA Climate Prediction Center, Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt
+  (ERSST.v5, Nino-3.4; US government work, public domain): the 25-Year Replay's El Nino / La Nina highlight only
+  (`pipeline/fetch/oni.py`, DATA_AUDIT 1.22).
+- Water Requirement Satisfaction Index: Frere, M. & Popov, G.F. (1979), Agrometeorological crop monitoring and
+  forecasting, FAO Plant Production and Protection Paper 17; FEWS NET's WRSI classes (World Bank Data Catalog metadata of
+  "Gridded dekadal Water Requirement Satisfaction Index (WRSI) for Africa", 2025) and the USGS WRSI readme
+  (iridl.ldeo.columbia.edu/documentation/usgs/adds/wrsi/WRSI_readme.pdf), read in a web-search summary, not opened.
+- `site/data/{labels,replay,pulse,checkup}/` otherwise reuse only the project's own outputs listed above.
+
 ### Licence notices (REVIEW_2, 2026-11-13; owner's answer 13: keep the DHM table with a notice, state the GSOD terms, say in LICENSE what MIT does not cover)
 
 - **Kathmandu Airport station values.** Every value has GHCN source flag `S` (NOAA Global Summary of the Day). The GSOD
@@ -449,6 +472,7 @@ Licences are read from each package's installed metadata.
 | Claude Opus 5.5 (Anthropic), via Claude Code (parallel agent) | 2026-11-13 (night) | Draft machine translations of the site's words (screens, shared words, glossary, crop explainers; 269 texts each) into Hindi, Bengali, Spanish, French and Swahili, translated from the English (`pipeline/words/drafts/`), published beside English and Nepali in `site/data/words.json`, each language flagged as a draft with a 'Draft translation' label. Source quotations kept in their original English, untranslated. Nothing calls an AI service from the site. Details in SI_LOG.md | Not reviewed: every draft language needs native-speaker review |
 | Claude Opus 5.5 (Anthropic), via Claude Code (parallel agent) | 2026-11-14 (Saturday morning) | The "How we know" data story (`pipeline/export/build_story.py` -> `site/data/story.json`: 17 charts from finished outputs), the accuracy report card (VALIDATION.md), the satellite inventory and the challenge's resource list (DATA_AUDIT.md 7-8), the Sentinel-1 assessment (DATA_AUDIT 8.1, ASF metadata only); English and Nepali captions drafted by SI. Details in SI_LOG.md | Not reviewed yet: the owner reviews the report card and the confidence rules (METHOD_NOTES 98); a native speaker reviews the Nepali |
 | Claude Opus 5.5 (Anthropic), via Claude Code (session 9f5addf3, a sub-agent) | 2026-11-14 (Saturday) | Locked accuracy test set, reference data only: downloaded and transcribed DHM's 38 monthly bulletins (10 valley gauges, 358 station-months, with each month's wettest day), DHM's monsoon-season station totals (2022-2025, 36 rows) and MoALD's district yields for Bhaktapur (7 editions, 21 rows), with data cards and image spot-checks; not compared with any model output. Details in SI_LOG.md | Not reviewed by a person yet |
+| Claude Opus 5.5 (Anthropic), via Claude Code (session 9f5addf3, a sub-agent) | 2026-11-14 (Saturday afternoon) | Launch tooling and the probe's recorded demo (owner's launch brief): self-hosted fonts downloaded into `site/fonts/` with their licences; NASA map backgrounds (`pipeline/fetch/basemap.py`: HLS from NASA GIBS on a date chosen by a rule fixed before looking, and Blue Marble); `scripts/final_check.py` (all checks, the version stamp, the outside-request scan, the live byte-for-byte comparison); `scripts/demo_probe.py`; the probe replay's date, place and per-line times (`scripts/build_probe_log.py`); schemas and validator checks for `probe_log.json`, `version.json` and `basemap/*.json`; `docs/PROBE_RECORDING.md`, `docs/DEMO_CHECKLIST.md`, `docs/LAUNCH_CHECKLIST.md`; tests first. Details in SI_LOG.md | Not reviewed by a person yet |
 
 ## Data fetched by the pipeline
 
@@ -494,3 +518,14 @@ Licences are read from each package's installed metadata.
 - NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `sample-4`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-14 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
 - NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation; temperature correction A), field `sample-4`, 2001-01-01 to 2025-08-24, fetched 2026-11-14
 - NASA GPM IMERG V07 daily (GPM_3IMERGDF Final for 2025-09-30, its last day in CMR; GPM_3IMERGDL Late for 2025-10-01 to 2026-07-31; GES DISC OPeNDAP, the field `demo`'s box), fetched 2026-11-14 by pipeline/fetch/gpm.py into `data/rain2026/` (never `data/clean/demo/gpm.parquet`): the locked 2026 test of the central rain version only (`scripts/run_rain_selection.py`; rules.yaml verification.rain_selection); never the twin's rain
+- NOAA CPC Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (public domain), field `demo`, DJF 1950 to ASO 2026, fetched 2026-11-14
+- NOAA CPC Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (public domain), field `sample-1`, DJF 1950 to ASO 2026, fetched 2026-11-14
+- NOAA CPC Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (public domain), field `sample-2`, DJF 1950 to ASO 2026, fetched 2026-11-14
+- NOAA CPC Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (public domain), field `sample-3`, DJF 1950 to ASO 2026, fetched 2026-11-14
+- NOAA CPC Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (public domain), field `sample-4`, DJF 1950 to ASO 2026, fetched 2026-11-14
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `demo`'s fetch box, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-1`'s fetch box, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-2`'s fetch box, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-3`'s fetch box, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-4`'s fetch box, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, Blue Marble: Next Generation, August 2004 (MODIS; NASA Earth Observatory, Stockli et al. 2005), the whole world at 1024 px, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's zoomed-out map; site/data/basemap/world.jpg)

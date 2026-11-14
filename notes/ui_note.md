@@ -138,6 +138,30 @@ Saturday. Then `mock` becomes empty.
 - The water score no longer depends on groundwater; keep the regional trend as context only.
 - `diary.shift_note`: "No clear change since 2001, in Nepal's weather office records." (owner's exact words).
 
+## 6g. Landed on 14 November (Saturday), evening: four new files for the farmer's question
+
+One file of each kind per prepared field (demo, sample-1..4): `data/labels/<id>.json`, `data/replay/<id>.json`,
+`data/pulse/<id>.json`, `data/checkup/<id>.json`. Fetch them relatively (`fetch('data/replay/' + id + '.json')`); if
+one is missing, say "not ready yet". Schemas: `pipeline/export/{labels,replay,pulse,checkup}_schema.json`.
+
+- **labels:** `outputs.<id>.sure` is "verified" or "estimate" (show this word; `status` is for the detail view);
+  `scale` is field / neighbourhood / valley / region, with words in `scales.<scale>.en` / `.ne` and `.about` ("30 m or
+  finer" ...). `rain_corrected: true` = link to the Data Check-up. Output ids for every number: see the file (46).
+- **replay (25-Year Replay):** `start` is fixed (2026-11-04 on the demo); `windows` m3 and m6; show `year_count`
+  seasons (24), never a fixed number. Pick the start with the probe's band (`starts[].probe_band`: needs water -> dry,
+  good -> medium, too wet -> wet); before any reading use `start_default` (medium). For each plan id (the field file's
+  plans and the `current_options` option ids) `results.<window>.<start>[]` holds one square per past season:
+  `result` (worked / struggled / failed / null), `score` (0-100, the share of the crop's water need met), `reason`
+  (`{"code": "dry_spell", "month": "01", "days": 18}`, `no_dry_days`, `no_crop_in_window`; render the words),
+  `enso` (highlight seasons in `enso.same_as_now`), `sensitive` (mark it: another rain version gives another word),
+  `other_versions`. Rain-fed only: show `watering.en` beside it.
+- **pulse (खेतको नाडी):** `points.hls` (field scale) and `points.modis` (neighbourhood scale) are `[date, ndvi]`;
+  `curve.points` `[date, ndvi, source]` weekly; `seasons[]` (greenup, peak, end); `bare_threshold`; `typical[]`
+  (planting, greenup, peak, harvest as MM-DD, per slot; the farmer confirms or corrects them; keep answers on the phone
+  only); `nearby` (demo only, else null). Bikram Sambat months are yours to render.
+- **checkup:** `break_test`, `evidence[]` by id, `correction`, `versions` (tuned is central), `yearly` (one chart:
+  gpm as published, twin, chirps), `depends_on_corrected_rain` (label ids). Word it as a check we ran, not a fault.
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

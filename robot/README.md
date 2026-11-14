@@ -97,3 +97,6 @@ Until then the site shows only "drier / wetter than the other parts", never a wa
 | `bench.py`, `calibrate.py` | the bench test and the fit from probe scale to soil water |
 | `fake_probe.py` | the same lines without hardware, for tests and rehearsal |
 | `CUPS_PROTOCOL.md` | the bench-test steps for the team |
+
+What the team records, step by step, and what to send back: `docs/PROBE_RECORDING.md`. The live demo as one command
+(web server, bridge and the phone's address): `scripts/demo_probe.py`, with `docs/DEMO_CHECKLIST.md`.

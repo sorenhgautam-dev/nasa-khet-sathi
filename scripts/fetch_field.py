@@ -45,6 +45,7 @@ STEPS = [
     ("gauge_evidence", True, ["-m", "pipeline.fetch.gauge_evidence"], None),
     ("grace", True, ["-m", "pipeline.fetch.grace"], None),
     ("faostat", True, ["-m", "pipeline.fetch.faostat"], None),
+    ("oni", True, ["-m", "pipeline.fetch.oni"], None),           # the 25-Year Replay's El Nino / La Nina (window_replay.enso)
     ("ghcn", True, ["-m", "pipeline.fetch.ghcn"], "validation_station"),
     ("weather", True, ["-m", "pipeline.fetch.weather"], None),
     ("rain_check", True, ["scripts/run_rain_check.py"], None),

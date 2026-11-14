@@ -1,0 +1,27 @@
+{
+ "id": "world",
+ "image": "data/basemap/world.jpg",
+ "bounds": [
+  [
+   -85.0511287798066,
+   -180.0
+  ],
+  [
+   85.0511287798066,
+   180.0
+  ]
+ ],
+ "crs": "EPSG:3857",
+ "size_px": [
+  1024,
+  1024
+ ],
+ "native_zoom": 2,
+ "layer": "BlueMarble_NextGeneration",
+ "product": "Blue Marble: Next Generation, August 2004 (MODIS; NASA Earth Observatory, Stockli et al. 2005)",
+ "date": "2004-08",
+ "resolution": "500 m (Blue Marble); about 39 km per picture pixel at the equator",
+ "attribution": "NASA Blue Marble (Aug 2004), via NASA GIBS",
+ "chosen_by": "the whole world, for the zoomed-out view",
+ "source": "https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi"
+}

@@ -8,6 +8,17 @@ The number we want is called **field capacity**: the water the soil still holds 
 extra water has drained away. (FAO-56, chapter 8; FAO Soils Bulletin 79: "FC is best determined in the field by
 saturating the soil and measuring its water content after 48 hours of drainage have elapsed".)
 
+**The steps in short** (each is explained below):
+1. Soak the soil.
+2. Cover it.
+3. Wait 48 hours.
+4. Take tin samples of known volume.
+5. Weigh them.
+6. Dry them fully.
+7. Weigh them again.
+
+Write every number in `notes/field_capacity_template.csv`, one line per tin.
+
 ## When
 
 - In a **dry spell**: no rain expected for 3 days. Do not do it on a day after heavy rain.
@@ -53,6 +64,10 @@ saturating the soil and measuring its water content after 48 hours of drainage h
 6. Write down the time. Come back after **48 hours**.
 
 ## Day 3: take the tins (48 hours later)
+
+If rain fell on the square in the 48 hours, the soil has had extra water: do that spot again on another day, and
+write "rain came" in **notes** if you sample it anyway. (The computer's rule counts only soil with no rain in between:
+`config/rules.yaml` `field_capacity_measured.when`.)
 
 For each depth, do this 3 times, a hand's width apart, inside the square (not at its edges).
 

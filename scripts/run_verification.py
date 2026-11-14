@@ -105,6 +105,68 @@ def onset_copy(fid):
     return [True] * k + [False] * (n - k), {"years": "2001-2024", "all_57_years_equal": r["all_equal"]}
 
 
+FARMER = ROOT / "data/field_visit"           # the farmer's locked answers (notes/FARMER_SCORING.md)
+
+
+def _locked_csv(fid, name, columns):
+    """The farmer's file as rows, or None while it does not exist. Its SHA-256 must be in config/locked_test.yaml first
+    (verification.locked_test.farmer): a file that is not locked, or changed since, stops the scoring."""
+    import hashlib
+    path = FARMER / fid / name
+    if not path.exists():
+        return None
+    lock = ROOT / "config/locked_test.yaml"
+    want = ((yaml.safe_load(lock.read_text()) or {}) if lock.exists() else {}).get(f"data/field_visit/{fid}/{name}")
+    got = hashlib.sha256(path.read_bytes()).hexdigest()
+    if want != got:
+        raise SystemExit(f"{path} is not locked: write 'data/field_visit/{fid}/{name}: {got}' into config/locked_test.yaml "
+                         "before any score uses it (rules.yaml verification.locked_test.farmer)" if want is None
+                         else f"{path} changed after it was locked (config/locked_test.yaml): locked test data never change")
+    rows = list(csv.DictReader(open(path)))
+    if rows and (missing := [c for c in columns if c not in rows[0]]):
+        raise SystemExit(f"{path}: missing columns {missing} (notes/FARMER_SCORING.md)")
+    return rows
+
+
+def pulse_dates(fid, rows, tol):
+    """rules.yaml pulse.farmer_scoring: the Pulse's season dates against the farmer's (season_dates row)."""
+    from datetime import date
+    from pipeline.fetch.cropslib import load_crops
+    lib, pulse = load_crops(), _json(ROOT / "site/data/pulse" / f"{fid}.json")
+    farmer = []
+    for r in rows:
+        planted, harvested = date.fromisoformat(r["planted"]), date.fromisoformat(r["harvested"])
+        if int(r["year"]) != harvested.year:
+            raise SystemExit(f"farmer_dates.csv: year {r['year']} must be the year the {r['crop']} was harvested ({harvested})")
+        farmer.append((r["crop"], int(r["year"]), planted, harvested))
+    passes = v.season_date_passes(farmer, pulse["seasons"], {c: lib[c]["stages_days"]["ini"] for c, *_ in farmer}, tol)
+    return passes, {"rows": len(farmer), "dates": len(passes), "from": "site/data/pulse seasons, HLS years"}
+
+
+def farmer_year_lists(rows):
+    worst = [int(r["year"]) for r in rows if r["kind"] == "worst"]
+    return worst, [int(r["year"]) for r in rows if r["kind"] == "best"]
+
+
+def harvest_years(field, rows):
+    """verification.outputs.harvest_years: the farmer's worst and best years against the replay's thirds (field's water case)."""
+    worst, best = farmer_year_lists(rows)
+    harvest = {r["year"]: r["harvest"] for r in field["replay"]["current"]}
+    return v.year_matches(harvest, worst, best), {"worst": worst, "best": best}
+
+
+def replay_window(fid, rows, common):
+    """rules.yaml window_replay.farmer_scoring: the 25-Year Replay's current plan, m6 window, default start, against the
+    farmer's rows whose crop grows in that window."""
+    rp = _json(ROOT / "site/data/replay" / f"{fid}.json")
+    cur = next(p for p in rp["plans"] if p["id"] == "current")
+    crops = {c["crop"] for c in cur["crops_in_window"]["m6"]}
+    worst, best = farmer_year_lists([r for r in rows if r["crop"] in crops])
+    res = cur["results"]["m6"][rp["start_default"]]
+    passes = v.year_matches({r["year"]: r["score"] for r in res if r["score"] is not None}, worst, best)
+    return {**v.score(passes, True, common), "window": "m6", "start": rp["start_default"], "crops": sorted(crops)}
+
+
 def score_all(fid):
     rules = load_rules()["verification"]
     common, outs = rules["common"], rules["outputs"]
@@ -127,6 +189,13 @@ def score_all(fid):
     put("monsoon_start", *onset_copy(fid))
     for p in ("cover_gap", "safest"):
         put(f"plan_{p}_beats_current", *plans_robust(fid, p, outs[f"plan_{p}_beats_current"]["rain_versions"]))
+    dates = _locked_csv(fid, "farmer_dates.csv", ["crop", "year", "planted", "harvested"])
+    if dates is not None:                  # the farmer's dates: the Field Pulse's seasons (rules.yaml pulse.farmer_scoring)
+        put("season_dates", *pulse_dates(fid, dates, outs["season_dates"]["tolerance_days"]))
+    years = _locked_csv(fid, "farmer_years.csv", ["kind", "year", "crop"])
+    if years is not None:                  # the farmer's worst and best years: the replay and the 25-Year Replay
+        put("harvest_years", *harvest_years(field, years))
+        card["harvest_years"]["replay_window"] = replay_window(fid, years, common)
     for key in outs:                       # outputs whose test data have not arrived score as no cases yet
         if key not in card:
             put(key, [])
