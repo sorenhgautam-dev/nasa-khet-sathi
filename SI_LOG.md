@@ -1402,3 +1402,16 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   ("प्रायः ठूलो खतरा हुँदैन।", "needs native-speaker review") and the Hindi, Bengali, Spanish, French and Swahili drafts are
   SI's, each the old reviewed-for-length text with "to crops" dropped.
 - **For a person to review:** the Nepali line; that a fake-probe rehearsal now shows nothing on the phone.
+
+## 2026-11-14 (Saturday night, later): practice banner and the garden test (Claude Opus 5.5 via Claude Code)
+
+- **What SI did:** on the owner's answers 2 and 4 (commit 4f784a6, rules first): practice readings from the fake probe
+  show on the phone only from the laptop's hotspot, under a big "Practice: made-up numbers" banner, and are never used for
+  the field; `scripts/build_probe_log.py --garden` labels a garden walk "A garden test of our probe, recorded on <date>"
+  and drops the twin before and after; `docs/PROBE_RECORDING.md` 4b gives the team the garden test step by step. Checked
+  in a scratch copy of the site: the banner on the hotspot address, no practice reading on a public address, and the
+  garden label (a made-up preview walk in the scratch folder only, never in site/data).
+- **Words:** `check_soil.practice` is now "Practice: made-up numbers"; new `check_soil.garden_on`. The Nepali
+  ("अभ्यास: नक्कली अङ्क", "हाम्रो यन्त्रको बगैंचामा गरिएको जाँच, नापिएको मिति:", both "needs native-speaker review") and the
+  Hindi, Bengali, Spanish, French and Swahili drafts are SI's.
+- **For a person to review:** the two Nepali lines.

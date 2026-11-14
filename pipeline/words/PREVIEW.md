@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 697 texts): 674 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 698 texts): 675 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -232,7 +232,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 6. Let's check the soil / माटो जाँचौं
 
-*Nepali: 69 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 70 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -298,7 +298,8 @@ This page is made from the word files in this folder; change those, not this pag
 | Remove | हटाउनुहोस् |
 | This phone cannot keep photos here. | यो फोनले यहाँ फोटो राख्न सक्दैन। |
 | Recorded on | नापिएको मिति: |
-| Practice soil stick | अभ्यासको माटो जाँच्ने यन्त्र |
+| A garden test of our probe, recorded on | हाम्रो यन्त्रको बगैंचामा गरिएको जाँच, नापिएको मिति: |
+| Practice: made-up numbers | अभ्यास: नक्कली अङ्क |
 | Your soil, | तपाईंको माटो, |
 | part by part | भाग भाग गरी |
 | Not tested yet | अझै जाँचिएको छैन |

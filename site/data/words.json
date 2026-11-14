@@ -2719,15 +2719,26 @@
      "sw": "Ilipimwa tarehe"
     },
     {
-     "id": "practice",
-     "en": "Practice soil stick",
-     "ne": "अभ्यासको माटो जाँच्ने यन्त्र",
+     "id": "garden_on",
+     "en": "A garden test of our probe, recorded on",
+     "ne": "हाम्रो यन्त्रको बगैंचामा गरिएको जाँच, नापिएको मिति:",
      "ne_review": "needs native-speaker review",
-     "hi": "अभ्यास वाली मिट्टी की छड़ी",
-     "bn": "অনুশীলনের মাটির কাঠি",
-     "es": "Varilla de práctica",
-     "fr": "Tige d'entraînement",
-     "sw": "Kijiti cha mazoezi"
+     "hi": "हमारे यंत्र की बगीचे में जाँच, दर्ज करने की तारीख़:",
+     "bn": "বাগানে আমাদের যন্ত্রের পরীক্ষা, রেকর্ডের তারিখ:",
+     "es": "Prueba en huerto de nuestra sonda, registrada el",
+     "fr": "Test de notre sonde au jardin, enregistré le",
+     "sw": "Jaribio la kifaa chetu bustanini, lilirekodiwa tarehe"
+    },
+    {
+     "id": "practice",
+     "en": "Practice: made-up numbers",
+     "ne": "अभ्यास: नक्कली अङ्क",
+     "ne_review": "needs native-speaker review",
+     "hi": "अभ्यास: बनावटी आँकड़े",
+     "bn": "অনুশীলন: বানানো সংখ্যা",
+     "es": "Práctica: números inventados",
+     "fr": "Exercice : chiffres inventés",
+     "sw": "Mazoezi: namba za kubuni"
     },
     {
      "id": "h1",
