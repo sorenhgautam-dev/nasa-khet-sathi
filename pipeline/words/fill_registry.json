@@ -400,6 +400,20 @@
    ],
    "how": "the plan's harvest score with the rain scaled to DHM Bhaktapur's 1991-2020 normals (the range's dry edge, owner's decision 4b, 2026-11-14), rounded; used only when it differs",
    "example": 78
+  },
+  "cal_dry_down": {
+   "from": [
+    "code:pipeline/export/build_field_json.py:calibration_words"
+   ],
+   "how": "100 x (1 - rules.yaml gpm_series.gauge_calibration factors.other), from the weather card (corrections.rain_break.gauge_calibration), rounded",
+   "example": 25
+  },
+  "cal_wet_up": {
+   "from": [
+    "code:pipeline/export/build_field_json.py:calibration_words"
+   ],
+   "how": "100 x (factors.jjas - 1), from the same card, rounded",
+   "example": 5
   }
  },
  "conditions": {
@@ -718,6 +732,13 @@
    ],
    "how": "method.field_memory.kept is false",
    "plain": "if the field memory did not win its test and is left out"
+  },
+  "rain_gauge_calibrated": {
+   "from": [
+    "code:pipeline/export/build_field_json.py:calibration_words"
+   ],
+   "how": "the weather card's corrections.rain_break.gauge_calibration.applied is true (rules.yaml gpm_series.gauge_calibration apply, the owner's switch)",
+   "plain": "if we also matched the rain to four DHM gauges"
   }
  }
 }

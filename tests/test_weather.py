@@ -347,12 +347,20 @@ def _gpm_stepped(data):
     _gpm_card(data, FIELD["lat"], FIELD["lon"])
 
 
+def _break_only_rules():
+    """The break correction alone: the gauge tuning (on since the owner's decision of 2026-11-14) has its own tests
+    in tests/test_gauge_calibration.py."""
+    rules = load_rules()
+    rules["gpm_series"]["gauge_calibration"]["apply"] = False
+    return rules
+
+
 def test_final_rain_from_2017_is_scaled_back_and_the_uncorrected_rain_is_kept(tmp_path):
     """Factors 2/4 = 0.5 per month (February (56 + 57) / 2 / 112 over 2015-2016 vs 2017-2022: 0.504...), from Final
     days only; the Late days (Oct-Dec 2022) are scaled with the same factors (owner's answer 7, 2026-11-13)."""
     data = _inputs(tmp_path)
     _gpm_stepped(data)
-    out = w.build(FIELD, data_dir=data, rules=load_rules())
+    out = w.build(FIELD, data_dir=data, rules=_break_only_rules())
     df, card = pd.read_parquet(out["table"]), json.loads(out["card"].read_text())
     s = df.set_index("date")
     assert s.loc["2016-12-31", "rain_mm"] == 2.0 and s.loc["2017-07-01", "rain_mm"] == pytest.approx(2.0)
@@ -374,7 +382,7 @@ def test_late_days_are_scaled_but_never_set_a_factor(tmp_path):
     gpm = pd.read_parquet(path)
     gpm.loc[gpm["product"] == "late", "rain_mm"] = 8.0
     gpm.to_parquet(path, index=False)
-    out = w.build(FIELD, data_dir=data, rules=load_rules())
+    out = w.build(FIELD, data_dir=data, rules=_break_only_rules())
     df, card = pd.read_parquet(out["table"]), json.loads(out["card"].read_text())
     s = df.set_index("date")
     assert card["corrections"]["rain_break"]["factors_by_month"]["Nov"] == 0.5

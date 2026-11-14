@@ -1086,6 +1086,35 @@
        "future_dhm_rain": {
         "$ref": "#/$defs/future_series",
         "description": "As plans[].future_dhm_rain, for this option."
+       },
+       "score_untuned_rain": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "harvest",
+         "water",
+         "cover",
+         "soil_kept"
+        ],
+        "description": "The same as `score_dhm_rain` for the break-corrected rain without the gauge factors (owner, 2026-11-14 afternoon: the central rain is gauge-tuned; the other versions are the range). Present only where it differs; show the min and max over the central value and every alternative as the range.",
+        "properties": {
+         "harvest": {
+          "$ref": "#/$defs/pct"
+         },
+         "water": {
+          "$ref": "#/$defs/pct"
+         },
+         "cover": {
+          "$ref": "#/$defs/pct"
+         },
+         "soil_kept": {
+          "$ref": "#/$defs/pct"
+         }
+        }
+       },
+       "future_untuned_rain": {
+        "$ref": "#/$defs/future_series",
+        "description": "The same as `future_dhm_rain` for the break-corrected rain without the gauge factors (owner, 2026-11-14 afternoon: the central rain is gauge-tuned; the other versions are the range). Present only where it differs; show the min and max over the central value and every alternative as the range."
        }
       }
      }
@@ -1452,6 +1481,35 @@
     "future_dhm_rain": {
      "$ref": "#/$defs/future_series",
      "description": "The same outlook on GPM rain as published (no 2017 correction): show beside `future` as a range, like score_dhm_rain."
+    },
+    "score_untuned_rain": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "harvest",
+      "water",
+      "cover",
+      "soil_kept"
+     ],
+     "description": "The same as `score_dhm_rain` for the break-corrected rain without the gauge factors (owner, 2026-11-14 afternoon: the central rain is gauge-tuned; the other versions are the range). Present only where it differs; show the min and max over the central value and every alternative as the range.",
+     "properties": {
+      "harvest": {
+       "$ref": "#/$defs/pct"
+      },
+      "water": {
+       "$ref": "#/$defs/pct"
+      },
+      "cover": {
+       "$ref": "#/$defs/pct"
+      },
+      "soil_kept": {
+       "$ref": "#/$defs/pct"
+      }
+     }
+    },
+    "future_untuned_rain": {
+     "$ref": "#/$defs/future_series",
+     "description": "The same as `future_dhm_rain` for the break-corrected rain without the gauge factors (owner, 2026-11-14 afternoon: the central rain is gauge-tuned; the other versions are the range). Present only where it differs; show the min and max over the central value and every alternative as the range."
     }
    }
   },
@@ -1522,6 +1580,58 @@
       "event"
      ],
      "description": "The same year run with GPM's rain as published, without the 2017 correction (owner's decision 1, 2026-11-13: the rain gauges behind NASA's correction stopped reporting around this field in January 2017). Present only in years where it changes harvest, dry_days, event or the irrigated case; the year's own values use the corrected rain. Show the two as a range (e.g. a basket from the lower to the higher harvest).",
+     "properties": {
+      "harvest": {
+       "$ref": "#/$defs/pct"
+      },
+      "dry_days": {
+       "type": "integer",
+       "minimum": 0,
+       "maximum": 366
+      },
+      "event": {
+       "enum": [
+        "none",
+        "drought",
+        "flood"
+       ]
+      },
+      "event_season": {
+       "enum": [
+        "monsoon",
+        "winter"
+       ],
+       "description": "Only with event 'drought', and only when the drought comes from one season (owner, 2026-11-13): 'winter' = a dry winter (December to February), 'monsoon' = a dry monsoon (June to September). Absent when both seasons were dry, and for every other event."
+      },
+      "irrigated": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "harvest",
+        "dry_days"
+       ],
+       "properties": {
+        "harvest": {
+         "$ref": "#/$defs/pct"
+        },
+        "dry_days": {
+         "type": "integer",
+         "minimum": 0,
+         "maximum": 366
+        }
+       }
+      }
+     }
+    },
+    "untuned_rain": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "harvest",
+      "dry_days",
+      "event"
+     ],
+     "description": "The same as `dhm_rain` for the break-corrected rain without the gauge factors (owner, 2026-11-14 afternoon: the central rain is gauge-tuned; the other versions are the range). Present only where it differs; show the min and max over the central value and every alternative as the range.",
      "properties": {
       "harvest": {
        "$ref": "#/$defs/pct"

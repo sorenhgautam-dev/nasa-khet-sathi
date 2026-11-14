@@ -4,6 +4,21 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-14 (Saturday, afternoon): a third rain version in the range; groundwater out of the water score (owner's decisions)
+
+- **The central rain is now gauge-tuned:** the break-corrected GPM rain times 1.053 in June-September and 0.746 in the
+  other months, fitted on four DHM gauges, June 2023-December 2025 (VALIDATION 3.9e). Every `harvest`, `score`,
+  `future` value uses it.
+- **New optional fields, same shapes as the dhm ones:** `replay.<plan>[].untuned_rain`, `plans[].score_untuned_rain`,
+  `plans[].future_untuned_rain`, and the same two in `current_options.options[]`. They hold the break-corrected rain
+  without the gauge factors (the central case until today). Present only where they differ.
+- **How to show it:** the range is the min and the max over the central value and every alternative present
+  (`dhm_rain`, `untuned_rain`), e.g. "about 63 to 67".
+- **Groundwater no longer changes the water score** (owner: background only). `diary.groundwater` is unchanged and
+  stays as regional context.
+- `diary.shift_note` now says exactly "No clear change since 2001, in Nepal's weather office records." (the owner's
+  words); the cross-check sentence moved to the How we know text.
+
 ## 2026-11-14 (Saturday, 10:00): the second rain version is now the DHM-scaled dry edge (owner's decision 4b): renamed fields
 
 The owner kept the break-corrected rain as the central case. The other edge of every range is now the rain scaled month

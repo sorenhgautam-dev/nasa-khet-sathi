@@ -47,11 +47,14 @@ def record(clean, rules):
     gpm_day = w["rain_source"].astype(str).to_numpy() == "gpm"
     fit = gpm_day & prod.isin(corr["correction_factor_products"]).to_numpy()
     bf = inputs.break_factors(pub.where(fit), tuple(corr["correction_reference_years"]), corr["correction_from"])
+    cor, cal = pd.Series(w["rain_mm"].to_numpy(float), index=d), corr.get("gauge_calibration") or {}
+    if cal.get("apply") and clean.name in cal.get("fields", []):     # central rain gauge-calibrated: back to break-corrected
+        cor = cor / rs.calibrate(d.month, np.ones(len(d)), cal["factors"])
     dh = dhm_rain(rules)
-    df = inputs.dhm_factors(pd.Series(w["rain_mm"].to_numpy(float), index=d), dh["normals_mm"], dh["years"])
+    df = inputs.dhm_factors(cor, dh["normals_mm"], dh["years"])
     v = versions(pub, prod.where(gpm_day, "none"), bf, df, corr)
-    gap = {c: float(np.max(np.abs(v[c].to_numpy() - x["rain_mm"].to_numpy())))
-           for c, x in (("corrected", w), ("dhm_scaled", inputs.with_rain(w, "dhm", dh)))}
+    gap = {c: float(np.max(np.abs(v[c].to_numpy() - x)))
+           for c, x in (("corrected", cor.to_numpy()), ("dhm_scaled", inputs.with_rain(w, "dhm", dh)["rain_mm"].to_numpy()))}
     if max(gap.values()) > 1e-9:
         raise ValueError(f"the refitted versions differ from the weather table: {gap}")
     return v, bf, df

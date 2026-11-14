@@ -132,6 +132,12 @@ Saturday. Then `mock` becomes empty.
 - They hold the run with rain scaled to the Bhaktapur station's long-term average: the lower edge of each range.
 - Show "about 69 to 72", not two results.
 
+## 6f. Landed on 14 November (Saturday), afternoon: three rain versions, groundwater as context only
+
+- Ranges now take the min and max over the central value, `*_dhm_rain` and the new `*_untuned_rain` (same shapes).
+- The water score no longer depends on groundwater; keep the regional trend as context only.
+- `diary.shift_note`: "No clear change since 2001, in Nepal's weather office records." (owner's exact words).
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

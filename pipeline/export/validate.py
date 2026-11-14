@@ -12,6 +12,8 @@ import json
 import sys
 from pathlib import Path
 
+ALT_RAIN = ("dhm_rain", "untuned_rain")   # the range's other rain versions (owner, 2026-11-14)
+
 from jsonschema import Draft202012Validator
 
 HERE = Path(__file__).resolve().parent
@@ -86,15 +88,16 @@ def validate_field(doc, final=False):
             errors.append(f"replay/{key}: duplicate years {d}")
         elif [y["year"] for y in years] != list(range(years[0]["year"], years[0]["year"] + len(years))):
             errors.append(f"replay/{key}: years must run year by year, in order, with no gap")
-        for y in years:                     # owner's decisions 1 and 4b: the second rain version only where it differs
-            u = y.get("dhm_rain")
-            if u and all(u.get(k) == y.get(k) for k in ("harvest", "dry_days", "event", "irrigated")):
-                errors.append(f"replay/{key}/{y['year']}: dhm_rain is given but changes nothing")
+        for y in years:                     # owner's decisions 1 and 4b: the other rain versions only where they differ
+            for alt in ALT_RAIN:
+                u = y.get(alt)
+                if u and all(u.get(k) == y.get(k) for k in ("harvest", "dry_days", "event", "irrigated")):
+                    errors.append(f"replay/{key}/{y['year']}: {alt} is given but changes nothing")
     # owner's answer 9 to REVIEW_2 (2026-11-13): one weather event per year for the field, the same on every plan
     by_year = {}
     for key, years in doc["replay"].items():
         for y in years:
-            for tag, row in (("", y), (" (DHM-scaled rain)", y.get("dhm_rain"))):
+            for tag, row in [("", y)] + [(f" ({alt})", y.get(alt)) for alt in ALT_RAIN]:
                 if row and "event_season" in row and row["event"] != "drought":
                     errors.append(f"replay/{key}/{y['year']}{tag}: event_season is only for a drought")
             by_year.setdefault(y["year"], set()).add((y["event"], y.get("event_season")))
@@ -102,9 +105,10 @@ def validate_field(doc, final=False):
     if differ:
         errors.append(f"replay: a year must carry the same event (and season) on every plan; they differ in {differ}")
     for p in doc["plans"]:
-        u = p.get("score_dhm_rain")
-        if u and u == p["score"]:
-            errors.append(f"plans/{p['id']}: score_dhm_rain is given but changes nothing")
+        for alt in ALT_RAIN:
+            u = p.get(f"score_{alt}")
+            if u and u == p["score"]:
+                errors.append(f"plans/{p['id']}: score_{alt} is given but changes nothing")
     # owner's answer 2 to REVIEW_2 (2026-11-13): a block that is not computed yet is named in `mock` and holds no numbers
     not_ready = doc.get("mock", [])
     empty_sections = [s["id"] for s in doc["field"]["sections"]
@@ -121,9 +125,9 @@ def validate_field(doc, final=False):
     if doc["future"] is not None:
         series_list += [(f"future/{k}", doc["future"][k]) for k in ("nothing_changes", "with_plan")]
     for p in doc["plans"]:
-        series_list += [(f"plans/{p['id']}/{k}", p[k]) for k in ("future", "future_dhm_rain") if k in p]
+        series_list += [(f"plans/{p['id']}/{k}", p[k]) for k in ["future"] + [f"future_{a}" for a in ALT_RAIN] if k in p]
     for o in (doc.get("current_options") or {}).get("options", []):
-        series_list += [(f"current_options/{o['id']}/{k}", o[k]) for k in ("future", "future_dhm_rain") if k in o]
+        series_list += [(f"current_options/{o['id']}/{k}", o[k]) for k in ["future"] + [f"future_{a}" for a in ALT_RAIN] if k in o]
     for name, s in series_list:
         if doc["future"] is None:
             errors.append(f"{name}: a 2040 outlook needs the future block (future.years)")
@@ -179,7 +183,7 @@ def _current_options_errors(doc):
     cur = next((p for p in doc["plans"] if p["id"] == "current"), None)
     d = opts[co["default"]]
     if cur is None or any(d[k] != cur[k] for k in ("crops", "score", "tabs", "tips", "tabs_ne", "tips_ne")) \
-            or d.get("score_dhm_rain") != cur.get("score_dhm_rain") or d["replay"] != doc["replay"].get("current"):
+            or any(d.get(f"score_{a}") != cur.get(f"score_{a}") for a in ALT_RAIN) or d["replay"] != doc["replay"].get("current"):
         errors.append("current_options: the default option must be what plans (id current) and replay.current show")
     years = [y["year"] for y in doc["replay"].get("current", [])]
     suggested = sorted(p["id"] for p in doc["plans"] if p["id"] != "current")

@@ -3,7 +3,7 @@
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
 - Screens, and the words shared by many screens (screens.json, 288 texts): needs native-speaker review.
-- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 93 texts): needs native-speaker review.
+- The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 94 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
 
@@ -309,7 +309,7 @@ This page is made from the word files in this folder; change those, not this pag
 | --- | --- |
 | We replayed the weather from {year_first} to {year_last}. | {year_first} देखि {year_last} सम्मको मौसम फेरि चलायौं। |
 | Harvest was {harvest} out of 100 on average. | औसत उब्जनी १०० मा {harvest} थियो। |
-| With the nearby station's rain level: {harvest_dhm}. *(if NASA's uncorrected rain gives another harvest number)* | नजिकको केन्द्रको वर्षा मान्दा: {harvest_dhm}। |
+| With the town's long-term average rain: {harvest_dhm}. *(if NASA's uncorrected rain gives another harvest number)* | सहरको दीर्घकालीन औसत वर्षा मान्दा: {harvest_dhm}। |
 | Drier than usual: {drought_years} of {year_count} years. | सामान्यभन्दा सुक्खा: {year_count} मध्ये {drought_years} वर्ष। |
 | Harvest numbers are computer estimates. | उब्जनीका अङ्क कम्प्युटरका अनुमान हुन्। |
 | {source_name}: {source_kind}, {source_resolution}, {source_years}. *(one line for each source)* | {source_name}: {source_kind}, {source_resolution}, {source_years}। |
@@ -482,6 +482,7 @@ This page is made from the word files in this folder; change those, not this pag
 | After our fix: {err_after} mm. | सुधारपछि: {err_after} मिलिमिटर। |
 | This fix may also hide real change. | यस सुधारले साँचो फेरबदल पनि लुकाउन सक्छ। |
 | So we show both, as a range. | त्यसैले हामी दुवै देखाउँछौं, दायराका रूपमा। |
+| We also matched four rain gauges, 2023-2025. Outside the monsoon, we lowered rain by {cal_dry_down}%. In the monsoon, we raised rain by {cal_wet_up}%. *(if we also matched the rain to four DHM gauges)* | हामीले चार वर्षा मापकसँग पनि मिलायौं, २०२३-२०२५। मनसुनबाहिर वर्षा {cal_dry_down}% घटायौं। मनसुनमा वर्षा {cal_wet_up}% बढायौं। |
 
 ### Field memory
 

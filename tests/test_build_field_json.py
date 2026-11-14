@@ -164,6 +164,17 @@ def test_uncorrected_rain_is_added_only_to_years_it_changes():
         with_second_rain(base, unc[:1])
 
 
+def test_a_third_rain_version_is_kept_beside_the_dhm_one():
+    # owner, 2026-11-14 afternoon: the central rain is gauge-tuned; the untuned and DHM-scaled runs are the range
+    from pipeline.export.build_field_json import with_second_rain
+    base = [{"year": 2016, "harvest": 70, "dry_days": 80, "event": "none", "irrigated": {"harvest": 100, "dry_days": 0}}]
+    dhm = [{**base[0], "harvest": 66}]
+    unt = [{**base[0], "harvest": 72, "dry_days": 74}]
+    out = with_second_rain(with_second_rain(base, dhm), unt, "untuned_rain")
+    assert out[0]["dhm_rain"]["harvest"] == 66 and out[0]["untuned_rain"]["harvest"] == 72
+    assert out[0]["untuned_rain"]["dry_days"] == 74 and out[0]["harvest"] == 70
+
+
 def test_stated_choices_list_claudes_choices_with_their_approval():
     from pipeline.export.build_field_json import stated_choices
     rules = {"a": {"x": {"value": 1, "source": "Claude's choice, owner-approved 2026-11-13: why"}},

@@ -276,6 +276,8 @@ def build(field, data_dir=REPO / "data", rules=None, workers=4, from_cache=False
                       f"UTC days; scaled month by month with the factors fitted on IMERG Final months, 2001-2016 level over "
                       f"{rb.get('from', '?')} onwards (owner's answer 7 to REVIEW_2; rules.yaml gpm_series); days IMERG lacks "
                       f"filled from {wx.POWER_SRC}, PRECTOTCORR, flagged ({n_filled} day(s))")
+    if rb.get("gauge_calibration", {}).get("applied"):
+        src["rain_mm"] += "; then times two factors fitted on four DHM gauges (rules.yaml gpm_series.gauge_calibration)"
     src["rain_uncorrected_mm"] = src["rain_mm"].split("; scaled")[0] + "; as published, without the break correction"
     out_path = data_dir / "clean" / fid / "weather_now.parquet"
     now.to_parquet(out_path, index=False)

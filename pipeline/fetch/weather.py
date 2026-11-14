@@ -123,7 +123,9 @@ def column_sources(df, station_id, corrections, frost_method, gpm_card, n_filled
         "ws2m_ms": f"{POWER_SRC}, WS2M", "rs_mj_m2_day": f"{POWER_SRC}, ALLSKY_SFC_SW_DWN",
         "rain_mm": rain + (("; IMERG Final days from " + str(break_info.get("from")) + " scaled month by month back to GPM's own "
                            f"{break_info.get('reference_years')} level (owner's decision 1, 2026-11-13; rules.yaml gpm_series.correction; "
-                           "factors in corrections.rain_break)") if break_info else ""),
+                           "factors in corrections.rain_break)") if break_info else "")
+                   + ("; then times two factors fitted on four DHM gauges (rules.yaml gpm_series.gauge_calibration)"
+                      if (break_info or {}).get("gauge_calibration", {}).get("applied") else ""),
         "rain_uncorrected_mm": rain + "; as published, without the break correction (the uncorrected run)",
         "rain_break_corrected": flag + ": True where the GPM break correction scaled the day",
         "rain_source": flag + ": gpm, power_fill or missing", "rain_filled": flag + ": True where POWER filled",
@@ -185,6 +187,14 @@ def correct_gpm_break(rain, gpm, rule, field_id, field=None, break_test=None):
             "mean_yearly_mm_from_start": {"uncorrected": round(float(rs[after].sum() / len(yrs)), 1),
                                           "corrected": round(float(corrected[after].sum() / len(yrs)), 1)},
             "caveat": rule["trend_caveat"]}
+    cal = rule.get("gauge_calibration") or {}           # the owner's one-line switch (rules.yaml gpm_series.gauge_calibration)
+    on = bool(cal.get("apply")) and field_id in cal.get("fields", [])
+    if on:
+        from pipeline.checks.rain_selection import calibrate
+        rain["rain_mm"] = calibrate(d.month, rain["rain_mm"], cal["factors"])
+        g.assert_in_range(rain["rain_mm"].to_numpy(), "rain_mm", "rain_mm (gauge-calibrated)")
+    info["gauge_calibration"] = {"applied": on, "central_rain": "gauge_calibrated" if on else "corrected",
+                                 "factors": cal.get("factors"), "rule": "rules.yaml gpm_series.gauge_calibration"}
     return rain, info
 
 
@@ -374,6 +384,7 @@ def main(argv=None):
     if b.get("applied"):
         print(f"GPM break correction from {b['from']}: factors {b['factors_by_month']}; {b['days_scaled']} days scaled; "
               f"mean yearly rain from then {b['mean_yearly_mm_from_start']}; not scaled {b['days_not_scaled_after_start']}")
+        print(f"central rain: {b['gauge_calibration']['central_rain']} (rules.yaml gpm_series.gauge_calibration)")
     print(f"rain: {r['status']}; POWER-filled days by year: "
           + str({y: v['filled'] for y, v in r['by_year'].items() if v['filled']}))
     print(f"Tmin above Tmax: {c['corrections']['tmin_not_above_tmax']['days']}")

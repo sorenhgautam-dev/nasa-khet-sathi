@@ -46,7 +46,7 @@ def test_cover_gap_with_wheat_is_flagged_for_water_and_names_lentil_as_the_optio
     out = ex.render(GAP, CUR, CTX, LIB, WORDS)
     assert "Wheat here usually needs watering." in out["tabs"]["check"]
     assert "Lentil after rice is another choice." in out["tabs"]["check"]
-    assert "With the nearby station's rain level: 93." in out["tabs"]["evidence"]
+    assert "With the town's long-term average rain: 93." in out["tabs"]["evidence"]
     assert "Near here, those gauge reports stopped in 2017." in out["tabs"]["unknown"]
     assert "२०१७" in out["tabs_ne"]["unknown"] and len(out["tips"]) == len(out["tips_ne"])
 

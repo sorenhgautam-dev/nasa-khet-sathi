@@ -152,8 +152,8 @@
     "when": [
      "rain_changes_harvest"
     ],
-    "en": "With the nearby station's rain level: {harvest_dhm}.",
-    "ne": "नजिकको केन्द्रको वर्षा मान्दा: {harvest_dhm}।",
+    "en": "With the town's long-term average rain: {harvest_dhm}.",
+    "ne": "सहरको दीर्घकालीन औसत वर्षा मान्दा: {harvest_dhm}।",
     "ne_review": "needs native-speaker review",
     "basis": "owner's decision 4b (2026-11-14): the range's dry edge is the rain scaled to DHM Bhaktapur's 1991-2020 normals (was: GPM as published, owner's decision 1)"
    },
@@ -818,6 +818,15 @@
     ],
     "en": "So we show both, as a range.",
     "ne": "त्यसैले हामी दुवै देखाउँछौं, दायराका रूपमा।",
+    "ne_review": "needs native-speaker review"
+   },
+   {
+    "id": "mp_rain_gauges",
+    "when": [
+     "rain_gauge_calibrated"
+    ],
+    "en": "We also matched four rain gauges, 2023-2025. Outside the monsoon, we lowered rain by {cal_dry_down}%. In the monsoon, we raised rain by {cal_wet_up}%.",
+    "ne": "हामीले चार वर्षा मापकसँग पनि मिलायौं, २०२३-२०२५। मनसुनबाहिर वर्षा {cal_dry_down}% घटायौं। मनसुनमा वर्षा {cal_wet_up}% बढायौं।",
     "ne_review": "needs native-speaker review"
    }
   ],

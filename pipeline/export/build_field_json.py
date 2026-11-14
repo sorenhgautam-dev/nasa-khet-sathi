@@ -79,7 +79,7 @@ def replay_rows(replay, doc=None):
     return rows
 
 
-def with_second_rain(rows, rows_unc):
+def with_second_rain(rows, rows_unc, key="dhm_rain"):
     """Owner's decision 1 (2026-11-13): each year whose uncorrected-rain run differs (harvest, dry days, event or the
     watered case) carries it as dhm_rain (owner's decision 4b, 2026-11-14: the second version is the rain scaled to DHM
     Bhaktapur's normals, the range's dry edge; it was GPM as published until then); other years are left as they are."""
@@ -90,7 +90,7 @@ def with_second_rain(rows, rows_unc):
     for r in rows:
         u = {k: unc[r["year"]][k] for k in ("harvest", "dry_days", "event", "event_season", "irrigated") if k in unc[r["year"]]}
         differs = any(u.get(k) != r.get(k) for k in ("harvest", "dry_days", "event", "event_season", "irrigated"))
-        out.append({**r, "dhm_rain": u} if differs else dict(r))
+        out.append({**r, key: u} if differs else dict(r))
     return out
 
 
@@ -411,16 +411,14 @@ def apply_future(doc, future, plan_ids, option_ids):
                      "scenarios": list(future["labels"]["scenarios"]),
                      "nothing_changes": series(plan_ids["current"], "corrected"),
                      "with_plan": series(plan_ids["cover_gap"], "corrected"), "words": FUTURE_WORDS}
-    for p in out["plans"]:
-        p["future"] = series(plan_ids[p["id"]], "corrected")
-        u = series(plan_ids[p["id"]], "dhm") if "dhm" in future["plans"][plan_ids[p["id"]]] else None
-        if u is not None and u != p["future"]:
-            p["future_dhm_rain"] = u
-    for o in (out.get("current_options") or {}).get("options", []):
-        o["future"] = series(option_ids[o["id"]], "corrected")
-        u = series(option_ids[o["id"]], "dhm") if "dhm" in future["plans"][option_ids[o["id"]]] else None
-        if u is not None and u != o["future"]:
-            o["future_dhm_rain"] = u
+    blocks = [(p, plan_ids[p["id"]]) for p in out["plans"]] + \
+        [(o, option_ids[o["id"]]) for o in (out.get("current_options") or {}).get("options", [])]
+    for b, pid in blocks:
+        b["future"] = series(pid, "corrected")
+        for name in ("dhm", "untuned"):                  # the range's other rain versions, where future.json has them
+            u = series(pid, name) if name in future["plans"][pid] else None
+            if u is not None and u != b["future"]:
+                b[f"future_{name}_rain"] = u
     out["mock"] = [m for m in out.get("mock", []) if m != "future"]
     return out
 
@@ -439,6 +437,17 @@ def field_memory_block(memory, words_tabs):
     return {"kept": bool(r["kept"]), "seasons": int(r["n_seasons"]), "years": int(r["n_years"]),
             "error": {k: round(float(r["rmse"][k]), 3) for k in ("no_anomaly", "physics_only", "memory")},
             "words": {lang: render_tab(lines, held, vals, lang) for lang in ("en", "ne")}}
+
+
+def calibration_words(rain_break):
+    """(conditions, values) of the method page's gauge line when the central rain is gauge-calibrated (the weather card's
+    corrections.rain_break.gauge_calibration; rules.yaml gpm_series.gauge_calibration), else (set(), {})."""
+    cal = rain_break.get("gauge_calibration") or {}
+    if not cal.get("applied"):
+        return set(), {}
+    f = cal["factors"]
+    return {"rain_gauge_calibrated"}, {"cal_dry_down": int(round(100 * (1 - f["other"]))),
+                                       "cal_wet_up": int(round(100 * (f["jjas"] - 1)))}
 
 
 def rain_correction_block(rain_break, rain_check, evidence, words_tabs, shared):
@@ -463,8 +472,9 @@ def rain_correction_block(rain_break, rain_check, evidence, words_tabs, shared):
     vals = {"rain_fix_year": int(rain_break["from"][:4]), "rain_before": r10(gpm_pre), "rain_after": r10(gpm_post),
             "rain_normal": r10(block["rain_mm_per_year"]["station_normal"]),
             "err_before": int(round(h["mae_raw_mm"])), "err_after": int(round(h["mae_corrected_mm"]))}
+    held, cal = calibration_words(rain_break)
     lines = words_tabs["method_page"]["rain_correction"]
-    block["words"] = {lang: render_tab(lines, set(), vals, lang) for lang in ("en", "ne")}
+    block["words"] = {lang: render_tab(lines, held, {**vals, **cal}, lang) for lang in ("en", "ne")}
     return block
 
 
@@ -485,29 +495,33 @@ def _window_notes(plan_id, lib):
     return out
 
 
-def apply_plans(doc, plans, plans_unc, lib, words, ctx):
+def apply_plans(doc, plans, plans_unc, lib, words, ctx, extra=None):
     """doc with the three plans and their replays (build step 7). plans / plans_unc: plans.json of the corrected and
     the uncorrected run; ctx: diary-independent context for the words (explain.render). Validated before return."""
     from pipeline.plans import explain as ex
     out = copy.deepcopy(doc)
     roles = ("current", "cover_gap", "safest")
-    if plans_unc is not None and [plans_unc["export"][r]["plan"] for r in roles] != [plans["export"][r]["plan"] for r in roles]:
-        raise ValueError("the DHM-scaled run must export the same plans as the corrected one")
+    # the range (owner, 2026-11-14 afternoon: "keep the other versions as the range"): the DHM-scaled run, and `extra`
+    # runs such as {"untuned": plans.json of the break-corrected rain without the gauge factors}
+    alts = ([("dhm", plans_unc)] if plans_unc is not None else []) + sorted((extra or {}).items())
+    for name, a in alts:
+        if [a["export"][r]["plan"] for r in roles] != [plans["export"][r]["plan"] for r in roles]:
+            raise ValueError(f"the {name} run must export the same plans as the central one")
     replay = {}
     for r in roles:
         rows = replay_rows(plans["export"][r]["replay"], out)
-        if plans_unc is not None:
-            rows = with_second_rain(rows, replay_rows(plans_unc["export"][r]["replay"], out))
+        for name, a in alts:
+            rows = with_second_rain(rows, replay_rows(a["export"][r]["replay"], out), f"{name}_rain")
         replay[r] = rows
     out["field"]["water_source"] = plans["export"]["current"]["replay"]["labels"].get("water_source") or "unknown"
     contract, info = [], {}
     for r in roles:
         e = plans["export"][r]
         p = {"id": r, "name": e["name"], "crops": [dict(s) for s in e["spans"]], "score": score_block(e["score"])}
-        if plans_unc is not None:
-            u = score_block(plans_unc["export"][r]["score"])
+        for name, a in alts:
+            u = score_block(a["export"][r]["score"])
             if u != p["score"]:
-                p["score_dhm_rain"] = u
+                p[f"score_{name}_rain"] = u
         info[r] = {**p, "stability": e["stability"], "pest_break": e["pest_break"],
                    "needs_water_window": e["needs_water_window"], "windows": _window_notes(e["plan"], lib),
                    "thirsty": e["replay"].get("thirsty", {}), "gain_range": e.get("gain_range"),
@@ -522,7 +536,7 @@ def apply_plans(doc, plans, plans_unc, lib, words, ctx):
     out["plans"], out["replay"] = contract, replay
     # owner's answer 6 to REVIEW_2 (2026-11-13): the current plan once for each rotation the farmer may confirm
     if len(options) > 1:
-        unc_by_id = {o["id"]: o for o in (plans_unc.get("current_options") or [])} if plans_unc is not None else {}
+        alt_by_id = {name: {o["id"]: o for o in (a.get("current_options") or [])} for name, a in alts}
         blocks = []
         for k, o in enumerate(options):
             if k == 0:                                   # the default is what plans[0] and replay.current hold
@@ -531,19 +545,19 @@ def apply_plans(doc, plans, plans_unc, lib, words, ctx):
                 rows = replay_rows(o["replay"], out)
                 cur_p = {"id": "current", "name": contract[0]["name"], "crops": [dict(s) for s in o["spans"]],
                          "score": score_block(o["score"])}
-                if o["id"] in unc_by_id:
-                    rows = with_second_rain(rows, replay_rows(unc_by_id[o["id"]]["replay"], out))
-                    u = score_block(unc_by_id[o["id"]]["score"])
-                    if u != cur_p["score"]:
-                        cur_p["score_dhm_rain"] = u
+                for name, by_id in alt_by_id.items():
+                    if o["id"] in by_id:
+                        rows = with_second_rain(rows, replay_rows(by_id[o["id"]]["replay"], out), f"{name}_rain")
+                        u = score_block(by_id[o["id"]]["score"])
+                        if u != cur_p["score"]:
+                            cur_p[f"score_{name}_rain"] = u
                 cur_info = {**cur_p, "stability": o["stability"], "pest_break": o["pest_break"],
                             "needs_water_window": o["needs_water_window"], "windows": _window_notes(o["plan"], lib),
                             "thirsty": o["replay"].get("thirsty", {}), "gain_range": None,
                             "cover_days": round(o["score"]["cover"] / 100.0 * 365)}
             ck = {**c, "replay": {**replay, "current": rows}}
             block = {"id": o["id"], "crops": cur_p["crops"], "score": cur_p["score"]}
-            if "score_dhm_rain" in cur_p:
-                block["score_dhm_rain"] = cur_p["score_dhm_rain"]
+            block.update({k: v for k, v in cur_p.items() if k.startswith("score_") and k.endswith("_rain")})
             w = ex.render(cur_info, cur_info, ck, lib, words) if k else contract[0]
             block.update(tabs=w["tabs"], tips=w["tips"], tabs_ne=w["tabs_ne"], tips_ne=w["tips_ne"], replay=rows, compared={})
             for r in roles[1:]:
@@ -658,7 +672,11 @@ def export_step7(doc, field_id, plans):
            "station_rain_lower": rain["station_rain_lower"], "rain_corrected": bool(rain_break.get("applied")),
            "rain_fix_year": int(rain_break["from"][:4]) if rain_break.get("applied") else None,
            "legume_option": ex.legume_option(plans["plans"], rules["plans"]["suggested_must_include"], lib)}
-    out = apply_plans(out, plans, plans_unc, lib, words, ctx)
+    unt_path = checks / "rain_untuned" / "plans.json"          # the break-corrected rain without the gauge factors
+    plans_unt = json.loads(unt_path.read_text()) if unt_path.exists() else None
+    if plans_unt and plans_unt["labels"].get("rain_version") != "untuned":
+        raise ValueError("rain_untuned/plans.json must be the untuned-rain run")
+    out = apply_plans(out, plans, plans_unc, lib, words, ctx, extra={"untuned": plans_unt} if plans_unt else None)
     future_path = checks / "future.json"
     if future_path.exists():
         fut = json.loads(future_path.read_text())
