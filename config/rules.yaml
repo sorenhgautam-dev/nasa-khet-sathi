@@ -243,11 +243,14 @@ bare_soil:
     value: "1000 x (theta_fc - 0.5 x theta_wp) x Ze (eq. 73), with theta_fc and theta_wp of the twin's SoilGrids table (data/clean/<field>/soilgrids.parquet) averaged by depth over 0..Ze. Demo (0-5 and 5-15 cm): 25.7 mm"
     source: "FAO-56 eq. 73; the soil's own water contents (the same values as the root zone's TAW) rather than Table 19's typical ones (brief for 2a). The demo's 25.7 mm is above Table 19's loam TEW (16-22 mm) because SoilGrids' field capacity (0.33) is above Table 19's loam range (0.20-0.30)"
   rew_mm:
-    value: "the midpoint of table_19_rew_mm for the USDA texture class of SoilGrids' top layer (0-5 cm). Demo: sand 33.6, silt 45.8, clay 20.6 % = loam, 8-10 mm -> 9 mm. A class with no Table 19 row (sandy clay loam, clay loam, sandy clay) stops the run"
+    value: "the midpoint of table_19_rew_mm for the USDA texture class of SoilGrids' top layer (0-5 cm). Demo: sand 33.6, silt 45.8, clay 20.6 % = loam, 8-10 mm -> 9 mm. A class with no Table 19 row (sandy clay loam, clay loam, sandy clay) takes rew_no_row_mm (owner's item 3, 2026-11-14; until then it stopped the run)"
     source: "FAO-56 Table 19; Example 31 uses REW 9 mm for loam ('For Loam: TEW ~ 20 mm and REW ~ 9 mm'). The midpoint is Claude's choice, fixed before the first run. Texture: SSSA Glossary of Soil Science Terms (2022), 'soil texture', p. 115: 'loam - Soil material that contains 7 to 27% clay, 28 to 50% silt, and <52% sand' (p. 115 opened; the other classes, on p. 116, follow the USDA Soil Survey Manual as coded in the NRCS texture calculator: TODO-VERIFY)"
   table_19_rew_mm:
     value: {sand: [2, 7], loamy sand: [4, 8], sandy loam: [6, 10], loam: [8, 10], silt loam: [8, 11], silt: [8, 11], silty clay loam: [8, 11], silty clay: [8, 12], clay: [8, 12]}
     source: "FAO-56 Table 19, 'stage 1 REW' (mm), read 2026-11-14 (its 'Silt clay loam' row is the USDA silty clay loam)"
+  rew_no_row_mm:                  # owner's item 3 (2026-11-14): any field on Earth; the field abroad's top layer is sandy clay loam. Written and committed BEFORE its first run
+    value: [5, 12]
+    source: "FAO-56 Chapter 7, 'Evaporation reduction coefficient (Kr)' (https://www.fao.org/4/x0490e/x0490e0c.htm, opened 2026-11-14): 'The depth [REW] normally ranges from 5 to 12 mm and is generally highest for medium and fine textured soils. Typical values for REW are given in Table 19.' A texture class with no Table 19 row takes the midpoint of this general range, 8.5 mm, as rew_mm takes a row's midpoint; the run's bare-soil label says so (rew_from). Claude's choice, fixed before the first run; put to the owner. Nepal's five fields are loam (a Table 19 row): unchanged"
   kc_max:
     value: 1.20
     source: "FAO-56 eq. 72 with Kcb = 0 and h = 0 (no plants, so the climate term, multiplied by (h/3)^0.3, vanishes): max(1.2, 0.05) = 1.20; Example 31 (bare loam): 'From Eq. 72 Kc max = 1.20'. FAO-56 allows 'about 1.1' when the soil is wetted daily or every two days; not used (Claude's choice, fixed before the first run)"
