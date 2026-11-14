@@ -302,7 +302,7 @@ def sources_block(soil_distance_m=None, soil_around=None, field=None, cards=None
 
 
 # The demo's rows as they were written before REVIEW_2 H6 (sources_block() with no field): its config and cards
-DEMO_FIELD = {"lat": 27.690767, "lon": 85.441792, "validation_station": "NP000444540"}
+DEMO_FIELD = {"id": "demo", "lat": 27.690767, "lon": 85.441792, "validation_station": "NP000444540"}
 DEMO_CARDS = {"power": {"version": "v2.10.3"}, "modis": {},
               "gpm": {"segments": [{"product": "late", "from": "2025-10-01", "to": "2025-12-31"}]},
               "weather": {"corrections": {"tmin_c": {"applied": True},
