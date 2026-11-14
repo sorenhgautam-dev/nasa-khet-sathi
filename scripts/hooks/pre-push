@@ -1,0 +1,16 @@
+#!/bin/sh
+# Khet Sathi pre-push hook (owner, 2026-11-14 evening): EVERY push is blocked unless the secrets scan passes.
+# Installed by copying this file to .git/hooks/pre-push (scripts/install_hooks.sh). Never bypass it (no --no-verify).
+repo="$(git rev-parse --show-toplevel)" || exit 1
+cd "$repo" || exit 1
+if [ ! -x .venv/bin/python ]; then
+  echo "pre-push: .venv/bin/python not found, so the secrets scan cannot run. PUSH BLOCKED." >&2
+  exit 1
+fi
+echo "pre-push: running the secrets scan (scripts/scan_history.py) ..." >&2
+if .venv/bin/python scripts/scan_history.py >&2; then
+  echo "pre-push: secrets scan passed (exit 0). Push allowed." >&2
+  exit 0
+fi
+echo "pre-push: the secrets scan FAILED. PUSH BLOCKED. Read the masked report above; fix it before pushing." >&2
+exit 1

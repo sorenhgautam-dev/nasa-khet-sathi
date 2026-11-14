@@ -53,6 +53,15 @@ BAD_FILES = re.compile(r"(^|/)(\.env(\..*)?|\.netrc|_netrc|[^/]*\.pem|[^/]*\.key
                        r"secrets\.h|google-services\.json|GoogleService-Info\.plist|serviceAccount[^/]*\.json|"
                        r"firebase-adminsdk[^/]*\.json)$")
 MAX_FILE_BYTES = 5_000_000
+# A login template whose two values are both "<your ...>" placeholders (owner, 2026-11-14 evening: the false alarm in an
+# uncommitted draft of docs/DEPLOY_ANYWHERE.md). Only that exact shape is let through; any other value is still a hit.
+_PLACEHOLDER = r"<your [a-z ]{1,30}>"
+_NETRC_TEMPLATE = re.compile(rf"(?i)\bmachine\s+\S+\s+login\s+{_PLACEHOLDER}\s+password\s+{_PLACEHOLDER}")
+
+
+def mask(text):
+    """Every run of 4 or more non-space characters keeps its first 3; the rest become '*'. Reports never show a value."""
+    return re.sub(r"\S{4,}", lambda m: m.group(0)[:3] + "*" * (len(m.group(0)) - 3), text)
 
 
 def _git(repo, *args):
@@ -62,6 +71,7 @@ def _git(repo, *args):
 
 def _line_hits(line, allowed):
     """Kinds of secret-shaped text in one line, after letting through the values whose SHA-256 is allowed."""
+    line = _NETRC_TEMPLATE.sub("LOGIN_TEMPLATE", line)
     if allowed:
         line = _TOKENS.sub(lambda m: "ALLOWED" if hashlib.sha256(m.group(0).encode()).hexdigest() in allowed else m.group(0), line)
     return [kind for kind, rx in PATTERNS if rx.search(line)]
@@ -71,15 +81,21 @@ def scan(repo=".", allowed_sha256=None):
     allowed = ALLOWED_SHA256 if allowed_sha256 is None else set(allowed_sha256)
     commits = [c for c in _git(repo, "rev-list", "--all").split() if c]
     content, files = [], {}
-    commit, path = None, None
+    commit, path, n = None, None, 0
     for line in _git(repo, "log", "--all", "-p", "--no-color", "--format=COMMIT %H").splitlines():
         if line.startswith("COMMIT "):
             commit = line.split()[1]
         elif line.startswith("+++ "):
             path = line[6:] if line.startswith("+++ b/") else None
+        elif line.startswith("@@ "):
+            m = re.search(r"\+(\d+)", line)
+            n = int(m.group(1)) if m else 0
         elif line.startswith("+") and not line.startswith("+++") and path:
             for kind in _line_hits(line, allowed)[:1]:
-                content.append({"commit": commit, "file": path, "kind": kind, "text": line[1:].strip()[:120]})
+                content.append({"commit": commit, "file": path, "line": n, "kind": kind, "text": mask(line[1:].strip())[:120]})
+            n += 1
+        elif line.startswith(" "):
+            n += 1
     for block in _git(repo, "log", "--all", "--name-only", "--format=COMMIT %H").split("COMMIT ")[1:]:
         lines = block.strip().splitlines()
         for name in lines[1:]:
@@ -100,9 +116,9 @@ def scan(repo=".", allowed_sha256=None):
             text = f.read_text(errors="replace")
         except OSError:
             continue
-        for line in text.splitlines():
+        for i, line in enumerate(text.splitlines(), 1):
             for kind in _line_hits(line, allowed)[:1]:
-                hit = {"commit": "WORKTREE", "file": name, "kind": kind, "text": line.strip()[:120]}
+                hit = {"commit": "WORKTREE", "file": name, "line": i, "kind": kind, "text": mask(line.strip())[:120]}
                 if (hit["file"], hit["text"]) not in seen:
                     seen.add((hit["file"], hit["text"]))
                     content.append(hit)
@@ -128,7 +144,7 @@ def main(argv=None):
     print(f"commits scanned: {r['commits_scanned']} (all branches); files in the working tree scanned: {r['files_scanned']}")
     print(f"secret-shaped lines (ever added, or in the working tree): {len(r['content_hits'])}")
     for h in r["content_hits"]:
-        print(f"  {h['commit'][:10]} {h['file']} [{h['kind']}] {h['text']}")
+        print(f"  {h['commit'][:10]} {h['file']}:{h['line']} [{h['kind']}] {h['text']}")
     print(f"sensitive file names (ever committed, or in the working tree): {len(r['file_hits'])}")
     for h in r["file_hits"]:
         print(f"  {h['commit'][:10]} {h['file']}")

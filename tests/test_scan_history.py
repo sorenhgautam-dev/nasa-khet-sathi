@@ -126,3 +126,62 @@ def test_the_website_key_is_let_through_by_its_sha256_only(repo):
 def test_the_repository_never_holds_the_allowed_key_itself():
     """Only hashes are listed: 64 hex characters each, never a key."""
     assert all(len(h) == 64 and set(h) <= set("0123456789abcdef") for h in sh.ALLOWED_SHA256)
+
+
+# ---------- 2026-11-14 evening (owner): a placeholder login template is not a secret; output is masked ----------
+NETRC_HOST = "machine " + "urs.earthdata" + ".nasa.gov"
+
+
+def test_a_login_template_with_your_placeholders_is_not_a_hit(repo):
+    """The false alarm of 2026-11-14 (docs/DEPLOY_ANYWHERE.md line 24, never committed): both values are '<your ...>'."""
+    _commit(repo, "docs/guide.md", "`" + NETRC_HOST + " login <your user name> password <your password>`\n")
+    assert sh.scan(repo)["content_hits"] == []
+
+
+@pytest.mark.parametrize("line", [
+    NETRC_HOST + " login <your user name> password " + "Hunter2" + "Hunter2",        # a real-looking password
+    NETRC_HOST + " login " + "jdoe" + "1984 password <your password>",               # a real-looking login
+    NETRC_HOST,                                                                        # the host alone still counts
+    "machine example.org login " + "jdoe" + " password " + "s3cr" + "etvalue",        # any host's netrc line
+])
+def test_any_login_line_with_a_real_looking_value_is_still_a_hit(repo, line):
+    _commit(repo, "notes.txt", line + "\n")
+    assert sh.scan(repo)["content_hits"]
+
+
+def test_the_report_masks_every_value_and_gives_the_line(repo, capsys):
+    _commit(repo, "a.txt", "one\n" + PW + "\n")
+    hits = sh.scan(repo)["content_hits"]
+    assert hits[0]["line"] == 2
+    assert sh.main([str(repo)]) == 1
+    out = capsys.readouterr().out
+    assert "hunter2hunter2" not in out and "hun" in out and "a.txt:2" in out
+    assert sh.mask("token = " + GH_TOKEN) == "tok** = gho" + "*" * (len(GH_TOKEN) - 3)
+
+
+def test_the_pre_push_hook_blocks_a_push_when_the_scan_fails(repo):
+    """Owner, 2026-11-14 evening: scripts/hooks/pre-push runs the scan and blocks EVERY push that fails it."""
+    import os
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    (repo / ".venv").symlink_to(root / ".venv")
+    (repo / "scripts").symlink_to(root / "scripts")
+    (repo / ".gitignore").write_text(".venv\nscripts\n")
+    _commit(repo, ".gitignore", ".venv\nscripts\n")
+    hook = str(root / "scripts" / "hooks" / "pre-push")
+    run = lambda: subprocess.run(["sh", hook], cwd=repo, capture_output=True, text=True,
+                                 env={**os.environ, "GIT_DIR": str(repo / ".git")})
+    ok = run()
+    assert ok.returncode == 0 and "Push allowed" in ok.stderr
+    (repo / "draft.txt").write_text("token: " + GH_TOKEN + "\n")        # not committed: the working tree is scanned
+    bad = run()
+    assert bad.returncode == 1 and "PUSH BLOCKED" in bad.stderr and GH_TOKEN not in bad.stderr
+
+
+def test_the_installed_hook_is_the_tracked_one():
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    installed = root / ".git" / "hooks" / "pre-push"
+    if not installed.exists():                     # a fresh clone: scripts/install_hooks.sh has not been run yet
+        pytest.skip("run scripts/install_hooks.sh")
+    assert installed.read_text() == (root / "scripts" / "hooks" / "pre-push").read_text()

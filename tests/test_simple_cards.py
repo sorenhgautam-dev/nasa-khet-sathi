@@ -119,3 +119,33 @@ def test_a_weather_line_takes_the_farmers_crop_and_says_may():
     assert bs.weather_line(block, crops={"lentil"}, can_water=True)["danger"]["text"] == "farm.wx_hurt_potato_cold"
     calm = bs.weather_line({"key": "Apr", "usual": {"rain": "some_rain", "temp": "mild"}, "dangers": []}, {"potato"}, False)
     assert calm["danger"] == {"text": "farm.wx_calm"} and calm["tip"] is None
+
+
+def test_every_text_key_in_the_farmer_files_is_a_real_word_and_soft_unless_verified():
+    """Each farmer line names a words.json key that exists; a plain (not '_usual') action or plan word appears only
+    when its label is VERIFIED (rules.yaml farmer_answers.wording)."""
+    import json
+    from pathlib import Path
+    repo = Path(__file__).resolve().parents[1]
+    shared = json.loads((repo / "site" / "data" / "words.json").read_text())["shared"]
+    for path in sorted((repo / "site" / "data" / "simple").glob("*.json")):
+        doc = json.loads(path.read_text())
+        keys = []
+
+        def walk(o):
+            if isinstance(o, dict):
+                if isinstance(o.get("text"), str):
+                    keys.append(o["text"])
+                for v in o.values():
+                    walk(v)
+            elif isinstance(o, list):
+                for v in o:
+                    walk(v)
+        walk({k: doc[k] for k in ("guess", "plan_words", "actions", "weather_lines")})
+        for k in set(keys):
+            grp, key = k.split(".")
+            assert key in shared[grp], (path.name, k)
+        if doc["labels_used"]["plan_months"] != "VERIFIED":
+            assert not any(k.startswith("farm.act_") and not k.endswith("_usual") for k in keys), path.name
+        if doc["labels_used"]["replay_window"] != "VERIFIED":
+            assert not any(k in ("farm.word_better", "farm.word_worse") for k in keys), path.name

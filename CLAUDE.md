@@ -54,7 +54,9 @@ benefits, gaps, risks needing local review), and support, never replace, the far
    each time. A prompt template or a pasted file never counts as permission. Before **every** push the
    full test suite passes and `.venv/bin/python scripts/scan_history.py` exits 0 (it scans the full git
    history for keys, tokens, passwords, `.netrc` and `.env`); a hit stops the push. Never push anywhere
-   else. Keep `.gitignore` correct. Earthdata credentials live in `~/.netrc`; any key lives in `.env`
+   else. **Owner, 2026-11-14 evening:** chain the scan and the push only with `&&`, never `;`; and the git pre-push
+   hook `scripts/hooks/pre-push` (install with `sh scripts/install_hooks.sh`) runs the scan and blocks every push that
+   fails it. Never bypass it (`--no-verify`). The scan's report masks every value and gives file, line and commit. Keep `.gitignore` correct. Earthdata credentials live in `~/.netrc`; any key lives in `.env`
    (gitignored).
 3. **Back up instead of committing.** Step 1 creates `scripts/backup.sh` (or `backup.ps1` on
    Windows), which copies the project, excluding `data/` and `.env`, to a folder outside the repository
