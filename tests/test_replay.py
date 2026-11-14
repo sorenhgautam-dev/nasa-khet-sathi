@@ -10,7 +10,8 @@ from pipeline.plans import simulate as sim
 
 LIB = load_crops()
 SOIL = pd.DataFrame({"top_cm": [0, 30, 100], "bottom_cm": [30, 100, 200],
-                     "theta_fc_m3m3": [0.32, 0.33, 0.33], "theta_wp_m3m3": [0.15, 0.20, 0.22]})
+                     "theta_fc_m3m3": [0.32, 0.33, 0.33], "theta_wp_m3m3": [0.15, 0.20, 0.22],
+                     "sand_pct": [40.0, 40.0, 40.0], "clay_pct": [20.0, 20.0, 20.0]})   # loam: FAO-56 bare soil needs the texture
 CN = {"bare": 91, "wheat": 83, "rice": 83, "potato": 85}
 OPTS = dict(bare_kc=0.3)
 

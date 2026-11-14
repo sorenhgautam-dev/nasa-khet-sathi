@@ -20,7 +20,8 @@ REPO = Path(__file__).resolve().parents[1]
 LIB = load_crops()
 RULES = load_rules()
 SOIL = pd.DataFrame({"top_cm": [0, 30, 100], "bottom_cm": [30, 100, 200],
-                     "theta_fc_m3m3": [0.32, 0.33, 0.33], "theta_wp_m3m3": [0.15, 0.20, 0.22]})
+                     "theta_fc_m3m3": [0.32, 0.33, 0.33], "theta_wp_m3m3": [0.15, 0.20, 0.22],
+                     "sand_pct": [40.0, 40.0, 40.0], "clay_pct": [20.0, 20.0, 20.0]})   # loam: FAO-56 bare soil needs the texture
 CN = {"bare": 91, "wheat": 83, "rice": 83, "potato": 85, "lentil": 81}
 
 
@@ -186,11 +187,11 @@ def test_plan_run_follows_the_bare_soil_switch_as_run_plans_does():
     import copy
     sys.path.insert(0, str(REPO / "scripts"))
     from run_plans import evaluate
-    rules_on = copy.deepcopy(RULES)
-    rules_on["bare_soil"]["apply"] = True
+    rules_on, rules_off = copy.deepcopy(RULES), copy.deepcopy(RULES)
+    rules_on["bare_soil"]["apply"], rules_off["bare_soil"]["apply"] = True, False   # whatever rules.yaml says today
     soil = SOIL.assign(sand_pct=33.6, clay_pct=20.6)
     w = _wx()
-    on, off = ru.plan_run(SPECS, w, LIB, soil, CN, rules_on), ru.plan_run(SPECS, w, LIB, soil, CN, RULES)
+    on, off = ru.plan_run(SPECS, w, LIB, soil, CN, rules_on), ru.plan_run(SPECS, w, LIB, soil, CN, rules_off)
     e = evaluate(SPECS, w, LIB, soil, CN, rules_on, 1.0)
     assert on["harvest"] == e["harvest"] and on["dry_days"] == e["dry_days"]
     assert on["irrigation_mm"] == pytest.approx(e["irrigation_mm"], abs=0.05)
