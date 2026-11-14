@@ -4,6 +4,16 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, after midnight): 4 parts on every Bhaktapur field; `words.json` shared.welcome (addition only)
+
+- The four Bhaktapur sample fields and Ambohidratrimo now have 4 parts (`s1`..`s4`, 2 x 2, each about one 30 m NASA
+  pixel, numbered from the south-west), not 36: sectioning is per field (`sections: {cell_m: 30}` in each config). No
+  key changed; only `field.sections` of those five files.
+- `words.json` `shared.welcome`: the loading curtain's "Welcome" in the 7 languages (`en`, `ne` with `ne_review`, the five
+  drafts); `site/index.html` carries the same words for the first paint.
+- The soil test and Today show readings only of the field itself: a garden or indoor test (`probe_log.json` `kind`
+  `garden_test` / `indoor_test`) shows on How we know only, as bowls; a practice reading (`fake_probe`) is never read.
+
 ## 2026-11-14 (Saturday, near midnight): the indoor test's per-bowl lines and watered-bowl check (`probe_log.json`, addition only)
 
 - `probe_log.json` `sessions[]` gains an optional `check` (only with `--test` and `--watered sN --watered-at HH:MM`):

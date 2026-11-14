@@ -32,3 +32,4 @@ current_rotation_options: [[rice, potato], [rice, wheat]]  # PLACEHOLDER (owner,
 current_rotation_source: "PLACEHOLDER (owner, 2026-11-12): rice in the monsoon, then potato in winter, sown on the FAO Crop Calendar Nepal Hill-zone default windows; the real rotation comes from the farmer"
 validation_station: NP000444540        # NOAA GHCN-Daily KATHMANDU AIRPORT (validation; temperature correction A). About 7.4 km west of the placeholder field (great-circle, from the station's 27.700 N 85.367 E in ghcnd-stations.txt, DATA_AUDIT 1.11). Every record is GHCN S-flag 'S' (synoptic-derived: use with caution)
 correction_label: Kathmandu-valley correction  # decision A: POWER temperature corrected from validation_station
+sections: {cell_m: 30}   # this field's parts (owner, 2026-11-15: sectioning is per field): 30 m, about one NASA HLS pixel, so 2 x 2 = 4 parts

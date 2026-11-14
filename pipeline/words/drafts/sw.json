@@ -3335,6 +3335,10 @@
   "screens.check_soil.texts.bowl_watered_no": {
    "en": "Bowl {section} got water. It was not clearly wetter.",
    "sw": "Bakuli {section} lilipata maji. Halikuonyesha unyevu wazi."
+  },
+  "shared.welcome": {
+   "en": "Welcome",
+   "sw": "Karibu"
   }
  }
 }

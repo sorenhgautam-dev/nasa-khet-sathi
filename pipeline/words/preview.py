@@ -111,6 +111,8 @@ def render():
               ("Joining words", list(shared["join"].values()))]
     groups += [(about, list(shared[k].values())) for k, about in (("weather", "Weather ahead"), ("twin", "How we test each plan"), ("farm", "Farmer answers"), ("bs_months", "Bikram Sambat months (English and Nepali)"))
                if k in shared]
+    if "welcome" in shared:   # the loading curtain's welcome (owner, 2026-11-15)
+        groups.append(("The welcome while the app loads", [shared["welcome"]]))
     rows, nodes = [], []
     for about, group in groups:
         rows += [f"| *{about}* | |", *[_row(n, conditions) for n in group]]

@@ -45,3 +45,4 @@ utc_offset: "+03:00"                # Madagascar (East Africa Time, no daylight 
 time_zone: Indian/Antananarivo
 faostat_area_code: "129"            # FAOSTAT area code for Madagascar (checked against the bulk file's 'Area' column)
 validation_station: MA000067083     # NOAA GHCN-Daily ANTANANARIVO/IVATO (-18.800 N, 47.483 E, 1276 m; ghcnd-stations.txt), 7.4 km from the origin point. Validation only: its 2001-2025 record is patchy (fewer than 200 rain records in most years; S and I source flags)
+sections: {cell_m: 30}   # this field's parts (owner, 2026-11-15: sectioning is per field): 30 m, about one NASA HLS pixel, so 2 x 2 = 4 parts

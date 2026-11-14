@@ -1,7 +1,8 @@
-"""The soil test shows real probe readings with their date and no "Tested: n / N" count; practice readings from the fake
-probe only on the laptop's hotspot, under a big banner; a garden test labelled as one; neither practice nor garden ever
-stands for the field (owner, 2026-11-14 night; rules.yaml probe.live.practice_on_phone and garden_test). The site's rule
-for "real" is the bridge's: read from a serial port (robot/bridge.py)."""
+"""The soil test shows real probe readings of the field with their date and no "Tested: n / N" count. Owner, 2026-11-15:
+practice and indoor-bowl readings never show as the field's parts; the soil screen stays at "Readings come after our team
+tests it" until the real test is published, and a garden or indoor test shows only on How we know, as bowls (rules.yaml
+probe.live.practice_on_phone and garden_test). The site's rule for "real" is the bridge's: read from a serial port
+(robot/bridge.py)."""
 import re
 from pathlib import Path
 
@@ -22,19 +23,14 @@ def test_the_site_and_the_bridge_agree_on_what_a_real_reading_is():
         assert bool(re.search(rule, source)) == (bridge.is_real(source) and len(source) > len("serial:")), source
 
 
-def test_practice_readings_show_only_on_the_laptop_or_its_hotspot():
-    rule = _regex("onHotspot")
-    for host in ("localhost", "127.0.0.1", "192.168.1.5", "172.20.10.2", "10.0.0.4", "khet-laptop.local"):
-        assert re.search(rule, host), host
-    for host in ("sorenhgautam-dev.github.io", "example.com", "172.32.0.1", "8.8.8.8", "localhost.example.com", "10.github.io",
-                 "192.168.1.5.example.com", "evil.local.example.com"):
-        assert not re.search(rule, host), host
-    assert "function isPractice(lv) { return !!lv && lv.source === 'fake_probe' && onHotspot(); }" in APP
-    assert "class: 'practice-banner'" in APP and "T('check_soil.practice')" in APP
+def test_practice_readings_are_never_read():
+    assert "isPractice" not in APP and "fake_probe" not in APP and "practice-banner" not in APP
 
 
 def test_practice_and_garden_readings_never_stand_for_the_field():
-    assert "function forField(pd) { return !!pd && !pd.practice && !pd.test; }" in APP
+    assert "function forField(pd) { return !!pd && !pd.test; }" in APP
+    assert "} else if (d.kind === 'log' && forField(d)) {" in APP                 # the soil screen's walk
+    assert "if (!forField(pd)) pd = { kind: 'none', parts: {} };" in APP        # Today's parts
     assert "sd.today.mode === 'band' && forField(pd)" in APP                  # the soil at the start
     assert "if (!forField(pd)) return;" in APP                                   # the Choose screen's dots
     assert "if (!K.forField(pd)) return null;" in FEATURES                       # the Replay's start band
@@ -42,9 +38,15 @@ def test_practice_and_garden_readings_never_stand_for_the_field():
     assert "test: TEST_LABEL[log.kind] ? log.kind : null" in APP
 
 
+def test_a_stick_test_shows_on_how_we_know_as_bowls_and_field_readings_stay_not_ready():
+    how = (REPO / "site" / "js" / "how.js").read_text()
+    assert "return pd && pd.test ? section('stick', T('check_soil.prototype'), [K.recordedLine(pd), K.bowlLines(pd)]) : null;" in how
+    assert "if (!pd || pd.kind === 'none' || !K.forField(pd)) items.push(T('your_plan.nr_readings'));" in how
+
+
 def test_real_readings_carry_a_date_and_there_is_no_tested_count():
     reader = APP[APP.index("function probeData()"):APP.index("function anyTested(")]
-    assert "isReal(lv.source) || isPractice(lv)" in reader and "isReal(x.source)" in reader
+    assert "if (lv && isReal(lv.source) &&" in reader and "isReal(x.source)" in reader
     assert "pd.live.time" in APP and "(pd.test ? TEST_LABEL[pd.test] : ['recorded_on'])" in APP
     assert not re.search(r"T\('check_soil\.tested'\) \+ ': '", APP)
 

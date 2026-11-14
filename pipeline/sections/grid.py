@@ -9,8 +9,9 @@
   coarser for big fields, at most 40).
 Ids s1..sN run row by row from the first corner (the south-west one). Polygons are [lon, lat] rings, not closed.
 
-Step 8 passes rules.yaml sections.cell_m (30 m, about one HLS pixel). The default 10 m is the step-1 grid that
-pipeline/export/build_field_json.py still draws while the export names the sections as "not ready yet".
+Sectioning is per field (owner, 2026-11-15): field_sections() reads `sections` in the field's config over rules.yaml
+sections (cell_m 30 m, about one HLS pixel, so a 60 m square gives 2 x 2 = 4 parts). The default cell is that 30 m too:
+the 10 m step-1 default gave the sample fields 36 parts in the export, which the owner undid.
 Distances use a flat-earth scale at the outline's mean latitude (good to well under a metre over a field).
 """
 import math
@@ -148,7 +149,14 @@ def _clip_grid(p, cell_m, max_sections, coarsen_factor, min_piece_m2):
     return [[(origin[0] + x / scale[0], origin[1] + y / scale[1]) for x, y in piece] for piece in pieces]
 
 
-def grid_sections(polygon, cell_m=10.0, max_sections=40, coarsen_factor=1.1, min_piece_m2=1.0):
+def field_sections(field, rules):
+    """The field's own parts: `sections` in config/fields/<id>.yaml (cell_m, max_sections) over rules.yaml `sections`."""
+    own = {**rules, **(field.get("sections") or {})}
+    return grid_sections(field["polygon"], cell_m=own["cell_m"], max_sections=own["max_sections"],
+                         coarsen_factor=own["coarsen_factor"])
+
+
+def grid_sections(polygon, cell_m=30.0, max_sections=40, coarsen_factor=1.1, min_piece_m2=1.0):
     """[{id: 's1'.., polygon: [lon, lat] corners (ring not closed), area_m2}], row by row from the first corner."""
     pts = [(float(q[0]), float(q[1])) for q in polygon]
     if len(pts) == 4 and _convex(local_metres(pts)):
