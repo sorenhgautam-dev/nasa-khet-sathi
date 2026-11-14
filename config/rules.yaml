@@ -1090,8 +1090,8 @@ verification:                     # owner's accuracy and verification programme,
       value: "the probe's readings at the field and any weighed soil samples: the twin is scored on its state BEFORE a reading updates it (the Kalman prior), never after"
       source: "Claude's choice, set before any reading exists: a state after the update has already seen the reading"
     dhm_bulletins:
-      value: "DHM's monthly gauge bulletins (data/clean/<field>/dhm_bulletin_months.csv): never used to fit, scale or choose the rain"
-      source: "Owner, 2026-11-14 (items 1 and 2: merging GPM with DHM gauges only if tested on gauges and months it never saw)"
+      value: "DHM's monthly gauge bulletins (data/clean/<field>/dhm_bulletin_months.csv). Months up to December 2025 may be used to choose the central rain version and fit a correction, only as rain_selection says (leave one gauge out); January-July 2026 are the locked test months, never used to fit or choose"
+      source: "Owner, 2026-11-14 (items 1 and 2: merging GPM with DHM gauges only if tested on gauges and months it never saw); owner, 2026-11-14 afternoon: 'choose the central rain version and any monthly correction by testing on months and gauges it never saw. Show me the result before switching.' Amended before any 2026 month was compared. Already seen: the corrected rain against the three-gauge mean in the 20 scorable months of June 2023-December 2025 (13 within 19%, compliance table of b37ce10)"
     known_events:
       value: "config/known_events.yaml events and negative controls: never used to set or tune an event rule"
       source: "Owner, 2026-11-12 and 2026-11-14 ('never tune anything on the test set or the validation events')"
@@ -1159,3 +1159,30 @@ verification:                     # owner's accuracy and verification programme,
     plan_scores:
       value: {shown: "The water, cover and soil-kept scores", measure: "model indices with no measured counterpart", reference: "none", independent: false, needs: "measured water use and soil loss on the field"}
       source: "Owner, 2026-11-14 (item 4)"
+  rain_selection:                 # owner, 2026-11-14 afternoon, item 1. Written and committed BEFORE any comparison of 2026 months, and before the leave-one-gauge-out scores were computed
+    gauges:
+      value: ["Bhaktapur", "Changu Narayan", "Nagarkot", "Kathmandu Airport"]
+      source: "Owner, 2026-11-14: 'Bhaktapur, Changu Narayan, Nagarkot and the airport'. Nagarkot sits on the valley rim at about 2,100 m, so it is expected to read wetter than the valley floor; it is kept because the owner named it"
+    months:
+      value: {selection: "every bulletin month from the first issue to 2025-12", test: "2026-01 to 2026-07 (locked)", min_gauge_mm: 10}
+      source: "Owner, 2026-11-14 (months it never saw). A month whose gauge reads under 10 mm is listed, not scored (verification.outputs.rain_months). Claude's split, fixed before the run: the test months are the newest, a block in time"
+    candidates:
+      value: {published: "GPM IMERG as published (Final, else Late for days Final lacks)", corrected: "the break-corrected rain (gpm_series.correction; Late days scaled with the Final factors)", dhm_scaled: "GPM scaled month by month to DHM's Bhaktapur 1991-2020 normals (the current dry edge)", gauge_calibrated: "the corrected rain times one factor for June-September and one for the other months, each the ratio of sums gauge / corrected over the training gauges' selection months"}
+      source: "Owner, 2026-11-14 ('our rain versions' and 'any monthly correction'). Two factors, not twelve: with about 30 selection months a factor per calendar month would rest on two or three months each (Claude's choice, fixed before the run). For 2026 the versions are built from IMERG fetched for 2026 the same way as the record"
+    selection_score:
+      value: "leave one gauge out over the selection months: for each of the four gauges, each candidate's share of that gauge's months within 19% of it (verification.outputs.rain_months.tolerance_rel), the gauge-calibrated factors fitted on the other three gauges only; pooled over the four gauges. Highest pooled share wins; a tie goes to the lower median absolute log ratio. The gauge-calibrated version is kept only if it beats the best of the other three"
+      source: "Owner, 2026-11-14 ('testing on months and gauges it never saw'; keep a change only if it improves the held-out score). Claude's scoring rule, fixed before the run"
+    test_score:
+      value: "the winner, once, on the locked 2026 months at all four gauges (a gauge-calibrated winner refitted on all four gauges' selection months): share within 19%, n and 95% Wilson interval. Reported with every candidate's 2026 score beside it, for information. Nothing switches without the owner's go"
+      source: "Owner, 2026-11-14 ('Show me the result before switching')"
+    wettest_day:
+      value: "where a bulletin gives a month's wettest day, each candidate's wettest day of that month against it, as a ratio; reported, not scored"
+      source: "Owner, 2026-11-14 ('monthly totals and, where given, the wettest day'). Days differ by up to a day (DHM's day ends 08:45 local, IMERG's at 05:45 local); the month's maxima are compared, not dates"
+  year_order:                     # owner, 2026-11-14 afternoon, item 2. Written and committed BEFORE any yearly comparison was computed
+    data:
+      value: "each year's June-September (monsoon) rain at the nearest DHM stations (Bhaktapur, Changu Narayan, Kathmandu Airport, Nagarkot), in mm or as % of normal, from DHM's yearly monsoon reports; our June-September totals of each rain version at the field"
+      source: "Owner, 2026-11-14: 'from DHM's yearly monsoon reports, collect each year's monsoon rain at the nearest stations'"
+    measure:
+      value: "Spearman rank correlation between our yearly monsoon totals and the stations' (the mean of the stations' % of normal where at least two report, and each station alone), with a 95% bootstrap interval (validation_checks.common.correlation); holds up when the interval's lower bound is above 0. Also each year's class with DHM's own bands (below normal < 90%, near normal 90-110%, above normal > 110% of the record's mean for ours, of DHM's normal for the stations): the share of years in the same class. 2023 reported by itself: its rank and class in each"
+      source: "Owner, 2026-11-14 ('check whether our wet and dry years come in the right order (rank correlation). Report 2023 specifically'). Bands: DHM, Preliminary Precipitation and Temperature Summary, Monsoon Season 2025, p. 2 ('less than 90% of normal ... below normal, 90 to 110% ... near normal, more than 110% ... above normal'). Claude's measure details, fixed before the run"
+
