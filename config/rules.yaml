@@ -1508,3 +1508,29 @@ heat_clock:                       # item 4 (owner's brief, 2026-11-14): heat and
   label:
     value: "labels.outputs.heatclock_today (POWER corrected to the station: valley; estimate) and heatclock_2040 (NEX-GDDP: region; estimate)"
     source: "Owner's brief: 'add an entry for each new output, with its scale and scorecard row (none yet = estimate)'"
+
+simple_cards:                     # owner, 2026-11-14 evening: the three farmer cards (pipeline/export/build_simple.py -> site/data/simple/<field>.json)
+  replay_window:
+    value: m6
+    source: "Owner: '[Crop] this winter: better than what you grow now'. The Replay's 6-month window (to early May) holds every winter crop's whole season in the plans (potato to 21 Feb, wheat to 3 Mar or 3 Apr, lentil to 24 Feb). Claude's choice, fixed before the first run"
+  start:
+    value: start_default
+    source: "The Replay's own default start (window_replay; the twin's state, medium before any probe reading); the card has no controls (owner)"
+  compare:
+    value: {score: "each past winter's Replay score (water need met over the window's crop days, WRSI)", better_by: 10, worse_by: 10}
+    source: "Owner: 'with the threshold for better/same/worse fixed in rules.yaml before running'. Better = the suggested crop's score at least 10 points above the farmer's own winter crop's in the same past winter; worse = at least 10 points below; same otherwise. 10 points is Claude's choice, unsourced (half the width of the WRSI 'mediocre' class 60-80 named in window_replay.classes, whose bands other than the failure bound could not be opened). Fixed before the first run, without looking at the comparisons"
+  per_ten:
+    value: "largest remainder: 10 x count / winters, floored; the leftover faces go to the largest remainders (ties: better, then same, then worse)"
+    source: "Owner: 'scaled from our 24 winters to about X of every 10 winters, rounded'; the faces must add up to 10, so the largest-remainder (Hamilton) rounding. Claude's choice"
+  verdict:
+    value: "better when better winters are at least half of all winters and outnumber the worse ones; worse when worse winters are at least half and outnumber the better ones; same when same winters are at least half; otherwise mixed"
+    source: "Owner: 'If it's worse or mixed, say so just as plainly.' Claude's choice, fixed before the first run"
+  suggestion:
+    value: "the suggested plan (cover_gap or safest, never current) whose winter crop differs from the farmer's answer and has the most (better minus worse) winters; ties: fewer worse winters, then the plans' order"
+    source: "Claude's choice, fixed before the first run: the card names one crop ('[Crop] this winter'), the one that does best against the farmer's own crop"
+  watering:
+    value: "an answer of 'yes, I can water' compares every winter as 'same': the twin's watered case meets every crop's water need (window_replay watering), so water cannot tell the crops apart; the card says so plainly"
+    source: "The twin is a water model (CLAUDE.md: the bucket, Ks, FAO-33 harvest); it has no heat, pest, price or labour effects"
+  winter_answers:
+    value: "the winter crops of the field's current_options (demo: potato, wheat), each compared through its Replay plan (rice_potato, rice_wheat)"
+    source: "Owner: 'What do you grow in winter?' asked once and kept on the phone; current_options (owner, 2026-11-13)"
