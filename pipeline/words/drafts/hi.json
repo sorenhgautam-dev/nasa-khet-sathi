@@ -1473,8 +1473,8 @@
    "hi": "पिछले {year_count} साल देखें"
   },
   "screens.what_to_grow.texts.range_why": {
-   "en": "Two ways of counting rain give a range.",
-   "hi": "बारिश गिनने के दो तरीके दायरा देते हैं।"
+   "en": "Counting rain several ways gives a range.",
+   "hi": "बारिश कई तरह गिनने से दायरा आता है।"
   },
   "screens.what_to_grow.texts.range_town": {
    "en": "One matches the nearby town's usual rain.",
@@ -1651,6 +1651,38 @@
   "screens.your_plan.texts.links_title": {
    "en": "To read more",
    "hi": "और पढ़ने के लिए"
+  },
+  "screens.what_to_grow.texts.six_pick": {
+   "en": "One choice for these months",
+   "hi": "इन महीनों के लिए एक विकल्प"
+  },
+  "screens.what_to_grow.texts.step_first": {
+   "en": "First",
+   "hi": "पहले"
+  },
+  "screens.what_to_grow.texts.step_then": {
+   "en": "Then",
+   "hi": "फिर"
+  },
+  "screens.what_to_grow.texts.field_6": {
+   "en": "Your field over 6 months",
+   "hi": "6 महीनों में आपका खेत"
+  },
+  "screens.what_to_grow.texts.now_short": {
+   "en": "Now",
+   "hi": "अभी"
+  },
+  "screens.what_to_grow.texts.this_choice": {
+   "en": "This choice",
+   "hi": "यह विकल्प"
+  },
+  "screens.what_to_grow.texts.empty_months": {
+   "en": "Empty months:",
+   "hi": "खाली महीने:"
+  },
+  "screens.what_to_grow.texts.other_choices": {
+   "en": "Other choices",
+   "hi": "दूसरे विकल्प"
   }
  }
 }

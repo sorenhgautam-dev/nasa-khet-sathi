@@ -190,11 +190,21 @@
     return S.fieldP;
   }
   function mocked(F, block) { return (F.mock || []).indexOf(block) >= 0; }
-  // the second rain version: DHM-scaled rain (owner 4b) when exported, else the older "uncorrected" name
-  function alt(o, base) { if (!o) return null; return o[base + '_dhm_rain'] || o[base + '_uncorrected_rain'] || null; }
-  function altYear(y) { return y ? (y.dhm_rain || y.uncorrected_rain || null) : null; }
+  // the other rain versions beside the central (gauge-tuned) one: DHM-scaled and untuned (owner, 2026-11-14);
+  // older files carry only "uncorrected", read as a fallback. A range runs over the central value and every version present.
+  function alts(o, base) {
+    if (!o) return [];
+    var a = [o[base + 'dhm_rain'], o[base + 'untuned_rain']].filter(Boolean);
+    if (!a.length && o[base + 'uncorrected_rain']) a.push(o[base + 'uncorrected_rain']);
+    return a;
+  }
+  function spread(v, others, k) {
+    var xs = [v].concat(others.map(function (o) { return o[k]; })).filter(function (x) { return typeof x === 'number'; });
+    return xs.length ? [Math.min.apply(null, xs), Math.max.apply(null, xs)] : [v, v];
+  }
+  function yearRange(y, k) { return spread(y[k], alts(y, ''), k); }
   function hasDhm(F) { return JSON.stringify(F.plans).indexOf('_dhm_rain') >= 0; }
-  function scoreRange(p, k) { var a = p.score[k], b = alt(p, 'score'); b = b && b[k] != null ? b[k] : a; return [Math.min(a, b), Math.max(a, b)]; }
+  function scoreRange(p, k) { return spread(p.score[k], alts(p, 'score_'), k); }
   function curOption(F) {
     var co = F.current_options; if (!co || !co.options) return null;
     var id = S.winter || co['default'];
@@ -207,7 +217,8 @@
       var q;
       if (p.id === 'current' && opt) {
         q = { id: p.id, name: p.name };
-        ['crops', 'score', 'score_dhm_rain', 'score_uncorrected_rain', 'tabs', 'tips', 'tabs_ne', 'tips_ne', 'future', 'future_dhm_rain', 'future_uncorrected_rain']
+        ['crops', 'score', 'score_dhm_rain', 'score_untuned_rain', 'score_uncorrected_rain', 'tabs', 'tips', 'tabs_ne', 'tips_ne',
+          'future', 'future_dhm_rain', 'future_untuned_rain', 'future_uncorrected_rain']
           .forEach(function (k) { if (opt[k] != null) q[k] = opt[k]; });
         q.replay = opt.replay;
         return q;
@@ -397,7 +408,7 @@
     var x = parse();
     if (x.r === 'plan') { if (!S.cur) show('next'); openPlan(x.a); return; }
     if (S.sheetFor) closeSheet();
-    if (x.r === S.cur) { if (x.a && SCREENS[x.r].scrollTo) SCREENS[x.r].scrollTo(x.a); return; }
+    if (x.r === S.cur) { var sx = SCREENS[x.r]; if (x.a && sx.onArg) sx.onArg(x.a); else if (x.a && sx.scrollTo) sx.scrollTo(x.a); return; }
     show(x.r, x.a);
   }
   var SCREENS = {};
@@ -740,6 +751,8 @@
 
   // ---------------- 5 what to see ----------------
   function nextMonths(n) { var m = new Date().getMonth(), out = []; for (var i = 1; i <= (n || 3); i++) out.push(MONTHS[(m + i) % 12]); return out; }
+  // a month name short enough for a chip: Bikram Sambat in Nepali, three letters in Latin scripts
+  function monthShort(key) { if (S.lang === 'ne') return monthName(key, true); var n = monthName(key); return /^(en|es|fr|sw)$/.test(S.lang) ? n.slice(0, 3) : n; }
   SCREENS.choose = function () {
     var a = h('button', { type: 'button', class: 'bigcard light', onclick: function () { go('today'); } },
       h('div', { class: 'row', style: 'justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('pc', 16)), T('kind.model')),
@@ -750,16 +763,22 @@
         h('span', { class: 'go' }, svg(ic(P_.arrow, 22, 2.6), 'lime'))));
     a.querySelector('.go .ico').style.color = '#C8E05A';
     var orbit = svg('<svg width="230" height="230" viewBox="0 0 230 230"><circle cx="115" cy="115" r="110" fill="none" stroke="#FFF" stroke-opacity=".07" stroke-width="2"/><circle cx="115" cy="115" r="78" fill="none" stroke="#FFF" stroke-opacity=".07" stroke-width="2"/><circle cx="115" cy="115" r="46" fill="#C8E05A" fill-opacity=".08"/><g><circle cx="115" cy="37" r="6" fill="#C8E05A"/></g></svg>', 'orbit');
-    var b = h('button', { type: 'button', class: 'bigcard darkc', onclick: function () { go('next'); } }, orbit,
-      h('div', { class: 'row', style: 'position:relative' }, h('span', { class: 'chip', style: 'background:rgba(200,224,90,.16);color:#DDEB9C' }, svg(I('sat', 16)), T('home.card_months_tag'))),
-      h('div', { class: 'row', style: 'position:relative;gap:8px', 'aria-hidden': 'true' }, nextMonths().map(function (m) { return h('span', { class: 'mchip' }, monthName(m)); })),
-      h('div', { class: 'grow' }),
-      h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between;position:relative' },
-        h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('what_to_grow.next_h1') + ' ' + T('what_to_grow.next_h2')), h('span', { class: 's' }, T('home.card_months_sub'))),
-        h('span', { class: 'go', style: 'color:#14301E' }, svg(ic(P_.arrow, 22, 2.6)))));
+    function monthsCard(n, cls, extra, sub) {
+      return h('button', { type: 'button', class: 'bigcard ' + cls, onclick: function () { go('next/' + n); } }, extra,
+        h('div', { class: 'row', style: 'position:relative;justify-content:space-between;flex-wrap:wrap;gap:8px' },
+          h('span', { class: 'chip' }, svg(I('sat', 16)), T('home.card_months_tag')),
+          n === 3 ? h('div', { class: 'row', style: 'gap:5px', 'aria-hidden': 'true' }, nextMonths(3).map(function (m) { return h('span', { class: 'mchip' }, monthShort(m)); })) : null),
+        n === 6 ? h('div', { class: 'mstrip', 'aria-hidden': 'true' }, nextMonths(6).map(function (m) { return h('span', null, monthShort(m)); })) : null,
+        h('div', { class: 'grow' }),
+        h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between;position:relative' },
+          h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('what_to_grow.next_h1') + ' ' + T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')),
+            h('span', { class: 's' }, T(sub))),
+          h('span', { class: 'go' }, svg(ic(P_.arrow, 22, 2.6)))));
+    }
+    var path6 = svg('<svg width="200" height="120" viewBox="0 0 200 120"><path d="M10 110 Q 60 20 100 70 T 190 30" fill="none" stroke="#FBF4EA" stroke-width="2" stroke-dasharray="4 7"/></svg>', 'path6');
     return screen('choose', {
       head: bigTitle(T('check_soil.choose_h1'), T('check_soil.choose_h2')),
-      scene: h('div', { class: 'choose' }, a, b),
+      scene: h('div', { class: 'choose' }, a, monthsCard(3, 'darkc', orbit, 'home.card_months_sub'), monthsCard(6, 'greenc', path6, 'what_to_grow.three')),
       body: null,
       cta: btn3(T('btn.how_we_know'), function () { go('how'); }, 'book')
     });
@@ -808,7 +827,7 @@
     var coverChip = bit('sprout', 'cover', m.cover);
     if (less) { coverChip.classList.add('fogwrap'); coverChip.append(fogLayer(m.cover_sure)); }
     return h('div', { class: 'mrow' },
-      h('span', { class: 'mic', style: 'color:' + (icon === 'sun' ? '#9A5426' : '#14301E') }, svg(I(icon, 28))),
+      h('span', { class: 'mic', style: 'color:' + (icon === 'sun' ? '#D27A2C' : '#14301E') }, svg(I(icon, 28))),
       h('div', { class: 'grow', style: 'display:flex;flex-direction:column;gap:6px' },
         h('span', { class: 'mname', style: 'width:auto' }, monthName(key)),
         h('span', { class: 'small', style: 'font-weight:700' }, T('from_space.usually')),
@@ -832,38 +851,51 @@
         h('span', { class: 'num', style: 'font-size:20px' }, rng(wr[0], wr[1]), ' ', h('small', null, T('btn.out_of_100')))),
       srcs(F, ['twin']));
   }
-  SCREENS.next = function () {
-    return withField('next', function (F) {
-      var n = S.nextN || 3, span = n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2';
+  // the choices in the order shown: the current one, then the others (by the farmer's priority, when given)
+  function orderedPlans(F) {
+    var ps = effPlans(F), cur = ps.filter(function (p) { return p.id === 'current'; })[0] || ps[0];
+    var rest = ps.filter(function (p) { return p !== cur; });
+    if (S.prio) { var k = { harvest: 'harvest', water: 'water', soil: 'soil_kept' }[S.prio]; rest.sort(function (a, b) { return b.score[k] - a.score[k]; }); }
+    return { cur: cur, rest: rest };
+  }
+  function prioChips(onchange) {
+    var prio = h('div', { class: 'prio', role: 'group', 'aria-label': T('what_to_grow.priority_q') }, ['harvest', 'water', 'soil'].map(function (k) {
+      return h('button', { type: 'button', class: 'choice', 'aria-pressed': String(S.prio === k), onclick: function (e) {
+        S.prio = S.prio === k ? null : k;
+        [].forEach.call(prio.children, function (b) { b.setAttribute('aria-pressed', 'false'); });
+        if (S.prio) e.currentTarget.setAttribute('aria-pressed', 'true');
+        onchange();
+      } }, svg(I(k === 'harvest' ? 'sprout' : k === 'water' ? 'drop' : 'soil', 18)), T('lbl.what_to_grow.priority.' + k));
+    }));
+    return prio;
+  }
+  function spanTabs(n) {
+    return h('div', { class: 'tabs', role: 'tablist', style: 'margin-bottom:10px' }, [3, 6].map(function (k) {
+      return h('button', { type: 'button', role: 'tab', 'aria-selected': String(n === k), onclick: function () { location.replace('#/next/' + k); } },
+        T(k === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2'));
+    }));
+  }
+  SCREENS.next = function (arg) {
+    var n = arg === '6' ? 6 : arg === '3' ? 3 : (S.nextN || 3);
+    S.nextN = n;
+    return withField('next', n === 6 ? six : function (F) {
+      var span = 'what_to_grow.next_h2';
       var keys = nextMonths(n), months = keys.map(function (k) { return monthRow(F, k); });
-      var spanTabs = h('div', { class: 'tabs', role: 'tablist', style: 'margin-bottom:10px' }, [3, 6].map(function (k) {
-        return h('button', { type: 'button', role: 'tab', 'aria-selected': String(n === k), onclick: function () { S.nextN = k; rerender(); } },
-          T(k === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2'));
-      }));
       var monsoon = keys.some(function (k) { return k === 'Jun' || k === 'Jul'; }) && F.diary.monsoon_start;
       var frost = (F.diary.months || []).some(function (m) { return keys.indexOf(m.m) >= 0 && m.frost !== 'none'; });
       var monthCard = h('div', { class: 'card', style: 'animation:ks-reveal 800ms var(--ease) 100ms both;padding:4px 16px' }, months,
         monsoon ? h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('rain', 20))), h('div', { class: 'grow' }, lines(PL(F.diary.monsoon_start.words)), srcs(F, [F.diary.shift_source || 'dhm']))) : null);
       var plansBox = h('div', { style: 'display:flex;flex-direction:column;gap:12px' });
       function drawPlans() {
-        var ps = effPlans(F), cur = ps.filter(function (p) { return p.id === 'current'; })[0] || ps[0];
-        var rest = ps.filter(function (p) { return p !== cur; });
-        if (S.prio) { var k = { harvest: 'harvest', water: 'water', soil: 'soil_kept' }[S.prio]; rest.sort(function (a, b) { return b.score[k] - a.score[k]; }); }
+        var o = orderedPlans(F);
         plansBox.textContent = '';
-        [cur].concat(rest).forEach(function (p, i) { plansBox.append(planCard(F, p, cur, i)); });
+        [o.cur].concat(o.rest).forEach(function (p, i) { plansBox.append(planCard(F, p, o.cur, i)); });
       }
       drawPlans();
-      var prio = h('div', { class: 'prio', role: 'group', 'aria-label': T('what_to_grow.priority_q') }, ['harvest', 'water', 'soil'].map(function (k) {
-        return h('button', { type: 'button', class: 'choice', 'aria-pressed': String(S.prio === k), onclick: function (e) {
-          S.prio = S.prio === k ? null : k;
-          [].forEach.call(prio.children, function (b) { b.setAttribute('aria-pressed', 'false'); });
-          if (S.prio) e.currentTarget.setAttribute('aria-pressed', 'true');
-          drawPlans();
-        } }, svg(I(k === 'harvest' ? 'sprout' : k === 'water' ? 'drop' : 'soil', 18)), T('lbl.what_to_grow.priority.' + k));
-      }));
+      var prio = prioChips(drawPlans);
       return screen('next', {
         head: [bigTitle(T('what_to_grow.next_h1'), T(span)), isPlaceholder(F.field.name) ? sampleChip() : null],
-        scene: [spanTabs, h('p', { class: 'sub', style: 'font-weight:600;color:var(--ink);margin-bottom:8px' }, T('home.card_months_sub')), monthCard,
+        scene: [spanTabs(n), h('p', { class: 'sub', style: 'font-weight:600;color:var(--ink);margin-bottom:8px' }, T('home.card_months_sub')), monthCard,
           h('div', { style: 'height:8px' }), srcs(F, ['gpm', 'power', 'hls', 'twin']),
           h('p', { class: 'small' }, frost ? T('from_space.frost_note') + ' ' : '', T('from_space.months_note'))],
         body: [h('h2', { class: 'h2' }, T('what_to_grow.choices_title')), h('p', { class: 'sub' }, T('what_to_grow.tap_choice')),
@@ -875,6 +907,127 @@
       });
     });
   };
+  // #/next/3 and #/next/6 switch the view in place (the tabs replace the address, so Back still leads to "What do you want to see?")
+  SCREENS.next.onArg = function (a) { if (a === S.arg) return; S.arg = a; rerender(); W.scrollTo(0, 0); };
+
+  // ---------------- 7b next 6 months: one choice step by step, and the field month by month (design Future6) ----------------
+  // Crop seasons come from each plan's crops (start and end, MM-DD); a month counts as empty when most of its days have no crop.
+  var CUM = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334], MDAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  function doy(mmdd) { return CUM[+mmdd.slice(0, 2) - 1] + (+mmdd.slice(3, 5)) - 1; }
+  function covers(c, d) { var a = doy(c.start), b = doy(c.end); return a <= b ? d >= a && d <= b : d >= a || d <= b; }
+  function cropOn(p, d) { for (var i = 0; i < p.crops.length; i++) if (covers(p.crops[i], d)) return p.crops[i].crop; return null; }
+  function monthRuns(p, key) {
+    var mi = MONTHS.indexOf(key), runs = [];
+    for (var d = 0; d < MDAYS[mi]; d++) { var c = cropOn(p, CUM[mi] + d), last = runs[runs.length - 1]; if (last && last[0] === c) last[1]++; else runs.push([c, 1]); }
+    return runs;
+  }
+  function mainCrop(runs) { var t = {}, n = 0; runs.forEach(function (r) { t[r[0]] = (t[r[0]] || 0) + r[1]; n += r[1]; }); var best = null; Object.keys(t).forEach(function (k) { if (k !== 'null' && t[k] * 2 > n) best = k; }); return best; }
+  // the plan's crops in the order they come, from the first day of the window (a crop already in the ground comes first)
+  function cropsFrom(p, d0) {
+    return p.crops.map(function (c) { return { c: c, k: covers(c, d0) ? -1 : (doy(c.start) - d0 + 365) % 365 }; })
+      .sort(function (x, y) { return x.k - y.k; }).map(function (x) { return x.c; });
+  }
+  function explainersFor(id) { var ex = (S.words && S.words.crop_explainers) || {}; return Object.keys(ex).map(function (k) { return ex[k]; }).filter(function (e) { return (e.examples || []).indexOf(id) >= 0; }); }
+  function cap(s) { return /^(ne|hi|bn)$/.test(S.lang) ? s : s.charAt(0).toUpperCase() + s.slice(1); }
+  var CROP_COL = ['#C8E05A', '#F0AE4C', '#9CC8E3', '#E6B8DA'];
+  function six(F) {
+    var keys = nextMonths(6), d0 = CUM[MONTHS.indexOf(keys[0])], DM = F.diary.months || [];
+    var frost = DM.some(function (m) { return keys.indexOf(m.m) >= 0 && m.frost !== 'none'; });
+    var monsoon = keys.some(function (k) { return k === 'Jun' || k === 'Jul'; }) && F.diary.monsoon_start;
+    var tiles = h('div', { class: 'wtiles' }, keys.map(function (k, i) {
+      var m = DM.filter(function (x) { return x.m === k; })[0], mn = node('month.' + k), g = S.lang === 'ne' && mn ? (mn.ne.match(/\(([^)]+)\)/) || [])[1] : null;
+      var head = [h('span', { class: 'wm' }, monthShort(k)), g ? h('span', { class: 'wg' }, g) : null];
+      if (!m) return h('div', { class: 'wtile' }, head, h('span', { class: 'wl' }, T('btn.not_ready')));
+      var icon = m.frost === 'high' || m.frost === 'risk' ? 'snow' : (m.rain === 'high' ? 'rain' : (m.rain === 'medium' ? 'cloud' : 'sun'));
+      return h('div', { class: 'wtile', style: 'animation-delay:' + (120 + i * 60) + 'ms' }, head,
+        h('span', { style: 'color:' + (icon === 'sun' ? '#D27A2C' : 'var(--ink)') }, svg(I(icon, 24))),
+        h('span', { class: 'wl' }, T('lbl.from_space.rain.' + m.rain)),
+        m.frost !== 'none' ? h('span', { class: 'wl' }, T('lbl.from_space.frost.' + m.frost)) : (m.heat !== 'none' ? h('span', { class: 'wl' }, T('lbl.from_space.heat.' + m.heat)) : null));
+    }));
+    var weather = h('div', { class: 'card', style: 'display:flex;flex-direction:column;gap:10px;animation:ks-reveal 800ms var(--ease) 100ms both' },
+      h('h3', { class: 'h3' }, T('home.card_months_sub')), tiles,
+      monsoon ? h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('rain', 20))), h('div', { class: 'grow' }, lines(PL(F.diary.monsoon_start.words)), srcs(F, [F.diary.shift_source || 'dhm']))) : null,
+      srcs(F, ['gpm', 'power', 'hls', 'twin']),
+      h('p', { class: 'small', style: 'margin:0' }, frost ? T('from_space.frost_note') + ' ' : '', T('from_space.months_note')));
+
+    var choiceBox = h('div', { class: 'sixbox' }), fieldCard = h('div', { class: 'card', style: 'display:flex;flex-direction:column;gap:10px' }), otherBox = h('div', { class: 'sixbox' });
+    function draw() {
+      var o = orderedPlans(F), pick = o.rest[0] || o.cur, rest = [o.cur].concat(o.rest).filter(function (p) { return p !== pick; });
+      // one choice, step by step
+      var steps = [];
+      cropsFrom(pick, d0).forEach(function (c, i) {
+        var ex = explainersFor(c.crop);
+        if (i) steps.push(h('span', { class: 'stepjoin', 'aria-hidden': 'true' }, svg(I('down', 16, 2.6))));
+        steps.push(h('div', { class: 'step' + (i % 2 ? ' then' : ''), style: 'animation-delay:' + (200 + i * 160) + 'ms' },
+          h('span', { class: 'sl' }, T(i ? 'what_to_grow.step_then' : 'what_to_grow.step_first')),
+          h('span', { class: 'sc' }, cap(crop(c.crop))),
+          ex.length ? h('ul', { class: 'why' }, ex.map(function (e) { return h('li', null, svg(I('tick', 16, 2.6)), L(e.title)); })) : null,
+          h('span', { class: 'when' }, T('your_plan.plant_in', { crop: crop(c.crop), sow_month: monthName(MONTHS[+c.start.slice(0, 2) - 1]) }), h('br'),
+            T('your_plan.harvest_in', { crop: crop(c.crop), harvest_month: monthName(MONTHS[+c.end.slice(0, 2) - 1]) }))));
+      });
+      var hr = scoreRange(pick, 'harvest'), wr = scoreRange(pick, 'water');
+      var open = function () { go('plan/' + pick.id); };
+      choiceBox.textContent = '';
+      add(choiceBox, [h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('what_to_grow.six_pick')),
+        h('h2', { class: 'h2' }, planName(pick)), h('div', { class: 'steps6' }, steps),
+        h('button', { type: 'button', class: 'card pickscore', onclick: open },
+          h('div', { class: 'score' }, h('span', { class: 'lbl' }, T('lbl.what_to_grow.score.harvest')), pics(pick.score.harvest, 'basket', 16),
+            h('span', { class: 'num' }, rng(hr[0], hr[1]), ' ', h('small', null, T('btn.out_of_100'))), pick === o.cur ? null : vsChip(vsNow(pick, o.cur, 'harvest'))),
+          h('div', { class: 'score' }, h('span', { class: 'lbl' }, T('lbl.what_to_grow.score.water')), pics(pick.score.water, 'drop', 18),
+            h('span', { class: 'num', style: 'font-size:20px' }, rng(wr[0], wr[1]), ' ', h('small', null, T('btn.out_of_100')))),
+          h('span', { class: 'row', style: 'justify-content:space-between;font-weight:700;font-size:14px' }, T('what_to_grow.tap_choice'), svg(I('arrow', 20, 2.6)))),
+        srcs(F, ['twin', 'gpm', 'power'])]);
+      // the field month by month: now, and with this choice
+      var rows = pick === o.cur ? [[T('what_to_grow.now_short'), o.cur]] : [[T('what_to_grow.now_short'), o.cur], [T('what_to_grow.this_choice'), pick]];
+      var seen = [];
+      rows.forEach(function (r) { keys.forEach(function (k) { monthRuns(r[1], k).forEach(function (x) { if (x[0] && seen.indexOf(x[0]) < 0) seen.push(x[0]); }); }); });
+      var letters = seen.map(function (c) { return crop(c).charAt(0).toUpperCase(); });
+      letters = seen.map(function (c, i) { return letters.indexOf(letters[i]) !== letters.lastIndexOf(letters[i]) ? cap(crop(c)).slice(0, 2) : letters[i]; });
+      function col(c) { return CROP_COL[seen.indexOf(c) % CROP_COL.length]; }
+      var said = rows.map(function (r) {
+        return r[0] + ': ' + keys.map(function (k) { var c = mainCrop(monthRuns(r[1], k)); return monthName(k, true) + ' ' + crop(c || 'bare'); }).join(', ');
+      }).join('. ');
+      var grid = h('div', { class: 'tline', role: 'img', 'aria-label': said },
+        h('div', { class: 'trow', 'aria-hidden': 'true' }, h('span', { class: 'tl' }), keys.map(function (k) { return h('span', { class: 'tm' }, monthShort(k)); })),
+        rows.map(function (r, ri) {
+          return h('div', { class: 'trow', 'aria-hidden': 'true' }, h('span', { class: 'tl' }, r[0]), keys.map(function (k, i) {
+            var runs = monthRuns(r[1], k), big = runs.filter(function (x) { return x[0]; }).sort(function (a, b) { return b[1] - a[1]; })[0];
+            return h('span', { class: 'tc', style: 'animation-delay:' + (500 + ri * 200 + i * 70) + 'ms' }, runs.map(function (x) {
+              return h('i', { style: 'flex:' + x[1] + (x[0] ? ';background:' + col(x[0]) : '') }, x[0] && x === big && x[1] >= 12 ? letters[seen.indexOf(x[0])] : null);
+            }));
+          }));
+        }));
+      var legend = h('div', { class: 'legend' }, seen.map(function (c, i) {
+        return h('span', null, h('span', { class: 'sw lt', style: 'background:' + col(c) }, letters[i]), crop(c));
+      }), h('span', null, h('span', { class: 'sw lt empty' }), crop('bare')));
+      var empties = rows.map(function (r) { return r[0] + ' ' + num(keys.filter(function (k) { return !mainCrop(monthRuns(r[1], k)); }).length); }).join(' · ');
+      fieldCard.textContent = '';
+      add(fieldCard, [h('h3', { class: 'h3' }, T('what_to_grow.field_6')), grid, legend,
+        h('p', { style: 'margin:0;font-weight:700;font-size:14px' }, T('what_to_grow.empty_months') + ' ' + empties), srcs(F, ['twin', 'hls'])]);
+      // the other choices
+      otherBox.textContent = '';
+      add(otherBox, [h('h2', { class: 'h3' }, T('what_to_grow.other_choices')),
+        h('div', { class: 'card olist' }, rest.map(function (p) {
+          var r = scoreRange(p, 'harvest');
+          return h('button', { type: 'button', class: 'orow', onclick: function () { go('plan/' + p.id); } },
+            h('span', { class: 'grow', style: 'display:flex;flex-direction:column;gap:4px' }, h('span', { class: 'on' }, planName(p)), h('span', { class: 'crops' }, cropsLine(p)),
+              h('span', { class: 'score' }, pics(p.score.harvest, 'basket', 14), h('span', { style: 'font-weight:800' }, rng(r[0], r[1]), ' ', h('small', { class: 'small' }, T('btn.out_of_100'))),
+                p === o.cur ? null : vsChip(vsNow(p, o.cur, 'harvest')))),
+            svg(I('arrow', 20, 2.6)));
+        }))]);
+    }
+    draw();
+    var sc = screen('next', {
+      head: [bigTitle(T('what_to_grow.next_h1'), T('what_to_grow.next_h2_6')), isPlaceholder(F.field.name) ? sampleChip() : null],
+      scene: [spanTabs(6), weather, h('div', { style: 'height:14px' }), fieldCard],
+      body: [h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('what_to_grow.priority_q')), prioChips(draw), choiceBox, otherBox,
+        h('p', { class: 'small' }, T('what_to_grow.more_baskets'), ' ', T('what_to_grow.more_drops'), ' ', T('what_to_grow.range_why'), hasDhm(F) ? ' ' + T('what_to_grow.range_town') : ''),
+        h('p', { class: 'note' }, T('your_plan.know_best'), ' ', T('your_plan.advisor'), ' ', T('your_plan.small_first'))],
+      cta: [btn3(T('btn.how_we_know'), function () { go('how'); }, 'book'), btn2(T('your_plan.again'), function () { go('home'); }, 'redo')]
+    });
+    sc.classList.add('six');
+    return sc;
+  }
 
   // ---------------- the detail view of one plan (five tabs, tips, both water cases) ----------------
   function openSheet(build) {
@@ -1062,7 +1215,7 @@
     });
   }
   W.KS = { S: S, h: h, add: add, svg: svg, ic: ic, I: I, T: T, L: L, P: P, PL: PL, num: num, digits: digits, rng: rng, crop: crop, lines: lines, node: node, scr: scr,
-    srcTag: srcTag, srcs: srcs, srcObj: srcObj, effPlans: effPlans, planName: planName, alt: alt, altYear: altYear, hasDhm: hasDhm, scoreRange: scoreRange,
+    srcTag: srcTag, srcs: srcs, srcObj: srcObj, effPlans: effPlans, planName: planName, alts: alts, yearRange: yearRange, hasDhm: hasDhm, scoreRange: scoreRange,
     waterCases: waterCases, pics: pics, basketSvg: basketSvg, getJSON: getJSON, loadLeaflet: loadLeaflet, osm: osm, go: go, notReady: notReady, loading: loading,
     sampleChip: sampleChip, isPlaceholder: isPlaceholder, sourcesList: sourcesList, mocked: mocked, fogLayer: fogLayer, langInfo: langInfo, monthName: monthName,
     MONTHS: MONTHS, RM: RM, later: later, sentences: sentences, btn3: btn3, vsChip: vsChip };

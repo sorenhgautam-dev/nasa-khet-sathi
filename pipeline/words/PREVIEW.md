@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 288 texts): needs native-speaker review.
+- Screens, and the words shared by many screens (screens.json, 296 texts): needs native-speaker review.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 94 texts): needs native-speaker review.
 - Glossary (glossary.json, 64 texts): needs native-speaker review.
 - Crop explainers (crop_explainers.json, 25 texts): needs native-speaker review.
@@ -28,7 +28,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Try our sample field | हाम्रो नमुना खेत हेर्नुहोस् |
 | We picked this field as an example. *(while the field is a sample, not a farmer's own)* | हामीले यो खेत उदाहरणका लागि छानेका हौं। |
 | Know your land. | आफ्नो जमिन चिन्नुहोस्। |
-| Plan your season. | मौसमको योजना बनाउनुहोस्। |
+| Plan your season. | बाली सिजनको योजना बनाउनुहोस्। |
 | Soil check | माटो जाँच |
 | Today | आज |
 | How each part of your field is doing. | खेतको हरेक भाग कस्तो छ। |
@@ -51,14 +51,14 @@ This page is made from the word files in this folder; change those, not this pag
 | We have not looked at this place yet. | हामीले यो ठाउँ अहिलेसम्म हेरेका छैनौं। |
 | Try our sample field instead. | बरु हाम्रो नमुना खेत हेर्नुहोस्। |
 | Where does your field's water come from? | तपाईंको खेतमा पानी कहाँबाट आउँछ? |
-| Is your field flat or on steps? | तपाईंको खेत समथर छ कि गरामा? |
+| Is your field flat or on steps? | तपाईंको खेत समथर छ कि गरा परेको? |
 | Your field | तपाईंको खेत |
 | from above | माथिबाट |
 | This is a map, not a photo. | यो नक्सा हो, फोटो होइन। |
 | The line shows the sample field. | रेखाले नमुना खेत देखाउँछ। |
 | A real photo comes when we visit. | हामी खेतमा आएपछि साँचो फोटो आउँछ। |
 | We show our sample field near you. | हामी तपाईंको नजिकको नमुना खेत देखाउँछौं। |
-| Mark my own field | मेरो आफ्नै खेत चिनाउँछु |
+| Mark my own field | मेरो आफ्नै खेत कोर्छु |
 | Show the parts | भागहरू देखाउनुहोस् |
 | *Answers to the water question* | |
 | Rain only | वर्षा मात्र |
@@ -91,15 +91,15 @@ This page is made from the word files in this folder; change those, not this pag
 | Since {year_first}, rains start about {shift_days_abs} days earlier. *(if the rains now start earlier)* | {year_first} यता वर्षा करिब {shift_days_abs} दिन चाँडै आउँछ। |
 | Since {year_first}, rains start about {shift_days_abs} days later. *(if the rains now start later)* | {year_first} यता वर्षा करिब {shift_days_abs} दिन ढिलो आउँछ। |
 | The rains start about when they used to. *(if the start of the rains has not moved)* | वर्षा पहिलेजस्तै समयमा आउँछ। |
-| Water stored in this whole area is falling. *(if stored water in the area is falling)* | यो पूरै क्षेत्रमा जम्मा पानी घट्दै छ। |
-| Water stored in this whole area is steady. *(if stored water in the area is steady)* | यो पूरै क्षेत्रमा जम्मा पानी उस्तै छ। |
-| Water stored in this whole area is rising. *(if stored water in the area is rising)* | यो पूरै क्षेत्रमा जम्मा पानी बढ्दै छ। |
-| This trend is clear for the wide area. *(if the wide area's water trend is clear)* | ठूलो क्षेत्रका लागि यो चाल स्पष्ट छ। |
+| Water stored in this whole area is falling. *(if stored water in the area is falling)* | यस क्षेत्रमा जम्मा भएको पानी घट्दै छ। |
+| Water stored in this whole area is steady. *(if stored water in the area is steady)* | यस क्षेत्रमा जम्मा भएको पानी उस्तै छ। |
+| Water stored in this whole area is rising. *(if stored water in the area is rising)* | यस क्षेत्रमा जम्मा भएको पानी बढ्दै छ। |
+| This trend is clear for the wide area. *(if the wide area's water trend is clear)* | ठूलो क्षेत्रमा यो बदलाव स्पष्ट देखिन्छ। |
 | It does not tell about your own well. | यसले तपाईंको आफ्नै इनारबारे भन्दैन। |
 | This is the whole area, not your well. | यो पूरै क्षेत्रको कुरा हो, तपाईंको इनारको होइन। |
 | Your field's twelve months | तपाईंको खेतका बाह्र महिना |
 | Nepali and English months don't line up exactly. | नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्। |
-| We may show too many freezing nights. *(if some months have freezing nights)* | हामीले तुषारो धेरै देखाएका हुन सक्छौं। |
+| We may show too many freezing nights. *(if some months have freezing nights)* | तुषारो पर्ने रात हामीले बढी देखाएका हुन सक्छौं। |
 | We are less sure about this month. | यो महिनाबारे हामी कम पक्का छौं। |
 | Usually: | प्रायः: |
 | *Calendar: rain each month* | |
@@ -148,11 +148,11 @@ This page is made from the word files in this folder; change those, not this pag
 | How wet: {wetness} out of 100. | कति ओसिलो: १०० मा {wetness}। |
 | How warm the soil is: {temp} degrees. | माटो कति तातो छ: {temp} डिग्री। |
 | How sure we are: {sure_pct} out of 100. | हामी कति पक्का: १०० मा {sure_pct}। |
-| Fog means we are not sure yet. | कुहिरोको अर्थ, हामी अझै पक्का छैनौं। |
-| A smiling face means all is well. | हाँसेको अनुहारको अर्थ सबै ठीक छ। |
-| Your field | आजको |
-| today | खेत |
-| As of this day: | यो दिनको: |
+| Fog means we are not sure yet. | कुहिरो भनेको हामी अझै पक्का छैनौं। |
+| A smiling face means all is well. | हाँसेको अनुहार भनेको सबै ठीक छ। |
+| Your field | तपाईंको खेत |
+| today | आज |
+| As of this day: | यस दिनसम्मको: |
 | A little greener than the rest. | अरूभन्दा अलि बढी हरियो। |
 | A little less green than the rest. | अरूभन्दा अलि कम हरियो। |
 | We can't tell how green. | कति हरियो, भन्न सकिँदैन। |
@@ -183,13 +183,13 @@ This page is made from the word files in this folder; change those, not this pag
 | A robot to carry it comes next. | यसलाई बोक्ने रोबोट अर्को चरणमा आउँछ। |
 | Krishi Scout, our robot idea | कृषि स्काउट, हाम्रो रोबोटको योजना |
 | This shows how the robot will work. | रोबोटले कसरी काम गर्नेछ, यसले देखाउँछ। |
-| It reads only the top few centimetres. | यसले माथिको केही सेन्टिमिटर मात्र नाप्छ। |
+| It reads only the top few centimetres. | यसले माथिल्लो केही सेन्टिमिटर माटो मात्र नाप्छ। |
 | Readings come after our team tests it. | हाम्रो टोलीले जाँचेपछि नाप आउँछ। |
 | No reading yet | अझै नापिएको छैन |
 | Settling… | स्थिर हुँदै… |
 | Measuring… | नाप्दै… |
 | Measured | नापियो |
-| The reading jumped. Please test again. | नाप उफ्रियो। कृपया फेरि जाँच्नुहोस्। |
+| The reading jumped. Please test again. | नाप अचानक फेरियो। कृपया फेरि जाँच्नुहोस्। |
 | Off the scale | नापभन्दा बाहिर |
 | Soil stick not connected. | माटो जाँच्ने यन्त्र जोडिएको छैन। |
 | Part {section} of {section_count} | {section_count} मध्ये भाग {section} |
@@ -201,7 +201,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Good | ठीक छ |
 | Too wet | धेरै भिजेको |
 | Water in the soil: | माटोमा पानी: |
-| give or take | कम वा बढी |
+| give or take | थपघट |
 | What do you | तपाईं के |
 | want to see? | हेर्न चाहनुहुन्छ? |
 
@@ -243,7 +243,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Three choices: what to grow, and when. | तीन विकल्प: के लगाउने, कहिले लगाउने। |
 | More baskets, more harvest. | धेरै डोको, धेरै उब्जनी। |
 | More drops, less worry about water. | धेरै थोपा, पानीको चिन्ता कम। |
-| What matters most to you? | तपाईंलाई सबैभन्दा के चाहिन्छ? |
+| What matters most to you? | तपाईंलाई सबैभन्दा के महत्त्वपूर्ण छ? |
 | Tips for your field | तपाईंको खेतका लागि सुझाव |
 | Nepali and English months don't line up exactly. | नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्। |
 | Why do some crops help the soil? | केही बालीले माटोलाई किन मद्दत गर्छन्? |
@@ -258,8 +258,16 @@ This page is made from the word files in this folder; change those, not this pag
 | About the same as now | अहिलेजस्तै |
 | This assumes water never runs out. | पानी कहिल्यै सकिँदैन भन्ने मानेर। |
 | See the last {year_count} years | पछिल्ला {year_count} वर्ष हेर्नुहोस् |
-| Two ways of counting rain give a range. | वर्षा गन्ने दुई तरिकाले दायरा दिन्छन्। |
+| Counting rain several ways gives a range. | वर्षा धेरै तरिकाले गन्दा दायरा आउँछ। |
 | One matches the nearby town's usual rain. | एउटा नजिकको सहरको सामान्य वर्षासँग मिल्छ। |
+| One choice for these months | यी महिनाका लागि एउटा विकल्प |
+| First | पहिले |
+| Then | त्यसपछि |
+| Your field over 6 months | ६ महिनामा तपाईंको खेत |
+| Now | अहिले |
+| This choice | यो विकल्प |
+| Empty months: | खाली महिना: |
+| Other choices | अरू विकल्प |
 | *Plan names* | |
 | What you do now | अहिले जे गर्नुहुन्छ |
 | Fill the empty months | खाली महिनामा पनि बाली |
@@ -297,9 +305,9 @@ This page is made from the word files in this folder; change those, not this pag
 | This plan is here to feed your soil. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years))* | यो योजना माटोलाई मलिलो बनाउन हो। |
 | {legume_crop} feeds the soil for the next crop. *(if the plan has lentil or another crop that feeds the soil)* | {legume_crop}ले अर्को बालीका लागि माटोमा मल थप्छ। |
 | Bad years hurt it less than now. *(for the third plan, now called Feed your soil: rice then a pulse crop (the id stays safest; rice then wheat does better in bad years); if bad years hurt this plan less than the current one)* | खराब वर्षमा यसलाई अहिलेभन्दा कम असर पर्छ। |
-| Stored water in this area is falling. *(if stored water in the area is falling; if the water score beats the current plan)* | यस क्षेत्रमा जम्मा पानी घट्दै छ। |
+| Stored water in this area is falling. *(if stored water in the area is falling; if the water score beats the current plan)* | यस क्षेत्रमा जम्मा भएको पानी घट्दै छ। |
 | This plan needs less water. *(if stored water in the area is falling; if the water score beats the current plan)* | यो योजनालाई कम पानी चाहिन्छ। |
-| It did well when we replayed your field. *(if nothing else applies)* | तपाईंको खेत फेरि चलाएर हेर्दा यो राम्रो देखियो। |
+| It did well when we replayed your field. *(if nothing else applies)* | खेतका पुराना वर्ष दोहोर्‍याएर हेर्दा यो राम्रो देखियो। |
 
 #### Tab: How do we know? / हामीलाई कसरी थाहा भयो?
 
@@ -307,7 +315,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 | English | नेपाली |
 | --- | --- |
-| We replayed the weather from {year_first} to {year_last}. | {year_first} देखि {year_last} सम्मको मौसम फेरि चलायौं। |
+| We replayed the weather from {year_first} to {year_last}. | {year_first} देखि {year_last} सम्मको मौसम दोहोर्‍याएर हेर्‍यौं। |
 | Harvest was {harvest} out of 100 on average. | औसत उब्जनी १०० मा {harvest} थियो। |
 | With the town's long-term average rain: {harvest_dhm}. *(if NASA's uncorrected rain gives another harvest number)* | सहरको दीर्घकालीन औसत वर्षा मान्दा: {harvest_dhm}। |
 | Drier than usual: {drought_years} of {year_count} years. | सामान्यभन्दा सुक्खा: {year_count} मध्ये {drought_years} वर्ष। |
@@ -347,7 +355,7 @@ This page is made from the word files in this folder; change those, not this pag
 | We don't know how deep roots reach here. *(for a suggested plan, to say why the gain is a range)* | यहाँ जरा कति गहिरो पुग्छ, थाहा छैन। |
 | So the harvest gain is a range. *(for a suggested plan, to say why the gain is a range)* | त्यसैले उब्जनीको बढोत्तरी एउटा दायरामा छ। |
 | We guessed how thirst hurts {assumed_crop}. *(if a crop's harvest loss from thirst is our assumption)* | {assumed_crop}मा तिर्खाको असर हाम्रो अनुमान हो। |
-| If you can water, rice stands in water. *(if the plan has paddy rice)* | पानी दिन सक्नुहुन्छ भने धान पानीमा रहन्छ। |
+| If you can water, rice stands in water. *(if the plan has paddy rice)* | पानी लगाउन सक्नुहुन्छ भने धान पानीमा रहन्छ। |
 | Without water, rice lives on rain alone. *(if the plan has paddy rice)* | पानी नभए धान वर्षामा मात्र भर पर्छ। |
 | Your water is unknown, so we show both. *(if we do not know the field's water)* | पानीको स्रोत थाहा नभएकाले दुवै देखाएका छौं। |
 | Our rain numbers come from space. *(if the nearby station records about a third less rain than the satellite)* | हाम्रो वर्षाको नाप अन्तरिक्षबाट आउँछ। |
@@ -355,12 +363,12 @@ This page is made from the word files in this folder; change those, not this pag
 | Its record may miss some rain. *(if the nearby station records about a third less rain than the satellite)* | त्यहाँको नापले केही वर्षा छुटाउन सक्छ। |
 | We don't know which matches your field. *(if the nearby station records about a third less rain than the satellite)* | कुन तपाईंको खेतसँग मिल्छ, थाहा छैन। |
 | NASA checks its rain against ground rain gauges. *(if we lowered the rain numbers after the gauges stopped)* | नासाले आफ्नो वर्षाको नाप जमिनका वर्षा मापकसँग मिलाउँछ। |
-| Near here, those gauge reports stopped in {rain_fix_year}. *(if we lowered the rain numbers after the gauges stopped)* | यहाँ नजिक ती मापकका खबर {rain_fix_year} मा रोकिए। |
+| Near here, those gauge reports stopped in {rain_fix_year}. *(if we lowered the rain numbers after the gauges stopped)* | यहाँ नजिकका मापकबाट {rain_fix_year} देखि नाप आएनन्। |
 | Then NASA's rain here jumped too high. *(if we lowered the rain numbers after the gauges stopped)* | त्यसपछि यहाँ नासाको वर्षा धेरै बढी देखियो। |
 | We lowered rain from {rain_fix_year} to match before. *(if we lowered the rain numbers after the gauges stopped)* | हामीले {rain_fix_year} देखिको वर्षा पहिलेजस्तै हुने गरी घटायौं। |
 | That may also hide a real change. *(if we lowered the rain numbers after the gauges stopped)* | यसले साँच्चै भएको फेरबदल पनि लुकाउन सक्छ। |
 | Our rain may still read too high. *(if our rain is well above the nearest town's usual rain)* | हाम्रो वर्षाको नाप अझै बढी हुन सक्छ। |
-| Stored water is measured for a wide area. | जम्मा पानी ठूलो क्षेत्रको नापिएको हो। |
+| Stored water is measured for a wide area. | जम्मा भएको पानी ठूलो क्षेत्रभरिको नाप हो। |
 | It is not your own well. | यो तपाईंको आफ्नै इनार होइन। |
 | We may count too many freezing nights. *(if some months have freezing nights)* | हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। |
 | Prices and markets are not included. | बजार र मूल्य यसमा समावेश छैनन्। |
@@ -392,7 +400,7 @@ This page is made from the word files in this folder; change those, not this pag
 | --- | --- |
 | {crop} gets most thirsty in {month}. Water it then if you can. *(for the month a crop is most often thirsty)* | {crop}लाई {month}मा सबैभन्दा धेरै तिर्खा लाग्छ। सक्नुहुन्छ भने त्यतिबेला पानी दिनुहोस्। |
 | Cover bare soil with straw in {month}. *(for a month when the ground is usually bare)* | {month}मा खाली माटोलाई परालले ढाक्नुहोस्। |
-| On part {section}, plant across the slope. *(for a part of the field that slopes)* | भाग {section}मा भिरालोको तेर्सो लाइनमा रोप्नुहोस्। |
+| On part {section}, plant across the slope. *(for a part of the field that slopes)* | भाग {section}मा भिरालोमा तेर्सो हार बनाएर लगाउनुहोस्। |
 
 ### 9. Your field in {future_year} / {future_year}मा तपाईंको खेत
 
@@ -401,8 +409,8 @@ This page is made from the word files in this folder; change those, not this pag
 | English | नेपाली |
 | --- | --- |
 | **Your field in {future_year}** | **{future_year}मा तपाईंको खेत** |
-| If nothing changes | केही नबदले |
-| With the new plan | नयाँ योजनासँग |
+| If nothing changes | केही नबदलिए |
+| With the new plan | नयाँ योजना अपनाए |
 | Harvest: {future_low} to {future_high} out of 100. | उब्जनी: १०० मा {future_low} देखि {future_high} सम्म। |
 | Nobody knows the future for sure. | भविष्य पक्का कसैलाई थाहा छैन। |
 | Many computer guesses make this range. | धेरै कम्प्युटर अनुमानले यो दायरा बनाउँछन्। |
@@ -420,13 +428,13 @@ This page is made from the word files in this folder; change those, not this pag
 | **Your plan** | **तपाईंको योजना** |
 | Here is what you chose. | तपाईंले छान्नुभएको योजना यही हो। |
 | What to grow, and when: | के लगाउने, कहिले लगाउने: |
-| {crop}: plant in {sow_month}. | {crop}: {sow_month}मा रोप्नुहोस्। |
-| {crop}: harvest in {harvest_month}. | {crop}: {harvest_month}मा काट्नुहोस्। |
+| {crop}: plant in {sow_month}. | {crop}: {sow_month}मा लगाउनुहोस्। |
+| {crop}: harvest in {harvest_month}. | {crop}: {harvest_month}मा भित्र्याउनुहोस्। |
 | Nepali and English months don't line up exactly. | नेपाली र अंग्रेजी महिना ठ्याक्कै मिल्दैनन्। |
 | You know your land best. | आफ्नो जमिन तपाईंलाई नै राम्रो थाहा छ। |
 | Talk to a farm advisor before changing. | बदल्नुअघि कृषि प्राविधिकसँग सल्लाह गर्नुहोस्। |
 | Try it on one small part first. | पहिले एउटा सानो भागमा मात्र गरेर हेर्नुहोस्। |
-| Save this plan | यो योजना राख्नुहोस् |
+| Save this plan | यो योजना सेभ गर्नुहोस् |
 | Start again | फेरि सुरु गर्नुहोस् |
 | Made with pictures and numbers from NASA. | नासाका तस्बिर र अङ्कबाट बनाइएको। |
 | Where our numbers come from | हाम्रा अङ्क कहाँबाट आए |
@@ -469,13 +477,13 @@ This page is made from the word files in this folder; change those, not this pag
 | English | नेपाली |
 | --- | --- |
 | NASA's rain maps are checked against rain gauges. | नासाको वर्षाको नक्सा वर्षा मापकसँग जाँचिन्छ। |
-| Around this field, gauge reports stopped in {rain_fix_year}. | यो खेत वरिपरि मापकका खबर {rain_fix_year} मा रोकिए। |
-| Before, the gauges set almost all of it. | पहिले, धेरैजसो नाप मापकले नै मिलाउँथे। |
+| Around this field, gauge reports stopped in {rain_fix_year}. | यो खेत वरिपरि {rain_fix_year} देखि मापकका नाप आएनन्। |
+| Before, the gauges set almost all of it. | पहिले, वर्षाको नाप लगभग सबै मापकबाटै आउँथ्यो। |
 | After, the picture from space took over. | त्यसपछि, अन्तरिक्षबाट हेरेको नापले ठाउँ लियो। |
 | Its yearly rain here jumped to {rain_after} mm. | यहाँको वार्षिक वर्षा {rain_after} मिलिमिटर पुग्यो। |
 | Before, it was {rain_before} mm. | पहिले यो {rain_before} मिलिमिटर थियो। |
 | The nearest town's usual rain: {rain_normal} mm. | नजिकको सहरको सामान्य वर्षा: {rain_normal} मिलिमिटर। |
-| We scaled each month from {rain_fix_year} back down. | हामीले {rain_fix_year} देखि हरेक महिना घटायौं। |
+| We scaled each month from {rain_fix_year} back down. | हामीले {rain_fix_year} देखिको हरेक महिनाको वर्षा घटायौं। |
 | Each month now matches its earlier years. | अब हरेक महिना पहिलेका वर्षसँग मिल्छ। |
 | We tested this on years we kept aside. | यो जाँच अलग राखेका वर्षमा गर्‍यौं। |
 | Monthly error at the airport: {err_before} mm before. | विमानस्थलमा मासिक फरक: पहिले {err_before} मिलिमिटर। |
@@ -506,7 +514,7 @@ This page is made from the word files in this folder; change those, not this pag
 | English | नेपाली |
 | --- | --- |
 | *Buttons* | |
-| Next | अगाडि |
+| Next | अर्को |
 | Back | पछाडि |
 | What does this word mean? | यो शब्दको अर्थ के हो? |
 | Not sure yet | अझै पक्का छैन |
@@ -564,11 +572,11 @@ Science words appear only here, never on the screens.
 | **NDVI**: A greenness score from satellite pictures: the higher it is, the more living green leaves. | **एनडीभीआई (हरियालीको सूचकाङ्क)**: भू-उपग्रहको तस्बिरबाट निकालिएको हरियालीको अङ्क: जति बढी, उति धेरै हरिया पात। |
 | **frost risk**: The chance of nights near or below freezing (under 2 °C) that can hurt crops. | **तुषारोको जोखिम**: बालीलाई हानि गर्न सक्ने, २ डिग्रीभन्दा चिसो रात पर्ने सम्भावना। |
 | **water balance**: The field's water account: rain and watering in; plant use, runoff and drainage out. | **पानीको हिसाब (जल सन्तुलन)**: खेतको पानीको हिसाब: वर्षा र सिँचाइ भित्र; बिरुवाको प्रयोग, बहाव र चुहावट बाहिर। |
-| **monsoon onset**: The day the monsoon rains truly begin, with no long dry break soon after. | **मनसुन सुरुवात**: मनसुनको पानी साँच्चै सुरु भएको दिन, जसपछि छिट्टै लामो सुक्खा हुँदैन। |
+| **monsoon onset**: The day the monsoon rains truly begin, with no long dry break soon after. | **मनसुन सुरुवात**: मनसुनको पानी साँच्चै सुरु भएको दिन, जसपछि छिट्टै लामो खडेरी पर्दैन। |
 | **bare days**: Days in a year when the field has almost no green plants, seen from space. | **खाली दिन**: अन्तरिक्षबाट हेर्दा खेतमा हरियो बिरुवा लगभग नभएका वर्षका दिनहरू। |
 | **crop rotation**: Growing different crops one after another on the same field, season by season. | **बाली चक्र**: एउटै खेतमा मौसमअनुसार एकपछि अर्को फरक बाली लगाउने तरिका। |
 | **cover crop**: A crop grown mainly to keep the soil covered and healthy between main crops. | **ढाक्ने बाली**: मुख्य बालीहरूको बीचमा माटो ढाकेर स्वस्थ राख्न लगाइने बाली। |
-| **satellite**: A machine circling the Earth that sees wide areas at once, but not every detail. | **भू-उपग्रह (स्याटेलाइट)**: पृथ्वी घुम्ने यन्त्र, जसले ठूलो क्षेत्र एकैपटक देख्छ तर हरेक सानो कुरा होइन। |
+| **satellite**: A machine circling the Earth that sees wide areas at once, but not every detail. | **भू-उपग्रह (स्याटेलाइट)**: पृथ्वीको वरिपरि घुम्ने यन्त्र, जसले ठूलो क्षेत्र एकैपटक देख्छ तर हरेक सानो कुरा होइन। |
 | **ground measurement**: A reading taken at one spot on the ground: exact there, but only there. | **जमिनमा गरिएको नाप**: जमिनको एउटै ठाउँमा लिइएको नाप: त्यहाँ ठ्याक्कै, तर त्यहाँ मात्र। |
 | **data fusion**: Mixing space, computer and ground readings so each one fixes the others' weak spots. | **नाप मिलाउने तरिका (डाटा फ्युजन)**: अन्तरिक्ष, कम्प्युटर र जमिनका नाप मिलाएर एउटाको कमजोरी अर्कोले सच्याउने तरिका। |
 | **model-based**: Worked out by a computer from physics and other readings, not measured directly. | **मोडेलमा आधारित**: सिधै नापिएको होइन, भौतिक नियम र अरू नापबाट कम्प्युटरले निकालेको। |
@@ -577,7 +585,7 @@ Science words appear only here, never on the screens.
 | **water stress**: Days when the soil is too dry for the crop to drink freely. | **पानीको कमी**: माटो यति सुक्खा हुन्छ कि बालीले सजिलै पानी खान नसक्ने दिनहरू। |
 | **irrigation**: Water brought to the field by canal, well or pipe, as well as rain. | **सिँचाइ**: वर्षाबाहेक कुलो, इनार वा पाइपबाट खेतमा ल्याइएको पानी। |
 | **drought year**: A crop season whose rain was among the lowest fifth of all seasons since 2001. | **खडेरी वर्ष**: सन् २००१ यताका सबैभन्दा सुक्खा पाँचौं भागमा पर्ने बाली मौसम। |
-| **flood year**: A year whose heaviest rain day was among the heaviest fifth of all years. | **बाढी वर्ष**: पाँच वर्षमा एक पटक जति आउने, सबैभन्दा भारी पानी परेको दिन भएको वर्ष। |
+| **flood year**: A year whose heaviest rain day was among the heaviest fifth of all years. | **बाढी वर्ष**: जुन वर्षको सबैभन्दा भारी पानी परेको दिन सबै वर्षका सबैभन्दा भारी पाँचौं भागमा पर्छ। |
 | **soil probe**: A small stick pushed into the soil that measures how wet and warm it is. | **माटो जाँच्ने यन्त्र (प्रोब)**: माटो कति ओसिलो र तातो छ भनेर नाप्न माटोमा गाडिने सानो यन्त्र। |
 | **uncertainty**: How far a number could be from the truth; on screen, fog shows it. | **अनिश्चितता**: कुनै अङ्क साँचोभन्दा कति फरक हुन सक्छ; स्क्रिनमा कुहिरोले यो देखाउँछ। |
 | **regional water storage**: All water held across a wide area, seen by satellites; not your own well. | **क्षेत्रीय जल भण्डार**: भू-उपग्रहले नापेको ठूलो क्षेत्रभरिको सबै पानी; तपाईंको आफ्नै इनार होइन। |
@@ -586,7 +594,7 @@ Science words appear only here, never on the screens.
 | **nitrogen-fixing crop**: A crop like lentil whose root bacteria turn nitrogen from air into plant food. | **नाइट्रोजन स्थिर गर्ने बाली (कोसे बाली)**: मसुरजस्तो बाली, जसको जराका ब्याक्टेरियाले हावाको नाइट्रोजनलाई बिरुवाको खाना बनाउँछन्। |
 | **deep-rooting crop**: A crop whose roots reach water and food deep in the soil. | **गहिरो जरा भएको बाली**: जरा माटोको गहिराइसम्म पुगेर पानी र खाना लिन सक्ने बाली। |
 | **drought-tolerant crop**: A crop that still gives some harvest when the rains are short. | **खडेरी सहने बाली**: पानी कम पर्दा पनि केही उब्जनी दिने बाली। |
-| **pest cycle**: Pests and diseases that build up when crops of one family follow each other. | **कीरा र रोगको चक्र**: एउटै परिवारका बाली पालैपालो लगाउँदा बढ्दै जाने कीरा र रोग। |
+| **pest cycle**: Pests and diseases that build up when crops of one family follow each other. | **कीरा र रोगको चक्र**: एउटै जातका बाली लगातार लगाउँदा बढ्दै जाने कीरा र रोग। |
 | **organic matter**: Rotting roots, leaves and dung in the soil that make it dark and crumbly. | **प्राङ्गारिक पदार्थ**: माटोलाई कालो र खुकुलो बनाउने कुहिएका जरा, पात र गोबर। |
 | **heat stress**: Days hotter than nine in ten of this place's usual days. | **तातोको असर**: यस ठाउँका सामान्य दस दिनमध्ये नौ दिनभन्दा तातो दिनहरू। |
 | **resolution**: The size of the patch of land that one satellite or computer number covers. | **रिजोल्युसन**: भू-उपग्रह वा कम्प्युटरको एउटा अङ्कले ढाक्ने जमिनको टुक्राको आकार। |
@@ -608,7 +616,7 @@ Glossary word: nitrogen-fixing crop / नाइट्रोजन स्थि�
 | The next crop can use that fertilizer. | अर्को बालीले त्यो मल प्रयोग गर्न सक्छ। |
 | So you may need less bought fertilizer. | त्यसैले किनेको मल कम चाहिन सक्छ। |
 | In Nepal, lentil often follows rice. | नेपालमा प्रायः धानपछि मसुर लगाइन्छ। |
-| Here, lentil is sown mid-October to mid-November. | यहाँ मसुर अक्टोबरको मध्यदेखि नोभेम्बरको मध्यसम्म छरिन्छ। |
+| Here, lentil is sown mid-October to mid-November. | यहाँ मसुर कात्तिकमा छरिन्छ (मध्य अक्टोबर–मध्य नोभेम्बर)। |
 
 Sources:
 
@@ -628,11 +636,11 @@ Glossary word: cover crop / ढाक्ने बाली. Our examples: lenti
 | English | नेपाली |
 | --- | --- |
 | **Crops that cover bare soil** | **खाली माटोलाई ढाकेर राख्ने बाली** |
-| Rain does not hit covered soil hard. | ढाकिएको माटोमा पानीका थोपाले चोट गर्दैनन्। |
+| Rain does not hit covered soil hard. | ढाकिएको माटोमा पानीका थोपाले चोट पुर्‍याउँदैनन्। |
 | More rain soaks in; less soil washes away. | धेरै पानी माटोमा पस्छ, कम माटो बग्छ। |
 | Their leftovers make the soil richer. | तिनका बाँकी भागले माटो मलिलो बनाउँछ। |
 | They can help keep weeds and pests down. | तिनले झार र कीरा कम गर्न सघाउँछन्। |
-| Lentil and mustard grow here in winter. | मसुर र तोरी यहाँ जाडोमा हुर्कन्छन्। |
+| Lentil and mustard grow here in winter. | मसुर र तोरी यहाँ हिउँदमा हुर्कन्छन्। |
 
 Sources:
 
@@ -652,7 +660,7 @@ Glossary word: deep-rooting crop / गहिरो जरा भएको बा
 | --- | --- |
 | **Crops with deep roots** | **गहिरो जरा भएका बाली** |
 | Deep roots find water lower down. | गहिरो जराले तलको पानी भेट्छ। |
-| They bring back food washed deep down. | तल बगेर गएको खाना तिनले फेरि माथि ल्याउँछन्। |
+| They bring back food washed deep down. | तल बगेर गएको मल तिनले फेरि माथि ल्याउँछन्। |
 | Roots leave channels that let rain in. | जराले बनाएका प्वालबाट पानी माटोमा पस्छ। |
 | Millet roots can reach two metres down. | कोदोको जरा दुई मिटरसम्म पुग्न सक्छ। |
 | Maize roots go much deeper than potato roots. | मकैको जरा आलुको भन्दा धेरै गहिरो जान्छ। |
@@ -676,7 +684,7 @@ Glossary word: drought-tolerant crop / खडेरी सहने बाली
 | **Crops that cope with dry spells** | **सुक्खा सहन सक्ने बाली** |
 | Millets cope with poor soil and hard weather. | कोदोजस्ता बाली कमजोर माटो र कडा मौसम सहन्छन्। |
 | Finger millet is known as a hardy crop. | कोदो बलियो, कडा बाली मानिन्छ। |
-| But other millets need a little less water. | तर चिनो, कागुनोलाई यसभन्दा अलि कम पानी चाहिन्छ। |
+| But other millets need a little less water. | तर अरू कोदोजस्ता बालीलाई अलि कम पानी चाहिन्छ। |
 | Hill farmers often plant millet among their maize. | पहाडमा किसानहरू प्रायः मकैबारीमा कोदो रोप्छन्। |
 | Several different crops make total loss less likely. | धेरै किसिमका बाली लगाउँदा सबै गुम्ने डर घट्छ। |
 

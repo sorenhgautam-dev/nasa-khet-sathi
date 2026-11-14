@@ -62,7 +62,7 @@
     {
      "id": "hero_2",
      "en": "Plan your season.",
-     "ne": "मौसमको योजना बनाउनुहोस्।",
+     "ne": "बाली सिजनको योजना बनाउनुहोस्।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -166,7 +166,7 @@
     {
      "id": "q_shape",
      "en": "Is your field flat or on steps?",
-     "ne": "तपाईंको खेत समथर छ कि गरामा?",
+     "ne": "तपाईंको खेत समथर छ कि गरा परेको?",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -208,7 +208,7 @@
     {
      "id": "draw_own",
      "en": "Mark my own field",
-     "ne": "मेरो आफ्नै खेत चिनाउँछु",
+     "ne": "मेरो आफ्नै खेत कोर्छु",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -398,7 +398,7 @@
       "groundwater_falling"
      ],
      "en": "Water stored in this whole area is falling.",
-     "ne": "यो पूरै क्षेत्रमा जम्मा पानी घट्दै छ।",
+     "ne": "यस क्षेत्रमा जम्मा भएको पानी घट्दै छ।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -407,7 +407,7 @@
       "groundwater_steady"
      ],
      "en": "Water stored in this whole area is steady.",
-     "ne": "यो पूरै क्षेत्रमा जम्मा पानी उस्तै छ।",
+     "ne": "यस क्षेत्रमा जम्मा भएको पानी उस्तै छ।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -416,7 +416,7 @@
       "groundwater_rising"
      ],
      "en": "Water stored in this whole area is rising.",
-     "ne": "यो पूरै क्षेत्रमा जम्मा पानी बढ्दै छ।",
+     "ne": "यस क्षेत्रमा जम्मा भएको पानी बढ्दै छ।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -425,7 +425,7 @@
       "groundwater_trend_clear"
      ],
      "en": "This trend is clear for the wide area.",
-     "ne": "ठूलो क्षेत्रका लागि यो चाल स्पष्ट छ।",
+     "ne": "ठूलो क्षेत्रमा यो बदलाव स्पष्ट देखिन्छ।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -458,7 +458,7 @@
       "has_frost_risk"
      ],
      "en": "We may show too many freezing nights.",
-     "ne": "हामीले तुषारो धेरै देखाएका हुन सक्छौं।",
+     "ne": "तुषारो पर्ने रात हामीले बढी देखाएका हुन सक्छौं।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -673,31 +673,31 @@
     {
      "id": "fog",
      "en": "Fog means we are not sure yet.",
-     "ne": "कुहिरोको अर्थ, हामी अझै पक्का छैनौं।",
+     "ne": "कुहिरो भनेको हामी अझै पक्का छैनौं।",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "faces",
      "en": "A smiling face means all is well.",
-     "ne": "हाँसेको अनुहारको अर्थ सबै ठीक छ।",
+     "ne": "हाँसेको अनुहार भनेको सबै ठीक छ।",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "today_h1",
      "en": "Your field",
-     "ne": "आजको",
+     "ne": "तपाईंको खेत",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "today_h2",
      "en": "today",
-     "ne": "खेत",
+     "ne": "आज",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "as_of",
      "en": "As of this day:",
-     "ne": "यो दिनको:",
+     "ne": "यस दिनसम्मको:",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -851,7 +851,7 @@
     {
      "id": "top_only",
      "en": "It reads only the top few centimetres.",
-     "ne": "यसले माथिको केही सेन्टिमिटर मात्र नाप्छ।",
+     "ne": "यसले माथिल्लो केही सेन्टिमिटर माटो मात्र नाप्छ।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -887,7 +887,7 @@
     {
      "id": "test_again",
      "en": "The reading jumped. Please test again.",
-     "ne": "नाप उफ्रियो। कृपया फेरि जाँच्नुहोस्।",
+     "ne": "नाप अचानक फेरियो। कृपया फेरि जाँच्नुहोस्।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -959,7 +959,7 @@
     {
      "id": "give_or_take",
      "en": "give or take",
-     "ne": "कम वा बढी",
+     "ne": "थपघट",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -1160,7 +1160,7 @@
     {
      "id": "priority_q",
      "en": "What matters most to you?",
-     "ne": "तपाईंलाई सबैभन्दा के चाहिन्छ?",
+     "ne": "तपाईंलाई सबैभन्दा के महत्त्वपूर्ण छ?",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -1249,14 +1249,62 @@
     },
     {
      "id": "range_why",
-     "en": "Two ways of counting rain give a range.",
-     "ne": "वर्षा गन्ने दुई तरिकाले दायरा दिन्छन्।",
+     "en": "Counting rain several ways gives a range.",
+     "ne": "वर्षा धेरै तरिकाले गन्दा दायरा आउँछ।",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "range_town",
      "en": "One matches the nearby town's usual rain.",
      "ne": "एउटा नजिकको सहरको सामान्य वर्षासँग मिल्छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "six_pick",
+     "en": "One choice for these months",
+     "ne": "यी महिनाका लागि एउटा विकल्प",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "step_first",
+     "en": "First",
+     "ne": "पहिले",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "step_then",
+     "en": "Then",
+     "ne": "त्यसपछि",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "field_6",
+     "en": "Your field over 6 months",
+     "ne": "६ महिनामा तपाईंको खेत",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "now_short",
+     "en": "Now",
+     "ne": "अहिले",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "this_choice",
+     "en": "This choice",
+     "ne": "यो विकल्प",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "empty_months",
+     "en": "Empty months:",
+     "ne": "खाली महिना:",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "other_choices",
+     "en": "Other choices",
+     "ne": "अरू विकल्प",
      "ne_review": "needs native-speaker review"
     }
    ],
@@ -1384,13 +1432,13 @@
     {
      "id": "nothing_changes",
      "en": "If nothing changes",
-     "ne": "केही नबदले",
+     "ne": "केही नबदलिए",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "with_plan",
      "en": "With the new plan",
-     "ne": "नयाँ योजनासँग",
+     "ne": "नयाँ योजना अपनाए",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -1464,13 +1512,13 @@
     {
      "id": "plant_in",
      "en": "{crop}: plant in {sow_month}.",
-     "ne": "{crop}: {sow_month}मा रोप्नुहोस्।",
+     "ne": "{crop}: {sow_month}मा लगाउनुहोस्।",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "harvest_in",
      "en": "{crop}: harvest in {harvest_month}.",
-     "ne": "{crop}: {harvest_month}मा काट्नुहोस्।",
+     "ne": "{crop}: {harvest_month}मा भित्र्याउनुहोस्।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -1500,7 +1548,7 @@
     {
      "id": "save",
      "en": "Save this plan",
-     "ne": "यो योजना राख्नुहोस्",
+     "ne": "यो योजना सेभ गर्नुहोस्",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -1703,7 +1751,7 @@
    {
     "id": "next",
     "en": "Next",
-    "ne": "अगाडि",
+    "ne": "अर्को",
     "ne_review": "needs native-speaker review"
    },
    {

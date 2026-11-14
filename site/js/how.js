@@ -115,13 +115,13 @@
       })));
       var grid = h('div', { class: 'baskets', style: 'grid-template-columns:repeat(auto-fill,minmax(150px,1fr))' });
       rep.forEach(function (y) {
-        var a = K.altYear(y), ev = y.event_season ? T('lbl.last_years.event_season.' + y.event_season) : (y.event && y.event !== 'none' ? T('lbl.last_years.event.' + y.event) : null);
+        var ev = y.event_season ? T('lbl.last_years.event_season.' + y.event_season) : (y.event && y.event !== 'none' ? T('lbl.last_years.event.' + y.event) : null);
         var vals = cases.map(function (c) {
-          var v = c === 'rain_fed' ? rng(y.harvest, a ? a.harvest : null) : num(y.irrigated.harvest);
+          var v = c === 'rain_fed' ? rng.apply(null, K.yearRange(y, 'harvest')) : num(y.irrigated.harvest);
           var pct = c === 'rain_fed' ? y.harvest : y.irrigated.harvest;
           return h('span', { style: 'display:flex;flex-direction:column;align-items:center;gap:2px' }, svg(K.basketSvg(pct, 26, c === 'irrigated' ? '#7FB24A' : null)), h('span', { class: 'v' }, v));
         });
-        var dry = rng(y.dry_days, a ? a.dry_days : null);
+        var dry = rng.apply(null, K.yearRange(y, 'dry_days'));
         grid.append(h('div', { class: 'yr' }, h('span', { class: 'y' }, digits(y.year)), h('div', { class: 'bk' }, vals),
           cases.indexOf('rain_fed') >= 0 ? h('span', { class: 'small' }, T('last_years.thirsty_days', { dry_days: dry })) : null,
           ev ? h('span', { class: 'ev' }, svg(I(y.event === 'flood' ? 'rain' : 'sun', 13)), ' ', ev) : null));
@@ -161,9 +161,11 @@
     K.effPlans(F).forEach(function (p) {
       var f = p.future || (p.id === 'current' ? fu.nothing_changes : null);
       if (!f) return;
-      var fa = K.alt(p, 'future');
       var lo = f.harvest_low[i], hi = f.harvest_high[i], mid = f.harvest[i];
-      if (fa) { lo = Math.min(lo, fa.harvest_low[i]); hi = Math.max(hi, fa.harvest_high[i]); }
+      K.alts(p, 'future_').forEach(function (fa) {
+        if (fa.harvest_low && fa.harvest_low[i] != null) lo = Math.min(lo, fa.harvest_low[i]);
+        if (fa.harvest_high && fa.harvest_high[i] != null) hi = Math.max(hi, fa.harvest_high[i]);
+      });
       var today = K.scoreRange(p, 'harvest');
       var dir = today[1] < lo ? 'up' : (today[0] > hi ? 'down' : 'eq');
       dials.append(h('div', { class: 'dial' },

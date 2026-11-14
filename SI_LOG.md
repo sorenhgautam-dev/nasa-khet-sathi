@@ -1090,3 +1090,51 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - One command, `scripts/run_field.py --field <id>`, runs every build step in order from the cached data; shared helpers in `scripts/common.py`; duplicated helpers removed from run_replay and run_plans. Proved byte-identical against a SHA-256 manifest and in a fresh copy of the tracked files (demo, about 20 min); the only differences were method.choices from newer rules.yaml entries, plus metadata. Moved review_pack out of the root (to the backups folder). Net code lines +45 (the runner costs about 100): the pass made the build reproducible with one command, not smaller.
 - **For a person to review:** the runner's step order and the scripts left out of the chain (run_season, run_dhm_bulletin_check, the probe scripts, pick_sample_fields, plot_pixels).
 
+
+## 2026-11-14: the gauge-calibration switch, off (Claude Opus 5.5 via Claude Code, session 9f5addf3, sub-agent)
+
+- **What SI did:** wrote rules.yaml `gpm_series.gauge_calibration` (apply false; June-September x 1.053, other months x 0.746;
+  demo only) and, tests first (`tests/test_gauge_calibration.py`), the switch in `pipeline/fetch/weather.correct_gpm_break`
+  (so weather.parquet and the now-cast both follow it), the weather cards' record (`corrections.rain_break.gauge_calibration`),
+  the method page's rain line (`pipeline/words/tabs.json` mp_rain_gauges, English and a Nepali draft) and
+  `scripts/run_rain_selection.py`'s check for the switch on. Off: `run_field.py --field demo --only weather` rebuilt
+  weather.parquet byte for byte. On: a dry run into a scratch copy of data/ only; nothing exported or switched.
+- **For a person to review:** the new method-page line (three sentences of at most eight words, not one) and its Nepali
+  draft (needs native-speaker review), and the choice that the factors apply to the demo field only.
+
+## 2026-11-14: Nepali corrections from the returned review sheet (Claude Opus 5.5, Claude Code)
+
+- **What SI did:** applied the corrections in a teammate's returned copy of `pipeline/words/nepali_review.xlsx` with
+  `python -m pipeline.words.review_sheet --apply <sheet> --no-mark` (43 rows), and 36 more by hand where the text is
+  built in code (`pipeline/export/build_story.py`, `scripts/run_area_map.py`). Three corrected sentences were
+  shortened to keep the eight-word rule; one correction that dropped the Bikram Sambat month name was kept with the
+  month name (site rule). One row was set aside because its English had changed since the sheet was made.
+- **Why nothing is marked reviewed:** the sheet's "Correct?" column is empty in all rows and every comment starts with
+  "Claude:", so the corrections may themselves be AI drafts. Every text keeps "needs native-speaker review" until the
+  owner confirms a person checked them (commit f9d3501).
+- **For a person to review:** all 79 changed Nepali texts (PREVIEW.md shows them in place).
+
+## 2026-11-14: frosted glass and the 6-month view, from the teammate's updated design (Claude Opus 5.5 via Claude Code, parallel agent)
+
+- **What SI did:** gave the site's cards and buttons our UI teammate's frosted-glass look (white at 42 %, 16 px blur, a
+  light edge; white cards without blur inside the plan sheet) and the warmer sun colour (#D27A2C); added the third
+  "Next 6 months" card on "What do you want to see?" and built the 6-month view (`#/next/6`, beside the 3-month view's
+  tabs) from `design/screens/Future6.dc.html`: what the six months usually bring (`diary.months`), one choice step by step
+  (its crops, sow and harvest months and the sourced crop explainers that name the crop), its harvest and water ranges, the
+  field month by month for "now" and "this choice" (from each plan's crop dates; a month counts as empty when most of its
+  days have no crop), and the other choices. Ranges now run over every rain version the field file carries
+  (gauge-tuned, DHM-scaled, untuned; "uncorrected" only in older files), per the owner's decision of 2026-11-14.
+- **Words added (drafted by SI):** 8 screen texts (six_pick, step_first, step_then, field_6, now_short, this_choice,
+  empty_months, other_choices) and a new range_why ("Counting rain several ways gives a range.", since there are now
+  three rain versions), English and Nepali ("needs native-speaker review") plus drafts in hi, bn, es, fr and sw.
+- **Design texts not used, and why:** "Two crops in a row, so your field is never empty", "No empty months" and "Two
+  harvests before the rice season" (the three plans leave March to May mostly empty; the site counts the empty months
+  instead); lentil then mung bean, "Maize sells well", "No income for 6 months" (no plan has them; no market or income
+  data); "Weather ahead" and the month words (not a forecast: "What these months usually bring", from the 2001-2025
+  record); "From 20 years of NASA data and your soil test" (the plans do not use the soil stick; source tags instead);
+  "Ask your local agriculture office" (the existing "Talk to a farm advisor before changing.").
+- **Checked by SI:** `scripts/check_site.py --final` (0 problems), the full test suite, screenshots at 360, 390 and
+  1440 px (English, Nepali, Hindi; French checked for overflow), the 3-month view, plan sheet, How we know, Home and Today
+  after the glass change, the tab and Back behaviour, and the range helpers on a made-up plan with all three versions.
+- **For a person to review:** the new Nepali texts and drafts; the darker greens (#4A7539 for the design's #5F8A4B, and a
+  darker grey for small text) chosen for readable white and grey text on glass.

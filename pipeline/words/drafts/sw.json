@@ -1473,8 +1473,8 @@
    "sw": "Tazama miaka {year_count} iliyopita"
   },
   "screens.what_to_grow.texts.range_why": {
-   "en": "Two ways of counting rain give a range.",
-   "sw": "Njia mbili za kuhesabu mvua zinatoa kiwango."
+   "en": "Counting rain several ways gives a range.",
+   "sw": "Njia kadhaa za kuhesabu mvua zinatoa kiwango."
   },
   "screens.what_to_grow.texts.range_town": {
    "en": "One matches the nearby town's usual rain.",
@@ -1651,6 +1651,38 @@
   "screens.your_plan.texts.links_title": {
    "en": "To read more",
    "sw": "Kusoma zaidi"
+  },
+  "screens.what_to_grow.texts.six_pick": {
+   "en": "One choice for these months",
+   "sw": "Chaguo moja kwa miezi hii"
+  },
+  "screens.what_to_grow.texts.step_first": {
+   "en": "First",
+   "sw": "Kwanza"
+  },
+  "screens.what_to_grow.texts.step_then": {
+   "en": "Then",
+   "sw": "Kisha"
+  },
+  "screens.what_to_grow.texts.field_6": {
+   "en": "Your field over 6 months",
+   "sw": "Shamba lako kwa miezi 6"
+  },
+  "screens.what_to_grow.texts.now_short": {
+   "en": "Now",
+   "sw": "Sasa"
+  },
+  "screens.what_to_grow.texts.this_choice": {
+   "en": "This choice",
+   "sw": "Chaguo hili"
+  },
+  "screens.what_to_grow.texts.empty_months": {
+   "en": "Empty months:",
+   "sw": "Miezi mitupu:"
+  },
+  "screens.what_to_grow.texts.other_choices": {
+   "en": "Other choices",
+   "sw": "Machaguo mengine"
   }
  }
 }

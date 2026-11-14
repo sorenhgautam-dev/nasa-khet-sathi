@@ -23,6 +23,9 @@ server functions, no environment variables. GitHub Pages is not used.
 - **Map:** Leaflet 1.9.4 (BSD 2-Clause; self-hosted in `site/vendor/leaflet/` with its LICENSE), with map tiles from
   OpenStreetMap (© OpenStreetMap contributors, ODbL; https://www.openstreetmap.org/copyright), credited on every map.
 - **Charts:** drawn as inline SVG and HTML by `site/js/how.js`; no chart library and no outside chart service.
+- **Design update (2026-11-14):** our UI teammate's frosted-glass cards, warmer sun colour and the new "Next 6 months"
+  screen (`design/screens/Future6.dc.html`, `W8_Future6.dc.html`), built into the site by SI (see SI_LOG.md, 2026-11-14,
+  "frosted glass and the 6-month view").
 
 ## Data and metadata services
 
@@ -143,7 +146,11 @@ TODO-VERIFY on the FAOSTAT site.
   M. (1989). Training Manual 4, Irrigation Scheduling, FAO, ch. 4, sec. 4.2 and 4.4
   (https://www.fao.org/4/t7202e/t7202e07.htm); FAO (1985). Guidelines: land evaluation for irrigated agriculture, FAO
   Soils Bulletin 55, the section on seepage and percolation, citing Chin and Lee (1961) for Taiwan soils by clay content
-  (https://www.fao.org/4/x5648e/x5648e0e.htm).
+  (https://www.fao.org/4/x5648e/x5648e0e.htm). The water score with the losses on (rules.yaml paddy_losses.water_score;
+  read as text by Claude on 2026-11-14): Bouman et al. (2007), ch. 14 of Water for Food, Water for Life, pp. 523 and 526
+  (https://archive.iwmi.org/assessment/Water%20for%20Food%20Water%20for%20Life/Chapters/Chapter%2014%20Rice.pdf); Perry,
+  C., Steduto, P., Karajeh, F. (2017). Does improved irrigation technology save water? A review of the evidence. FAO,
+  Cairo, ISBN 978-92-5-109774-8, p. 8.
 - The field team's field-capacity test (owner's item 4; notes/FIELD_CAPACITY_PROTOCOL.md; rules.yaml
   field_capacity_measured; opened 2026-11-14 by a research sub-agent, the first two re-read by Claude): FAO-56 chapter 8
   (https://www.fao.org/4/x0490e/x0490e0e.htm); Shaxson, F., Barber, R. (2003). Optimizing soil moisture for plant
