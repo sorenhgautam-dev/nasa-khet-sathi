@@ -677,8 +677,8 @@ This page is made from the word files in this folder; change those, not this pag
 | Your own field: today we show a sample. | तपाईंको आफ्नै खेत: अहिले नमुना देखाउँछौं। |
 | The robot that carries the stick. | यन्त्र बोक्ने रोबोट। |
 | A NASA season outlook: a next step. | नासाको मौसमी पूर्वानुमान: अर्को चरण। |
-| NASA's outlook gives raw numbers, no ready signals. | नासाको पूर्वानुमानले कच्चा अङ्क मात्र दिन्छ, तयार सङ्केत होइन। |
-| Forecast skill here is near zero, December to May. | यहाँ डिसेम्बरदेखि मेसम्म यसको भरोसा लगभग शून्य छ। |
+| NASA's outlook gives raw numbers, no ready signals. | नासाले कच्चा अङ्क मात्र दिन्छ, तयार सङ्केत होइन। |
+| Forecast skill here: near zero, December to May. | यहाँ डिसेम्बरदेखि मेसम्म यसको भरोसा लगभग शून्य छ। |
 | How sure are we? | हामी कति पक्का छौं? |
 | Quite sure | धेरै पक्का |
 | Fairly sure | केही पक्का |

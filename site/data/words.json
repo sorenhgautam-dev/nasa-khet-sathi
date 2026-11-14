@@ -5285,7 +5285,7 @@
     {
      "id": "nr_outlook_why1",
      "en": "NASA's outlook gives raw numbers, no ready signals.",
-     "ne": "नासाको पूर्वानुमानले कच्चा अङ्क मात्र दिन्छ, तयार सङ्केत होइन।",
+     "ne": "नासाले कच्चा अङ्क मात्र दिन्छ, तयार सङ्केत होइन।",
      "ne_review": "needs native-speaker review",
      "hi": "नासा कच्चे आँकड़े देता है, तैयार संकेत नहीं।",
      "bn": "নাসা কাঁচা সংখ্যা দেয়, তৈরি সংকেত নয়।",
@@ -5295,7 +5295,7 @@
     },
     {
      "id": "nr_outlook_why2",
-     "en": "Forecast skill here is near zero, December to May.",
+     "en": "Forecast skill here: near zero, December to May.",
      "ne": "यहाँ डिसेम्बरदेखि मेसम्म यसको भरोसा लगभग शून्य छ।",
      "ne_review": "needs native-speaker review",
      "hi": "यहाँ दिसंबर से मई तक कौशल लगभग शून्य।",
