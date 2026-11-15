@@ -1801,3 +1801,48 @@ disaster_floods:                  # owner, 2026-11-15 afternoon (answer 4): floo
   caveat:
     value: "How we know says: these databases record reported damage, which depends on where people live and how well incidents were reported, so this is a rough cross-check at district level"
     source: "Owner"
+
+soil_drying:                      # owner, 2026-11-15 evening (display addition 1): "How fast the soil dries", one line on each Weather ahead card and in Next 6 months (pipeline/diary/weather_ahead.py; fields/<field>.json weather.blocks[].usual.drying). Written and committed BEFORE its first run. No model result changes.
+  et0:
+    value: "the twin's daily FAO-56 reference evapotranspiration (weather.parquet et0_mm: Penman-Monteith from NASA POWER's sunshine, wind, humidity and the valley-corrected temperatures), averaged over every day of the block in its 24 years (weather_ahead.years), mm per day, 1 decimal. The months are the Weather ahead blocks (approximate Bikram Sambat months), so a card's line covers its own months"
+    source: "Owner, 2026-11-15 evening: 'From the drying power the model already computes each day (FAO-56 reference evapotranspiration, from NASA POWER's sun, wind, humidity and temperature): the 24-year average for each month'"
+  word:
+    value: {rule: "terciles of the twelve block means within this field (as months.terciles: the four lowest take the first word, the four highest the last)", words: [slow, medium, fast]}
+    source: "Owner: 'Label months dries slowly, medium or dries fast by thirds within this field's own 12 months'"
+  icons:
+    value: "a wind icon when the block's mean daily wind at 2 m (weather.parquet ws2m_ms, NASA POWER WS2M) is among the four highest of the twelve blocks; a sun icon when its mean daily sunshine (rs_mj_m2_day, NASA POWER ALLSKY_SFC_SW_DWN) is among the four highest. Both can show"
+    source: "Owner: 'add a wind icon or a sun icon when that month's average wind or sunshine is in its top third'"
+  joined_cards:
+    value: "a Weather ahead card that joins months (B7) says their one word when they share it, else the slowest and the fastest ('medium to fast'); an icon shows when any of its months has it"
+    source: "Claude's choice, fixed before the first run: B7 joins months by their weather words, and their drying can differ"
+  label:
+    value: "estimate. How we know says: this is the area's drying (NASA's weather squares are about 50 km), and the model assumes an open field, so trees or walls that block wind slow drying"
+    source: "Owner"
+
+soil_years:                       # owner, 2026-11-15 evening (display addition 2): "24 years of soil at a glance" (scripts/run_soil_years.py -> data/checks/<field>/soil_years.json -> site/data/behind.json soil_years). Written and committed BEFORE its first run; the four steps fixed before drawing. No model result changes.
+  run:
+    value: "the exported replay recomputed as it is (scripts/run_replay.py's inputs, pipeline/plans/twin_options.replay with every switch as set), the field's current plan (config current_rotation) in the export's water case (simulate.export_case: rain-fed while the water source is unknown, 'if you can't water'). Its yearly harvests must equal data/checks/<field>/replay.json's, or nothing is written"
+    source: "Owner, 2026-11-15 evening: 'No changes to the model's results; if a number isn't saved, recompute it from the existing replay without changing anything'; 'under the current plan'"
+  wetness:
+    value: "each day's root-zone water as a share of what the soil can hold for the crop on the field that day, 1 - Dr/TAW (0 = wilting point, 1 = field capacity); the calendar month's mean of its days, for each replayed year (fields/<field>.json replay.current years)"
+    source: "Owner: 'the monthly average, as a share of what the soil can hold'; the same measure as months.terciles soil (diary.months)"
+  steps:
+    value: {edges: [0.25, 0.5, 0.75], words: [very_dry, dry, damp, wet], colours: ["#A6611A", "#DFC27D", "#80CDC1", "#018571"]}
+    source: "Fixed before drawing (owner: 'in four steps fixed before drawing'): four equal quarters of the share. The middle edge 0.5 is FAO-56's common depletion fraction ('A value of 0.50 for p is commonly used for many crops', FAO-56 ch. 8, Table 22): below it a crop starts to suffer. Claude's choice. Colours: ColorBrewer BrBG, 4 classes (colorbrewer2.org, marked colour-blind safe), dry brown to wet blue-green; each square's word is also given on a tap, never colour alone"
+  marks:
+    value: "the replay's flood and drought years (fields/<field>.json replay.current[].event) marked beside the year: a drop for flood, a sun for drought"
+    source: "Owner: 'Mark the flood and dry years we already list'"
+  place:
+    value: "a card in Behind the scenes (site/data/behind.json, the site's main field) right after its strip 'NASA data > A copy of your field > Tested in 24 past years > Your answers', and a link in How we know's contents, the judges' path; never on the farmer cards. A tap on a square says its month, year and word"
+    source: "Owner: 'Put it in Behind the scenes, inside the Tested in 24 past years sheet if that exists, and in the judges' tour. Not on the main farmer cards.' 'Tested in 24 past years' is a step of the strip, not a sheet, so the grid is the card after the strip"
+
+part_heatmap:                     # owner, 2026-11-15 evening (display addition 3): the field as a heatmap on the soil test and Today (site/js/app.js). Written and committed BEFORE the code.
+  colour:
+    value: "each tested part's steady reading (the stick's wetness, 0-100 on its own scale) placed between the driest (0) and the wettest (1) tested part of the same walk or tray, cut by soil_years.steps edges into its four colours; when the tested readings are all equal, or one part is tested, every tested part takes one neutral colour and the words 'about the same'. The legend says dry to wet compared with the other parts, never a number"
+    source: "Owner: 'colour each tested part from dry to wet by its reading compared with the other parts, with the same legend'"
+  readings:
+    value: "real readings only (a serial-port source): the field's recorded walk (probe_log.json, not a garden or indoor test) or its live reading, drawn on the field's parts; the live demo tray on the hotspot drawn as its own pots, never as the field's parts"
+    source: "Owner: 'Real readings only: the live demo tray on the hotspot, or a recorded walk'; owner, 2026-11-15 afternoon: a demo tray is never the field's parts"
+  fog:
+    value: "a part not tested keeps its fog: on the soil test as before; on Today the small field picture draws the same fog over each untested part"
+    source: "Owner: 'Untested parts keep their fog'; owner, 2026-11-15 evening: 'and also add the fog thingy' (Claude's reading: the fog on Today's new picture too)"
