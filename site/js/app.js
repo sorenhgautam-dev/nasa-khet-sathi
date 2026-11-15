@@ -376,7 +376,7 @@
         g.q.setAttribute('style', 'fill:' + bg); shapes.append(g.q);
         return;
       }
-      var q = h('span', { class: 'q', style: st + 'background:' + bg + (mode === 'grow' ? ';animation:ks-rise 500ms ease ' + (1300 + i * 100) + 'ms both' : '') });
+      var q = h('span', { class: 'q', style: st + 'background:' + bg + (mode === 'grow' ? ';animation:ks-soft 280ms ease ' + (1300 + i * 100) + 'ms both' : '') });   // gentle motion (2026-11-15)
       g.q = q; box.append(q);
     });
     var xs = {}, ys = {};
@@ -390,7 +390,7 @@
           if (Math.abs(x - g.cx) < (g.r - g.l) * 0.2 && Math.abs(y - g.cy) < (g.b - g.t) * 0.28) continue;
           var d = 2000 + qi * 160 + ((r * 4 + c) % 9) * 50;
           var sp = h('span', { class: 'sprout ' + (mode === 'grow' ? 'g' : 's'), style: 'left:' + x + '%;top:' + y + '%;' +
-            (mode === 'grow' ? 'animation-delay:' + d + 'ms,' + (d + 600) + 'ms' : 'animation-delay:-' + ((r + c) * 0.4) + 's') });
+            (mode === 'grow' ? 'animation-delay:' + d + 'ms,' + (d + 300) + 'ms' : 'animation-delay:-' + ((r + c) * 0.4) + 's') });   // gentle motion (2026-11-15)
           sp.innerHTML = SPROUT; box.append(sp);
         }
       });
@@ -491,7 +491,7 @@
       return;
     }
     old.classList.add('leaving');
-    setTimeout(build, 380);
+    setTimeout(build, 180);   // gentle motion (2026-11-15): a short fade out (css: .scr.leaving)
   }
   function rerender() {
     if (!S.cur) return;
@@ -850,7 +850,8 @@
         fb.textContent = T('fog.sure_before') + ': ' + num(b);
         if (RM) { show(n); return; }
         var t0 = Date.now();
-        (function tick() { var k = Math.min(1, (Date.now() - t0) / 1400); show(Math.round(b + (n - b) * k)); if (k < 1 && fv.isConnected) W.requestAnimationFrame(tick); })();
+        // gentle motion (2026-11-15): the number counts in 300 ms, as the fog clears (css .sfog::before)
+        (function tick() { var k = Math.min(1, (Date.now() - t0) / 300); show(Math.round(b + (n - b) * k)); if (k < 1 && fv.isConnected) W.requestAnimationFrame(tick); })();
       });
     }
     // one line under the field when a checked part keeps its fog: a test away from the field, or no bench test yet
