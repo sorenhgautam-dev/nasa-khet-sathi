@@ -32,6 +32,8 @@ def pixel_weights(section_xy, transform, shape):
     a, b, c, d, e, f = (float(v) for v in tuple(transform)[:6])
     if b or d or a <= 0 or e >= 0:
         raise ValueError("pixel_weights needs a north-up grid (no rotation, rows going south)")
+    x0, y0 = (float(v) for v in section_xy[0][:2])     # from the first corner: UTM-sized products round off in shoelace
+    section_xy, c, f = [(float(x) - x0, float(y) - y0) for x, y in section_xy], c - x0, f - y0
     area = shoelace(section_xy)
     if area <= 0:
         raise ValueError("the section has no area")

@@ -27,6 +27,21 @@ def test_pixel_weights_worked_numbers():
     assert ws[0]["row"] == 0 and ws[0]["col"] == 0
 
 
+def test_pixel_weights_at_real_utm_coordinates_sum_to_one():
+    """Dhulikhel's patch p8 (63 m2, 4 corners to the mm) on its cached HLS grid (UTM 45N, x about 356,100 m, y about
+    3,055,735 m). Corner products of about 1e12 m2 lost about 1e-4 m2 to rounding in the shoelace sum: the weights summed
+    to 0.9999981 and the 1e-6 check stopped the build (2026-11-15). The reference is the same patch moved by whole pixels
+    to near the grid's origin, where rounding is negligible: the weights must not change."""
+    grid_utm = (30.0, 0.0, 351030.0, 0.0, -30.0, 3060780.0)
+    p8 = [(356099.113, 3055729.338), (356097.975, 3055735.778), (356105.648, 3055740.341), (356105.518, 3055729.262)]
+    ws = at.pixel_weights(p8, grid_utm, (400, 400))
+    assert sum(w["weight"] for w in ws) == pytest.approx(1.0, abs=1e-12)
+    near = [(x - 351030.0 - 168 * 30, y - 3060780.0 + 167 * 30 + 90) for x, y in p8]       # rows 167, 168 -> 0, 1
+    ref = at.pixel_weights(near, GRID, (3, 3))
+    assert [(w["row"] + 167, w["col"] + 168) for w in ref] == [(w["row"], w["col"]) for w in ws] == [(168, 169), (168, 168), (167, 169)]
+    assert [w["weight"] for w in ws] == pytest.approx([w["weight"] for w in ref], abs=1e-12)
+
+
 def test_pixel_weights_refuse_a_section_outside_the_raster():
     with pytest.raises(ValueError, match="outside"):
         at.pixel_weights([(80, 60), (100, 60), (100, 90), (80, 90)], GRID, (3, 3))
