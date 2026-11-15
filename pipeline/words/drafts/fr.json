@@ -3355,6 +3355,66 @@
   "shared.welcome": {
    "en": "Welcome",
    "fr": "Bienvenue"
+  },
+  "shared.fog.how_sure": {
+   "en": "How sure are we?",
+   "fr": "À quel point sommes-nous sûrs ?"
+  },
+  "shared.fog.sure_n": {
+   "en": "{sure_pct} out of 100",
+   "fr": "{sure_pct} sur 100"
+  },
+  "shared.fog.fog_line": {
+   "en": "From space, we guess. Our soil stick checks. The fog clears where we test.",
+   "fr": "Depuis l’espace, nous devinons. Notre tige vérifie. Le brouillard se lève là où nous mesurons."
+  },
+  "shared.fog.sure_before": {
+   "en": "Before the stick",
+   "fr": "Avant la tige"
+  },
+  "shared.fog.sure_after": {
+   "en": "After the stick",
+   "fr": "Après la tige"
+  },
+  "shared.fog.sure_wait": {
+   "en": "Not yet: the stick needs its cup test.",
+   "fr": "Pas encore : il manque le test des gobelets."
+  },
+  "shared.fog.fog_test": {
+   "en": "Tests away from the field clear no fog.",
+   "fr": "Un test hors du champ garde le brouillard."
+  },
+  "shared.fog.fog_h": {
+   "en": "Space guesses, the ground checks",
+   "fr": "L’espace devine, le sol vérifie"
+  },
+  "shared.fog.fog_p1": {
+   "en": "From space, we make a first guess.",
+   "fr": "Depuis l’espace, nous faisons une première estimation."
+  },
+  "shared.fog.fog_p2": {
+   "en": "Our soil stick reads one spot exactly.",
+   "fr": "Notre tige mesure un point avec précision."
+  },
+  "shared.fog.fog_p3": {
+   "en": "We mix the two, trusting the surer one.",
+   "fr": "Nous mêlons les deux, surtout le plus sûr."
+  },
+  "shared.fog.fog_p4": {
+   "en": "So the fog clears where we test.",
+   "fr": "Le brouillard se lève donc où nous mesurons."
+  },
+  "shared.fog.how_mix": {
+   "en": "How we mix them:",
+   "fr": "Comment nous les mêlons :"
+  },
+  "glossary.kalman_update.term": {
+   "en": "Kalman update",
+   "fr": "mise à jour de Kalman"
+  },
+  "glossary.kalman_update.say": {
+   "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
+   "fr": "Un calcul qui mêle une estimation et une mesure, en croyant plus la plus sûre."
   }
  }
 }

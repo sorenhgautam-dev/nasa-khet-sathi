@@ -2,9 +2,9 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 714 texts): 691 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 727 texts): 704 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
-- Glossary (glossary.json, 64 texts): 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
+- Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
 
 Each table below starts with the review status of its own lines.
@@ -792,7 +792,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 179 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 192 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -971,6 +971,20 @@ This page is made from the word files in this folder; change those, not this pag
 | NASA rain, {year_count} years | नासाको वर्षा, {year_count} वर्ष |
 | NASA weather, {year_count} years | नासाको मौसम, {year_count} वर्ष |
 | NASA pictures, {year_count} years | नासाका तस्बिर, {year_count} वर्ष |
+| *The fog that clears where the soil stick tests* | |
+| How sure are we? | हामी कति पक्का छौं? |
+| {sure_pct} out of 100 | १०० मा {sure_pct} |
+| From space, we guess. Our soil stick checks. The fog clears where we test. | अन्तरिक्षबाट हामी अनुमान गर्छौं। हाम्रो माटो जाँच्ने यन्त्रले जाँच्छ। जहाँ जाँच्छौं, त्यहाँ कुहिरो हट्छ। |
+| Before the stick | यन्त्रले जाँच्नुअघि |
+| After the stick | यन्त्रले जाँचेपछि |
+| Not yet: the stick needs its cup test. | अझै छैन: पहिले यन्त्रको कप जाँच चाहिन्छ। |
+| Tests away from the field clear no fog. | खेतबाहिरका जाँचले कुहिरो हटाउँदैनन्। |
+| Space guesses, the ground checks | अन्तरिक्षले अनुमान गर्छ, जमिनले जाँच्छ |
+| From space, we make a first guess. | अन्तरिक्षबाट हामी पहिलो अनुमान गर्छौं। |
+| Our soil stick reads one spot exactly. | हाम्रो माटो जाँच्ने यन्त्रले एउटा ठाउँ ठ्याक्कै नाप्छ। |
+| We mix the two, trusting the surer one. | हामी दुवै मिलाउँछौं, बढी पक्कालाई बढी भरोसा गर्दै। |
+| So the fog clears where we test. | त्यसैले जाँचेको ठाउँमा कुहिरो हट्छ। |
+| How we mix them: | कसरी मिलाउँछौं: |
 | *Bikram Sambat months (English and Nepali)* | |
 | Magh | माघ |
 | Falgun | फागुन |
@@ -991,7 +1005,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 Science words appear only here, never on the screens.
 
-*Nepali: 60 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -1027,6 +1041,7 @@ Science words appear only here, never on the screens.
 | **heat stress**: Days hotter than nine in ten of this place's usual days. | **तातोको असर**: यस ठाउँका सामान्य दस दिनमध्ये नौ दिनभन्दा तातो दिनहरू। |
 | **resolution**: The size of the patch of land that one satellite or computer number covers. | **रिजोल्युसन**: भू-उपग्रह वा कम्प्युटरको एउटा अङ्कले ढाक्ने जमिनको टुक्राको आकार। |
 | **climate projection**: A computer picture of possible future weather, given as a range, not a forecast. | **जलवायु प्रक्षेपण**: भविष्यको सम्भावित मौसमको कम्प्युटर अनुमान, दायराका रूपमा, पक्का भविष्यवाणी होइन। |
+| **Kalman update**: A sum that mixes a guess and a reading, trusting the surer one more. | **कालमान अपडेट**: अनुमान र नापलाई मिलाउने हिसाब, जुन बढी पक्का छ त्यसलाई बढी भरोसा गर्दै। |
 
 ## Crop explainers
 

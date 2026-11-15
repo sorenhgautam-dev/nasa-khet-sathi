@@ -3355,6 +3355,66 @@
   "shared.welcome": {
    "en": "Welcome",
    "hi": "स्वागत है"
+  },
+  "shared.fog.how_sure": {
+   "en": "How sure are we?",
+   "hi": "हम कितने पक्के हैं?"
+  },
+  "shared.fog.sure_n": {
+   "en": "{sure_pct} out of 100",
+   "hi": "100 में से {sure_pct}"
+  },
+  "shared.fog.fog_line": {
+   "en": "From space, we guess. Our soil stick checks. The fog clears where we test.",
+   "hi": "अंतरिक्ष से हम अनुमान लगाते हैं। हमारी मिट्टी की छड़ी जाँचती है। जहाँ जाँचते हैं, वहाँ कोहरा छँटता है।"
+  },
+  "shared.fog.sure_before": {
+   "en": "Before the stick",
+   "hi": "छड़ी से पहले"
+  },
+  "shared.fog.sure_after": {
+   "en": "After the stick",
+   "hi": "छड़ी के बाद"
+  },
+  "shared.fog.sure_wait": {
+   "en": "Not yet: the stick needs its cup test.",
+   "hi": "अभी नहीं: छड़ी की कप जाँच बाकी है।"
+  },
+  "shared.fog.fog_test": {
+   "en": "Tests away from the field clear no fog.",
+   "hi": "खेत से बाहर की जाँच कोहरा नहीं हटाती।"
+  },
+  "shared.fog.fog_h": {
+   "en": "Space guesses, the ground checks",
+   "hi": "अंतरिक्ष अनुमान लगाता है, ज़मीन जाँचती है"
+  },
+  "shared.fog.fog_p1": {
+   "en": "From space, we make a first guess.",
+   "hi": "अंतरिक्ष से हम पहला अनुमान लगाते हैं।"
+  },
+  "shared.fog.fog_p2": {
+   "en": "Our soil stick reads one spot exactly.",
+   "hi": "हमारी छड़ी एक जगह ठीक-ठीक नापती है।"
+  },
+  "shared.fog.fog_p3": {
+   "en": "We mix the two, trusting the surer one.",
+   "hi": "दोनों को मिलाते हैं, पक्के पर ज़्यादा भरोसा।"
+  },
+  "shared.fog.fog_p4": {
+   "en": "So the fog clears where we test.",
+   "hi": "इसलिए जाँच की जगह पर कोहरा छँटता है।"
+  },
+  "shared.fog.how_mix": {
+   "en": "How we mix them:",
+   "hi": "हम कैसे मिलाते हैं:"
+  },
+  "glossary.kalman_update.term": {
+   "en": "Kalman update",
+   "hi": "कालमान अपडेट"
+  },
+  "glossary.kalman_update.say": {
+   "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
+   "hi": "अनुमान और माप मिलाने का हिसाब, पक्के पर ज़्यादा भरोसा करते हुए।"
   }
  }
 }

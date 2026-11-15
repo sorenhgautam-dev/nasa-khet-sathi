@@ -3355,6 +3355,66 @@
   "shared.welcome": {
    "en": "Welcome",
    "es": "Bienvenidos"
+  },
+  "shared.fog.how_sure": {
+   "en": "How sure are we?",
+   "es": "¿Qué tan seguros estamos?"
+  },
+  "shared.fog.sure_n": {
+   "en": "{sure_pct} out of 100",
+   "es": "{sure_pct} de 100"
+  },
+  "shared.fog.fog_line": {
+   "en": "From space, we guess. Our soil stick checks. The fog clears where we test.",
+   "es": "Desde el espacio, adivinamos. Nuestra varilla comprueba. La niebla se aclara donde medimos."
+  },
+  "shared.fog.sure_before": {
+   "en": "Before the stick",
+   "es": "Antes de la varilla"
+  },
+  "shared.fog.sure_after": {
+   "en": "After the stick",
+   "es": "Después de la varilla"
+  },
+  "shared.fog.sure_wait": {
+   "en": "Not yet: the stick needs its cup test.",
+   "es": "Aún no: falta la prueba de vasos."
+  },
+  "shared.fog.fog_test": {
+   "en": "Tests away from the field clear no fog.",
+   "es": "Pruebas fuera del campo no quitan niebla."
+  },
+  "shared.fog.fog_h": {
+   "en": "Space guesses, the ground checks",
+   "es": "El espacio adivina, el suelo comprueba"
+  },
+  "shared.fog.fog_p1": {
+   "en": "From space, we make a first guess.",
+   "es": "Desde el espacio hacemos una primera estimación."
+  },
+  "shared.fog.fog_p2": {
+   "en": "Our soil stick reads one spot exactly.",
+   "es": "Nuestra varilla mide un punto con exactitud."
+  },
+  "shared.fog.fog_p3": {
+   "en": "We mix the two, trusting the surer one.",
+   "es": "Mezclamos ambos, confiando más en el más seguro."
+  },
+  "shared.fog.fog_p4": {
+   "en": "So the fog clears where we test.",
+   "es": "Así la niebla se aclara donde medimos."
+  },
+  "shared.fog.how_mix": {
+   "en": "How we mix them:",
+   "es": "Cómo los mezclamos:"
+  },
+  "glossary.kalman_update.term": {
+   "en": "Kalman update",
+   "es": "actualización de Kalman"
+  },
+  "glossary.kalman_update.say": {
+   "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
+   "es": "Un cálculo que mezcla una estimación y una medida, confiando más en la más segura."
   }
  }
 }

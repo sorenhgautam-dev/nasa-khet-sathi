@@ -7789,6 +7789,138 @@
     "sw": "Picha za NASA, miaka {year_count}"
    }
   },
+  "fog": {
+   "how_sure": {
+    "en": "How sure are we?",
+    "ne": "हामी कति पक्का छौं?",
+    "ne_review": "needs native-speaker review",
+    "hi": "हम कितने पक्के हैं?",
+    "bn": "আমরা কতটা নিশ্চিত?",
+    "es": "¿Qué tan seguros estamos?",
+    "fr": "À quel point sommes-nous sûrs ?",
+    "sw": "Tuna uhakika kiasi gani?"
+   },
+   "sure_n": {
+    "en": "{sure_pct} out of 100",
+    "ne": "१०० मा {sure_pct}",
+    "ne_review": "needs native-speaker review",
+    "hi": "100 में से {sure_pct}",
+    "bn": "100-এর মধ্যে {sure_pct}",
+    "es": "{sure_pct} de 100",
+    "fr": "{sure_pct} sur 100",
+    "sw": "{sure_pct} kati ya 100"
+   },
+   "fog_line": {
+    "en": "From space, we guess. Our soil stick checks. The fog clears where we test.",
+    "ne": "अन्तरिक्षबाट हामी अनुमान गर्छौं। हाम्रो माटो जाँच्ने यन्त्रले जाँच्छ। जहाँ जाँच्छौं, त्यहाँ कुहिरो हट्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अंतरिक्ष से हम अनुमान लगाते हैं। हमारी मिट्टी की छड़ी जाँचती है। जहाँ जाँचते हैं, वहाँ कोहरा छँटता है।",
+    "bn": "মহাকাশ থেকে আমরা অনুমান করি। আমাদের মাটির কাঠি যাচাই করে। যেখানে যাচাই করি, সেখানে কুয়াশা কাটে।",
+    "es": "Desde el espacio, adivinamos. Nuestra varilla comprueba. La niebla se aclara donde medimos.",
+    "fr": "Depuis l’espace, nous devinons. Notre tige vérifie. Le brouillard se lève là où nous mesurons.",
+    "sw": "Kutoka angani, tunakisia. Kijiti chetu cha udongo kinahakiki. Ukungu unaondoka tunapopima."
+   },
+   "sure_before": {
+    "en": "Before the stick",
+    "ne": "यन्त्रले जाँच्नुअघि",
+    "ne_review": "needs native-speaker review",
+    "hi": "छड़ी से पहले",
+    "bn": "কাঠির আগে",
+    "es": "Antes de la varilla",
+    "fr": "Avant la tige",
+    "sw": "Kabla ya kijiti"
+   },
+   "sure_after": {
+    "en": "After the stick",
+    "ne": "यन्त्रले जाँचेपछि",
+    "ne_review": "needs native-speaker review",
+    "hi": "छड़ी के बाद",
+    "bn": "কাঠির পরে",
+    "es": "Después de la varilla",
+    "fr": "Après la tige",
+    "sw": "Baada ya kijiti"
+   },
+   "sure_wait": {
+    "en": "Not yet: the stick needs its cup test.",
+    "ne": "अझै छैन: पहिले यन्त्रको कप जाँच चाहिन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अभी नहीं: छड़ी की कप जाँच बाकी है।",
+    "bn": "এখনও নয়: কাঠির কাপ পরীক্ষা বাকি।",
+    "es": "Aún no: falta la prueba de vasos.",
+    "fr": "Pas encore : il manque le test des gobelets.",
+    "sw": "Bado: kijiti kinahitaji jaribio la vikombe."
+   },
+   "fog_test": {
+    "en": "Tests away from the field clear no fog.",
+    "ne": "खेतबाहिरका जाँचले कुहिरो हटाउँदैनन्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "खेत से बाहर की जाँच कोहरा नहीं हटाती।",
+    "bn": "জমির বাইরের পরীক্ষা কুয়াশা সরায় না।",
+    "es": "Pruebas fuera del campo no quitan niebla.",
+    "fr": "Un test hors du champ garde le brouillard.",
+    "sw": "Majaribio nje ya shamba hayaondoi ukungu."
+   },
+   "fog_h": {
+    "en": "Space guesses, the ground checks",
+    "ne": "अन्तरिक्षले अनुमान गर्छ, जमिनले जाँच्छ",
+    "ne_review": "needs native-speaker review",
+    "hi": "अंतरिक्ष अनुमान लगाता है, ज़मीन जाँचती है",
+    "bn": "মহাকাশ অনুমান করে, মাটি যাচাই করে",
+    "es": "El espacio adivina, el suelo comprueba",
+    "fr": "L’espace devine, le sol vérifie",
+    "sw": "Anga inakisia, ardhi inahakiki"
+   },
+   "fog_p1": {
+    "en": "From space, we make a first guess.",
+    "ne": "अन्तरिक्षबाट हामी पहिलो अनुमान गर्छौं।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अंतरिक्ष से हम पहला अनुमान लगाते हैं।",
+    "bn": "মহাকাশ থেকে আমরা প্রথম অনুমান করি।",
+    "es": "Desde el espacio hacemos una primera estimación.",
+    "fr": "Depuis l’espace, nous faisons une première estimation.",
+    "sw": "Kutoka angani tunakisia kwa mara ya kwanza."
+   },
+   "fog_p2": {
+    "en": "Our soil stick reads one spot exactly.",
+    "ne": "हाम्रो माटो जाँच्ने यन्त्रले एउटा ठाउँ ठ्याक्कै नाप्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हमारी छड़ी एक जगह ठीक-ठीक नापती है।",
+    "bn": "আমাদের মাটির কাঠি এক জায়গা ঠিকঠাক মাপে।",
+    "es": "Nuestra varilla mide un punto con exactitud.",
+    "fr": "Notre tige mesure un point avec précision.",
+    "sw": "Kijiti chetu kinapima sehemu moja kwa usahihi."
+   },
+   "fog_p3": {
+    "en": "We mix the two, trusting the surer one.",
+    "ne": "हामी दुवै मिलाउँछौं, बढी पक्कालाई बढी भरोसा गर्दै।",
+    "ne_review": "needs native-speaker review",
+    "hi": "दोनों को मिलाते हैं, पक्के पर ज़्यादा भरोसा।",
+    "bn": "আমরা দুটো মেলাই, বেশি নিশ্চিতটিতে বেশি ভরসা।",
+    "es": "Mezclamos ambos, confiando más en el más seguro.",
+    "fr": "Nous mêlons les deux, surtout le plus sûr.",
+    "sw": "Tunachanganya vyote viwili, tukiamini zaidi kilicho na uhakika."
+   },
+   "fog_p4": {
+    "en": "So the fog clears where we test.",
+    "ne": "त्यसैले जाँचेको ठाउँमा कुहिरो हट्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "इसलिए जाँच की जगह पर कोहरा छँटता है।",
+    "bn": "তাই যেখানে যাচাই করি, কুয়াশা কাটে।",
+    "es": "Así la niebla se aclara donde medimos.",
+    "fr": "Le brouillard se lève donc où nous mesurons.",
+    "sw": "Kwa hiyo ukungu unaondoka tunapopima."
+   },
+   "how_mix": {
+    "en": "How we mix them:",
+    "ne": "कसरी मिलाउँछौं:",
+    "ne_review": "needs native-speaker review",
+    "hi": "हम कैसे मिलाते हैं:",
+    "bn": "আমরা কীভাবে মেলাই:",
+    "es": "Cómo los mezclamos:",
+    "fr": "Comment nous les mêlons :",
+    "sw": "Jinsi tunavyochanganya:"
+   }
+  },
   "bs_months": {
    "Jan": {
     "en": "Magh",
@@ -8951,6 +9083,34 @@
     "जलवायु"
    ],
    "basis": "CLAUDE.md 'Future': NEX-GDDP-CMIP6 delta change, SSP2-4.5 and SSP5-8.5, reported as a range"
+  },
+  {
+   "id": "kalman_update",
+   "term": {
+    "en": "Kalman update",
+    "ne": "कालमान अपडेट",
+    "ne_review": "needs native-speaker review",
+    "hi": "कालमान अपडेट",
+    "bn": "কালমান আপডেট",
+    "es": "actualización de Kalman",
+    "fr": "mise à jour de Kalman",
+    "sw": "usasishaji wa Kalman"
+   },
+   "say": {
+    "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
+    "ne": "अनुमान र नापलाई मिलाउने हिसाब, जुन बढी पक्का छ त्यसलाई बढी भरोसा गर्दै।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अनुमान और माप मिलाने का हिसाब, पक्के पर ज़्यादा भरोसा करते हुए।",
+    "bn": "একটি হিসাব যা অনুমান আর মাপ মেলায়, বেশি নিশ্চিতটিতে বেশি ভরসা করে।",
+    "es": "Un cálculo que mezcla una estimación y una medida, confiando más en la más segura.",
+    "fr": "Un calcul qui mêle une estimation et une mesure, en croyant plus la plus sûre.",
+    "sw": "Hesabu inayochanganya makisio na kipimo, ikiamini zaidi kilicho na uhakika."
+   },
+   "aliases_en": [],
+   "ne_block": [
+    "कालमान"
+   ],
+   "basis": "CLAUDE.md 'Probe fusion' (scalar Kalman update; pipeline/twin/kalman.py, rules.yaml probe.kalman): before = the twin alone, after = the twin with the soil stick's reading; sure = 1 - sqrt(P / P0)"
   }
  ],
  "crop_explainers": {

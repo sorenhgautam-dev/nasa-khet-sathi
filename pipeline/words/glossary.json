@@ -708,6 +708,24 @@
     "जलवायु"
    ],
    "basis": "CLAUDE.md 'Future': NEX-GDDP-CMIP6 delta change, SSP2-4.5 and SSP5-8.5, reported as a range"
+  },
+  {
+   "id": "kalman_update",
+   "term": {
+    "en": "Kalman update",
+    "ne": "कालमान अपडेट",
+    "ne_review": "needs native-speaker review"
+   },
+   "say": {
+    "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
+    "ne": "अनुमान र नापलाई मिलाउने हिसाब, जुन बढी पक्का छ त्यसलाई बढी भरोसा गर्दै।",
+    "ne_review": "needs native-speaker review"
+   },
+   "aliases_en": [],
+   "ne_block": [
+    "कालमान"
+   ],
+   "basis": "CLAUDE.md 'Probe fusion' (scalar Kalman update; pipeline/twin/kalman.py, rules.yaml probe.kalman): before = the twin alone, after = the twin with the soil stick's reading; sure = 1 - sqrt(P / P0)"
   }
  ],
  "never_on_screens": {

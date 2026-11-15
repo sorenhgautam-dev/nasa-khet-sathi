@@ -772,3 +772,30 @@ svg.pix circle.pf { stroke: #14301E; }
   .how .bcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .how .bnums { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+/* space guesses, the ground checks (owner, 2026-11-15): a soft fog on each part, thick where we are unsure, and how sure
+   we are out of 100; it thins gently when the soil stick's reading updates the part (js/app.js fogParts) */
+.fieldbox .sfog { position: absolute; z-index: 2; display: flex; justify-content: center; align-items: flex-start; padding-top: 5%; pointer-events: none; }
+.fieldbox .sfog::before { content: ''; position: absolute; inset: 0; background: #FAF7F0; opacity: var(--fog); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  transition: opacity 1.6s ease; }
+.fieldbox .sfog.still::before { transition: none; }
+.fieldbox .flab { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; padding: 4px 10px 5px; border-radius: 14px;
+  background: rgba(255,255,255,.88); text-align: center; line-height: 1.15; box-shadow: 0 4px 12px -6px rgba(20,48,30,.35); transition: background .6s ease; }
+.fieldbox .flab .fq { font-size: 11px; font-weight: 700; color: var(--muted); }
+.fieldbox .flab .fv { font-size: 12px; font-weight: 700; white-space: nowrap; }
+.fieldbox .flab .fn { font-family: var(--f-head); font-size: 26px; font-weight: 900; margin: 0 3px; color: var(--ink); }
+.fieldbox .flab .fb { font-size: 11px; font-weight: 600; color: var(--muted); }
+.fieldbox .flab .fb:empty { display: none; }
+.fieldbox .flab.small { padding: 2px 6px; }
+.fieldbox .flab.small .fn { font-size: 15px; }
+.fieldbox .sfog.clear .flab { background: var(--lime); }
+.fogline { margin: 0; font-family: var(--f-head); font-weight: 800; font-size: 21px; line-height: 1.25; letter-spacing: -0.01em; }
+.fognote { margin: 0; font-weight: 700; color: var(--brown-2); }
+.fognote:empty { display: none; }
+@media (min-width: 1024px) {
+  .fieldbox .flab .fq { font-size: 14px; }
+  .fieldbox .flab .fv { font-size: 15px; }
+  .fieldbox .flab .fn { font-size: 40px; }
+  .fieldbox .flab .fb { font-size: 13px; }
+  .fogline { font-size: 26px; }
+}

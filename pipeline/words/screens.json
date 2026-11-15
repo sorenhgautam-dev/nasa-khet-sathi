@@ -4279,6 +4279,73 @@
     "ne_review": "needs native-speaker review"
    }
   },
+  "fog": {
+   "how_sure": {
+    "en": "How sure are we?",
+    "ne": "हामी कति पक्का छौं?",
+    "ne_review": "needs native-speaker review"
+   },
+   "sure_n": {
+    "en": "{sure_pct} out of 100",
+    "ne": "१०० मा {sure_pct}",
+    "ne_review": "needs native-speaker review"
+   },
+   "fog_line": {
+    "en": "From space, we guess. Our soil stick checks. The fog clears where we test.",
+    "ne": "अन्तरिक्षबाट हामी अनुमान गर्छौं। हाम्रो माटो जाँच्ने यन्त्रले जाँच्छ। जहाँ जाँच्छौं, त्यहाँ कुहिरो हट्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "sure_before": {
+    "en": "Before the stick",
+    "ne": "यन्त्रले जाँच्नुअघि",
+    "ne_review": "needs native-speaker review"
+   },
+   "sure_after": {
+    "en": "After the stick",
+    "ne": "यन्त्रले जाँचेपछि",
+    "ne_review": "needs native-speaker review"
+   },
+   "sure_wait": {
+    "en": "Not yet: the stick needs its cup test.",
+    "ne": "अझै छैन: पहिले यन्त्रको कप जाँच चाहिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "fog_test": {
+    "en": "Tests away from the field clear no fog.",
+    "ne": "खेतबाहिरका जाँचले कुहिरो हटाउँदैनन्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "fog_h": {
+    "en": "Space guesses, the ground checks",
+    "ne": "अन्तरिक्षले अनुमान गर्छ, जमिनले जाँच्छ",
+    "ne_review": "needs native-speaker review"
+   },
+   "fog_p1": {
+    "en": "From space, we make a first guess.",
+    "ne": "अन्तरिक्षबाट हामी पहिलो अनुमान गर्छौं।",
+    "ne_review": "needs native-speaker review"
+   },
+   "fog_p2": {
+    "en": "Our soil stick reads one spot exactly.",
+    "ne": "हाम्रो माटो जाँच्ने यन्त्रले एउटा ठाउँ ठ्याक्कै नाप्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "fog_p3": {
+    "en": "We mix the two, trusting the surer one.",
+    "ne": "हामी दुवै मिलाउँछौं, बढी पक्कालाई बढी भरोसा गर्दै।",
+    "ne_review": "needs native-speaker review"
+   },
+   "fog_p4": {
+    "en": "So the fog clears where we test.",
+    "ne": "त्यसैले जाँचेको ठाउँमा कुहिरो हट्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "how_mix": {
+    "en": "How we mix them:",
+    "ne": "कसरी मिलाउँछौं:",
+    "ne_review": "needs native-speaker review"
+   }
+  },
   "bs_months": {
    "Jan": {
     "en": "Magh",

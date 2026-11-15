@@ -3355,6 +3355,66 @@
   "shared.welcome": {
    "en": "Welcome",
    "bn": "স্বাগতম"
+  },
+  "shared.fog.how_sure": {
+   "en": "How sure are we?",
+   "bn": "আমরা কতটা নিশ্চিত?"
+  },
+  "shared.fog.sure_n": {
+   "en": "{sure_pct} out of 100",
+   "bn": "100-এর মধ্যে {sure_pct}"
+  },
+  "shared.fog.fog_line": {
+   "en": "From space, we guess. Our soil stick checks. The fog clears where we test.",
+   "bn": "মহাকাশ থেকে আমরা অনুমান করি। আমাদের মাটির কাঠি যাচাই করে। যেখানে যাচাই করি, সেখানে কুয়াশা কাটে।"
+  },
+  "shared.fog.sure_before": {
+   "en": "Before the stick",
+   "bn": "কাঠির আগে"
+  },
+  "shared.fog.sure_after": {
+   "en": "After the stick",
+   "bn": "কাঠির পরে"
+  },
+  "shared.fog.sure_wait": {
+   "en": "Not yet: the stick needs its cup test.",
+   "bn": "এখনও নয়: কাঠির কাপ পরীক্ষা বাকি।"
+  },
+  "shared.fog.fog_test": {
+   "en": "Tests away from the field clear no fog.",
+   "bn": "জমির বাইরের পরীক্ষা কুয়াশা সরায় না।"
+  },
+  "shared.fog.fog_h": {
+   "en": "Space guesses, the ground checks",
+   "bn": "মহাকাশ অনুমান করে, মাটি যাচাই করে"
+  },
+  "shared.fog.fog_p1": {
+   "en": "From space, we make a first guess.",
+   "bn": "মহাকাশ থেকে আমরা প্রথম অনুমান করি।"
+  },
+  "shared.fog.fog_p2": {
+   "en": "Our soil stick reads one spot exactly.",
+   "bn": "আমাদের মাটির কাঠি এক জায়গা ঠিকঠাক মাপে।"
+  },
+  "shared.fog.fog_p3": {
+   "en": "We mix the two, trusting the surer one.",
+   "bn": "আমরা দুটো মেলাই, বেশি নিশ্চিতটিতে বেশি ভরসা।"
+  },
+  "shared.fog.fog_p4": {
+   "en": "So the fog clears where we test.",
+   "bn": "তাই যেখানে যাচাই করি, কুয়াশা কাটে।"
+  },
+  "shared.fog.how_mix": {
+   "en": "How we mix them:",
+   "bn": "আমরা কীভাবে মেলাই:"
+  },
+  "glossary.kalman_update.term": {
+   "en": "Kalman update",
+   "bn": "কালমান আপডেট"
+  },
+  "glossary.kalman_update.say": {
+   "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
+   "bn": "একটি হিসাব যা অনুমান আর মাপ মেলায়, বেশি নিশ্চিতটিতে বেশি ভরসা করে।"
   }
  }
 }

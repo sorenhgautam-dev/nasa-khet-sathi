@@ -29,7 +29,7 @@
     var toc = h('nav', { class: 'prio', 'aria-label': T('btn.how_we_know') });
     root.append(h('div', { class: 'row wrap' }, K.isPlaceholder(F.field.name) ? K.sampleChip() : null, h('span', { class: 'small' }, F.field.name)),
       // first, the field twin in three pictures, then the 24 seasons played for each plan (owner, 2026-11-14 evening)
-      twinPics(), animBox(F), toc);
+      twinPics(), animBox(F), fogExplain(F), toc);
     var storyBox = h('div', { style: 'display:flex;flex-direction:column;gap:16px' });
     var areaBox = h('div'), nr = h('div');
     // for judges: everything that is not on the farmer's seven screens (owner, 2026-11-14 evening), each from its own file
@@ -156,6 +156,43 @@
       play();
     });
     return box;
+  }
+
+  // ---------------- space guesses, the ground checks (owner, 2026-11-15): the guess, the stick's reading, how we mix them ----------------
+  // How sure we are before the stick: the twin alone (field.sections[].sure); after: the Kalman update robot/bridge.py
+  // made with a real reading on this field (probe_log.json or live.json; only once the bench test gave the stick's error).
+  var FIELD_ISO = '<path d="M10 72 L56 84 L102 72 L56 60Z" fill="#7FB24A" stroke="#14301E" stroke-width="1.6"/><path d="M24 72l32 8M38 68l32 8M52 65l32 8" stroke="#14301E" stroke-opacity=".25" stroke-width="1.4"/>';
+  var FOG_PIC = [
+    '<svg width="120" height="96" viewBox="0 0 120 96"><g transform="translate(92 16) rotate(-20)"><rect x="-6" y="-5" width="12" height="10" rx="2" fill="#14301E"/><rect x="-20" y="-3.5" width="12" height="7" fill="#2F6E99"/><rect x="8" y="-3.5" width="12" height="7" fill="#2F6E99"/></g>' +
+      '<path d="M84 28 L64 54" stroke="#9A5426" stroke-width="1.6" stroke-dasharray="3 3"/>' + FIELD_ISO + '<ellipse cx="56" cy="70" rx="54" ry="20" fill="#FAF7F0" opacity=".88"/></svg>',
+    '<svg width="120" height="96" viewBox="0 0 120 96">' + FIELD_ISO + '<ellipse cx="56" cy="70" rx="54" ry="20" fill="#FAF7F0" opacity=".6"/><path d="M53 22h6v42l-3 9-3-9z" fill="#9A5426" stroke="#14301E" stroke-width="1.4"/><path d="M53 32h6" stroke="#14301E" stroke-width="1.4"/>' +
+      '<ellipse cx="56" cy="76" rx="9" ry="3.5" fill="none" stroke="#14301E" stroke-width="2"/></svg>',
+    '<svg width="120" height="96" viewBox="0 0 120 96">' + FIELD_ISO + '<ellipse cx="56" cy="70" rx="54" ry="20" fill="#FAF7F0" opacity=".18"/><circle cx="96" cy="30" r="14" fill="#C8E05A" stroke="#14301E" stroke-width="1.6"/><path d="M89 30l5 5 9-10" stroke="#14301E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  ];
+  function fogExplain(F) {
+    var secs = K.mocked(F, 'field.sections') ? [] : (F.field.sections || []).filter(function (x) { return typeof x.sure === 'number'; });
+    if (!secs.length) return null;   // no number of our own yet: nothing to explain it with
+    var s0 = secs.map(function (x) { return Math.round(x.sure * 100); }), lo = Math.min.apply(null, s0), hi = Math.max.apply(null, s0);
+    var g = (S.words.glossary || []).filter(function (x) { return x.id === 'kalman_update'; })[0], after = h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:4px' });
+    K.probeData().then(function (pd) {
+      var rows = [];
+      if (!pd.test) K.geom(F).forEach(function (q) {
+        var x = K.sureOf(F, pd, q.s.id);
+        if (x.after != null) rows.push(T('each_part.part_name', { section: q.n }) + ': ' + num(Math.round(x.before * 100)) + ' → ' + num(Math.round(x.after * 100)));
+      });
+      K.add(after, rows.length ? h('p', { style: 'margin:0' }, h('b', null, T('fog.sure_after') + ': '), rows.join(' · ')) :
+        [h('p', { style: 'margin:0' }, h('b', null, T('fog.sure_after') + ': '), T('fog.sure_wait')), pd.test ? h('p', { class: 'small', style: 'margin:0' }, T('fog.fog_test')) : null]);
+    });
+    return section('fog', T('fog.fog_h'), [
+      h('ol', { class: 'twinsteps three' }, [['fog.fog_p1'], ['fog.fog_p2'], ['fog.fog_p3', 'fog.fog_p4']].map(function (x, i) {
+        return h('li', { class: 'tstep' }, h('span', { class: 'tn' }, num(i + 1)), svg(FOG_PIC[i], 'tpic'), h('p', { class: 'tt' }, h('b', null, T(x[0])), x[1] ? [' ', h('span', null, T(x[1]))] : null));
+      })),
+      h('div', { class: 'card', style: 'display:flex;flex-direction:column;gap:6px' },
+        h('p', { class: 'lead', style: 'margin:0' }, T('fog.how_sure')),
+        h('p', { style: 'margin:0' }, h('b', null, T('fog.sure_before') + ': '), T('fog.sure_n', { sure_pct: lo === hi ? lo : rng(lo, hi) }),
+          F.field.status_date ? ' · ' + T('each_part.as_of') + ' ' + K.fmtDate(F.field.status_date) : ''),
+        after,
+        g ? h('p', { class: 'small', style: 'margin:0' }, h('b', null, T('fog.how_mix') + ' ' + L(g.term) + '.'), ' ', L(g.say)) : null)]);
   }
 
   // ---------------- the three plans' full details (scores, five tabs, tips): the sheet each plan opens ----------------

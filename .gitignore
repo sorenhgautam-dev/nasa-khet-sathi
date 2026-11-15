@@ -45,3 +45,6 @@ __pycache__/
 
 # installers downloaded into the project folder (never committed)
 *.dmg
+
+# local notes (owner, 2026-11-15): kept on this laptop, never published
+local_notes/

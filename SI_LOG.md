@@ -1518,3 +1518,15 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   native-speaker review in `pipeline/words` shared.welcome); timed in Chrome: the curtain lifts 1.9 s later than before
   on a first visit, at once on a tap, still words with reduced motion. `translate="no"` and the notranslate meta tag.
 - **For a person to review:** the Nepali "स्वागत छ"; the welcome on a real phone (Bengali uses the phone's own font).
+
+## 2026-11-15 (Sunday): the fog on the soil test, and the click-through version back as the home page (Claude Opus 5.5 via Claude Code)
+
+- **What Claude did:** built the fog that clears where the soil stick tests (app.js `sureOf`, `fogParts`; how.js
+  `fogExplain`; the glossary term "Kalman update"); drafted 13 English lines, their Nepali and the five draft languages
+  (machine translation), with "From space, we guess" for "Satellites guess" and the owner's three sentences in five short
+  ones (both approved by the owner, 2026-11-15). Overnight it also built a long scrolling page; the owner chose the
+  click-through version, so main was rebuilt from the last published commit (786b068) with the finished branches
+  soil-parts-welcome and behind-the-scenes merged and the fog re-applied; the long page is not on the site (kept only in the
+  history of branch `dhulikhel`, where another session had committed part of it). The 20 new Nepali lines were added to
+  `pipeline/words/nepali_farmer_screens.xlsx` and the full review sheet was rebuilt.
+- **For a person to review:** every new Nepali line (marked "needs native-speaker review"), including स्वागत छ.

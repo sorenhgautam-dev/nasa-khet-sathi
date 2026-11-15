@@ -804,6 +804,62 @@
     });
   }
   function anyTested(pd) { return !!pd && Object.keys(pd.parts).some(function (k) { return pd.parts[k].state === 'done'; }); }
+  // ---------------- space guesses, the ground checks: fog on each part (owner, 2026-11-15) ----------------
+  // How sure we are of a part's soil water, out of 100. Before the stick: the twin alone (field.sections[].sure, or the
+  // recorded or live reading's own "before"). After: the Kalman update robot/bridge.py made with that reading (only once
+  // the bench test gave the stick's error; rules.yaml probe.kalman.r). A test away from the field (garden, bowls) never
+  // changes the field's number, and no number means the fog stays: nothing is guessed.
+  function sureOf(F, pd, sid) {
+    var sec = mocked(F, 'field.sections') ? null : (F.field.sections || []).filter(function (s) { return s.id === sid; })[0];
+    var out = { before: sec && typeof sec.sure === 'number' ? sec.sure : null, after: null }, ok = pd && !pd.test, r = ok && pd.parts[sid];
+    // the update's own "before" once a reading exists: the twin aged to the reading's day (rec: every recorded part)
+    var rb = ok && pd.kind === 'log' ? (r && r.before) || (pd.rec && pd.rec[sid] && pd.rec[sid].before) : ok && pd.kind === 'live' ? pd.live && pd.live.prior : null;
+    if (rb && rb.sure != null) out.before = rb.sure;
+    if (r && r.state === 'done') out.after = pd.kind === 'log' ? (r.after ? r.after.sure : null) : pd.kind === 'live' && r.sure != null ? r.sure : null;
+    return out;
+  }
+  function fogOpacity(s) { return (0.85 * (1 - Math.max(0, Math.min(1, s == null ? 0 : s)))).toFixed(2); }
+  // the fog over every part of a field box and its number; .set(pd) clears each part the stick has checked to its new
+  // number (a gentle fade and count; under reduced motion the before and after numbers only); .note(pd) says why not
+  function fogParts(box, F) {
+    var G = box._g, roomy = G.length <= 6, tpl = T('fog.sure_n'), at = tpl.indexOf('{sure_pct}'), fogs = {};
+    function label(v) { return at < 0 ? num(v) : [tpl.slice(0, at), h('b', { class: 'fn' }, num(v)), tpl.slice(at + 10)]; }
+    G.forEach(function (g) {
+      var s0 = sureOf(F, null, g.s.id).before, svgPart = g.q.namespaceURI === SVGNS, f = { s0: s0, now: s0 };
+      if (s0 == null) return;
+      if (svgPart) { g.q.style.fill = 'rgba(250,247,240,' + fogOpacity(s0) + ')'; f.q = g.q; fogs[g.s.id] = f; return; }
+      f.el = h('span', { class: 'sfog', style: 'left:' + g.l + '%;top:' + g.t + '%;width:' + (g.r - g.l) + '%;height:' + (g.b - g.t) + '%;--fog:' + fogOpacity(s0) });
+      f.lab = h('span', { class: 'flab' + (roomy ? '' : ' small') }, roomy ? h('span', { class: 'fq' }, T('fog.how_sure')) : null, h('span', { class: 'fv' }, label(Math.round(s0 * 100))), h('span', { class: 'fb' }));
+      f.el.append(f.lab); box.append(f.el); fogs[g.s.id] = f;
+    });
+    // a part not checked yet takes the update's own "before" at once (no animation); a checked one clears to its "after"
+    function set(pd) {
+      Object.keys(fogs).forEach(function (sid) {
+        var f = fogs[sid], s = sureOf(F, pd, sid), a = s.after, to = a != null ? a : s.before;
+        if (to == null || to === f.now) return;
+        var b = Math.round((s.before == null ? f.s0 : s.before) * 100), n = Math.round(to * 100);
+        f.now = to;
+        if (f.q) { f.q.style.fill = 'rgba(250,247,240,' + fogOpacity(to) + ')'; return; }
+        var fv = f.lab.querySelector('.fv'), fb = f.lab.querySelector('.fb');
+        function show(v) { fv.textContent = ''; add(fv, label(v)); }
+        if (a == null) {   // no fade: the style is read once with the transition off
+          f.el.classList.add('still'); f.el.style.setProperty('--fog', fogOpacity(to)); W.getComputedStyle(f.el, '::before').opacity; f.el.classList.remove('still'); show(n); return;
+        }
+        f.el.style.setProperty('--fog', fogOpacity(a)); f.el.classList.add('clear');
+        fb.textContent = T('fog.sure_before') + ': ' + num(b);
+        if (RM) { show(n); return; }
+        var t0 = Date.now();
+        (function tick() { var k = Math.min(1, (Date.now() - t0) / 1400); show(Math.round(b + (n - b) * k)); if (k < 1 && fv.isConnected) W.requestAnimationFrame(tick); })();
+      });
+    }
+    // one line under the field when a checked part keeps its fog: a test away from the field, or no bench test yet
+    function note(pd) {
+      if (!Object.keys(fogs).length || !anyTested(pd)) return null;
+      if (pd.test) return T('fog.fog_test');
+      return Object.keys(pd.parts).some(function (k) { return fogs[k] && pd.parts[k].state === 'done' && sureOf(F, pd, k).after == null; }) ? T('fog.sure_wait') : null;
+    }
+    return { set: set, note: note, any: Object.keys(fogs).length > 0 };
+  }
   // one part's word from its reading: the probe's band (good, needs water, too wet) once the bench calibration exists,
   // else only drier or wetter than the other parts; "not tested yet" without a reading
   function partWord(r) {
@@ -833,7 +889,7 @@
   }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
-      var box = fieldBox(F, 'robot'), G = box._g;
+      var box = fieldBox(F, 'robot'), G = box._g, fog = fogParts(box, F), fnote = h('p', { class: 'small fognote' }), liveNow = null;
       var route = D.createElementNS('http://www.w3.org/2000/svg', 'svg');
       route.setAttribute('class', 'route'); route.setAttribute('viewBox', '0 0 100 100'); route.setAttribute('preserveAspectRatio', 'none');
       box.append(route);
@@ -878,6 +934,8 @@
           g.q.style[prop] = done ? 'rgba(200,224,90,' + (prop === 'fill' ? '.45' : '.28') + ')' : g.q.dataset.bg;   // the design's tested quarter
           if (g.num) { g.num.classList.toggle('ok', done); g.num.textContent = done ? '' : digits(g.n); if (done) g.num.append(svg(I('tick', 16, 3.2))); }
         });
+        var now = { kind: pd ? pd.kind : 'none', test: pd && pd.test, live: liveNow, parts: shown, rec: pd && pd.parts };
+        fog.set(now); fnote.textContent = fog.note(now) || '';   // the fog clears where the stick checked the field
       }
       function drawCta(active) {
         ctaBox.textContent = '';
@@ -903,7 +961,7 @@
       }
       var lastSec = null;
       function fromLive(lv) {
-        shown = liveParts(lv); drawRows(lv.section);
+        shown = liveParts(lv); liveNow = lv; drawRows(lv.section);
         var g = G.filter(function (x) { return x.s.id === lv.section; })[0];
         if (g && lv.section !== lastSec) { lastSec = lv.section; moveTo(g); }
         if (lv.state === 'done' && g) ring.hidden = true;
@@ -930,9 +988,10 @@
       });
       var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub')), tbox = h('div');
       return screen('soil', {
-        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
+        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null,
+          fog.any ? h('p', { class: 'fogline' }, T('fog.fog_line')) : null],
         scene: box,
-        body: [rows, info, tbox, honest],
+        body: [rows, fnote, info, tbox, honest],
         cta: ctaBox
       });
     });
@@ -1502,7 +1561,7 @@
       if (D.readyState === 'complete') loadFonts(); else W.addEventListener('load', loadFonts);
     });
   }
-  W.KS = { S: S, h: h, add: add, svg: svg, ic: ic, I: I, T: T, L: L, P: P, PL: PL, num: num, digits: digits, rng: rng, crop: crop, lines: lines, node: node, scr: scr,
+  W.KS = { sureOf: sureOf, S: S, h: h, add: add, svg: svg, ic: ic, I: I, T: T, L: L, P: P, PL: PL, num: num, digits: digits, rng: rng, crop: crop, lines: lines, node: node, scr: scr,
     srcTag: srcTag, srcs: srcs, srcObj: srcObj, effPlans: effPlans, planName: planName, alts: alts, yearRange: yearRange, hasDhm: hasDhm, scoreRange: scoreRange,
     waterCases: waterCases, pics: pics, basketSvg: basketSvg, getJSON: getJSON, loadLeaflet: loadLeaflet, osm: osm, go: go, notReady: notReady, loading: loading,
     sampleChip: sampleChip, isPlaceholder: isPlaceholder, sourcesList: sourcesList, mocked: mocked, fogLayer: fogLayer, langInfo: langInfo, monthName: monthName,
