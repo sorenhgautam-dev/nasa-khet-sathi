@@ -3795,6 +3795,14 @@
   "shared.farm.next_parts": {
    "en": "Next: split into parts",
    "es": "Siguiente: dividir en partes"
+  },
+  "shared.farm.keep_growing": {
+   "en": "Keep growing {crop}.",
+   "es": "Siga cultivando {crop}."
+  },
+  "shared.farm.none_better": {
+   "en": "None of our other plans usually did better.",
+   "es": "Ningún otro plan nuestro solía ir mejor."
   }
  }
 }

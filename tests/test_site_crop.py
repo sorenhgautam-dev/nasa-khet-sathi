@@ -35,7 +35,7 @@ var wl = sd.weather_lines && sd.weather_lines[crop];
 console.log(JSON.stringify({{winterId: winterId(F, S.winter), crop: crop,
   plans_current: cur.crops.map(function (c) {{ return c.crop; }}),
   what_you_do_now: own, what_you_do_now_6: fp6.own ? fp6.own.p.crops.map(function (c) {{ return c.crop; }}) : [],
-  suggestion: fp.pick ? fp.pick.p.crops.map(function (c) {{ return c.crop; }}) : [],
+  suggestion: fp.pick ? fp.pick.p.crops.map(function (c) {{ return c.crop; }}) : [], keep: !!fp.keep,
   weather_warns: wl ? JSON.stringify(wl.no) : ''}}));""")
     return json.loads(subprocess.run(["node", "-e", js], capture_output=True, text=True, check=True).stdout)
 
@@ -52,7 +52,9 @@ def test_every_screen_uses_the_guess_until_the_farmer_answers_then_their_answer(
     assert r["crop"] == winter                                            # Next 3 and 6 months, Weather ahead
     assert r["plans_current"] == ["rice", winter]                         # the plans: "What you do now"
     assert r["what_you_do_now"] == ["rice", winter] == r["what_you_do_now_6"]
-    assert r["suggestion"] != ["rice", winter]                            # a suggestion is never what they do now
+    # a change is never what they do now; when no plan is usually better the card keeps their crop (rules.yaml
+    # simple_cards.suggest_change_only_if_better, owner 2026-11-15)
+    assert r["suggestion"] != ["rice", winter] or (r["keep"] and r["suggestion"] == ["rice", winter])
     assert winter in r["weather_warns"] and other not in r["weather_warns"]   # the warnings name their crop only
 
 

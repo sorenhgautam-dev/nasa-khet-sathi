@@ -17,15 +17,18 @@ SW = (SITE / "sw.js").read_text()
 APP = (SITE / "js" / "app.js").read_text()
 
 
-def test_a_first_visit_saves_the_app_and_the_main_fields_files_and_nothing_always_fresh():
+def test_a_first_visit_saves_the_whole_web_app_and_nothing_always_fresh():
+    """Owner, 2026-11-15 afternoon: 'make the entire webapp offline': a first visit saves every file of the site (every
+    field, How we know, Behind the scenes, the world page and its pictures), except sw.js itself and NEVER (the live
+    reading, the demo-mode switch and the recorded test readings always come fresh)."""
     main, files = bo.first_visit(SITE)
     assert main == json.loads((SITE / "data" / "index.json").read_text())["fields"][0]["id"]
-    for f in ("index.html", "manifest.webmanifest", "js/app.js", "css/app.css", "data/words.json", "data/index.json",
-              f"data/fields/{main}.json", f"data/simple/{main}.json", f"data/labels/{main}.json"):
+    every = {p.relative_to(SITE).as_posix() for p in SITE.rglob("*") if p.is_file() and not p.name.startswith(".")}
+    assert set(files) == every - set(bo.NEVER) - {"sw.js"}
+    for f in ("index.html", "manifest.webmanifest", "js/app.js", "js/world.js", "data/basemap/world.jpg", "data/story.json",
+              "data/behind.json", f"data/fields/{main}.json", "data/fields/demo.json", "data/fields/ambohidratrimo.json"):
         assert f in files, f
     assert not set(bo.NEVER) & set(files) and "sw.js" not in files
-    assert not any(f.startswith("data/fields/") and f != f"data/fields/{main}.json" for f in files)   # other fields: later
-    assert not set(bo.LATER) & set(files)                                                             # the world page: later
     assert all((SITE / f).is_file() for f in files)
 
 

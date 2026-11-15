@@ -4658,6 +4658,16 @@
     "en": "Next: split into parts",
     "ne": "अब भागमा बाँड्नुहोस्",
     "ne_review": "needs native-speaker review"
+   },
+   "keep_growing": {
+    "en": "Keep growing {crop}.",
+    "ne": "{crop} नै लगाइराख्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "none_better": {
+    "en": "None of our other plans usually did better.",
+    "ne": "हाम्रा अरू कुनै योजनाले प्रायः राम्रो गरेनन्।",
+    "ne_review": "needs native-speaker review"
    }
   },
   "fog": {

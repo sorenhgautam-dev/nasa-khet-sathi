@@ -668,6 +668,10 @@ details.why { background: rgba(255,255,255,.6); }
 .fieldsfold summary { min-height: 44px; display: flex; align-items: center; font-weight: 700; font-size: 15px; cursor: pointer; }
 .pword { margin: 0; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 17px; }
 .best .pword { color: var(--lime); }
+/* "Keep growing [crop]." (rules.yaml simple_cards.suggest_change_only_if_better): the other plans below, each with its symbol */
+.best.keep { cursor: default; }
+.best .keepothers { list-style: none; margin: 4px 0 0; padding: 12px 0 0; border-top: 1px solid rgba(255,255,255,.18); display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+.best .keepothers li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .tcards.lines1 .word { font-size: 19px; line-height: 1.3; }
 
 /* ---------------- wide screens: the web design (W1-W7) ---------------- */

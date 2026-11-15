@@ -3795,6 +3795,14 @@
   "shared.farm.next_parts": {
    "en": "Next: split into parts",
    "hi": "आगे: हिस्सों में बाँटें"
+  },
+  "shared.farm.keep_growing": {
+   "en": "Keep growing {crop}.",
+   "hi": "{crop} ही उगाते रहें।"
+  },
+  "shared.farm.none_better": {
+   "en": "None of our other plans usually did better.",
+   "hi": "हमारी कोई और योजना अक्सर बेहतर नहीं रही।"
   }
  }
 }

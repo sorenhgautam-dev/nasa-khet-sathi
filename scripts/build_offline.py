@@ -3,10 +3,9 @@
     .venv/bin/python scripts/build_offline.py           # rewrite the list in site/sw.js; print what a first visit saves
     .venv/bin/python scripts/build_offline.py --check   # the problems, exit 1 if any (scripts/check_site.py runs it)
 
-A first visit saves the app's own files (everything in site/ outside data/, except sw.js and the world page) and the main
-field's files (index.json's first field: every data/<kind>/<id>.* and <id>_*, the pictures its map and drone files name),
-plus the shared data files, so every farmer screen works with no signal. Other fields and the world page are saved when
-first opened (sw.js). NEVER is never saved: the live reading, the demo-mode switch and the recorded test readings (the
+A first visit saves the whole web app (owner, 2026-11-15 afternoon: 'make the entire webapp offline'): every file in
+site/ (every field, How we know, Behind the scenes, the world page and its pictures, about 7 MB), except sw.js itself and
+NEVER, so every screen of every field works with no signal after one visit. NEVER is never saved: the live reading, the demo-mode switch and the recorded test readings (the
 owner: live readings, practice readings and demo-mode data always come fresh). The version is the version stamp
 (data/version.json) plus a hash of the listed files, so any change gives a new worker, which replaces the old copy.
 """
@@ -20,7 +19,6 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 SITE = REPO / "site"
 NEVER = ("data/live.json", "data/demo.json", "data/probe_log.json")
-LATER = ("js/world.js", "data/basemap/world.json", "data/basemap/world.jpg")
 BEGIN, END = "// BEGIN LIST (scripts/build_offline.py writes this block)\n", "// END LIST\n"
 
 
@@ -29,13 +27,7 @@ def first_visit(site=SITE):
     site = Path(site)
     main = json.loads((site / "data" / "index.json").read_text())["fields"][0]["id"]
     rel = [p.relative_to(site).as_posix() for p in site.rglob("*") if p.is_file() and not p.name.startswith(".")]
-    app = [f for f in rel if not f.startswith("data/") and f != "sw.js"]
-    shared = [f for f in rel if f.startswith("data/") and f.count("/") == 1 and f.endswith(".json")]
-    field = [f for f in rel if f.count("/") == 2 and re.fullmatch(re.escape(main) + r"(_[^/]*)?\.[a-z]+", f.split("/")[2])]
-    for j in (f"data/basemap/{main}.json", f"data/drone/{main}.json"):
-        img = json.loads((site / j).read_text()).get("image") if (site / j).exists() else None
-        field += [img] if img else []
-    return main, sorted(set(app + shared + field) - set(NEVER) - set(LATER))
+    return main, sorted(set(rel) - set(NEVER) - {"sw.js"})
 
 
 def block(site=SITE):
@@ -72,7 +64,7 @@ def check(site=SITE):
     main = first_visit(site)[0] if (site / "data" / "index.json").exists() else None
     named |= {p.relative_to(site).as_posix() for p in (site / "data").glob(f"*/{main}.*")} if main else set()
     for f in sorted(named):
-        if (site / f).is_file() and f not in NEVER and f not in LATER and f not in have:
+        if (site / f).is_file() and f not in NEVER and f not in have:
             out.append(f"not listed: {f} is loaded by a screen but not saved for offline use")
     return out
 

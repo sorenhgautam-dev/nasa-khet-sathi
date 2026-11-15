@@ -1518,7 +1518,10 @@
       rest.push({ id: id, p: p, word: e.text, v: VERDICT_ORDER[e.verdict] == null ? 9 : VERDICT_ORDER[e.verdict], i: i, acts: ((sd.actions || {})[id] || {})[win] || [] });
     });
     rest.sort(function (a, b) { return a.v - b.v || a.i - b.i; });
-    return { pick: rest[0] || own, others: rest.slice(1), own: own };
+    // rules.yaml simple_cards.suggest_change_only_if_better (owner, 2026-11-15, answer 3): a change only when another plan
+    // is usually better than now; otherwise keep the farmer's own plan, every other plan listed below it
+    var best = rest[0], keep = !!own && !(best && best.v === VERDICT_ORDER.better);
+    return { pick: keep ? own : best || own, others: keep ? rest : rest.slice(1), own: own, keep: keep };
   }
   // a plan's title: the crop it adds to what the farmer grows; the plan's name (or its crops, for a plan named "what you do now" that is not)
   function addedCrop(x, own) {
@@ -1546,6 +1549,15 @@
     return h('div', { class: 'best' }, h('span', { class: 'tag' }, T('what_to_grow.our_pick')),
       h('span', { class: 'bc' }, cap(crop(addedCrop(x, own)))), h('span', { class: 'bp' }, farmPlanName(x)),
       wordLine(x), brief ? null : ticks(x.acts.map(say)), brief || x.own ? null : tryBtn(x.id));
+  }
+  // no other plan usually did better (rules.yaml simple_cards.suggest_change_only_if_better): "Keep growing [crop].", one
+  // line, no trial button, and the other plans below with their own symbols (better ✓, about the same =, worse ✗)
+  function keepCard(s, cropKey) {
+    return h('div', { class: 'best keep' }, h('span', { class: 'tag' }, T('what_to_grow.our_pick')),
+      h('span', { class: 'bc' }, T('farm.keep_growing', { crop: crop(cropKey) })), h('p', { class: 'pword' }, T('farm.none_better')),
+      s.others.length ? h('ul', { class: 'keepothers' }, s.others.map(function (x) {
+        return h('li', null, symEl(KIND[x.v] || 'same'), h('b', null, cap(crop(addedCrop(x, s.own)))), h('span', null, T(x.word)));
+      })) : null);
   }
   // Next 3 months (B5): one row per month, what to do (the plan's own sentence, else growing or resting) and the month's
   // watch-out from Weather ahead for the crop of that row, when the file has one for that crop
@@ -1599,14 +1611,16 @@
         var steps = monthSteps(s.pick.p, s.pick.acts, blockKeys(n)), wl = F.weather && F.weather.blocks && wxLines(F, sd);
         if (n === 6) {   // B2: one line naming the suggestion, then each of the six months as on Weather ahead (else the plan's steps)
           var grows = s.pick.p.crops.map(function (c) { return c.crop; });
-          scene.append(pickLine(s.pick, s.own)); scene.lastChild.append(pickLinks(s.pick, 'm6', years));
+          if (s.keep) scene.append(keepCard(s, winterCrop(F, sd)));
+          else { scene.append(pickLine(s.pick, s.own)); scene.lastChild.append(pickLinks(s.pick, 'm6', years)); }
           add(body, [knowBest(), lnk(T('weather.title'), function () { go('weather'); }, 'sun'), moreBox([wl ? h('div', { class: 'wblocks' }, sixBlocks(F.weather).map(function (b, i) { return wxCard(forCrops(wl[b.key] || {}, grows), b, monthSpan(b.key), i); })) : sixRow(steps),
             tags, advisorNote(monthsNote())])]);
           return;
         }
         // B1: the suggestion (its NASA tags once), one row for each of the next three months, the other choices folded
-        scene.append(bestCard(s.pick, s.own, true)); scene.lastChild.append(pickLinks(s.pick, 'm3', years));
-        add(body, [knowBest(), moreBox([monthRows(steps, function (c) { return wxLines(F, sd, c); }), othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])),
+        if (s.keep) scene.append(keepCard(s, winterCrop(F, sd)));   // the other plans are listed on the card itself
+        else { scene.append(bestCard(s.pick, s.own, true)); scene.lastChild.append(pickLinks(s.pick, 'm3', years)); }
+        add(body, [knowBest(), moreBox([monthRows(steps, function (c) { return wxLines(F, sd, c); }), s.keep ? null : othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])),
           tags, advisorNote(monthsNote())])]);
       });
       return screen('next', {

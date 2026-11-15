@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 822 texts): 799 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 824 texts): 801 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -798,7 +798,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 281 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 283 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -1046,6 +1046,8 @@ This page is made from the word files in this folder; change those, not this pag
 | Tap a square to see the year | वर्ष हेर्न कुनै कोठा थिच्नुहोस् |
 | No part is tested yet. | अझै कुनै भाग जाँचिएको छैन। |
 | Next: split into parts | अब भागमा बाँड्नुहोस् |
+| Keep growing {crop}. | {crop} नै लगाइराख्नुहोस्। |
+| None of our other plans usually did better. | हाम्रा अरू कुनै योजनाले प्रायः राम्रो गरेनन्। |
 | *The fog that clears where the soil stick tests* | |
 | How sure are we? | हामी कति पक्का छौं? |
 | {sure_pct} out of 100 | १०० मा {sure_pct} |

@@ -8543,6 +8543,26 @@
     "es": "Siguiente: dividir en partes",
     "fr": "Ensuite : diviser en parties",
     "sw": "Ifuatayo: gawa katika sehemu"
+   },
+   "keep_growing": {
+    "en": "Keep growing {crop}.",
+    "ne": "{crop} नै लगाइराख्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} ही उगाते रहें।",
+    "bn": "{crop}-ই চাষ করতে থাকুন।",
+    "es": "Siga cultivando {crop}.",
+    "fr": "Continuez à cultiver {crop}.",
+    "sw": "Endelea kulima {crop}."
+   },
+   "none_better": {
+    "en": "None of our other plans usually did better.",
+    "ne": "हाम्रा अरू कुनै योजनाले प्रायः राम्रो गरेनन्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हमारी कोई और योजना अक्सर बेहतर नहीं रही।",
+    "bn": "আমাদের অন্য কোনো পরিকল্পনা সাধারণত ভালো করেনি।",
+    "es": "Ningún otro plan nuestro solía ir mejor.",
+    "fr": "Aucun autre de nos plans n'a fait mieux.",
+    "sw": "Hakuna mpango wetu mwingine ulifanya vizuri zaidi."
    }
   },
   "fog": {

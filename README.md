@@ -77,9 +77,9 @@ prepared area gets a friendly message instead of an error.
 
 ### Works offline after one visit
 
-- **The first opening needs internet.** On that visit the phone saves the main field's screens and data (about 50 files,
-  under 3 MB; `site/sw.js`, a service worker; its list and version are written by `scripts/build_offline.py` from the
-  final files, and `scripts/check_site.py` checks they are current).
+- **The first opening needs internet.** On that visit the phone saves the whole web app: every field, How we know,
+  Behind the scenes and the world page (about 110 files, 7 MB; `site/sw.js`, a service worker; its list and version are
+  written by `scripts/build_offline.py` from the final files, and `scripts/check_site.py` checks they are current).
 - **After that it opens with no internet**, on that phone and browser, and says "Offline: showing your saved field."
   When the phone is online again and we have published new data, it fetches the new files once and uses them.
 - **Live probe readings always need the laptop** (and its hotspot) nearby: `data/live.json` and the probe log are never

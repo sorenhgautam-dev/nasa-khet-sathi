@@ -3795,6 +3795,14 @@
   "shared.farm.next_parts": {
    "en": "Next: split into parts",
    "sw": "Ifuatayo: gawa katika sehemu"
+  },
+  "shared.farm.keep_growing": {
+   "en": "Keep growing {crop}.",
+   "sw": "Endelea kulima {crop}."
+  },
+  "shared.farm.none_better": {
+   "en": "None of our other plans usually did better.",
+   "sw": "Hakuna mpango wetu mwingine ulifanya vizuri zaidi."
   }
  }
 }
