@@ -33,10 +33,13 @@ def _profile_flag(cfg):
     return {"profile": "default", "note": dict(GLOBAL_NOTE)} if profile_id(cfg, load_profiles()) == "default" else {}
 
 
-def build_index(configs, data_dir):
-    """{fields, areas} from the configs (dicts as load_field gives them) and what exists under data_dir (site/data)."""
+def build_index(configs, data_dir, hidden=()):
+    """{fields, areas} from the configs (dicts as load_field gives them) and what exists under data_dir (site/data).
+    A field in `hidden` (rules.yaml site_hidden_fields; owner, 2026-11-15 afternoon) is left out of the list and of the
+    drone previews; its files stay."""
     data_dir = Path(data_dir)
     by_id = {c["id"]: c for c in configs}
+    configs = [c for c in configs if c["id"] not in set(hidden)]
     listed = [c for c in configs if (data_dir / "fields" / f"{c['id']}.json").exists()]
     with_map = {a for a in {_area_of(c) for c in listed} if (data_dir / "area" / f"{a}.json").exists()}
     fields = [{"id": c["id"], "name": c["name"], "country": c["country"], "lat": c["lat"], "lon": c["lon"],
@@ -70,7 +73,8 @@ def main(argv=None):
     ap.add_argument("--data-dir", default=str(REPO / "site" / "data"))
     a = ap.parse_args(argv)
     data_dir = Path(a.data_dir)
-    idx = build_index(all_configs(), data_dir)
+    from pipeline.fetch.rules import load_rules
+    idx = build_index(all_configs(), data_dir, hidden=load_rules().get("site_hidden_fields") or ())
     errs = validate_index(idx)
     if errs:
         print("REFUSED: the index would break its schema:\n" + "\n".join(errs))

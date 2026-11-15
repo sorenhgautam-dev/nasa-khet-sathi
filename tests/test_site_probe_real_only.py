@@ -28,7 +28,7 @@ def test_practice_readings_are_never_read():
 
 
 def test_practice_and_garden_readings_never_stand_for_the_field():
-    assert "function forField(pd) { return !!pd && !pd.test; }" in APP
+    assert "function forField(pd) { return !!pd && !pd.test && pd.kind !== 'tray'; }" in APP   # the demo tray too (2026-11-15)
     assert "} else if (d.kind === 'log' && forField(d)) {" in APP                 # the soil screen's walk
     assert "if (!forField(pd)) pd = { kind: 'none', parts: {} };" in APP        # Today's parts
     assert "sd.today.mode === 'band' && forField(pd)" in APP                  # the soil at the start

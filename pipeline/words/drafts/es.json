@@ -3803,6 +3803,18 @@
   "shared.farm.none_better": {
    "en": "None of our other plans usually did better.",
    "es": "Ningún otro plan nuestro solía ir mejor."
+  },
+  "screens.check_soil.texts.tray_title": {
+   "en": "Demo tray",
+   "es": "Bandeja de muestra"
+  },
+  "screens.check_soil.texts.tray_line": {
+   "en": "Pots of soil stand in for a field.",
+   "es": "Macetas de tierra en lugar de un campo."
+  },
+  "screens.check_soil.texts.tray_pot": {
+   "en": "Pot {section}",
+   "es": "Maceta {section}"
   }
  }
 }

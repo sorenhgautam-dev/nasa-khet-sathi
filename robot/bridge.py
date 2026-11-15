@@ -244,8 +244,9 @@ class Context:
     and the crop now. Any of them may be missing; then the numbers that need it stay null."""
 
     def __init__(self, source, rules, twin=None, calibration=None, soil_top=None, crop_p=None, crop=None,
-                 soil_distance_m=None):
+                 soil_distance_m=None, field=None):
         self.source, self.rules, self.twin, self.cal = source, rules, twin, calibration
+        self.field = field   # live.json names it: the site shows a reading as a field's part only on that field (owner, 2026-11-15)
         self.soil_top, self.crop_p, self.crop, self.soil_distance_m = soil_top, crop_p, crop, soil_distance_m
 
     def caveats(self):
@@ -300,7 +301,8 @@ def live_doc(section, state, t, ctx, res=None, ev=None, parts=None, index=None, 
            "band": None, "relative": None, "sure": None, "fused_wetness": None,
            "prior": None if not prior else {"wetness": int(round(prior["wetness"])), "sure": round(prior["sure"], 2)},
            "twin_date": ctx.twin["date"] if ctx.twin else None, "caveats": ctx.caveats(), "parts": parts or [],
-           "part": index, "parts_total": total, "source": ctx.source, "stale": False, "stale_reason": None, "note": None}
+           "part": index, "parts_total": total, "source": ctx.source, "field": getattr(ctx, "field", None),
+           "stale": False, "stale_reason": None, "note": None}
     if res is not None:
         doc.update(steady=res["steady"], off_scale=res["off_scale"], spread_pct=res["spread_pct"], n=res["n"],
                    wetness=None if res["probe_pct"] is None else int(round(res["probe_pct"])),
@@ -466,7 +468,7 @@ def build_context(field, source, rules, twin_path=None, calibration_path=None):
     crop_p = load_crops()[crop]["p"] if crop and crop != "bare" else None
     card = REPO / "data" / "cards" / field / "soilgrids.json"
     dist = json.loads(card.read_text()).get("location", {}).get("distance_m") if card.exists() else None
-    return Context(source, rules, twin, calib, soil_top, crop_p, crop, dist)
+    return Context(source, rules, twin, calib, soil_top, crop_p, crop, dist, field=field)
 
 
 def main(argv=None):

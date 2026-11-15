@@ -3803,6 +3803,18 @@
   "shared.farm.none_better": {
    "en": "None of our other plans usually did better.",
    "bn": "আমাদের অন্য কোনো পরিকল্পনা সাধারণত ভালো করেনি।"
+  },
+  "screens.check_soil.texts.tray_title": {
+   "en": "Demo tray",
+   "bn": "প্রদর্শনী ট্রে"
+  },
+  "screens.check_soil.texts.tray_line": {
+   "en": "Pots of soil stand in for a field.",
+   "bn": "মাটির টব জমির বদলে আছে।"
+  },
+  "screens.check_soil.texts.tray_pot": {
+   "en": "Pot {section}",
+   "bn": "টব {section}"
   }
  }
 }

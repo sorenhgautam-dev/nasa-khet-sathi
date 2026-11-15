@@ -2937,6 +2937,39 @@
      "es": "¿Y ahora?",
      "fr": "Et maintenant ?",
      "sw": "Nini sasa?"
+    },
+    {
+     "id": "tray_title",
+     "en": "Demo tray",
+     "ne": "प्रदर्शन ट्रे",
+     "ne_review": "needs native-speaker review",
+     "hi": "प्रदर्शन ट्रे",
+     "bn": "প্রদর্শনী ট্রে",
+     "es": "Bandeja de muestra",
+     "fr": "Plateau de démonstration",
+     "sw": "Trei ya maonyesho"
+    },
+    {
+     "id": "tray_line",
+     "en": "Pots of soil stand in for a field.",
+     "ne": "माटोका गमलाले खेतको ठाउँ लिन्छन्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "मिट्टी के गमले खेत की जगह हैं।",
+     "bn": "মাটির টব জমির বদলে আছে।",
+     "es": "Macetas de tierra en lugar de un campo.",
+     "fr": "Des pots de terre remplacent un champ.",
+     "sw": "Vyungu vya udongo vinasimama badala ya shamba."
+    },
+    {
+     "id": "tray_pot",
+     "en": "Pot {section}",
+     "ne": "गमला {section}",
+     "ne_review": "needs native-speaker review",
+     "hi": "गमला {section}",
+     "bn": "টব {section}",
+     "es": "Maceta {section}",
+     "fr": "Pot {section}",
+     "sw": "Chungu {section}"
     }
    ]
   },

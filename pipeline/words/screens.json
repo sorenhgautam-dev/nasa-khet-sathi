@@ -1657,6 +1657,24 @@
      "en": "What next?",
      "ne": "अब के?",
      "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "tray_title",
+     "en": "Demo tray",
+     "ne": "प्रदर्शन ट्रे",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "tray_line",
+     "en": "Pots of soil stand in for a field.",
+     "ne": "माटोका गमलाले खेतको ठाउँ लिन्छन्।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
+     "id": "tray_pot",
+     "en": "Pot {section}",
+     "ne": "गमला {section}",
+     "ne_review": "needs native-speaker review"
     }
    ]
   },

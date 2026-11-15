@@ -591,7 +591,8 @@
   SCREENS.home = function () {
     var ix = (S.index && S.index.fields) || [];
     var f0 = ix.filter(function (f) { return f.id === S.fid; })[0] || ix[0];
-    var sample = f0 && isPlaceholder(f0.name);
+    // a real farm from a drone photo (Kharipati) is never called a sample field (owner, 2026-11-15 afternoon)
+    var sample = f0 && !f0.drone && isPlaceholder(f0.name);
     var cap = h('div', { 'aria-live': 'polite' }), sel = -1, cards = [];
     var CAPS = [['home.intro', 'home.you_decide'], ['check_soil.wide_close', 'check_soil.together'], ['home.card_months_sub', null]];
     function showCap() {
@@ -621,11 +622,11 @@
       scene: [island(), floats],
       body: [h('p', { class: 'sub homesub' }, T('home.you_decide')), moreBox([h('div', { class: 'homecards' }, cards), cap]),
         sample ? h('p', { class: 'small', style: 'margin:0' }, T('home.sample_note')) : null,
-        // the prepared fields, folded away (CLAUDE.md: "a short list of prepared fields"); How we know is for judges only
-        // (owner, 2026-11-14 evening): one small link here, none on the farmer's other screens
-        ix.length > 1 ? h('details', { class: 'fieldsfold' }, h('summary', null, T('home.prepared_title')), worldLink(), fieldsList()) : null,
+        // Kharipati is the only field the app shows (owner, 2026-11-15 afternoon): no field list here, only the world page
+        // (Kharipati and Madagascar); How we know is for judges only (owner, 2026-11-14 evening): one small link
+        ix.length > 1 ? worldLink() : null,
         h('a', { class: 'judges', href: '#/how' }, svg(I('book', 16)), T('farm.judges_link'))],
-      cta: cta(T('home.try_sample'), function () { go('photo'); }, { sweep: true })
+      cta: cta(T(sample ? 'home.try_sample' : 'home.start'), function () { go('photo'); }, { sweep: true })
     });
     // for judges, at the end of the scroll and below the first screen: "Behind the scenes" (loaded when it is scrolled to)
     var both = D.createDocumentFragment(); both.append(scr, promiseBox(true), limitsBox(true), behindBox(true));
@@ -679,7 +680,10 @@
     m.getContainer().style.background = '#C9D6BE';
     if (!m.getPane('ksbase')) m.createPane('ksbase').style.zIndex = 150;   // the pictures stay under any overlay (a drone photo: fix A1, 2026-11-15)
     if (abroad()) world = 'only';
-    ['world'].concat(world === 'only' ? [] : [S.fid]).forEach(function (id, i) {
+    // a field with a drone photo (Kharipati): no 30 m NASA picture around it, which looks blurry at the drone's zoom
+    // (owner, 2026-11-15 afternoon); the plain map colour shows instead
+    var ent = ((S.index && S.index.fields) || []).filter(function (f) { return f.id === S.fid; })[0];
+    ['world'].concat(world === 'only' || (ent && ent.drone) ? [] : [S.fid]).forEach(function (id, i) {
       if (id === 'world' && !world) return;
       getJSON('data/basemap/' + encodeURIComponent(id) + '.json').then(function (b) {
         if (!b || !b.image || !b.bounds) return;
@@ -1083,13 +1087,15 @@
   function isReal(src) { return /^serial:./.test(String(src || '')); }
   // Owner, 2026-11-15: practice and indoor-bowl readings never show as the field's parts (a practice reading is not read at
   // all; a garden or indoor test shows only on How we know, as bowls); the soil screen waits for the field's real test
-  function forField(pd) { return !!pd && !pd.test; }   // readings that may stand for the field itself
+  function forField(pd) { return !!pd && !pd.test && pd.kind !== 'tray'; }   // readings that may stand for the field itself
   var TEST_LABEL = { garden_test: ['garden_on'], indoor_test: ['indoor_title', 'indoor_on'] };   // a test of the stick, not the field
   function probeData() {
     return Promise.all([demoOn(), getJSON('data/live.json', true), getJSON('data/probe_log.json')]).then(function (r) {
       var demo = r[0], lv = r[1], log = r[2];   // phone as drone: in demo mode live.json holds the 4 pots, never the field
+      // a reading for another field, or naming none (the pots on the hotspot), is a demo tray: never this field's parts
+      // (owner, 2026-11-15 afternoon; robot/bridge.py writes the field into live.json)
       if (lv && !demo && isReal(lv.source) && (lv.section || (lv.parts || []).length))
-        return (S.probe = { kind: 'live', live: lv, parts: liveParts(lv) });
+        return (S.probe = lv.field === S.fid ? { kind: 'live', live: lv, parts: liveParts(lv) } : { kind: 'tray', live: lv, parts: {}, tray: liveParts(lv) });
       var sess = log && (log.sessions || []).filter(function (x) { return isReal(x.source); }).pop();
       if (sess && sess.parts && sess.parts.length) {
         var m = {}; sess.parts.forEach(function (p) { m[p.section] = p; });
@@ -1184,6 +1190,17 @@
     if (c && c.possible) out.push(T('check_soil.bowl_watered_' + (c.passed ? 'yes' : 'no'), { section: +c.watered.slice(1) }));
     return lines(out, 'sub');
   }
+  // the demo tray (owner, 2026-11-15 afternoon): pots of soil stand in for a field; one row per pot, in the parts' words
+  function trayCard(parts) {
+    var ids = Object.keys(parts || {}).sort();
+    return h('div', { class: 'card soft tray' }, h('p', { class: 'lead', style: 'margin:0' }, svg(I('stick', 18)), ' ', T('check_soil.tray_title')),
+      h('p', { class: 'sub', style: 'margin:0' }, T('check_soil.tray_line')),
+      h('div', { class: 'prows' }, ids.map(function (k) {
+        var r = parts[k], w = partWord(r), done = !!(r && r.state === 'done');
+        return h('div', { class: 'prow ' + (done ? 'done' : 'now') }, h('span', { class: 'pn' }, T('check_soil.tray_pot', { section: +String(k).replace(/\D/g, '') || k })),
+          h('span', { class: 'ps' }, w.word));
+      })));
+  }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
       var demo = !!S.demo, ph = demo && S.demoPhoto, pcap = h('div', { class: 'potcap', 'aria-live': 'polite' });   // phone as drone: the photo, and the pots' results under it
@@ -1276,13 +1293,20 @@
         else if (active) info.append(h('p', { class: 'sub', style: 'margin:0' }, T('check_soil.hold')));
         drawCta(active);
       }
+      var trayBox = h('div');
+      function showTray(lv) { trayBox.textContent = ''; trayBox.append(trayCard(liveParts(lv))); }
       drawRows(); drawCta(false);
       (demo ? demoProbe() : probeData()).then(function (d) {
         pd = d;
-        if (d.kind === 'live' || demo) {
+        if (d.kind === 'live' || d.kind === 'tray' || demo) {
           if (d.kind === 'live') fromLive(d.live);
+          else if (d.kind === 'tray') { showTray(d.live); honest.prepend(h('p', { class: 'sub', style: 'margin:0;font-weight:600;color:var(--ink)' }, T('check_soil.after_test'))); }
           else info.append(h('p', { class: 'sub', style: 'margin:0;font-weight:600;color:var(--ink)' }, T('drone.start')));
-          every(function () { getJSON('data/live.json', true).then(function (x) { if (x && isReal(x.source) && rows.isConnected) fromLive(x); }); }, 2000);
+          // each new reading: this field's own, or the demo tray's (never this field's parts)
+          every(function () { getJSON('data/live.json', true).then(function (x) {
+            if (!x || !isReal(x.source) || !rows.isConnected) return;
+            if (demo || x.field === S.fid) fromLive(x); else showTray(x);
+          }); }, 2000);
         } else if (d.kind === 'log' && forField(d)) {
           add(info, recordedLine(d));
           walk(d.sess.parts);
@@ -1295,7 +1319,7 @@
       return screen('soil', {
         head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), demo ? demoLabel() : fieldChip(F)],
         scene: ph ? h('div', { class: 'photocard' }, box, pcap) : [box, F._drone ? droneCredit(F._drone) : null],
-        body: [demo && !ph ? h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('drone.no_photo')), btn2(T('drone.take'), function () { go('photo'); }, 'camera')) : null, ans, rows, fnote, info, relnk, tbox,
+        body: [demo && !ph ? h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('drone.no_photo')), btn2(T('drone.take'), function () { go('photo'); }, 'camera')) : null, ans, rows, fnote, info, trayBox, relnk, tbox,
           moreBox([fog.any ? h('p', { class: 'fogline' }, T('fog.fog_line')) : null, honest])],
         cta: ctaBox
       });
@@ -2068,7 +2092,8 @@
       if (!S.words) { cur.append(h('button', { type: 'button', class: 'round', style: 'position:absolute;bottom:40px', 'aria-label': 'reload', onclick: function () { location.reload(); } }, svg(I('redo', 22)))); return; }
       var ids = ((S.index && S.index.fields) || []).map(function (f) { return f.id; });
       var fid = store.get('fid');
-      S.fid = ids.indexOf(fid) >= 0 ? fid : (ids[0] || 'demo');
+      S.fid = ids.indexOf(fid) >= 0 ? fid : (ids[0] || 'demo');   // a remembered field no longer listed opens Kharipati
+      if (fid && S.fid !== fid) store.set('winter', null);           // and forgets the old field's crop answer
       var want = store.get('lang') || defaultLang(S.fid);
       S.lang = langInfo(want) ? want : 'ne';
       D.documentElement.lang = S.lang;

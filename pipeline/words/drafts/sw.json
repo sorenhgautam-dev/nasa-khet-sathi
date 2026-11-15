@@ -3803,6 +3803,18 @@
   "shared.farm.none_better": {
    "en": "None of our other plans usually did better.",
    "sw": "Hakuna mpango wetu mwingine ulifanya vizuri zaidi."
+  },
+  "screens.check_soil.texts.tray_title": {
+   "en": "Demo tray",
+   "sw": "Trei ya maonyesho"
+  },
+  "screens.check_soil.texts.tray_line": {
+   "en": "Pots of soil stand in for a field.",
+   "sw": "Vyungu vya udongo vinasimama badala ya shamba."
+  },
+  "screens.check_soil.texts.tray_pot": {
+   "en": "Pot {section}",
+   "sw": "Chungu {section}"
   }
  }
 }

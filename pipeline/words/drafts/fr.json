@@ -3803,6 +3803,18 @@
   "shared.farm.none_better": {
    "en": "None of our other plans usually did better.",
    "fr": "Aucun autre de nos plans n'a fait mieux."
+  },
+  "screens.check_soil.texts.tray_title": {
+   "en": "Demo tray",
+   "fr": "Plateau de démonstration"
+  },
+  "screens.check_soil.texts.tray_line": {
+   "en": "Pots of soil stand in for a field.",
+   "fr": "Des pots de terre remplacent un champ."
+  },
+  "screens.check_soil.texts.tray_pot": {
+   "en": "Pot {section}",
+   "fr": "Pot {section}"
   }
  }
 }

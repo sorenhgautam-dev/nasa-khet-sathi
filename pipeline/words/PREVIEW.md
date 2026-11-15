@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 824 texts): 801 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 827 texts): 804 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -233,7 +233,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 6. Let's check the soil / माटो जाँचौं
 
-*Nepali: 78 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 81 needs native-speaker review; 3 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -318,6 +318,9 @@ This page is made from the word files in this folder; change those, not this pag
 | From the soil test | माटो जाँचबाट |
 | Soil tested. | माटो जाँचियो। |
 | What next? | अब के? |
+| Demo tray | प्रदर्शन ट्रे |
+| Pots of soil stand in for a field. | माटोका गमलाले खेतको ठाउँ लिन्छन्। |
+| Pot {section} | गमला {section} |
 
 ### 7. Your field's last {year_count} years / तपाईंको खेतका पछिल्ला {year_count} वर्ष
 

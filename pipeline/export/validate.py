@@ -535,19 +535,22 @@ def launch_problems(data_dir, index, final=False):
     """{path: problems} for the launch files (owner's launch brief, 2026-11-14): probe_log.json and version.json when
     they exist (no probe_log until real readings exist: the site says 'not ready yet'), and every basemap/*.json;
     --final also wants a basemap for every listed field (but one on the global defaults) and the world."""
+    from pipeline.fetch.rules import load_rules
+    # a field hidden from the app keeps its files (owner, 2026-11-15 afternoon): they need not be listed
+    hidden = set(load_rules().get("site_hidden_fields") or ()) - {f["id"] for f in (index or {}).get("fields", [])}
     data_dir, out = Path(data_dir), {}
     log_path = data_dir / "probe_log.json"
     if log_path.exists():
         doc = json.loads(log_path.read_text())
         fpath = data_dir / "fields" / f"{doc.get('field')}.json"
         field_doc = json.loads(fpath.read_text()) if fpath.exists() else None
-        if errs := probe_log_problems(doc, index, field_doc):
+        if errs := probe_log_problems(doc, None if doc.get("field") in hidden else index, field_doc):
             out[str(log_path)] = errs
     ver = data_dir / "version.json"
     if ver.exists() and (errs := version_problems(json.loads(ver.read_text()))):
         out[str(ver)] = errs
     for path in sorted((data_dir / "basemap").glob("*.json")):
-        if errs := basemap_problems(json.loads(path.read_text()), path, data_dir, index):
+        if errs := basemap_problems(json.loads(path.read_text()), path, data_dir, None if path.stem in hidden else index):
             out[str(path)] = errs
     if final:
         # a field on the global defaults has no picture yet (basemap.py rebuilds every field's at once): the world's

@@ -3803,6 +3803,18 @@
   "shared.farm.none_better": {
    "en": "None of our other plans usually did better.",
    "hi": "हमारी कोई और योजना अक्सर बेहतर नहीं रही।"
+  },
+  "screens.check_soil.texts.tray_title": {
+   "en": "Demo tray",
+   "hi": "प्रदर्शन ट्रे"
+  },
+  "screens.check_soil.texts.tray_line": {
+   "en": "Pots of soil stand in for a field.",
+   "hi": "मिट्टी के गमले खेत की जगह हैं।"
+  },
+  "screens.check_soil.texts.tray_pot": {
+   "en": "Pot {section}",
+   "hi": "गमला {section}"
   }
  }
 }

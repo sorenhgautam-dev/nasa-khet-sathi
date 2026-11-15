@@ -17,21 +17,6 @@
    "drone": "data/drone/kharipati.json"
   },
   {
-   "id": "demo",
-   "name": "Bhaktapur demo field (PLACEHOLDER location and rotation)",
-   "country": "Nepal",
-   "lat": 27.690767,
-   "lon": 85.441792,
-   "bbox": [
-    85.379227,
-    27.625034,
-    85.480773,
-    27.714966
-   ],
-   "sample": false,
-   "area": "demo"
-  },
-  {
    "id": "ambohidratrimo",
    "name": "Ambohidratrimo field, Madagascar (PLACEHOLDER location and rotation)",
    "country": "Madagascar",
@@ -50,66 +35,6 @@
     "en": "A field on another continent, run by the same pipeline. Not checked against local rain gauges yet.",
     "ne": "अर्को महादेशको खेत, उही प्रणालीले चलाएको। स्थानीय वर्षा मापकसँग अझै जाँच गरिएको छैन।"
    }
-  },
-  {
-   "id": "sample-1",
-   "name": "Bhaktapur sample field 1 (PLACEHOLDER)",
-   "country": "Nepal",
-   "lat": 27.688458,
-   "lon": 85.475542,
-   "bbox": [
-    85.379227,
-    27.625034,
-    85.480773,
-    27.714966
-   ],
-   "sample": true,
-   "area": "demo"
-  },
-  {
-   "id": "sample-2",
-   "name": "Bhaktapur sample field 2 (PLACEHOLDER)",
-   "country": "Nepal",
-   "lat": 27.659292,
-   "lon": 85.467708,
-   "bbox": [
-    85.379227,
-    27.625034,
-    85.480773,
-    27.714966
-   ],
-   "sample": true,
-   "area": "demo"
-  },
-  {
-   "id": "sample-3",
-   "name": "Bhaktapur sample field 3 (PLACEHOLDER)",
-   "country": "Nepal",
-   "lat": 27.708292,
-   "lon": 85.407625,
-   "bbox": [
-    85.379227,
-    27.625034,
-    85.480773,
-    27.714966
-   ],
-   "sample": true,
-   "area": "demo"
-  },
-  {
-   "id": "sample-4",
-   "name": "Bhaktapur sample field 4 (PLACEHOLDER)",
-   "country": "Nepal",
-   "lat": 27.649125,
-   "lon": 85.391708,
-   "bbox": [
-    85.379227,
-    27.625034,
-    85.480773,
-    27.714966
-   ],
-   "sample": true,
-   "area": "demo"
   }
  ],
  "areas": [
@@ -126,27 +51,6 @@
    "fields": [
     "kharipati"
    ]
-  },
-  {
-   "id": "demo",
-   "name": "Bhaktapur demo field area",
-   "bbox": [
-    85.379227,
-    27.625034,
-    85.480773,
-    27.714966
-   ],
-   "map": "data/area/demo.json",
-   "fields": [
-    "demo",
-    "sample-1",
-    "sample-2",
-    "sample-3",
-    "sample-4"
-   ]
   }
- ],
- "drone_previews": [
-  "data/drone/dhulikhel.json"
  ]
 }

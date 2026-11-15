@@ -60,7 +60,7 @@ def test_the_nearest_prepared_field_for_each_example():
     fields = json.loads((REPO / "site" / "data" / "index.json").read_text())["fields"]
     ex = bw.rules()["examples"]["value"]
     near = {k: bw.nearest(lat, lon, fields) for k, (lat, lon) in ex.items()}
-    assert near["nepal"][0] == "demo" and near["nepal"][1] < 1
+    assert near["nepal"][0] == "kharipati" and near["nepal"][1] < 5   # the only Nepal field listed (owner, 2026-11-15 afternoon)
     assert near["madagascar"][0] == "ambohidratrimo" and near["madagascar"][1] < 1
     assert near["us_midwest"][0] in {"demo", "ambohidratrimo", "kharipati", "sample-1", "sample-2", "sample-3", "sample-4"}
     assert near["northern_canada"][1] > 5000
