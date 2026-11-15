@@ -11,7 +11,9 @@ Steps, each PASS or FAIL, then one RESULT line (exit 0 only if every step passed
                      Written first, so the checks below cover it; rewritten only when its content changes. Not with --live:
                      the live copy must be the one that was pushed. The stamp names the commit it was made at; commit the
                      stamp after it (the published commit is then the next one).
-  2. tests           the full suite (python -m pytest -q), judged by its exit code; FAILED / ERROR lines are shown
+     offline list    scripts/build_offline.py, right after the stamp: site/sw.js's version is named from it (commit
+                     site/sw.js with the stamp).
+  2. tests          the full suite (python -m pytest -q), judged by its exit code; FAILED / ERROR lines are shown
   3. validate        python -m pipeline.export.validate --final
   4. static site     scripts/check_site.py --final
   5. no outside      no file in site/ makes the browser fetch anything from another address at runtime (fonts, map
@@ -172,6 +174,8 @@ def main(argv=None, runner=run, repo=REPO, today=None, get=_get):
                                                       f"{'' if changed else ' (unchanged)'}"]))
             except (RuntimeError, OSError) as e:
                 steps.append(("version stamp", False, [str(e)]))
+            # the offline copy's version is named from the stamp (site/sw.js; 2026-11-15): rebuilt after it, before the checks
+            cmd_step("offline list (build_offline)", [py, "scripts/build_offline.py"])
         if os.environ.get(INNER):
             steps.append(("tests", False, ["not run: already inside final_check's own test run"]))
         else:

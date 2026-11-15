@@ -66,6 +66,9 @@ def test_every_check_passes_and_the_stamp_is_written(tmp_path, capsys):
     ran = [" ".join(map(str, c)) for c in r.calls]
     assert any("-m pytest" in c for c in ran) and any("pipeline.export.validate --final" in c for c in ran)
     assert any("scripts/check_site.py --final" in c for c in ran) and any("scripts/scan_history.py" in c for c in ran)
+    # the offline list is named from the stamp (scripts/build_offline.py): rebuilt after the stamp, before every check
+    off = next(i for i, c in enumerate(ran) if "scripts/build_offline.py" in c)
+    assert off < min(i for i, c in enumerate(ran) if "-m pytest" in c or "check_site.py" in c)
     stamp = json.loads((tmp_path / "site" / "data" / "version.json").read_text())
     Draft202012Validator(load_schema("version_schema.json")).validate(stamp)
     assert stamp == {"commit": HEAD, "commit_short": "8c7acbc", "commit_date": "2026-11-14", "checked_on": "2026-11-15",
