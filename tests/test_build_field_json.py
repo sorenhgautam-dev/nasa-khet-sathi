@@ -234,7 +234,7 @@ def test_blocks_that_are_not_computed_yet_are_named_and_emptied():
     out = b.not_ready_blocks(build_field(), field)
     assert out["mock"] == ["field.sections", "future"] and out["future"] is None
     assert out["field"]["name"] == "Sample field (PLACEHOLDER)" and "MOCK" not in out["field"]["name"]
-    assert len(out["field"]["sections"]) == 36
+    assert [sec["id"] for sec in out["field"]["sections"]] == ["s1", "s2", "s3", "s4"]   # 2 x 2 (owner, 2026-11-15), never 36
     assert all(sec["status"] == "grey" and sec["wetness"] is None and sec["temp"] is None and sec["sure"] == 0
                for sec in out["field"]["sections"])
     assert validate_field(out) == []

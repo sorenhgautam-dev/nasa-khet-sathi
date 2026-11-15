@@ -251,6 +251,7 @@ def main(argv=None):
     ap.add_argument("--out", help="output file (default data/checks/<field>/sections.json)")
     a = ap.parse_args(argv)
     field, rules = load_field(a.field), load_rules()
+    rules["sections"].update(field.get("sections") or {})    # sectioning is per field (owner, 2026-11-15): its config first
     S, data = rules["sections"], REPO / "data"
     sections = grid.grid_sections(field["polygon"], cell_m=S["cell_m"], max_sections=S["max_sections"],
                                   coarsen_factor=S["coarsen_factor"])

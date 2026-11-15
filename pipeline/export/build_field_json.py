@@ -659,8 +659,12 @@ def export_step7(doc, field_id, plans):
     if plans["labels"].get("rain_version") != "corrected" or (plans_unc and plans_unc["labels"].get("rain_version") != "dhm"):
         raise ValueError("plans.json must be the corrected-rain run and rain_dhm/plans.json the DHM-scaled one")
     sec_path, state_path = checks / "sections.json", REPO / "data" / "clean" / field_id / "twin_state.json"
-    out = not_ready_blocks(doc, field, sections=json.loads(sec_path.read_text()) if sec_path.exists() else None,
-                           twin_state=json.loads(state_path.read_text()) if state_path.exists() else None)
+    sections = json.loads(sec_path.read_text()) if sec_path.exists() else None
+    twin_state = json.loads(state_path.read_text()) if sections and state_path.exists() else None
+    if sections is None and not field.get("patches"):   # no sections run (a sample field, a field abroad): the field's
+        from pipeline.sections.grid import field_sections                    # own grid from its config (owner, 2026-11-15)
+        sections = {"sections": field_sections(field, rules["sections"])}
+    out = not_ready_blocks(doc, field, sections=sections, twin_state=twin_state)
     soil_card_path = REPO / "data" / "cards" / field_id / "soilgrids.json"
     soil_card = json.loads(soil_card_path.read_text()) if soil_card_path.exists() else {}
     soil_loc = soil_card.get("location", {})

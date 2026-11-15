@@ -75,7 +75,7 @@
       var ar = K.indexEntry().area;   // the area map this field shares (index.json area), if any
       if (!hasArea && ar) K.getJSON('data/area/' + encodeURIComponent(ar) + '.json').then(function (a) { if (a && areaBox.isConnected) areaBox.append(section('area', T('your_plan.area_title'), area(F, a))); });
     });
-    K.getJSON('data/probe_log.json').then(function (log) { if (nr.isConnected) nr.append(notReady(F, log)); });
+    K.probeData().then(function (pd) { if (!nr.isConnected) return; var t = stickTest(pd); if (t) nr.append(t); nr.append(notReady(F, pd)); });
     return root;
   };
 
@@ -352,10 +352,14 @@
         g.basis ? h('p', { class: 'quote', lang: 'en' }, (li && li.quote_label ? (li.quote_label[S.lang] || li.quote_label.en) + ': ' : '') + g.basis) : null);
     }));
   }
-  function notReady(F, log) {
+  // a garden or indoor test of the soil stick: shown here as bowls, never as the field's parts (owner, 2026-11-15)
+  function stickTest(pd) {
+    return pd && pd.test ? section('stick', T('check_soil.prototype'), [K.recordedLine(pd), K.bowlLines(pd)]) : null;
+  }
+  function notReady(F, pd) {
     var items = (F.mock || []).map(function (b) { return T('btn.not_ready') + ' (' + b + ')'; });
     items.push(T('your_plan.nr_photo'));
-    if (!log) items.push(T('your_plan.nr_readings'));
+    if (!pd || pd.kind === 'none' || !K.forField(pd)) items.push(T('your_plan.nr_readings'));
     if (K.isPlaceholder(F.field.name)) items.push(T('your_plan.nr_own_field'));
     items.push(T('your_plan.nr_robot'));
     items.push(T('your_plan.nr_outlook') + ' ' + T('your_plan.nr_outlook_why1') + ' ' + T('your_plan.nr_outlook_why2'));   // rules.yaml weather_ahead.season_outlook

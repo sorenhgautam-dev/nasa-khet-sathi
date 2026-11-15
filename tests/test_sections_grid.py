@@ -50,12 +50,49 @@ def test_the_60_m_demo_square_at_30_m_gives_2_by_2_sections():
     assert s[3]["polygon"][2] == DEMO[2] and s[2]["polygon"][3] == DEMO[3]
 
 
-def test_the_default_is_still_the_step_1_grid_the_export_draws():
-    s = grid.grid_sections(DEMO)
+def test_a_10_m_cell_is_only_ever_asked_for_never_the_default():
+    """Owner, 2026-11-15: the 10 m default gave the sample fields 36 parts; the default is the 30 m of rules.yaml now."""
+    assert [x["id"] for x in grid.grid_sections(DEMO)] == ["s1", "s2", "s3", "s4"]
+    s = grid.grid_sections(DEMO, cell_m=10.0)
     assert len(s) == 36 and [x["id"] for x in s] == [f"s{i}" for i in range(1, 37)]
     for x in s:
         w, h = _size_m(x["polygon"])
         assert 9.0 < w < 11.0 and 9.0 < h < 11.0
+
+
+def _south_west_first(parts):
+    """True when the parts are numbered from the south-west, row by row, west to east (centres, to 1 m)."""
+    c = [(sum(p[0] for p in x["polygon"]) / len(x["polygon"]), sum(p[1] for p in x["polygon"]) / len(x["polygon"])) for x in parts]
+    return c == sorted(c, key=lambda q: (round(q[1], 5), q[0]))
+
+
+def test_sectioning_is_per_field_and_the_demo_and_sample_fields_have_exactly_4_parts():
+    """Owner, 2026-11-15: sectioning is set in each field's config; the Bhaktapur demo field and the sample fields keep
+    4 parts (2 x 2, each about one 30 m NASA pixel), numbered from the south-west; only a field with drone-photo
+    `patches` (Dhulikhel) has 10 m patches. Checked on the configs and on the files the site reads."""
+    import json
+    from pathlib import Path
+    from pipeline.export.build_index import all_configs
+    rules, site = load_rules()["sections"], Path(__file__).resolve().parents[1] / "site" / "data" / "fields"
+    seen = []
+    for cfg in all_configs():
+        if cfg.get("patches"):
+            continue
+        seen.append(cfg["id"])
+        assert cfg["sections"] == {"cell_m": 30}, cfg["id"]
+        parts = grid.field_sections(cfg, rules)
+        assert [p["id"] for p in parts] == ["s1", "s2", "s3", "s4"] and _south_west_first(parts), cfg["id"]
+        built = json.loads((site / f"{cfg['id']}.json").read_text())["field"]["sections"]
+        assert [p["id"] for p in built] == ["s1", "s2", "s3", "s4"] and _south_west_first(built), cfg["id"]
+        assert [p["polygon"] for p in built] == [p["polygon"] for p in parts], cfg["id"]
+    assert "demo" in seen and {"sample-1", "sample-2", "sample-3", "sample-4"} <= set(seen)
+
+
+def test_a_fields_own_cell_size_wins_over_the_rule():
+    rules = load_rules()["sections"]
+    field = {"polygon": DEMO}
+    assert len(grid.field_sections(field, rules)) == 4                                     # rules.yaml: 30 m
+    assert len(grid.field_sections({**field, "sections": {"cell_m": 20}}, rules)) == 9     # the field's config: 3 x 3
 
 
 @pytest.mark.parametrize("cell", [10.0, 30.0])

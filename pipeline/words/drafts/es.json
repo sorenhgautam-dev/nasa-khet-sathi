@@ -3335,6 +3335,10 @@
   "screens.check_soil.texts.bowl_watered_no": {
    "en": "Bowl {section} got water. It was not clearly wetter.",
    "es": "El cuenco {section} recibió agua. No salió claramente más húmedo."
+  },
+  "shared.welcome": {
+   "en": "Welcome",
+   "es": "Bienvenidos"
   }
  }
 }

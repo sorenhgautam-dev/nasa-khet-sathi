@@ -332,34 +332,58 @@
   function fogTag() { return h('span', { class: 'fogtag' }, svg(I('fog', 16)), T('btn.not_sure')); }
 
   // ---------------- the field drawn as a box of parts ----------------
+  var SVGNS = 'http://www.w3.org/2000/svg';
   function geom(F) {
     var secs = F.field.sections || [], x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
     secs.forEach(function (s) { s.polygon.forEach(function (p) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); }); });
     var dx = (x1 - x0) || 1, dy = (y1 - y0) || 1;
-    return secs.map(function (s) {
+    var G = secs.map(function (s) {
       var a = 1e9, b = -1e9, c = 1e9, d = -1e9;
       s.polygon.forEach(function (p) { a = Math.min(a, p[0]); b = Math.max(b, p[0]); c = Math.min(c, p[1]); d = Math.max(d, p[1]); });
-      var g = { s: s, l: (a - x0) / dx * 100, r: (b - x0) / dx * 100, t: (y1 - d) / dy * 100, b: (y1 - c) / dy * 100, n: String(s.id).replace(/^s/, '') };
-      g.cx = (g.l + g.r) / 2; g.cy = (g.t + g.b) / 2;
+      var g = { s: s, l: (a - x0) / dx * 100, r: (b - x0) / dx * 100, t: (y1 - d) / dy * 100, b: (y1 - c) / dy * 100, n: String(s.id).replace(/^\D+/, '') };
+      g.pts = s.polygon.map(function (p) { return [(p[0] - x0) / dx * 100, (y1 - p[1]) / dy * 100]; });
+      var A = 0, X = 0, Y = 0;   // the centre of the part's own area (a rectangle's is its middle)
+      g.pts.forEach(function (p, i) { var q = g.pts[(i + 1) % g.pts.length], k = p[0] * q[1] - q[0] * p[1]; A += k; X += (p[0] + q[0]) * k; Y += (p[1] + q[1]) * k; });
+      g.cx = A ? X / (3 * A) : (g.l + g.r) / 2; g.cy = A ? Y / (3 * A) : (g.t + g.b) / 2;
       return g;
-    }).sort(function (p, q) { return (Math.round(p.t) - Math.round(q.t)) || (p.l - q.l); });
+    }).sort(function (p, q) { return p.n - q.n; });   // part 1 first: the ids run from the south-west (owner, 2026-11-15)
+    // the field's width over its height on the ground, and whether its parts make a plain grid (as Bhaktapur's 2 x 2)
+    G.aspect = dx * Math.cos((y0 + y1) / 2 * Math.PI / 180) / dy;
+    var cols = {}, rows = {};
+    G.forEach(function (g) { cols[Math.round(g.l)] = 1; rows[Math.round(g.t)] = 1; });
+    G.grid = G.every(function (g) { return g.pts.length === 4; }) && Object.keys(cols).length * Object.keys(rows).length === G.length;
+    return G;
   }
   function fieldBox(F, mode, opt) {
     opt = opt || {};
     var G = geom(F), box = h('div', { class: 'fieldbox', role: 'img', 'aria-label': T('parts.split', { section_count: G.length }) });
     box.append(h('div', { class: 'wm', 'aria-hidden': 'true' }, T('where.your_farm')));
     var colour = { green: 'rgba(63,122,46,.16)', yellow: 'rgba(201,138,27,.2)', red: 'rgba(184,67,42,.2)', grey: 'rgba(139,143,134,.14)' };
+    // parts that are not a plain grid (a drawn field's patches, owner 2026-11-15): the field at its true shape, each part's
+    // own outline as a crisp vector line, no sprouts
+    var shapes = !G.grid && D.createElementNS(SVGNS, 'svg');
+    if (shapes) {
+      box.style.aspectRatio = String(Math.max(0.8, Math.min(2.4, G.aspect || 1)));
+      shapes.setAttribute('class', 'shapes'); shapes.setAttribute('viewBox', '0 0 100 100'); shapes.setAttribute('preserveAspectRatio', 'none'); shapes.setAttribute('aria-hidden', 'true');
+      box.append(shapes);
+    }
     G.forEach(function (g, i) {
       var st = 'left:' + g.l + '%;top:' + g.t + '%;width:' + (g.r - g.l) + '%;height:' + (g.b - g.t) + '%;';
       var bg = mode === 'status' ? colour[g.s.status] || colour.grey : (i % 3 === 0 ? 'rgba(20,48,30,.06)' : 'rgba(154,84,38,.06)');
+      if (shapes) {
+        g.q = D.createElementNS(SVGNS, 'path');
+        g.q.setAttribute('d', 'M' + g.pts.map(function (p) { return p[0].toFixed(2) + ' ' + p[1].toFixed(2); }).join('L') + 'Z');
+        g.q.setAttribute('style', 'fill:' + bg); shapes.append(g.q);
+        return;
+      }
       var q = h('span', { class: 'q', style: st + 'background:' + bg + (mode === 'grow' ? ';animation:ks-rise 500ms ease ' + (1300 + i * 100) + 'ms both' : '') });
       g.q = q; box.append(q);
     });
     var xs = {}, ys = {};
-    G.forEach(function (g) { if (g.l > 0.5) xs[g.l.toFixed(2)] = 1; if (g.t > 0.5) ys[g.t.toFixed(2)] = 1; });
+    if (!shapes) G.forEach(function (g) { if (g.l > 0.5) xs[g.l.toFixed(2)] = 1; if (g.t > 0.5) ys[g.t.toFixed(2)] = 1; });
     Object.keys(xs).forEach(function (x) { box.append(h('span', { class: 'vl', style: 'left:' + x + '%' + (mode === 'grow' ? '' : ';animation:none') })); });
     Object.keys(ys).forEach(function (y) { box.append(h('span', { class: 'hl', style: 'top:' + y + '%' + (mode === 'grow' ? '' : ';animation:none') })); });
-    if (mode === 'grow' || mode === 'sway' || mode === 'robot') {
+    if (!shapes && (mode === 'grow' || mode === 'sway' || mode === 'robot')) {
       G.forEach(function (g, qi) {
         for (var r = 0; r < 3; r++) for (var c = 0; c < 4; c++) {
           var x = g.l + (g.r - g.l) * (0.16 + c * 0.23), y = g.t + (g.b - g.t) * (0.28 + r * 0.28);
@@ -379,8 +403,11 @@
         box.append(h('span', { class: 'pfog', style: 'left:' + g.l + '%;top:' + g.t + '%;width:' + (g.r - g.l) + '%;height:' + (g.b - g.t) + '%;opacity:' + (fo * 0.6).toFixed(2) }));
         box.append(h('span', { class: 'n', style: 'left:' + (g.l + 9) + '%;top:' + (g.t + 12) + '%;width:30px;height:30px;margin:-15px 0 0 -15px;font-size:14px;border-width:2px' }, digits(g.n)));
       } else {
-        g.num = h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + (mode === 'robot' ? g.cy + 14 : g.cy) + '%;' +
-          (mode === 'robot' ? 'width:32px;height:32px;margin:-16px 0 0 -16px;font-size:15px;' : '') + (mode === 'grow' ? 'animation-delay:' + (1300 + i * 100) + 'ms' : 'animation:none') }, digits(g.n));
+        // robot: the number below the robot's spot, kept inside its own part; smaller numbers when the parts are many
+        var px = G.length <= 4 ? (mode === 'robot' ? 32 : 0) : G.length <= 12 ? 28 : G.length <= 24 ? 24 : 22;
+        g.num = h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + (mode === 'robot' && !shapes ? g.cy + Math.max(0, Math.min(14, (g.b - g.t) / 2 - 11)) : g.cy) + '%;' +
+          (px ? 'width:' + px + 'px;height:' + px + 'px;margin:-' + px / 2 + 'px 0 0 -' + px / 2 + 'px;font-size:' + Math.round(px * 0.47) + 'px;' + (px < 32 ? 'border-width:2px;' : '') : '') +
+          (mode === 'grow' ? 'animation-delay:' + (1300 + i * 100) + 'ms' : 'animation:none') }, digits(g.n));
         box.append(g.num);
       }
     });
@@ -743,9 +770,9 @@
 
   // ---------------- 4 the soil test, part by part (design: Robot, W4_Robot) ----------------
   // The walk is the real one: live.json during the in-person demo, else the recorded walk (probe_log.json); with neither,
-  // every part says "not tested yet". Only readings from a real serial port are shown (robot/bridge.py is_real), each with
-  // its date. A practice run with the fake probe shows only on this laptop or its hotspot, under a big "Practice: made-up
-  // numbers" banner, and a garden or indoor test is labelled so; neither is used for the field (rules.yaml probe.live). The robot is
+  // every part says "not tested yet". Only readings of the field from a real serial port are shown (robot/bridge.py
+  // is_real), each with its date; a practice run and a garden or indoor test never show as the field's parts (owner,
+  // 2026-11-15; rules.yaml probe.live): the screen then says "Readings come after our team tests it". The robot is
   // drawn as the plan (Krishi Scout); the words say a person carries the prototype soil stick, so no sentence says a robot
   // tested anything.
   function liveParts(lv) {
@@ -755,15 +782,15 @@
     return m;
   }
   function isReal(src) { return /^serial:./.test(String(src || '')); }
-  function onHotspot() { return /^(localhost|(127|10)\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+|[\w-]+\.local)$/.test(location.hostname); }
-  function isPractice(lv) { return !!lv && lv.source === 'fake_probe' && onHotspot(); }
-  function forField(pd) { return !!pd && !pd.practice && !pd.test; }   // readings that may stand for the field itself
+  // Owner, 2026-11-15: practice and indoor-bowl readings never show as the field's parts (a practice reading is not read at
+  // all; a garden or indoor test shows only on How we know, as bowls); the soil screen waits for the field's real test
+  function forField(pd) { return !!pd && !pd.test; }   // readings that may stand for the field itself
   var TEST_LABEL = { garden_test: ['garden_on'], indoor_test: ['indoor_title', 'indoor_on'] };   // a test of the stick, not the field
   function probeData() {
     return Promise.all([getJSON('data/live.json', true), getJSON('data/probe_log.json')]).then(function (r) {
       var lv = r[0], log = r[1];
-      if (lv && (isReal(lv.source) || isPractice(lv)) && (lv.section || (lv.parts || []).length))
-        return (S.probe = { kind: 'live', live: lv, parts: liveParts(lv), practice: isPractice(lv) });
+      if (lv && isReal(lv.source) && (lv.section || (lv.parts || []).length))
+        return (S.probe = { kind: 'live', live: lv, parts: liveParts(lv) });
       var sess = log && (log.sessions || []).filter(function (x) { return isReal(x.source); }).pop();
       if (sess && sess.parts && sess.parts.length) {
         var m = {}; sess.parts.forEach(function (p) { m[p.section] = p; });
@@ -785,7 +812,7 @@
     return { k: 'info', word: T('check_soil.tested') };
   }
   function recordedLine(pd) {
-    var days = !pd || pd.practice ? [] : pd.kind === 'log' ? pd.log.recorded_on || [] : pd.kind === 'live' && pd.live.time ? [String(pd.live.time).slice(0, 10)] : [];
+    var days = !pd ? [] : pd.kind === 'log' ? pd.log.recorded_on || [] : pd.kind === 'live' && pd.live.time ? [String(pd.live.time).slice(0, 10)] : [];
     if (!days.length) return null;
     return h('p', { class: 'small', style: 'margin:0;font-weight:700;color:var(--ink)' }, svg(I('stick', 14)), ' ', (pd.test ? TEST_LABEL[pd.test] : ['recorded_on']).map(function (k) { return T('check_soil.' + k); }).join(' ') + ' ' +
       days.map(fmtDate).join(', ') + (pd.kind === 'log' && pd.log.place ? ' · ' + pd.log.place : ''));
@@ -800,16 +827,15 @@
     if (c && c.possible) out.push(T('check_soil.bowl_watered_' + (c.passed ? 'yes' : 'no'), { section: +c.watered.slice(1) }));
     return lines(out, 'sub');
   }
-  function practiceBanner(pd) { return pd && pd.practice ? h('div', { class: 'practice-banner', role: 'alert' }, svg(I('warn', 26, 3)), h('span', null, T('check_soil.practice'))) : null; }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
       var box = fieldBox(F, 'robot'), G = box._g;
       var route = D.createElementNS('http://www.w3.org/2000/svg', 'svg');
       route.setAttribute('class', 'route'); route.setAttribute('viewBox', '0 0 100 100'); route.setAttribute('preserveAspectRatio', 'none');
       box.append(route);
-      var robot = h('div', { class: 'robot', style: 'left:7%;top:50%' }); robot.innerHTML = ROBOT; box.append(robot);
+      var pos = G.length ? [G[0].cx, G[0].cy] : [7, 50];   // the robot waits on part 1, where its path starts
+      var robot = h('div', { class: 'robot' + (G.length > 6 ? ' small' : ''), style: 'left:' + pos[0] + '%;top:' + pos[1] + '%' }); robot.innerHTML = ROBOT; box.append(robot);
       var ring = h('span', { class: 'ring', hidden: true }); box.append(ring);
-      var pos = [7, 50];
       function moveTo(g, then) {
         var b = [g.cx, g.cy], ms = RM ? 0 : Math.max(900, Math.round(Math.hypot(b[0] - pos[0], b[1] - pos[1]) * 22));
         if (!RM) {
@@ -835,7 +861,7 @@
         robot.querySelector('.led').setAttribute('fill', happy ? '#5FBF6A' : '#E9A948');
       }
       var rows = h('div', { class: 'prows', 'aria-live': 'polite' }), info = h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:8px' });
-      var ctaBox = h('div', { class: 'ctarow' }), shown = {}, pd = null, pbox = h('div');
+      var ctaBox = h('div', { class: 'ctarow' }), shown = {}, pd = null;
       function drawRows(cur) {
         rows.textContent = '';
         G.forEach(function (g) {
@@ -843,20 +869,22 @@
           rows.append(h('div', { class: 'prow ' + (done ? 'done' : r ? 'now' : 'wait') + (cur === g.s.id ? ' cur' : '') },
             h('span', { class: 'pn' }, T('each_part.part_name', { section: g.n })),
             h('span', { class: 'ps' }, done ? [T('check_soil.tested'), ' ', svg(I('tick', 14, 3))] : w.word)));
-          if (g.q.dataset.bg == null) g.q.dataset.bg = g.q.style.background;
-          g.q.style.background = done ? 'rgba(200,224,90,.28)' : g.q.dataset.bg;   // the design's tested quarter
+          var prop = g.q.namespaceURI === SVGNS ? 'fill' : 'background';
+          if (g.q.dataset.bg == null) g.q.dataset.bg = g.q.style[prop];
+          g.q.style[prop] = done ? 'rgba(200,224,90,' + (prop === 'fill' ? '.45' : '.28') + ')' : g.q.dataset.bg;   // the design's tested quarter
           if (g.num) { g.num.classList.toggle('ok', done); g.num.textContent = done ? '' : digits(g.n); if (done) g.num.append(svg(I('tick', 16, 3.2))); }
         });
       }
       function drawCta(active) {
         ctaBox.textContent = '';
         if (active) { ctaBox.append(h('button', { type: 'button', class: 'cta wait', disabled: true }, T('check_soil.measuring'))); return; }
-        if (pd && pd.kind === 'log') ctaBox.append(roundBtn(T('check_soil.replay_check'), 'redo', function () { walk(pd.sess.parts); }));
+        if (pd && pd.kind === 'log' && forField(pd)) ctaBox.append(roundBtn(T('check_soil.replay_check'), 'redo', function () { walk(pd.sess.parts); }));
         ctaBox.append(cta(T('check_soil.see_what'), function () { go('choose'); }));
       }
       // the recorded walk, part by part, at the pace of the design's animation (the readings are the recorded ones)
       function walk(parts) {
         clearTimers(); shown = {}; [].slice.call(route.childNodes).forEach(function (n) { n.remove(); }); drawRows(); drawCta(true); tbox.textContent = '';
+        if (G.length) { pos = [G[0].cx, G[0].cy]; robot.style.transitionDuration = '0ms'; robot.style.left = pos[0] + '%'; robot.style.top = pos[1] + '%'; }   // a replay starts again at part 1
         var i = 0;
         function step() {
           if (i >= parts.length) { rest(true); drawRows(); drawCta(false); add(tbox, bowlLines(pd)); return; }
@@ -877,7 +905,7 @@
         if (lv.state === 'done' && g) ring.hidden = true;
         var active = !lv.stale && (lv.state === 'settling' || lv.state === 'measuring');
         info.textContent = '';
-        add(info, recordedLine({ kind: 'live', live: lv, practice: isPractice(lv) }));
+        add(info, recordedLine({ kind: 'live', live: lv }));
         if (lv.stale) info.append(h('p', { class: 'lead', style: 'margin:0' }, svg(I('warn', 18, 3)), ' ', T('check_soil.not_connected')));
         else if (active) info.append(h('p', { class: 'sub', style: 'margin:0' }, T('check_soil.hold')));
         drawCta(active);
@@ -887,9 +915,8 @@
         pd = d;
         if (d.kind === 'live') {
           fromLive(d.live);
-          add(pbox, practiceBanner(d));
-          every(function () { getJSON('data/live.json', true).then(function (x) { if (x && (isReal(x.source) || isPractice(x)) && rows.isConnected) fromLive(x); }); }, 2000);
-        } else if (d.kind === 'log') {
+          every(function () { getJSON('data/live.json', true).then(function (x) { if (x && isReal(x.source) && rows.isConnected) fromLive(x); }); }, 2000);
+        } else if (d.kind === 'log' && forField(d)) {
           add(info, recordedLine(d));
           walk(d.sess.parts);
         } else {
@@ -899,7 +926,7 @@
       });
       var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub')), tbox = h('div');
       return screen('soil', {
-        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null, pbox],
+        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: box,
         body: [rows, info, tbox, honest],
         cta: ctaBox
@@ -1002,13 +1029,14 @@
   }
   SCREENS.today = function () {
     return withField('today', function (F) {
-      var G = geom(F).sort(function (a, b) { return a.n - b.n; }), cards = h('div', { class: 'tcards lines1' }), more = h('div', { class: 'row wrap' }), mode = 'compare', pbox = h('div');
+      var G = geom(F), cards = h('div', { class: 'tcards lines1' }), more = h('div', { class: 'row wrap' }), mode = 'compare';
       var last = null, drawn = 0;
       function draw(pd) {
+        if (!forField(pd)) pd = { kind: 'none', parts: {} };   // a garden or indoor test never shows as the field's parts
         var key = JSON.stringify(pd.parts) + S.lang + mode;
         if (key === last) return;   // the live file is read again every few seconds: redraw only when a reading changed
         last = key; cards.classList.toggle('still', drawn++ > 1);
-        cards.textContent = ''; more.textContent = ''; pbox.textContent = ''; add(pbox, practiceBanner(pd));
+        cards.textContent = ''; more.textContent = '';
         G.forEach(function (g, i) {
           var x = patchLine(pd.parts[g.s.id], mode, g.n);
           cards.append(h('div', { class: 'tcard ' + x.k, style: 'animation-delay:' + (i * 110 + 100) + 'ms' }, dotEl(x.k), h('span', { class: 'word' }, x.text)));
@@ -1023,7 +1051,7 @@
         if (pd.kind === 'live') every(function () { probeData().then(function (x) { if (cards.isConnected) draw(x); }); }, 4000);
       });
       return screen('today', {
-        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), isPlaceholder(F.field.name) ? sampleChip() : null, pbox],
+        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
         scene: [cards, more],
         body: null,
         cta: cta(T('what_to_grow.see3'), function () { go('next/3'); })
@@ -1410,13 +1438,48 @@
   }
   // self-hosted fonts (fonts/fonts.css), after the first screen so it stays small; no request leaves the site
   function loadFonts() { D.head.append(h('link', { rel: 'stylesheet', href: 'fonts/fonts.css' })); }
+  // The welcome on the loading curtain (owner, 2026-11-15): "Welcome" in the site's 7 languages (index.html, the words of
+  // pipeline/words shared.welcome), one after another, Nepali first, once per visit, while the app loads. The curtain
+  // lifts when the data is in AND every word has shown: at most HELLO_STEP_MS x 7 + HELLO_HOLD_MS after the start, so
+  // at most about 1.9 s later than the curtain's old 900 ms. A tap or a key skips it. Reduced motion: "स्वागत छ · Welcome",
+  // still. Returns how long the welcome wants the curtain (ms from now; 0: no welcome); on any failure, 0.
+  var HELLO_STEP_MS = 360, HELLO_HOLD_MS = 260, HELLO_STILL_MS = 1500;
+  function hello(cur) {
+    try {
+      var box = cur.querySelector('.hello'), ss = W.sessionStorage;
+      if (!box || ss.getItem('ks.hello')) return 0;
+      ss.setItem('ks.hello', '1');
+      var words = [].slice.call(box.children);
+      if (RM) {
+        box.textContent = words[0].textContent + ' · ' + words[1].textContent;
+        box.hidden = false; box.classList.add('still');
+        return HELLO_STILL_MS;
+      }
+      var i = 0;
+      words[0].className = 'on'; box.hidden = false;
+      (function next() {
+        setTimeout(function () {
+          if (!cur.isConnected || cur.classList.contains('lift')) return;
+          words[i].className = 'off'; i = (i + 1) % words.length; words[i].className = 'on';   // loops while the data loads
+          next();
+        }, HELLO_STEP_MS);
+      })();
+      return HELLO_STEP_MS * words.length + HELLO_HOLD_MS;
+    } catch (e) { return 0; }
+  }
   function init() {
     grass();
     S.winter = store.get('winter'); S.water = store.get('water');
-    var t0 = Date.now();
+    var t0 = Date.now(), cur = $('#curtain'), ready = false, wantMs = hello(cur);
+    function lift() {
+      if (!ready || !cur.isConnected || cur.classList.contains('lift')) return;
+      cur.classList.add('lift');
+      setTimeout(function () { cur.remove(); }, RM ? 0 : 1000);
+    }
+    function skip() { wantMs = 0; lift(); }
+    if (wantMs) { cur.addEventListener('click', skip); D.addEventListener('keydown', skip, { once: true }); }
     Promise.all([getJSON('data/words.json'), getJSON('data/index.json')]).then(function (r) {
       S.words = r[0]; S.index = r[1];
-      var cur = $('#curtain');
       if (!S.words) { cur.append(h('button', { type: 'button', class: 'round', style: 'position:absolute;bottom:40px', 'aria-label': 'reload', onclick: function () { location.reload(); } }, svg(I('redo', 22)))); return; }
       var want = store.get('lang') || 'ne';
       S.lang = langInfo(want) ? want : 'ne';
@@ -1426,10 +1489,8 @@
       S.fid = ids.indexOf(fid) >= 0 ? fid : (ids[0] || 'demo');
       W.addEventListener('hashchange', onRoute);
       onRoute();
-      setTimeout(function () {
-        cur.classList.add('lift');
-        setTimeout(function () { cur.remove(); }, RM ? 0 : 1000);
-      }, RM ? 0 : Math.max(0, 900 - (Date.now() - t0)));
+      ready = true;
+      setTimeout(lift, Math.max(0, Math.max(RM ? 0 : 900, wantMs) - (Date.now() - t0)));
       var idle = W.requestIdleCallback || function (f) { return setTimeout(f, 300); };
       idle(function () { fieldReady(); });
       if (D.readyState === 'complete') loadFonts(); else W.addEventListener('load', loadFonts);
@@ -1441,7 +1502,7 @@
     sampleChip: sampleChip, isPlaceholder: isPlaceholder, sourcesList: sourcesList, mocked: mocked, fogLayer: fogLayer, langInfo: langInfo, monthName: monthName,
     MONTHS: MONTHS, RM: RM, later: later, sentences: sentences, btn3: btn3, vsChip: vsChip,
     btn2: btn2, cta: cta, screen: screen, labs: labs, rainMark: rainMark, closeSheet: closeSheet, bigTitle: bigTitle, store: store, fmtDate: fmtDate, geom: geom, fieldBox: fieldBox,
-    cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord,
+    cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
     say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy };

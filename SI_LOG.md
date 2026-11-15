@@ -1478,3 +1478,25 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   `site/data/live.json` into `data/probe/demo/`: on this laptop it made the site show the bowls as "your farm".
 - **For a person to review:** which bowl got water and when (the owner's message left them blank); the Nepali lines.
 
+
+## 2026-11-15 (Sunday, after midnight): parts per field, the soil screen in number order, the welcome (Claude Opus 5.5 via Claude Code)
+
+- **Parts per field:** on the owner's bug report ("the Bhaktapur field now shows 36 parts ... instead of 4"), Claude found
+  the cause: a field without its own parts run (the four Bhaktapur sample fields and Ambohidratrimo) fell back to the old
+  10 m step-1 grid, so 36 parts; the demo field itself always had 4. Sectioning is now set in each field's config
+  (`sections: {cell_m: 30}`, read by `pipeline/sections/grid.field_sections` over `rules.yaml` sections), the default cell
+  is 30 m, and a test checks that the demo and sample fields have exactly 4 parts, numbered from the south-west, in the
+  files the site reads. The five field files were rebuilt; only their parts changed (every other key byte-for-byte the
+  same: the rule notes added since their last export wait for the next full rebuild).
+- **Soil screen:** parts listed and numbered 1, 2, 3 ... (from the south-west); every number kept inside its own part and
+  smaller when the parts are many; the robot waits on part 1, its path starts there, and a replay starts there again;
+  parts that are not a plain grid (a drawn field's patches) are drawn at the field's true shape with each part's own
+  outline. On the owner's rule, practice and indoor-bowl readings never show as the field's parts (soil test, Today): the
+  soil screen says "Readings come after our team tests it", and the indoor test shows on How we know as bowls
+  (`rules.yaml` probe.live.practice_on_phone and garden_test updated; the practice banner is gone). Checked in
+  screenshots with 4 parts and with a throwaway 14-part layout test (Dhulikhel's patches, scratch copy only, never
+  published).
+- **Welcome:** "Welcome" in the site's 7 languages on the loading curtain, the owner's words (Nepali marked for
+  native-speaker review in `pipeline/words` shared.welcome); timed in Chrome: the curtain lifts 1.9 s later than before
+  on a first visit, at once on a tap, still words with reduced motion. `translate="no"` and the notranslate meta tag.
+- **For a person to review:** the Nepali "स्वागत छ"; the welcome on a real phone (Bengali uses the phone's own font).

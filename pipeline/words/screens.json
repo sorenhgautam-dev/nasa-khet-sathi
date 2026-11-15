@@ -4320,6 +4320,12 @@
     "ne": "पुस",
     "ne_review": "needs native-speaker review"
    }
+  },
+  "welcome": {
+   "en": "Welcome",
+   "ne": "स्वागत छ",
+   "ne_review": "needs native-speaker review",
+   "note": "The loading curtain's welcome (owner, 2026-11-15): this word in the site's 7 languages, one after another, Nepali first. The words are the owner's own (not machine-translated). site/index.html carries the same words for the first paint (tests/test_site_welcome.py keeps the two the same)."
   }
  }
 }
