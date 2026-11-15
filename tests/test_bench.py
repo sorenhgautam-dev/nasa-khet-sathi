@@ -214,6 +214,27 @@ def test_a_spoon_bench_within_smaps_yardstick_writes_a_rough_calibration(tmp_pat
     assert load_calibration(cal_out)["label"] == c["label"]
 
 
+HAND = "cup_id,cup_spoons,water_spoons,probe_pct,notes\nc1,20,0,8,\nc2,20,1,36,\nc3,20,2,68,\nc4,20,3,87,\n"
+
+
+def test_hand_copied_readings_make_a_labelled_calibration_only_when_they_pass(tmp_path):
+    # the owner's exception (rules.yaml probe.bench.spoon.hand_copied): x 8 36 68 87, y 0 5 10 15 ->
+    # water % = -1.659 + 0.1841 x probe; leave-one-out errors 0.68 0.05 -1.31 1.73 -> RMSE 1.14 points = 0.0114 m3/m3
+    sheet, out, cal_out = tmp_path / "hand_copied.csv", tmp_path / "bench_hand.json", tmp_path / "probe_calibration.yaml"
+    sheet.write_text(HAND)
+    assert rpb.main(["--hand-copied", str(sheet), "--out", str(out), "--calibration-out", str(cal_out)]) == 0
+    b = json.loads(out.read_text())
+    assert b["spoon"]["passes"] and b["spoon"]["loo_rmse_m3m3"] == pytest.approx(0.0114, abs=2e-4)
+    assert b["accurate"]["coef"] == pytest.approx([-1.659, 0.1841], abs=2e-3) and b["steady"]["passes"] is None
+    c = yaml.safe_load(cal_out.read_text())
+    assert c["label"].endswith("hand-copied readings, not logged") and c["r_probe_pct2"] == 9
+    assert "hand-copied" in c["made_from"] and "bench test" in c["made_from"] and c["cups"] == 4
+    sheet.write_text(HAND.replace("c3,20,2,68", "c3,20,2,30"))                      # out of order: no calibration
+    cal_out.unlink()
+    assert rpb.main(["--hand-copied", str(sheet), "--out", str(out), "--calibration-out", str(cal_out)]) == 0
+    assert not cal_out.exists() and json.loads(out.read_text())["spoon"]["passes"] is False
+
+
 def test_a_spoon_bench_outside_the_yardstick_writes_no_calibration_and_the_fog_stays(tmp_path):
     log = tmp_path / "readings_2026-11-15.jsonl"                               # in order, but far from a line
     log.write_text("".join(json.dumps(r) + "\n" for r in _spoon_fixture("serial:/dev/cu.usbserial-0001", [8, 40, 44, 80],

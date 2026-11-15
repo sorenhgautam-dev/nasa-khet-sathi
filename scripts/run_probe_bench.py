@@ -39,19 +39,25 @@ def main(argv=None):
     ap.add_argument("--cups", default=str(BENCH_DIR / "cups.csv"))
     ap.add_argument("--out", default=None, help=f"default {OUT.relative_to(REPO)} (a real bench only)")
     ap.add_argument("--calibration-out", default=str(CAL))
+    ap.add_argument("--hand-copied", help="one hand-copied reading per cup (rules.yaml probe.bench.spoon.hand_copied)")
     a = ap.parse_args(argv)
-    logs = [Path(p) for p in a.log] if a.log else sorted(BENCH_DIR.glob("readings_*.jsonl"))
-    if not logs or not Path(a.cups).exists():
-        print("WAITING FOR THE BENCH TEST: no bench log or no cups.csv (robot/CUPS_PROTOCOL.md); nothing written")
-        return 2
-    records = [json.loads(l) for p in logs for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
-    cups = pd.read_csv(a.cups, dtype={"cup_id": str}, keep_default_na=False).to_dict("records")
-    b = bench.analyse(records, cups, load_rules()["probe"])
+    if a.hand_copied:
+        import datetime as dt
+        cups = pd.read_csv(a.hand_copied, dtype={"cup_id": str}, keep_default_na=False).to_dict("records")
+        b = bench.hand_copied(cups, load_rules()["probe"], str(dt.date.today()))
+    else:
+        logs = [Path(p) for p in a.log] if a.log else sorted(BENCH_DIR.glob("readings_*.jsonl"))
+        if not logs or not Path(a.cups).exists():
+            print("WAITING FOR THE BENCH TEST: no bench log or no cups.csv (robot/CUPS_PROTOCOL.md); nothing written")
+            return 2
+        records = [json.loads(l) for p in logs for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+        cups = pd.read_csv(a.cups, dtype={"cup_id": str}, keep_default_na=False).to_dict("records")
+        b = bench.analyse(records, cups, load_rules()["probe"])
     out = Path(a.out) if a.out else OUT
     if b["made_up"] and not a.out:
         ap.exit(2, "refused: these push-ins are made up (fake probe, stdin or a pseudo-terminal): pass --out to a file "
                    "outside data/checks/probe/bench.json\n")
-    b["logs"] = [str(p) for p in logs]
+    b["logs"] = [a.hand_copied] if a.hand_copied else [str(p) for p in logs]
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(b, indent=1) + "\n")
     p, s = b["proofs"], b["settling"]
@@ -59,7 +65,8 @@ def main(argv=None):
     print(f"(a) steady {p['steady']} (R {b['steady']['r_probe_pct2']}); (b) in order {p['order']} (Spearman "
           f"{b['order']['spearman']}); (c) accurate: leave-one-cup-out MAE {p['accurate']} water-% points "
           f"({b['accurate'].get('model')}); (d) ice water {p['temperature']} ({b['temperature']['median_c']} C)")
-    print(f"settling: median {s['median_s']} s, longest {s['max_s']} s over {s['n']} steady push-ins -> {out}")
+    print(f"settling: median {s['median_s']} s, longest {s['max_s']} s over {s['n']} steady push-ins -> {out}" if s else
+          f"settling, steadiness and the ice cup: not possible from hand-copied readings -> {out}")
     if b.get("spoon"):                    # rules.yaml probe.bench.spoon
         sp, r4 = b["spoon"], (lambda v: None if v is None else round(v, 4))
         print(f"{sp['label']}: leave-one-cup-out RMSE {r4(sp['loo_rmse_m3m3'])} m3/m3 (MAE {r4(sp['loo_mae_m3m3'])}) against "

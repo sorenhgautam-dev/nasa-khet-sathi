@@ -1,0 +1,32 @@
+# Made by scripts/run_probe_bench.py from the team's bench cups. Not field-tested.
+made_from: the spoon bench test of 2026-11-15, a rough calibration (spoon measures,
+  air-dried soil), hand-copied readings, not logged (the owner exception), not field-tested
+label: rough calibration (spoon measures, air-dried soil), hand-copied readings, not
+  logged
+fit_var_water_pct2: 1.2954
+loo_rmse_m3m3: 0.01138
+dry_point: 'the soil is air-dried as far as possible; its starting moisture is not
+  known and the reference counts only the water added, so every cup''s true water
+  content may be a few percent above its reference: the dry point may be a few percent
+  above zero. Stated with every result; not inside the error'
+date: '2026-11-15'
+cups: 4
+fit:
+  model: line
+  coef:
+  - -1.6593662309219068
+  - 0.18410786393812875
+mae_water_pct: 0.94
+range_probe_pct:
+- 8.0
+- 87.0
+r_probe_pct2: 9.0
+excluded_cups: []
+ice_water_c: null
+proofs:
+  steady: null
+  order: true
+  accurate: 0.9421
+  temperature: null
+rules: config/rules.yaml probe.bench.spoon.hand_copied
+made_by: scripts/run_probe_bench.py

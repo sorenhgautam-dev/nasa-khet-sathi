@@ -238,6 +238,29 @@ def spoon_check(pis, rows, used, order, accurate, rules):
             "rule": rules["passes"]}
 
 
+def hand_copied(cups, rules, date):
+    """rules.yaml probe.bench.spoon.hand_copied (the owner's exception, 2026-11-15): one hand-copied probe reading per
+    cup -> bench.json's content in the same shape, the proofs that need logged lines set to None. Pure."""
+    rows = sorted(({"cup_id": str(c["cup_id"]), "water_pct": reference_water_pct(c), "value_pct": float(c["probe_pct"]),
+                    "notes": c.get("notes") or ""} for c in cups), key=lambda r: r["water_pct"])
+    x, y = [r["value_pct"] for r in rows], [r["water_pct"] for r in rows]
+    order = order_check(y, x)
+    ok = len(rows) >= rules["bench"]["min_cups"]
+    f = choose_fit(x, y, rules["bench"]) if ok else None
+    accurate = {"model": f["model"], "coef": f["coef"], "loo_mae_water_pct": round(f["loo_mae"], 4), "line": f["line"],
+                "cups": [r["cup_id"] for r in rows], "range_probe_pct": [min(x), max(x)]} if ok else \
+        {"model": None, "why": f"{len(rows)} cups, at least {rules['bench']['min_cups']} needed"}
+    sp = spoon_check([], rows, rows, order, accurate, rules["bench"]["spoon"])
+    sp.update(label=sp["label"] + ", hand-copied readings, not logged", driest_first=None)
+    return {"made_up": False, "hand_copied": True, "label": f"{sp['label']}: the spoon bench test of {date}", "spoon": sp,
+            "date": date, "sources": ["hand-copied"], "cups": rows, "cups_used": len(rows), "excluded": [], "voided": [],
+            "steady": {"passes": None, "r_probe_pct2": 9.0, "why": rules["bench"]["spoon"]["hand_copied"]},
+            "order": order, "accurate": accurate, "temperature": {"passes": None, "median_c": None},
+            "settling": None, "proofs": {"steady": None, "order": order["passes"],
+                                         "accurate": accurate.get("loo_mae_water_pct"), "temperature": None},
+            "rules": "config/rules.yaml probe.bench.spoon.hand_copied"}
+
+
 def calibration_doc(b):
     """config/probe_calibration.yaml's content, or None: only from a real bench with a fit and cups in order (and, for a
     spoon bench, within SMAP's 0.04 m3/m3: rules.yaml probe.bench.spoon.use)."""
@@ -249,7 +272,8 @@ def calibration_doc(b):
     a = b["accurate"]
     rough = {"label": sp["label"], "fit_var_water_pct2": round((100.0 * sp["loo_rmse_m3m3"]) ** 2, 4),
              "loo_rmse_m3m3": round(sp["loo_rmse_m3m3"], 5), "dry_point": sp["dry_point"]} if sp else {}
-    return {"made_from": (f"the spoon bench test of {b['date']}, a {sp['label']}, not field-tested" if sp else
+    return {"made_from": (f"the spoon bench test of {b['date']}, a {sp['label']}{' (the owner exception)' if b.get('hand_copied') else ''}"
+                          ", not field-tested" if sp else
                           f"the bench test of {b['date']}, not field-tested"), **rough, "date": b["date"], "cups": b["cups_used"],
             "fit": {"model": a["model"], "coef": a["coef"]}, "mae_water_pct": round(a["loo_mae_water_pct"], 2),
             "range_probe_pct": a["range_probe_pct"], "r_probe_pct2": round(b["steady"]["r_probe_pct2"], 4),
