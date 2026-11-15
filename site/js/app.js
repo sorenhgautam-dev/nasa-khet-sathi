@@ -9,12 +9,12 @@
   // the UI teammate's seven steps are the app (owner, 2026-11-14 evening); the features live inside them and on "How we know"
   var STEPS = ['home', 'photo', 'parts', 'soil', 'choose', 'today', 'next'];
   // weather: "Weather ahead", the Choose screen's extra choice (owner, 2026-11-14 evening)
-  var ROUTES = STEPS.concat(['weather', 'how', 'plan', 'trial']);
+  var ROUTES = STEPS.concat(['weather', 'how', 'plan', 'trial', 'world']);
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   // sun x, sun y, tint, sunset, road progress (the phone prototype P0, per step)
   var SKY = { home: [30, 300, 0, 0, 0], photo: [79, 197, 0, 0, 0.16], parts: [131, 119, 0, 0, 0.33], soil: [183, 81, 0.05, 0.1, 0.5],
     choose: [236, 96, 0.15, 0.3, 0.66], today: [288, 159, 0.4, 0.65, 0.84], next: [325, 223, 0.65, 0.95, 1], weather: [325, 223, 0.65, 0.95, 1],
-    how: [325, 223, 0.5, 0.8, 1] };
+    how: [325, 223, 0.5, 0.8, 1], world: [325, 223, 0.5, 0.8, 1] };
   var S = { lang: 'ne', words: null, index: null, fid: null, field: null, fieldP: null, winter: null, water: null, prio: null,
     timers: [], cur: null, arg: null, prev: null, sheetFor: null };
 
@@ -377,7 +377,7 @@
         g.q.setAttribute('style', 'fill:' + bg); shapes.append(g.q);
         return;
       }
-      var q = h('span', { class: 'q', style: st + 'background:' + bg + (mode === 'grow' ? ';animation:ks-rise 500ms ease ' + (1300 + i * 100) + 'ms both' : '') });
+      var q = h('span', { class: 'q', style: st + 'background:' + bg + (mode === 'grow' ? ';animation:ks-soft 280ms ease ' + (1300 + i * 100) + 'ms both' : '') });   // gentle motion (2026-11-15)
       g.q = q; box.append(q);
     });
     var xs = {}, ys = {};
@@ -391,7 +391,7 @@
           if (Math.abs(x - g.cx) < (g.r - g.l) * 0.2 && Math.abs(y - g.cy) < (g.b - g.t) * 0.28) continue;
           var d = 2000 + qi * 160 + ((r * 4 + c) % 9) * 50;
           var sp = h('span', { class: 'sprout ' + (mode === 'grow' ? 'g' : 's'), style: 'left:' + x + '%;top:' + y + '%;' +
-            (mode === 'grow' ? 'animation-delay:' + d + 'ms,' + (d + 600) + 'ms' : 'animation-delay:-' + ((r + c) * 0.4) + 's') });
+            (mode === 'grow' ? 'animation-delay:' + d + 'ms,' + (d + 300) + 'ms' : 'animation-delay:-' + ((r + c) * 0.4) + 's') });   // gentle motion (2026-11-15)
           sp.innerHTML = SPROUT; box.append(sp);
         }
       });
@@ -444,7 +444,7 @@
   }
   function goBack() {
     if (S.prev && S.prev !== S.cur && W.history.length > 1) { W.history.back(); return; }
-    var back = { photo: 'home', parts: 'photo', soil: 'parts', choose: 'soil', today: 'choose', next: 'choose', weather: 'choose', how: 'home' };
+    var back = { photo: 'home', parts: 'photo', soil: 'parts', choose: 'soil', today: 'choose', next: 'choose', weather: 'choose', how: 'home', world: 'home' };
     go(back[S.cur] || 'home');
   }
   function setLang(l) {
@@ -492,7 +492,7 @@
       return;
     }
     old.classList.add('leaving');
-    setTimeout(build, 380);
+    setTimeout(build, 180);   // gentle motion (2026-11-15): a short fade out (css: .scr.leaving)
   }
   function rerender() {
     if (!S.cur) return;
@@ -556,7 +556,7 @@
         sample ? h('p', { class: 'small', style: 'margin:0;text-align:center' }, T('home.sample_note')) : null,
         // the prepared fields, folded away (CLAUDE.md: "a short list of prepared fields"); How we know is for judges only
         // (owner, 2026-11-14 evening): one small link here, none on the farmer's other screens
-        ix.length > 1 ? h('details', { class: 'fieldsfold' }, h('summary', null, T('home.prepared_title')), fieldsList()) : null,
+        ix.length > 1 ? h('details', { class: 'fieldsfold' }, h('summary', null, T('home.prepared_title')), worldLink(), fieldsList()) : null,
         h('a', { class: 'judges', href: '#/how' }, svg(I('book', 16)), T('farm.judges_link'))],
       foot: strip
     });
@@ -941,7 +941,8 @@
         fb.textContent = T('fog.sure_before') + ': ' + num(b);
         if (RM) { show(n); return; }
         var t0 = Date.now();
-        (function tick() { var k = Math.min(1, (Date.now() - t0) / 1400); show(Math.round(b + (n - b) * k)); if (k < 1 && fv.isConnected) W.requestAnimationFrame(tick); })();
+        // gentle motion (2026-11-15): the number counts in 300 ms, as the fog clears (css .sfog::before)
+        (function tick() { var k = Math.min(1, (Date.now() - t0) / 300); show(Math.round(b + (n - b) * k)); if (k < 1 && fv.isConnected) W.requestAnimationFrame(tick); })();
       });
     }
     // one line under the field when a checked part keeps its fog: a test away from the field, or no bench test yet
@@ -1579,6 +1580,13 @@
     });
     return box;
   };
+  // ---------------- Fields around the world (js/world.js, loaded when first opened; owner, 2026-11-15) ----------------
+  function worldLink() { return h('a', { class: 'judges', href: '#/world' }, svg(I('globe', 16)), T('farm.world_link')); }
+  SCREENS.world = function () {
+    var body = h('div', { class: 's-body' }, loading());
+    (S.worldP = S.worldP || loadScript('js/world.js')).then(function () { body.textContent = ''; body.append(W.KS.world ? W.KS.world() : notReady()); });
+    return h('section', { class: 'scr scr-how' }, h('div', { class: 's-head' }, bigTitle(T('farm.world_title'))), body);
+  };
   SCREENS.how.scrollTo = function (id) { var el = D.getElementById('how-' + id); if (el) el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); };
 
   // ---------------- start ----------------
@@ -1677,7 +1685,7 @@
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
-    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy };
+    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink };
 
   // ---------------- Behind the scenes: your field, seen by NASA (owner, 2026-11-15; js/behind.js) ----------------
   // For judges: the section sits at the end of Home's scroll, below the first screen, and on How we know; nothing of it

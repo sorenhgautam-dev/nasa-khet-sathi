@@ -230,6 +230,15 @@ shows six counted numbers, the flow line, one card per NASA mission (charts from
 `K.how.plot`) and the pixel-size picture. Farmer answers show a small tag (`farm.tag_rain`, `tag_weather`, `tag_space`,
 filled with `year_count`); a tap opens the matching card in a sheet. Details: CONTRACT_CHANGES.md, 2026-11-15.
 
+## 6m. Landed on 15 November (Sunday), morning: fields around the world, gentle motion, clearer words
+
+A new page `#/world` (`js/world.js`, loaded when opened): NASA's Blue Marble picture from `data/basemap/world.jpg`, a dot
+per place, the fields of `index.json` below it, and three steps to run it for your own field. Linked inside Home's folded
+field list and at the top of How we know's field list. Motion: one block at the end of `app.css` ("gentle motion") and four
+marked lines in `app.js`; delete them to undo. Your layout is unchanged (every element's box compared, phone and web). The
+dive from Home into the photo, the map's arrival after it and the sky are as you made them. Words: Today says "Part 1",
+as the other screens do.
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

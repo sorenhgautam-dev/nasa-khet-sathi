@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 743 texts): 720 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 752 texts): 729 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -51,7 +51,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Worse | कमजोर |
 | about | करिब |
 | of every 10 winters | पटक, हरेक १० हिउँदमा |
-| Your field usually rests in: | तपाईंको खेत प्रायः यी महिना खाली रहन्छ: |
+| Your field usually rests in: | खेत प्रायः खाली रहने महिना: |
 | Your field is usually green all year. | तपाईंको खेत प्रायः वर्षभरि हरियो रहन्छ। |
 | NASA map | नासाको नक्सा |
 | A top view of your farm | माथिबाट तपाईंको खेत |
@@ -793,7 +793,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 207 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 216 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -868,7 +868,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Most years. | धेरैजसो वर्ष। |
 | Some years. | कुनै कुनै वर्ष। |
 | Do this: | यो गर्नुहोस्: |
-| Cover young plants on clear, cold nights. | सफा, चिसो रातमा साना बिरुवा छोप्नुहोस्। |
+| Cover young plants on frosty nights. | सफा, चिसो रातमा साना बिरुवा छोप्नुहोस्। |
 | Water in the evening on hot days. | तातो दिनमा बेलुका पानी दिनुहोस्। |
 | Water before flowering if no rain. | पानी नपरे फुल्नुअघि सिँचाइ गर्नुहोस्। |
 | Clear drains before the rains. | पानी पर्नुअघि कुलो सफा गर्नुहोस्। |
@@ -946,18 +946,18 @@ This page is made from the word files in this folder; change those, not this pag
 | Big rain may hurt {crop} sowing. | ठूलो पानीले {crop} लगाउने काम बिगार्न सक्छ। |
 | Big rain may hurt {crop} harvest. | ठूलो पानीले {crop} भित्र्याउने काम बिगार्न सक्छ। |
 | Usually no big danger. | प्रायः ठूलो खतरा हुँदैन। |
-| Patch {section} is drier than the others. | भाग {section} अरूभन्दा सुक्खा छ। |
+| Part {section} is drier than the others. | भाग {section} अरूभन्दा सुक्खा छ। |
 | Water it first. | यसमा पहिले पानी दिनुहोस्। |
-| Patch {section} is wetter than the others. | भाग {section} अरूभन्दा ओसिलो छ। |
+| Part {section} is wetter than the others. | भाग {section} अरूभन्दा ओसिलो छ। |
 | Water it last. | यसमा पछि पानी दिनुहोस्। |
-| Patch {section} is like the others. | भाग {section} अरूजस्तै छ। |
-| Patch {section} is dry. | भाग {section} सुक्खा छ। |
+| Part {section} is like the others. | भाग {section} अरूजस्तै छ। |
+| Part {section} is dry. | भाग {section} सुक्खा छ। |
 | Water it today. | आज पानी दिनुहोस्। |
-| Patch {section} is fine. | भाग {section} ठीक छ। |
+| Part {section} is fine. | भाग {section} ठीक छ। |
 | No water needed. | पानी चाहिँदैन। |
-| Patch {section} is too wet. | भाग {section} धेरै भिजेको छ। |
+| Part {section} is too wet. | भाग {section} धेरै भिजेको छ। |
 | Don't water it. | पानी नदिनुहोस्। |
-| Patch {section} is not tested yet. | भाग {section} अझै जाँचिएको छैन। |
+| Part {section} is not tested yet. | भाग {section} अझै जाँचिएको छैन। |
 | We copy your field into a computer. | हामी तपाईंको खेत कम्प्युटरमा नक्कल गर्छौं। |
 | We replay {year_count} years of NASA weather. | हामी नासाको {year_count} वर्षको मौसम दोहोर्‍याउँछौं। |
 | Each crop plan, in every year. | हरेक बाली योजना, हरेक वर्षमा। |
@@ -972,6 +972,15 @@ This page is made from the word files in this folder; change those, not this pag
 | NASA rain, {year_count} years | नासाको वर्षा, {year_count} वर्ष |
 | NASA weather, {year_count} years | नासाको मौसम, {year_count} वर्ष |
 | NASA pictures, {year_count} years | नासाका तस्बिर, {year_count} वर्ष |
+| Fields around the world | संसारभरका खेतहरू |
+| See every field on a world map | विश्व नक्सामा सबै खेत हेर्नुहोस् |
+| Tap a field to open it. | खोल्न खेतमा थिच्नुहोस्। |
+| World picture: NASA Blue Marble, August 2004. | विश्वको तस्बिर: नासा ब्लु मार्बल, अगस्ट २००४। |
+| Run it for your own field | आफ्नै खेतका लागि चलाउनुहोस् |
+| Write down your field's corners and crops. | आफ्नो खेतका कुना र बाली लेख्नुहोस्। |
+| Download NASA's free records for that place. | त्यो ठाउँको नासाको निःशुल्क रेकर्ड डाउनलोड गर्नुहोस्। |
+| Run one command. It builds every page. | एउटा आदेश चलाउनुहोस्। यसले सबै पाना बनाउँछ। |
+| The full steps (README, in English) | पूरा चरणहरू (README, अंग्रेजीमा) |
 | *The fog that clears where the soil stick tests* | |
 | How sure are we? | हामी कति पक्का छौं? |
 | {sure_pct} out of 100 | १०० मा {sure_pct} |

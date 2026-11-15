@@ -4,6 +4,13 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, morning): fields around the world; wording only (`words.json`; additions only)
+
+- `words.json` gains `shared.farm.world_title`, `world_link`, `world_tap`, `world_map_src`, `world_own_title`,
+  `world_step_1` to `world_step_3` and `world_readme` (the page `#/world`, `js/world.js`). It reads `index.json` as it is.
+- Wording only, no key renamed or removed: `shared.farm.today_*` say "Part {section}" (was "Patch"), `shared.weather.tip_cold`
+  is "Cover young plants on frosty nights.", and the Nepali of `rests_in` is "खेत प्रायः खाली रहने महिना:".
+
 ## 2026-11-15 (Sunday, morning): what would verify each answer (`story.json`, `labels`; additions only)
 
 - `story.json` `compliance[].verify_by` (optional, `{en, ne}`): on a row that is not VERIFIED, one plain line saying what

@@ -2869,7 +2869,7 @@
    "bn": "এটি করুন:"
   },
   "shared.weather.tip_cold": {
-   "en": "Cover young plants on clear, cold nights.",
+   "en": "Cover young plants on frosty nights.",
    "bn": "পরিষ্কার, ঠান্ডা রাতে ছোট চারা ঢেকে দিন।"
   },
   "shared.weather.tip_heat": {
@@ -3173,52 +3173,52 @@
    "bn": "সাধারণত বড় বিপদ নেই।"
   },
   "shared.farm.today_drier": {
-   "en": "Patch {section} is drier than the others.",
-   "bn": "অংশ {section} অন্যগুলোর চেয়ে শুকনো।"
+   "en": "Part {section} is drier than the others.",
+   "bn": "ভাগ {section} অন্যগুলোর চেয়ে শুকনো।"
   },
   "shared.farm.today_water_first": {
    "en": "Water it first.",
    "bn": "এখানে আগে পানি দিন।"
   },
   "shared.farm.today_wetter": {
-   "en": "Patch {section} is wetter than the others.",
-   "bn": "অংশ {section} অন্যগুলোর চেয়ে ভেজা।"
+   "en": "Part {section} is wetter than the others.",
+   "bn": "ভাগ {section} অন্যগুলোর চেয়ে ভেজা।"
   },
   "shared.farm.today_water_last": {
    "en": "Water it last.",
    "bn": "এখানে পরে পানি দিন।"
   },
   "shared.farm.today_same": {
-   "en": "Patch {section} is like the others.",
-   "bn": "অংশ {section} অন্যগুলোর মতো।"
+   "en": "Part {section} is like the others.",
+   "bn": "ভাগ {section} অন্যগুলোর মতো।"
   },
   "shared.farm.today_dry": {
-   "en": "Patch {section} is dry.",
-   "bn": "অংশ {section} শুকনো।"
+   "en": "Part {section} is dry.",
+   "bn": "ভাগ {section} শুকনো।"
   },
   "shared.farm.today_water_today": {
    "en": "Water it today.",
    "bn": "আজ পানি দিন।"
   },
   "shared.farm.today_fine": {
-   "en": "Patch {section} is fine.",
-   "bn": "অংশ {section} ঠিক আছে।"
+   "en": "Part {section} is fine.",
+   "bn": "ভাগ {section} ঠিক আছে।"
   },
   "shared.farm.today_no_water": {
    "en": "No water needed.",
    "bn": "পানি লাগবে না।"
   },
   "shared.farm.today_too_wet": {
-   "en": "Patch {section} is too wet.",
-   "bn": "অংশ {section} খুব ভেজা।"
+   "en": "Part {section} is too wet.",
+   "bn": "ভাগ {section} খুব ভেজা।"
   },
   "shared.farm.today_dont_water": {
    "en": "Don't water it.",
    "bn": "পানি দেবেন না।"
   },
   "shared.farm.today_untested": {
-   "en": "Patch {section} is not tested yet.",
-   "bn": "অংশ {section} এখনও পরীক্ষা হয়নি।"
+   "en": "Part {section} is not tested yet.",
+   "bn": "ভাগ {section} এখনও পরীক্ষা হয়নি।"
   },
   "shared.farm.twin3_1": {
    "en": "We copy your field into a computer.",
@@ -3275,6 +3275,42 @@
   "shared.farm.tag_space": {
    "en": "NASA pictures, {year_count} years",
    "bn": "নাসার ছবি, {year_count} বছর"
+  },
+  "shared.farm.world_title": {
+   "en": "Fields around the world",
+   "bn": "বিশ্বজুড়ে খেত"
+  },
+  "shared.farm.world_link": {
+   "en": "See every field on a world map",
+   "bn": "বিশ্ব মানচিত্রে সব খেত দেখুন"
+  },
+  "shared.farm.world_tap": {
+   "en": "Tap a field to open it.",
+   "bn": "খুলতে একটি খেতে ট্যাপ করুন।"
+  },
+  "shared.farm.world_map_src": {
+   "en": "World picture: NASA Blue Marble, August 2004.",
+   "bn": "বিশ্বের ছবি: নাসা ব্লু মার্বেল, আগস্ট 2004।"
+  },
+  "shared.farm.world_own_title": {
+   "en": "Run it for your own field",
+   "bn": "নিজের খেতের জন্য চালান"
+  },
+  "shared.farm.world_step_1": {
+   "en": "Write down your field's corners and crops.",
+   "bn": "আপনার খেতের কোণ আর ফসল লিখুন।"
+  },
+  "shared.farm.world_step_2": {
+   "en": "Download NASA's free records for that place.",
+   "bn": "সেই জায়গার নাসার বিনামূল্যের রেকর্ড নামান।"
+  },
+  "shared.farm.world_step_3": {
+   "en": "Run one command. It builds every page.",
+   "bn": "একটি কমান্ড চালান। এটি সব পাতা বানায়।"
+  },
+  "shared.farm.world_readme": {
+   "en": "The full steps (README, in English)",
+   "bn": "পুরো ধাপগুলি (README, ইংরেজিতে)"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

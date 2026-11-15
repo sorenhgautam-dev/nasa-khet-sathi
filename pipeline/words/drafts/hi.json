@@ -2869,7 +2869,7 @@
    "hi": "यह करें:"
   },
   "shared.weather.tip_cold": {
-   "en": "Cover young plants on clear, cold nights.",
+   "en": "Cover young plants on frosty nights.",
    "hi": "साफ़, ठंडी रातों में छोटे पौधे ढकें।"
   },
   "shared.weather.tip_heat": {
@@ -3173,7 +3173,7 @@
    "hi": "आमतौर पर बड़ा ख़तरा नहीं।"
   },
   "shared.farm.today_drier": {
-   "en": "Patch {section} is drier than the others.",
+   "en": "Part {section} is drier than the others.",
    "hi": "हिस्सा {section} बाक़ी से सूखा है।"
   },
   "shared.farm.today_water_first": {
@@ -3181,7 +3181,7 @@
    "hi": "इसे पहले पानी दें।"
   },
   "shared.farm.today_wetter": {
-   "en": "Patch {section} is wetter than the others.",
+   "en": "Part {section} is wetter than the others.",
    "hi": "हिस्सा {section} बाक़ी से गीला है।"
   },
   "shared.farm.today_water_last": {
@@ -3189,11 +3189,11 @@
    "hi": "इसे बाद में पानी दें।"
   },
   "shared.farm.today_same": {
-   "en": "Patch {section} is like the others.",
+   "en": "Part {section} is like the others.",
    "hi": "हिस्सा {section} बाक़ी जैसा है।"
   },
   "shared.farm.today_dry": {
-   "en": "Patch {section} is dry.",
+   "en": "Part {section} is dry.",
    "hi": "हिस्सा {section} सूखा है।"
   },
   "shared.farm.today_water_today": {
@@ -3201,7 +3201,7 @@
    "hi": "आज पानी दें।"
   },
   "shared.farm.today_fine": {
-   "en": "Patch {section} is fine.",
+   "en": "Part {section} is fine.",
    "hi": "हिस्सा {section} ठीक है।"
   },
   "shared.farm.today_no_water": {
@@ -3209,7 +3209,7 @@
    "hi": "पानी की ज़रूरत नहीं।"
   },
   "shared.farm.today_too_wet": {
-   "en": "Patch {section} is too wet.",
+   "en": "Part {section} is too wet.",
    "hi": "हिस्सा {section} बहुत गीला है।"
   },
   "shared.farm.today_dont_water": {
@@ -3217,7 +3217,7 @@
    "hi": "पानी न दें।"
   },
   "shared.farm.today_untested": {
-   "en": "Patch {section} is not tested yet.",
+   "en": "Part {section} is not tested yet.",
    "hi": "हिस्सा {section} अभी जाँचा नहीं गया।"
   },
   "shared.farm.twin3_1": {
@@ -3275,6 +3275,42 @@
   "shared.farm.tag_space": {
    "en": "NASA pictures, {year_count} years",
    "hi": "नासा की तस्वीरें, {year_count} साल"
+  },
+  "shared.farm.world_title": {
+   "en": "Fields around the world",
+   "hi": "दुनिया भर के खेत"
+  },
+  "shared.farm.world_link": {
+   "en": "See every field on a world map",
+   "hi": "विश्व मानचित्र पर सभी खेत देखें"
+  },
+  "shared.farm.world_tap": {
+   "en": "Tap a field to open it.",
+   "hi": "खोलने के लिए खेत पर टैप करें।"
+  },
+  "shared.farm.world_map_src": {
+   "en": "World picture: NASA Blue Marble, August 2004.",
+   "hi": "दुनिया की तस्वीर: नासा ब्लू मार्बल, अगस्त 2004।"
+  },
+  "shared.farm.world_own_title": {
+   "en": "Run it for your own field",
+   "hi": "अपने खेत के लिए चलाएँ"
+  },
+  "shared.farm.world_step_1": {
+   "en": "Write down your field's corners and crops.",
+   "hi": "अपने खेत के कोने और फ़सलें लिखें।"
+  },
+  "shared.farm.world_step_2": {
+   "en": "Download NASA's free records for that place.",
+   "hi": "उस जगह के नासा के मुफ़्त रिकॉर्ड डाउनलोड करें।"
+  },
+  "shared.farm.world_step_3": {
+   "en": "Run one command. It builds every page.",
+   "hi": "एक कमांड चलाएँ। यह हर पेज बनाता है।"
+  },
+  "shared.farm.world_readme": {
+   "en": "The full steps (README, in English)",
+   "hi": "पूरे चरण (README, अंग्रेज़ी में)"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

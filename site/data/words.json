@@ -360,7 +360,7 @@
     {
      "id": "rests_in",
      "en": "Your field usually rests in:",
-     "ne": "तपाईंको खेत प्रायः यी महिना खाली रहन्छ:",
+     "ne": "खेत प्रायः खाली रहने महिना:",
      "ne_review": "needs native-speaker review",
      "hi": "आपका खेत प्रायः इन महीनों ख़ाली रहता है:",
      "bn": "আপনার খেত সাধারণত এই মাসে খালি থাকে:",
@@ -6776,7 +6776,7 @@
     "sw": "Fanya hivi:"
    },
    "tip_cold": {
-    "en": "Cover young plants on clear, cold nights.",
+    "en": "Cover young plants on frosty nights.",
     "ne": "सफा, चिसो रातमा साना बिरुवा छोप्नुहोस्।",
     "ne_review": "needs native-speaker review",
     "hi": "साफ़, ठंडी रातों में छोटे पौधे ढकें।",
@@ -7540,13 +7540,13 @@
     "sw": "Kwa kawaida hakuna hatari kubwa."
    },
    "today_drier": {
-    "en": "Patch {section} is drier than the others.",
+    "en": "Part {section} is drier than the others.",
     "ne": "भाग {section} अरूभन्दा सुक्खा छ।",
     "ne_review": "needs native-speaker review",
     "hi": "हिस्सा {section} बाक़ी से सूखा है।",
-    "bn": "অংশ {section} অন্যগুলোর চেয়ে শুকনো।",
-    "es": "La parcela {section} está más seca.",
-    "fr": "La parcelle {section} est plus sèche.",
+    "bn": "ভাগ {section} অন্যগুলোর চেয়ে শুকনো।",
+    "es": "La parte {section} está más seca.",
+    "fr": "La partie {section} est plus sèche.",
     "sw": "Sehemu {section} ni kavu kuliko nyingine."
    },
    "today_water_first": {
@@ -7560,13 +7560,13 @@
     "sw": "Imwagilie kwanza."
    },
    "today_wetter": {
-    "en": "Patch {section} is wetter than the others.",
+    "en": "Part {section} is wetter than the others.",
     "ne": "भाग {section} अरूभन्दा ओसिलो छ।",
     "ne_review": "needs native-speaker review",
     "hi": "हिस्सा {section} बाक़ी से गीला है।",
-    "bn": "অংশ {section} অন্যগুলোর চেয়ে ভেজা।",
-    "es": "La parcela {section} está más húmeda.",
-    "fr": "La parcelle {section} est plus humide.",
+    "bn": "ভাগ {section} অন্যগুলোর চেয়ে ভেজা।",
+    "es": "La parte {section} está más húmeda.",
+    "fr": "La partie {section} est plus humide.",
     "sw": "Sehemu {section} ina unyevu kuliko nyingine."
    },
    "today_water_last": {
@@ -7580,23 +7580,23 @@
     "sw": "Imwagilie mwisho."
    },
    "today_same": {
-    "en": "Patch {section} is like the others.",
+    "en": "Part {section} is like the others.",
     "ne": "भाग {section} अरूजस्तै छ।",
     "ne_review": "needs native-speaker review",
     "hi": "हिस्सा {section} बाक़ी जैसा है।",
-    "bn": "অংশ {section} অন্যগুলোর মতো।",
-    "es": "La parcela {section} está como las otras.",
-    "fr": "La parcelle {section} est comme les autres.",
+    "bn": "ভাগ {section} অন্যগুলোর মতো।",
+    "es": "La parte {section} está como las otras.",
+    "fr": "La partie {section} est comme les autres.",
     "sw": "Sehemu {section} ni kama nyingine."
    },
    "today_dry": {
-    "en": "Patch {section} is dry.",
+    "en": "Part {section} is dry.",
     "ne": "भाग {section} सुक्खा छ।",
     "ne_review": "needs native-speaker review",
     "hi": "हिस्सा {section} सूखा है।",
-    "bn": "অংশ {section} শুকনো।",
-    "es": "La parcela {section} está seca.",
-    "fr": "La parcelle {section} est sèche.",
+    "bn": "ভাগ {section} শুকনো।",
+    "es": "La parte {section} está seca.",
+    "fr": "La partie {section} est sèche.",
     "sw": "Sehemu {section} ni kavu."
    },
    "today_water_today": {
@@ -7610,13 +7610,13 @@
     "sw": "Imwagilie leo."
    },
    "today_fine": {
-    "en": "Patch {section} is fine.",
+    "en": "Part {section} is fine.",
     "ne": "भाग {section} ठीक छ।",
     "ne_review": "needs native-speaker review",
     "hi": "हिस्सा {section} ठीक है।",
-    "bn": "অংশ {section} ঠিক আছে।",
-    "es": "La parcela {section} está bien.",
-    "fr": "La parcelle {section} va bien.",
+    "bn": "ভাগ {section} ঠিক আছে।",
+    "es": "La parte {section} está bien.",
+    "fr": "La partie {section} va bien.",
     "sw": "Sehemu {section} iko sawa."
    },
    "today_no_water": {
@@ -7630,13 +7630,13 @@
     "sw": "Haihitaji maji."
    },
    "today_too_wet": {
-    "en": "Patch {section} is too wet.",
+    "en": "Part {section} is too wet.",
     "ne": "भाग {section} धेरै भिजेको छ।",
     "ne_review": "needs native-speaker review",
     "hi": "हिस्सा {section} बहुत गीला है।",
-    "bn": "অংশ {section} খুব ভেজা।",
-    "es": "La parcela {section} está demasiado húmeda.",
-    "fr": "La parcelle {section} est trop humide.",
+    "bn": "ভাগ {section} খুব ভেজা।",
+    "es": "La parte {section} está demasiado húmeda.",
+    "fr": "La partie {section} est trop humide.",
     "sw": "Sehemu {section} ina maji mengi mno."
    },
    "today_dont_water": {
@@ -7650,13 +7650,13 @@
     "sw": "Usiimwagilie."
    },
    "today_untested": {
-    "en": "Patch {section} is not tested yet.",
+    "en": "Part {section} is not tested yet.",
     "ne": "भाग {section} अझै जाँचिएको छैन।",
     "ne_review": "needs native-speaker review",
     "hi": "हिस्सा {section} अभी जाँचा नहीं गया।",
-    "bn": "অংশ {section} এখনও পরীক্ষা হয়নি।",
-    "es": "La parcela {section} aún no se ha probado.",
-    "fr": "La parcelle {section} n'est pas encore testée.",
+    "bn": "ভাগ {section} এখনও পরীক্ষা হয়নি।",
+    "es": "La parte {section} aún no se ha probado.",
+    "fr": "La partie {section} n'est pas encore testée.",
     "sw": "Sehemu {section} bado haijapimwa."
    },
    "twin3_1": {
@@ -7798,6 +7798,96 @@
     "es": "Imágenes de la NASA, {year_count} años",
     "fr": "Images de la NASA, {year_count} ans",
     "sw": "Picha za NASA, miaka {year_count}"
+   },
+   "world_title": {
+    "en": "Fields around the world",
+    "ne": "संसारभरका खेतहरू",
+    "ne_review": "needs native-speaker review",
+    "hi": "दुनिया भर के खेत",
+    "bn": "বিশ্বজুড়ে খেত",
+    "es": "Campos de todo el mundo",
+    "fr": "Des champs partout dans le monde",
+    "sw": "Mashamba duniani kote"
+   },
+   "world_link": {
+    "en": "See every field on a world map",
+    "ne": "विश्व नक्सामा सबै खेत हेर्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "विश्व मानचित्र पर सभी खेत देखें",
+    "bn": "বিশ্ব মানচিত্রে সব খেত দেখুন",
+    "es": "Ver todos los campos en un mapa",
+    "fr": "Voir tous les champs sur une carte",
+    "sw": "Tazama mashamba yote kwenye ramani"
+   },
+   "world_tap": {
+    "en": "Tap a field to open it.",
+    "ne": "खोल्न खेतमा थिच्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "खोलने के लिए खेत पर टैप करें।",
+    "bn": "খুলতে একটি খেতে ট্যাপ করুন।",
+    "es": "Toque un campo para abrirlo.",
+    "fr": "Touchez un champ pour l'ouvrir.",
+    "sw": "Gusa shamba ili kulifungua."
+   },
+   "world_map_src": {
+    "en": "World picture: NASA Blue Marble, August 2004.",
+    "ne": "विश्वको तस्बिर: नासा ब्लु मार्बल, अगस्ट २००४।",
+    "ne_review": "needs native-speaker review",
+    "hi": "दुनिया की तस्वीर: नासा ब्लू मार्बल, अगस्त 2004।",
+    "bn": "বিশ্বের ছবি: নাসা ব্লু মার্বেল, আগস্ট 2004।",
+    "es": "Imagen del mundo: NASA Blue Marble, agosto de 2004.",
+    "fr": "Image du monde : NASA Blue Marble, août 2004.",
+    "sw": "Picha ya dunia: NASA Blue Marble, Agosti 2004."
+   },
+   "world_own_title": {
+    "en": "Run it for your own field",
+    "ne": "आफ्नै खेतका लागि चलाउनुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "अपने खेत के लिए चलाएँ",
+    "bn": "নিজের খেতের জন্য চালান",
+    "es": "Úselo para su propio campo",
+    "fr": "Lancez-le pour votre champ",
+    "sw": "Iendeshe kwa shamba lako"
+   },
+   "world_step_1": {
+    "en": "Write down your field's corners and crops.",
+    "ne": "आफ्नो खेतका कुना र बाली लेख्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अपने खेत के कोने और फ़सलें लिखें।",
+    "bn": "আপনার খেতের কোণ আর ফসল লিখুন।",
+    "es": "Anote las esquinas y cultivos del campo.",
+    "fr": "Notez les coins et les cultures du champ.",
+    "sw": "Andika pembe na mazao ya shamba lako."
+   },
+   "world_step_2": {
+    "en": "Download NASA's free records for that place.",
+    "ne": "त्यो ठाउँको नासाको निःशुल्क रेकर्ड डाउनलोड गर्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "उस जगह के नासा के मुफ़्त रिकॉर्ड डाउनलोड करें।",
+    "bn": "সেই জায়গার নাসার বিনামূল্যের রেকর্ড নামান।",
+    "es": "Descargue los registros gratuitos de la NASA.",
+    "fr": "Téléchargez les relevés gratuits de la NASA.",
+    "sw": "Pakua rekodi za bure za NASA za mahali hapo."
+   },
+   "world_step_3": {
+    "en": "Run one command. It builds every page.",
+    "ne": "एउटा आदेश चलाउनुहोस्। यसले सबै पाना बनाउँछ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "एक कमांड चलाएँ। यह हर पेज बनाता है।",
+    "bn": "একটি কমান্ড চালান। এটি সব পাতা বানায়।",
+    "es": "Ejecute un comando. Crea todas las páginas.",
+    "fr": "Lancez une commande. Elle crée chaque page.",
+    "sw": "Endesha amri moja. Inatengeneza kila ukurasa."
+   },
+   "world_readme": {
+    "en": "The full steps (README, in English)",
+    "ne": "पूरा चरणहरू (README, अंग्रेजीमा)",
+    "ne_review": "needs native-speaker review",
+    "hi": "पूरे चरण (README, अंग्रेज़ी में)",
+    "bn": "পুরো ধাপগুলি (README, ইংরেজিতে)",
+    "es": "Todos los pasos (README, en inglés)",
+    "fr": "Toutes les étapes (README, en anglais)",
+    "sw": "Hatua zote (README, kwa Kiingereza)"
    }
   },
   "fog": {
