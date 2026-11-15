@@ -1458,7 +1458,7 @@ RESOURCES = [
      "how": T("United States water data only. We have no Nepal well records yet.",
               "अमेरिकाको पानी तथ्याङ्क मात्र। हामीसँग नेपालका इनारको अभिलेख अझै छैन।")},
     {"name": "USDA AMS Market News", "status": "not used",
-     "how": T("United States prices. We show no money figures.", "अमेरिकी मूल्य। हामी पैसाको अङ्क देखाउँदैनौं।")},
+     "how": T("A United States dataset. Not used here.", "अमेरिकी तथ्याङ्क। यहाँ प्रयोग गरिएको छैन।")},
     {"name": "USDA NASS QuickStats", "status": "equivalent", "instead": "FAOSTAT QCL, Nepal's national yields",
      "how": T("United States yields. We use FAOSTAT for Nepal.",
               "अमेरिकाको उब्जनी। नेपालका लागि हामी FAOSTAT प्रयोग गर्छौं।")},
