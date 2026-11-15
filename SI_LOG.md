@@ -1717,6 +1717,13 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   owner, before and after.
 - **Checked:** tests first (`tests/test_story.py`: the promise, the rain words); story.json's chart numbers identical;
   each field file differs from before only in that one sentence; the drone picture and patches byte-identical.
-- **The farmer screens made simpler (a helper agent, owner's six rules):** see its own entry below when merged.
+- **The farmer screens made simpler (a helper agent, owner's six rules; merged from `4285375`):** one question and one
+  answer per screen, the rest behind one tap ("More"); one main button, always at the bottom, saying what happens next;
+  secondary actions as small links; ✓ = ✗ beside better / about the same / worse, each with a word for screen readers;
+  a new farmer 24-year sheet (one line, the squares, "Tap a square to see the year"), its marks rebuilt from
+  `replay/<id>.json` by the back end's own rule and tested to add up to `plan_words`' counts; Next 6 months leaves out
+  watch-outs for crops the suggestion does not grow. 8 new words (Nepali and five drafts unreviewed). Tests first
+  (`tests/test_site_simple_screens.py`); the five-second check, the removed words and before/after screenshots in
+  `~/Desktop/khet_sathi_screens/simple_17_00/`. No pipeline output, rule or data file changed except `words.json`.
 - **For a person to review:** all new Nepali (the promise's 7 lines, the rain chapter, the screen words, the drone
   label) and the 12 lines rewritten in the five draft languages; the flood records before any rule is written.
