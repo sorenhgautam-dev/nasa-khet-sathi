@@ -3551,6 +3551,10 @@
   "shared.drone.fit_again": {
    "en": "Fit again",
    "hi": "फिर से मिलाएँ"
+  },
+  "shared.offline.line": {
+   "en": "Offline: showing your saved field.",
+   "hi": "ऑफ़लाइन: आपका सहेजा हुआ खेत दिखा रहे हैं।"
   }
  }
 }

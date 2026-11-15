@@ -108,6 +108,10 @@ def site_problems(site_dir=REPO / "site", final=False):
                     "text": "demo mode is for the laptop's hotspot only: run scripts/demo_mode.py off before the final commit"})
     if final and not (site_dir / "index.html").is_file():
         out.append({"file": "index.html", "line": 0, "kind": "missing", "text": "site/index.html is the page the live address opens"})
+    if (site_dir / "sw.js").is_file():   # the offline copy (owner, 2026-11-15): every saved file exists, no needed file left out
+        sys.path.insert(0, str(REPO))
+        from scripts.build_offline import check
+        out += [{"file": "sw.js", "line": 0, "kind": "offline list", "text": t} for t in check(site_dir)]
     return out
 
 

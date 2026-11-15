@@ -4591,6 +4591,13 @@
     "ne": "फेरि मिलाउनुहोस्",
     "ne_review": "needs native-speaker review"
    }
+  },
+  "offline": {
+   "line": {
+    "en": "Offline: showing your saved field.",
+    "ne": "अफलाइन: तपाईंको सुरक्षित गरिएको खेत देखाउँदै।",
+    "ne_review": "needs native-speaker review"
+   }
   }
  }
 }

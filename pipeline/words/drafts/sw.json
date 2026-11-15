@@ -3551,6 +3551,10 @@
   "shared.drone.fit_again": {
    "en": "Fit again",
    "sw": "Rekebisha tena"
+  },
+  "shared.offline.line": {
+   "en": "Offline: showing your saved field.",
+   "sw": "Nje ya mtandao: tunaonyesha shamba lako lililohifadhiwa."
   }
  }
 }

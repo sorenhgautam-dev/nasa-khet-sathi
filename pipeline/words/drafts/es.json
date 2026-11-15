@@ -3551,6 +3551,10 @@
   "shared.drone.fit_again": {
    "en": "Fit again",
    "es": "Ajustar de nuevo"
+  },
+  "shared.offline.line": {
+   "en": "Offline: showing your saved field.",
+   "es": "Sin conexión: mostrando tu campo guardado."
   }
  }
 }

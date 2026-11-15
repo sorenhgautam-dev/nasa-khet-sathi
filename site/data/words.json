@@ -8401,6 +8401,18 @@
     "fr": "Ajuster à nouveau",
     "sw": "Rekebisha tena"
    }
+  },
+  "offline": {
+   "line": {
+    "en": "Offline: showing your saved field.",
+    "ne": "अफलाइन: तपाईंको सुरक्षित गरिएको खेत देखाउँदै।",
+    "ne_review": "needs native-speaker review",
+    "hi": "ऑफ़लाइन: आपका सहेजा हुआ खेत दिखा रहे हैं।",
+    "bn": "অফলাইন: আপনার সংরক্ষিত খেত দেখানো হচ্ছে।",
+    "es": "Sin conexión: mostrando tu campo guardado.",
+    "fr": "Hors ligne : votre champ enregistré s'affiche.",
+    "sw": "Nje ya mtandao: tunaonyesha shamba lako lililohifadhiwa."
+   }
   }
  },
  "glossary": [

@@ -772,6 +772,25 @@
     if (!S.demoP) S.demoP = demoHost(location.hostname) ? getJSON('data/demo.json', true).then(function (d) { return !!d && d.demo === true; }) : Promise.resolve(false);
     return S.demoP;
   }
+  // the offline copy (owner, 2026-11-15; sw.js): the public site only, never on the laptop or its hotspot (demoHost: any
+  // worker there is removed); without a worker, or if it fails, the app works as before. A new version takes over with one
+  // reload. One quiet line while there is no signal.
+  function offline() {
+    var sw = navigator.serviceWorker;
+    try {
+      if (!sw) return;
+      if (demoHost(location.hostname)) { sw.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); }).catch(function () {}); return; }
+      var had = !!sw.controller;
+      sw.addEventListener('controllerchange', function () { if (had) { had = false; location.reload(); } });
+      sw.register('sw.js', { updateViaCache: 'none' }).catch(function () {});
+    } catch (e) { /* no worker: the app as before */ }
+  }
+  function offlineLine() {
+    var p = h('p', { class: 'offline-line', role: 'status', hidden: navigator.onLine !== false }, T('offline.line'));
+    D.body.append(p);
+    W.addEventListener('online', function () { p.hidden = true; });
+    W.addEventListener('offline', function () { p.hidden = false; });
+  }
   function demoLabel() { return h('p', { class: 'demolabel', role: 'note' }, svg(I('camera', 18)), h('span', null, T('drone.label'))); }
   // the phone's camera (a file input: it works over the hotspot's plain http); the photo becomes an object URL in memory
   function takeBtn(round) {
@@ -1828,6 +1847,7 @@
       S.fid = ids.indexOf(fid) >= 0 ? fid : (ids[0] || 'demo');
       W.addEventListener('hashchange', onRoute);
       onRoute();
+      offlineLine(); offline();
       step(0.9);                                                     // Home is drawn
       ready = true;
       setTimeout(lift, Math.max(0, (wantMs || (RM ? 0 : REPEAT_MIN_MS)) - (Date.now() - t0)));   // data first, then the welcome's time

@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 761 texts): 738 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 762 texts): 739 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -798,7 +798,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 220 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 221 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -1020,6 +1020,8 @@ This page is made from the word files in this folder; change those, not this pag
 | Drag the corners to fit the 4 pots. | ४ वटै गमला मिलाउन कुनाहरू तान्नुहोस्। |
 | Done | भयो |
 | Fit again | फेरि मिलाउनुहोस् |
+| *The line shown with no signal (the offline copy)* | |
+| Offline: showing your saved field. | अफलाइन: तपाईंको सुरक्षित गरिएको खेत देखाउँदै। |
 | *Bikram Sambat months (English and Nepali)* | |
 | Magh | माघ |
 | Falgun | फागुन |
