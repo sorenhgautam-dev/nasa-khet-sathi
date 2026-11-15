@@ -127,8 +127,11 @@ For GPM rain, accept the GES DISC data licence on your Earthdata account once.
 
 ```sh
 python3.12 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-.venv/bin/python -m pytest                      # everything should pass
+.venv/bin/pip install numpy==2.5.4 pandas==2.3.3 xarray==2026.9.0 pyarrow==26.0.1 PyYAML==6.0.3 \
+  jsonschema==4.26.0 requests==2.34.2 matplotlib==3.11.2 pytest==9.2.0 pyet==1.5.0 earthaccess==0.19.0 \
+  python-dateutil==2.9.0.post0 h5py==3.16.0 rasterio==1.5.2 scikit-learn==1.9.1 ruptures==1.1.10 \
+  pymannkendall==1.4.3 flask==3.1.3 pyserial==3.5
+.venv/bin/python -m pytest tests                # everything should pass
 ```
 
 1. **Describe the field.** Copy `config/fields/demo.yaml` to `config/fields/<id>.yaml`. Set `id`, `name`,
@@ -248,7 +251,7 @@ First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil
 
 - **Data and methods:** NASA (POWER, GPM, HLS, MODIS, SMAP, NASADEM, ECOSTRESS, GRACE-FO, NEX-GDDP-CMIP6),
   ISRIC, ESA, NOAA NCEI and FAO. Exact products, versions and citations are in [records/credits.txt](records/credits.txt).
-- **Libraries:** listed in [records/credits.txt](records/credits.txt) and pinned in `requirements.txt`.
+- **Libraries:** listed in [records/credits.txt](records/credits.txt) and pinned in the install line above.
 - **AI (SI) use:** every use is logged in [records/credits.txt](records/credits.txt) and, with what a person reviewed, in
   [records/ai_log.txt](records/ai_log.txt). AI runs only at build time, never from the public site.
 - **How we checked our work:** [records/checks.txt](records/checks.txt) and [HOW_WE_KNOW.md](HOW_WE_KNOW.md).

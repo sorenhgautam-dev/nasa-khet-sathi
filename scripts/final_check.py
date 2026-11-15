@@ -180,7 +180,7 @@ def main(argv=None, runner=run, repo=REPO, today=None, get=_get):
         if os.environ.get(INNER):
             steps.append(("tests", False, ["not run: already inside final_check's own test run"]))
         else:
-            cmd_step("tests (full suite)", [py, "-m", "pytest", "-q"], env={**os.environ, INNER: "1"})
+            cmd_step("tests (full suite)", [py, "-m", "pytest", "-q", "tests"], env={**os.environ, INNER: "1"})
         cmd_step("validate --final", [py, "-m", "pipeline.export.validate", "--final"])
         cmd_step("static site (check_site --final)", [py, "scripts/check_site.py", "--final"])
         hits = outside_requests(repo / "site")

@@ -16,7 +16,7 @@ MUST_IGNORE = ["data/raw/imerg.nc4", "data/clean/power.parquet", "data/cards/pow
                "robot/firmware/khet_probe/secrets.h", "site/google-services.json", "serviceAccountKey.json",
                "keys/firebase-adminsdk-abc12.json", "site/data/live.json", "site/data/.live.json.tmp"]
 MUST_KEEP = ["site/data/fields/demo.json", "site/data/index.json", "pipeline/export/schema.json",
-             "config/crops.json", "CREDITS.md", "scripts/backup.sh", "requirements.txt"]
+             "config/crops.json", "records/credits.txt", "scripts/backup.sh", "README.md"]
 
 
 @pytest.fixture(scope="module")
