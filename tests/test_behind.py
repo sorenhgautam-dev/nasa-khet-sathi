@@ -38,6 +38,16 @@ def _inputs():
     }
 
 
+def test_the_soil_grid_comes_from_soil_years_json_with_its_fixed_steps():
+    # owner, 2026-11-15 evening; rules.yaml soil_years: the replay's months in four steps, the flood and dry years marked
+    steps = {"edges": [0.25, 0.5, 0.75], "words": ["very_dry", "dry", "damp", "wet"], "colours": ["#1", "#2", "#3", "#4"]}
+    g = bb.soil_years({"case": "rain-fed", "rotation": ["rice", "potato"], "years": [2002, 2003], "steps": steps,
+                       "step": {"2002": [0] * 12, "2003": [3] * 12}, "events": {"2003": "flood"}})
+    assert g["years"] == [2002, 2003] and g["step"] == [[0] * 12, [3] * 12] and g["events"] == {"2003": "flood"}
+    assert [w["en"] for w in g["words"]] == ["Very dry", "Dry", "Damp", "Wet"] and g["colours"] == ["#1", "#2", "#3", "#4"]
+    assert g["title"]["en"] == "2 years of soil at a glance" and "rice, then potato" in g["case"]["en"]
+
+
 def test_size_reads_the_first_length_in_metres_or_kilometres():
     assert bb.size_m("30 m") == 30 and bb.size_m("0.1 deg (about 10 km)") == 10_000
     assert bb.size_m("about 300 km") == 300_000 and bb.size_m("9 km") == 9_000

@@ -72,6 +72,7 @@
     sat: '<path d="M13 7L9 3 5 7l4 4"/><path d="M17 11l4 4-4 4-4-4"/><path d="M8 12l4 4 6-6-4-4z"/><path d="M9 21a6 6 0 0 0-6-6"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
     snow: '<path d="M12 2v20M4.9 6.5l14.2 11M4.9 17.5l14.2-11M9 4l3 2 3-2M9 20l3-2 3 2"/>',
+    wind: '<path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/>',
     rain: '<path d="M7 14a4 4 0 010-8 5 5 0 019.6 1.2A3.4 3.4 0 0117 14zM9 17.5l-1 3M13 17.5l-1 3"/>',
     cloud: '<path d="M7 17a4 4 0 010-8 5 5 0 019.6 1.2A3.4 3.4 0 0117 17z"/>',
     fog: '<path d="M7 14a4 4 0 010-8 5 5 0 019.6 1.2A3.4 3.4 0 0117 14z"/><path d="M4 18h16M6 21h12"/>',
@@ -1190,16 +1191,41 @@
     if (c && c.possible) out.push(T('check_soil.bowl_watered_' + (c.passed ? 'yes' : 'no'), { section: +c.watered.slice(1) }));
     return lines(out, 'sub');
   }
+  // the field as a heatmap (owner, 2026-11-15 evening; rules.yaml part_heatmap): each tested part's steady reading against
+  // the other tested parts, cut at the soil_years.steps edges into their four colours (ColorBrewer BrBG 4, dry to wet);
+  // readings all equal, or one part: one neutral colour, "about the same". Real readings only (probeData)
+  var HEAT = ['#A6611A', '#DFC27D', '#80CDC1', '#018571'], HEAT_SAME = '#C9C2B0';
+  function heatCols(parts) {
+    var v = {}, out = {};
+    Object.keys(parts || {}).forEach(function (k) { var p = parts[k]; if (p && p.state === 'done' && typeof p.wetness === 'number') v[k] = p.wetness; });
+    var xs = Object.keys(v).map(function (k) { return v[k]; }), lo = Math.min.apply(null, xs), hi = Math.max.apply(null, xs);
+    Object.keys(v).forEach(function (k) { var x = (v[k] - lo) / (hi - lo); out[k] = hi > lo ? HEAT[x < 0.25 ? 0 : x < 0.5 ? 1 : x < 0.75 ? 2 : 3] : HEAT_SAME; });
+    return out;
+  }
+  function heatLegend(cols) {
+    var ks = Object.keys(cols);
+    if (!ks.length) return null;
+    if (ks.every(function (k) { return cols[k] === HEAT_SAME; })) return h('p', { class: 'small heatleg' }, h('i', { style: 'background:' + HEAT_SAME }), T('farm.heat_same'));
+    return h('div', { class: 'small heatleg' }, h('span', null, T('farm.heat_drier')), HEAT.map(function (c) { return h('i', { style: 'background:' + c }); }),
+      h('span', null, T('farm.heat_wetter')), h('span', { class: 'hn' }, T('farm.heat_note')));
+  }
+  function paintHeat(G, cols) {
+    G.forEach(function (g) {
+      var c = cols[g.s.id], sv = g.q.namespaceURI === SVGNS;
+      if (sv) g.q.style.fillOpacity = c ? '.85' : '';
+      if (c) g.q.style[sv ? 'fill' : 'background'] = c;
+    });
+  }
   // the demo tray (owner, 2026-11-15 afternoon): pots of soil stand in for a field; one row per pot, in the parts' words
   function trayCard(parts) {
-    var ids = Object.keys(parts || {}).sort();
+    var ids = Object.keys(parts || {}).sort(), cols = heatCols(parts);
     return h('div', { class: 'card soft tray' }, h('p', { class: 'lead', style: 'margin:0' }, svg(I('stick', 18)), ' ', T('check_soil.tray_title')),
       h('p', { class: 'sub', style: 'margin:0' }, T('check_soil.tray_line')),
       h('div', { class: 'prows' }, ids.map(function (k) {
         var r = parts[k], w = partWord(r), done = !!(r && r.state === 'done');
-        return h('div', { class: 'prow ' + (done ? 'done' : 'now') }, h('span', { class: 'pn' }, T('check_soil.tray_pot', { section: +String(k).replace(/\D/g, '') || k })),
-          h('span', { class: 'ps' }, w.word));
-      })));
+        return h('div', { class: 'prow ' + (done ? 'done' : 'now') }, h('span', { class: 'pn' }, cols[k] ? h('i', { class: 'hsw', style: 'background:' + cols[k] }) : null,
+          T('check_soil.tray_pot', { section: +String(k).replace(/\D/g, '') || k })), h('span', { class: 'ps' }, w.word));
+      })), heatLegend(cols));
   }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
@@ -1238,7 +1264,7 @@
         robot.querySelector('.led').setAttribute('fill', happy ? '#5FBF6A' : '#E9A948');
       }
       var rows = h('div', { class: 'prows', 'aria-live': 'polite' }), info = h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:8px' });
-      var ctaBox = h('div', { class: 'ctarow' }), relnk = h('div'), ans = h('p', { class: 'lead answer' }, T('farm.untested_all')), shown = {}, pd = null;
+      var ctaBox = h('div', { class: 'ctarow' }), relnk = h('div'), ans = h('p', { class: 'lead answer' }, T('farm.untested_all')), shown = {}, pd = null, heatBox = h('div');
       function drawRows(cur) {
         rows.textContent = '';
         var any = Object.keys(shown).length > 0; rows.hidden = !any; ans.hidden = any;   // nine 'not tested yet' say no more than one line
@@ -1254,6 +1280,9 @@
         });
         var now = { kind: pd ? pd.kind : 'none', test: pd && pd.test, live: liveNow, parts: shown, rec: pd && pd.parts, demo: !!(pd && pd.demo) };
         fog.set(now); fnote.textContent = fog.note(now) || '';   // the fog clears where the stick checked the field
+        // the field as a heatmap (rules.yaml part_heatmap): only the field's own real readings, never a test away from it
+        var cols = forField(now) && !demo ? heatCols(shown) : {};
+        paintHeat(G, cols); heatBox.textContent = ''; add(heatBox, heatLegend(cols));
         if (demo) { potMarks(box, G, shown); pcap.textContent = ''; add(pcap, potLines(G, shown)); }
       }
       function drawCta(active) {
@@ -1319,7 +1348,7 @@
       return screen('soil', {
         head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), demo ? demoLabel() : fieldChip(F)],
         scene: ph ? h('div', { class: 'photocard' }, box, pcap) : [box, F._drone ? droneCredit(F._drone) : null],
-        body: [demo && !ph ? h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('drone.no_photo')), btn2(T('drone.take'), function () { go('photo'); }, 'camera')) : null, ans, rows, fnote, info, trayBox, relnk, tbox,
+        body: [demo && !ph ? h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('drone.no_photo')), btn2(T('drone.take'), function () { go('photo'); }, 'camera')) : null, heatBox, ans, rows, fnote, info, trayBox, relnk, tbox,
           moreBox([fog.any ? h('p', { class: 'fogline' }, T('fog.fog_line')) : null, honest])],
         cta: ctaBox
       });
@@ -1438,13 +1467,22 @@
   SCREENS.today = function () {
     return withField('today', function (F) {
       var G = geom(F), cards = h('div', { class: 'tcards lines1' }), more = h('div', { class: 'row wrap' }), mode = 'compare';
-      var last = null, drawn = 0;
+      var last = null, drawn = 0, pic = h('div', { class: 'col', style: 'display:flex;flex-direction:column;gap:6px' });
+      // the field as a heatmap (owner, 2026-11-15 evening; rules.yaml part_heatmap): the soil test's picture, untested parts
+      // under their fog, tested ones dry to wet against each other; the demo tray's pots on their own card, never the field
+      function drawPic(pd, tray) {
+        pic.textContent = '';
+        var box = fieldBox(F, 'robot'), fog = fogParts(box, F), cols = heatCols(pd.parts);
+        fog.set({ kind: pd.kind, test: pd.test, live: pd.live, parts: pd.parts, rec: pd.parts });
+        paintHeat(box._g, cols); add(pic, [box, heatLegend(cols), tray ? trayCard(tray) : null]);
+      }
       function draw(pd) {
+        var tray = pd && pd.kind === 'tray' ? pd.tray : null;
         if (!forField(pd)) pd = { kind: 'none', parts: {} };   // a garden or indoor test never shows as the field's parts
-        var key = JSON.stringify(pd.parts) + S.lang + mode;
+        var key = JSON.stringify(pd.parts) + JSON.stringify(tray) + S.lang + mode;
         if (key === last) return;   // the live file is read again every few seconds: redraw only when a reading changed
         last = key; cards.classList.toggle('still', drawn++ > 1);
-        cards.textContent = ''; more.textContent = '';
+        cards.textContent = ''; more.textContent = ''; drawPic(pd, tray);
         if (!anyTested(pd)) {   // owner, 2026-11-15: one line, not one 'not tested yet' per part
           cards.append(h('div', { class: 'tcard none' }, dotEl('none'), h('span', { class: 'word' }, T('farm.untested_all'))));
           more.append(lnk(T('parts.start_test'), function () { go('soil'); }, 'stick'));
@@ -1460,11 +1498,11 @@
       Promise.all([probeData(), featData('simple')]).then(function (r) {
         var pd = r[0]; mode = (r[1] && r[1].today && r[1].today.mode) || 'compare';
         if (cards.isConnected) draw(pd);
-        if (pd.kind === 'live') every(function () { probeData().then(function (x) { if (cards.isConnected) draw(x); }); }, 4000);
+        if (pd.kind === 'live' || pd.kind === 'tray') every(function () { probeData().then(function (x) { if (cards.isConnected) draw(x); }); }, 4000);
       });
       return screen('today', {
         head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), fieldChip(F)],
-        scene: [cards, more],
+        scene: [pic, cards, more],
         body: null,
         cta: cta(T('what_to_grow.see3'), function () { go('next/3'); })
       });
@@ -1731,13 +1769,25 @@
   function blockIcon(u) { return u.frost !== 'none' ? 'snow' : RAIN_IC[u.rain] || 'cloud'; }
   // one Weather ahead card (B7; Next 6 months too, B2): the month's picture, then at most three short lines: "[Months]: usually
   // [weather]." / "Watch out: [danger]" or "Usually no big danger." / "Do this: [its tip]" or "Keep your usual care."
-  function wxCard(x, b, months, i, tags) {
+  function wxCard(x, b, months, i, tags, bs) {
     var icon = blockIcon(b.usual);
     return h('div', { class: 'card wblock', style: 'animation-delay:' + (120 + i * 70) + 'ms' },
       h('span', { class: 'wbi', style: icon === 'sun' ? 'color:#D27A2C' : '' }, svg(I(icon, 40))),
       h('div', { class: 'wpara' }, h('p', null, h('b', null, say(x.usual, { month: months }))),
         x.other ? null : h('p', null, x.tip ? [h('b', null, T('weather.watch')), ' ', say(x.danger)] : say(x.danger)),
-        x.other ? null : h('p', null, h('b', null, T('weather.do')), ' ', x.tip ? say(x.tip) : T('farm.wx_usual_care')), tags || null));
+        x.other ? null : h('p', null, h('b', null, T('weather.do')), ' ', x.tip ? say(x.tip) : T('farm.wx_usual_care')), dryLine(bs || [b]), tags || null));
+  }
+  // how fast the soil dries (owner, 2026-11-15 evening; rules.yaml soil_drying), an estimate: the months' word (slowest to
+  // fastest when a joined card's months differ), a wind or sun icon when any of them is among the four windiest or sunniest
+  var DRY = ['slow', 'medium', 'fast'];
+  function dryLine(bs) {
+    var ds = bs.map(function (b) { return b && b.usual && b.usual.drying; }).filter(Boolean);
+    if (!ds.length) return null;
+    var r = ds.map(function (d) { return DRY.indexOf(d.word); }), lo = Math.min.apply(null, r), hi = Math.max.apply(null, r);
+    function tag(on, ic, k) { return on ? h('span', { class: 'wdi' }, svg(I(ic, 16, 2.4)), T('weather.' + k)) : null; }
+    return h('p', { class: 'wdry' }, svg(I('soil', 16, 2.4)), h('span', null, T('weather.dry_' + DRY[lo] + (hi > lo ? '_' + DRY[hi] : ''))),
+      tag(ds.some(function (d) { return d.wind; }), 'wind', 'dry_wind'), tag(ds.some(function (d) { return d.sun; }), 'sun', 'dry_sun'),
+      h('span', { class: 'wlab' }, T('your_plan.lab_estimate')));
   }
   // W (owner, 2026-11-15): two or three of a month block's own words, "Dry, cold" or, on frosty months, "Cold, frost possible"
   function wxWords(u) { return cap(u.frost !== 'none' ? T('weather.temp_' + u.temp) + ', ' + T('weather.frost_' + u.frost) : T('weather.rain_' + u.rain) + ', ' + T('weather.temp_' + u.temp)); }
@@ -1779,7 +1829,7 @@
         var blocks = sixBlocks(wx), byKey = {};
         blocks.forEach(function (b) { byKey[b.key] = b; });
         joinBlocks(blocks.map(function (b) { return b.key; }), wl).forEach(function (g, i) {
-          list.append(wxCard(g.x, byKey[g.keys[0]], monthSpan(g.keys[0], g.keys[g.keys.length - 1]), i));
+          list.append(wxCard(g.x, byKey[g.keys[0]], monthSpan(g.keys[0], g.keys[g.keys.length - 1]), i, null, g.keys.map(function (k) { return byKey[k]; })));
         });
       });
       return screen('weather', {

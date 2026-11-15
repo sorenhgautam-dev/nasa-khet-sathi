@@ -177,12 +177,42 @@ def pixels(inp):
                       "हरेक चित्र साँचो नापमा छ। कोर्न नसकिने सानो कुरालाई थोप्लाले देखाउँछ।")}
 
 
+NE_MONTHS = ["जन", "फेब", "मार्च", "अप्रि", "मे", "जुन", "जुला", "अग", "सेप", "अक्टो", "नोभे", "डिसे"]
+NE_CROPS = {"rice": "धान", "potato": "आलु", "wheat": "गहुँ", "lentil": "मसुरो", "maize": "मकै", "mustard": "तोरी"}
+STEP_WORDS = {"very_dry": T("Very dry", "धेरै सुक्खा"), "dry": T("Dry", "सुक्खा"), "damp": T("Damp", "चिस्यान"), "wet": T("Wet", "ओसिलो")}
+
+
+def soil_years(g):
+    """24 years of soil at a glance (owner, 2026-11-15 evening; rules.yaml soil_years): data/checks/<field>/soil_years.json
+    as a grid of steps (one row per replayed year), with its words."""
+    n, rot, dry = len(g["years"]), g["rotation"], g["case"] == "rain-fed"
+    plan = (", then ".join(rot), ", त्यसपछि ".join(NE_CROPS.get(c, c) for c in rot))
+    return {
+        "title": T(f"{n} years of soil at a glance", f"{n} वर्षको माटो एकै नजरमा"),
+        "say": T("How wet the soil was each month, in our copy of your field.",
+                 "हाम्रो खेतको नक्कलमा हरेक महिना माटो कति ओसिलो थियो।"),
+        "case": T(f"Your plan now ({plan[0]}), " + ("if you can't water." if dry else "with water."),
+                  f"अहिलेको योजना ({plan[1]}), " + ("पानी हाल्न नसके।" if dry else "पानी हाल्दा।")),
+        "years": g["years"], "step": [g["step"][str(y)] for y in g["years"]], "events": g["events"],
+        "colours": g["steps"]["colours"], "words": [STEP_WORDS[w] for w in g["steps"]["words"]],
+        "months": [T(m, ne) for m, ne in zip(MONTHS, NE_MONTHS)],
+        "marks": {"flood": T("Flood year", "बाढी वर्ष"), "drought": T("Dry year", "खडेरी वर्ष")},
+        "legend": [T("Dry", "सुक्खा"), T("Wet", "ओसिलो")],
+        "tap": T("Tap a square to see its month.", "महिना हेर्न वर्ग थिच्नुहोस्।"),
+        "note": T("Each square is the month's average: how full the soil's water store was. "
+                  "An estimate from our copy of your field, with NASA rain and weather.",
+                  "हरेक वर्ग महिनाको औसत हो: माटोले राख्न सक्ने पानी कति भरिएको थियो। "
+                  "नासाको वर्षा र मौसमसहित हाम्रो खेतको नक्कलबाट अनुमान।"),
+    }
+
+
 def build_behind(inp):
     """The whole file from loaded inputs (pure)."""
     fj = inp["field_json"]
     power = power_chart(inp["weather"], inp["rules"], source(fj, "NASA POWER"))
     n = len(fj["replay"]["current"])
     p = inp["paths"]
+    grid = {"soil_years": soil_years(inp["soil_years"])} if inp.get("soil_years") else {}
     return {
         "field": inp["field"], "placeholder": bool(re.search("placeholder", fj["field"]["name"], re.I)), "ne_review": NE_REVIEW,
         "made_by": "pipeline/export/build_behind.py",
@@ -195,7 +225,8 @@ def build_behind(inp):
         "units": {"m": T("m", "मि"), "km": T("km", "किमी")},
         "inputs": {"numbers": sorted({p[k] for k in ("gpm", "greenness", "field_json", "plans", "future")}),
                    "cards": [p["story"], p["field_json"], p["gpm"]], "power_year": [p["weather"], "config/rules.yaml"],
-                   "pixels": [p["field_json"], p["field_config"]]},
+                   "pixels": [p["field_json"], p["field_config"]], **({"soil_years": [p["soil_years"]]} if grid else {})},
+        **grid,
     }
 
 
@@ -203,7 +234,7 @@ def input_paths(field):
     c, k = f"data/clean/{field}", f"data/checks/{field}"
     return {"gpm": f"{c}/gpm.parquet", "greenness": f"{c}/greenness_field.parquet", "weather": f"{c}/weather.parquet",
             "plans": f"{k}/plans.json", "future": f"{k}/future.json", "field_json": f"site/data/fields/{field}.json",
-            "story": "site/data/story.json", "field_config": f"config/fields/{field}.yaml"}
+            "story": "site/data/story.json", "field_config": f"config/fields/{field}.yaml", "soil_years": f"{k}/soil_years.json"}
 
 
 def load_inputs(repo, field):
@@ -213,6 +244,8 @@ def load_inputs(repo, field):
     out = {"field": field, "paths": paths, "rules": load_rules()}
     for key, rel in paths.items():
         path = Path(repo) / rel
+        if key == "soil_years" and not path.exists():   # optional: scripts/run_soil_years.py (2026-11-15 evening)
+            continue
         out[key] = pd.read_parquet(path) if rel.endswith(".parquet") else \
             yaml.safe_load(path.read_text()) if rel.endswith(".yaml") else json.loads(path.read_text())
     if out["story"]["field"] != field:

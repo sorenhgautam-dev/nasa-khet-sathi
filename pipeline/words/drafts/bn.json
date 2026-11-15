@@ -3815,6 +3815,62 @@
   "screens.check_soil.texts.tray_pot": {
    "en": "Pot {section}",
    "bn": "টব {section}"
+  },
+  "shared.weather.dry_slow": {
+   "en": "Soil dries slowly.",
+   "bn": "মাটি ধীরে শুকায়।"
+  },
+  "shared.weather.dry_medium": {
+   "en": "Soil dries at medium speed.",
+   "bn": "মাটি মাঝারি গতিতে শুকায়।"
+  },
+  "shared.weather.dry_fast": {
+   "en": "Soil dries fast.",
+   "bn": "মাটি দ্রুত শুকায়।"
+  },
+  "shared.weather.dry_slow_medium": {
+   "en": "Soil dries slowly to medium.",
+   "bn": "মাটি ধীর থেকে মাঝারি গতিতে শুকায়।"
+  },
+  "shared.weather.dry_medium_fast": {
+   "en": "Soil dries medium to fast.",
+   "bn": "মাটি মাঝারি থেকে দ্রুত শুকায়।"
+  },
+  "shared.weather.dry_slow_fast": {
+   "en": "Soil dries slowly to fast.",
+   "bn": "মাটি ধীর থেকে দ্রুত শুকায়।"
+  },
+  "shared.weather.dry_wind": {
+   "en": "Windy",
+   "bn": "বাতাস বেশি"
+  },
+  "shared.weather.dry_sun": {
+   "en": "Sunny",
+   "bn": "রোদ বেশি"
+  },
+  "shared.weather.dry_title": {
+   "en": "How fast the soil dries",
+   "bn": "মাটি কত দ্রুত শুকায়"
+  },
+  "shared.weather.dry_how": {
+   "en": "We use NASA's sun, wind, humidity and heat. Each word compares this field's twelve months. Wind icon: one of the four windiest months. Sun icon: one of the four sunniest months. This is the area's drying, not your field's. NASA's weather squares are about 50 km. We assume an open field. Trees or walls that block wind slow drying.",
+   "bn": "ভিত্তি: নাসার রোদ, বাতাস, আর্দ্রতা ও তাপ। প্রতিটি শব্দ বারো মাসের তুলনা। বাতাসের চিহ্ন: সবচেয়ে বাতাসের চার মাস। রোদের চিহ্ন: সবচেয়ে রোদের চার মাস। এটা পুরো এলাকার শুকানো। নাসার আবহাওয়া বর্গ প্রায় 50 কিমি। আমরা খোলা মাঠ ধরে নিই। গাছ বা দেয়াল বাতাস আটকালে শুকানো ধীর।"
+  },
+  "shared.farm.heat_drier": {
+   "en": "Drier",
+   "bn": "বেশি শুকনো"
+  },
+  "shared.farm.heat_wetter": {
+   "en": "Wetter",
+   "bn": "বেশি ভেজা"
+  },
+  "shared.farm.heat_note": {
+   "en": "Colours compare the tested parts.",
+   "bn": "রং পরীক্ষিত অংশগুলোর তুলনা।"
+  },
+  "shared.farm.heat_same": {
+   "en": "All tested parts are about the same.",
+   "bn": "পরীক্ষিত সব অংশ প্রায় একই।"
   }
  }
 }

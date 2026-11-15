@@ -3815,6 +3815,62 @@
   "screens.check_soil.texts.tray_pot": {
    "en": "Pot {section}",
    "hi": "गमला {section}"
+  },
+  "shared.weather.dry_slow": {
+   "en": "Soil dries slowly.",
+   "hi": "मिट्टी धीरे सूखती है।"
+  },
+  "shared.weather.dry_medium": {
+   "en": "Soil dries at medium speed.",
+   "hi": "मिट्टी मध्यम गति से सूखती है।"
+  },
+  "shared.weather.dry_fast": {
+   "en": "Soil dries fast.",
+   "hi": "मिट्टी जल्दी सूखती है।"
+  },
+  "shared.weather.dry_slow_medium": {
+   "en": "Soil dries slowly to medium.",
+   "hi": "मिट्टी धीरे से मध्यम गति तक सूखती है।"
+  },
+  "shared.weather.dry_medium_fast": {
+   "en": "Soil dries medium to fast.",
+   "hi": "मिट्टी मध्यम से तेज़ सूखती है।"
+  },
+  "shared.weather.dry_slow_fast": {
+   "en": "Soil dries slowly to fast.",
+   "hi": "मिट्टी धीरे से तेज़ सूखती है।"
+  },
+  "shared.weather.dry_wind": {
+   "en": "Windy",
+   "hi": "तेज़ हवा"
+  },
+  "shared.weather.dry_sun": {
+   "en": "Sunny",
+   "hi": "तेज़ धूप"
+  },
+  "shared.weather.dry_title": {
+   "en": "How fast the soil dries",
+   "hi": "मिट्टी कितनी जल्दी सूखती है"
+  },
+  "shared.weather.dry_how": {
+   "en": "We use NASA's sun, wind, humidity and heat. Each word compares this field's twelve months. Wind icon: one of the four windiest months. Sun icon: one of the four sunniest months. This is the area's drying, not your field's. NASA's weather squares are about 50 km. We assume an open field. Trees or walls that block wind slow drying.",
+   "hi": "आधार: नासा की धूप, हवा, नमी और गर्मी। हर शब्द बारह महीनों की तुलना करता है। हवा का चिह्न: चार सबसे हवादार महीने। धूप का चिह्न: चार सबसे धूप वाले महीने। यह पूरे इलाके का सूखना है। नासा के मौसम वर्ग लगभग 50 किमी। हम खुला खेत मानते हैं। पेड़ या दीवार हवा रोकें, तो सूखना धीमा।"
+  },
+  "shared.farm.heat_drier": {
+   "en": "Drier",
+   "hi": "ज़्यादा सूखा"
+  },
+  "shared.farm.heat_wetter": {
+   "en": "Wetter",
+   "hi": "ज़्यादा गीला"
+  },
+  "shared.farm.heat_note": {
+   "en": "Colours compare the tested parts.",
+   "hi": "रंग जाँचे गए हिस्सों की तुलना है।"
+  },
+  "shared.farm.heat_same": {
+   "en": "All tested parts are about the same.",
+   "hi": "जाँचे गए सभी हिस्से लगभग एक जैसे।"
   }
  }
 }

@@ -3977,6 +3977,56 @@
     "en": "days",
     "ne": "दिन",
     "ne_review": "needs native-speaker review"
+   },
+   "dry_slow": {
+    "en": "Soil dries slowly.",
+    "ne": "माटो बिस्तारै सुक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_medium": {
+    "en": "Soil dries at medium speed.",
+    "ne": "माटो मध्यम गतिमा सुक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_fast": {
+    "en": "Soil dries fast.",
+    "ne": "माटो छिटो सुक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_slow_medium": {
+    "en": "Soil dries slowly to medium.",
+    "ne": "माटो बिस्तारैदेखि मध्यम गतिमा सुक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_medium_fast": {
+    "en": "Soil dries medium to fast.",
+    "ne": "माटो मध्यमदेखि छिटो सुक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_slow_fast": {
+    "en": "Soil dries slowly to fast.",
+    "ne": "माटो बिस्तारैदेखि छिटो सुक्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_wind": {
+    "en": "Windy",
+    "ne": "हावा धेरै",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_sun": {
+    "en": "Sunny",
+    "ne": "घाम धेरै",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_title": {
+    "en": "How fast the soil dries",
+    "ne": "माटो कति छिटो सुक्छ",
+    "ne_review": "needs native-speaker review"
+   },
+   "dry_how": {
+    "en": "We use NASA's sun, wind, humidity and heat. Each word compares this field's twelve months. Wind icon: one of the four windiest months. Sun icon: one of the four sunniest months. This is the area's drying, not your field's. NASA's weather squares are about 50 km. We assume an open field. Trees or walls that block wind slow drying.",
+    "ne": "हामी नासाको घाम, हावा, आर्द्रता र गर्मी हेर्छौं। हरेक शब्दले यो खेतका बाह्र महिना तुलना गर्छ। हावाको चित्र: सबैभन्दा हावा चल्ने चार महिनामध्ये एक। घामको चित्र: सबैभन्दा घमाइलो चार महिनामध्ये एक। यो इलाकाको सुकाइ हो, खेतको मात्र होइन। नासाको मौसम वर्ग करिब ५० किमीका छन्। हामीले खुला खेत मानेका छौं। हावा रोक्ने रूख वा पर्खालले सुकाइ ढिलो बनाउँछ।",
+    "ne_review": "needs native-speaker review"
    }
   },
   "twin": {
@@ -4685,6 +4735,26 @@
    "none_better": {
     "en": "None of our other plans usually did better.",
     "ne": "हाम्रा अरू कुनै योजनाले प्रायः राम्रो गरेनन्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "heat_drier": {
+    "en": "Drier",
+    "ne": "बढी सुक्खा",
+    "ne_review": "needs native-speaker review"
+   },
+   "heat_wetter": {
+    "en": "Wetter",
+    "ne": "बढी ओसिलो",
+    "ne_review": "needs native-speaker review"
+   },
+   "heat_note": {
+    "en": "Colours compare the tested parts.",
+    "ne": "रङले जाँचेका भाग तुलना गर्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "heat_same": {
+    "en": "All tested parts are about the same.",
+    "ne": "जाँचेका सबै भाग उस्तै छन्।",
     "ne_review": "needs native-speaker review"
    }
   },

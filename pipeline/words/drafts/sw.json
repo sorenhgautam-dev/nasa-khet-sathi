@@ -3815,6 +3815,62 @@
   "screens.check_soil.texts.tray_pot": {
    "en": "Pot {section}",
    "sw": "Chungu {section}"
+  },
+  "shared.weather.dry_slow": {
+   "en": "Soil dries slowly.",
+   "sw": "Udongo hukauka polepole."
+  },
+  "shared.weather.dry_medium": {
+   "en": "Soil dries at medium speed.",
+   "sw": "Udongo hukauka kwa kasi ya wastani."
+  },
+  "shared.weather.dry_fast": {
+   "en": "Soil dries fast.",
+   "sw": "Udongo hukauka haraka."
+  },
+  "shared.weather.dry_slow_medium": {
+   "en": "Soil dries slowly to medium.",
+   "sw": "Udongo hukauka polepole hadi wastani."
+  },
+  "shared.weather.dry_medium_fast": {
+   "en": "Soil dries medium to fast.",
+   "sw": "Udongo hukauka wastani hadi haraka."
+  },
+  "shared.weather.dry_slow_fast": {
+   "en": "Soil dries slowly to fast.",
+   "sw": "Udongo hukauka polepole hadi haraka."
+  },
+  "shared.weather.dry_wind": {
+   "en": "Windy",
+   "sw": "Upepo mwingi"
+  },
+  "shared.weather.dry_sun": {
+   "en": "Sunny",
+   "sw": "Jua kali"
+  },
+  "shared.weather.dry_title": {
+   "en": "How fast the soil dries",
+   "sw": "Udongo hukauka kwa kasi gani"
+  },
+  "shared.weather.dry_how": {
+   "en": "We use NASA's sun, wind, humidity and heat. Each word compares this field's twelve months. Wind icon: one of the four windiest months. Sun icon: one of the four sunniest months. This is the area's drying, not your field's. NASA's weather squares are about 50 km. We assume an open field. Trees or walls that block wind slow drying.",
+   "sw": "Msingi: jua, upepo, unyevu na joto la NASA. Kila neno hulinganisha miezi kumi na mbili. Alama ya upepo: miezi minne yenye upepo zaidi. Alama ya jua: miezi minne yenye jua zaidi. Huu ni ukaukaji wa eneo lote. Miraba ya hewa ya NASA: karibu 50 km. Tunadhani shamba liko wazi. Miti au kuta zinazozuia upepo hupunguza ukaukaji."
+  },
+  "shared.farm.heat_drier": {
+   "en": "Drier",
+   "sw": "Kavu zaidi"
+  },
+  "shared.farm.heat_wetter": {
+   "en": "Wetter",
+   "sw": "Bichi zaidi"
+  },
+  "shared.farm.heat_note": {
+   "en": "Colours compare the tested parts.",
+   "sw": "Rangi hulinganisha sehemu zilizopimwa."
+  },
+  "shared.farm.heat_same": {
+   "en": "All tested parts are about the same.",
+   "sw": "Sehemu zote zilizopimwa zinakaribia kufanana."
   }
  }
 }

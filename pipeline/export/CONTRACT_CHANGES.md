@@ -4,6 +4,17 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, evening): soil drying, 24 years of soil, the field heatmap (additions only)
+
+- `fields/<id>.json` `weather.blocks[].usual.drying` (optional; rules.yaml soil_drying): `et0_mm_day`, `word` (slow,
+  medium, fast: thirds of the field's twelve blocks), `wind`, `sun` (among the four windiest or sunniest). Weather ahead
+  and Next 6 months show one line per card, labelled Estimate; How we know lists the twelve months with the caveat.
+- `behind.json` `soil_years` (optional; rules.yaml soil_years; scripts/run_soil_years.py): one row of twelve steps
+  (0 very dry .. 3 wet) per replayed year, the flood and dry years, its words and colours. Behind the scenes draws it
+  after the strip; How we know's contents link to it.
+- No new file: the soil test, Today and the demo tray colour tested parts dry to wet against each other in the browser
+  (rules.yaml part_heatmap).
+
 ## 2026-11-15 (Sunday, afternoon): 'What this tool can and cannot tell you' (additions only)
 
 - `story.json` gains `limits` (`title`, `lines`, `checked`, `estimates`, `source`): four plain lines and the compliance

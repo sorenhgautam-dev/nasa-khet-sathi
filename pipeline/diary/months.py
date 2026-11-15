@@ -23,6 +23,18 @@ def tercile_words(values12, words):
     return [words[0] if r < 4 else words[1] if r < 8 else words[2] for r in rank]
 
 
+def monthly_wetness(dates, dr_mm, taw_mm, years):
+    """rules.yaml soil_years: {year: twelve calendar-month means of the daily root-zone share 1 - Dr/TAW, 3 decimals}."""
+    s = pd.Series(1 - np.asarray(dr_mm, float) / np.asarray(taw_mm, float), index=pd.DatetimeIndex(dates))
+    m = s.groupby([s.index.year, s.index.month]).mean()
+    return {y: [round(float(m[(y, k)]), 3) for k in range(1, 13)] for y in years}
+
+
+def wetness_step(share, edges):
+    """The step (0 = driest) of a share between the fixed edges: below edges[0] 0, from edges[-1] up len(edges)."""
+    return int(np.searchsorted(edges, share, side="right"))
+
+
 def frost_band(coldest_c, frost_c, risk_c):
     if coldest_c < frost_c:
         return "high"

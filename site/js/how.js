@@ -69,6 +69,8 @@
       if (!storyBox.isConnected) return;
       var hasArea = false;
       if (bh.isConnected) addToc('behind', T('farm.behind_title'));   // gone when there is none for this field
+      // the judges' path to 24 years of soil at a glance (owner, 2026-11-15 evening; js/behind.js soilGrid)
+      K.getJSON('data/behind.json').then(function (b) { var g = b && b.field === S.fid && b.soil_years; if (g && bh.isConnected) toc.insertBefore(h('a', { class: 'btn3', href: '#/how/soilyears', style: 'min-height:40px;font-size:13px' }, K.P(g.title)), toc.children[1] || null); });
       J.forEach(function (j) { addToc(j[0], j[1]); });
       if (st) {
         story(F, st).forEach(function (x) { storyBox.append(x.el); addToc(x.id, x.title); });
@@ -212,9 +214,20 @@
     var wx = F.weather; if (!wx || !wx.blocks) return null;
     return h('div', { style: 'display:flex;flex-direction:column;gap:8px' }, h('p', { class: 'sub' }, T('weather.top', { year_count: wx.years }) + ' ' + T('weather.not_forecast')),
       K.sixBlocks(wx).map(function (b) { return h('details', { class: 'why' }, h('summary', null, K.monthSpanEl(b.key)), K.weatherWhy(F, b)); }),
+      dryingDetails(wx),
       h('p', { class: 'small', style: 'margin:0;font-weight:700' }, T('weather.sources')),
       K.lines((wx.sources || []).map(function (x) { return x.name + ' · ' + x.product + ' · ' + x.resolution + ' · ' + digits(x.years); }), 'small'),
       K.lines((wx.limits || []).map(function (x) { return x.name; }), 'small'));
+  }
+
+  // how fast the soil dries (owner, 2026-11-15 evening; rules.yaml soil_drying): each month's word, then where it comes from
+  function dryingDetails(wx) {
+    var bs = (wx.blocks || []).filter(function (b) { return b.usual.drying; });
+    if (!bs.length) return null;
+    return sub(T('weather.dry_title'), [h('ul', { class: 'lines small' }, bs.map(function (b) {
+      var d = b.usual.drying;
+      return h('li', null, h('b', null, K.monthSpanEl(b.key)), ' · ' + T('weather.dry_' + d.word) + (d.wind ? ' · ' + T('weather.dry_wind') : '') + (d.sun ? ' · ' + T('weather.dry_sun') : ''));
+    })), said(T('weather.dry_how')), h('p', { class: 'small', style: 'margin:0' }, T('your_plan.lab_estimate') + ' · NASA POWER · ' + T('kind.model'))]);
   }
 
   // ---------------- the method in plain words ----------------

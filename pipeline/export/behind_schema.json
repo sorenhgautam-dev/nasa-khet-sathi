@@ -1,83 +1,438 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "behind_schema.json",
-  "title": "site/data/behind.json: 'Behind the scenes: your field, seen by NASA' (owner, 2026-11-15)",
-  "description": "Built by pipeline/export/build_behind.py from finished outputs only. Every number is counted from the file named in its `from`. A card's `chart` is a chart id in site/data/story.json, or one of this file's own `charts` (the same chart rule as story_schema.json, checked by build_behind.validate_behind). Sizes are metres.",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["field", "placeholder", "ne_review", "made_by", "title", "numbers", "flow", "cards", "charts", "pixels", "tags", "units", "inputs"],
-  "properties": {
-    "field": {"type": "string", "minLength": 1},
-    "placeholder": {"type": "boolean", "description": "true while the field's location and rotation are placeholders"},
-    "ne_review": {"const": "needs native-speaker review", "description": "every Nepali text in this file is an SI draft"},
-    "made_by": {"type": "string", "minLength": 1},
-    "title": {"$ref": "#/$defs/text"},
-    "numbers": {
-      "type": "array", "minItems": 1,
-      "items": {
-        "type": "object", "additionalProperties": false, "required": ["id", "value", "label", "detail", "from", "sources"],
-        "properties": {
-          "id": {"enum": ["rain_days", "images", "years_replayed", "climate_models", "seasons", "datasets"]},
-          "value": {"type": "integer", "minimum": 1, "description": "a count, never an estimate"},
-          "label": {"$ref": "#/$defs/text"},
-          "detail": {"$ref": "#/$defs/text"},
-          "from": {"type": "string", "minLength": 1, "description": "the repository file the value was counted from, and what was counted"},
-          "sources": {
-            "type": "array", "minItems": 1, "description": "the field file's own source entries behind the number",
-            "items": {
-              "type": "object", "additionalProperties": false, "required": ["name", "resolution", "years", "type"],
-              "properties": {"name": {"type": "string", "minLength": 1}, "resolution": {"type": "string", "minLength": 1},
-                             "years": {"type": "string", "minLength": 1}, "type": {"enum": ["satellite", "model", "station"]}}
-            }
-          }
-        }
-      }
-    },
-    "flow": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/text"}, "description": "NASA data, the field twin, the replay, the farmer's answers: left to right"},
-    "cards": {
-      "type": "array", "minItems": 1,
-      "items": {
-        "type": "object", "additionalProperties": false, "required": ["id", "mission", "say", "chart", "source", "resolution", "years", "kind"],
-        "properties": {
-          "id": {"type": "string", "pattern": "^[a-z_]+$"},
-          "mission": {"type": "string", "minLength": 1},
-          "say": {"$ref": "#/$defs/text", "description": "one plain sentence; its numbers come from the data"},
-          "chart": {"type": "string", "minLength": 1},
-          "only": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "show only these categories of the chart"},
-          "also": {"type": "string", "description": "a second dataset on the card that is not in the field file's source list"},
-          "source": {"type": "string", "minLength": 1, "description": "the name in the field file's `sources`"},
-          "resolution": {"type": "string", "minLength": 1},
-          "years": {"type": "string", "minLength": 1},
-          "kind": {"enum": ["satellite", "model", "station"], "description": "model: label it as worked out by computer"}
-        }
-      }
-    },
-    "charts": {"type": "array", "items": {"type": "object"}},
-    "pixels": {
-      "type": "object", "additionalProperties": false, "required": ["field_m", "squares", "say", "note"],
-      "properties": {
-        "say": {"$ref": "#/$defs/text"}, "note": {"$ref": "#/$defs/text"},
-        "field_m": {"type": "number", "exclusiveMinimum": 0, "description": "the field's side: the square root of its outline's area"},
-        "squares": {
-          "type": "array", "minItems": 1,
-          "items": {
-            "type": "object", "additionalProperties": false, "required": ["id", "name", "what", "size_m", "source"],
-            "properties": {
-              "id": {"type": "string"}, "name": {"type": "string"}, "what": {"$ref": "#/$defs/text"},
-              "size_m": {"type": "number", "exclusiveMinimum": 0}, "source": {"type": "string"}
-            }
-          }
-        }
-      }
-    },
-    "tags": {"type": "object", "additionalProperties": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "description": "a farmer answer's small tag (rain, weather, space) -> the cards it opens"},
-    "units": {"type": "object", "additionalProperties": false, "required": ["m", "km"], "properties": {"m": {"$ref": "#/$defs/text"}, "km": {"$ref": "#/$defs/text"}}},
-    "inputs": {"type": "object", "additionalProperties": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "behind_schema.json",
+ "title": "site/data/behind.json: 'Behind the scenes: your field, seen by NASA' (owner, 2026-11-15)",
+ "description": "Built by pipeline/export/build_behind.py from finished outputs only. Every number is counted from the file named in its `from`. A card's `chart` is a chart id in site/data/story.json, or one of this file's own `charts` (the same chart rule as story_schema.json, checked by build_behind.validate_behind). Sizes are metres.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "field",
+  "placeholder",
+  "ne_review",
+  "made_by",
+  "title",
+  "numbers",
+  "flow",
+  "cards",
+  "charts",
+  "pixels",
+  "tags",
+  "units",
+  "inputs"
+ ],
+ "properties": {
+  "field": {
+   "type": "string",
+   "minLength": 1
   },
-  "$defs": {
-    "text": {
-      "type": "object", "additionalProperties": false, "required": ["en", "ne"],
-      "properties": {"en": {"type": "string", "minLength": 1}, "ne": {"type": "string", "minLength": 1}}
+  "placeholder": {
+   "type": "boolean",
+   "description": "true while the field's location and rotation are placeholders"
+  },
+  "ne_review": {
+   "const": "needs native-speaker review",
+   "description": "every Nepali text in this file is an SI draft"
+  },
+  "made_by": {
+   "type": "string",
+   "minLength": 1
+  },
+  "title": {
+   "$ref": "#/$defs/text"
+  },
+  "numbers": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "value",
+     "label",
+     "detail",
+     "from",
+     "sources"
+    ],
+    "properties": {
+     "id": {
+      "enum": [
+       "rain_days",
+       "images",
+       "years_replayed",
+       "climate_models",
+       "seasons",
+       "datasets"
+      ]
+     },
+     "value": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "a count, never an estimate"
+     },
+     "label": {
+      "$ref": "#/$defs/text"
+     },
+     "detail": {
+      "$ref": "#/$defs/text"
+     },
+     "from": {
+      "type": "string",
+      "minLength": 1,
+      "description": "the repository file the value was counted from, and what was counted"
+     },
+     "sources": {
+      "type": "array",
+      "minItems": 1,
+      "description": "the field file's own source entries behind the number",
+      "items": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "name",
+        "resolution",
+        "years",
+        "type"
+       ],
+       "properties": {
+        "name": {
+         "type": "string",
+         "minLength": 1
+        },
+        "resolution": {
+         "type": "string",
+         "minLength": 1
+        },
+        "years": {
+         "type": "string",
+         "minLength": 1
+        },
+        "type": {
+         "enum": [
+          "satellite",
+          "model",
+          "station"
+         ]
+        }
+       }
+      }
+     }
     }
+   }
+  },
+  "flow": {
+   "type": "array",
+   "minItems": 2,
+   "items": {
+    "$ref": "#/$defs/text"
+   },
+   "description": "NASA data, the field twin, the replay, the farmer's answers: left to right"
+  },
+  "cards": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "mission",
+     "say",
+     "chart",
+     "source",
+     "resolution",
+     "years",
+     "kind"
+    ],
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^[a-z_]+$"
+     },
+     "mission": {
+      "type": "string",
+      "minLength": 1
+     },
+     "say": {
+      "$ref": "#/$defs/text",
+      "description": "one plain sentence; its numbers come from the data"
+     },
+     "chart": {
+      "type": "string",
+      "minLength": 1
+     },
+     "only": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+       "type": "string"
+      },
+      "description": "show only these categories of the chart"
+     },
+     "also": {
+      "type": "string",
+      "description": "a second dataset on the card that is not in the field file's source list"
+     },
+     "source": {
+      "type": "string",
+      "minLength": 1,
+      "description": "the name in the field file's `sources`"
+     },
+     "resolution": {
+      "type": "string",
+      "minLength": 1
+     },
+     "years": {
+      "type": "string",
+      "minLength": 1
+     },
+     "kind": {
+      "enum": [
+       "satellite",
+       "model",
+       "station"
+      ],
+      "description": "model: label it as worked out by computer"
+     }
+    }
+   }
+  },
+  "charts": {
+   "type": "array",
+   "items": {
+    "type": "object"
+   }
+  },
+  "pixels": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "field_m",
+    "squares",
+    "say",
+    "note"
+   ],
+   "properties": {
+    "say": {
+     "$ref": "#/$defs/text"
+    },
+    "note": {
+     "$ref": "#/$defs/text"
+    },
+    "field_m": {
+     "type": "number",
+     "exclusiveMinimum": 0,
+     "description": "the field's side: the square root of its outline's area"
+    },
+    "squares": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "id",
+       "name",
+       "what",
+       "size_m",
+       "source"
+      ],
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "name": {
+        "type": "string"
+       },
+       "what": {
+        "$ref": "#/$defs/text"
+       },
+       "size_m": {
+        "type": "number",
+        "exclusiveMinimum": 0
+       },
+       "source": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   }
+  },
+  "tags": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "array",
+    "minItems": 1,
+    "items": {
+     "type": "string"
+    }
+   },
+   "description": "a farmer answer's small tag (rain, weather, space) -> the cards it opens"
+  },
+  "units": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "m",
+    "km"
+   ],
+   "properties": {
+    "m": {
+     "$ref": "#/$defs/text"
+    },
+    "km": {
+     "$ref": "#/$defs/text"
+    }
+   }
+  },
+  "inputs": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "array",
+    "minItems": 1,
+    "items": {
+     "type": "string",
+     "minLength": 1
+    }
+   }
+  },
+  "soil_years": {
+   "description": "Optional (owner, 2026-11-15 evening; rules.yaml soil_years): 24 years of soil at a glance, one row of twelve steps (0 = very dry .. 3 = wet) per replayed year, from scripts/run_soil_years.py",
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "title",
+    "say",
+    "case",
+    "years",
+    "step",
+    "events",
+    "colours",
+    "words",
+    "months",
+    "marks",
+    "legend",
+    "tap",
+    "note"
+   ],
+   "properties": {
+    "title": {
+     "$ref": "#/$defs/text"
+    },
+    "say": {
+     "$ref": "#/$defs/text"
+    },
+    "case": {
+     "$ref": "#/$defs/text"
+    },
+    "tap": {
+     "$ref": "#/$defs/text"
+    },
+    "note": {
+     "$ref": "#/$defs/text"
+    },
+    "years": {
+     "type": "array",
+     "items": {
+      "type": "integer"
+     },
+     "minItems": 1
+    },
+    "step": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "items": {
+       "enum": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      "minItems": 12,
+      "maxItems": 12
+     }
+    },
+    "events": {
+     "type": "object",
+     "additionalProperties": {
+      "enum": [
+       "flood",
+       "drought"
+      ]
+     }
+    },
+    "colours": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "minItems": 4,
+     "maxItems": 4
+    },
+    "words": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/text"
+     },
+     "minItems": 4,
+     "maxItems": 4
+    },
+    "months": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/text"
+     },
+     "minItems": 12,
+     "maxItems": 12
+    },
+    "marks": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "flood",
+      "drought"
+     ],
+     "properties": {
+      "flood": {
+       "$ref": "#/$defs/text"
+      },
+      "drought": {
+       "$ref": "#/$defs/text"
+      }
+     }
+    },
+    "legend": {
+     "type": "array",
+     "items": {
+      "$ref": "#/$defs/text"
+     },
+     "minItems": 2,
+     "maxItems": 2
+    }
+   }
   }
+ },
+ "$defs": {
+  "text": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "en",
+    "ne"
+   ],
+   "properties": {
+    "en": {
+     "type": "string",
+     "minLength": 1
+    },
+    "ne": {
+     "type": "string",
+     "minLength": 1
+    }
+   }
+  }
+ }
 }

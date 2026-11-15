@@ -4896,7 +4896,13 @@
      "tmin_c": 4.0,
      "frost": "risk",
      "rain": "dry",
-     "temp": "cold"
+     "temp": "cold",
+     "drying": {
+      "et0_mm_day": 2.6,
+      "word": "slow",
+      "wind": false,
+      "sun": false
+     }
     },
     "dry_run": {
      "typical": 17,
@@ -5156,7 +5162,13 @@
      "tmin_c": 7.4,
      "frost": "none",
      "rain": "some_rain",
-     "temp": "cold"
+     "temp": "cold",
+     "drying": {
+      "et0_mm_day": 3.7,
+      "word": "medium",
+      "wind": true,
+      "sun": true
+     }
     },
     "dry_run": {
      "typical": 11,
@@ -5309,7 +5321,13 @@
      "tmin_c": 11.3,
      "frost": "none",
      "rain": "some_rain",
-     "temp": "mild"
+     "temp": "mild",
+     "drying": {
+      "et0_mm_day": 4.9,
+      "word": "fast",
+      "wind": true,
+      "sun": true
+     }
     },
     "dry_run": {
      "typical": 12,
@@ -5396,7 +5414,13 @@
      "tmin_c": 14.3,
      "frost": "none",
      "rain": "some_rain",
-     "temp": "mild"
+     "temp": "mild",
+     "drying": {
+      "et0_mm_day": 5.2,
+      "word": "fast",
+      "wind": true,
+      "sun": true
+     }
     },
     "dry_run": {
      "typical": 7,
@@ -5441,7 +5465,13 @@
      "tmin_c": 17.6,
      "frost": "none",
      "rain": "some_rain",
-     "temp": "warm"
+     "temp": "warm",
+     "drying": {
+      "et0_mm_day": 5.0,
+      "word": "fast",
+      "wind": true,
+      "sun": true
+     }
     },
     "dry_run": {
      "typical": 4,
@@ -5486,7 +5516,13 @@
      "tmin_c": 19.8,
      "frost": "none",
      "rain": "wet",
-     "temp": "warm"
+     "temp": "warm",
+     "drying": {
+      "et0_mm_day": 4.0,
+      "word": "fast",
+      "wind": false,
+      "sun": false
+     }
     },
     "dry_run": {
      "typical": 2,
@@ -5531,7 +5567,13 @@
      "tmin_c": 20.1,
      "frost": "none",
      "rain": "wet",
-     "temp": "warm"
+     "temp": "warm",
+     "drying": {
+      "et0_mm_day": 3.8,
+      "word": "medium",
+      "wind": false,
+      "sun": false
+     }
     },
     "dry_run": {
      "typical": 1,
@@ -5585,7 +5627,13 @@
      "tmin_c": 19.5,
      "frost": "none",
      "rain": "wet",
-     "temp": "warm"
+     "temp": "warm",
+     "drying": {
+      "et0_mm_day": 3.7,
+      "word": "medium",
+      "wind": false,
+      "sun": false
+     }
     },
     "dry_run": {
      "typical": 2,
@@ -5647,7 +5695,13 @@
      "tmin_c": 17.1,
      "frost": "none",
      "rain": "wet",
-     "temp": "mild"
+     "temp": "mild",
+     "drying": {
+      "et0_mm_day": 3.4,
+      "word": "medium",
+      "wind": false,
+      "sun": false
+     }
     },
     "dry_run": {
      "typical": 7,
@@ -5784,7 +5838,13 @@
      "tmin_c": 11.6,
      "frost": "none",
      "rain": "dry",
-     "temp": "mild"
+     "temp": "mild",
+     "drying": {
+      "et0_mm_day": 2.9,
+      "word": "slow",
+      "wind": false,
+      "sun": false
+     }
     },
     "dry_run": {
      "typical": 15,
@@ -5912,7 +5972,13 @@
      "tmin_c": 6.8,
      "frost": "none",
      "rain": "dry",
-     "temp": "cold"
+     "temp": "cold",
+     "drying": {
+      "et0_mm_day": 2.2,
+      "word": "slow",
+      "wind": false,
+      "sun": false
+     }
     },
     "dry_run": {
      "typical": 23,
@@ -6002,7 +6068,13 @@
      "tmin_c": 3.4,
      "frost": "risk",
      "rain": "dry",
-     "temp": "cold"
+     "temp": "cold",
+     "drying": {
+      "et0_mm_day": 2.1,
+      "word": "slow",
+      "wind": false,
+      "sun": false
+     }
     },
     "dry_run": {
      "typical": 17,

@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 827 texts): 804 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 841 texts): 818 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -801,7 +801,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 283 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 297 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -908,6 +908,16 @@ This page is made from the word files in this folder; change those, not this pag
 | This is an estimate. | यो अनुमान हो। |
 | Where this comes from | यो कहाँबाट आयो |
 | days | दिन |
+| Soil dries slowly. | माटो बिस्तारै सुक्छ। |
+| Soil dries at medium speed. | माटो मध्यम गतिमा सुक्छ। |
+| Soil dries fast. | माटो छिटो सुक्छ। |
+| Soil dries slowly to medium. | माटो बिस्तारैदेखि मध्यम गतिमा सुक्छ। |
+| Soil dries medium to fast. | माटो मध्यमदेखि छिटो सुक्छ। |
+| Soil dries slowly to fast. | माटो बिस्तारैदेखि छिटो सुक्छ। |
+| Windy | हावा धेरै |
+| Sunny | घाम धेरै |
+| How fast the soil dries | माटो कति छिटो सुक्छ |
+| We use NASA's sun, wind, humidity and heat. Each word compares this field's twelve months. Wind icon: one of the four windiest months. Sun icon: one of the four sunniest months. This is the area's drying, not your field's. NASA's weather squares are about 50 km. We assume an open field. Trees or walls that block wind slow drying. | हामी नासाको घाम, हावा, आर्द्रता र गर्मी हेर्छौं। हरेक शब्दले यो खेतका बाह्र महिना तुलना गर्छ। हावाको चित्र: सबैभन्दा हावा चल्ने चार महिनामध्ये एक। घामको चित्र: सबैभन्दा घमाइलो चार महिनामध्ये एक। यो इलाकाको सुकाइ हो, खेतको मात्र होइन। नासाको मौसम वर्ग करिब ५० किमीका छन्। हामीले खुला खेत मानेका छौं। हावा रोक्ने रूख वा पर्खालले सुकाइ ढिलो बनाउँछ। |
 | *How we test each plan* | |
 | How we test each plan | हामी हरेक योजना कसरी जाँच्छौं |
 | Four simple steps. | चारवटा सजिला चरण। |
@@ -1051,6 +1061,10 @@ This page is made from the word files in this folder; change those, not this pag
 | Next: split into parts | अब भागमा बाँड्नुहोस् |
 | Keep growing {crop}. | {crop} नै लगाइराख्नुहोस्। |
 | None of our other plans usually did better. | हाम्रा अरू कुनै योजनाले प्रायः राम्रो गरेनन्। |
+| Drier | बढी सुक्खा |
+| Wetter | बढी ओसिलो |
+| Colours compare the tested parts. | रङले जाँचेका भाग तुलना गर्छ। |
+| All tested parts are about the same. | जाँचेका सबै भाग उस्तै छन्। |
 | *The fog that clears where the soil stick tests* | |
 | How sure are we? | हामी कति पक्का छौं? |
 | {sure_pct} out of 100 | १०० मा {sure_pct} |

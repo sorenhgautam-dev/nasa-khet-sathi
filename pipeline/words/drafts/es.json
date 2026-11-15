@@ -3815,6 +3815,62 @@
   "screens.check_soil.texts.tray_pot": {
    "en": "Pot {section}",
    "es": "Maceta {section}"
+  },
+  "shared.weather.dry_slow": {
+   "en": "Soil dries slowly.",
+   "es": "El suelo se seca despacio."
+  },
+  "shared.weather.dry_medium": {
+   "en": "Soil dries at medium speed.",
+   "es": "El suelo se seca a ritmo medio."
+  },
+  "shared.weather.dry_fast": {
+   "en": "Soil dries fast.",
+   "es": "El suelo se seca rápido."
+  },
+  "shared.weather.dry_slow_medium": {
+   "en": "Soil dries slowly to medium.",
+   "es": "El suelo se seca de despacio a medio."
+  },
+  "shared.weather.dry_medium_fast": {
+   "en": "Soil dries medium to fast.",
+   "es": "El suelo se seca de medio a rápido."
+  },
+  "shared.weather.dry_slow_fast": {
+   "en": "Soil dries slowly to fast.",
+   "es": "El suelo se seca de despacio a rápido."
+  },
+  "shared.weather.dry_wind": {
+   "en": "Windy",
+   "es": "Ventoso"
+  },
+  "shared.weather.dry_sun": {
+   "en": "Sunny",
+   "es": "Soleado"
+  },
+  "shared.weather.dry_title": {
+   "en": "How fast the soil dries",
+   "es": "Qué tan rápido se seca el suelo"
+  },
+  "shared.weather.dry_how": {
+   "en": "We use NASA's sun, wind, humidity and heat. Each word compares this field's twelve months. Wind icon: one of the four windiest months. Sun icon: one of the four sunniest months. This is the area's drying, not your field's. NASA's weather squares are about 50 km. We assume an open field. Trees or walls that block wind slow drying.",
+   "es": "Base: sol, viento, humedad y calor de NASA. Cada palabra compara los doce meses del campo. Viento: los cuatro meses con más viento. Sol: los cuatro meses con más sol. Es el secado de toda la zona. Cuadros del tiempo de NASA: unos 50 km. Suponemos un campo abierto. Con árboles o muros, se seca más lento."
+  },
+  "shared.farm.heat_drier": {
+   "en": "Drier",
+   "es": "Más seco"
+  },
+  "shared.farm.heat_wetter": {
+   "en": "Wetter",
+   "es": "Más húmedo"
+  },
+  "shared.farm.heat_note": {
+   "en": "Colours compare the tested parts.",
+   "es": "Los colores comparan las partes probadas."
+  },
+  "shared.farm.heat_same": {
+   "en": "All tested parts are about the same.",
+   "es": "Las partes probadas son casi iguales."
   }
  }
 }

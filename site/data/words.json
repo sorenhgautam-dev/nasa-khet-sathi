@@ -7182,6 +7182,106 @@
     "es": "días",
     "fr": "jours",
     "sw": "siku"
+   },
+   "dry_slow": {
+    "en": "Soil dries slowly.",
+    "ne": "माटो बिस्तारै सुक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी धीरे सूखती है।",
+    "bn": "মাটি ধীরে শুকায়।",
+    "es": "El suelo se seca despacio.",
+    "fr": "Le sol sèche lentement.",
+    "sw": "Udongo hukauka polepole."
+   },
+   "dry_medium": {
+    "en": "Soil dries at medium speed.",
+    "ne": "माटो मध्यम गतिमा सुक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी मध्यम गति से सूखती है।",
+    "bn": "মাটি মাঝারি গতিতে শুকায়।",
+    "es": "El suelo se seca a ritmo medio.",
+    "fr": "Le sol sèche à vitesse moyenne.",
+    "sw": "Udongo hukauka kwa kasi ya wastani."
+   },
+   "dry_fast": {
+    "en": "Soil dries fast.",
+    "ne": "माटो छिटो सुक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी जल्दी सूखती है।",
+    "bn": "মাটি দ্রুত শুকায়।",
+    "es": "El suelo se seca rápido.",
+    "fr": "Le sol sèche vite.",
+    "sw": "Udongo hukauka haraka."
+   },
+   "dry_slow_medium": {
+    "en": "Soil dries slowly to medium.",
+    "ne": "माटो बिस्तारैदेखि मध्यम गतिमा सुक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी धीरे से मध्यम गति तक सूखती है।",
+    "bn": "মাটি ধীর থেকে মাঝারি গতিতে শুকায়।",
+    "es": "El suelo se seca de despacio a medio.",
+    "fr": "Le sol sèche lentement à moyennement.",
+    "sw": "Udongo hukauka polepole hadi wastani."
+   },
+   "dry_medium_fast": {
+    "en": "Soil dries medium to fast.",
+    "ne": "माटो मध्यमदेखि छिटो सुक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी मध्यम से तेज़ सूखती है।",
+    "bn": "মাটি মাঝারি থেকে দ্রুত শুকায়।",
+    "es": "El suelo se seca de medio a rápido.",
+    "fr": "Le sol sèche moyennement à vite.",
+    "sw": "Udongo hukauka wastani hadi haraka."
+   },
+   "dry_slow_fast": {
+    "en": "Soil dries slowly to fast.",
+    "ne": "माटो बिस्तारैदेखि छिटो सुक्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी धीरे से तेज़ सूखती है।",
+    "bn": "মাটি ধীর থেকে দ্রুত শুকায়।",
+    "es": "El suelo se seca de despacio a rápido.",
+    "fr": "Le sol sèche lentement à vite.",
+    "sw": "Udongo hukauka polepole hadi haraka."
+   },
+   "dry_wind": {
+    "en": "Windy",
+    "ne": "हावा धेरै",
+    "ne_review": "needs native-speaker review",
+    "hi": "तेज़ हवा",
+    "bn": "বাতাস বেশি",
+    "es": "Ventoso",
+    "fr": "Venteux",
+    "sw": "Upepo mwingi"
+   },
+   "dry_sun": {
+    "en": "Sunny",
+    "ne": "घाम धेरै",
+    "ne_review": "needs native-speaker review",
+    "hi": "तेज़ धूप",
+    "bn": "রোদ বেশি",
+    "es": "Soleado",
+    "fr": "Ensoleillé",
+    "sw": "Jua kali"
+   },
+   "dry_title": {
+    "en": "How fast the soil dries",
+    "ne": "माटो कति छिटो सुक्छ",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी कितनी जल्दी सूखती है",
+    "bn": "মাটি কত দ্রুত শুকায়",
+    "es": "Qué tan rápido se seca el suelo",
+    "fr": "À quelle vitesse le sol sèche",
+    "sw": "Udongo hukauka kwa kasi gani"
+   },
+   "dry_how": {
+    "en": "We use NASA's sun, wind, humidity and heat. Each word compares this field's twelve months. Wind icon: one of the four windiest months. Sun icon: one of the four sunniest months. This is the area's drying, not your field's. NASA's weather squares are about 50 km. We assume an open field. Trees or walls that block wind slow drying.",
+    "ne": "हामी नासाको घाम, हावा, आर्द्रता र गर्मी हेर्छौं। हरेक शब्दले यो खेतका बाह्र महिना तुलना गर्छ। हावाको चित्र: सबैभन्दा हावा चल्ने चार महिनामध्ये एक। घामको चित्र: सबैभन्दा घमाइलो चार महिनामध्ये एक। यो इलाकाको सुकाइ हो, खेतको मात्र होइन। नासाको मौसम वर्ग करिब ५० किमीका छन्। हामीले खुला खेत मानेका छौं। हावा रोक्ने रूख वा पर्खालले सुकाइ ढिलो बनाउँछ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "आधार: नासा की धूप, हवा, नमी और गर्मी। हर शब्द बारह महीनों की तुलना करता है। हवा का चिह्न: चार सबसे हवादार महीने। धूप का चिह्न: चार सबसे धूप वाले महीने। यह पूरे इलाके का सूखना है। नासा के मौसम वर्ग लगभग 50 किमी। हम खुला खेत मानते हैं। पेड़ या दीवार हवा रोकें, तो सूखना धीमा।",
+    "bn": "ভিত্তি: নাসার রোদ, বাতাস, আর্দ্রতা ও তাপ। প্রতিটি শব্দ বারো মাসের তুলনা। বাতাসের চিহ্ন: সবচেয়ে বাতাসের চার মাস। রোদের চিহ্ন: সবচেয়ে রোদের চার মাস। এটা পুরো এলাকার শুকানো। নাসার আবহাওয়া বর্গ প্রায় 50 কিমি। আমরা খোলা মাঠ ধরে নিই। গাছ বা দেয়াল বাতাস আটকালে শুকানো ধীর।",
+    "es": "Base: sol, viento, humedad y calor de NASA. Cada palabra compara los doce meses del campo. Viento: los cuatro meses con más viento. Sol: los cuatro meses con más sol. Es el secado de toda la zona. Cuadros del tiempo de NASA: unos 50 km. Suponemos un campo abierto. Con árboles o muros, se seca más lento.",
+    "fr": "Base: soleil, vent, humidité, chaleur de la NASA. Chaque mot compare les douze mois du champ. Icône vent: les quatre mois les plus venteux. Icône soleil: les quatre mois les plus ensoleillés. C'est le séchage de toute la zone. Carrés météo de la NASA: environ 50 km. Nous supposons un champ ouvert. Arbres ou murs coupe-vent: séchage plus lent.",
+    "sw": "Msingi: jua, upepo, unyevu na joto la NASA. Kila neno hulinganisha miezi kumi na mbili. Alama ya upepo: miezi minne yenye upepo zaidi. Alama ya jua: miezi minne yenye jua zaidi. Huu ni ukaukaji wa eneo lote. Miraba ya hewa ya NASA: karibu 50 km. Tunadhani shamba liko wazi. Miti au kuta zinazozuia upepo hupunguza ukaukaji."
    }
   },
   "twin": {
@@ -8596,6 +8696,46 @@
     "es": "Ningún otro plan nuestro solía ir mejor.",
     "fr": "Aucun autre de nos plans n'a fait mieux.",
     "sw": "Hakuna mpango wetu mwingine ulifanya vizuri zaidi."
+   },
+   "heat_drier": {
+    "en": "Drier",
+    "ne": "बढी सुक्खा",
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़्यादा सूखा",
+    "bn": "বেশি শুকনো",
+    "es": "Más seco",
+    "fr": "Plus sec",
+    "sw": "Kavu zaidi"
+   },
+   "heat_wetter": {
+    "en": "Wetter",
+    "ne": "बढी ओसिलो",
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़्यादा गीला",
+    "bn": "বেশি ভেজা",
+    "es": "Más húmedo",
+    "fr": "Plus humide",
+    "sw": "Bichi zaidi"
+   },
+   "heat_note": {
+    "en": "Colours compare the tested parts.",
+    "ne": "रङले जाँचेका भाग तुलना गर्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "रंग जाँचे गए हिस्सों की तुलना है।",
+    "bn": "রং পরীক্ষিত অংশগুলোর তুলনা।",
+    "es": "Los colores comparan las partes probadas.",
+    "fr": "Les couleurs comparent les parties testées.",
+    "sw": "Rangi hulinganisha sehemu zilizopimwa."
+   },
+   "heat_same": {
+    "en": "All tested parts are about the same.",
+    "ne": "जाँचेका सबै भाग उस्तै छन्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "जाँचे गए सभी हिस्से लगभग एक जैसे।",
+    "bn": "পরীক্ষিত সব অংশ প্রায় একই।",
+    "es": "Las partes probadas son casi iguales.",
+    "fr": "Les parties testées sont presque pareilles.",
+    "sw": "Sehemu zote zilizopimwa zinakaribia kufanana."
    }
   },
   "fog": {

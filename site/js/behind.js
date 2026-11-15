@@ -98,9 +98,32 @@
     }));
   }
 
+  // ---------------- 24 years of soil at a glance (owner, 2026-11-15 evening; rules.yaml soil_years) ----------------
+  // one row per replayed year, one square per month, coloured by its fixed step (ColorBrewer BrBG 4); a tap says the
+  // square's month, year and word; flood and dry years carry a drop or a sun beside the year
+  function soilGrid(b) {
+    var g = b.soil_years; if (!g) return null;
+    var tip = h('p', { class: 'small sgtip', 'aria-live': 'polite' }, P(g.tap));
+    var grid = h('div', { class: 'sgrid' }, h('span'), g.months.map(function (m) { return h('span', { class: 'sgm' }, P(m)); }));
+    g.years.forEach(function (y, i) {
+      var ev = g.events[String(y)];
+      grid.append(h('span', { class: 'sgy' }, digits(String(y)), ev ? svg(I(ev === 'flood' ? 'drop' : 'sun', 11, 2.6)) : null));
+      g.step[i].forEach(function (k, m) {
+        var say = P(g.months[m]) + ' ' + digits(String(y)) + ': ' + P(g.words[k]) + (ev ? ' · ' + P(g.marks[ev]) : '');
+        grid.append(h('button', { type: 'button', class: 'sgc', style: 'background:' + g.colours[k], 'aria-label': say, onclick: function () { tip.textContent = say; } }));
+      });
+    });
+    var legend = h('div', { class: 'sgleg small' }, h('span', null, P(g.legend[0])), g.colours.map(function (c, k) { return h('span', { class: 'sgsw' }, h('i', { style: 'background:' + c }), P(g.words[k])); }), h('span', null, P(g.legend[1])));
+    return h('article', { class: 'bcard', id: 'how-soilyears' }, h('div', { class: 'bhead' }, h('span', { class: 'ic' }, svg(I('soil', 20))),
+      h('div', { class: 'grow' }, h('h3', { class: 'h3' }, P(g.title)), h('p', { class: 'small', style: 'margin:0' }, P(g.case)))),
+      h('p', { class: 'lead' }, P(g.say)), legend, grid, tip,
+      h('p', { class: 'small', style: 'margin:0' }, svg(I('drop', 13)), ' ', P(g.marks.flood), ' · ', svg(I('sun', 13)), ' ', P(g.marks.drought)),
+      h('p', { class: 'small', style: 'margin:0' }, svg(I('info', 13)), ' ', P(g.note)));
+  }
+
   function section(d) {
     var b = d.b;
-    return h('div', { class: 'behind' }, b.placeholder ? K.sampleChip() : null, tiles(b), flow(b),
+    return h('div', { class: 'behind' }, b.placeholder ? K.sampleChip() : null, tiles(b), flow(b), soilGrid(b),
       h('div', { class: 'bcards' }, b.cards.map(function (c) { return card(d, c); }),
         h('article', { class: 'bcard', id: 'behind-pixels' }, h('div', { class: 'bhead' }, h('span', { class: 'ic' }, svg(I('near', 20))),
           h('div', { class: 'grow' }, h('h3', { class: 'h3' }, b.pixels.squares.map(function (q) { return size(q.size_m, b.units); }).join(' · ')))),

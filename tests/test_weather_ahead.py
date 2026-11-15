@@ -142,6 +142,19 @@ def test_temperature_trends_leave_out_blocks_touching_2001_to_2003():
     assert wa.clean_years([2003, 2004], 12, [2001, 2002, 2003]) == [2004]
 
 
+def test_drying_is_thirds_of_the_twelve_block_means_with_wind_and_sun_in_their_top_third():
+    # rules.yaml soil_drying: ET0 sorted 1.5 1.6 2.0 2.2 | 2.8 3.2 3.4 3.5 | 3.6 4.2 4.5 4.8
+    et0 = [1.6, 2.2, 3.4, 4.5, 4.8, 4.2, 3.6, 3.5, 3.2, 2.8, 2.0, 1.54]
+    wind = [1.0, 1.1, 1.6, 1.7, 1.5, 1.2, 0.9, 0.8, 0.85, 0.95, 1.3, 1.4]   # top four: Mar Apr May Dec
+    sun = [12, 15, 19, 22, 23, 18, 14, 15.5, 15, 16, 13, 11]                # top four: Mar Apr May Jun
+    d = wa.drying(et0, wind, sun, ["slow", "medium", "fast"])
+    assert [x["word"] for x in d] == ["slow", "slow", "medium", "fast", "fast", "fast", "fast", "medium", "medium", "medium",
+                                      "slow", "slow"]
+    assert [m for m, x in zip(wa.KEYS, d) if x["wind"]] == ["Mar", "Apr", "May", "Dec"]
+    assert [m for m, x in zip(wa.KEYS, d) if x["sun"]] == ["Mar", "Apr", "May", "Jun"]
+    assert d[11]["et0_mm_day"] == 1.5 and d[0] == {"et0_mm_day": 1.6, "word": "slow", "wind": False, "sun": False}
+
+
 def test_rain_and_temperature_words_are_terciles_of_the_twelve_blocks():
     rain = [5, 10, 20, 50, 130, 220, 340, 320, 170, 45, 6, 8]
     # sorted: 5 6 8 10 | 20 45 50 130 | 170 220 320 340

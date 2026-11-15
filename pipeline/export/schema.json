@@ -943,6 +943,18 @@
           "high"
          ]
         },
+        "drying": {
+         "description": "Optional (owner, 2026-11-15 evening; rules.yaml soil_drying): how fast the soil dries in this block, an estimate. et0_mm_day: the block's mean daily FAO-56 reference evapotranspiration over its 24 years (model-based: NASA POWER through the twin's weather); word: thirds of the twelve block means within this field; wind / sun: the block's mean wind or sunshine is among the four highest. The area's drying (NASA POWER's square is about 50 km), for an open field.",
+         "type": "object",
+         "additionalProperties": false,
+         "required": ["et0_mm_day", "word", "wind", "sun"],
+         "properties": {
+          "et0_mm_day": {"type": "number", "minimum": 0, "maximum": 15},
+          "word": {"enum": ["slow", "medium", "fast"]},
+          "wind": {"type": "boolean"},
+          "sun": {"type": "boolean"}
+         }
+        },
         "rain_mm": {
          "type": "object",
          "additionalProperties": false,

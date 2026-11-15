@@ -660,6 +660,25 @@ details.why { background: rgba(255,255,255,.6); }
 .anend { min-height: 26px; }
 .wpara { margin: 0; font-size: 17px; line-height: 1.45; display: flex; flex-direction: column; gap: 4px; }
 .wpara p { margin: 0; }
+/* the field as a heatmap (owner, 2026-11-15 evening): the dry-to-wet legend and a pot's swatch */
+.heatleg { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0; }
+.heatleg i, .prow .hsw { width: 18px; height: 14px; border-radius: 3px; display: inline-block; vertical-align: middle; }
+.prow .hsw { margin-right: 6px; }
+.heatleg .hn { flex-basis: 100%; }
+/* 24 years of soil at a glance (owner, 2026-11-15 evening): years down, months across, one square each */
+.sgrid { display: grid; grid-template-columns: 44px repeat(12, minmax(0, 1fr)); gap: 2px; align-items: center; }
+.sgrid .sgm { font-size: 10px; text-align: center; color: var(--muted); overflow: hidden; white-space: nowrap; }
+.sgrid .sgy { font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px; color: var(--ink); }
+.sgrid .sgc { border: 0; padding: 0; height: 14px; border-radius: 2px; cursor: pointer; }
+.sgrid .sgc:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+.sgleg { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.sgleg .sgsw { display: inline-flex; align-items: center; gap: 4px; }
+.sgleg i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+.sgtip { margin: 0; font-weight: 700; color: var(--ink); min-height: 1.4em; }
+/* how fast the soil dries (owner, 2026-11-15 evening): one short line, its icons and the "Estimate" tag */
+.wpara .wdry { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 15px; color: var(--muted); }
+.wdry .wdi { display: inline-flex; align-items: center; gap: 3px; font-weight: 600; color: var(--ink); }
+.wdry .wlab { font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: rgba(20,48,30,.08); color: var(--ink); }
 .tcards.lines1 { grid-template-columns: minmax(0, 1fr); }
 .tcards.lines1 .tcard { min-height: 0; flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; }
 .guess { display: flex; flex-direction: column; gap: 10px; }

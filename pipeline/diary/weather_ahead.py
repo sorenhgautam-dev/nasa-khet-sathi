@@ -178,6 +178,14 @@ def words12(values12, words):
     return tercile_words(values12, words)
 
 
+def drying(et0, wind, sun, words):
+    """How fast the soil dries in each of the twelve blocks (rules.yaml soil_drying): the word from the thirds of the block
+    means of FAO-56 ET0, and the wind and sun icons when the block's mean wind or sunshine is among the four highest."""
+    top = (False, False, True)
+    return [{"et0_mm_day": round(float(e), 1), "word": d, "wind": bool(a), "sun": bool(b)}
+            for e, d, a, b in zip(et0, words12(et0, words), words12(wind, top), words12(sun, top))]
+
+
 def _candidates(crops, lib, r):
     """[(check, kind, crop dict, window, column, rule)] for every plan crop: the sourced temperature limits of wheat and
     potato (heat_clock), and dry spells and big rain for every crop (weather_ahead.dangers)."""
@@ -223,7 +231,7 @@ def build(w, rain_versions, crops, lib, r):
             crop_order.append(c["crop"])
 
     out_blocks, detail = [], []
-    rain_mean, temp_mean = [], []
+    rain_mean, temp_mean, dry_means = [], [], []
     for b in blocks(sd):
         m = KEYS.index(b["key"]) + 1
         years = block_years(m, sd, d0, d1, n_years)
@@ -238,6 +246,7 @@ def build(w, rain_versions, crops, lib, r):
         dry = {y: longest_run(w["rain_mm"].to_numpy(float)[s] < dry_mm) for y, s in sel.items()}
         rain_mean.append(float(np.mean(list(rain.values()))))
         temp_mean.append(float(np.mean((tmax + tmin) / 2)))
+        dry_means.append([float(w[c].to_numpy(float)[allm].mean()) for c in ("et0_mm", "ws2m_ms", "rs_mj_m2_day")])
         cy = clean_years(years, m, bad)
 
         dangers, none, det = [], [], []
@@ -284,6 +293,7 @@ def build(w, rain_versions, crops, lib, r):
                        "dangers": det})
     rw = words12(rain_mean, wa["rain_word"]["words"])
     tw = words12(temp_mean, wa["temperature_word"]["words"])
+    dr = drying(*zip(*dry_means), r["soil_drying"]["word"]["words"])
     for i, blk in enumerate(out_blocks):
-        blk["usual"]["rain"], blk["usual"]["temp"] = rw[i], tw[i]
+        blk["usual"]["rain"], blk["usual"]["temp"], blk["usual"]["drying"] = rw[i], tw[i], dr[i]
     return out_blocks, detail
