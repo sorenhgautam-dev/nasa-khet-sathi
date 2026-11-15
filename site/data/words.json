@@ -586,6 +586,17 @@
      "sw": "Picha halisi itakuja tutakapotembelea."
     },
     {
+     "id": "seen_space",
+     "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
+     "ne": "नासाले {date} मा अन्तरिक्षबाट हेरेको। अब हाम्रो ड्रोनले यो फोटो खिच्छ।",
+     "ne_review": "needs native-speaker review",
+     "hi": "NASA ने {date} को अंतरिक्ष से देखा। अब हमारा ड्रोन यह फ़ोटो लेगा।",
+     "bn": "NASA {date} তারিখে মহাকাশ থেকে দেখেছে। এরপর আমাদের ড্রোন এই ছবি তুলবে।",
+     "es": "Visto por la NASA desde el espacio: {date}. Luego, nuestro dron toma esta foto.",
+     "fr": "Vu de l’espace par la NASA le {date}. Ensuite, notre drone prend cette photo.",
+     "sw": "Imeonwa kutoka angani na NASA tarehe {date}. Kisha, droni yetu inapiga picha hii."
+    },
+    {
      "id": "inside_sample",
      "en": "We show our sample field near you.",
      "ne": "हामी तपाईंको नजिकको नमुना खेत देखाउँछौं।",
@@ -8053,6 +8064,158 @@
    "es": "Bienvenidos",
    "fr": "Bienvenue",
    "sw": "Karibu"
+  },
+  "drone": {
+   "label": {
+    "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",
+    "ne": "डेमो: खेतको सट्टा ४ वटा गमला छन्। हाम्रो ड्रोनको सट्टा यो फोन छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "डेमो: खेत की जगह 4 गमले हैं। हमारे ड्रोन की जगह यह फ़ोन है।",
+    "bn": "ডেমো: খামারের বদলে 4টি টব। আমাদের ড্রোনের বদলে এই ফোন।",
+    "es": "Demo: 4 macetas hacen de finca. Este teléfono hace de dron.",
+    "fr": "Démo : 4 pots remplacent une ferme. Ce téléphone remplace notre drone.",
+    "sw": "Onyesho: vyungu 4 vinawakilisha shamba. Simu hii inawakilisha droni yetu."
+   },
+   "take": {
+    "en": "Take a photo from above",
+    "ne": "माथिबाट फोटो खिच्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "ऊपर से फ़ोटो लें",
+    "bn": "উপর থেকে ছবি তুলুন",
+    "es": "Tome una foto desde arriba",
+    "fr": "Prendre une photo d’en haut",
+    "sw": "Piga picha kutoka juu"
+   },
+   "again": {
+    "en": "Take it again",
+    "ne": "फेरि खिच्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर से लें",
+    "bn": "আবার তুলুন",
+    "es": "Tómela otra vez",
+    "fr": "La reprendre",
+    "sw": "Piga tena"
+   },
+   "taken": {
+    "en": "Photo taken from above:",
+    "ne": "माथिबाट खिचिएको फोटो:",
+    "ne_review": "needs native-speaker review",
+    "hi": "ऊपर से ली गई फ़ोटो:",
+    "bn": "উপর থেকে তোলা ছবি:",
+    "es": "Foto tomada desde arriba:",
+    "fr": "Photo prise d’en haut :",
+    "sw": "Picha imepigwa kutoka juu:"
+   },
+   "stays": {
+    "en": "The photo stays on this phone.",
+    "ne": "फोटो यही फोनमा मात्र रहन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "फ़ोटो इसी फ़ोन पर रहती है।",
+    "bn": "ছবিটি এই ফোনেই থাকে।",
+    "es": "La foto se queda en este teléfono.",
+    "fr": "La photo reste sur ce téléphone.",
+    "sw": "Picha inabaki kwenye simu hii."
+   },
+   "yes": {
+    "en": "Yes",
+    "ne": "हो",
+    "ne_review": "needs native-speaker review",
+    "hi": "हाँ",
+    "bn": "হ্যাঁ",
+    "es": "Sí",
+    "fr": "Oui",
+    "sw": "Ndiyo"
+   },
+   "no_photo": {
+    "en": "No photo yet. Take one from above first.",
+    "ne": "अहिलेसम्म फोटो छैन। पहिले माथिबाट खिच्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अभी कोई फ़ोटो नहीं। पहले ऊपर से एक लें।",
+    "bn": "এখনও ছবি নেই। আগে উপর থেকে একটি তুলুন।",
+    "es": "Aún no hay foto. Primero tome una desde arriba.",
+    "fr": "Pas encore de photo. Prenez-en une d’en haut.",
+    "sw": "Bado hakuna picha. Kwanza piga moja kutoka juu."
+   },
+   "start": {
+    "en": "Push the soil stick into pot 1.",
+    "ne": "माटो जाँच्ने यन्त्र गमला १ मा घुसाउनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "मिट्टी की छड़ी गमले 1 में डालें।",
+    "bn": "মাটির কাঠি টব 1-এ ঢোকান।",
+    "es": "Meta la varilla en la maceta 1.",
+    "fr": "Enfoncez la tige dans le pot 1.",
+    "sw": "Weka kijiti cha udongo kwenye chungu 1."
+   },
+   "pot_wetter": {
+    "en": "Pot {section} is wetter than the others.",
+    "ne": "गमला {section} अरूभन्दा ओसिलो छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "गमला {section} बाकी से ज़्यादा गीला है।",
+    "bn": "টব {section} অন্যগুলোর চেয়ে ভেজা।",
+    "es": "Maceta {section}: más húmeda que las demás.",
+    "fr": "Pot {section} : plus humide que les autres.",
+    "sw": "Chungu {section} kina unyevu zaidi kuliko vingine."
+   },
+   "pot_drier": {
+    "en": "Pot {section} is drier than the others.",
+    "ne": "गमला {section} अरूभन्दा सुक्खा छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "गमला {section} बाकी से ज़्यादा सूखा है।",
+    "bn": "টব {section} অন্যগুলোর চেয়ে শুকনো।",
+    "es": "Maceta {section}: más seca que las demás.",
+    "fr": "Pot {section} : plus sec que les autres.",
+    "sw": "Chungu {section} ni kikavu zaidi kuliko vingine."
+   },
+   "pot_same": {
+    "en": "Pot {section} is like the others.",
+    "ne": "गमला {section} अरूजस्तै छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "गमला {section} बाकी जैसा है।",
+    "bn": "টব {section} অন্যগুলোর মতোই।",
+    "es": "Maceta {section}: igual que las demás.",
+    "fr": "Pot {section} : comme les autres.",
+    "sw": "Chungu {section} ni kama vingine."
+   },
+   "pot_none": {
+    "en": "Pot {section}: no steady reading.",
+    "ne": "गमला {section}: स्थिर नाप आएन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "गमला {section}: स्थिर माप नहीं मिला।",
+    "bn": "টব {section}: স্থির মাপ পাওয়া যায়নি।",
+    "es": "Maceta {section}: sin lectura estable.",
+    "fr": "Pot {section} : pas de mesure stable.",
+    "sw": "Chungu {section}: hakuna kipimo thabiti."
+   },
+   "chip_wetter": {
+    "en": "Wetter",
+    "ne": "ओसिलो",
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़्यादा गीला",
+    "bn": "বেশি ভেজা",
+    "es": "Más húmeda",
+    "fr": "Plus humide",
+    "sw": "Unyevu zaidi"
+   },
+   "chip_drier": {
+    "en": "Drier",
+    "ne": "सुक्खा",
+    "ne_review": "needs native-speaker review",
+    "hi": "ज़्यादा सूखा",
+    "bn": "বেশি শুকনো",
+    "es": "Más seca",
+    "fr": "Plus sec",
+    "sw": "Kikavu zaidi"
+   },
+   "chip_same": {
+    "en": "Same",
+    "ne": "उस्तै",
+    "ne_review": "needs native-speaker review",
+    "hi": "एक जैसा",
+    "bn": "একই রকম",
+    "es": "Igual",
+    "fr": "Pareil",
+    "sw": "Sawa"
+   }
   }
  },
  "glossary": [

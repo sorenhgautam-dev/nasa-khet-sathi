@@ -356,8 +356,9 @@
   }
   function fieldBox(F, mode, opt) {
     opt = opt || {};
-    var G = geom(F), box = h('div', { class: 'fieldbox', role: 'img', 'aria-label': T('parts.split', { section_count: G.length }) });
-    box.append(h('div', { class: 'wm', 'aria-hidden': 'true' }, T('where.your_farm')));
+    var G = geom(F), box = h('div', { class: 'fieldbox' + (opt.photo ? ' photo' : ''), role: 'img', 'aria-label': T('parts.split', { section_count: G.length }) });
+    if (opt.photo) box.append(h('img', { class: 'ph', src: opt.photo, alt: '' }));   // phone as drone: the photo from above, drawn under the parts
+    else box.append(h('div', { class: 'wm', 'aria-hidden': 'true' }, T('where.your_farm')));
     var colour = { green: 'rgba(63,122,46,.16)', yellow: 'rgba(201,138,27,.2)', red: 'rgba(184,67,42,.2)', grey: 'rgba(139,143,134,.14)' };
     // parts that are not a plain grid (a drawn field's patches, owner 2026-11-15): the field at its true shape, each part's
     // own outline as a crisp vector line, no sprouts
@@ -369,7 +370,7 @@
     }
     G.forEach(function (g, i) {
       var st = 'left:' + g.l + '%;top:' + g.t + '%;width:' + (g.r - g.l) + '%;height:' + (g.b - g.t) + '%;';
-      var bg = mode === 'status' ? colour[g.s.status] || colour.grey : (i % 3 === 0 ? 'rgba(20,48,30,.06)' : 'rgba(154,84,38,.06)');
+      var bg = opt.photo ? 'transparent' : mode === 'status' ? colour[g.s.status] || colour.grey : (i % 3 === 0 ? 'rgba(20,48,30,.06)' : 'rgba(154,84,38,.06)');
       if (shapes) {
         g.q = D.createElementNS(SVGNS, 'path');
         g.q.setAttribute('d', 'M' + g.pts.map(function (p) { return p[0].toFixed(2) + ' ' + p[1].toFixed(2); }).join('L') + 'Z');
@@ -383,7 +384,7 @@
     if (!shapes) G.forEach(function (g) { if (g.l > 0.5) xs[g.l.toFixed(2)] = 1; if (g.t > 0.5) ys[g.t.toFixed(2)] = 1; });
     Object.keys(xs).forEach(function (x) { box.append(h('span', { class: 'vl', style: 'left:' + x + '%' + (mode === 'grow' ? '' : ';animation:none') })); });
     Object.keys(ys).forEach(function (y) { box.append(h('span', { class: 'hl', style: 'top:' + y + '%' + (mode === 'grow' ? '' : ';animation:none') })); });
-    if (!shapes && (mode === 'grow' || mode === 'sway' || mode === 'robot')) {
+    if (!shapes && !opt.photo && (mode === 'grow' || mode === 'sway' || mode === 'robot')) {
       G.forEach(function (g, qi) {
         for (var r = 0; r < 3; r++) for (var c = 0; c < 4; c++) {
           var x = g.l + (g.r - g.l) * (0.16 + c * 0.23), y = g.t + (g.b - g.t) * (0.28 + r * 0.28);
@@ -691,8 +692,97 @@
   var DRONE = '<svg width="64" height="44" viewBox="0 0 120 80"><path d="M30 34 L18 22 M90 34 L102 22 M30 46 L18 56 M90 46 L102 56" stroke="#9A8A6A" stroke-width="5" stroke-linecap="round"/><rect x="34" y="28" width="52" height="24" rx="11" fill="#9A8A6A"/><circle cx="60" cy="58" r="6" fill="#9A8A6A"/><ellipse cx="18" cy="20" rx="13" ry="3" fill="#CDBF9F"/><ellipse cx="102" cy="20" rx="13" ry="3" fill="#CDBF9F"/><ellipse cx="18" cy="58" rx="13" ry="3" fill="#CDBF9F"/><ellipse cx="102" cy="58" rx="13" ry="3" fill="#CDBF9F"/></svg>';
   function roundBtn(label, icon, onclick) { return h('button', { type: 'button', class: 'round big', 'aria-label': label, title: label, onclick: onclick }, svg(I(icon, 24, 2.2))); }
   function leadRow(lead, sub) { return h('div', { class: 'leadrow' }, h('div', { class: 'grow', style: 'display:flex;flex-direction:column;gap:4px' }, lead, sub)); }
+  // the day NASA's picture under the field was taken (site/data/basemap/<field>.json 'date', pipeline/fetch/basemap.py):
+  // only the field's own picture with a full date; abroad fields show only the world picture, so no line
+  function seenLine() {
+    var p = h('p', { class: 'seen', hidden: true });
+    if (!abroad()) getJSON('data/basemap/' + encodeURIComponent(S.fid) + '.json').then(function (b) {
+      if (!b || !/^\d{4}-\d\d-\d\d$/.test(String(b.date || ''))) return;
+      add(p, [svg(I('sat', 18)), h('span', null, T('where.seen_space', { date: fmtDate(b.date) }))]); p.hidden = false;
+    });
+    return p;
+  }
+
+  // ---------------- phone as drone: the in-person demo, on the laptop's hotspot only (owner, 2026-11-15) ----------------
+  // Never on the public site: demo mode needs BOTH a page served from the laptop or its hotspot (a private address, never
+  // github.io) AND the git-ignored switch site/data/demo.json (scripts/demo_mode.py on|off; scripts/check_site.py --final
+  // refuses it). The phone's photo from above stays on the phone: an object URL in this page's memory, never sent anywhere,
+  // never saved (a reload forgets it). 4 pots stand in for the field's 4 parts (pot n = part n = s<n>); their readings
+  // (live.json from robot/bridge.py) show only on the demo's soil screen, on the photo, never as the field's parts anywhere
+  // else (probeData ignores live.json in demo mode). A pot's fog clears only with a calibrated reading (sureOf).
+  function demoHost(hn) {
+    hn = String(hn || '').toLowerCase();
+    if (!hn || /github\.io$/.test(hn)) return false;
+    return /^(localhost|127(\.\d{1,3}){3}|10(\.\d{1,3}){3}|192\.168(\.\d{1,3}){2}|172\.(1[6-9]|2\d|3[01])(\.\d{1,3}){2}|[a-z0-9-]+\.local)$/.test(hn);
+  }
+  function demoOn() {
+    if (!S.demoP) S.demoP = demoHost(location.hostname) ? getJSON('data/demo.json', true).then(function (d) { return !!d && d.demo === true; }) : Promise.resolve(false);
+    return S.demoP;
+  }
+  function demoLabel() { return h('p', { class: 'demolabel', role: 'note' }, svg(I('camera', 18)), h('span', null, T('drone.label'))); }
+  // the phone's camera (a file input: it works over the hotspot's plain http); the photo becomes an object URL in memory
+  function takeBtn(round) {
+    var id = 'drone-photo-' + (++uid), label = T(S.demoPhoto ? 'drone.again' : 'drone.take');
+    var input = h('input', { type: 'file', accept: 'image/*', capture: 'environment', class: 'vh', id: id, tabindex: '-1' });
+    input.addEventListener('change', function () {
+      var f = input.files && input.files[0];
+      if (!f || !/^image\//.test(f.type || 'image/')) return;
+      if (S.demoPhoto) URL.revokeObjectURL(S.demoPhoto.url);
+      S.demoPhoto = { url: URL.createObjectURL(f), at: new Date() };   // the phone's own clock, when the photo came back
+      rerender();
+    });
+    var btn = round ? h('label', { for: id, class: 'round big', role: 'button', tabindex: '0', 'aria-label': label, title: label }, svg(I('camera', 24, 2.2)))
+      : h('label', { for: id, class: 'cta take', role: 'button', tabindex: '0' }, svg(I('camera', 24, 2.2)), h('span', null, label));
+    btn.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
+    return [input, btn];
+  }
+  function takenAt(d) {
+    function two(n) { return ('0' + n).slice(-2); }
+    return fmtDate(d.getFullYear() + '-' + two(d.getMonth() + 1) + '-' + two(d.getDate())) + ', ' + digits(two(d.getHours()) + ':' + two(d.getMinutes()));
+  }
+  function demoPhoto(F) {
+    var p = S.demoPhoto;
+    return screen('photo', {
+      head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2')), demoLabel()],
+      scene: p ? fieldBox(F, 'sway', { photo: p.url })
+        : h('div', { class: 'mapbox photo' }, h('div', { class: 'msg' }, svg(DRONE), h('span', { class: 'hint' }, T('drone.stays')))),
+      body: p ? [h('p', { class: 'taken' }, svg(I('camera', 18)), h('span', null, T('drone.taken') + ' ' + takenAt(p.at)), svg(I('tick', 18, 3), 'ok')),
+        leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('drone.stays')))] : [seenLine()],
+      cta: h('div', { class: 'ctarow' }, takeBtn(!!p), p ? cta(T('drone.yes'), function () { go('parts'); }) : null)
+    });
+  }
+  // a pot's result in the stick's own words: drier, wetter or about the same as the other pots (robot/calibrate.py
+  // relative, rules.yaml probe.same_band_pct); 'none' when it gave no steady reading; nothing before its reading
+  function potWord(p) {
+    if (!p) return null;
+    if (p.state === 'test_again') return 'none';
+    if (p.state !== 'done' || !p.relative) return null;
+    return { drier: 'drier', wetter: 'wetter' }[p.relative] || 'same';
+  }
+  function potMarks(box, G, parts) {   // a word on each pot's part of the photo
+    G.forEach(function (g) {
+      var w = potWord(parts[g.s.id]);
+      if (g.chip) { g.chip.remove(); g.chip = null; }
+      if (!w || w === 'none') return;
+      g.chip = h('span', { class: 'pchip ' + w, style: 'left:' + (g.l + 2) + '%;top:' + (g.b - 3) + '%' },
+        w === 'same' ? null : svg(I(w === 'wetter' ? 'drop' : 'sun', 13, 2.4)), T('drone.chip_' + w));
+      box.append(g.chip);
+    });
+  }
+  function potLines(G, parts) {        // "Pot 3 is wetter than the others.", one line per pot read, right under the photo
+    var out = G.map(function (g) { var w = potWord(parts[g.s.id]); return w ? T('drone.pot_' + w, { section: g.n }) : null; }).filter(Boolean);
+    return out.length ? lines(out, 'potlines') : null;
+  }
+  function demoProbe() {               // the pots' walk: live.json from a real serial port only, as the field's walk
+    return getJSON('data/live.json', true).then(function (lv) {
+      return lv && isReal(lv.source) && (lv.section || (lv.parts || []).length) ? { kind: 'live', live: lv, parts: liveParts(lv), demo: true }
+        : { kind: 'none', parts: {}, demo: true };
+    });
+  }
+  // ---------------- end of phone as drone ----------------
   SCREENS.photo = function () {
     return withField('photo', function (F) {
+      if (S.demo) return demoPhoto(F);
       var sample = isPlaceholder(F.field.name);
       var mapEl = h('div', { style: 'position:absolute;inset:0' });
       var mbox = h('div', { class: 'mapbox photo' }, h('div', { class: 'msg' }, svg(DRONE), h('span', { class: 'yf' }, T('where.your_farm')), h('span', { class: 'hint' }, T('where.photo_later'))), mapEl,
@@ -752,7 +842,7 @@
       return screen('photo', {
         head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2'))],
         scene: mbox,
-        body: [msg, leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('where.split_next'))), guess, rests],
+        body: [msg, seenLine(), leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('where.split_next'))), guess, rests],
         cta: h('div', { class: 'ctarow' }, roundBtn(T('where.draw_own'), 'pin', startDraw), cta(T('where.yes_parts'), function () { go('parts'); }))
       });
     });
@@ -761,12 +851,12 @@
   // ---------------- 3 your farm, in parts (design: Parts, W3_Parts) ----------------
   SCREENS.parts = function () {
     return withField('parts', function (F) {
-      var n = (F.field.sections || []).length;
+      var n = (F.field.sections || []).length, ph = S.demo && S.demoPhoto;
       var lead = h('p', { class: 'lead', 'aria-live': 'polite' }, T('parts.making'));
       later(function () { lead.textContent = T('parts.here', { section_count: n }); }, 2000);
       return screen('parts', {
-        head: [stepsBar(2), bigTitle(T('parts.h1'), T('parts.h2', { section_count: n })), isPlaceholder(F.field.name) ? sampleChip() : null],
-        scene: fieldBox(F, 'grow'),
+        head: [stepsBar(2), bigTitle(T('parts.h1'), T('parts.h2', { section_count: n })), S.demo ? demoLabel() : isPlaceholder(F.field.name) ? sampleChip() : null],
+        scene: fieldBox(F, 'grow', ph ? { photo: ph.url } : null),
         body: leadRow(lead, h('p', { class: 'sub' }, T('parts.middle'))),
         cta: cta(T('parts.start_test'), function () { go('soil'); })
       });
@@ -792,9 +882,9 @@
   function forField(pd) { return !!pd && !pd.test; }   // readings that may stand for the field itself
   var TEST_LABEL = { garden_test: ['garden_on'], indoor_test: ['indoor_title', 'indoor_on'] };   // a test of the stick, not the field
   function probeData() {
-    return Promise.all([getJSON('data/live.json', true), getJSON('data/probe_log.json')]).then(function (r) {
-      var lv = r[0], log = r[1];
-      if (lv && isReal(lv.source) && (lv.section || (lv.parts || []).length))
+    return Promise.all([demoOn(), getJSON('data/live.json', true), getJSON('data/probe_log.json')]).then(function (r) {
+      var demo = r[0], lv = r[1], log = r[2];   // phone as drone: in demo mode live.json holds the 4 pots, never the field
+      if (lv && !demo && isReal(lv.source) && (lv.section || (lv.parts || []).length))
         return (S.probe = { kind: 'live', live: lv, parts: liveParts(lv) });
       var sess = log && (log.sessions || []).filter(function (x) { return isReal(x.source); }).pop();
       if (sess && sess.parts && sess.parts.length) {
@@ -817,6 +907,7 @@
     var rb = ok && pd.kind === 'log' ? (r && r.before) || (pd.rec && pd.rec[sid] && pd.rec[sid].before) : ok && pd.kind === 'live' ? pd.live && pd.live.prior : null;
     if (rb && rb.sure != null) out.before = rb.sure;
     if (r && r.state === 'done') out.after = pd.kind === 'log' ? (r.after ? r.after.sure : null) : pd.kind === 'live' && r.sure != null ? r.sure : null;
+    if (pd && pd.demo && !(r && r.water_pct != null)) out.after = null;   // phone as drone: only a calibrated reading clears a pot's fog
     return out;
   }
   function fogOpacity(s) { return (0.85 * (1 - Math.max(0, Math.min(1, s == null ? 0 : s)))).toFixed(2); }
@@ -890,7 +981,8 @@
   }
   SCREENS.soil = function () {
     return withField('soil', function (F) {
-      var box = fieldBox(F, 'robot'), G = box._g, fog = fogParts(box, F), fnote = h('p', { class: 'small fognote' }), liveNow = null;
+      var demo = !!S.demo, ph = demo && S.demoPhoto, pcap = h('div', { class: 'potcap', 'aria-live': 'polite' });   // phone as drone: the photo, and the pots' results under it
+      var box = fieldBox(F, 'robot', ph ? { photo: ph.url } : null), G = box._g, fog = fogParts(box, F), fnote = h('p', { class: 'small fognote' }), liveNow = null;
       var route = D.createElementNS('http://www.w3.org/2000/svg', 'svg');
       route.setAttribute('class', 'route'); route.setAttribute('viewBox', '0 0 100 100'); route.setAttribute('preserveAspectRatio', 'none');
       box.append(route);
@@ -937,8 +1029,9 @@
           g.q.style[prop] = done ? 'rgba(200,224,90,' + (prop === 'fill' ? '.45' : '.28') + ')' : g.q.dataset.bg;   // the design's tested quarter
           if (g.num) { g.num.classList.toggle('ok', done); g.num.textContent = done ? '' : digits(g.n); if (done) g.num.append(svg(I('tick', 16, 3.2))); }
         });
-        var now = { kind: pd ? pd.kind : 'none', test: pd && pd.test, live: liveNow, parts: shown, rec: pd && pd.parts };
+        var now = { kind: pd ? pd.kind : 'none', test: pd && pd.test, live: liveNow, parts: shown, rec: pd && pd.parts, demo: !!(pd && pd.demo) };
         fog.set(now); fnote.textContent = fog.note(now) || '';   // the fog clears where the stick checked the field
+        if (demo) { potMarks(box, G, shown); pcap.textContent = ''; add(pcap, potLines(G, shown)); }
       }
       function drawCta(active) {
         ctaBox.textContent = '';
@@ -964,6 +1057,7 @@
       }
       var lastSec = null;
       function fromLive(lv) {
+        if (pd && pd.demo) { pd.kind = 'live'; pd.live = lv; pd.parts = liveParts(lv); }
         shown = liveParts(lv); liveNow = lv; drawRows(lv.section);
         var g = G.filter(function (x) { return x.s.id === lv.section; })[0];
         if (g && lv.section !== lastSec) { lastSec = lv.section; moveTo(g); }
@@ -976,10 +1070,11 @@
         drawCta(active);
       }
       drawRows(); drawCta(false);
-      probeData().then(function (d) {
+      (demo ? demoProbe() : probeData()).then(function (d) {
         pd = d;
-        if (d.kind === 'live') {
-          fromLive(d.live);
+        if (d.kind === 'live' || demo) {
+          if (d.kind === 'live') fromLive(d.live);
+          else info.append(h('p', { class: 'sub', style: 'margin:0;font-weight:600;color:var(--ink)' }, T('drone.start')));
           every(function () { getJSON('data/live.json', true).then(function (x) { if (x && isReal(x.source) && rows.isConnected) fromLive(x); }); }, 2000);
         } else if (d.kind === 'log' && forField(d)) {
           add(info, recordedLine(d));
@@ -991,10 +1086,10 @@
       });
       var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub')), tbox = h('div');
       return screen('soil', {
-        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), isPlaceholder(F.field.name) ? sampleChip() : null,
+        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), demo ? demoLabel() : isPlaceholder(F.field.name) ? sampleChip() : null,
           fog.any ? h('p', { class: 'fogline' }, T('fog.fog_line')) : null],
-        scene: box,
-        body: [rows, fnote, info, tbox, honest],
+        scene: ph ? h('div', { class: 'photocard' }, box, pcap) : box,
+        body: [demo && !ph ? h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('drone.no_photo')), btn2(T('drone.take'), function () { go('photo'); }, 'camera')) : null, rows, fnote, info, tbox, honest],
         cta: ctaBox
       });
     });
@@ -1554,8 +1649,8 @@
     function skip() { wantMs = 0; lift(); }
     cur.addEventListener('click', skip); D.addEventListener('keydown', skip, { once: true });
     Promise.all([getJSON('data/words.json').then(function (x) { step(prog + 0.45); return x; }),
-                 getJSON('data/index.json').then(function (x) { step(prog + 0.18); return x; })]).then(function (r) {
-      S.words = r[0]; S.index = r[1];
+                 getJSON('data/index.json').then(function (x) { step(prog + 0.18); return x; }), demoOn()]).then(function (r) {
+      S.words = r[0]; S.index = r[1]; S.demo = r[2] === true;   // phone as drone (hotspot only)
       if (!S.words) { cur.append(h('button', { type: 'button', class: 'round', style: 'position:absolute;bottom:40px', 'aria-label': 'reload', onclick: function () { location.reload(); } }, svg(I('redo', 22)))); return; }
       var want = store.get('lang') || 'ne';
       S.lang = langInfo(want) ? want : 'ne';

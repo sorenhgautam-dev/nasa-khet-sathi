@@ -326,6 +326,12 @@
      "ne_review": "needs native-speaker review"
     },
     {
+     "id": "seen_space",
+     "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
+     "ne": "नासाले {date} मा अन्तरिक्षबाट हेरेको। अब हाम्रो ड्रोनले यो फोटो खिच्छ।",
+     "ne_review": "needs native-speaker review"
+    },
+    {
      "id": "inside_sample",
      "en": "We show our sample field near you.",
      "ne": "हामी तपाईंको नजिकको नमुना खेत देखाउँछौं।",
@@ -4413,6 +4419,83 @@
    "ne": "स्वागत छ",
    "ne_review": "needs native-speaker review",
    "note": "The loading curtain's welcome (owner, 2026-11-15): this word in the site's 7 languages, one after another, Nepali first. The words are the owner's own (not machine-translated). site/index.html carries the same words for the first paint (tests/test_site_welcome.py keeps the two the same)."
+  },
+  "drone": {
+   "label": {
+    "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",
+    "ne": "डेमो: खेतको सट्टा ४ वटा गमला छन्। हाम्रो ड्रोनको सट्टा यो फोन छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "take": {
+    "en": "Take a photo from above",
+    "ne": "माथिबाट फोटो खिच्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "again": {
+    "en": "Take it again",
+    "ne": "फेरि खिच्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "taken": {
+    "en": "Photo taken from above:",
+    "ne": "माथिबाट खिचिएको फोटो:",
+    "ne_review": "needs native-speaker review"
+   },
+   "stays": {
+    "en": "The photo stays on this phone.",
+    "ne": "फोटो यही फोनमा मात्र रहन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "yes": {
+    "en": "Yes",
+    "ne": "हो",
+    "ne_review": "needs native-speaker review"
+   },
+   "no_photo": {
+    "en": "No photo yet. Take one from above first.",
+    "ne": "अहिलेसम्म फोटो छैन। पहिले माथिबाट खिच्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "start": {
+    "en": "Push the soil stick into pot 1.",
+    "ne": "माटो जाँच्ने यन्त्र गमला १ मा घुसाउनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "pot_wetter": {
+    "en": "Pot {section} is wetter than the others.",
+    "ne": "गमला {section} अरूभन्दा ओसिलो छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "pot_drier": {
+    "en": "Pot {section} is drier than the others.",
+    "ne": "गमला {section} अरूभन्दा सुक्खा छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "pot_same": {
+    "en": "Pot {section} is like the others.",
+    "ne": "गमला {section} अरूजस्तै छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "pot_none": {
+    "en": "Pot {section}: no steady reading.",
+    "ne": "गमला {section}: स्थिर नाप आएन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "chip_wetter": {
+    "en": "Wetter",
+    "ne": "ओसिलो",
+    "ne_review": "needs native-speaker review"
+   },
+   "chip_drier": {
+    "en": "Drier",
+    "ne": "सुक्खा",
+    "ne_review": "needs native-speaker review"
+   },
+   "chip_same": {
+    "en": "Same",
+    "ne": "उस्तै",
+    "ne_review": "needs native-speaker review"
+   }
   }
  }
 }

@@ -1558,3 +1558,23 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   and the gap is gone. Chrome's translate log reads "Notranslate meta: true" for this version, "false" for the
   published one. No result, word or layout changed.
 - **For a person to review:** the look, on a real phone.
+
+## 2026-11-15 (Sunday): phone as drone, the in-person demo mode (Claude Opus 5.5 via Claude Code)
+
+- **What Claude did:** at the owner's request ("Add a 'phone as drone' demo mode for the in-person demo and the video, on
+  the hotspot only, never on the public site. Don't change any results.") built the demo mode in `site/js/app.js` (the
+  block "phone as drone"): a double guard (the page served from the laptop or its hotspot, never github.io, and the
+  git-ignored switch `site/data/demo.json`, written by `scripts/demo_mode.py`; `scripts/check_site.py --final` refuses it);
+  on the photo step a "Take a photo from above" button that opens the phone's camera, the photo kept as an object URL in
+  the page's memory (never uploaded or stored), with the time it was taken, the field's own 4 parts drawn on it and "Is this
+  your farm? Yes"; the parts and soil steps on the same photo; the 4 pots' results from the stick's own relative words
+  (drier, wetter, about the same; robot/calibrate.py) on the photo and as one line per pot; a pot's fog clears only with a
+  calibrated reading (water_pct and sure from the bridge); in demo mode live.json is never read as the field anywhere else.
+  On the public photo step one line: "Seen from space by NASA on {date}. Next, our drone takes this photo.", the date read
+  from the basemap file of the picture shown (HLS, 11 November 2025 for the demo field), left out abroad. Drafted 16
+  English lines, their Nepali and the five draft languages (machine translation); added the placeholder `date` to the
+  registry. Tests in `tests/test_site_drone_demo.py`. Screenshots in headless Chrome emulating an iPhone (Safari) and an
+  Android phone (Chrome), with a generated test picture of 4 pots and the real 4-bowl indoor reading of 14 November.
+- **For a person to review:** every new Nepali line (marked "needs native-speaker review"); the demo on real phones over
+  the hotspot (the screenshots are emulated); whether the demo label should show on more screens than the three demo steps.
+

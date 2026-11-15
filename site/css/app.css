@@ -822,3 +822,30 @@ svg.pix circle.pf { stroke: #14301E; }
   .fieldbox .flab .fb { font-size: 13px; }
   .fogline { font-size: 26px; }
 }
+
+/* ---------------- the public photo step: when NASA saw the field from space (js/app.js seenLine) ---------------- */
+.seen { margin: 0; display: flex; align-items: flex-start; gap: 8px; font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--ink); }
+.seen .ico { flex-shrink: 0; margin-top: 1px; color: var(--brown); }
+
+/* ---------------- phone as drone: the in-person demo, hotspot only (js/app.js "phone as drone"; owner, 2026-11-15) ---------------- */
+.demolabel { margin: 0; display: flex; align-items: flex-start; gap: 8px; padding: 8px 12px; border-radius: 14px; background: #FFF3C9;
+  color: #5A3E00; border: 1.5px dashed #C9A24A; font-size: 14px; font-weight: 800; line-height: 1.35; }
+.demolabel .ico { flex-shrink: 0; margin-top: 1px; }
+label.cta.take, label.round { cursor: pointer; }
+.fieldbox.photo { background: #2B2B26; }
+.fieldbox.photo > img.ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fieldbox.photo .vl, .fieldbox.photo .hl { background: #fff; box-shadow: 0 0 0 1px rgba(20,48,30,.5); }
+.fieldbox .pchip { position: absolute; z-index: 3; transform: translateY(-100%); display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px;
+  border-radius: 999px; background: rgba(255,255,255,.94); color: var(--ink); font-size: 12px; font-weight: 800; white-space: nowrap;
+  box-shadow: 0 3px 10px -4px rgba(20,48,30,.45); pointer-events: none; }
+.fieldbox .pchip.wetter { background: #D7ECFA; color: #0E3A57; }
+.fieldbox .pchip.drier { background: #FBE7C6; color: #6B3A10; }
+.photocard { display: flex; flex-direction: column; gap: 6px; }
+.potcap:empty { display: none; }
+.potcap { padding: 10px 14px; border-radius: 18px; background: var(--ink); color: #fff; font-weight: 700; }
+.potcap .lines { margin: 0; }
+.taken { margin: 0; display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--ink); }
+.taken .ico.ok { color: #3F7A2E; }
+/* a narrow phone: a small word with no icon, clear of the part's number in the middle */
+@media (max-width: 1023px) { .fieldbox .pchip { font-size: 11px; padding: 2px 7px; } .fieldbox .pchip .ico { display: none !important; } }
+@media (min-width: 1024px) { .fieldbox .pchip { font-size: 14px; padding: 4px 11px; } }

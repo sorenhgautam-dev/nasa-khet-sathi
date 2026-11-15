@@ -3415,6 +3415,70 @@
   "glossary.kalman_update.say": {
    "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
    "sw": "Hesabu inayochanganya makisio na kipimo, ikiamini zaidi kilicho na uhakika."
+  },
+  "screens.where.texts.seen_space": {
+   "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
+   "sw": "Imeonwa kutoka angani na NASA tarehe {date}. Kisha, droni yetu inapiga picha hii."
+  },
+  "shared.drone.label": {
+   "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",
+   "sw": "Onyesho: vyungu 4 vinawakilisha shamba. Simu hii inawakilisha droni yetu."
+  },
+  "shared.drone.take": {
+   "en": "Take a photo from above",
+   "sw": "Piga picha kutoka juu"
+  },
+  "shared.drone.again": {
+   "en": "Take it again",
+   "sw": "Piga tena"
+  },
+  "shared.drone.taken": {
+   "en": "Photo taken from above:",
+   "sw": "Picha imepigwa kutoka juu:"
+  },
+  "shared.drone.stays": {
+   "en": "The photo stays on this phone.",
+   "sw": "Picha inabaki kwenye simu hii."
+  },
+  "shared.drone.yes": {
+   "en": "Yes",
+   "sw": "Ndiyo"
+  },
+  "shared.drone.no_photo": {
+   "en": "No photo yet. Take one from above first.",
+   "sw": "Bado hakuna picha. Kwanza piga moja kutoka juu."
+  },
+  "shared.drone.start": {
+   "en": "Push the soil stick into pot 1.",
+   "sw": "Weka kijiti cha udongo kwenye chungu 1."
+  },
+  "shared.drone.pot_wetter": {
+   "en": "Pot {section} is wetter than the others.",
+   "sw": "Chungu {section} kina unyevu zaidi kuliko vingine."
+  },
+  "shared.drone.pot_drier": {
+   "en": "Pot {section} is drier than the others.",
+   "sw": "Chungu {section} ni kikavu zaidi kuliko vingine."
+  },
+  "shared.drone.pot_same": {
+   "en": "Pot {section} is like the others.",
+   "sw": "Chungu {section} ni kama vingine."
+  },
+  "shared.drone.pot_none": {
+   "en": "Pot {section}: no steady reading.",
+   "sw": "Chungu {section}: hakuna kipimo thabiti."
+  },
+  "shared.drone.chip_wetter": {
+   "en": "Wetter",
+   "sw": "Unyevu zaidi"
+  },
+  "shared.drone.chip_drier": {
+   "en": "Drier",
+   "sw": "Kikavu zaidi"
+  },
+  "shared.drone.chip_same": {
+   "en": "Same",
+   "sw": "Sawa"
   }
  }
 }

@@ -3415,6 +3415,70 @@
   "glossary.kalman_update.say": {
    "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
    "hi": "अनुमान और माप मिलाने का हिसाब, पक्के पर ज़्यादा भरोसा करते हुए।"
+  },
+  "screens.where.texts.seen_space": {
+   "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
+   "hi": "NASA ने {date} को अंतरिक्ष से देखा। अब हमारा ड्रोन यह फ़ोटो लेगा।"
+  },
+  "shared.drone.label": {
+   "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",
+   "hi": "डेमो: खेत की जगह 4 गमले हैं। हमारे ड्रोन की जगह यह फ़ोन है।"
+  },
+  "shared.drone.take": {
+   "en": "Take a photo from above",
+   "hi": "ऊपर से फ़ोटो लें"
+  },
+  "shared.drone.again": {
+   "en": "Take it again",
+   "hi": "फिर से लें"
+  },
+  "shared.drone.taken": {
+   "en": "Photo taken from above:",
+   "hi": "ऊपर से ली गई फ़ोटो:"
+  },
+  "shared.drone.stays": {
+   "en": "The photo stays on this phone.",
+   "hi": "फ़ोटो इसी फ़ोन पर रहती है।"
+  },
+  "shared.drone.yes": {
+   "en": "Yes",
+   "hi": "हाँ"
+  },
+  "shared.drone.no_photo": {
+   "en": "No photo yet. Take one from above first.",
+   "hi": "अभी कोई फ़ोटो नहीं। पहले ऊपर से एक लें।"
+  },
+  "shared.drone.start": {
+   "en": "Push the soil stick into pot 1.",
+   "hi": "मिट्टी की छड़ी गमले 1 में डालें।"
+  },
+  "shared.drone.pot_wetter": {
+   "en": "Pot {section} is wetter than the others.",
+   "hi": "गमला {section} बाकी से ज़्यादा गीला है।"
+  },
+  "shared.drone.pot_drier": {
+   "en": "Pot {section} is drier than the others.",
+   "hi": "गमला {section} बाकी से ज़्यादा सूखा है।"
+  },
+  "shared.drone.pot_same": {
+   "en": "Pot {section} is like the others.",
+   "hi": "गमला {section} बाकी जैसा है।"
+  },
+  "shared.drone.pot_none": {
+   "en": "Pot {section}: no steady reading.",
+   "hi": "गमला {section}: स्थिर माप नहीं मिला।"
+  },
+  "shared.drone.chip_wetter": {
+   "en": "Wetter",
+   "hi": "ज़्यादा गीला"
+  },
+  "shared.drone.chip_drier": {
+   "en": "Drier",
+   "hi": "ज़्यादा सूखा"
+  },
+  "shared.drone.chip_same": {
+   "en": "Same",
+   "hi": "एक जैसा"
   }
  }
 }

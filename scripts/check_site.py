@@ -10,6 +10,7 @@ What it refuses in site/:
   `data/...`, `js/app.js`, `../img/x.svg`. Relative paths work at the site's root and in any folder; full addresses
   of other sites (`https://...`) are not touched by this rule;
 - reading an environment variable (`process.env`, `import.meta.env`): there is none on a static site;
+- with --final, the demo switch site/data/demo.json (phone as drone: the laptop's hotspot only; git-ignored);
 - calling a server function (`fetch('api/...')`), or files that would make Vercel run code or a build: an `api/`
   folder, `middleware.*`, `package.json`, `.env*`, files that need compiling (.ts, .tsx, .jsx, .vue, .svelte, .scss),
   or a `vercel.json` that sets functions, env, crons, builds or a build or install command.
@@ -102,6 +103,9 @@ def site_problems(site_dir=REPO / "site", final=False):
             out += text_problems(name, f.read_text(errors="replace"))
         elif f.suffix == ".json" and len(parts) == 3 and parts[0] == "data" and parts[1] in FEATURE_DIRS:
             out += data_link_problems(name, json.loads(f.read_text()))
+    if final and (site_dir / "data" / "demo.json").is_file():   # phone as drone: the hotspot-only demo switch (scripts/demo_mode.py)
+        out.append({"file": "data/demo.json", "line": 0, "kind": "demo switch",
+                    "text": "demo mode is for the laptop's hotspot only: run scripts/demo_mode.py off before the final commit"})
     if final and not (site_dir / "index.html").is_file():
         out.append({"file": "index.html", "line": 0, "kind": "missing", "text": "site/index.html is the page the live address opens"})
     return out
@@ -117,6 +121,8 @@ def main(argv=None):
         print(f"FAIL {p['file']}:{p['line']} [{p['kind']}] {p['text']}")
     files = sum(1 for p in site.rglob("*") if p.is_file())
     print(f"{files} file(s) in {site} checked, {len(problems)} problem(s)")
+    if not final and (site / "data" / "demo.json").is_file():
+        print("NOTE: demo mode is on (site/data/demo.json, git-ignored; hotspot only). scripts/demo_mode.py off turns it off")
     if not final and not (site / "index.html").is_file():
         print("NOTE: no index.html at the root of site/ yet (--final makes this a failure)")
     return 1 if problems else 0

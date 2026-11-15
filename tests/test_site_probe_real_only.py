@@ -46,7 +46,8 @@ def test_a_stick_test_shows_on_how_we_know_as_bowls_and_field_readings_stay_not_
 
 def test_real_readings_carry_a_date_and_there_is_no_tested_count():
     reader = APP[APP.index("function probeData()"):APP.index("function anyTested(")]
-    assert "if (lv && isReal(lv.source) &&" in reader and "isReal(x.source)" in reader
+    # in demo mode (phone as drone, hotspot only) live.json holds the pots and is not read as the field at all
+    assert re.search(r"if \(lv && (?:!demo && )?isReal\(lv\.source\) &&", reader) and "isReal(x.source)" in reader
     assert "pd.live.time" in APP and "(pd.test ? TEST_LABEL[pd.test] : ['recorded_on'])" in APP
     assert not re.search(r"T\('check_soil\.tested'\) \+ ': '", APP)
 

@@ -22,6 +22,8 @@ firebase-adminsdk*.json
 # the recorded site/data/probe_log.json IS committed
 /site/data/live.json
 /site/data/.live.json.tmp
+# Phone as drone (owner, 2026-11-15): the demo switch, on the laptop's hotspot only; never committed or published
+/site/data/demo.json
 
 # Python
 .venv/
