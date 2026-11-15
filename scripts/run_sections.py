@@ -253,8 +253,10 @@ def main(argv=None):
     field, rules = load_field(a.field), load_rules()
     rules["sections"].update(field.get("sections") or {})    # sectioning is per field (owner, 2026-11-15): its config first
     S, data = rules["sections"], REPO / "data"
-    sections = grid.grid_sections(field["polygon"], cell_m=S["cell_m"], max_sections=S["max_sections"],
-                                  coarsen_factor=S["coarsen_factor"])
+    pc = field.get("patches")       # a drawn field's patches (rules.yaml sections.patches), else the 30 m grid
+    sections = [{"id": p["id"], "polygon": p["polygon"], "area_m2": p["area_m2"]} for p in grid.patches(
+        field["polygon"], (field["lon"], field["lat"]), pc["cell_m"], pc["min_piece_m2"], pc["ids"])[0]] if pc else \
+        grid.grid_sections(field["polygon"], cell_m=S["cell_m"], max_sections=S["max_sections"], coarsen_factor=S["coarsen_factor"])
     g = greenness(field, sections, rules, data)
     lg, dem_px = low_ground(field, sections, rules, data)
     tpath = Path(a.twin_state) if a.twin_state else data / "clean" / field["id"] / "twin_state.json"
@@ -268,6 +270,8 @@ def main(argv=None):
     for s in sections:
         sid, ws = s["id"], g["weights"][s["id"]]
         t = g["test"][sid]
+        if pc and s["area_m2"] < 900:    # rules.yaml sections.sub_pixel_patches: patches share their 30 m pixels
+            t = dict(t, word="can't tell", why="smaller than one 30 m HLS pixel (rules.yaml sections.sub_pixel_patches)")
         out_sections.append({
             "id": sid, "polygon": s["polygon"], "area_m2": s["area_m2"],
             "hls_pixels": [{"row": w["row"], "col": w["col"], "weight": round(w["weight"], 4)} for w in ws],

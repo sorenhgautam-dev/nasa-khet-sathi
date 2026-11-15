@@ -3515,6 +3515,26 @@
   "shared.drone.chip_same": {
    "en": "Same",
    "fr": "Pareil"
+  },
+  "screens.your_plan.texts.drone_title": {
+   "en": "What our drone step will look like",
+   "fr": "Voici à quoi ressemblera notre étape drone"
+  },
+  "screens.your_plan.texts.drone_lead": {
+   "en": "A real drone photo of another farm. It is in Dhulikhel.",
+   "fr": "Une vraie photo de drone d'une autre ferme. Elle est à Dhulikhel."
+  },
+  "screens.your_plan.texts.drone_label": {
+   "en": "Real farm in Dhulikhel. Drone photo from 2023 (OpenAerialMap). No farmer's answers yet.",
+   "fr": "Vraie ferme à Dhulikhel. Photo de drone de 2023 (OpenAerialMap). Pas encore de réponses de l'agriculteur."
+  },
+  "screens.your_plan.texts.drone_patches": {
+   "en": "{section_count} patches of about 10 by 10 m.",
+   "fr": "{section_count} parcelles d'environ 10 x 10 m."
+  },
+  "screens.your_plan.texts.drone_sat": {
+   "en": "From space, we see 30 m squares. About 2 squares cover this farm. So that history is for the whole area. The soil stick tests each 10 m patch.",
+   "fr": "Vus de l'espace, les carrés font 30 m. Environ 2 carrés couvrent cette ferme. Cette histoire est celle de la zone. La sonde mesure chaque parcelle de 10 m."
   }
  }
 }

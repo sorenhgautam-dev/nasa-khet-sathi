@@ -1,0 +1,60 @@
+# A REAL farm (owner, 2026-11-15, 00:10 Nepal time): the teammate's package design/dhulikhel_farm_package.zip.
+# Anything unknown is null with a TODO. Do not guess it.
+#
+# Dhulikhel Municipality, Kavrepalanchok District, Nepal, beside the Land Management Training Centre. The outline was
+# traced by the teammate along the field's visible edges on an OpenAerialMap drone orthomosaic ('Land Management
+# Training Center', 8 Sep 2023, DJI Mavic Pro, 12.7 cm per pixel, CC-BY 4.0), georeferenced from the GeoTIFF itself
+# (WGS 84 / UTM 45N) and checked by hand in Google Earth (package README). Traced by eye: area about +/-5-10 %.
+# The FARM is real; its CROPS are not known: there are no farmer's answers yet, so the rotation below is the demo's
+# placeholder and the app asks the farmer (current_options), as on the demo field.
+# The 30 m satellite data (HLS, NASADEM) see only about two squares of this farm, so its satellite history is for the
+# area around it; the soil probe sees each 10 m patch.
+id: dhulikhel
+name: Real farm in Dhulikhel (PLACEHOLDER crops)   # the farm is real; its crops are not (the export refuses a placeholder rotation under a name without 'placeholder')
+placeholder: true                   # the crops and the water source are placeholders (no farmer's answers yet); the location is real
+real_farm: true                     # the outline is a real farm's (drone photo), not a picked square
+country: Nepal
+origin_point: {lat: 27.617935, lon: 85.54191}   # the package's field centre (farm_coordinates.json field_centre)
+lat: 27.617935
+lon: 85.54191
+polygon:                            # the package's field_outline_lonlat: 14 points, [lon, lat], clockwise from the west (ring not closed)
+- [85.54163, 27.617993]
+- [85.541709, 27.618036]
+- [85.541838, 27.618058]
+- [85.54198, 27.618074]
+- [85.542097, 27.618061]
+- [85.542162, 27.618027]
+- [85.542188, 27.617964]
+- [85.542202, 27.617896]
+- [85.542099, 27.617845]
+- [85.541958, 27.617809]
+- [85.541829, 27.617791]
+- [85.541732, 27.61779]
+- [85.54168, 27.617838]
+- [85.541647, 27.617913]
+# [min_lon, min_lat, max_lon, max_lat]: 5 km N, S, E, W of origin_point by the demo's own method
+# (pipeline/fetch/worldcover.box_around). The package suggests [85.491219, 27.572717, 85.592601, 27.663154]: within 30 m.
+fetch_box: [85.491162, 27.572969, 85.592658, 27.662901]
+bbox: [85.491162, 27.572969, 85.592658, 27.662901]       # index.json prepared area = the fetch box
+elevation_m: 1467.0                 # NASADEM_HGT v001 over the outline (1 pixel centre inside it: 1467 m; slope 6.4 deg; data/clean/dhulikhel/nasadem_field.json, 2026-11-15)
+water_source: null                  # TODO(farmer): unknown, so both cases are run (rain-fed and irrigated)
+current_rotation: [rice, potato]    # PLACEHOLDER: no farmer's answers yet; the demo's placeholder (FAO Crop Calendar Nepal Hill-zone windows)
+current_rotation_options: [[rice, potato], [rice, wheat]]  # PLACEHOLDER: as on the demo field, the farmer answers on screen
+current_rotation_source: "PLACEHOLDER (Claude's choice, 2026-11-15, as the demo's): rice in the monsoon, then potato or wheat in winter, sown on the FAO Crop Calendar Nepal Hill-zone default windows; the real rotation comes from the farmer"
+# Validation only (no correction_label, so POWER's temperatures are NOT corrected; Claude's choice, 2026-11-15, put to
+# the owner): the demo's 'Kathmandu-valley correction' fixes the valley floor's cold-air pooling, and this farm is 19.5 km
+# east of the station, outside the valley floor (pipeline/fetch/weather.py: a station without a label is for validation).
+validation_station: NP000444540     # NOAA GHCN-Daily KATHMANDU AIRPORT (27.700 N, 85.367 E), 19.5 km west-north-west (great-circle). S-flag 'S' records
+drone_photo:                        # the 'from the sky' picture of this field (owner, 2026-11-15)
+  package: design/dhulikhel_farm_package.zip
+  file: one_farm_clean.jpg          # copied unchanged to site/data/drone/dhulikhel.jpg (pipeline/export/build_drone.py)
+  bounds: [[27.617742, 85.541568], [27.618124, 85.542265]]   # [[south, west], [north, east]] (package; north-up within 1 m)
+  size_px: [536, 338]
+  date: "2023-09-08"
+  source: "OpenAerialMap drone orthomosaic 'Land Management Training Center', 8 Sep 2023, DJI Mavic Pro, Pix4Dmapper, 12.7 cm per pixel, CC-BY 4.0"
+  resolution: "12.7 cm per pixel (drone); the picture here is the farm cut out at 536 x 338 pixels"
+  oam_id: 64fac6d25ee57100013326fb  # https://api.openaerialmap.org/meta?title=Land%20Management%20Training%20Center (read 2026-11-15)
+  # The record's 'provider' field reads "Dji Mavic Pro" (the drone model, not a name); its uploader and contact is
+  # Anil Basnet (user.name). The credit names the uploader. TODO(owner): confirm.
+  credit: "Drone imagery: Anil Basnet, OpenAerialMap, CC-BY 4.0"
+patches: {cell_m: 10, min_piece_m2: 50, ids: p}   # the package README's method: a 10 m grid centred on the field, pieces under 50 m2 joined to the nearest patch, numbered from the south-west (pipeline/sections/grid.patches)

@@ -406,6 +406,19 @@ for each claim (copied from notes/parallel_session.md).
   map, marked colour-blind safe there.
 - Data reused, nothing downloaded: HLS-VI v2.0 box windows and ESA WorldCover 10 m 2021 v200 (CC BY 4.0), as listed above.
 
+### The real farm in Dhulikhel (2026-11-15; `config/fields/dhulikhel.yaml`, `design/dhulikhel_farm_package.zip`)
+
+- **Drone imagery: Anil Basnet, OpenAerialMap, CC-BY 4.0.** The orthomosaic "Land Management Training Center"
+  (OpenAerialMap id 64fac6d25ee57100013326fb; acquired 2023-09-07 18:15 UTC, 8 Sep 2023 in Nepal; DJI Mavic Pro, UAV;
+  0.12746 m per pixel; EPSG:32645; licence "CC-BY 4.0"), read from api.openaerialmap.org/meta on 2026-11-15. The
+  record's `provider` field reads "Dji Mavic Pro" (the drone model, not a name); its uploader and contact is Anil Basnet,
+  so the credit names him (TODO(owner): confirm). The site shows `site/data/drone/dhulikhel.jpg`, the farm cut out of
+  the orthomosaic by our teammate (536 x 338 pixels), unchanged.
+- The teammate's package: the farm's outline traced by eye on the orthomosaic, georeferenced from the GeoTIFF and
+  checked by hand in Google Earth (no Google imagery is in the package or on the site), and a 14-patch layout. Our own
+  code cuts the patches again (`pipeline/sections/grid.patches`; VALIDATION 3.27).
+- Data for its 5 km box: the same NASA and partner datasets as the demo field, listed above, fetched for the new box.
+
 ### The data story, the inventories and the Sentinel-1 assessment (2026-11-14; metadata and documentation only)
 
 - *metadata* ASF Search API, Alaska Satellite Facility DAAC (https://api.daac.asf.alaska.edu/services/search/param):
@@ -633,3 +646,11 @@ Licences are read from each package's installed metadata.
 - NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-3`'s fetch box, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
 - NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-4`'s fetch box, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
 - NASA GIBS WMS, Blue Marble: Next Generation, August 2004 (MODIS; NASA Earth Observatory, Stockli et al. 2005), the whole world at 1024 px, fetched 2026-11-14 by pipeline/fetch/basemap.py (the site's zoomed-out map; site/data/basemap/world.jpg)
+- NASA POWER Daily API v2.10.3 (model-based), field `dhulikhel`, 2001-01-01 to 2025-12-31, fetched 2026-11-15
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `dhulikhel`'s fetch box, 2001-2025, fetched 2026-11-15 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
+- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `dhulikhel`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-15 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
+- FAOSTAT QCL bulk file (FAO), Nepal rice, wheat and maize yields, 2001 to 2024, fetched 2026-11-15 (validation only)
+- NOAA CPC Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (public domain), field `dhulikhel`, DJF 1950 to ASO 2026, fetched 2026-11-15
+- NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation only), field `dhulikhel`, 2001-01-01 to 2025-08-24, fetched 2026-11-15
+- NEX-GDDP-CMIP6 (NASA Earth Exchange; Thrasher et al. 2022), pr, tasmax, tasmin at the 0.25 deg cell 27.625 N, 85.625 E (field `dhulikhel`), historical 1995-2014 and ssp245 / ssp585 2026-2040, fetched from 2026-11-14 via NASA NCCS THREDDS by pipeline/fetch/nexgddp.py (the 2040 outlook; the models used are listed in data/cards/dhulikhel/nexgddp.json)
+- NASA POWER daily API (near-real-time: GEOS-IT, FLASHFlux; model-based) and NASA GPM IMERG Late V07 daily (GPM_3IMERGDL, GES DISC OPeNDAP), field `dhulikhel`, 2026-01-01 to 2026-11-09, fetched 2026-11-15 by pipeline/fetch/now.py (the twin's state now, build step 10)

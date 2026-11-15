@@ -55,7 +55,7 @@
       });
     });
     function loadingEl() { return h('div', null, K.loading()); }
-    var mine = [judges, replay(F), future(F), method(F), areaBox, helped(), section('sources', T('your_plan.sources_title'), [K.sourcesList(F), version,
+    var mine = [judges, dronePreviews(), replay(F), future(F), method(F), areaBox, helped(), section('sources', T('your_plan.sources_title'), [K.sourcesList(F), version,
       // the acknowledgement NASA GIBS asks for, beside the map pictures (NASA HLS, NASA Blue Marble); kept in its own words
       h('p', { class: 'small', lang: 'en' }, 'We acknowledge the use of imagery provided by services from NASA\u2019s Global Imagery Browse Services (GIBS), part of NASA\u2019s Earth Science Data and Information System (ESDIS).')]), glossary(), nr];
     // the labels and the evidence that left the farmer's screens first, then the chapters of story.json
@@ -394,6 +394,22 @@
   // a garden or indoor test of the soil stick: shown here as bowls, never as the field's parts (owner, 2026-11-15)
   function stickTest(pd) {
     return pd && pd.test ? section('stick', T('check_soil.prototype'), [K.recordedLine(pd), K.bowlLines(pd)]) : null;
+  }
+  // a drawn farm's drone photo whose field is not built yet (index.json drone_previews; owner, 2026-11-15): never mixed
+  // with this field's results, only shown as what the drone step will look like
+  function dronePreviews() {
+    var files = (S.index && S.index.drone_previews) || [], box = h('div');
+    files.forEach(function (f) {
+      K.getJSON(f).then(function (d) {
+        if (!d || !box.isConnected) return;
+        var v = K.droneView(d);
+        v.G.forEach(function (g) { v.el.append(h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + g.cy + '%;width:22px;height:22px;margin:-11px 0 0 -11px;font-size:11px;border-width:2px;animation:none' }, K.digits(g.n))); });
+        box.append(section('drone', T('your_plan.drone_title'), [h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('your_plan.drone_lead')), v.el,
+          K.lines([T('your_plan.drone_label'), T('your_plan.drone_patches', { section_count: d.patches.length }), T('your_plan.drone_sat')], 'sub'),
+          h('p', { class: 'small', lang: 'en' }, d.credit)]));
+      });
+    });
+    return box;
   }
   function notReady(F, pd) {
     var items = (F.mock || []).map(function (b) { return T('btn.not_ready') + ' (' + b + ')'; });

@@ -38,7 +38,7 @@
           "end": {"type": "string"},
           "check": {"type": "object", "additionalProperties": false, "description": "A garden or indoor test only: the watered bowl's check (config/rules.yaml probe.live.watered_check)",
             "required": ["watered", "watered_at", "possible", "passed", "repeat_error_pct", "needed_pct", "margin_pct"],
-            "properties": {"watered": {"type": "string", "pattern": "^s[0-9]+$"}, "watered_at": {"type": "string", "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"},
+            "properties": {"watered": {"type": "string", "pattern": "^[sp][0-9]+$"}, "watered_at": {"type": "string", "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"},
               "possible": {"type": "boolean"}, "passed": {"type": ["boolean", "null"]}, "repeat_error_pct": {"type": ["number", "null"], "minimum": 0},
               "needed_pct": {"type": ["number", "null"], "minimum": 0}, "margin_pct": {"type": ["number", "null"]}}},
           "parts": {
@@ -49,7 +49,7 @@
               "required": ["section", "time", "state", "steady", "off_scale", "wetness", "spread_pct", "n", "temp",
                            "water_pct", "give_or_take_pct", "band", "relative", "before", "after", "lines"],
               "properties": {
-                "section": {"type": "string", "pattern": "^s[0-9]+$"},
+                "section": {"type": "string", "pattern": "^[sp][0-9]+$"},
                 "time": {"type": "string"},
                 "state": {"enum": ["done", "test_again"]},
                 "steady": {"type": "boolean"},

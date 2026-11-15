@@ -5382,6 +5382,61 @@
      "sw": "Hapa usahihi ni karibu sifuri, Desemba hadi Mei."
     },
     {
+     "id": "drone_title",
+     "en": "What our drone step will look like",
+     "ne": "हाम्रो ड्रोन चरण यस्तो देखिनेछ",
+     "ne_review": "needs native-speaker review",
+     "hi": "हमारा ड्रोन चरण ऐसा दिखेगा",
+     "bn": "আমাদের ড্রোন ধাপ এমন দেখাবে",
+     "es": "Así se verá nuestro paso con dron",
+     "fr": "Voici à quoi ressemblera notre étape drone",
+     "sw": "Hatua yetu ya ndege nyuki itaonekana hivi"
+    },
+    {
+     "id": "drone_lead",
+     "en": "A real drone photo of another farm. It is in Dhulikhel.",
+     "ne": "धुलिखेलको अर्को खेतको साँचो ड्रोन तस्बिर।",
+     "ne_review": "needs native-speaker review",
+     "hi": "दूसरे खेत की असली ड्रोन तस्वीर। यह धुलीखेल में है।",
+     "bn": "অন্য খামারের আসল ড্রোন ছবি। এটি ধুলিখেলে।",
+     "es": "Una foto real de dron de otra finca. Está en Dhulikhel.",
+     "fr": "Une vraie photo de drone d'une autre ferme. Elle est à Dhulikhel.",
+     "sw": "Picha halisi ya ndege nyuki ya shamba lingine. Iko Dhulikhel."
+    },
+    {
+     "id": "drone_label",
+     "en": "Real farm in Dhulikhel. Drone photo from 2023 (OpenAerialMap). No farmer's answers yet.",
+     "ne": "धुलिखेलको साँचो खेत। सन् २०२३ को ड्रोन तस्बिर (OpenAerialMap)। किसानका जवाफ अझै छैनन्।",
+     "ne_review": "needs native-speaker review",
+     "hi": "धुलीखेल का असली खेत। 2023 की ड्रोन तस्वीर (OpenAerialMap)। किसान के जवाब अभी नहीं।",
+     "bn": "ধুলিখেলের আসল খামার। 2023 সালের ড্রোন ছবি (OpenAerialMap)। কৃষকের উত্তর এখনো নেই।",
+     "es": "Finca real en Dhulikhel. Foto de dron de 2023 (OpenAerialMap). Aún sin respuestas del agricultor.",
+     "fr": "Vraie ferme à Dhulikhel. Photo de drone de 2023 (OpenAerialMap). Pas encore de réponses de l'agriculteur.",
+     "sw": "Shamba halisi Dhulikhel. Picha ya ndege nyuki ya 2023 (OpenAerialMap). Bado hakuna majibu ya mkulima."
+    },
+    {
+     "id": "drone_patches",
+     "en": "{section_count} patches of about 10 by 10 m.",
+     "ne": "करिब १० × १० मिटरका {section_count} टुक्रा।",
+     "ne_review": "needs native-speaker review",
+     "hi": "लगभग 10 × 10 मी के {section_count} टुकड़े।",
+     "bn": "প্রায় 10 × 10 মি-এর {section_count}টি টুকরো।",
+     "es": "{section_count} parcelas de unos 10 x 10 m.",
+     "fr": "{section_count} parcelles d'environ 10 x 10 m.",
+     "sw": "Vipande {section_count} vya takriban m 10 x 10."
+    },
+    {
+     "id": "drone_sat",
+     "en": "From space, we see 30 m squares. About 2 squares cover this farm. So that history is for the whole area. The soil stick tests each 10 m patch.",
+     "ne": "अन्तरिक्षबाट हामी ३० मिटरका वर्ग देख्छौं। यो खेतमा करिब २ वर्ग पर्छन्। त्यसैले अन्तरिक्षबाट देखिएको इतिहास वरपरको क्षेत्रको हो। माटो जाँच्ने यन्त्रले हरेक १० मिटरको टुक्रा जाँच्छ।",
+     "ne_review": "needs native-speaker review",
+     "hi": "अंतरिक्ष से 30 मी के वर्ग दिखते हैं। लगभग 2 वर्ग इस खेत पर हैं। अंतरिक्ष वाला इतिहास आसपास के इलाके का है। यंत्र हर 10 मी टुकड़ा जाँचता है।",
+     "bn": "মহাকাশ থেকে আমরা 30 মি-এর বর্গ দেখি। প্রায় 2টি বর্গ এই খামারে পড়ে। তাই মহাকাশের ইতিহাস আশেপাশের এলাকার। যন্ত্রটি প্রতিটি 10 মি টুকরো পরীক্ষা করে।",
+     "es": "Desde el espacio vemos cuadros de 30 m. Unos 2 cuadros cubren esta finca. Esa historia es de la zona. La varilla mide cada parcela de 10 m.",
+     "fr": "Vus de l'espace, les carrés font 30 m. Environ 2 carrés couvrent cette ferme. Cette histoire est celle de la zone. La sonde mesure chaque parcelle de 10 m.",
+     "sw": "Kutoka angani tunaona miraba ya m 30. Takriban miraba 2 hufunika shamba hili. Historia hiyo ni ya eneo. Kifaa hupima kila kipande cha m 10."
+    },
+    {
      "id": "report_card",
      "en": "How sure are we?",
      "ne": "हामी कति पक्का छौं?",

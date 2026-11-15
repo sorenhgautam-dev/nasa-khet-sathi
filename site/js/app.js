@@ -9,12 +9,15 @@
   // the UI teammate's seven steps are the app (owner, 2026-11-14 evening); the features live inside them and on "How we know"
   var STEPS = ['home', 'photo', 'parts', 'soil', 'choose', 'today', 'next'];
   // weather: "Weather ahead", the Choose screen's extra choice (owner, 2026-11-14 evening)
-  var ROUTES = STEPS.concat(['weather', 'how', 'plan', 'trial', 'world']);
+  var ROUTES = STEPS.concat(['weather', 'how', 'plan', 'trial', 'world', 'story']);
+  // the farmer's flow: 'steps' (the seven screens) or 'story' (one long page told as the farmer scrolls, js/story.js; owner,
+  // 2026-11-15: built beside the steps, and the home page only once it passes every check). #/story opens it either way.
+  var FLOW = 'steps';
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   // sun x, sun y, tint, sunset, road progress (the phone prototype P0, per step)
   var SKY = { home: [30, 300, 0, 0, 0], photo: [79, 197, 0, 0, 0.16], parts: [131, 119, 0, 0, 0.33], soil: [183, 81, 0.05, 0.1, 0.5],
     choose: [236, 96, 0.15, 0.3, 0.66], today: [288, 159, 0.4, 0.65, 0.84], next: [325, 223, 0.65, 0.95, 1], weather: [325, 223, 0.65, 0.95, 1],
-    how: [325, 223, 0.5, 0.8, 1], world: [325, 223, 0.5, 0.8, 1] };
+    how: [325, 223, 0.5, 0.8, 1], world: [325, 223, 0.5, 0.8, 1], story: [30, 300, 0, 0, 0] };
   var S = { lang: 'ne', words: null, index: null, fid: null, field: null, fieldP: null, winter: null, water: null, prio: null,
     timers: [], cur: null, arg: null, prev: null, sheetFor: null };
 
@@ -197,7 +200,10 @@
   function fieldReady() {
     if (S.fieldP) return S.fieldP;
     var id = encodeURIComponent(S.fid);
-    S.fieldP = Promise.all([getJSON('data/fields/' + id + '.json'), getJSON('data/labels/' + id + '.json')]).then(function (r) { S.field = r[0]; S.labels = r[1]; return r[0]; });
+    var dr = indexEntry().drone;
+    S.fieldP = Promise.all([getJSON('data/fields/' + id + '.json'), getJSON('data/labels/' + id + '.json'), dr ? getJSON(dr) : null]).then(function (r) {
+      S.field = r[0]; S.labels = r[1]; if (r[0] && r[2]) r[0]._drone = r[2]; return r[0];
+    });
     return S.fieldP;
   }
   function mocked(F, block) { return (F.mock || []).indexOf(block) >= 0; }
@@ -311,6 +317,8 @@
   function btn2(label, onclick, icon) { return h('button', { type: 'button', class: 'btn2', onclick: onclick }, icon ? svg(I(icon, 18)) : null, label); }
   function btn3(label, onclick, icon) { return h('button', { type: 'button', class: 'btn3', onclick: onclick }, icon ? svg(I(icon, 18)) : null, label); }
   function sampleChip() { return h('span', { class: 'chip sample' }, svg(I('pin', 14)), T('btn.sample_field')); }
+  // a real farm from a drone photo (owner, 2026-11-15): its own label where a sample field shows its chip
+  function fieldChip(F) { return F._drone ? h('p', { class: 'small dronelabel' }, svg(I('pin', 14)), ' ', T('your_plan.drone_label')) : isPlaceholder(F.field.name) ? sampleChip() : null; }
   function loading() { return h('div', { class: 'loading', role: 'status' }, h('span', { class: 'dots' }, h('i'), h('i'), h('i'))); }
   function notReady(extra) { return h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('btn.not_ready')), extra || null); }
   function stepsBar(n) { return h('div', { class: 'steps', 'aria-hidden': 'true' }, [1, 2, 3].map(function (i) { return h('span', { class: i <= n ? 'on' : '' }); })); }
@@ -354,8 +362,41 @@
     G.grid = G.every(function (g) { return g.pts.length === 4; }) && Object.keys(cols).length * Object.keys(rows).length === G.length;
     return G;
   }
+  // a drawn field's drone photo (data/drone/<id>.json; owner, 2026-11-15): the picture, the outline and the lines between
+  // patches drawn over it as vector lines (crisp at any size), a number at each patch's centre. G: each patch in percent of
+  // the picture, as geom() gives it, so the soil screen's robot walks on the photo.
+  function droneView(d, sections) {
+    var W0 = d.size_px[0], H0 = d.size_px[1], s0 = d.bounds[0][0], w0 = d.bounds[0][1], n0 = d.bounds[1][0], e0 = d.bounds[1][1];
+    function px(p) { return [(p[0] - w0) / (e0 - w0) * W0, (n0 - p[1]) / (n0 - s0) * H0]; }
+    function pathOf(ring) { return 'M' + ring.map(function (p) { var q = px(p); return q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('L') + 'Z'; }
+    var box = h('div', { class: 'dronebox', style: 'aspect-ratio:' + W0 + '/' + H0 }, h('img', { src: d.image, alt: '', decoding: 'async' }));
+    var sv = D.createElementNS(SVGNS, 'svg');
+    sv.setAttribute('viewBox', '0 0 ' + W0 + ' ' + H0); sv.setAttribute('preserveAspectRatio', 'none'); sv.setAttribute('aria-hidden', 'true');
+    function el(tag, attrs) { var e = D.createElementNS(SVGNS, tag); Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); }); sv.append(e); return e; }
+    var byId = {}; (sections || []).forEach(function (s) { byId[s.id] = s; });
+    var G = d.patches.map(function (p) {
+      var xs = p.polygon.map(function (q) { return px(q)[0] / W0 * 100; }), ys = p.polygon.map(function (q) { return px(q)[1] / H0 * 100; }), c = px(p.centre);
+      return { s: byId[p.id] || { id: p.id, polygon: p.polygon }, n: p.id.replace(/^[sp]/, ''), q: el('path', { d: pathOf(p.polygon), class: 'dq' }),
+               l: Math.min.apply(null, xs), r: Math.max.apply(null, xs), t: Math.min.apply(null, ys), b: Math.max.apply(null, ys), cx: c[0] / W0 * 100, cy: c[1] / H0 * 100 };
+    });
+    d.lines.forEach(function (ln) { var a = px(ln[0]), b = px(ln[1]); el('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], class: 'dl' }); });
+    el('path', { d: pathOf(d.outline), class: 'do' });
+    box.append(sv);
+    return { el: box, G: G };
+  }
   function fieldBox(F, mode, opt) {
     opt = opt || {};
+    if (F._drone && !opt.photo) {
+      var dv = droneView(F._drone, F.field.sections), dbox = dv.el;
+      dbox.classList.add('fieldbox', 'drone'); dbox.setAttribute('role', 'img'); dbox.setAttribute('aria-label', T('parts.split', { section_count: dv.G.length }));
+      dv.G.forEach(function (g, i) {
+        g.num = h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + g.cy + '%;width:24px;height:24px;margin:-12px 0 0 -12px;font-size:12px;border-width:2px;' +
+          (mode === 'grow' ? 'animation-delay:' + (300 + i * 60) + 'ms' : 'animation:none') }, digits(g.n));
+        dbox.append(g.num);
+      });
+      dbox._g = dv.G;
+      return dbox;
+    }
     var G = geom(F), box = h('div', { class: 'fieldbox' + (opt.photo ? ' photo' : ''), role: 'img', 'aria-label': T('parts.split', { section_count: G.length }) });
     if (opt.photo) box.append(h('img', { class: 'ph', src: opt.photo, alt: '' }));   // phone as drone: the photo from above, drawn under the parts
     else box.append(h('div', { class: 'wm', 'aria-hidden': 'true' }, T('where.your_farm')));
@@ -421,7 +462,7 @@
   function renderTop(r) {
     var top = $('#top'); top.textContent = '';
     var left = h('div', { class: 'left' });
-    if (r === 'home') left.append(h('span', { class: 'logo', 'aria-hidden': 'true' }, svg(ic(P_.leaf, 22, 2.2))));
+    if (r === 'home' || r === 'story') left.append(h('span', { class: 'logo', 'aria-hidden': 'true' }, svg(ic(P_.leaf, 22, 2.2))));
     else left.append(h('button', { type: 'button', class: 'round', 'aria-label': T('btn.back'), onclick: goBack }, svg(I('back', 22, 2.4))));
     left.append(h('span', { class: 'brand' }, L(scr('home').title)));
     var langs = h('div', { class: 'langs', role: 'group', 'aria-label': T('btn.language') });
@@ -457,7 +498,8 @@
   function go(r) { location.hash = '#/' + r; }
   function parse() {
     var p = (location.hash || '').replace(/^#\/?/, '').split('/');
-    return { r: ROUTES.indexOf(p[0]) >= 0 ? p[0] : 'home', a: p[1] ? decodeURIComponent(p[1]) : null };
+    var r = ROUTES.indexOf(p[0]) >= 0 ? p[0] : 'home';
+    return { r: r === 'home' && FLOW === 'story' ? 'story' : r, a: p[1] ? decodeURIComponent(p[1]) : null };
   }
   function setSky(r) {
     var v = SKY[r] || SKY.next, s = $('#sky');
@@ -644,7 +686,7 @@
   }
   // the crops we think the farmer grows, as a question (owner, 2026-11-14 evening): "We think you grow rice, then potato.
   // Is that right?" Yes keeps our guess; the other rotation is the second button. The answer stays on the phone.
-  function guessCard(F, box) {
+  function guessCard(F, box, after) {
     featData('simple').then(function (sd) {
       if (!sd || !sd.guess || !box.isConnected) return;
       var co = F.current_options, opts = (co && co.options) || [], def = co ? co['default'] : null;
@@ -654,7 +696,7 @@
           h('div', { class: 'row wrap', role: 'group', 'aria-label': T('farm.guess_ask') }, (opts.length ? opts : [{ id: null }]).map(function (o) {
             var label = !o.id || o.id === def ? T('from_space.yes') : cap(o.crops.map(function (c) { return crop(c.crop); }).join(', ' + T('join.then') + ' '));
             return h('button', { type: 'button', class: 'choice', 'aria-pressed': String(!!o.id && S.winter === o.id), onclick: function () {
-              if (o.id) { S.winter = o.id; store.set('winter', o.id); } draw();
+              if (o.id) { S.winter = o.id; store.set('winter', o.id); } draw(); if (after) after();
             } }, label);
           })),
           opts.length > 1 ? h('p', { class: 'small', style: 'margin:0' }, svg(I('sat', 14)), ' ', T('from_space.guess_cannot_tell')) : null,
@@ -783,7 +825,7 @@
   SCREENS.photo = function () {
     return withField('photo', function (F) {
       if (S.demo) return demoPhoto(F);
-      var sample = isPlaceholder(F.field.name);
+      var sample = isPlaceholder(F.field.name) && !F._drone, dr = F._drone;
       var mapEl = h('div', { style: 'position:absolute;inset:0' });
       var mbox = h('div', { class: 'mapbox photo' }, h('div', { class: 'msg' }, svg(DRONE), h('span', { class: 'yf' }, T('where.your_farm')), h('span', { class: 'hint' }, T('where.photo_later'))), mapEl,
         sample ? h('div', { class: 'mapnote' }, sampleChip()) : null);
@@ -792,20 +834,26 @@
       loadLeaflet().then(function (L) {
         if (!mapEl.isConnected) return;
         Lf = L; mbox.querySelector('.msg').remove();
-        map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 0.5 });
+        map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 0.5, maxZoom: dr ? 21 : 18 });
         osm(L, map);
+        if (dr) {   // the drone photo, its outline and the lines between its patches (vector: crisp when zoomed)
+          L.imageOverlay(dr.image, dr.bounds, { attribution: dr.credit, interactive: false }).addTo(map);
+          dr.lines.forEach(function (ln) { L.polyline(ln.map(function (p) { return [p[1], p[0]]; }), { color: '#FBF4EA', weight: 1.5, interactive: false }).addTo(map); });
+          var dro = L.polygon(dr.outline.map(function (p) { return [p[1], p[0]]; }), { color: '#C8E05A', weight: 3, fill: false, interactive: false }).addTo(map);
+          map.fitBounds(dro.getBounds(), { padding: [24, 24], maxZoom: 21 });
+        }
         var pts = [];
-        (F.field.sections || []).forEach(function (s) {
+        (dr ? [] : F.field.sections || []).forEach(function (s) {
           var ll = s.polygon.map(function (p) { return [p[1], p[0]]; }); pts = pts.concat(s.polygon);
           L.polygon(ll, { color: '#FBF4EA', weight: 1.5, dashArray: '4 5', fill: false, interactive: false }).addTo(map);
         });
-        if (pts.length) {
+        if (pts.length && !dr) {
           var hl = hull(pts).map(function (p) { return [p[1], p[0]]; });
           L.polygon(hl, { color: '#14301E', weight: 7, opacity: .35, fill: false, interactive: false }).addTo(map);
           var outline = L.polygon(hl, { color: '#C8E05A', weight: 4, fillColor: '#C8E05A', fillOpacity: .12, interactive: false }).addTo(map);
           map.fitBounds(outline.getBounds(), { padding: [60, 60], maxZoom: abroad() ? 9 : 16 });   // abroad: only the coarse world picture
           if (!abroad()) getJSON('data/basemap/' + encodeURIComponent(S.fid) + '.json').then(function (b) { if (b && b.bounds && !draw) map.setMaxBounds(L.latLngBounds(b.bounds).pad(0.1)); });
-        } else map.setView([F.field.lat, F.field.lon], 17);
+        } else if (!dr) map.setView([F.field.lat, F.field.lon], 17);
       }).catch(function () { /* the drone picture and "a real photo comes when we visit" stay */ });
       function startDraw() {
         if (!map) return;
@@ -840,9 +888,10 @@
       var guess = h('div', { class: 'card guess', hidden: true });
       guessCard(F, guess);
       return screen('photo', {
-        head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2'))],
+        head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2')), dr ? fieldChip(F) : null],
         scene: mbox,
-        body: [msg, seenLine(), leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('where.split_next'))), guess, rests],
+        body: [msg, dr ? null : seenLine(), leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('where.split_next'))), guess, rests,
+          dr ? lines([T('your_plan.drone_sat')], 'sub') : null, dr ? h('p', { class: 'small', lang: 'en' }, dr.credit) : null],
         cta: h('div', { class: 'ctarow' }, roundBtn(T('where.draw_own'), 'pin', startDraw), cta(T('where.yes_parts'), function () { go('parts'); }))
       });
     });
@@ -855,7 +904,7 @@
       var lead = h('p', { class: 'lead', 'aria-live': 'polite' }, T('parts.making'));
       later(function () { lead.textContent = T('parts.here', { section_count: n }); }, 2000);
       return screen('parts', {
-        head: [stepsBar(2), bigTitle(T('parts.h1'), T('parts.h2', { section_count: n })), S.demo ? demoLabel() : isPlaceholder(F.field.name) ? sampleChip() : null],
+        head: [stepsBar(2), bigTitle(T('parts.h1'), T('parts.h2', { section_count: n })), S.demo ? demoLabel() : fieldChip(F)],
         scene: fieldBox(F, 'grow', ph ? { photo: ph.url } : null),
         body: leadRow(lead, h('p', { class: 'sub' }, T('parts.middle'))),
         cta: cta(T('parts.start_test'), function () { go('soil'); })
@@ -1087,7 +1136,7 @@
       });
       var honest = h('div', { class: 'card honest' }, lines([T('check_soil.prototype'), T('check_soil.by_hand'), T('check_soil.robot_next')], 'sub')), tbox = h('div');
       return screen('soil', {
-        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), demo ? demoLabel() : isPlaceholder(F.field.name) ? sampleChip() : null,
+        head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), demo ? demoLabel() : fieldChip(F),
           fog.any ? h('p', { class: 'fogline' }, T('fog.fog_line')) : null],
         scene: ph ? h('div', { class: 'photocard' }, box, pcap) : box,
         body: [demo && !ph ? h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('drone.no_photo')), btn2(T('drone.take'), function () { go('photo'); }, 'camera')) : null, rows, fnote, info, tbox, honest],
@@ -1213,7 +1262,7 @@
         if (pd.kind === 'live') every(function () { probeData().then(function (x) { if (cards.isConnected) draw(x); }); }, 4000);
       });
       return screen('today', {
-        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
+        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), fieldChip(F)],
         scene: [cards, more],
         body: null,
         cta: cta(T('what_to_grow.see3'), function () { go('next/3'); })
@@ -1295,7 +1344,7 @@
         add(body, [othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])), tags(), h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note')), noteBox()]);
       });
       return screen('next', {
-        head: [bigTitle(T('what_to_grow.next_h1'), T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
+        head: [bigTitle(T('what_to_grow.next_h1'), T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')), fieldChip(F)],
         scene: scene,
         body: body,
         cta: doneCta()
@@ -1348,7 +1397,7 @@
   }
   SCREENS.weather = function () {
     return withField('weather', function (F) {
-      var wx = F.weather, head = [bigTitle(T('weather.title')), isPlaceholder(F.field.name) ? sampleChip() : null];
+      var wx = F.weather, head = [bigTitle(T('weather.title')), fieldChip(F)];
       if (!wx || !wx.blocks) return screen('weather', { head: head, body: notReady(), cta: doneCta() });
       var list = h('div', { class: 'wblocks' }, loading());
       featData('simple').then(function (sd) {
@@ -1524,7 +1573,7 @@
         })) : null;
         add(panel, [
           sheetBar(planName(p)),
-          isPlaceholder(F.field.name) ? sampleChip() : null,
+          fieldChip(F),
           h('div', { style: 'display:flex;flex-direction:column;gap:14px;margin-top:10px' },
             p.id === 'current' && F.current_options ? h('div', { class: 'card' }, winterQuestion(F, function () { rerender(); })) : null,
             h('div', { class: 'card' }, h('h3', { class: 'h3' }, T('your_plan.what_when')), cropRows, h('p', { class: 'small', style: 'margin:0' }, T('your_plan.months_note'))),
@@ -1588,6 +1637,18 @@
     return h('section', { class: 'scr scr-how' }, h('div', { class: 's-head' }, bigTitle(T('farm.world_title'))), body);
   };
   SCREENS.how.scrollTo = function (id) { var el = D.getElementById('how-' + id); if (el) el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); };
+
+  // ---------------- the farmer's flow as one long page (js/story.js and css/story.css, loaded when first opened) ----------------
+  SCREENS.story = function (arg, keep) {
+    var box = h('div', { class: 'story' }, loading());
+    S.storyP = S.storyP || Promise.all([loadScript('js/story.js'),
+      new Promise(function (res) { var l = h('link', { rel: 'stylesheet', href: 'css/story.css' }); l.onload = l.onerror = res; D.head.append(l); })]);
+    Promise.all([S.storyP, fieldReady()]).then(function (r) {
+      if (!box.isConnected) return;
+      box.replaceWith(r[1] && W.KS.story ? W.KS.story(r[1], keep) : screen('story', { body: notReady() }));
+    });
+    return box;
+  };
 
   // ---------------- start ----------------
   function grass() {
@@ -1684,8 +1745,13 @@
     btn2: btn2, cta: cta, screen: screen, labs: labs, rainMark: rainMark, closeSheet: closeSheet, bigTitle: bigTitle, store: store, fmtDate: fmtDate, geom: geom, fieldBox: fieldBox,
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
-    gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
-    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink };
+    gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
+    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink,
+    // for the long page (js/story.js): the same pieces the seven screens use, so its results are theirs
+    fieldReady: fieldReady, fieldChip: fieldChip, setLang: setLang, setSky: setSky, hull: hull, guessCard: guessCard, farmPlans: farmPlans,
+    winterCrop: winterCrop, startState: startState, addedCrop: addedCrop, farmPlanName: farmPlanName, wordLine: wordLine, tryBtn: tryBtn,
+    noteBox: noteBox, patchLine: patchLine, dotEl: dotEl, anyTested: anyTested, liveParts: liveParts, isReal: isReal, canWater: canWater, blockIcon: blockIcon,
+    cropOn: cropOn, CUM: CUM, cap: cap, ROBOT: ROBOT, fogParts: fogParts };
 
   // ---------------- Behind the scenes: your field, seen by NASA (owner, 2026-11-15; js/behind.js) ----------------
   // For judges: the section sits at the end of Home's scroll, below the first screen, and on How we know; nothing of it

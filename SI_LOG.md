@@ -1593,3 +1593,16 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   Nepali "rests in" line ("खेत प्रायः खाली रहने महिना:"), and "records" for "data" on the world page.
 - **For a person to review:** every new or changed Nepali line (marked "needs native-speaker review"); "frosty nights"
   in place of "clear, cold nights" (the same advice in fewer words); the five draft languages.
+
+## 2026-11-15 (Sunday, after midnight): the real farm in Dhulikhel (Claude Opus 5.5 via Claude Code; one helper agent)
+
+- **What Claude did:** read the teammate's package (README, farm_coordinates.json); wrote `config/fields/dhulikhel.yaml`
+  (committed before its first download) and started every download for its 5 km box, the kit's plus SMAP, NEX-GDDP and
+  this week's weather, as for the demo; wrote the patch method in our own code (`pipeline/sections/grid.patches`, rules
+  `sections.patches` and `sub_pixel_patches` committed before their first run) with tests; built the drone file and the
+  How we know preview; let the probe walk take p1..p14. A helper agent read the image's OpenAerialMap record (the
+  provider field is the drone model; the uploader is Anil Basnet).
+- **For a person to review:** the credit name; the south-west corner of the patches (VALIDATION 3.27: ours differs from
+  the package's for p2-p4); the station choice for Dhulikhel (validation only, no valley correction); the new Nepali
+  lines (marked for native-speaker review) and the draft lines in the other languages.
+

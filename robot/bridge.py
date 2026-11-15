@@ -39,7 +39,7 @@ from robot import calibrate as cal
 from robot import probe, settle
 
 REPO = Path(__file__).resolve().parents[1]
-SECTION = re.compile(r"^s[0-9]+$")       # the contract's section ids (schema.json)
+SECTION = re.compile(r"^[sp][0-9]+$")   # the contract's section ids (schema.json): s1.., or p1.. for a drawn field's patches
 DEFAULT_BAUD = 115200                     # the probe sketch's Serial.begin rate
 SILENT = None                             # what a source yields when a read times out with no line
 PTY = re.compile(r"^/dev/(ttys\d+|pts/\d+)$")
@@ -197,15 +197,19 @@ def fake_lines(interval_s=2.0, n=None, seed=0, start_moist=45.0, **kw):
 def _sections(doc):
     if isinstance(doc, dict) and isinstance(doc.get("sections"), list):
         return doc["sections"]
+    if isinstance(doc, dict) and isinstance(doc.get("patches"), list):      # a drawn field's drone file (p1..)
+        return doc["patches"]
     if isinstance(doc, dict) and isinstance(doc.get("field"), dict):
         return doc["field"].get("sections")
     return doc if isinstance(doc, list) else None
 
 
 def field_section_ids(field_id, repo=REPO):
-    """(ids, file): the field's sections from data/checks/<field>/sections.json, else from the field file."""
+    """(ids, file): the field's sections from data/checks/<field>/sections.json, else from the field file, else a drawn
+    field's patches from its drone file (site/data/drone/<field>.json: p1..p14 for Dhulikhel before its build)."""
     for path in (Path(repo) / "data" / "checks" / field_id / "sections.json",
-                 Path(repo) / "site" / "data" / "fields" / f"{field_id}.json"):
+                 Path(repo) / "site" / "data" / "fields" / f"{field_id}.json",
+                 Path(repo) / "site" / "data" / "drone" / f"{field_id}.json"):
         if path.exists():
             secs = _sections(json.loads(path.read_text()))
             if secs and all(isinstance(s, dict) and "id" in s for s in secs):

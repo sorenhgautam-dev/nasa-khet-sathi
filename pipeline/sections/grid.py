@@ -165,3 +165,66 @@ def grid_sections(polygon, cell_m=30.0, max_sections=40, coarsen_factor=1.1, min
         cells = _clip_grid(pts, cell_m, max_sections, coarsen_factor, min_piece_m2)
     return [{"id": f"s{k + 1}", "polygon": [[round(x, 7), round(y, 7)] for x, y in cell],
              "area_m2": round(area_m2(cell), 1)} for k, cell in enumerate(cells)]
+
+
+def centroid_area(points):
+    """(x, y, area) of a simple polygon given as (x, y) corners, ring not closed (the area-weighted centre)."""
+    a = cx = cy = 0.0
+    for i in range(len(points)):
+        (x0, y0), (x1, y1) = points[i][:2], points[(i + 1) % len(points)][:2]
+        k = x0 * y1 - x1 * y0
+        a, cx, cy = a + k, cx + (x0 + x1) * k, cy + (y0 + y1) * k
+    return (cx / (3 * a), cy / (3 * a), abs(a) / 2) if a else (0.0, 0.0, 0.0)
+
+
+def patches(polygon, centre, cell_m=10.0, min_piece_m2=50.0, prefix="p"):
+    """A drawn field's patches (the Dhulikhel package's method, owner 2026-11-15): a cell_m grid whose lines pass through
+    the field's centre ([lon, lat]), each cell clipped to the outline; a piece under min_piece_m2 is joined to the patch
+    whose centre is nearest its own; numbered from the south-west, row by row, west to east. Each patch: id, row, col
+    (of its main cell), area_m2, centre [lon, lat] (the centre of its own area), pieces ([lon, lat] rings) and polygon:
+    one ring, the outline clipped to the rectangle its cells make (exactly its pieces' union), or, when its cells do not
+    make a rectangle, its main piece only (whole: false).
+    Returns (patches, lines): lines are the [[lon, lat], [lon, lat]] edges between two different patches, for drawing
+    them over a photo with the outline (edges between the pieces of one patch are left out)."""
+    pts = [(float(q[0]), float(q[1])) for q in polygon]
+    scale, lon0, lat0 = _scale(pts), float(centre[0]), float(centre[1])
+    xy = local_metres(pts, (lon0, lat0), scale)
+    xs, ys = [p[0] for p in xy], [p[1] for p in xy]
+    pieces = []
+    for j in range(math.floor(min(ys) / cell_m), math.ceil(max(ys) / cell_m)):
+        for i in range(math.floor(min(xs) / cell_m), math.ceil(max(xs) / cell_m)):
+            ring = clip_to_rect(xy, i * cell_m, j * cell_m, (i + 1) * cell_m, (j + 1) * cell_m)
+            x, y, a = centroid_area(ring) if ring else (0.0, 0.0, 0.0)
+            if a > 1e-6:
+                pieces.append({"i": i, "j": j, "ring": ring, "x": x, "y": y, "a": a})
+    big = [p for p in pieces if p["a"] >= min_piece_m2] or [max(pieces, key=lambda p: p["a"])]
+    for p in pieces:
+        p["owner"] = p if p in big else min(big, key=lambda b: math.hypot(b["x"] - p["x"], b["y"] - p["y"]))
+    big.sort(key=lambda b: (b["j"], b["i"]))
+    to_lonlat = lambda x, y: [round(lon0 + x / scale[0], 7), round(lat0 + y / scale[1], 7)]   # noqa: E731
+    out = []
+    for k, b in enumerate(big):
+        b["id"] = f"{prefix}{k + 1}"
+        mine = [p for p in pieces if p["owner"] is b]
+        area = sum(p["a"] for p in mine)
+        ii, jj = {p["i"] for p in mine}, {p["j"] for p in mine}
+        whole = len(mine) == (max(ii) - min(ii) + 1) * (max(jj) - min(jj) + 1)
+        ring = clip_to_rect(xy, min(ii) * cell_m, min(jj) * cell_m, (max(ii) + 1) * cell_m, (max(jj) + 1) * cell_m) if whole else b["ring"]
+        out.append({"id": b["id"], "row": b["j"], "col": b["i"], "area_m2": round(area, 1),
+                    "polygon": [to_lonlat(x, y) for x, y in ring], "whole": whole,
+                    "centre": to_lonlat(sum(p["a"] * p["x"] for p in mine) / area, sum(p["a"] * p["y"] for p in mine) / area),
+                    "pieces": [[to_lonlat(x, y) for x, y in p["ring"]] for p in mine]})
+    cell = {(p["i"], p["j"]): p for p in pieces}
+    lines = []
+    for p in pieces:                      # a piece's edge on its cell's east or north side, when the next cell's piece
+        for di, dj in ((1, 0), (0, 1)):   # belongs to another patch: one line per shared edge
+            nb = cell.get((p["i"] + di, p["j"] + dj))
+            if nb is None or nb["owner"] is p["owner"]:
+                continue
+            k = (p["i"] + 1) * cell_m if di else (p["j"] + 1) * cell_m
+            on = [q for q in p["ring"] if abs((q[0] if di else q[1]) - k) < 1e-6]
+            if len(on) >= 2:
+                lo, hi = (min(on, key=lambda q: q[1]), max(on, key=lambda q: q[1])) if di else \
+                         (min(on, key=lambda q: q[0]), max(on, key=lambda q: q[0]))
+                lines.append([to_lonlat(*lo), to_lonlat(*hi)])
+    return out, lines

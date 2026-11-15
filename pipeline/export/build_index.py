@@ -41,20 +41,27 @@ def build_index(configs, data_dir):
     with_map = {a for a in {_area_of(c) for c in listed} if (data_dir / "area" / f"{a}.json").exists()}
     fields = [{"id": c["id"], "name": c["name"], "country": c["country"], "lat": c["lat"], "lon": c["lon"],
                "bbox": list(c["bbox"]), "sample": bool(c.get("sample")),
-               "area": _area_of(c) if _area_of(c) in with_map else None, **_profile_flag(c)} for c in listed]
+               "area": _area_of(c) if _area_of(c) in with_map else None, **_profile_flag(c),
+               **({"drone": f"data/drone/{c['id']}.json"} if (data_dir / "drone" / f"{c['id']}.json").exists() else {})}
+              for c in listed]
     areas = []
     for a in dict.fromkeys(_area_of(c) for c in listed if _area_of(c) in with_map):     # in the order the fields come
         owner = by_id.get(a, {})
         areas.append({"id": a, "name": owner.get("area_name") or f"{str(owner.get('name', a)).split(' (')[0]} area",
                       "bbox": list(owner.get("bbox") or json.loads((data_dir / "area" / f"{a}.json").read_text())["bbox"]),
                       "map": f"data/area/{a}.json", "fields": [f["id"] for f in fields if f["area"] == a]})
-    return {"fields": fields, "areas": areas}
+    # a drawn field's drone photo whose field is not listed yet: shown on How we know as a preview (owner, 2026-11-15)
+    previews = [f"data/drone/{c['id']}.json" for c in configs
+                if c not in listed and (data_dir / "drone" / f"{c['id']}.json").exists()]
+    return {"fields": fields, "areas": areas, **({"drone_previews": previews} if previews else {})}
 
 
-def all_configs(config_dir=REPO / "config" / "fields"):
+def all_configs(config_dir=REPO / "config" / "fields", main=None):
     from pipeline.fetch.fields import load_field
+    from pipeline.fetch.rules import load_rules
+    main = main or load_rules()["site_main_field"]                 # the field the site opens first ("Try our demo field")
     ids = sorted(p.stem for p in Path(config_dir).glob("*.yaml"))
-    order = sorted(ids, key=lambda i: (i != "demo", i))           # the demo first ("Try our demo field")
+    order = sorted(ids, key=lambda i: (i != main, i != "demo", i))
     return [load_field(i, config_dir) for i in order]
 
 

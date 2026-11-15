@@ -64,6 +64,20 @@ def test_the_history_is_rebuilt_exactly_as_weather_py_built_it():
     assert rep["rows"] == len(w) and rep["identical"], rep
 
 
+@pytest.mark.skipif(not (REPO / "data" / "clean" / "dhulikhel" / "weather.parquet").exists(), reason="needs Dhulikhel's cleaned data")
+def test_a_validation_only_station_is_not_used_to_correct_as_in_weather_py():
+    """Dhulikhel names Kathmandu Airport without a correction_label (validation only): the rebuild must stay uncorrected
+    POWER, as weather.py built it (2026-11-15: now.py corrected anyway and refused its own rebuild)."""
+    from pipeline.fetch.fields import load_field
+    from pipeline.fetch.rules import load_rules
+    field, rules = load_field("dhulikhel"), load_rules()
+    inputs = now.history_inputs(field, REPO / "data")
+    assert inputs["station"] is not None and not field.get("correction_label")
+    out = now.build_days(field, inputs, power_new=None, gpm_new=None, rules=rules)
+    rep = now.reproduction(out["table"], pd.read_parquet(REPO / "data" / "clean" / "dhulikhel" / "weather.parquet"))
+    assert rep["identical"], rep
+
+
 @pytest.mark.skipif(not (CLEAN / "twin_state.json").exists(), reason="run scripts/run_twin_now.py first")
 def test_the_twin_state_has_the_keys_the_sections_code_reads():
     s = json.loads((CLEAN / "twin_state.json").read_text())

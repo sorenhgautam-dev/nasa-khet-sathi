@@ -368,12 +368,14 @@ def not_ready_blocks(doc, field, sections=None, twin_state=None):
     sections), the twin's own sureness before any probe reading (sure_prior), its own greenness word and its
     low-ground flag. Without the twin's state the parts keep their outlines and say nothing. The 2040 outlook is
     filled later in the export (build step 9); here it is null and named."""
-    from pipeline.sections.grid import grid_sections
+    from pipeline.sections.grid import grid_sections, patches as grid_patches
     out = copy.deepcopy(doc)
     out["field"]["name"], out["field"]["lat"], out["field"]["lon"] = field["name"], field["lat"], field["lon"]
     out["field"].pop("status_date", None)
     mock = list(NOT_READY)
-    parts = sections["sections"] if sections else grid_sections(field["polygon"])
+    pc = field.get("patches")       # a drawn field's patches (rules.yaml sections.patches)
+    parts = sections["sections"] if sections else grid_patches(field["polygon"], (field["lon"], field["lat"]), pc["cell_m"],
+                                                               pc["min_piece_m2"], pc["ids"])[0] if pc else grid_sections(field["polygon"])
     if sections and twin_state:
         out["field"]["sections"] = [{
             "id": s["id"], "polygon": s["polygon"], "status": s["status"], "wetness": int(round(s["wetness_pct"])),

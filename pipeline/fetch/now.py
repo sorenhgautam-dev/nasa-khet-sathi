@@ -89,6 +89,10 @@ def build_days(field, inputs, power_new, gpm_new, rules):
         if station is None:
             corrections[col] = {"label": "uncorrected POWER (no nearby station)", "applied": False}
             continue
+        if not wx.station_corrects(field):      # as weather.py: a station without correction_label is for validation only
+            corrections[col] = {"label": "uncorrected POWER (the station is for validation only: no correction_label)",
+                                "applied": False}
+            continue
         c = bias.build_correction(hist_power, station, col, tc["min_shared_days_per_year"], tc["min_shared_days_per_month"])
         label = f"{field.get('correction_label', 'station-based correction')} (station {field.get('validation_station')})"
         if c["apply"]:
