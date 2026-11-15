@@ -219,14 +219,23 @@
   function yearRange(y, k) { return spread(y[k], alts(y, ''), k); }
   function hasDhm(F) { return JSON.stringify(F.plans).indexOf('_dhm_rain') >= 0; }
   function scoreRange(p, k) { return spread(p.score[k], alts(p, 'score_'), k); }
-  function curOption(F) {
+  // what the farmer grows now (fix A3, owner 2026-11-15: one answer on every screen): their answer once given, until then
+  // our guess from space (the option whose crops are the diary's guess), else the file's default. Pure.
+  function winterId(F, answer) {
     var co = F.current_options; if (!co || !co.options) return null;
-    var id = S.winter || co['default'];
+    var g = ((F.diary && F.diary.guess) || []).join('+');
+    var guess = co.options.filter(function (o) { return o.crops.map(function (c) { return c.crop; }).join('+') === g; })[0];
+    return answer || (guess && guess.id) || co['default'];
+  }
+  // the option that replaces the 'current' plan: none while it is the file's default and the farmer has not answered
+  function swapId(F, answer) { var co = F.current_options, id = winterId(F, answer); return co && (answer || id !== co['default']) ? id : null; }
+  function curOption(F) {
+    var co = F.current_options, id = winterId(F, S.winter); if (!id) return null;
     return co.options.filter(function (o) { return o.id === id; })[0] || null;
   }
   // the three plans with the farmer's winter-crop answer applied (CONTRACT_CHANGES, current_options)
   function effPlans(F) {
-    var co = F.current_options, opt = co && S.winter ? curOption(F) : null;
+    var co = F.current_options, opt = co && swapId(F, S.winter) ? curOption(F) : null;
     return F.plans.map(function (p) {
       var q;
       if (p.id === 'current' && opt) {
@@ -1869,7 +1878,7 @@
     MONTHS: MONTHS, RM: RM, later: later, sentences: sentences, btn3: btn3, vsChip: vsChip,
     btn2: btn2, cta: cta, screen: screen, labs: labs, rainMark: rainMark, closeSheet: closeSheet, bigTitle: bigTitle, store: store, fmtDate: fmtDate, geom: geom, fieldBox: fieldBox,
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
-    labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
+    labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterId: winterId, swapId: swapId, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, droneLabel: droneLabel, droneSat: droneSat, droneCredit: droneCredit, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
     say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink, inNepal: inNepal };
 

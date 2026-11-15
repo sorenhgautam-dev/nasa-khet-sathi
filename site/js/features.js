@@ -152,7 +152,8 @@
   function replay(F, R) {
     if (!R || !R.plans || !R.windows || !R.windows.length) return null;
     var cur = R.plans.filter(function (p) { return p.role === 'current'; })[0];
-    var opt = S.winter && R.plans.filter(function (p) { return p.id === S.winter && p.role === 'current_option'; })[0];
+    var sw = K.swapId(F, S.winter);   // the farmer's answer, else our guess from space (fix A3)
+    var opt = sw && R.plans.filter(function (p) { return p.id === sw && p.role === 'current_option'; })[0];
     var plans = [opt || cur].concat(R.plans.filter(function (p) { return p.role === 'suggested'; })).filter(Boolean);
     var st = { win: S.rpWin || R.windows[0].id, plan: S.rpPlan || plans[0].id, start: R.start_default, by: 'default', sel: null };
     if (!plans.some(function (p) { return p.id === st.plan; })) st.plan = plans[0].id;
