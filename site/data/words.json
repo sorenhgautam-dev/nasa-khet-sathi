@@ -587,14 +587,14 @@
     },
     {
      "id": "seen_space",
-     "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
-     "ne": "नासाले {date} मा अन्तरिक्षबाट हेरेको। अब हाम्रो ड्रोनले यो फोटो खिच्छ।",
+     "en": "Seen from space by NASA on {date}.",
+     "ne": "नासाले {date} मा अन्तरिक्षबाट हेरेको।",
      "ne_review": "needs native-speaker review",
-     "hi": "NASA ने {date} को अंतरिक्ष से देखा। अब हमारा ड्रोन यह फ़ोटो लेगा।",
-     "bn": "NASA {date} তারিখে মহাকাশ থেকে দেখেছে। এরপর আমাদের ড্রোন এই ছবি তুলবে।",
-     "es": "Visto por la NASA desde el espacio: {date}. Luego, nuestro dron toma esta foto.",
-     "fr": "Vu de l’espace par la NASA le {date}. Ensuite, notre drone prend cette photo.",
-     "sw": "Imeonwa kutoka angani na NASA tarehe {date}. Kisha, droni yetu inapiga picha hii."
+     "hi": "NASA ने {date} को अंतरिक्ष से देखा।",
+     "bn": "NASA {date} তারিখে মহাকাশ থেকে দেখেছে।",
+     "es": "Visto desde el espacio por la NASA, {date}.",
+     "fr": "Vu de l'espace par la NASA le {date}.",
+     "sw": "Imeonwa kutoka angani na NASA tarehe {date}."
     },
     {
      "id": "inside_sample",
@@ -3983,14 +3983,14 @@
     },
     {
      "id": "better_not",
-     "en": "Not price, not labour, not taste.",
-     "ne": "मूल्य, श्रम वा स्वाद होइन।",
+     "en": "Not your work, not your taste.",
+     "ne": "तपाईंको मेहनत वा स्वाद होइन।",
      "ne_review": "needs native-speaker review",
-     "hi": "दाम, मेहनत या स्वाद नहीं।",
-     "bn": "দাম, শ্রম বা স্বাদ নয়।",
-     "es": "No precio, no trabajo, no sabor.",
-     "fr": "Ni prix, ni travail, ni goût.",
-     "sw": "Si bei, si kazi, si ladha."
+     "hi": "आपकी मेहनत या स्वाद नहीं।",
+     "bn": "আপনার পরিশ্রম বা স্বাদ নয়।",
+     "es": "Ni su trabajo ni su gusto.",
+     "fr": "Ni votre travail, ni vos goûts.",
+     "sw": "Si kazi yako, si ladha yako."
     },
     {
      "id": "water_yes_1",
@@ -5680,25 +5680,25 @@
     },
     {
      "id": "lab_rain",
-     "en": "Rain fix",
-     "ne": "वर्षा सुधार",
+     "en": "Rain corrected",
+     "ne": "वर्षा मिलाइएको",
      "ne_review": "needs native-speaker review",
-     "hi": "बारिश सुधार",
-     "bn": "বৃষ্টি সংশোধন",
+     "hi": "बारिश समायोजित",
+     "bn": "বৃষ্টি সমন্বিত",
      "es": "Lluvia corregida",
      "fr": "Pluie corrigée",
-     "sw": "Mvua iliyorekebishwa"
+     "sw": "Mvua imerekebishwa"
     },
     {
      "id": "lab_rain_why",
-     "en": "This number uses our fixed rain record.",
-     "ne": "यो अङ्कमा हाम्रो सुधारिएको वर्षा अभिलेख छ।",
+     "en": "This number uses our corrected rain record.",
+     "ne": "यो अङ्कमा हाम्रो मिलाइएको वर्षा अभिलेख छ।",
      "ne_review": "needs native-speaker review",
-     "hi": "यह अंक हमारे सुधारे बारिश रिकॉर्ड से है।",
-     "bn": "এই সংখ্যায় আমাদের সংশোধিত বৃষ্টির রেকর্ড আছে।",
-     "es": "Este número usa nuestra lluvia corregida.",
-     "fr": "Ce nombre utilise notre pluie corrigée.",
-     "sw": "Namba hii inatumia rekodi yetu ya mvua iliyorekebishwa."
+     "hi": "यह अंक हमारे समायोजित बारिश रिकॉर्ड से है।",
+     "bn": "এই সংখ্যা আমাদের সমন্বিত বৃষ্টির রেকর্ড থেকে।",
+     "es": "Este número usa nuestro registro de lluvia corregido.",
+     "fr": "Ce nombre utilise notre relevé de pluie corrigé.",
+     "sw": "Nambari hii inatumia rekodi yetu ya mvua iliyorekebishwa."
     },
     {
      "id": "mm",
@@ -5779,14 +5779,14 @@
     },
     {
      "id": "check_found",
-     "en": "From {rain_fix_year}, the rain map was made differently.",
-     "ne": "{rain_fix_year} देखि वर्षाको नक्सा फरक तरिकाले बन्यो।",
+     "en": "From {rain_fix_year}, fewer gauges fed the rain map.",
+     "ne": "{rain_fix_year} देखि वर्षाको नक्सामा मापक धेरै घटे।",
      "ne_review": "needs native-speaker review",
-     "hi": "{rain_fix_year} से बारिश का नक्शा अलग तरह बना।",
-     "bn": "{rain_fix_year} থেকে বৃষ্টির মানচিত্র অন্যভাবে তৈরি হয়।",
-     "es": "Desde {rain_fix_year}, el mapa de lluvia cambió.",
-     "fr": "Depuis {rain_fix_year}, la carte des pluies a changé.",
-     "sw": "Tangu {rain_fix_year}, ramani ya mvua ilitengenezwa tofauti."
+     "hi": "{rain_fix_year} से नक्शे में कम वर्षामापी जुड़े।",
+     "bn": "{rain_fix_year} থেকে মানচিত্রে কম বৃষ্টিমাপক যুক্ত হয়েছে।",
+     "es": "Desde {rain_fix_year}, menos pluviómetros alimentan el mapa.",
+     "fr": "Depuis {rain_fix_year}, moins de pluviomètres alimentent la carte.",
+     "sw": "Tangu {rain_fix_year}, vipimo vichache vililisha ramani ya mvua."
     },
     {
      "id": "check_none",
@@ -5867,25 +5867,25 @@
     },
     {
      "id": "check_jump",
-     "en": "Ours jumped, compared with it:",
-     "ne": "त्यससँग दाँज्दा हाम्रो उफ्रियो:",
+     "en": "Ours stepped up, compared with it:",
+     "ne": "त्यससँग दाँज्दा हाम्रो बढ्यो:",
      "ne_review": "needs native-speaker review",
-     "hi": "उसकी तुलना में हमारा उछला:",
-     "bn": "তার তুলনায় আমাদেরটা লাফিয়েছে:",
-     "es": "El nuestro saltó, comparado con ese:",
-     "fr": "La nôtre a bondi, comparée à elle :",
-     "sw": "Yetu iliruka, ikilinganishwa nayo:"
+     "hi": "उसकी तुलना में हमारा बढ़ा:",
+     "bn": "এর তুলনায় আমাদেরটা বেড়েছে:",
+     "es": "El nuestro subió, comparado con él:",
+     "fr": "Le nôtre a monté, comparé à lui :",
+     "sw": "Yetu ilipanda, ikilinganishwa nayo:"
     },
     {
      "id": "check_late",
-     "en": "A version made without gauges jumped less.",
-     "ne": "मापकबिना बनेको संस्करण कम उफ्रियो।",
+     "en": "A version made without gauges stepped up less.",
+     "ne": "मापकबिना बनेको संस्करण कम बढ्यो।",
      "ne_review": "needs native-speaker review",
-     "hi": "वर्षामापी के बिना बना रूप कम उछला।",
-     "bn": "মাপক ছাড়া তৈরি সংস্করণ কম লাফিয়েছে।",
-     "es": "Una versión sin pluviómetros saltó menos.",
-     "fr": "Une version sans pluviomètres a moins bondi.",
-     "sw": "Toleo lisilo na vipimo liliruka kidogo."
+     "hi": "वर्षामापी के बिना बना रूप कम बढ़ा।",
+     "bn": "বৃষ্টিমাপক ছাড়া তৈরি সংস্করণ কম বেড়েছে।",
+     "es": "Una versión hecha sin pluviómetros subió menos.",
+     "fr": "Une version faite sans pluviomètres a moins monté.",
+     "sw": "Toleo lililotengenezwa bila vipimo lilipanda kidogo."
     },
     {
      "id": "check_late_jump",
@@ -5933,11 +5933,11 @@
     },
     {
      "id": "check_ours",
-     "en": "Our fixed rain:",
-     "ne": "हाम्रो सुधारिएको वर्षा:",
+     "en": "Our corrected rain:",
+     "ne": "हाम्रो मिलाइएको वर्षा:",
      "ne_review": "needs native-speaker review",
-     "hi": "हमारी सुधारी बारिश:",
-     "bn": "আমাদের সংশোধিত বৃষ্টি:",
+     "hi": "हमारी समायोजित बारिश:",
+     "bn": "আমাদের সমন্বিত বৃষ্টি:",
      "es": "Nuestra lluvia corregida:",
      "fr": "Notre pluie corrigée :",
      "sw": "Mvua yetu iliyorekebishwa:"
@@ -6021,22 +6021,22 @@
     },
     {
      "id": "ver_tuned",
-     "en": "Fixed, then matched to gauges",
-     "ne": "सुधारेर मापकसँग मिलाइएको",
+     "en": "Corrected, then matched to gauges",
+     "ne": "समायोजन गरेर मापकसँग मिलाइएको",
      "ne_review": "needs native-speaker review",
-     "hi": "सुधारी, फिर वर्षामापी से मिलाई",
-     "bn": "সংশোধিত, তারপর মাপকের সঙ্গে মেলানো",
-     "es": "Corregida y ajustada a pluviómetros",
-     "fr": "Corrigée puis ajustée aux pluviomètres",
+     "hi": "समायोजित, फिर वर्षामापी से मिलाई",
+     "bn": "সমন্বিত, তারপর বৃষ্টিমাপকের সঙ্গে মেলানো",
+     "es": "Corregida y luego ajustada a los pluviómetros",
+     "fr": "Corrigée, puis ajustée aux pluviomètres",
      "sw": "Imerekebishwa, kisha kulinganishwa na vipimo"
     },
     {
      "id": "ver_untuned",
-     "en": "Fixed only",
-     "ne": "सुधार मात्र",
+     "en": "Corrected only",
+     "ne": "समायोजन मात्र",
      "ne_review": "needs native-speaker review",
-     "hi": "सिर्फ़ सुधारी",
-     "bn": "শুধু সংশোধিত",
+     "hi": "केवल समायोजित",
+     "bn": "শুধু সমন্বিত",
      "es": "Solo corregida",
      "fr": "Corrigée seulement",
      "sw": "Imerekebishwa tu"
@@ -6087,11 +6087,11 @@
     },
     {
      "id": "line_twin",
-     "en": "Our fixed rain",
-     "ne": "हाम्रो सुधारिएको वर्षा",
+     "en": "Our corrected rain",
+     "ne": "हाम्रो मिलाइएको वर्षा",
      "ne_review": "needs native-speaker review",
-     "hi": "हमारी सुधारी बारिश",
-     "bn": "আমাদের সংশোধিত বৃষ্টি",
+     "hi": "हमारी समायोजित बारिश",
+     "bn": "আমাদের সমন্বিত বৃষ্টি",
      "es": "Nuestra lluvia corregida",
      "fr": "Notre pluie corrigée",
      "sw": "Mvua yetu iliyorekebishwa"
@@ -6109,14 +6109,14 @@
     },
     {
      "id": "check_marked",
-     "en": "Numbers with this mark use our fixed rain.",
-     "ne": "यो चिन्ह भएका अङ्कमा सुधारिएको वर्षा छ।",
+     "en": "Numbers with this mark use our corrected rain.",
+     "ne": "यो चिन्ह भएका अङ्कमा मिलाइएको वर्षा छ।",
      "ne_review": "needs native-speaker review",
-     "hi": "इस निशान वाले अंक सुधारी बारिश से हैं।",
-     "bn": "এই চিহ্নের সংখ্যায় সংশোধিত বৃষ্টি আছে।",
-     "es": "Los números con esta marca usan lluvia corregida.",
-     "fr": "Les nombres marqués ainsi utilisent la pluie corrigée.",
-     "sw": "Namba zenye alama hii zinatumia mvua iliyorekebishwa."
+     "hi": "इस निशान के अंक समायोजित बारिश से हैं।",
+     "bn": "এই চিহ্নের সংখ্যা সমন্বিত বৃষ্টি ব্যবহার করে।",
+     "es": "Los números marcados usan nuestra lluvia corregida.",
+     "fr": "Les nombres marqués utilisent notre pluie corrigée.",
+     "sw": "Nambari zenye alama hii zinatumia mvua yetu iliyorekebishwa."
     },
     {
      "id": "version",

@@ -164,8 +164,10 @@ def test_home_and_how_we_know_show_the_limits_block_and_its_lists_only_on_their_
     how = (REPO / "site" / "js" / "how.js").read_text()
     body = re.search(r"function limitsBox\(lazy\) \{.*?\n  \}", app, re.S).group(0)
     assert "st.limits" in body and "st.field === S.fid" in body            # the lists belong to story.json's field
-    assert "both.append(scr, limitsBox(true), behindBox(true))" in app       # Home: below the first screen, lazily
-    assert "K.limitsBox()" in how                                            # How we know: first
+    assert "both.append(scr, promiseBox(true), limitsBox(true), behindBox(true))" in app   # Home: below the first screen, lazily
+    assert "K.limitsBox()" in how and how.index("K.promiseBox()") > how.index("K.limitsBox()")   # How we know: promise first (unshifted last)
+    pbody = re.search(r"function promiseBox\(lazy\) \{.*?\n  \}", app, re.S).group(0)
+    assert "st.promise" in pbody and "P(Pr.title)" in pbody
 
 
 def test_sen_line_passes_through_the_median_residual():

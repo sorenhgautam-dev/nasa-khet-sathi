@@ -1773,12 +1773,12 @@
    "sw": "Ukaguzi uliolingana:"
   },
   "screens.your_plan.texts.lab_rain": {
-   "en": "Rain fix",
-   "sw": "Mvua iliyorekebishwa"
+   "en": "Rain corrected",
+   "sw": "Mvua imerekebishwa"
   },
   "screens.your_plan.texts.lab_rain_why": {
-   "en": "This number uses our fixed rain record.",
-   "sw": "Namba hii inatumia rekodi yetu ya mvua iliyorekebishwa."
+   "en": "This number uses our corrected rain record.",
+   "sw": "Nambari hii inatumia rekodi yetu ya mvua iliyorekebishwa."
   },
   "screens.your_plan.texts.mm": {
    "en": "mm",
@@ -2169,8 +2169,8 @@
    "sw": "Kila shamba hufanya ukaguzi huu lenyewe."
   },
   "screens.your_plan.texts.check_found": {
-   "en": "From {rain_fix_year}, the rain map was made differently.",
-   "sw": "Tangu {rain_fix_year}, ramani ya mvua ilitengenezwa tofauti."
+   "en": "From {rain_fix_year}, fewer gauges fed the rain map.",
+   "sw": "Tangu {rain_fix_year}, vipimo vichache vililisha ramani ya mvua."
   },
   "screens.your_plan.texts.check_none": {
    "en": "No change found. We use the rain as published.",
@@ -2201,12 +2201,12 @@
    "sw": "Ramani nyingine ya mvua, CHIRPS, ilibaki thabiti."
   },
   "screens.your_plan.texts.check_jump": {
-   "en": "Ours jumped, compared with it:",
-   "sw": "Yetu iliruka, ikilinganishwa nayo:"
+   "en": "Ours stepped up, compared with it:",
+   "sw": "Yetu ilipanda, ikilinganishwa nayo:"
   },
   "screens.your_plan.texts.check_late": {
-   "en": "A version made without gauges jumped less.",
-   "sw": "Toleo lisilo na vipimo liliruka kidogo."
+   "en": "A version made without gauges stepped up less.",
+   "sw": "Toleo lililotengenezwa bila vipimo lilipanda kidogo."
   },
   "screens.your_plan.texts.check_late_jump": {
    "en": "Without gauges:",
@@ -2225,7 +2225,7 @@
    "sw": "Ramani ya mvua, ikilinganishwa nayo:"
   },
   "screens.your_plan.texts.check_ours": {
-   "en": "Our fixed rain:",
+   "en": "Our corrected rain:",
    "sw": "Mvua yetu iliyorekebishwa:"
   },
   "screens.your_plan.texts.check_fix_title": {
@@ -2257,11 +2257,11 @@
    "sw": "Mvua kwa mwaka, kwa hesabu tofauti"
   },
   "screens.your_plan.texts.ver_tuned": {
-   "en": "Fixed, then matched to gauges",
+   "en": "Corrected, then matched to gauges",
    "sw": "Imerekebishwa, kisha kulinganishwa na vipimo"
   },
   "screens.your_plan.texts.ver_untuned": {
-   "en": "Fixed only",
+   "en": "Corrected only",
    "sw": "Imerekebishwa tu"
   },
   "screens.your_plan.texts.ver_dhm": {
@@ -2281,7 +2281,7 @@
    "sw": "Ramani ya mvua, kama ilivyochapishwa"
   },
   "screens.your_plan.texts.line_twin": {
-   "en": "Our fixed rain",
+   "en": "Our corrected rain",
    "sw": "Mvua yetu iliyorekebishwa"
   },
   "screens.your_plan.texts.line_chirps": {
@@ -2289,8 +2289,8 @@
    "sw": "Ramani nyingine ya mvua (CHIRPS)"
   },
   "screens.your_plan.texts.check_marked": {
-   "en": "Numbers with this mark use our fixed rain.",
-   "sw": "Namba zenye alama hii zinatumia mvua iliyorekebishwa."
+   "en": "Numbers with this mark use our corrected rain.",
+   "sw": "Nambari zenye alama hii zinatumia mvua yetu iliyorekebishwa."
   },
   "screens.check_soil.texts.practice": {
    "en": "Practice: made-up numbers",
@@ -2581,8 +2581,8 @@
    "sw": "Bora: mvua inakidhi maji zaidi yanayohitajika."
   },
   "screens.last_years.texts.better_not": {
-   "en": "Not price, not labour, not taste.",
-   "sw": "Si bei, si kazi, si ladha."
+   "en": "Not your work, not your taste.",
+   "sw": "Si kazi yako, si ladha yako."
   },
   "screens.last_years.texts.water_yes_1": {
    "en": "With water, dry spells stop mattering.",
@@ -3661,8 +3661,8 @@
    "sw": "Hesabu inayochanganya makisio na kipimo, ikiamini zaidi kilicho na uhakika."
   },
   "screens.where.texts.seen_space": {
-   "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
-   "sw": "Imeonwa kutoka angani na NASA tarehe {date}. Kisha, droni yetu inapiga picha hii."
+   "en": "Seen from space by NASA on {date}.",
+   "sw": "Imeonwa kutoka angani na NASA tarehe {date}."
   },
   "shared.drone.label": {
    "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",

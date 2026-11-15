@@ -327,8 +327,8 @@
     },
     {
      "id": "seen_space",
-     "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
-     "ne": "नासाले {date} मा अन्तरिक्षबाट हेरेको। अब हाम्रो ड्रोनले यो फोटो खिच्छ।",
+     "en": "Seen from space by NASA on {date}.",
+     "ne": "नासाले {date} मा अन्तरिक्षबाट हेरेको।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -2238,8 +2238,8 @@
     },
     {
      "id": "better_not",
-     "en": "Not price, not labour, not taste.",
-     "ne": "मूल्य, श्रम वा स्वाद होइन।",
+     "en": "Not your work, not your taste.",
+     "ne": "तपाईंको मेहनत वा स्वाद होइन।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -3190,14 +3190,14 @@
     },
     {
      "id": "lab_rain",
-     "en": "Rain fix",
-     "ne": "वर्षा सुधार",
+     "en": "Rain corrected",
+     "ne": "वर्षा मिलाइएको",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "lab_rain_why",
-     "en": "This number uses our fixed rain record.",
-     "ne": "यो अङ्कमा हाम्रो सुधारिएको वर्षा अभिलेख छ।",
+     "en": "This number uses our corrected rain record.",
+     "ne": "यो अङ्कमा हाम्रो मिलाइएको वर्षा अभिलेख छ।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -3244,8 +3244,8 @@
     },
     {
      "id": "check_found",
-     "en": "From {rain_fix_year}, the rain map was made differently.",
-     "ne": "{rain_fix_year} देखि वर्षाको नक्सा फरक तरिकाले बन्यो।",
+     "en": "From {rain_fix_year}, fewer gauges fed the rain map.",
+     "ne": "{rain_fix_year} देखि वर्षाको नक्सामा मापक धेरै घटे।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -3292,14 +3292,14 @@
     },
     {
      "id": "check_jump",
-     "en": "Ours jumped, compared with it:",
-     "ne": "त्यससँग दाँज्दा हाम्रो उफ्रियो:",
+     "en": "Ours stepped up, compared with it:",
+     "ne": "त्यससँग दाँज्दा हाम्रो बढ्यो:",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "check_late",
-     "en": "A version made without gauges jumped less.",
-     "ne": "मापकबिना बनेको संस्करण कम उफ्रियो।",
+     "en": "A version made without gauges stepped up less.",
+     "ne": "मापकबिना बनेको संस्करण कम बढ्यो।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -3328,8 +3328,8 @@
     },
     {
      "id": "check_ours",
-     "en": "Our fixed rain:",
-     "ne": "हाम्रो सुधारिएको वर्षा:",
+     "en": "Our corrected rain:",
+     "ne": "हाम्रो मिलाइएको वर्षा:",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -3376,14 +3376,14 @@
     },
     {
      "id": "ver_tuned",
-     "en": "Fixed, then matched to gauges",
-     "ne": "सुधारेर मापकसँग मिलाइएको",
+     "en": "Corrected, then matched to gauges",
+     "ne": "समायोजन गरेर मापकसँग मिलाइएको",
      "ne_review": "needs native-speaker review"
     },
     {
      "id": "ver_untuned",
-     "en": "Fixed only",
-     "ne": "सुधार मात्र",
+     "en": "Corrected only",
+     "ne": "समायोजन मात्र",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -3412,8 +3412,8 @@
     },
     {
      "id": "line_twin",
-     "en": "Our fixed rain",
-     "ne": "हाम्रो सुधारिएको वर्षा",
+     "en": "Our corrected rain",
+     "ne": "हाम्रो मिलाइएको वर्षा",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -3424,8 +3424,8 @@
     },
     {
      "id": "check_marked",
-     "en": "Numbers with this mark use our fixed rain.",
-     "ne": "यो चिन्ह भएका अङ्कमा सुधारिएको वर्षा छ।",
+     "en": "Numbers with this mark use our corrected rain.",
+     "ne": "यो चिन्ह भएका अङ्कमा मिलाइएको वर्षा छ।",
      "ne_review": "needs native-speaker review"
     },
     {

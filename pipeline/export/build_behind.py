@@ -145,8 +145,8 @@ def cards(inp, power):
 
     out = [
         card("gpm", "GPM", "GPM IMERG", "rain_fixed",
-             f"Rain every day for {rain_years} years; the {jump} jump is fixed.",
-             f"{rain_years} वर्षको हरेक दिनको वर्षा; {jump} को उफ्राइ सच्याइएको छ।"),
+             f"Rain every day for {rain_years} years; corrected for fewer gauges from {jump}.",
+             f"{rain_years} वर्षको हरेक दिनको वर्षा; {jump} देखि घटेका मापकका लागि मिलाइएको।"),
         card("hls", "HLS (Landsat + Sentinel-2)", "Harmonized Landsat", "seasons_from_space",
              "The field's green heartbeat: each wave is a crop.", "खेतको हरियो धड्कन: हरेक लहर एउटा बाली हो।"),
         card("power", "NASA POWER", "NASA POWER", power["id"], power["caption"]["en"], power["caption"]["ne"]),

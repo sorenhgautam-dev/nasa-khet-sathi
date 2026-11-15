@@ -617,7 +617,7 @@
       foot: strip
     });
     // for judges, at the end of the scroll and below the first screen: "Behind the scenes" (loaded when it is scrolled to)
-    var both = D.createDocumentFragment(); both.append(scr, limitsBox(true), behindBox(true));
+    var both = D.createDocumentFragment(); both.append(scr, promiseBox(true), limitsBox(true), behindBox(true));
     return both;
   };
   // the prepared fields (index.json); a field built with the global settings carries its note (owner, 2026-11-14 evening)
@@ -2052,6 +2052,24 @@
     } else fill();
     return box;
   }
+  // "Our promise" (owner, 2026-11-15 afternoon): free for every farmer, always; no ads, no accounts; data and photos stay
+  // on the phone; open code and open data. Words from story.json `promise` (pipeline/export/build_story.promise_block).
+  function promiseBox(lazy) {
+    var box = h('section', { class: 'card limitsbox', id: 'how-promise' }, loading());
+    function fill() {
+      if (box._done) return; box._done = true;
+      getJSON('data/story.json').then(function (st) {
+        var Pr = st && st.promise; box.textContent = '';
+        if (!Pr) { box.remove(); return; }
+        add(box, [h('h2', { class: 'h2' }, P(Pr.title)), lines(Pr.lines.map(P))]);
+      });
+    }
+    if (lazy && W.IntersectionObserver) {
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); fill(); } });
+      io.observe(box);
+    } else fill();
+    return box;
+  }
   function yearSpan(s) { var m = s && String(s.years).match(/^(\d{4})-(\d{4})$/); return m ? m[2] - m[1] + 1 : 0; }
   // the tags of one farmer answer, [[kind, years], ...]: kind is rain, weather or space (behind.json `tags`), years the
   // number of years the answer stands on. Shown only on the field behind.json was built for.
@@ -2068,6 +2086,6 @@
     });
     return row;
   }
-  W.KS.behindBox = behindBox; W.KS.limitsBox = limitsBox;
+  W.KS.behindBox = behindBox; W.KS.limitsBox = limitsBox; W.KS.promiseBox = promiseBox;
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 })();

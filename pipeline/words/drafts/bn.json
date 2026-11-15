@@ -1773,12 +1773,12 @@
    "bn": "মিলে যাওয়া যাচাই:"
   },
   "screens.your_plan.texts.lab_rain": {
-   "en": "Rain fix",
-   "bn": "বৃষ্টি সংশোধন"
+   "en": "Rain corrected",
+   "bn": "বৃষ্টি সমন্বিত"
   },
   "screens.your_plan.texts.lab_rain_why": {
-   "en": "This number uses our fixed rain record.",
-   "bn": "এই সংখ্যায় আমাদের সংশোধিত বৃষ্টির রেকর্ড আছে।"
+   "en": "This number uses our corrected rain record.",
+   "bn": "এই সংখ্যা আমাদের সমন্বিত বৃষ্টির রেকর্ড থেকে।"
   },
   "screens.your_plan.texts.mm": {
    "en": "mm",
@@ -2169,8 +2169,8 @@
    "bn": "প্রতিটি জমিতে এই পরীক্ষা নিজে চলে।"
   },
   "screens.your_plan.texts.check_found": {
-   "en": "From {rain_fix_year}, the rain map was made differently.",
-   "bn": "{rain_fix_year} থেকে বৃষ্টির মানচিত্র অন্যভাবে তৈরি হয়।"
+   "en": "From {rain_fix_year}, fewer gauges fed the rain map.",
+   "bn": "{rain_fix_year} থেকে মানচিত্রে কম বৃষ্টিমাপক যুক্ত হয়েছে।"
   },
   "screens.your_plan.texts.check_none": {
    "en": "No change found. We use the rain as published.",
@@ -2201,12 +2201,12 @@
    "bn": "আরেকটি বৃষ্টির মানচিত্র, CHIRPS, স্থির ছিল।"
   },
   "screens.your_plan.texts.check_jump": {
-   "en": "Ours jumped, compared with it:",
-   "bn": "তার তুলনায় আমাদেরটা লাফিয়েছে:"
+   "en": "Ours stepped up, compared with it:",
+   "bn": "এর তুলনায় আমাদেরটা বেড়েছে:"
   },
   "screens.your_plan.texts.check_late": {
-   "en": "A version made without gauges jumped less.",
-   "bn": "মাপক ছাড়া তৈরি সংস্করণ কম লাফিয়েছে।"
+   "en": "A version made without gauges stepped up less.",
+   "bn": "বৃষ্টিমাপক ছাড়া তৈরি সংস্করণ কম বেড়েছে।"
   },
   "screens.your_plan.texts.check_late_jump": {
    "en": "Without gauges:",
@@ -2225,8 +2225,8 @@
    "bn": "তার তুলনায় বৃষ্টির মানচিত্র:"
   },
   "screens.your_plan.texts.check_ours": {
-   "en": "Our fixed rain:",
-   "bn": "আমাদের সংশোধিত বৃষ্টি:"
+   "en": "Our corrected rain:",
+   "bn": "আমাদের সমন্বিত বৃষ্টি:"
   },
   "screens.your_plan.texts.check_fix_title": {
    "en": "What we did",
@@ -2257,12 +2257,12 @@
    "bn": "বছরের বৃষ্টি, নানা ভাবে গোনা"
   },
   "screens.your_plan.texts.ver_tuned": {
-   "en": "Fixed, then matched to gauges",
-   "bn": "সংশোধিত, তারপর মাপকের সঙ্গে মেলানো"
+   "en": "Corrected, then matched to gauges",
+   "bn": "সমন্বিত, তারপর বৃষ্টিমাপকের সঙ্গে মেলানো"
   },
   "screens.your_plan.texts.ver_untuned": {
-   "en": "Fixed only",
-   "bn": "শুধু সংশোধিত"
+   "en": "Corrected only",
+   "bn": "শুধু সমন্বিত"
   },
   "screens.your_plan.texts.ver_dhm": {
    "en": "Like the nearby town's usual rain",
@@ -2281,16 +2281,16 @@
    "bn": "বৃষ্টির মানচিত্র, যেমন প্রকাশিত"
   },
   "screens.your_plan.texts.line_twin": {
-   "en": "Our fixed rain",
-   "bn": "আমাদের সংশোধিত বৃষ্টি"
+   "en": "Our corrected rain",
+   "bn": "আমাদের সমন্বিত বৃষ্টি"
   },
   "screens.your_plan.texts.line_chirps": {
    "en": "Another rain map (CHIRPS)",
    "bn": "আরেকটি বৃষ্টির মানচিত্র (CHIRPS)"
   },
   "screens.your_plan.texts.check_marked": {
-   "en": "Numbers with this mark use our fixed rain.",
-   "bn": "এই চিহ্নের সংখ্যায় সংশোধিত বৃষ্টি আছে।"
+   "en": "Numbers with this mark use our corrected rain.",
+   "bn": "এই চিহ্নের সংখ্যা সমন্বিত বৃষ্টি ব্যবহার করে।"
   },
   "screens.check_soil.texts.practice": {
    "en": "Practice: made-up numbers",
@@ -2581,8 +2581,8 @@
    "bn": "ভালো মানে: দরকারি পানি বৃষ্টিতে বেশি মেটে।"
   },
   "screens.last_years.texts.better_not": {
-   "en": "Not price, not labour, not taste.",
-   "bn": "দাম, শ্রম বা স্বাদ নয়।"
+   "en": "Not your work, not your taste.",
+   "bn": "আপনার পরিশ্রম বা স্বাদ নয়।"
   },
   "screens.last_years.texts.water_yes_1": {
    "en": "With water, dry spells stop mattering.",
@@ -3661,8 +3661,8 @@
    "bn": "একটি হিসাব যা অনুমান আর মাপ মেলায়, বেশি নিশ্চিতটিতে বেশি ভরসা করে।"
   },
   "screens.where.texts.seen_space": {
-   "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
-   "bn": "NASA {date} তারিখে মহাকাশ থেকে দেখেছে। এরপর আমাদের ড্রোন এই ছবি তুলবে।"
+   "en": "Seen from space by NASA on {date}.",
+   "bn": "NASA {date} তারিখে মহাকাশ থেকে দেখেছে।"
   },
   "shared.drone.label": {
    "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",

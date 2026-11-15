@@ -1773,12 +1773,12 @@
    "fr": "Contrôles dans la marge :"
   },
   "screens.your_plan.texts.lab_rain": {
-   "en": "Rain fix",
+   "en": "Rain corrected",
    "fr": "Pluie corrigée"
   },
   "screens.your_plan.texts.lab_rain_why": {
-   "en": "This number uses our fixed rain record.",
-   "fr": "Ce nombre utilise notre pluie corrigée."
+   "en": "This number uses our corrected rain record.",
+   "fr": "Ce nombre utilise notre relevé de pluie corrigé."
   },
   "screens.your_plan.texts.mm": {
    "en": "mm",
@@ -2169,8 +2169,8 @@
    "fr": "Chaque champ fait ce contrôle tout seul."
   },
   "screens.your_plan.texts.check_found": {
-   "en": "From {rain_fix_year}, the rain map was made differently.",
-   "fr": "Depuis {rain_fix_year}, la carte des pluies a changé."
+   "en": "From {rain_fix_year}, fewer gauges fed the rain map.",
+   "fr": "Depuis {rain_fix_year}, moins de pluviomètres alimentent la carte."
   },
   "screens.your_plan.texts.check_none": {
    "en": "No change found. We use the rain as published.",
@@ -2201,12 +2201,12 @@
    "fr": "Une autre carte, CHIRPS, est restée stable."
   },
   "screens.your_plan.texts.check_jump": {
-   "en": "Ours jumped, compared with it:",
-   "fr": "La nôtre a bondi, comparée à elle :"
+   "en": "Ours stepped up, compared with it:",
+   "fr": "Le nôtre a monté, comparé à lui :"
   },
   "screens.your_plan.texts.check_late": {
-   "en": "A version made without gauges jumped less.",
-   "fr": "Une version sans pluviomètres a moins bondi."
+   "en": "A version made without gauges stepped up less.",
+   "fr": "Une version faite sans pluviomètres a moins monté."
   },
   "screens.your_plan.texts.check_late_jump": {
    "en": "Without gauges:",
@@ -2225,7 +2225,7 @@
    "fr": "La carte des pluies, comparée à cela :"
   },
   "screens.your_plan.texts.check_ours": {
-   "en": "Our fixed rain:",
+   "en": "Our corrected rain:",
    "fr": "Notre pluie corrigée :"
   },
   "screens.your_plan.texts.check_fix_title": {
@@ -2257,11 +2257,11 @@
    "fr": "Pluie par an, comptée de plusieurs façons"
   },
   "screens.your_plan.texts.ver_tuned": {
-   "en": "Fixed, then matched to gauges",
-   "fr": "Corrigée puis ajustée aux pluviomètres"
+   "en": "Corrected, then matched to gauges",
+   "fr": "Corrigée, puis ajustée aux pluviomètres"
   },
   "screens.your_plan.texts.ver_untuned": {
-   "en": "Fixed only",
+   "en": "Corrected only",
    "fr": "Corrigée seulement"
   },
   "screens.your_plan.texts.ver_dhm": {
@@ -2281,7 +2281,7 @@
    "fr": "Carte des pluies, telle que publiée"
   },
   "screens.your_plan.texts.line_twin": {
-   "en": "Our fixed rain",
+   "en": "Our corrected rain",
    "fr": "Notre pluie corrigée"
   },
   "screens.your_plan.texts.line_chirps": {
@@ -2289,8 +2289,8 @@
    "fr": "Une autre carte des pluies (CHIRPS)"
   },
   "screens.your_plan.texts.check_marked": {
-   "en": "Numbers with this mark use our fixed rain.",
-   "fr": "Les nombres marqués ainsi utilisent la pluie corrigée."
+   "en": "Numbers with this mark use our corrected rain.",
+   "fr": "Les nombres marqués utilisent notre pluie corrigée."
   },
   "screens.check_soil.texts.practice": {
    "en": "Practice: made-up numbers",
@@ -2581,8 +2581,8 @@
    "fr": "Mieux : la pluie couvre plus le besoin d'eau."
   },
   "screens.last_years.texts.better_not": {
-   "en": "Not price, not labour, not taste.",
-   "fr": "Ni prix, ni travail, ni goût."
+   "en": "Not your work, not your taste.",
+   "fr": "Ni votre travail, ni vos goûts."
   },
   "screens.last_years.texts.water_yes_1": {
    "en": "With water, dry spells stop mattering.",
@@ -3661,8 +3661,8 @@
    "fr": "Un calcul qui mêle une estimation et une mesure, en croyant plus la plus sûre."
   },
   "screens.where.texts.seen_space": {
-   "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
-   "fr": "Vu de l’espace par la NASA le {date}. Ensuite, notre drone prend cette photo."
+   "en": "Seen from space by NASA on {date}.",
+   "fr": "Vu de l'espace par la NASA le {date}."
   },
   "shared.drone.label": {
    "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",

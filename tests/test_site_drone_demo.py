@@ -137,7 +137,7 @@ def test_the_fog_on_the_pots_clears_only_with_calibrated_numbers():
 
 def test_the_public_photo_step_says_when_nasa_saw_the_field():
     w = screen_word("where", "seen_space")
-    assert w["en"] == "Seen from space by NASA on {date}. Next, our drone takes this photo."
+    assert w["en"] == "Seen from space by NASA on {date}."   # owner, 2026-11-15 afternoon: no phone-as-drone
     assert "{date}" in w["ne"]
     photo = APP[APP.index("SCREENS.photo = function"):APP.index("SCREENS.parts = function")]
     assert "seenLine(" in photo

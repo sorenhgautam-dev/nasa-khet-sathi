@@ -78,7 +78,7 @@ This page is made from the word files in this folder; change those, not this pag
 | This is a map, not a photo. | यो नक्सा हो, फोटो होइन। |
 | The line shows the sample field. | रेखाले नमुना खेत देखाउँछ। |
 | A real photo comes when we visit. | हामी खेतमा आएपछि साँचो फोटो आउँछ। |
-| Seen from space by NASA on {date}. Next, our drone takes this photo. | नासाले {date} मा अन्तरिक्षबाट हेरेको। अब हाम्रो ड्रोनले यो फोटो खिच्छ। |
+| Seen from space by NASA on {date}. | नासाले {date} मा अन्तरिक्षबाट हेरेको। |
 | We show our sample field near you. | हामी तपाईंको नजिकको नमुना खेत देखाउँछौं। |
 | Mark my own field | मेरो आफ्नै खेत कोर्छु |
 | Show the parts | भागहरू देखाउनुहोस् |
@@ -418,7 +418,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Both crops, in {year_count} past winters. | दुवै बाली, {year_count} पुराना हिउँदमा। |
 | winters | हिउँद |
 | Better means more water need met by rain. | राम्रो भनेको: चाहिने पानी वर्षाले बढी पुग्नु। |
-| Not price, not labour, not taste. | मूल्य, श्रम वा स्वाद होइन। |
+| Not your work, not your taste. | तपाईंको मेहनत वा स्वाद होइन। |
 | With water, dry spells stop mattering. | पानी लगाउन सके, सुक्खा समयले फरक पार्दैन। |
 | Our computer looks at water only. | हाम्रो कम्प्युटरले पानी मात्र हेर्छ। |
 | Boxes: the coming months only, rain only. | कोठा: आउने महिना मात्र, वर्षा मात्र। |
@@ -589,7 +589,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Stored water is measured for a wide area. | जम्मा भएको पानी ठूलो क्षेत्रभरिको नाप हो। |
 | It is not your own well. | यो तपाईंको आफ्नै इनार होइन। |
 | We may count too many freezing nights. *(if some months have freezing nights)* | हामीले तुषारो परेका रात बढी गनेका हुन सक्छौं। |
-| Prices and markets are not included. | बजार र मूल्य यसमा समावेश छैनन्। |
+| Your work and spending are not counted. | तपाईंको मेहनत र खर्च यसमा गनिएको छैन। |
 
 #### Tab: Ask someone who knows / जानकारलाई सोध्नुहोस्
 
@@ -713,8 +713,8 @@ This page is made from the word files in this folder; change those, not this pag
 | Your valley: a map about 10 km wide. | तपाईंको उपत्यका: करिब १० किलोमिटर चौडा नक्साबाट। |
 | Your region: a map 50 km or wider. | तपाईंको क्षेत्र: ५० किलोमिटर वा बढी चौडा नक्साबाट। |
 | Checks within range: | मिलेका जाँच: |
-| Rain fix | वर्षा सुधार |
-| This number uses our fixed rain record. | यो अङ्कमा हाम्रो सुधारिएको वर्षा अभिलेख छ। |
+| Rain corrected | वर्षा मिलाइएको |
+| This number uses our corrected rain record. | यो अङ्कमा हाम्रो मिलाइएको वर्षा अभिलेख छ। |
 | mm | मिमि |
 | Record Check-up | अभिलेख जाँच |
 | How we checked your rain record. | हामीले तपाईंको वर्षा अभिलेख कसरी जाँच्यौं। |
@@ -722,7 +722,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Check-up | जाँच |
 | We checked this field's rain record. | हामीले यो खेतको वर्षा अभिलेख जाँच्यौं। |
 | Every field runs this check by itself. | हरेक खेतमा यो जाँच आफैँ चल्छ। |
-| From {rain_fix_year}, the rain map was made differently. | {rain_fix_year} देखि वर्षाको नक्सा फरक तरिकाले बन्यो। |
+| From {rain_fix_year}, fewer gauges fed the rain map. | {rain_fix_year} देखि वर्षाको नक्सामा मापक धेरै घटे। |
 | No change found. We use the rain as published. | कुनै फरक भेटिएन। प्रकाशित वर्षा नै प्रयोग गर्छौं। |
 | How we can tell | हामीले कसरी थाहा पायौं |
 | Share of rain gauges inside the rain map: | वर्षाको नक्सामा वर्षा मापकको हिस्सा: |
@@ -730,13 +730,13 @@ This page is made from the word files in this folder; change those, not this pag
 | From {rain_fix_year}: | {rain_fix_year} देखि: |
 | Rain gauges counted near this field: | यो खेत नजिक गनिएका वर्षा मापक: |
 | Another rain map, CHIRPS, stayed steady. | अर्को वर्षा नक्सा, CHIRPS, स्थिर रह्यो। |
-| Ours jumped, compared with it: | त्यससँग दाँज्दा हाम्रो उफ्रियो: |
-| A version made without gauges jumped less. | मापकबिना बनेको संस्करण कम उफ्रियो। |
+| Ours stepped up, compared with it: | त्यससँग दाँज्दा हाम्रो बढ्यो: |
+| A version made without gauges stepped up less. | मापकबिना बनेको संस्करण कम बढ्यो। |
 | Without gauges: | मापकबिना: |
 | With gauges: | मापकसहित: |
 | Nepal's weather office, usual rain a year: | नेपालको मौसम कार्यालय, वर्षको सामान्य वर्षा: |
 | The rain map, compared with it: | त्यससँग दाँज्दा वर्षाको नक्सा: |
-| Our fixed rain: | हाम्रो सुधारिएको वर्षा: |
+| Our corrected rain: | हाम्रो मिलाइएको वर्षा: |
 | What we did | हामीले के गर्‍यौं |
 | From {rain_fix_year}, rain is scaled back each month. | {rain_fix_year} देखि हरेक महिनाको वर्षा घटाएर मिलाइयो। |
 | To match these years: | यी वर्षसँग मिलाउन: |
@@ -744,15 +744,15 @@ This page is made from the word files in this folder; change those, not this pag
 | Monsoon months: | बर्खा महिना: |
 | Other months: | अरू महिना: |
 | Rain a year, counted different ways | वर्षको वर्षा, फरक तरिकाले गनिएको |
-| Fixed, then matched to gauges | सुधारेर मापकसँग मिलाइएको |
-| Fixed only | सुधार मात्र |
+| Corrected, then matched to gauges | समायोजन गरेर मापकसँग मिलाइएको |
+| Corrected only | समायोजन मात्र |
 | Like the nearby town's usual rain | नजिकको सहरको सामान्य वर्षाजस्तै |
 | As published | प्रकाशितजस्तै |
 | Rain each year | हरेक वर्षको वर्षा |
 | Rain map, as published | वर्षाको नक्सा, प्रकाशितजस्तै |
-| Our fixed rain | हाम्रो सुधारिएको वर्षा |
+| Our corrected rain | हाम्रो मिलाइएको वर्षा |
 | Another rain map (CHIRPS) | अर्को वर्षा नक्सा (CHIRPS) |
-| Numbers with this mark use our fixed rain. | यो चिन्ह भएका अङ्कमा सुधारिएको वर्षा छ। |
+| Numbers with this mark use our corrected rain. | यो चिन्ह भएका अङ्कमा मिलाइएको वर्षा छ। |
 | Version | संस्करण |
 | checked | जाँचिएको मिति |
 | with changes not yet saved | नराखिएका परिवर्तनसहित |

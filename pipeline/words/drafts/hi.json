@@ -1773,12 +1773,12 @@
    "hi": "सही निकली जाँचें:"
   },
   "screens.your_plan.texts.lab_rain": {
-   "en": "Rain fix",
-   "hi": "बारिश सुधार"
+   "en": "Rain corrected",
+   "hi": "बारिश समायोजित"
   },
   "screens.your_plan.texts.lab_rain_why": {
-   "en": "This number uses our fixed rain record.",
-   "hi": "यह अंक हमारे सुधारे बारिश रिकॉर्ड से है।"
+   "en": "This number uses our corrected rain record.",
+   "hi": "यह अंक हमारे समायोजित बारिश रिकॉर्ड से है।"
   },
   "screens.your_plan.texts.mm": {
    "en": "mm",
@@ -2169,8 +2169,8 @@
    "hi": "यह जाँच हर खेत में अपने-आप चलती है।"
   },
   "screens.your_plan.texts.check_found": {
-   "en": "From {rain_fix_year}, the rain map was made differently.",
-   "hi": "{rain_fix_year} से बारिश का नक्शा अलग तरह बना।"
+   "en": "From {rain_fix_year}, fewer gauges fed the rain map.",
+   "hi": "{rain_fix_year} से नक्शे में कम वर्षामापी जुड़े।"
   },
   "screens.your_plan.texts.check_none": {
    "en": "No change found. We use the rain as published.",
@@ -2201,12 +2201,12 @@
    "hi": "दूसरा बारिश नक्शा, CHIRPS, स्थिर रहा।"
   },
   "screens.your_plan.texts.check_jump": {
-   "en": "Ours jumped, compared with it:",
-   "hi": "उसकी तुलना में हमारा उछला:"
+   "en": "Ours stepped up, compared with it:",
+   "hi": "उसकी तुलना में हमारा बढ़ा:"
   },
   "screens.your_plan.texts.check_late": {
-   "en": "A version made without gauges jumped less.",
-   "hi": "वर्षामापी के बिना बना रूप कम उछला।"
+   "en": "A version made without gauges stepped up less.",
+   "hi": "वर्षामापी के बिना बना रूप कम बढ़ा।"
   },
   "screens.your_plan.texts.check_late_jump": {
    "en": "Without gauges:",
@@ -2225,8 +2225,8 @@
    "hi": "उसकी तुलना में बारिश का नक्शा:"
   },
   "screens.your_plan.texts.check_ours": {
-   "en": "Our fixed rain:",
-   "hi": "हमारी सुधारी बारिश:"
+   "en": "Our corrected rain:",
+   "hi": "हमारी समायोजित बारिश:"
   },
   "screens.your_plan.texts.check_fix_title": {
    "en": "What we did",
@@ -2257,12 +2257,12 @@
    "hi": "साल की बारिश, अलग तरीकों से गिनी"
   },
   "screens.your_plan.texts.ver_tuned": {
-   "en": "Fixed, then matched to gauges",
-   "hi": "सुधारी, फिर वर्षामापी से मिलाई"
+   "en": "Corrected, then matched to gauges",
+   "hi": "समायोजित, फिर वर्षामापी से मिलाई"
   },
   "screens.your_plan.texts.ver_untuned": {
-   "en": "Fixed only",
-   "hi": "सिर्फ़ सुधारी"
+   "en": "Corrected only",
+   "hi": "केवल समायोजित"
   },
   "screens.your_plan.texts.ver_dhm": {
    "en": "Like the nearby town's usual rain",
@@ -2281,16 +2281,16 @@
    "hi": "बारिश का नक्शा, जैसा प्रकाशित"
   },
   "screens.your_plan.texts.line_twin": {
-   "en": "Our fixed rain",
-   "hi": "हमारी सुधारी बारिश"
+   "en": "Our corrected rain",
+   "hi": "हमारी समायोजित बारिश"
   },
   "screens.your_plan.texts.line_chirps": {
    "en": "Another rain map (CHIRPS)",
    "hi": "दूसरा बारिश नक्शा (CHIRPS)"
   },
   "screens.your_plan.texts.check_marked": {
-   "en": "Numbers with this mark use our fixed rain.",
-   "hi": "इस निशान वाले अंक सुधारी बारिश से हैं।"
+   "en": "Numbers with this mark use our corrected rain.",
+   "hi": "इस निशान के अंक समायोजित बारिश से हैं।"
   },
   "screens.check_soil.texts.practice": {
    "en": "Practice: made-up numbers",
@@ -2581,8 +2581,8 @@
    "hi": "बेहतर यानी ज़रूरी पानी बारिश से ज़्यादा मिले।"
   },
   "screens.last_years.texts.better_not": {
-   "en": "Not price, not labour, not taste.",
-   "hi": "दाम, मेहनत या स्वाद नहीं।"
+   "en": "Not your work, not your taste.",
+   "hi": "आपकी मेहनत या स्वाद नहीं।"
   },
   "screens.last_years.texts.water_yes_1": {
    "en": "With water, dry spells stop mattering.",
@@ -3661,8 +3661,8 @@
    "hi": "अनुमान और माप मिलाने का हिसाब, पक्के पर ज़्यादा भरोसा करते हुए।"
   },
   "screens.where.texts.seen_space": {
-   "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
-   "hi": "NASA ने {date} को अंतरिक्ष से देखा। अब हमारा ड्रोन यह फ़ोटो लेगा।"
+   "en": "Seen from space by NASA on {date}.",
+   "hi": "NASA ने {date} को अंतरिक्ष से देखा।"
   },
   "shared.drone.label": {
    "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",
