@@ -143,7 +143,9 @@ def test_kharipatis_drone_file_is_up_to_date_resized_for_the_web_and_carries_its
     assert json.loads((REPO / "site" / "data" / "drone" / "kharipati.json").read_text()) == json.loads(json.dumps(doc))
     assert (REPO / "site" / "data" / "drone" / "kharipati.jpg").read_bytes() == picture and len(picture) < 200_000
     assert doc["size_px"] == [800, 696] and doc["credit"] == "Drone imagery: Rabi Shrestha, OpenAerialMap, CC-BY 4.0."
-    assert doc["label"]["en"].startswith("A real farm in Kharipati") and doc["sat"]["en"].startswith("From space")
+    # owner, 2026-11-15 afternoon: an open drone map standing in for our future drone (no phone-as-drone)
+    assert doc["label"]["en"].startswith("An open drone map. It stands in for our future drone. Kharipati")
+    assert doc["sat"]["en"].startswith("From space")
     assert doc["label"]["ne_review"] == doc["sat"]["ne_review"] == "needs native-speaker review"
 
 
