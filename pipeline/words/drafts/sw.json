@@ -3763,6 +3763,38 @@
   "shared.offline.line": {
    "en": "Offline: showing your saved field.",
    "sw": "Nje ya mtandao: tunaonyesha shamba lako lililohifadhiwa."
+  },
+  "shared.farm.more": {
+   "en": "More",
+   "sw": "Zaidi"
+  },
+  "shared.farm.sym_better": {
+   "en": "Better",
+   "sw": "Bora zaidi"
+  },
+  "shared.farm.sym_same": {
+   "en": "About the same",
+   "sw": "Karibu sawa"
+  },
+  "shared.farm.sym_worse": {
+   "en": "Worse",
+   "sw": "Mbaya zaidi"
+  },
+  "shared.farm.years_line": {
+   "en": "{crop} worked better in {count} of {year_count} years",
+   "sw": "{crop} ilikuwa bora miaka {count} kati ya {year_count}"
+  },
+  "shared.farm.years_tap": {
+   "en": "Tap a square to see the year",
+   "sw": "Gusa kisanduku kuona mwaka"
+  },
+  "shared.farm.untested_all": {
+   "en": "No part is tested yet.",
+   "sw": "Hakuna sehemu iliyopimwa bado."
+  },
+  "shared.farm.next_parts": {
+   "en": "Next: split into parts",
+   "sw": "Ifuatayo: gawa katika sehemu"
   }
  }
 }

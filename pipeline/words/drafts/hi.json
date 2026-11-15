@@ -3763,6 +3763,38 @@
   "shared.offline.line": {
    "en": "Offline: showing your saved field.",
    "hi": "ऑफ़लाइन: आपका सहेजा हुआ खेत दिखा रहे हैं।"
+  },
+  "shared.farm.more": {
+   "en": "More",
+   "hi": "और देखें"
+  },
+  "shared.farm.sym_better": {
+   "en": "Better",
+   "hi": "बेहतर"
+  },
+  "shared.farm.sym_same": {
+   "en": "About the same",
+   "hi": "लगभग वैसा ही"
+  },
+  "shared.farm.sym_worse": {
+   "en": "Worse",
+   "hi": "बदतर"
+  },
+  "shared.farm.years_line": {
+   "en": "{crop} worked better in {count} of {year_count} years",
+   "hi": "{crop} {year_count} में से {count} साल बेहतर रहा"
+  },
+  "shared.farm.years_tap": {
+   "en": "Tap a square to see the year",
+   "hi": "साल देखने के लिए कोई खाना छुएँ"
+  },
+  "shared.farm.untested_all": {
+   "en": "No part is tested yet.",
+   "hi": "अभी कोई हिस्सा जाँचा नहीं गया।"
+  },
+  "shared.farm.next_parts": {
+   "en": "Next: split into parts",
+   "hi": "आगे: हिस्सों में बाँटें"
   }
  }
 }

@@ -33,7 +33,7 @@ def test_yes_is_the_guess_and_the_other_button_is_the_other_rotation():
 
 
 def test_the_card_uses_it():
-    body = re.search(r"function guessCard\(F, box, after\) \{.*?\n  \}", APP, re.S).group(0)
+    body = re.search(r"function guessCard\(F, box, after(, extra)?\) \{.*?\n  \}", APP, re.S).group(0)
     assert "guessButtons(" in body and "o.id === def" not in body
 
 

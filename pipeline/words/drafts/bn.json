@@ -3763,6 +3763,38 @@
   "shared.offline.line": {
    "en": "Offline: showing your saved field.",
    "bn": "অফলাইন: আপনার সংরক্ষিত খেত দেখানো হচ্ছে।"
+  },
+  "shared.farm.more": {
+   "en": "More",
+   "bn": "আরও দেখুন"
+  },
+  "shared.farm.sym_better": {
+   "en": "Better",
+   "bn": "ভালো"
+  },
+  "shared.farm.sym_same": {
+   "en": "About the same",
+   "bn": "প্রায় একই"
+  },
+  "shared.farm.sym_worse": {
+   "en": "Worse",
+   "bn": "খারাপ"
+  },
+  "shared.farm.years_line": {
+   "en": "{crop} worked better in {count} of {year_count} years",
+   "bn": "{crop} {year_count} বছরের মধ্যে {count} বছর ভালো হয়েছে"
+  },
+  "shared.farm.years_tap": {
+   "en": "Tap a square to see the year",
+   "bn": "বছর দেখতে একটি ঘর ছুঁয়ে দিন"
+  },
+  "shared.farm.untested_all": {
+   "en": "No part is tested yet.",
+   "bn": "এখনও কোনো অংশ পরীক্ষা হয়নি।"
+  },
+  "shared.farm.next_parts": {
+   "en": "Next: split into parts",
+   "bn": "এবার: অংশে ভাগ করুন"
   }
  }
 }

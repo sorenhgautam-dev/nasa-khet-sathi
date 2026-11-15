@@ -3763,6 +3763,38 @@
   "shared.offline.line": {
    "en": "Offline: showing your saved field.",
    "fr": "Hors ligne : votre champ enregistré s'affiche."
+  },
+  "shared.farm.more": {
+   "en": "More",
+   "fr": "Plus"
+  },
+  "shared.farm.sym_better": {
+   "en": "Better",
+   "fr": "Mieux"
+  },
+  "shared.farm.sym_same": {
+   "en": "About the same",
+   "fr": "À peu près pareil"
+  },
+  "shared.farm.sym_worse": {
+   "en": "Worse",
+   "fr": "Moins bien"
+  },
+  "shared.farm.years_line": {
+   "en": "{crop} worked better in {count} of {year_count} years",
+   "fr": "{crop} a mieux marché {count} années sur {year_count}"
+  },
+  "shared.farm.years_tap": {
+   "en": "Tap a square to see the year",
+   "fr": "Touchez une case pour voir l'année"
+  },
+  "shared.farm.untested_all": {
+   "en": "No part is tested yet.",
+   "fr": "Aucune partie n'est encore testée."
+  },
+  "shared.farm.next_parts": {
+   "en": "Next: split into parts",
+   "fr": "Ensuite : diviser en parties"
   }
  }
 }
