@@ -84,15 +84,16 @@
       add(body, [
         card('', h('p', { class: 'lead', style: 'margin:0' }, K.planName(p)), h('p', { class: 'sub' }, K.cropsLine(p))),
         card('', stepH(T('check_soil.trial_pick_part')), box, K.lines([T('check_soil.trial_rest')], 'sub')),
-        card('', stepH(T('check_soil.trial_spots')), K.lines([T('check_soil.trial_spot_one'), T('check_soil.trial_spot_three')]),
-          h('p', { class: 'small', style: 'margin:0' }, T('check_soil.prototype'))),
         st.start ? null : K.cta(T('check_soil.trial_start'), function () { st.start = today(); save(); draw(); }),
         st.start ? card('', h('p', { class: 'lead', style: 'margin:0' }, svg(I('tick', 18, 3)), ' ', T('check_soil.trial_started') + ' ' + K.fmtDate(st.start)),
           h('p', { class: 'sub' }, K.planName(p) + ' · ' + T('each_part.part_name', { section: names[st.quarter] })), h('p', { class: 'small', style: 'margin:0' }, T('check_soil.trial_saved'))) : null,
         st.start ? diary(st) : null,
-        card('', stepH(T('check_soil.trial_compare')),
-          h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('quarter', 20))), K.lines([T('check_soil.trial_vs_rest')])),
-          h('p', { class: 'note', style: 'margin:0' }, T('check_soil.trial_after'), ' ', T('check_soil.trial_no_numbers')))
+        // owner, 2026-11-15 ('really simple'): where the stick reads and how we compare, behind one tap
+        K.moreBox([card('', stepH(T('check_soil.trial_spots')), K.lines([T('check_soil.trial_spot_one'), T('check_soil.trial_spot_three')]),
+          h('p', { class: 'small', style: 'margin:0' }, T('check_soil.prototype'))),
+          card('', stepH(T('check_soil.trial_compare')),
+            h('div', { class: 'fact' }, h('span', { class: 'ic' }, svg(I('quarter', 20))), K.lines([T('check_soil.trial_vs_rest')])),
+            h('p', { class: 'note', style: 'margin:0' }, T('check_soil.trial_after'), ' ', T('check_soil.trial_no_numbers')))])
       ]);
     }
     function diary(st) {

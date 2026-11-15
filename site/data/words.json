@@ -8463,6 +8463,86 @@
     "es": "Volver al inicio",
     "fr": "Retour au début",
     "sw": "Rudi mwanzo"
+   },
+   "more": {
+    "en": "More",
+    "ne": "थप हेर्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "और देखें",
+    "bn": "আরও দেখুন",
+    "es": "Más",
+    "fr": "Plus",
+    "sw": "Zaidi"
+   },
+   "sym_better": {
+    "en": "Better",
+    "ne": "राम्रो",
+    "ne_review": "needs native-speaker review",
+    "hi": "बेहतर",
+    "bn": "ভালো",
+    "es": "Mejor",
+    "fr": "Mieux",
+    "sw": "Bora zaidi"
+   },
+   "sym_same": {
+    "en": "About the same",
+    "ne": "करिब उस्तै",
+    "ne_review": "needs native-speaker review",
+    "hi": "लगभग वैसा ही",
+    "bn": "প্রায় একই",
+    "es": "Casi igual",
+    "fr": "À peu près pareil",
+    "sw": "Karibu sawa"
+   },
+   "sym_worse": {
+    "en": "Worse",
+    "ne": "कमजोर",
+    "ne_review": "needs native-speaker review",
+    "hi": "बदतर",
+    "bn": "খারাপ",
+    "es": "Peor",
+    "fr": "Moins bien",
+    "sw": "Mbaya zaidi"
+   },
+   "years_line": {
+    "en": "{crop} worked better in {count} of {year_count} years",
+    "ne": "{year_count} मध्ये {count} वर्ष {crop} राम्रो भयो",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} {year_count} में से {count} साल बेहतर रहा",
+    "bn": "{crop} {year_count} বছরের মধ্যে {count} বছর ভালো হয়েছে",
+    "es": "{crop} fue mejor en {count} de {year_count} años",
+    "fr": "{crop} a mieux marché {count} années sur {year_count}",
+    "sw": "{crop} ilikuwa bora miaka {count} kati ya {year_count}"
+   },
+   "years_tap": {
+    "en": "Tap a square to see the year",
+    "ne": "वर्ष हेर्न कुनै कोठा थिच्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "साल देखने के लिए कोई खाना छुएँ",
+    "bn": "বছর দেখতে একটি ঘর ছুঁয়ে দিন",
+    "es": "Toque un cuadro para ver el año",
+    "fr": "Touchez une case pour voir l'année",
+    "sw": "Gusa kisanduku kuona mwaka"
+   },
+   "untested_all": {
+    "en": "No part is tested yet.",
+    "ne": "अझै कुनै भाग जाँचिएको छैन।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अभी कोई हिस्सा जाँचा नहीं गया।",
+    "bn": "এখনও কোনো অংশ পরীক্ষা হয়নি।",
+    "es": "Aún no se ha probado ninguna parte.",
+    "fr": "Aucune partie n'est encore testée.",
+    "sw": "Hakuna sehemu iliyopimwa bado."
+   },
+   "next_parts": {
+    "en": "Next: split into parts",
+    "ne": "अब भागमा बाँड्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "आगे: हिस्सों में बाँटें",
+    "bn": "এবার: অংশে ভাগ করুন",
+    "es": "Siguiente: dividir en partes",
+    "fr": "Ensuite : diviser en parties",
+    "sw": "Ifuatayo: gawa katika sehemu"
    }
   },
   "fog": {

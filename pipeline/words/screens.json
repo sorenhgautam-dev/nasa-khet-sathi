@@ -4618,6 +4618,46 @@
     "en": "Back to start",
     "ne": "सुरुमा फर्कनुहोस्",
     "ne_review": "needs native-speaker review"
+   },
+   "more": {
+    "en": "More",
+    "ne": "थप हेर्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "sym_better": {
+    "en": "Better",
+    "ne": "राम्रो",
+    "ne_review": "needs native-speaker review"
+   },
+   "sym_same": {
+    "en": "About the same",
+    "ne": "करिब उस्तै",
+    "ne_review": "needs native-speaker review"
+   },
+   "sym_worse": {
+    "en": "Worse",
+    "ne": "कमजोर",
+    "ne_review": "needs native-speaker review"
+   },
+   "years_line": {
+    "en": "{crop} worked better in {count} of {year_count} years",
+    "ne": "{year_count} मध्ये {count} वर्ष {crop} राम्रो भयो",
+    "ne_review": "needs native-speaker review"
+   },
+   "years_tap": {
+    "en": "Tap a square to see the year",
+    "ne": "वर्ष हेर्न कुनै कोठा थिच्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "untested_all": {
+    "en": "No part is tested yet.",
+    "ne": "अझै कुनै भाग जाँचिएको छैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "next_parts": {
+    "en": "Next: split into parts",
+    "ne": "अब भागमा बाँड्नुहोस्",
+    "ne_review": "needs native-speaker review"
    }
   },
   "fog": {

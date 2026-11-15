@@ -990,3 +990,31 @@ label.cta.take, label.round { cursor: pointer; }
 .ofold > summary::after { content: '+'; font-size: 24px; line-height: 1; }
 .ofold[open] > summary::after { content: '\2212'; }
 .ctapair { display: flex; flex-direction: column; gap: 10px; }
+
+/* owner, 2026-11-15 ('really, really simple'): one main button, always at the bottom of the screen; secondary actions as
+   small links; everything else behind one tap ("More"); symbols with a word for screen readers; the 24-year sheet */
+.s-cta { position: sticky; bottom: 10px; z-index: 30; }
+.lnk { background: none; border: 0; padding: 10px 4px; min-height: 44px; color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
+  text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.lnks { display: flex; flex-wrap: wrap; gap: 0 18px; }
+.best .lnk, .best .lnks .lnk { color: #E9F2C2; }
+.s-body > .lnk { align-self: flex-start; }
+details.more > summary { cursor: pointer; font-weight: 700; padding: 12px 16px; min-height: 48px; display: flex; align-items: center; }
+details.more > .morein { display: flex; flex-direction: column; gap: 12px; padding: 4px 0 10px; }
+.homesub { margin: 0; font-size: 18px; font-weight: 600; color: var(--ink); }
+p.answer { margin: 0; }
+.sym { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; font-weight: 800; font-size: 16px; line-height: 1;
+  vertical-align: middle; margin-right: 2px; flex-shrink: 0; }
+.sym.k-better { background: #7FB24A; color: #fff; }
+.sym.k-same { background: #E9C77A; color: #14301E; }
+.sym.k-worse { background: #9A5426; color: #fff; }
+.sym.k-mixed { background: #E3D6BF; color: #14301E; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.yrow { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 8px; margin: 18px 0 12px; }
+.ysq { aspect-ratio: 1; border: 0; border-radius: 12px; font-size: 22px; font-weight: 800; cursor: pointer; min-height: 46px; }
+.ysq.k-better { background: #7FB24A; color: #fff; }
+.ysq.k-same { background: #F1E6C8; color: #14301E; }
+.ysq.k-worse { background: #9A5426; color: #fff; }
+.ytap { font-size: 17px; font-weight: 600; margin: 0; }
+details.dfold > summary { cursor: pointer; }
+
