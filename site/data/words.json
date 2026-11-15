@@ -7747,6 +7747,46 @@
     "es": "Para el jurado: cómo lo sabemos",
     "fr": "Pour le jury : comment nous savons",
     "sw": "Kwa majaji: tunajuaje"
+   },
+   "behind_title": {
+    "en": "Behind the scenes: your field, seen by NASA",
+    "ne": "पर्दा पछाडि: नासाले देखेको तपाईंको खेत",
+    "ne_review": "needs native-speaker review",
+    "hi": "पर्दे के पीछे: नासा ने देखा आपका खेत",
+    "bn": "পর্দার আড়ালে: নাসার চোখে আপনার জমি",
+    "es": "Entre bastidores: su campo, visto por la NASA",
+    "fr": "En coulisses: votre champ, vu par la NASA",
+    "sw": "Nyuma ya pazia: shamba lako, kama NASA inavyoliona"
+   },
+   "tag_rain": {
+    "en": "NASA rain, {year_count} years",
+    "ne": "नासाको वर्षा, {year_count} वर्ष",
+    "ne_review": "needs native-speaker review",
+    "hi": "नासा की बारिश, {year_count} साल",
+    "bn": "নাসার বৃষ্টি, {year_count} বছর",
+    "es": "Lluvia de la NASA, {year_count} años",
+    "fr": "Pluie de la NASA, {year_count} ans",
+    "sw": "Mvua ya NASA, miaka {year_count}"
+   },
+   "tag_weather": {
+    "en": "NASA weather, {year_count} years",
+    "ne": "नासाको मौसम, {year_count} वर्ष",
+    "ne_review": "needs native-speaker review",
+    "hi": "नासा का मौसम, {year_count} साल",
+    "bn": "নাসার আবহাওয়া, {year_count} বছর",
+    "es": "Clima de la NASA, {year_count} años",
+    "fr": "Météo de la NASA, {year_count} ans",
+    "sw": "Hali ya hewa ya NASA, miaka {year_count}"
+   },
+   "tag_space": {
+    "en": "NASA pictures, {year_count} years",
+    "ne": "नासाका तस्बिर, {year_count} वर्ष",
+    "ne_review": "needs native-speaker review",
+    "hi": "नासा की तस्वीरें, {year_count} साल",
+    "bn": "নাসার ছবি, {year_count} বছর",
+    "es": "Imágenes de la NASA, {year_count} años",
+    "fr": "Images de la NASA, {year_count} ans",
+    "sw": "Picha za NASA, miaka {year_count}"
    }
   },
   "bs_months": {

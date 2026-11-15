@@ -546,7 +546,7 @@
       [['stick', 'home.card_today_tag', 'home.card_today_sub'], ['sat', 'home.card_months_tag', 'home.card_months_sub'], ['hand', 'home.farmer_first', 'home.you_decide']].map(function (x) {
         return h('div', { class: 'hs' }, h('span', { class: 'hsi' }, svg(I(x[0], 20))), h('span', null, h('span', { class: 'tg' }, T(x[1])), h('br'), h('span', { class: 'tx' }, T(x[2]))));
       }));
-    return screen('home', {
+    var scr = screen('home', {
       head: [h('span', { class: 'chip nasa' }, h('i'), T('home.open_records')), bigTitle(T('home.hero_1'), T('home.hero_2')), sample ? sampleChip() : null],
       scene: [island(), floats],
       body: [h('div', { class: 'homecards' }, cards), cap],
@@ -558,6 +558,9 @@
         h('a', { class: 'judges', href: '#/how' }, svg(I('book', 16)), T('farm.judges_link'))],
       foot: strip
     });
+    // for judges, at the end of the scroll and below the first screen: "Behind the scenes" (loaded when it is scrolled to)
+    var both = D.createDocumentFragment(); both.append(scr, behindBox(true));
+    return both;
   };
   // the prepared fields (index.json); a field built with the global settings carries its note (owner, 2026-11-14 evening)
   function fieldsList(target) {
@@ -652,7 +655,8 @@
               if (o.id) { S.winter = o.id; store.set('winter', o.id); } draw();
             } }, label);
           })),
-          opts.length > 1 ? h('p', { class: 'small', style: 'margin:0' }, svg(I('sat', 14)), ' ', T('from_space.guess_cannot_tell')) : null]);
+          opts.length > 1 ? h('p', { class: 'small', style: 'margin:0' }, svg(I('sat', 14)), ' ', T('from_space.guess_cannot_tell')) : null,
+          nasaTags([['space', yearSpan(srcObj(F, 'hls'))]])]);
       }
       draw(); box.hidden = false;
     });
@@ -1128,8 +1132,9 @@
         if (!sd || !sd.plan_words) { scene.append(notReady()); return; }
         var s = farmPlans(F, sd, n, startState(r[1], sd));
         if (!s.pick) { scene.append(notReady()); return; }
-        scene.append(bestCard(s.pick, s.own));
-        add(body, [othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])), h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note')), noteBox()]);
+        var years = (effPlans(F)[0].replay || []).length, tags = function () { return nasaTags([['rain', years], ['weather', years]]); };
+        scene.append(bestCard(s.pick, s.own)); scene.lastChild.append(tags());
+        add(body, [othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])), tags(), h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note')), noteBox()]);
       });
       return screen('next', {
         head: [bigTitle(T('what_to_grow.next_h1'), T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
@@ -1202,7 +1207,8 @@
             h('span', { class: 'wbi', style: icon === 'sun' ? 'color:#D27A2C' : '' }, svg(I(icon, 28))),
             h('div', { class: 'wpara' }, h('p', null, h('b', null, say(x.usual))),
               h('p', null, x.tip ? [h('b', null, T('weather.watch')), ' ', say(x.danger)] : say(x.danger)),
-              x.tip ? h('p', null, h('b', null, T('weather.do')), ' ', say(x.tip) + ' ' + T('weather.tip_end')) : null)));
+              x.tip ? h('p', null, h('b', null, T('weather.do')), ' ', say(x.tip) + ' ' + T('weather.tip_end')) : null,
+              nasaTags([['weather', wx.years]]))));
         });
       });
       return screen('weather', {
@@ -1506,5 +1512,45 @@
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
     say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy };
+
+  // ---------------- Behind the scenes: your field, seen by NASA (owner, 2026-11-15; js/behind.js) ----------------
+  // For judges: the section sits at the end of Home's scroll, below the first screen, and on How we know; nothing of it
+  // loads until it is scrolled to. A farmer's answer shows only a small tag: a tap opens the matching NASA card.
+  function behind() { S.behindP = S.behindP || loadScript('js/behind.js'); return S.behindP; }
+  function behindBox(lazy) {
+    var body = h('div'), box = h('section', { class: 'behindbox', id: 'how-behind' }, h('h2', { class: 'h2' }, T('farm.behind_title')), body);
+    function fill() {
+      if (body.firstChild) return;   // once
+      body.append(loading());
+      behind().then(function () { return W.KS.behind ? W.KS.behind.section() : null; }).then(function (el) {
+        body.textContent = '';
+        if (el) { body.append(el); return; }
+        if (lazy) { body.append(notReady()); return; }   // none for this field: Home says so, How we know drops it and its link
+        box.remove(); var a = D.querySelector('.how a[href="#/how/behind"]'); if (a) a.remove();
+      });
+    }
+    if (lazy && W.IntersectionObserver) {
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); fill(); } });
+      io.observe(box); box.addEventListener('click', fill);   // a tap on the title fills it too
+    } else fill();
+    return box;
+  }
+  function yearSpan(s) { var m = s && String(s.years).match(/^(\d{4})-(\d{4})$/); return m ? m[2] - m[1] + 1 : 0; }
+  // the tags of one farmer answer, [[kind, years], ...]: kind is rain, weather or space (behind.json `tags`), years the
+  // number of years the answer stands on. Shown only on the field behind.json was built for.
+  function nasaTags(pairs) {
+    var row = h('div', { class: 'srcs nasa', hidden: true });
+    getJSON('data/behind.json').then(function (b) {
+      if (!b || b.field !== S.fid) return;
+      pairs.forEach(function (p) {
+        if (!p[1] || !b.tags[p[0]]) return;
+        row.append(h('button', { type: 'button', class: 'src', onclick: function (e) { e.stopPropagation(); behind().then(function () { if (W.KS.behind) W.KS.behind.open(p[0]); }); } },
+          svg(I('sat', 12, 2.2)), T('farm.tag_' + p[0], { year_count: p[1] })));
+      });
+      row.hidden = !row.firstChild;
+    });
+    return row;
+  }
+  W.KS.behindBox = behindBox;
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 })();

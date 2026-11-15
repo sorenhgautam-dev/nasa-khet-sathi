@@ -23,6 +23,23 @@ holds no numbers.
   `check_soil.bowl_drier`, `bowl_wetter`, `bowl_same`, `bowl_none`) and, with a `check`, "Bowl 3 got water. It read
   clearly wetter." or "... It was not clearly wetter." (`bowl_watered_yes`, `bowl_watered_no`).
 
+## 2026-11-15 (Sunday, night): "Behind the scenes: your field, seen by NASA" (a new file `behind.json`; additions only)
+
+- New file `site/data/behind.json` (`pipeline/export/build_behind.py`, schema `behind_schema.json`, run-field step `behind`
+  after `story`). Every other file is byte for byte as it was; `words.json` gains four keys in `shared.farm`
+  (`behind_title`, `tag_rain`, `tag_weather`, `tag_space`).
+- `numbers[]`: six true counts, each with `value`, `label`, `detail`, `from` (the file it was counted from) and `sources`
+  (the field file's own source entries: name, resolution, years, type). `flow[]`: NASA data, Field Twin, the replay with
+  its own year count, your answers. `cards[]`: one per NASA mission (`gpm`, `hls`, `power`, `grace`, `nexgddp`,
+  `smap_gldas`) with `say` (one plain sentence), `chart` (a chart id in `story.json`, or `power_year` in this file's own
+  `charts`), `only` (the chart's rows to show), `source`, `resolution`, `years`, `kind`. `pixels`: the field's side and each
+  dataset's square in metres. `tags`: a farmer answer's tag (`rain`, `weather`, `space`) -> the cards it opens.
+- The site: `js/behind.js` (loaded only when the section is scrolled to on Home, when How we know opens, or when a tag is
+  tapped) draws the section at the end of Home's scroll and first on How we know (`#/how/behind`). Farmer answers (the
+  crop guess on Photo, the plans on Next 3 / 6 months, each month on Weather ahead) carry a small tag, "NASA rain, 24
+  years": the year count comes from the answer's own data (the replay's years, `weather.years`, the HLS source's years).
+  Tags and the section show only on the field `behind.json` was built for (`field`); another field says "Not ready yet".
+
 ## 2026-11-14 (Saturday, late night): wording only, no number changed
 
 - `index.json` `fields[].note` (a field on the global defaults) now reads "A field on another continent, run by the same

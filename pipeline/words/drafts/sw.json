@@ -3260,6 +3260,22 @@
    "en": "For judges: how we know",
    "sw": "Kwa majaji: tunajuaje"
   },
+  "shared.farm.behind_title": {
+   "en": "Behind the scenes: your field, seen by NASA",
+   "sw": "Nyuma ya pazia: shamba lako, kama NASA inavyoliona"
+  },
+  "shared.farm.tag_rain": {
+   "en": "NASA rain, {year_count} years",
+   "sw": "Mvua ya NASA, miaka {year_count}"
+  },
+  "shared.farm.tag_weather": {
+   "en": "NASA weather, {year_count} years",
+   "sw": "Hali ya hewa ya NASA, miaka {year_count}"
+  },
+  "shared.farm.tag_space": {
+   "en": "NASA pictures, {year_count} years",
+   "sw": "Picha za NASA, miaka {year_count}"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "sw": "Januari–Februari"

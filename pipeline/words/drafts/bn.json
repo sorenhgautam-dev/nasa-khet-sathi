@@ -3260,6 +3260,22 @@
    "en": "For judges: how we know",
    "bn": "বিচারকদের জন্য: আমরা কীভাবে জানি"
   },
+  "shared.farm.behind_title": {
+   "en": "Behind the scenes: your field, seen by NASA",
+   "bn": "পর্দার আড়ালে: নাসার চোখে আপনার জমি"
+  },
+  "shared.farm.tag_rain": {
+   "en": "NASA rain, {year_count} years",
+   "bn": "নাসার বৃষ্টি, {year_count} বছর"
+  },
+  "shared.farm.tag_weather": {
+   "en": "NASA weather, {year_count} years",
+   "bn": "নাসার আবহাওয়া, {year_count} বছর"
+  },
+  "shared.farm.tag_space": {
+   "en": "NASA pictures, {year_count} years",
+   "bn": "নাসার ছবি, {year_count} বছর"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "bn": "জানুয়ারি–ফেব্রুয়ারি"

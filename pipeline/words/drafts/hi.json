@@ -3260,6 +3260,22 @@
    "en": "For judges: how we know",
    "hi": "निर्णायकों के लिए: हमें कैसे पता"
   },
+  "shared.farm.behind_title": {
+   "en": "Behind the scenes: your field, seen by NASA",
+   "hi": "पर्दे के पीछे: नासा ने देखा आपका खेत"
+  },
+  "shared.farm.tag_rain": {
+   "en": "NASA rain, {year_count} years",
+   "hi": "नासा की बारिश, {year_count} साल"
+  },
+  "shared.farm.tag_weather": {
+   "en": "NASA weather, {year_count} years",
+   "hi": "नासा का मौसम, {year_count} साल"
+  },
+  "shared.farm.tag_space": {
+   "en": "NASA pictures, {year_count} years",
+   "hi": "नासा की तस्वीरें, {year_count} साल"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "hi": "जनवरी–फ़रवरी"

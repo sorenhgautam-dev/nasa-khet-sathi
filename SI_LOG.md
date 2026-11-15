@@ -1465,6 +1465,24 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **For a person to review:** that the list scrolls by finger on a real phone (iPhone and Android); the screenshots were taken
   in Chrome on a laptop.
 
+## 2026-11-15 (Sunday, night): "Behind the scenes: your field, seen by NASA" (Claude Fable 5.2 via Claude Code, a helper agent)
+
+- **What Claude did:** on the owner's request ("Judges must be able to see how deeply we use NASA's data, while the
+  farmer's path stays simple"), wrote `pipeline/export/build_behind.py` (-> `site/data/behind.json`) and `site/js/behind.js`.
+  The six big numbers are counted from our own files, never typed: 9,131 days of rain records (`data/clean/demo/gpm.parquet`),
+  2,047 pictures from space (`greenness_field.parquet`: Landsat 336, Sentinel-2 1,135, MODIS 576; 1,321 clear enough to
+  use), 24 years replayed and 23 climate models (the field file), 7,465 crop seasons run (`data/checks/demo/plans.json`: 165
+  plans, each crop, each year, the main run only) and 11 datasets (the field file's sources, our own twin not counted).
+  The mission cards reuse charts already in `story.json`; one chart is new, NASA POWER's temperature through the year
+  (the twin's corrected temperatures, 2001-2025, with the frost and heat lines of `config/rules.yaml`). Claude wrote every
+  sentence (English and Nepali; draft lines in five more languages for the four screen words) and chose where the section
+  sits: at the end of Home's scroll and first on How we know.
+- **Claude's choices to check:** "datasets" counts the field file's source list (11), not the larger list the checks use;
+  "crop seasons run" counts the main rain-fed run only; the temperature chart uses all of 2001-2025 and notes that
+  2001-2003 read too warm by day; the Today screen (soil stick) has no NASA tag, because its lines come from the stick.
+- **For a person to review:** every Nepali line (marked "needs native-speaker review"); the five draft languages; the
+  screenshots (taken in Chrome on a laptop, not on a real phone).
+
 ## 2026-11-14 (Saturday, near midnight): the team's indoor test of the soil stick (Claude Opus 5.5 via Claude Code)
 
 - **What Claude did:** read the bridge's log of the real walk (`data/probe/demo/readings_2026-11-14.jsonl`, session
