@@ -4543,6 +4543,61 @@
     "en": "Ropani, the land unit",
     "ne": "रोपनी, जग्गा नाप्ने एकाइ",
     "ne_review": "needs native-speaker review"
+   },
+   "m_grows": {
+    "en": "{crop} is growing.",
+    "ne": "{crop} बढ्दैछ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "m_rest": {
+    "en": "The field rests.",
+    "ne": "खेत आराम गर्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "see6": {
+    "en": "See the next 6 months",
+    "ne": "अर्को ६ महिना हेर्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "m_row": {
+    "en": "Usually, month by month:",
+    "ne": "प्रायः, महिनैपिच्छे:",
+    "ne_review": "needs native-speaker review"
+   },
+   "k_sow": {
+    "en": "Sow",
+    "ne": "छर्ने",
+    "ne_review": "needs native-speaker review"
+   },
+   "k_harvest": {
+    "en": "Harvest",
+    "ne": "काट्ने",
+    "ne_review": "needs native-speaker review"
+   },
+   "k_plant": {
+    "en": "Plant",
+    "ne": "रोप्ने",
+    "ne_review": "needs native-speaker review"
+   },
+   "k_grow": {
+    "en": "Growing",
+    "ne": "बढ्दै",
+    "ne_review": "needs native-speaker review"
+   },
+   "k_rest": {
+    "en": "Rest",
+    "ne": "आराम",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_range": {
+    "en": "{month_from} to {month_to}",
+    "ne": "{month_from}देखि {month_to}सम्म",
+    "ne_review": "needs native-speaker review"
+   },
+   "wx_usual_care": {
+    "en": "Keep your usual care.",
+    "ne": "सधैंजस्तै हेरचाह गर्नुहोस्।",
+    "ne_review": "needs native-speaker review"
    }
   },
   "fog": {

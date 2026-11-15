@@ -3460,6 +3460,50 @@
    "en": "Ropani, the land unit",
    "sw": "Ropani, kipimo cha ardhi"
   },
+  "shared.farm.m_grows": {
+   "en": "{crop} is growing.",
+   "sw": "{crop} inakua."
+  },
+  "shared.farm.m_rest": {
+   "en": "The field rests.",
+   "sw": "Shamba linapumzika."
+  },
+  "shared.farm.see6": {
+   "en": "See the next 6 months",
+   "sw": "Tazama miezi 6 ijayo"
+  },
+  "shared.farm.m_row": {
+   "en": "Usually, month by month:",
+   "sw": "Kwa kawaida, mwezi kwa mwezi:"
+  },
+  "shared.farm.k_sow": {
+   "en": "Sow",
+   "sw": "Panda"
+  },
+  "shared.farm.k_harvest": {
+   "en": "Harvest",
+   "sw": "Vuna"
+  },
+  "shared.farm.k_plant": {
+   "en": "Plant",
+   "sw": "Pandikiza"
+  },
+  "shared.farm.k_grow": {
+   "en": "Growing",
+   "sw": "Inakua"
+  },
+  "shared.farm.k_rest": {
+   "en": "Rest",
+   "sw": "Pumziko"
+  },
+  "shared.farm.wx_range": {
+   "en": "{month_from} to {month_to}",
+   "sw": "{month_from} hadi {month_to}"
+  },
+  "shared.farm.wx_usual_care": {
+   "en": "Keep your usual care.",
+   "sw": "Endelea na utunzaji wa kawaida."
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "sw": "Januari–Februari"

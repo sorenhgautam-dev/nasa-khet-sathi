@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 799 texts): 776 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 810 texts): 787 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -798,7 +798,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 258 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 269 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -1023,6 +1023,17 @@ This page is made from the word files in this folder; change those, not this pag
 | Bikram Sambat months | विक्रम संवत्का महिना |
 | The Nepali words, checked by people | मानिसले जाँचेका नेपाली शब्द |
 | Ropani, the land unit | रोपनी, जग्गा नाप्ने एकाइ |
+| {crop} is growing. | {crop} बढ्दैछ। |
+| The field rests. | खेत आराम गर्छ। |
+| See the next 6 months | अर्को ६ महिना हेर्नुहोस् |
+| Usually, month by month: | प्रायः, महिनैपिच्छे: |
+| Sow | छर्ने |
+| Harvest | काट्ने |
+| Plant | रोप्ने |
+| Growing | बढ्दै |
+| Rest | आराम |
+| {month_from} to {month_to} | {month_from}देखि {month_to}सम्म |
+| Keep your usual care. | सधैंजस्तै हेरचाह गर्नुहोस्। |
 | *The fog that clears where the soil stick tests* | |
 | How sure are we? | हामी कति पक्का छौं? |
 | {sure_pct} out of 100 | १०० मा {sure_pct} |

@@ -3460,6 +3460,50 @@
    "en": "Ropani, the land unit",
    "es": "Ropani, la medida de tierra"
   },
+  "shared.farm.m_grows": {
+   "en": "{crop} is growing.",
+   "es": "{crop} está creciendo."
+  },
+  "shared.farm.m_rest": {
+   "en": "The field rests.",
+   "es": "El campo descansa."
+  },
+  "shared.farm.see6": {
+   "en": "See the next 6 months",
+   "es": "Ver los próximos 6 meses"
+  },
+  "shared.farm.m_row": {
+   "en": "Usually, month by month:",
+   "es": "Por lo general, mes a mes:"
+  },
+  "shared.farm.k_sow": {
+   "en": "Sow",
+   "es": "Sembrar"
+  },
+  "shared.farm.k_harvest": {
+   "en": "Harvest",
+   "es": "Cosechar"
+  },
+  "shared.farm.k_plant": {
+   "en": "Plant",
+   "es": "Plantar"
+  },
+  "shared.farm.k_grow": {
+   "en": "Growing",
+   "es": "Creciendo"
+  },
+  "shared.farm.k_rest": {
+   "en": "Rest",
+   "es": "Descanso"
+  },
+  "shared.farm.wx_range": {
+   "en": "{month_from} to {month_to}",
+   "es": "{month_from} a {month_to}"
+  },
+  "shared.farm.wx_usual_care": {
+   "en": "Keep your usual care.",
+   "es": "Siga con su cuidado de siempre."
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "es": "enero–febrero"
