@@ -849,3 +849,33 @@ label.cta.take, label.round { cursor: pointer; }
 /* a narrow phone: a small word with no icon, clear of the part's number in the middle */
 @media (max-width: 1023px) { .fieldbox .pchip { font-size: 11px; padding: 2px 7px; } .fieldbox .pchip .ico { display: none !important; } }
 @media (min-width: 1024px) { .fieldbox .pchip { font-size: 14px; padding: 4px 11px; } }
+
+/* Fields around the world (js/world.js; owner, 2026-11-15): NASA's Blue Marble picture, cropped to 75 N - 60 S, a dot per place */
+.wmap { position: relative; overflow: hidden; border-radius: 18px; background: #0B1E33; }
+.wmap img { display: block; width: 100%; height: auto; }
+.wdot { position: absolute; transform: translate(-7px, -50%); display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 6px 0 0;
+  background: none; border: 0; cursor: pointer; color: #fff; font: 700 13px/1.1 var(--f-body); }
+.wdot.w { flex-direction: row-reverse; transform: translate(calc(-100% + 7px), -50%); padding: 0 0 0 6px; }
+.wdot i { flex: none; width: 14px; height: 14px; border-radius: 50%; background: #C8E05A; border: 2px solid #14301E; box-shadow: 0 0 0 4px rgba(200,224,90,.35); }
+.wdot span { background: rgba(20,48,30,.85); padding: 4px 8px; border-radius: 10px; white-space: nowrap; }
+.wdot:focus-visible span { outline: 2px solid #C8E05A; outline-offset: 1px; }
+.wcountry { margin: 0 0 6px; display: flex; align-items: center; gap: 6px; font-weight: 800; }
+.wplace + .wplace { margin-top: 14px; }
+.wsteps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+.world p.small { margin: 0; }
+
+/* ---------------- gentle motion (owner, 2026-11-15) ---------------- */
+/* Screen changes are short fades, parts and results appear softly, the fog clears smoothly: each under 300 ms, opacity and
+   transform only (nothing moves the layout), all of it off under prefers-reduced-motion (the rule above). The dive from Home
+   into the photo stays the design's own. To undo: delete this block and the four "gentle motion" changes in js/app.js. */
+@keyframes ks-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ks-soft { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.scr { animation: ks-fade 260ms var(--ease) both; }
+.scr.leaving, .diving + .behindbox, .leaving + .behindbox { transition-duration: 180ms; }
+#sheet .panel { animation: ks-soft 280ms var(--ease) both; }
+.caption { animation: ks-fade 240ms var(--ease) both; }
+.part, .plan, .tcard, .wblock, .tstep, .bnum { animation: ks-soft 280ms var(--ease) both; }
+.best { animation: ks-soft 280ms var(--ease) 120ms both; }
+.fieldbox .vl, .fieldbox .hl, .fieldbox .n, .fieldbox .face { animation-duration: 300ms; }
+.fieldbox .sprout.g { animation-duration: 300ms, 3.2s; }
+.fieldbox .sfog::before, .fieldbox .flab, .fieldbox svg.shapes path { transition-duration: 300ms; }

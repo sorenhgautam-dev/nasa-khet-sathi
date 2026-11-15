@@ -1578,3 +1578,18 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **For a person to review:** every new Nepali line (marked "needs native-speaker review"); the demo on real phones over
   the hotspot (the screenshots are emulated); whether the demo label should show on more screens than the three demo steps.
 
+## 2026-11-15 (Sunday, morning): fields around the world, gentle motion, a clarity pass (Claude Opus 5.5 via Claude Code, a helper agent)
+
+- **Asked by the owner:** a simple "Fields around the world" page linked from Home and How we know (a light world map from
+  our own files, a marker for every prepared field, each opening that field, three steps pointing to the README); gentle
+  motion on the click-through screens (under 300 ms each, no layout shift, none under reduced motion, nothing that changes
+  the teammate's design); a clarity pass on every farmer screen (eight words a line, no unexplained word, same layout).
+- **What SI generated:** `site/js/world.js` (NASA Blue Marble `data/basemap/world.jpg`, already in the site, one dot per
+  place), the route and links in `js/app.js` and `js/how.js`, the CSS blocks at the end of `app.css`, the 9 new words
+  (`shared.farm.world_*`, English, the Nepali drafts and the five draft languages). The motion block shortens durations
+  only; a browser check compared every element's box on ten screens, phone and web, before and after: the same. The clarity
+  pass measured every visible sentence on the farmer screens in English and Nepali, then changed: "Patch" to "Part" on
+  Today (7 lines; Bengali, Spanish and French drafts follow), the frost tip ("Cover young plants on frosty nights."), the
+  Nepali "rests in" line ("खेत प्रायः खाली रहने महिना:"), and "records" for "data" on the world page.
+- **For a person to review:** every new or changed Nepali line (marked "needs native-speaker review"); "frosty nights"
+  in place of "clear, cold nights" (the same advice in fewer words); the five draft languages.

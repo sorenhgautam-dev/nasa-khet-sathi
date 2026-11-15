@@ -2869,7 +2869,7 @@
    "fr": "À faire :"
   },
   "shared.weather.tip_cold": {
-   "en": "Cover young plants on clear, cold nights.",
+   "en": "Cover young plants on frosty nights.",
    "fr": "Couvrez les jeunes plants les nuits froides."
   },
   "shared.weather.tip_heat": {
@@ -3173,52 +3173,52 @@
    "fr": "D'habitude, pas de grand danger."
   },
   "shared.farm.today_drier": {
-   "en": "Patch {section} is drier than the others.",
-   "fr": "La parcelle {section} est plus sèche."
+   "en": "Part {section} is drier than the others.",
+   "fr": "La partie {section} est plus sèche."
   },
   "shared.farm.today_water_first": {
    "en": "Water it first.",
    "fr": "Arrosez-la d'abord."
   },
   "shared.farm.today_wetter": {
-   "en": "Patch {section} is wetter than the others.",
-   "fr": "La parcelle {section} est plus humide."
+   "en": "Part {section} is wetter than the others.",
+   "fr": "La partie {section} est plus humide."
   },
   "shared.farm.today_water_last": {
    "en": "Water it last.",
    "fr": "Arrosez-la en dernier."
   },
   "shared.farm.today_same": {
-   "en": "Patch {section} is like the others.",
-   "fr": "La parcelle {section} est comme les autres."
+   "en": "Part {section} is like the others.",
+   "fr": "La partie {section} est comme les autres."
   },
   "shared.farm.today_dry": {
-   "en": "Patch {section} is dry.",
-   "fr": "La parcelle {section} est sèche."
+   "en": "Part {section} is dry.",
+   "fr": "La partie {section} est sèche."
   },
   "shared.farm.today_water_today": {
    "en": "Water it today.",
    "fr": "Arrosez-la aujourd'hui."
   },
   "shared.farm.today_fine": {
-   "en": "Patch {section} is fine.",
-   "fr": "La parcelle {section} va bien."
+   "en": "Part {section} is fine.",
+   "fr": "La partie {section} va bien."
   },
   "shared.farm.today_no_water": {
    "en": "No water needed.",
    "fr": "Pas besoin d'eau."
   },
   "shared.farm.today_too_wet": {
-   "en": "Patch {section} is too wet.",
-   "fr": "La parcelle {section} est trop humide."
+   "en": "Part {section} is too wet.",
+   "fr": "La partie {section} est trop humide."
   },
   "shared.farm.today_dont_water": {
    "en": "Don't water it.",
    "fr": "Ne l'arrosez pas."
   },
   "shared.farm.today_untested": {
-   "en": "Patch {section} is not tested yet.",
-   "fr": "La parcelle {section} n'est pas encore testée."
+   "en": "Part {section} is not tested yet.",
+   "fr": "La partie {section} n'est pas encore testée."
   },
   "shared.farm.twin3_1": {
    "en": "We copy your field into a computer.",
@@ -3275,6 +3275,42 @@
   "shared.farm.tag_space": {
    "en": "NASA pictures, {year_count} years",
    "fr": "Images de la NASA, {year_count} ans"
+  },
+  "shared.farm.world_title": {
+   "en": "Fields around the world",
+   "fr": "Des champs partout dans le monde"
+  },
+  "shared.farm.world_link": {
+   "en": "See every field on a world map",
+   "fr": "Voir tous les champs sur une carte"
+  },
+  "shared.farm.world_tap": {
+   "en": "Tap a field to open it.",
+   "fr": "Touchez un champ pour l'ouvrir."
+  },
+  "shared.farm.world_map_src": {
+   "en": "World picture: NASA Blue Marble, August 2004.",
+   "fr": "Image du monde : NASA Blue Marble, août 2004."
+  },
+  "shared.farm.world_own_title": {
+   "en": "Run it for your own field",
+   "fr": "Lancez-le pour votre champ"
+  },
+  "shared.farm.world_step_1": {
+   "en": "Write down your field's corners and crops.",
+   "fr": "Notez les coins et les cultures du champ."
+  },
+  "shared.farm.world_step_2": {
+   "en": "Download NASA's free records for that place.",
+   "fr": "Téléchargez les relevés gratuits de la NASA."
+  },
+  "shared.farm.world_step_3": {
+   "en": "Run one command. It builds every page.",
+   "fr": "Lancez une commande. Elle crée chaque page."
+  },
+  "shared.farm.world_readme": {
+   "en": "The full steps (README, in English)",
+   "fr": "Toutes les étapes (README, en anglais)"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",
