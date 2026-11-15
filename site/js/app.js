@@ -652,12 +652,13 @@
   function osm(L, m, world) {
     if (m.attributionControl) m.attributionControl.setPrefix('Leaflet');
     m.getContainer().style.background = '#C9D6BE';
+    if (!m.getPane('ksbase')) m.createPane('ksbase').style.zIndex = 150;   // the pictures stay under any overlay (a drone photo: fix A1, 2026-11-15)
     if (abroad()) world = 'only';
     ['world'].concat(world === 'only' ? [] : [S.fid]).forEach(function (id, i) {
       if (id === 'world' && !world) return;
       getJSON('data/basemap/' + encodeURIComponent(id) + '.json').then(function (b) {
         if (!b || !b.image || !b.bounds) return;
-        var o = L.imageOverlay(b.image, b.bounds, { attribution: b.attribution || '', interactive: false }).addTo(m);
+        var o = L.imageOverlay(b.image, b.bounds, { attribution: b.attribution || '', interactive: false, pane: 'ksbase' }).addTo(m);
         if (i === 0) o.bringToBack();
       });
     });
@@ -966,9 +967,8 @@
         Lf = L; mbox.querySelector('.msg').remove();
         map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 0.5, maxZoom: dr ? 21 : 18 });
         osm(L, map);
-        if (dr) {   // the drone photo, its outline and the lines between its patches (vector: crisp when zoomed)
+        if (dr) {   // the drone photo and the field's outline only (fix A1, 2026-11-15: the parts come on the next screen)
           L.imageOverlay(dr.image, dr.bounds, { attribution: dr.credit, interactive: false }).addTo(map);
-          dr.lines.forEach(function (ln) { L.polyline(ln.map(function (p) { return [p[1], p[0]]; }), { color: '#FBF4EA', weight: 1.5, interactive: false }).addTo(map); });
           var dro = L.polygon(dr.outline.map(function (p) { return [p[1], p[0]]; }), { color: '#C8E05A', weight: 3, fill: false, interactive: false }).addTo(map);
           map.fitBounds(dro.getBounds(), { padding: [24, 24], maxZoom: 21 });
         }
