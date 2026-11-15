@@ -3415,6 +3415,70 @@
   "glossary.kalman_update.say": {
    "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
    "es": "Un cálculo que mezcla una estimación y una medida, confiando más en la más segura."
+  },
+  "screens.where.texts.seen_space": {
+   "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
+   "es": "Visto por la NASA desde el espacio: {date}. Luego, nuestro dron toma esta foto."
+  },
+  "shared.drone.label": {
+   "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",
+   "es": "Demo: 4 macetas hacen de finca. Este teléfono hace de dron."
+  },
+  "shared.drone.take": {
+   "en": "Take a photo from above",
+   "es": "Tome una foto desde arriba"
+  },
+  "shared.drone.again": {
+   "en": "Take it again",
+   "es": "Tómela otra vez"
+  },
+  "shared.drone.taken": {
+   "en": "Photo taken from above:",
+   "es": "Foto tomada desde arriba:"
+  },
+  "shared.drone.stays": {
+   "en": "The photo stays on this phone.",
+   "es": "La foto se queda en este teléfono."
+  },
+  "shared.drone.yes": {
+   "en": "Yes",
+   "es": "Sí"
+  },
+  "shared.drone.no_photo": {
+   "en": "No photo yet. Take one from above first.",
+   "es": "Aún no hay foto. Primero tome una desde arriba."
+  },
+  "shared.drone.start": {
+   "en": "Push the soil stick into pot 1.",
+   "es": "Meta la varilla en la maceta 1."
+  },
+  "shared.drone.pot_wetter": {
+   "en": "Pot {section} is wetter than the others.",
+   "es": "Maceta {section}: más húmeda que las demás."
+  },
+  "shared.drone.pot_drier": {
+   "en": "Pot {section} is drier than the others.",
+   "es": "Maceta {section}: más seca que las demás."
+  },
+  "shared.drone.pot_same": {
+   "en": "Pot {section} is like the others.",
+   "es": "Maceta {section}: igual que las demás."
+  },
+  "shared.drone.pot_none": {
+   "en": "Pot {section}: no steady reading.",
+   "es": "Maceta {section}: sin lectura estable."
+  },
+  "shared.drone.chip_wetter": {
+   "en": "Wetter",
+   "es": "Más húmeda"
+  },
+  "shared.drone.chip_drier": {
+   "en": "Drier",
+   "es": "Más seca"
+  },
+  "shared.drone.chip_same": {
+   "en": "Same",
+   "es": "Igual"
   }
  }
 }

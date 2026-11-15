@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 727 texts): 704 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 743 texts): 720 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -61,7 +61,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### 2. Where is your field? / तपाईंको खेत कहाँ छ?
 
-*Nepali: 28 needs native-speaker review; 2 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 29 needs native-speaker review; 2 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -78,6 +78,7 @@ This page is made from the word files in this folder; change those, not this pag
 | This is a map, not a photo. | यो नक्सा हो, फोटो होइन। |
 | The line shows the sample field. | रेखाले नमुना खेत देखाउँछ। |
 | A real photo comes when we visit. | हामी खेतमा आएपछि साँचो फोटो आउँछ। |
+| Seen from space by NASA on {date}. Next, our drone takes this photo. | नासाले {date} मा अन्तरिक्षबाट हेरेको। अब हाम्रो ड्रोनले यो फोटो खिच्छ। |
 | We show our sample field near you. | हामी तपाईंको नजिकको नमुना खेत देखाउँछौं। |
 | Mark my own field | मेरो आफ्नै खेत कोर्छु |
 | Show the parts | भागहरू देखाउनुहोस् |
@@ -792,7 +793,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 192 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 207 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -985,6 +986,22 @@ This page is made from the word files in this folder; change those, not this pag
 | We mix the two, trusting the surer one. | हामी दुवै मिलाउँछौं, बढी पक्कालाई बढी भरोसा गर्दै। |
 | So the fog clears where we test. | त्यसैले जाँचेको ठाउँमा कुहिरो हट्छ। |
 | How we mix them: | कसरी मिलाउँछौं: |
+| *Phone as drone: the in-person demo, on the laptop's hotspot only* | |
+| Demo: 4 pots stand in for a field. This phone stands in for our drone. | डेमो: खेतको सट्टा ४ वटा गमला छन्। हाम्रो ड्रोनको सट्टा यो फोन छ। |
+| Take a photo from above | माथिबाट फोटो खिच्नुहोस् |
+| Take it again | फेरि खिच्नुहोस् |
+| Photo taken from above: | माथिबाट खिचिएको फोटो: |
+| The photo stays on this phone. | फोटो यही फोनमा मात्र रहन्छ। |
+| Yes | हो |
+| No photo yet. Take one from above first. | अहिलेसम्म फोटो छैन। पहिले माथिबाट खिच्नुहोस्। |
+| Push the soil stick into pot 1. | माटो जाँच्ने यन्त्र गमला १ मा घुसाउनुहोस्। |
+| Pot {section} is wetter than the others. | गमला {section} अरूभन्दा ओसिलो छ। |
+| Pot {section} is drier than the others. | गमला {section} अरूभन्दा सुक्खा छ। |
+| Pot {section} is like the others. | गमला {section} अरूजस्तै छ। |
+| Pot {section}: no steady reading. | गमला {section}: स्थिर नाप आएन। |
+| Wetter | ओसिलो |
+| Drier | सुक्खा |
+| Same | उस्तै |
 | *Bikram Sambat months (English and Nepali)* | |
 | Magh | माघ |
 | Falgun | फागुन |

@@ -512,6 +512,16 @@
     "en": "cold",
     "ne": "चिसो"
    }
+  },
+  "date": {
+   "from": [
+    "code:pipeline/fetch/basemap.py:field_doc"
+   ],
+   "how": "the day the field's own NASA picture on the photo step was taken (site/data/basemap/<field>.json 'date', YYYY-MM-DD), written as day, month and year (site/js/app.js fmtDate); the line is left out when that picture has no full date, and abroad, where only the world picture shows",
+   "example": {
+    "en": "11 November 2025",
+    "ne": "११ नोभेम्बर २०२५"
+   }
   }
  },
  "conditions": {

@@ -3415,6 +3415,70 @@
   "glossary.kalman_update.say": {
    "en": "A sum that mixes a guess and a reading, trusting the surer one more.",
    "bn": "একটি হিসাব যা অনুমান আর মাপ মেলায়, বেশি নিশ্চিতটিতে বেশি ভরসা করে।"
+  },
+  "screens.where.texts.seen_space": {
+   "en": "Seen from space by NASA on {date}. Next, our drone takes this photo.",
+   "bn": "NASA {date} তারিখে মহাকাশ থেকে দেখেছে। এরপর আমাদের ড্রোন এই ছবি তুলবে।"
+  },
+  "shared.drone.label": {
+   "en": "Demo: 4 pots stand in for a field. This phone stands in for our drone.",
+   "bn": "ডেমো: খামারের বদলে 4টি টব। আমাদের ড্রোনের বদলে এই ফোন।"
+  },
+  "shared.drone.take": {
+   "en": "Take a photo from above",
+   "bn": "উপর থেকে ছবি তুলুন"
+  },
+  "shared.drone.again": {
+   "en": "Take it again",
+   "bn": "আবার তুলুন"
+  },
+  "shared.drone.taken": {
+   "en": "Photo taken from above:",
+   "bn": "উপর থেকে তোলা ছবি:"
+  },
+  "shared.drone.stays": {
+   "en": "The photo stays on this phone.",
+   "bn": "ছবিটি এই ফোনেই থাকে।"
+  },
+  "shared.drone.yes": {
+   "en": "Yes",
+   "bn": "হ্যাঁ"
+  },
+  "shared.drone.no_photo": {
+   "en": "No photo yet. Take one from above first.",
+   "bn": "এখনও ছবি নেই। আগে উপর থেকে একটি তুলুন।"
+  },
+  "shared.drone.start": {
+   "en": "Push the soil stick into pot 1.",
+   "bn": "মাটির কাঠি টব 1-এ ঢোকান।"
+  },
+  "shared.drone.pot_wetter": {
+   "en": "Pot {section} is wetter than the others.",
+   "bn": "টব {section} অন্যগুলোর চেয়ে ভেজা।"
+  },
+  "shared.drone.pot_drier": {
+   "en": "Pot {section} is drier than the others.",
+   "bn": "টব {section} অন্যগুলোর চেয়ে শুকনো।"
+  },
+  "shared.drone.pot_same": {
+   "en": "Pot {section} is like the others.",
+   "bn": "টব {section} অন্যগুলোর মতোই।"
+  },
+  "shared.drone.pot_none": {
+   "en": "Pot {section}: no steady reading.",
+   "bn": "টব {section}: স্থির মাপ পাওয়া যায়নি।"
+  },
+  "shared.drone.chip_wetter": {
+   "en": "Wetter",
+   "bn": "বেশি ভেজা"
+  },
+  "shared.drone.chip_drier": {
+   "en": "Drier",
+   "bn": "বেশি শুকনো"
+  },
+  "shared.drone.chip_same": {
+   "en": "Same",
+   "bn": "একই রকম"
   }
  }
 }
