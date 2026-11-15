@@ -3515,6 +3515,22 @@
   "shared.drone.chip_same": {
    "en": "Same",
    "bn": "একই রকম"
+  },
+  "shared.drone.fit_guide": {
+   "en": "Fit the 4 pots inside the square.",
+   "bn": "4টি টব বর্গের ভেতরে রাখুন।"
+  },
+  "shared.drone.fit_drag": {
+   "en": "Drag the corners to fit the 4 pots.",
+   "bn": "4টি টবে মেলাতে কোণগুলো টানুন।"
+  },
+  "shared.drone.fit_done": {
+   "en": "Done",
+   "bn": "হয়ে গেছে"
+  },
+  "shared.drone.fit_again": {
+   "en": "Fit again",
+   "bn": "আবার মেলান"
   }
  }
 }

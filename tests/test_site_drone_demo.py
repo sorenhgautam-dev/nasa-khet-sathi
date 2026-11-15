@@ -148,3 +148,45 @@ def test_the_public_photo_step_says_when_nasa_saw_the_field():
     assert "abroad()" in seen, "abroad fields show only the world picture: no date line"
     demo = json.loads((SITE / "data" / "basemap" / "demo.json").read_text())
     assert re.fullmatch(r"\d{4}-\d\d-\d\d", demo["date"])
+
+
+# ---------- the square on the camera step, and the corners after it (owner, 2026-11-15) ----------
+
+def test_the_camera_step_shows_the_square_and_its_words():
+    b = demo_block()
+    assert "function guideBox()" in b and "T('drone.fit_guide')" in b
+    assert re.search(r"p \? fieldBox\(F, 'sway', \{ photo: p\.url \}\)\s*: guideBox\(\)", b)    # before the photo: the square
+    for k, en in (("fit_guide", "Fit the 4 pots inside the square."), ("fit_drag", "Drag the corners to fit the 4 pots."),
+                  ("fit_done", "Done"), ("fit_again", "Fit again")):
+        w = word("drone", k)
+        assert w["en"] == en and w["ne"].strip() and w["ne_review"] == "needs native-speaker review"
+
+
+def test_after_the_photo_four_corners_are_dragged_before_the_parts_are_drawn():
+    b = demo_block()
+    assert "function fitView(raw)" in b and b.count("setPointerCapture") == 1 and "pointercancel" in b
+    assert "S.demoRaw = { url: URL.createObjectURL(f), at: new Date(), quad: null }" in b and "S.demoPhoto = null" in b
+    assert "if (raw && !p)" in b                                             # a new photo goes to the corners first
+    css = (SITE / "css" / "app.css").read_text()
+    assert re.search(r"\.fitbox \.fithandle \{[^}]*touch-action: none", css)   # dragging never scrolls the page
+    assert ".fieldbox.photo > img.ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; }" in css
+
+
+@pytest.mark.skipif(not shutil.which("node"), reason="node is not installed")
+def test_the_corners_map_the_square_exactly():
+    m = re.search(r"function quadMap\(q\) \{.*?\n  \}", APP, re.S)
+    assert m, "quadMap(q): the unit square onto the dragged corners"
+    js = m.group(0) + """
+var q = [[10, 20], [110, 30], [100, 140], [5, 120]], f = quadMap(q), par = quadMap([[0, 0], [4, 0], [6, 2], [2, 2]]);
+console.log(JSON.stringify({ corners: [f(0, 0), f(1, 0), f(1, 1), f(0, 1)], mid: par(0.5, 0.5), edge: par(0.5, 0) }));"""
+    got = json.loads(subprocess.run(["node", "-e", js], capture_output=True, text=True, check=True).stdout)
+    for p, want in zip(got["corners"], [[10, 20], [110, 30], [100, 140], [5, 120]]):
+        assert p == pytest.approx(want, abs=1e-9)
+    assert got["mid"] == pytest.approx([3, 1]) and got["edge"] == pytest.approx([2, 0])   # a parallelogram stays affine
+
+
+def test_the_straightened_photo_stays_on_the_phone():
+    b = demo_block()
+    body = b[b.index("function straighten("):]
+    assert "getImageData" in body and "toBlob(" in body and "URL.createObjectURL(b)" in body
+    assert "URL.revokeObjectURL" in b

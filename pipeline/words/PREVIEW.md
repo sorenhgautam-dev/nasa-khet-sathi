@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 752 texts): 729 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 756 texts): 733 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -793,7 +793,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 216 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 220 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -1011,6 +1011,10 @@ This page is made from the word files in this folder; change those, not this pag
 | Wetter | ओसिलो |
 | Drier | सुक्खा |
 | Same | उस्तै |
+| Fit the 4 pots inside the square. | ४ वटै गमला वर्गभित्र पार्नुहोस्। |
+| Drag the corners to fit the 4 pots. | ४ वटै गमला मिलाउन कुनाहरू तान्नुहोस्। |
+| Done | भयो |
+| Fit again | फेरि मिलाउनुहोस् |
 | *Bikram Sambat months (English and Nepali)* | |
 | Magh | माघ |
 | Falgun | फागुन |

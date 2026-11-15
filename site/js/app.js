@@ -722,13 +722,15 @@
   function demoLabel() { return h('p', { class: 'demolabel', role: 'note' }, svg(I('camera', 18)), h('span', null, T('drone.label'))); }
   // the phone's camera (a file input: it works over the hotspot's plain http); the photo becomes an object URL in memory
   function takeBtn(round) {
-    var id = 'drone-photo-' + (++uid), label = T(S.demoPhoto ? 'drone.again' : 'drone.take');
+    var id = 'drone-photo-' + (++uid), label = T(S.demoRaw ? 'drone.again' : 'drone.take');
     var input = h('input', { type: 'file', accept: 'image/*', capture: 'environment', class: 'vh', id: id, tabindex: '-1' });
     input.addEventListener('change', function () {
       var f = input.files && input.files[0];
       if (!f || !/^image\//.test(f.type || 'image/')) return;
+      if (S.demoRaw) URL.revokeObjectURL(S.demoRaw.url);
       if (S.demoPhoto) URL.revokeObjectURL(S.demoPhoto.url);
-      S.demoPhoto = { url: URL.createObjectURL(f), at: new Date() };   // the phone's own clock, when the photo came back
+      S.demoRaw = { url: URL.createObjectURL(f), at: new Date(), quad: null };   // the phone's own clock, when the photo came back
+      S.demoPhoto = null;                                                    // the corners first, then the parts
       rerender();
     });
     var btn = round ? h('label', { for: id, class: 'round big', role: 'button', tabindex: '0', 'aria-label': label, title: label }, svg(I('camera', 24, 2.2)))
@@ -740,15 +742,113 @@
     function two(n) { return ('0' + n).slice(-2); }
     return fmtDate(d.getFullYear() + '-' + two(d.getMonth() + 1) + '-' + two(d.getDate())) + ', ' + digits(two(d.getHours()) + ':' + two(d.getMinutes()));
   }
+  // The square on the camera step and the corners after it (owner, 2026-11-15). A page on the hotspot's plain http cannot
+  // draw over the phone's own camera, so the square shows before the camera opens; after the photo the four corners are
+  // dragged onto the pots, and the photo inside them is straightened into the square the 4 parts are drawn on, on the phone.
+  // quadMap: the unit square (u, v) onto the corners [top-left, top-right, bottom-right, bottom-left], the projective
+  // square-to-quad mapping of Heckbert (1989, Fundamentals of Texture Mapping, sec. 2.2.3).
+  function quadMap(q) {
+    var x0 = q[0][0], y0 = q[0][1], x1 = q[1][0], y1 = q[1][1], x2 = q[2][0], y2 = q[2][1], x3 = q[3][0], y3 = q[3][1];
+    var sx = x0 - x1 + x2 - x3, sy = y0 - y1 + y2 - y3, g = 0, k = 0, a = x1 - x0, b = x3 - x0, d = y1 - y0, e = y3 - y0;
+    if (Math.abs(sx) > 1e-12 || Math.abs(sy) > 1e-12) {
+      var dx1 = x1 - x2, dx2 = x3 - x2, dy1 = y1 - y2, dy2 = y3 - y2, den = dx1 * dy2 - dx2 * dy1;
+      g = (sx * dy2 - dx2 * sy) / den; k = (dx1 * sy - sx * dy1) / den;
+      a = x1 - x0 + g * x1; b = x3 - x0 + k * x3; d = y1 - y0 + g * y1; e = y3 - y0 + k * y3;
+    }
+    return function (u, v) { var w = g * u + k * v + 1; return [(a * u + b * v + x0) / w, (d * u + e * v + y0) / w]; };
+  }
+  function guideBox() {   // before the camera: 4 pots inside a square, numbered as the parts (3 4 at the back, 1 2 in front)
+    var pot = function (x, y, n) {
+      return '<circle cx="' + x + '" cy="' + y + '" r="23" fill="#9A5426"/><circle cx="' + x + '" cy="' + y + '" r="16" fill="#5E3A1C"/>' +
+        '<text x="' + x + '" y="' + (y + 6) + '" text-anchor="middle" font-size="17" font-weight="800" fill="#FBF4EA">' + digits(n) + '</text>';
+    };
+    var g = h('div', { class: 'mapbox photo guide' });
+    g.append(svg('<svg viewBox="0 0 200 200" aria-hidden="true"><rect x="22" y="22" width="156" height="156" rx="8" fill="none" stroke="#C8E05A" stroke-width="4" stroke-dasharray="12 9"/>' +
+      pot(65, 65, 3) + pot(135, 65, 4) + pot(65, 135, 1) + pot(135, 135, 2) + '</svg>'), h('p', { class: 'gtext' }, T('drone.fit_guide')));
+    return g;
+  }
+  function fitView(raw) {   // the photo with four corners to drag; a preview of the 4 parts inside them
+    var box = h('div', { class: 'fitbox' }), img = h('img', { class: 'fitimg', src: raw.url, alt: '' }), lines_ = D.createElementNS(SVGNS, 'svg');
+    lines_.setAttribute('viewBox', '0 0 100 100'); lines_.setAttribute('preserveAspectRatio', 'none'); lines_.setAttribute('class', 'fitlines');
+    box.append(img, lines_);
+    var nums = [[0.25, 0.25, 3], [0.75, 0.25, 4], [0.25, 0.75, 1], [0.75, 0.75, 2]].map(function (n) { var el = h('span', { class: 'fn' }, digits(n[2])); box.append(el); return { u: n[0], v: n[1], el: el }; });
+    var hs = [0, 1, 2, 3].map(function (i) { var el = h('span', { class: 'fithandle', tabindex: '0', role: 'button', 'aria-label': T('drone.fit_drag') + ' ' + digits(i + 1) }); box.append(el); return el; });
+    function clamp(x) { return Math.max(0, Math.min(1, x)); }
+    function pt(p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }
+    function draw() {
+      var q = raw.quad;
+      if (!q) return;
+      var m = quadMap(q);
+      lines_.innerHTML = '<polygon points="' + q.map(pt).join(' ') + '"/><line x1="' + m(0.5, 0)[0] * 100 + '" y1="' + m(0.5, 0)[1] * 100 + '" x2="' + m(0.5, 1)[0] * 100 + '" y2="' + m(0.5, 1)[1] * 100 + '"/>' +
+        '<line x1="' + m(0, 0.5)[0] * 100 + '" y1="' + m(0, 0.5)[1] * 100 + '" x2="' + m(1, 0.5)[0] * 100 + '" y2="' + m(1, 0.5)[1] * 100 + '"/>';
+      hs.forEach(function (el, i) { el.style.left = q[i][0] * 100 + '%'; el.style.top = q[i][1] * 100 + '%'; });
+      nums.forEach(function (n) { var c = m(n.u, n.v); n.el.style.left = c[0] * 100 + '%'; n.el.style.top = c[1] * 100 + '%'; });
+    }
+    function start() {   // first time: a square in the middle, 80% of the photo's shorter side
+      if (!raw.quad) {
+        var w = img.naturalWidth || 1, hh = img.naturalHeight || 1, sd = 0.8 * Math.min(w, hh), fx = sd / w / 2, fy = sd / hh / 2;
+        raw.quad = [[0.5 - fx, 0.5 - fy], [0.5 + fx, 0.5 - fy], [0.5 + fx, 0.5 + fy], [0.5 - fx, 0.5 + fy]];
+      }
+      draw();
+    }
+    if (img.complete && img.naturalWidth) start(); else img.addEventListener('load', start);
+    var drag = -1;
+    hs.forEach(function (el, i) {
+      el.addEventListener('pointerdown', function (e) { e.preventDefault(); el.setPointerCapture(e.pointerId); drag = i; el.classList.add('on'); });
+      el.addEventListener('pointermove', function (e) {
+        if (drag !== i || !raw.quad) return;
+        var r = box.getBoundingClientRect();
+        raw.quad[i] = [clamp((e.clientX - r.left) / r.width), clamp((e.clientY - r.top) / r.height)]; draw();
+      });
+      function up() { drag = -1; el.classList.remove('on'); }
+      el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+      el.addEventListener('keydown', function (e) {   // the keyboard too: arrows move a corner by 1%
+        var dv = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
+        if (!dv || !raw.quad) return;
+        e.preventDefault(); raw.quad[i] = [clamp(raw.quad[i][0] + dv[0] / 100), clamp(raw.quad[i][1] + dv[1] / 100)]; draw();
+      });
+    });
+    return { el: box, img: img };
+  }
+  // the photo inside the corners, straightened into a square (bilinear, at most 1600 px read, 900 px out), kept in memory
+  function straighten(raw, img, done) {
+    var nw = img.naturalWidth, nh = img.naturalHeight, sc = Math.min(1, 1600 / Math.max(nw, nh)), cw = Math.max(1, Math.round(nw * sc)), ch = Math.max(1, Math.round(nh * sc));
+    var src = D.createElement('canvas'); src.width = cw; src.height = ch;
+    var sx = src.getContext('2d'); sx.drawImage(img, 0, 0, cw, ch);
+    var sd = sx.getImageData(0, 0, cw, ch).data, N = 900, out = D.createElement('canvas'); out.width = N; out.height = N;
+    var ox = out.getContext('2d'), od = ox.createImageData(N, N), o = od.data;
+    var m = quadMap(raw.quad.map(function (p) { return [p[0] * cw, p[1] * ch]; }));
+    for (var j = 0; j < N; j++) for (var i = 0; i < N; i++) {
+      var p = m((i + 0.5) / N, (j + 0.5) / N), x = Math.min(cw - 1, Math.max(0, p[0] - 0.5)), y = Math.min(ch - 1, Math.max(0, p[1] - 0.5));
+      var x0 = Math.floor(x), y0 = Math.floor(y), x1 = Math.min(cw - 1, x0 + 1), y1 = Math.min(ch - 1, y0 + 1), fx = x - x0, fy = y - y0;
+      var i00 = (y0 * cw + x0) * 4, i10 = (y0 * cw + x1) * 4, i01 = (y1 * cw + x0) * 4, i11 = (y1 * cw + x1) * 4, t = (j * N + i) * 4;
+      for (var c = 0; c < 3; c++) o[t + c] = (sd[i00 + c] * (1 - fx) + sd[i10 + c] * fx) * (1 - fy) + (sd[i01 + c] * (1 - fx) + sd[i11 + c] * fx) * fy;
+      o[t + 3] = 255;
+    }
+    ox.putImageData(od, 0, 0);
+    out.toBlob(function (b) { done(b ? URL.createObjectURL(b) : null); }, 'image/jpeg', 0.9);
+  }
   function demoPhoto(F) {
-    var p = S.demoPhoto;
+    var raw = S.demoRaw, p = S.demoPhoto, head = [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2')), demoLabel()];
+    if (raw && !p) {         // the corners first
+      var fv = fitView(raw), doneBtn = cta(T('drone.fit_done'), function () {
+        if (!raw.quad || doneBtn.disabled) return;
+        doneBtn.disabled = true;
+        setTimeout(function () {   // let the button show it was pressed before the straightening runs
+          straighten(raw, fv.img, function (url) { doneBtn.disabled = false; if (!url) return; S.demoPhoto = { url: url, at: raw.at }; rerender(); });
+        }, 30);
+      });
+      return screen('photo', { head: head, scene: fv.el, body: [h('p', { class: 'lead' }, T('drone.fit_drag')), h('p', { class: 'sub' }, T('drone.stays'))],
+        cta: h('div', { class: 'ctarow' }, takeBtn(true), doneBtn) });
+    }
     return screen('photo', {
-      head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2')), demoLabel()],
+      head: head,
       scene: p ? fieldBox(F, 'sway', { photo: p.url })
-        : h('div', { class: 'mapbox photo' }, h('div', { class: 'msg' }, svg(DRONE), h('span', { class: 'hint' }, T('drone.stays')))),
+        : guideBox(),
       body: p ? [h('p', { class: 'taken' }, svg(I('camera', 18)), h('span', null, T('drone.taken') + ' ' + takenAt(p.at)), svg(I('tick', 18, 3), 'ok')),
-        leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('drone.stays')))] : [seenLine()],
-      cta: h('div', { class: 'ctarow' }, takeBtn(!!p), p ? cta(T('drone.yes'), function () { go('parts'); }) : null)
+        leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('drone.stays'))),
+        btn2(T('drone.fit_again'), function () { URL.revokeObjectURL(p.url); S.demoPhoto = null; rerender(); }, 'redo')] : [seenLine()],
+      cta: h('div', { class: 'ctarow' }, takeBtn(!!raw), p ? cta(T('drone.yes'), function () { go('parts'); }) : null)
     });
   }
   // a pot's result in the stick's own words: drier, wetter or about the same as the other pots (robot/calibrate.py

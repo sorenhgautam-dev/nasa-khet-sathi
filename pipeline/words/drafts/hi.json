@@ -3515,6 +3515,22 @@
   "shared.drone.chip_same": {
    "en": "Same",
    "hi": "एक जैसा"
+  },
+  "shared.drone.fit_guide": {
+   "en": "Fit the 4 pots inside the square.",
+   "hi": "4 गमलों को वर्ग के अंदर रखें।"
+  },
+  "shared.drone.fit_drag": {
+   "en": "Drag the corners to fit the 4 pots.",
+   "hi": "4 गमलों पर बैठाने के लिए कोने खींचें।"
+  },
+  "shared.drone.fit_done": {
+   "en": "Done",
+   "hi": "हो गया"
+  },
+  "shared.drone.fit_again": {
+   "en": "Fit again",
+   "hi": "फिर से मिलाएँ"
   }
  }
 }

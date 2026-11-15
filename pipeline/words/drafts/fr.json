@@ -3515,6 +3515,22 @@
   "shared.drone.chip_same": {
    "en": "Same",
    "fr": "Pareil"
+  },
+  "shared.drone.fit_guide": {
+   "en": "Fit the 4 pots inside the square.",
+   "fr": "Placez les 4 pots dans le carré."
+  },
+  "shared.drone.fit_drag": {
+   "en": "Drag the corners to fit the 4 pots.",
+   "fr": "Faites glisser les coins sur les 4 pots."
+  },
+  "shared.drone.fit_done": {
+   "en": "Done",
+   "fr": "Terminé"
+  },
+  "shared.drone.fit_again": {
+   "en": "Fit again",
+   "fr": "Ajuster à nouveau"
   }
  }
 }

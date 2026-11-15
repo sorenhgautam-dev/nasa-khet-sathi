@@ -3515,6 +3515,22 @@
   "shared.drone.chip_same": {
    "en": "Same",
    "sw": "Sawa"
+  },
+  "shared.drone.fit_guide": {
+   "en": "Fit the 4 pots inside the square.",
+   "sw": "Weka vyungu 4 ndani ya mraba."
+  },
+  "shared.drone.fit_drag": {
+   "en": "Drag the corners to fit the 4 pots.",
+   "sw": "Buruta pembe zitoshe vyungu 4."
+  },
+  "shared.drone.fit_done": {
+   "en": "Done",
+   "sw": "Tayari"
+  },
+  "shared.drone.fit_again": {
+   "en": "Fit again",
+   "sw": "Rekebisha tena"
   }
  }
 }

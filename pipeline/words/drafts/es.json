@@ -3515,6 +3515,22 @@
   "shared.drone.chip_same": {
    "en": "Same",
    "es": "Igual"
+  },
+  "shared.drone.fit_guide": {
+   "en": "Fit the 4 pots inside the square.",
+   "es": "Ponga las 4 macetas dentro del cuadrado."
+  },
+  "shared.drone.fit_drag": {
+   "en": "Drag the corners to fit the 4 pots.",
+   "es": "Arrastre las esquinas hasta las 4 macetas."
+  },
+  "shared.drone.fit_done": {
+   "en": "Done",
+   "es": "Listo"
+  },
+  "shared.drone.fit_again": {
+   "en": "Fit again",
+   "es": "Ajustar de nuevo"
   }
  }
 }
