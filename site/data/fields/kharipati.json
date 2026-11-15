@@ -2177,6 +2177,13 @@
    "type": "satellite"
   },
   {
+   "name": "MODIS Terra",
+   "product": "MOD13Q1 v061 greenness (NDVI), before HLS: the older, coarser line in Field Pulse; no plan number uses it",
+   "resolution": "250 m",
+   "years": "2001-2013",
+   "type": "satellite"
+  },
+  {
    "name": "GRACE and GRACE-FO",
    "product": "JPL mascon CRI RL06.3 v04: water stored across the region",
    "resolution": "about 300 km",
@@ -2786,6 +2793,12 @@
     "id": "probe.bench.spoon.use",
     "choice": "Owner, 2026-11-15 ('use it for the fog only if it passes, with its own error in the Kalman update'). Adding the two variances (a reading's repeat noise and the line's own error) is Claude's reading",
     "value": "config/probe_calibration.yaml is written only if it passes (and real_only holds): only then does the fog clear with it. In the Kalman update its own error is added to the probe's: R (water-% points squared) = R_probe x b^2 + the leave-one-cup-out mean squared error, then converted to wetness points as in probe.kalman.r. If it fails: no calibration file, the site keeps 'drier / wetter than the other parts' and the fog stays",
+    "status": "Claude's choice"
+   },
+   {
+    "id": "probe.bench.spoon.hand_copied",
+    "choice": "Owner, 2026-11-15, 11:15 (answer to Claude's question): 'Use the 4 numbers, labelled'. The team ran the 4 cups (0, 1, 2 and 3 of N = 20 bottle caps) on a friend's laptop and copied one reading per cup: 8, 36, 68 and 87 %; the friend's laptop and its log are away until the demo. R_probe = 3 squared is Claude's cautious choice, fixed before the calibration was computed",
+    "value": "the owner's exception to real_only: one probe reading per cup, copied by hand from a run on another laptop (data/probe/bench/hand_copied.csv: cup_id, cup_spoons, water_spoons, probe_pct, notes; scripts/run_probe_bench.py --hand-copied), makes the calibration if it passes as above (order, at least min_cups, leave-one-cup-out RMSE at most 0.04 m3/m3), labelled 'rough calibration (spoon measures, air-dried soil), hand-copied readings, not logged'. The proofs that need the logged lines are not possible and are said so with it: steadiness, the repeats' R, settling, the ice cup. In their place R_probe = 9 probe-% squared: the steady limit (repeat_spread_max_pct, 3 points) taken as one standard deviation, larger than any steady repeat logged today (spread 1). The Kalman R then adds the leave-one-cup-out mean squared error (use)",
     "status": "Claude's choice"
    },
    {

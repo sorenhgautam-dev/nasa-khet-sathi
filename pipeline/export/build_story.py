@@ -566,7 +566,7 @@ def chart_other_checks(smap, gldas, hls, fao, eco):
     gl = gldas["rain"]["corrected"]
     hv = hls["rain"]["corrected"]
     fa = fao["rain"]["corrected"]
-    ev = eco["rain"]["corrected"]
+    ev = eco["rain"]["corrected"] if eco else None     # None: no 70 m ECOSTRESS pixel centre lies in the field
     items = [
         ("smap", "Soil water vs NASA SMAP", "माटोको पानी र नासा SMAP", (round(sm["pearson"], 2), None), "4.2b"),
         ("gldas_soil", "Soil water vs NASA GLDAS", "माटोको पानी र नासा GLDAS", _corr(gl["soil"]), "4.2d"),
@@ -593,8 +593,8 @@ def chart_other_checks(smap, gldas, hls, fao, eco):
              "status": statuses.get(cid, ""), "validation_row": vrow} for cid, en, ne, (r, ci), vrow in items]
     rows.append({"id": "ecostress", "check": T("Crop stress vs NASA ECOSTRESS", "बालीको तनाव र नासा ECOSTRESS"),
                  "r": None, "low": None, "high": None, "validation_row": "4.2e",
-                 "status": "not testable: too few clear overpasses a season" if not ev["holds_up_any_slot"]
-                 else "holds up"})
+                 "status": "not possible: no 70 m pixel centre lies in the farm" if ev is None else
+                 "not testable: too few clear overpasses a season" if not ev["holds_up_any_slot"] else "holds up"})
     untestable = [cid for cid, *_ in items if cid not in {s[0] for s in shown}]
     en = ["1 means they rise and fall together."]
     ne = ["१ भनेको सँगै बढ्छन् र घट्छन्"]
@@ -1412,7 +1412,7 @@ def load_inputs(repo, field):
     out = {"field": field, "paths": paths}
     for key, rel in paths.items():
         p = repo / rel
-        if key in ("bench", "scorecard", "weather_ahead"):
+        if key in ("bench", "scorecard", "weather_ahead", "eco"):   # eco: not possible on a farm smaller than 70 m
             out[key] = json.loads(p.read_text()) if p.exists() else None
             continue
         if not p.exists():
@@ -1530,8 +1530,21 @@ def build_story(inp, generated):
         "compliance_note": T(f"Verified means right at least {ys['pct']} times in 100, on {ys['nmin']} or more checks. "
                              "The range shows how sure that number is.",
                              f"प्रमाणित भनेको कम्तीमा {ys['nmin']} जाँचमा १०० मा {ys['pct']} पटक सही। दायराले त्यो अङ्क कति पक्का छ देखाउँछ।"),
-        "satellites": SATELLITES, "resources": RESOURCES,
+        "satellites": satellites_for(field, inp["eco"]), "resources": RESOURCES,
     }
+
+
+# cards whose 'checked' line was tested on the Bhaktapur demo field only: what they say for another field (2026-11-15,
+# Kharipati: its own three season methods agree, VALIDATION 3.36), and ECOSTRESS where no 70 m pixel centre is in the field
+ELSEWHERE = {"landsat": T("Three season methods agree here too.", "यहाँ पनि तीन तरिका मिल्छन्।"),
+             "modis": T("Checked against HLS on the Bhaktapur field.", "भक्तपुरको खेतमा HLS सँग जाँचिएको।"),
+             "worldcover": T("It maps the farmland around this farm.", "यसले यो खेत वरिपरिको खेतीयोग्य जमिन देखाउँछ।")}
+NO_ECOSTRESS = T("Not possible: the farm is too small.", "सम्भव छैन: खेत धेरै सानो छ।")
+
+
+def satellites_for(field, eco):
+    return [{**s, "checked": NO_ECOSTRESS} if s["id"] == "ecostress" and eco is None else
+            {**s, "checked": ELSEWHERE[s["id"]]} if field != "demo" and s["id"] in ELSEWHERE else s for s in SATELLITES]
 
 
 def load_schema():
@@ -1562,11 +1575,14 @@ def markdown_tables(story):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--field", default="demo")
+    ap.add_argument("--field", default=None, help="default: rules.yaml site_main_field (the field the site opens first)")
     ap.add_argument("--out", default=None, help="default site/data/story.json")
     ap.add_argument("--generated", default=date.today().isoformat())
     ap.add_argument("--markdown", action="store_true", help="print the report card and inventories as Markdown")
     a = ap.parse_args(argv)
+    if a.field is None:
+        from pipeline.fetch.rules import load_rules
+        a.field = load_rules()["site_main_field"]
     story = build_story(load_inputs(REPO, a.field), a.generated)
     problems = validate_story(story)
     if problems:

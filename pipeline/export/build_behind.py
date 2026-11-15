@@ -235,9 +235,12 @@ def validate_behind(doc):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--field", default="demo")
+    ap.add_argument("--field", default=None, help="default: rules.yaml site_main_field (the field the site opens first)")
     ap.add_argument("--out", default=None, help="default site/data/behind.json")
     a = ap.parse_args(argv)
+    if a.field is None:
+        from pipeline.fetch.rules import load_rules
+        a.field = load_rules()["site_main_field"]
     doc = build_behind(load_inputs(REPO, a.field))
     if problems := validate_behind(doc):
         print("behind.json does not match behind_schema.json:\n  " + "\n  ".join(problems[:20]), file=sys.stderr)

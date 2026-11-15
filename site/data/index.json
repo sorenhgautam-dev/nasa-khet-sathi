@@ -1,6 +1,22 @@
 {
  "fields": [
   {
+   "id": "kharipati",
+   "name": "Real farm in Kharipati, Bhaktapur (PLACEHOLDER crops)",
+   "country": "Nepal",
+   "lat": 27.686299,
+   "lon": 85.463624,
+   "bbox": [
+    85.379227,
+    27.625034,
+    85.480773,
+    27.714966
+   ],
+   "sample": false,
+   "area": "kharipati",
+   "drone": "data/drone/kharipati.json"
+  },
+  {
    "id": "demo",
    "name": "Bhaktapur demo field (PLACEHOLDER location and rotation)",
    "country": "Nepal",
@@ -34,22 +50,6 @@
     "en": "A field on another continent, run by the same pipeline. Not checked against local rain gauges yet.",
     "ne": "अर्को महादेशको खेत, उही प्रणालीले चलाएको। स्थानीय वर्षा मापकसँग अझै जाँच गरिएको छैन।"
    }
-  },
-  {
-   "id": "kharipati",
-   "name": "Real farm in Kharipati, Bhaktapur (PLACEHOLDER crops)",
-   "country": "Nepal",
-   "lat": 27.686299,
-   "lon": 85.463624,
-   "bbox": [
-    85.379227,
-    27.625034,
-    85.480773,
-    27.714966
-   ],
-   "sample": false,
-   "area": "kharipati",
-   "drone": "data/drone/kharipati.json"
   },
   {
    "id": "sample-1",
@@ -114,6 +114,20 @@
  ],
  "areas": [
   {
+   "id": "kharipati",
+   "name": "Real farm in Kharipati, Bhaktapur area",
+   "bbox": [
+    85.379227,
+    27.625034,
+    85.480773,
+    27.714966
+   ],
+   "map": "data/area/kharipati.json",
+   "fields": [
+    "kharipati"
+   ]
+  },
+  {
    "id": "demo",
    "name": "Bhaktapur demo field area",
    "bbox": [
@@ -129,20 +143,6 @@
     "sample-2",
     "sample-3",
     "sample-4"
-   ]
-  },
-  {
-   "id": "kharipati",
-   "name": "Real farm in Kharipati, Bhaktapur area",
-   "bbox": [
-    85.379227,
-    27.625034,
-    85.480773,
-    27.714966
-   ],
-   "map": "data/area/kharipati.json",
-   "fields": [
-    "kharipati"
    ]
   }
  ],
