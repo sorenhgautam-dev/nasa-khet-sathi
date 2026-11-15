@@ -1738,3 +1738,12 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   under How we know's flood chart with the owner's caveat (VALIDATION 3.41). No result changed.
 - **For a person to review:** all new Nepali (the promise's 7 lines, the rain chapter, the screen words, the drone
   label) and the 12 lines rewritten in the five draft languages; the flood records before any rule is written.
+
+## 2026-11-15 afternoon: Kharipati is the only field the app shows (Claude Opus 5.5 via Claude Code)
+
+- **What SI did:** hid the demo field, the four sample fields and the Dhulikhel preview from index.json (rules.yaml
+  site_hidden_fields, committed first; files kept); Home without the "Sample field" chip and field list; no blurry
+  NASA picture under the drone photo; the pots demo as a "Demo tray" card that never fills Kharipati's parts; drafted
+  3 new screen words (tray_title, tray_line, tray_pot) in Nepali and the five draft languages; a helper agent
+  recounted the six docs' numbers for Kharipati and wrote which checks are valley-wide. No result changed.
+- **For a person to review:** the 3 new Nepali lines and their five drafts; the docs' before→after numbers.

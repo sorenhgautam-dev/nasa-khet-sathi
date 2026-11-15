@@ -26,7 +26,9 @@ record is in `docs/PROBE_RECORDING.md`.
    - On macOS, if a box asks "accept incoming connections" for Python, click **Allow**.
 4. [ ] On the phone, open the address it prints, `http://<laptop address>:8000/#/soil`. You should see "Let's check the
        soil".
-5. [ ] Walk s1, s2, s3, s4.
+5. [ ] Walk s1, s2, s3, s4 (the four pots). The phone shows them as a "Demo tray" card, "Pot 1" to "Pot 4": pots
+       stand in for a field, so they never show as Kharipati's parts. A real walk on Kharipati itself is
+       `scripts/demo_probe.py --field kharipati` (parts p1 to p9).
    - At each part, push the probe in, then press Enter.
    - Hands off for 20 seconds.
    - "Not steady" means press Enter and test that part again.

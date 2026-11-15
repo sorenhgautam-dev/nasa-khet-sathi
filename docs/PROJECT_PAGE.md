@@ -38,7 +38,7 @@ field, one plan at a time, and leaves the choice to the farmer.
 
 **What the farmer sees: seven steps** (`site/js/app.js` `STEPS`). Short answers only: no numbers, years, counts or
 charts on these screens. Nepali first, with Bikram Sambat months.
-1. **Home.** "Know your land. Plan your season." and "Try our sample field".
+1. **Home.** "Know your land. Plan your season." and "Start".
 2. **Your farm from the sky.** An open drone map of the farm (Kharipati, OpenAerialMap, 5 May 2026), labelled as
    standing in for our future drone (on the field abroad, NASA's map picture: HLS, via NASA GIBS). Then a question:
    "We think you grow rice, then wheat. Is that right?" (our guess from space) The answer stays on the phone. Then the months the field

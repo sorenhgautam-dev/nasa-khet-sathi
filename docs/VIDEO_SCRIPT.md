@@ -4,8 +4,8 @@ Written 14 November 2026 (afternoon); shots 3 to 8 updated that night to match t
 answers, and the field twin on "How we know"). About 87 spoken words: brisk but clear. If a take runs long, shorten the
 Record Check-up line first. Every number is in `docs/PITCH_FACTS.md` (IDs in square brackets) or the file named in the
 Facts column: check them there before recording. Screens come from the live site, designed by our UI teammate. The field on
-screen is Kharipati, a real farm in Kharipati, Bhaktapur; its crops are placeholders, so keep the app's placeholder chip
-(today "Sample field") visible whenever it is on screen.
+screen is Kharipati, a real farm in Kharipati, Bhaktapur; its crops are placeholders, so keep the drone map's label ("An
+open drone map. It stands in for our future drone. ... No farmer's answers yet.") visible whenever it is on screen.
 
 ## Shot list
 
