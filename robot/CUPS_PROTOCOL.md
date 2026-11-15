@@ -68,3 +68,33 @@ not field-tested"). Send us `cups.csv` and the `readings_*.jsonl` files if you r
 
 It also reports how long settling really takes (from each push-in's first line until its lines stay within 3 points of
 its median).
+
+## No scale: the spoon method (a rough calibration)
+
+Owner, 2026-11-15; rules in `config/rules.yaml` `probe.bench.spoon` (committed before any cup was measured). **4 cups,
+one spoon, level spoonfuls only.** A small spoon (a teaspoon) is better: more spoonfuls, less rounding.
+
+1. Mark a line on each cup about 1 cm below the rim. **N:** count level spoonfuls of water to the line in one cup (do
+   it twice; if the counts differ, use the mean). If the cup has a printed volume (ml), note it. Empty and dry the cup.
+2. **Water per cup:** c1 0, c2 10 %, c3 20 %, c4 30 % of N, to the nearest spoonful (N = 50: 0, 5, 10, 15).
+3. For each cup: fill it with the air-dried soil to the line (press lightly, three layers), tip it into the bowl, add
+   its spoonfuls of water, mix until even, pack it all back to the line the same way. If it will not all go back, or
+   will not reach the line, write `pack` in its notes (it is left out) and make it again if you can. Cover the cups.
+4. Write `data/probe/bench/cups.csv`:
+
+   ```csv
+   cup_id,cup_spoons,water_spoons,printed_volume_ml,notes
+   c1,50,0,250,
+   c2,50,5,,
+   c3,50,10,,
+   c4,50,15,,
+   ```
+
+5. Record **driest cup first** (c1, c2, c3, c4), 3 push-ins each, and **let go of the probe** while it measures:
+   `.venv/bin/python -m robot.bench --port <port> --cup c1` ... `--cup c4`. Then `scripts/run_probe_bench.py`.
+
+The reference is the water added, w / N (m3/m3); the soil's own starting water is unknown, so the dry point may be a
+few percent above zero. The result is labelled "rough calibration (spoon measures, air-dried soil)". It is used for the
+fog only if the cups rise in order and the leave-one-cup-out RMSE is at most 0.04 m3/m3 (NASA SMAP's yardstick); its
+own error is then added to the probe's in the Kalman update. If it does not pass, there is no calibration file and the
+site keeps "drier / wetter than the other parts".

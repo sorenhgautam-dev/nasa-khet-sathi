@@ -149,7 +149,7 @@ def bench_link(cal_path):
     if c is None:
         return None
     return {"file": "data/checks/probe/bench.json", "date": str(c["date"]), "cups": int(c["cups"]),
-            "mae_water_pct": float(c["mae_water_pct"])}
+            "mae_water_pct": float(c["mae_water_pct"]), **({"label": c["label"]} if c.get("label") else {})}
 
 
 def validate(doc):

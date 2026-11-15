@@ -60,6 +60,11 @@ def main(argv=None):
           f"{b['order']['spearman']}); (c) accurate: leave-one-cup-out MAE {p['accurate']} water-% points "
           f"({b['accurate'].get('model')}); (d) ice water {p['temperature']} ({b['temperature']['median_c']} C)")
     print(f"settling: median {s['median_s']} s, longest {s['max_s']} s over {s['n']} steady push-ins -> {out}")
+    if b.get("spoon"):                    # rules.yaml probe.bench.spoon
+        sp, r4 = b["spoon"], (lambda v: None if v is None else round(v, 4))
+        print(f"{sp['label']}: leave-one-cup-out RMSE {r4(sp['loo_rmse_m3m3'])} m3/m3 (MAE {r4(sp['loo_mae_m3m3'])}) against "
+              f"SMAP's {sp['yardstick_m3m3']}: {'PASSES' if sp['passes'] else 'DOES NOT PASS: no calibration, the fog stays'};"
+              f" driest first: {sp['driest_first']}. The dry point may be a few percent above zero")
     doc = bench.calibration_doc(b)
     if doc is None:
         print("no calibration file: " + ("made-up readings" if b["made_up"] else "the fit or the order check failed"))

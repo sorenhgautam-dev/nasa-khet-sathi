@@ -42,6 +42,8 @@ def test_water_to_twin_wetness_and_r_hand_worked():
     assert cal.wetness_from_water(25.0, 0.33, 0.17) == pytest.approx(50.0)               # 100 x (0.25 - 0.17) / 0.16
     # R_probe 1.3, slope 0.6 water-% per probe %, fc - wp 0.16: 1.3 x (0.6 / 0.16)^2 = 1.3 x 14.0625 = 18.28125
     assert cal.r_twin_var(1.3, 0.6, 0.33, 0.17) == pytest.approx(18.28125)
+    # the spoon calibration adds its own error (rules.yaml probe.bench.spoon.use): (2 x 0.8^2 + 4) / 0.25^2 = 84.48
+    assert cal.r_twin_var(2.0, 0.8, 0.40, 0.15, fit_var=4.0) == pytest.approx(84.48)
 
 
 def test_drier_or_wetter_than_the_other_parts():

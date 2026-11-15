@@ -20,7 +20,8 @@
         {"type": "null"},
         {"type": "object", "additionalProperties": false, "required": ["file", "date", "cups", "mae_water_pct"],
          "properties": {"file": {"type": "string"}, "date": {"type": "string"}, "cups": {"type": "integer", "minimum": 1},
-                        "mae_water_pct": {"type": "number", "minimum": 0, "description": "Leave-one-cup-out error: 'give or take'"}}}
+                        "mae_water_pct": {"type": "number", "minimum": 0, "description": "Leave-one-cup-out error: 'give or take'"},
+                        "label": {"type": "string", "minLength": 1, "description": "Only for a rough calibration: 'rough calibration (spoon measures, air-dried soil)' (rules.yaml probe.bench.spoon.label)"}}}
       ]
     },
     "skipped": {"type": "array", "items": {"type": "string"}, "description": "Sessions left out (not from a real serial port)"},

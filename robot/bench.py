@@ -26,6 +26,7 @@ BENCH_DIR = REPO / "data" / "probe" / "bench"
 QUAD_MIN_CUPS, QUAD_MARGIN = 5, 1.0           # rules.yaml probe.bench.fit (the sentence says both)
 PORE_PARTICLE_DENSITY = 2.65                  # rules.yaml probe.bench.exclude_cups
 NOTE_WORDS = ("pool", "pack")
+SMAP_M3M3 = 0.04                              # rules.yaml probe.bench.spoon.passes (NASA SMAP's accuracy requirement)
 
 
 # ---------- the analysis (pure) ----------
@@ -38,15 +39,34 @@ def fit_poly(x, y, degree):
     return {"coef": [float(c) for c in coef], "residuals": [float(r) for r in y - pred]}
 
 
-def loo_mae(x, y, degree):
-    """Leave one cup out: refit without it, predict it; the mean absolute error."""
+def loo_errors(x, y, degree):
+    """Leave one cup out: refit without it, predict it; each cup's error (cup minus prediction)."""
     x, y = np.asarray(x, float), np.asarray(y, float)
     errs = []
     for i in range(len(x)):
         keep = np.arange(len(x)) != i
         coef = np.polyfit(x[keep], y[keep], degree)[::-1]
-        errs.append(abs(y[i] - sum(c * x[i] ** k for k, c in enumerate(coef))))
-    return float(np.mean(errs))
+        errs.append(float(y[i] - sum(c * x[i] ** k for k, c in enumerate(coef))))
+    return errs
+
+
+def loo_mae(x, y, degree):
+    """The leave-one-cup-out mean absolute error."""
+    return float(np.mean(np.abs(loo_errors(x, y, degree))))
+
+
+def reference_water_pct(cup):
+    """A cup's water %: rules.yaml probe.bench.water_pct (grams in ml) or, for a spoon sheet (cup_spoons),
+    probe.bench.spoon.reference: 100 x w_k / N (the spoon's size cancels out)."""
+    if "cup_spoons" in cup:
+        return 100.0 * float(cup["water_spoons"]) / float(cup["cup_spoons"])
+    return float(cup["water_added_g"]) / float(cup["cup_volume_ml"]) * 100.0
+
+
+def spoon_ml(cup):
+    """The printed cup volume / N: the spoon's size, a cross-check only (None without a printed volume)."""
+    v = cup.get("printed_volume_ml")
+    return None if v in (None, "") else float(v) / float(cup["cup_spoons"])
 
 
 def choose_fit(x, y, bench_rules):
@@ -90,10 +110,11 @@ def exclusion_reasons(cup, value, steady_push_ins, off_scale=(0, 100)):
     notes = str(cup.get("notes") or "").lower()
     if any(w in notes for w in NOTE_WORDS):
         why.append(f"notes say water pooled or the soil could not be packed: '{cup.get('notes')}'")
-    vol, soil, water = float(cup["cup_volume_ml"]), float(cup["dry_soil_g"]), float(cup["water_added_g"])
-    pore = 1.0 - (soil / vol) / PORE_PARTICLE_DENSITY
-    if water / vol > pore:
-        why.append(f"water {water / vol:.3f} of the cup is more than its pore space {pore:.3f}")
+    if "cup_spoons" not in cup:      # a spoon sheet has no soil mass: no pore-space test (rules.yaml probe.bench.spoon.pore_space)
+        vol, soil, water = float(cup["cup_volume_ml"]), float(cup["dry_soil_g"]), float(cup["water_added_g"])
+        pore = 1.0 - (soil / vol) / PORE_PARTICLE_DENSITY
+        if water / vol > pore:
+            why.append(f"water {water / vol:.3f} of the cup is more than its pore space {pore:.3f}")
     if steady_push_ins == 0 or value is None:
         why.append("no steady push-in")
     elif float(value) in {float(o) for o in off_scale}:
@@ -129,6 +150,7 @@ def analyse(records, cups, rules):
         raise ValueError("no push-in in the bench log")
     sources = sorted({str(r["source"]) for r in pis})
     made_up = any(not s.startswith("serial:") for s in sources)
+    spoon = any("cup_spoons" in c for c in cups)          # rules.yaml probe.bench.spoon
     by_cup = {}
     for r in pis:
         by_cup.setdefault(str(r["cup"]), []).append(r)
@@ -141,7 +163,7 @@ def analyse(records, cups, rules):
         steady = [r["result"]["median_pct"] for r in got if r["result"]["steady"]]
         value = float(np.median(steady)) if steady else None
         why = exclusion_reasons(cup, value, len(steady), rules["off_scale_pct"])
-        row = {"cup_id": cid, "water_pct": float(cup["water_added_g"]) / float(cup["cup_volume_ml"]) * 100.0,
+        row = {"cup_id": cid, "water_pct": reference_water_pct(cup), **({"spoon_ml": spoon_ml(cup)} if spoon else {}),
                "push_ins": len(got), "push_in_medians_pct": [r["result"]["median_pct"] for r in got],
                "within_spread_pct": [r["result"]["spread_pct"] for r in got], "steady_push_ins": len(steady),
                "between_spread_pct": float(max(steady) - min(steady)) if len(steady) > 1 else None,
@@ -179,8 +201,10 @@ def analyse(records, cups, rules):
                 "within_settle_lines": sum(t <= 2.0 * rules["settle_lines"] for t in known),
                 "definition": b["settling"]}
     date = str(pd.Timestamp(pis[0]["time"]).date())
+    sp = spoon_check(pis, rows, used, order, accurate, b["spoon"]) if spoon else None
+    label = (f"{sp['label']}: the spoon bench test of {date}" if spoon else f"bench test of {date}")
     return {"made_up": made_up, "label": ("REHEARSAL: made-up readings (fake probe, stdin or a pseudo-terminal), never a "
-                                          "calibration") if made_up else f"bench test of {date}",
+                                          "calibration: " + label) if made_up else label, **({"spoon": sp} if spoon else {}),
             "date": date, "sources": sources, "cups": rows, "cups_used": len(used),
             "excluded": [{"cup_id": r["cup_id"], "why": r["excluded"]} for r in excluded],
             "steady": steady, "order": order, "accurate": accurate, "temperature": temperature, "settling": settling,
@@ -189,12 +213,37 @@ def analyse(records, cups, rules):
             "rules": "config/rules.yaml probe.bench, settle_lines, measure_lines, repeat_spread_max_pct"}
 
 
+def spoon_check(pis, rows, used, order, accurate, rules):
+    """rules.yaml probe.bench.spoon: the leave-one-cup-out RMSE and MAE in m3/m3 against SMAP's 0.04, whether the cups
+    were logged driest first (reported only), and the stated dry point. Pure."""
+    e = loo_errors([r["value_pct"] for r in used], [r["water_pct"] for r in used],
+                   2 if accurate.get("model") == "quadratic" else 1) if accurate.get("model") else []
+    rmse = float(np.sqrt(np.mean(np.square(e)))) / 100.0 if e else None
+    first = {}
+    for r in sorted(pis, key=lambda r: pd.Timestamp(r["time"])):
+        first.setdefault(str(r["cup"]), True)
+    wet = {r["cup_id"]: r["water_pct"] for r in rows}
+    seq = [wet[c] for c in first if c in wet]
+    return {"label": rules["label"], "loo_rmse_m3m3": rmse,
+            "loo_mae_m3m3": float(np.mean(np.abs(e))) / 100.0 if e else None, "yardstick_m3m3": SMAP_M3M3,
+            "passes": bool(order["passes"] and rmse is not None and rmse <= SMAP_M3M3 + 1e-12),
+            "driest_first": seq == sorted(seq), "dry_point": rules["dry_soil"], "pore_space": rules["pore_space"],
+            "rule": rules["passes"]}
+
+
 def calibration_doc(b):
-    """config/probe_calibration.yaml's content, or None: only from a real bench with a fit and cups in order."""
+    """config/probe_calibration.yaml's content, or None: only from a real bench with a fit and cups in order (and, for a
+    spoon bench, within SMAP's 0.04 m3/m3: rules.yaml probe.bench.spoon.use)."""
     if b["made_up"] or not b["accurate"].get("model") or not b["order"]["passes"] or b["steady"]["r_probe_pct2"] is None:
         return None
+    sp = b.get("spoon")
+    if sp and not sp["passes"]:
+        return None
     a = b["accurate"]
-    return {"made_from": f"the bench test of {b['date']}, not field-tested", "date": b["date"], "cups": b["cups_used"],
+    rough = {"label": sp["label"], "fit_var_water_pct2": round((100.0 * sp["loo_rmse_m3m3"]) ** 2, 4),
+             "loo_rmse_m3m3": round(sp["loo_rmse_m3m3"], 5), "dry_point": sp["dry_point"]} if sp else {}
+    return {"made_from": (f"the spoon bench test of {b['date']}, a {sp['label']}, not field-tested" if sp else
+                          f"the bench test of {b['date']}, not field-tested"), **rough, "date": b["date"], "cups": b["cups_used"],
             "fit": {"model": a["model"], "coef": a["coef"]}, "mae_water_pct": round(a["loo_mae_water_pct"], 2),
             "range_probe_pct": a["range_probe_pct"], "r_probe_pct2": round(b["steady"]["r_probe_pct2"], 4),
             "excluded_cups": b["excluded"], "ice_water_c": b["temperature"]["median_c"],
@@ -263,9 +312,10 @@ def main(argv=None):
     try:
         for k in range(1, rules["bench"]["push_ins"] + 1):
             if not a.no_wait:
-                input(f"Cup {a.cup}, push-in {k} of {rules['bench']['push_ins']}: push the probe in to its line, then press Enter. ")
+                input(f"Cup {a.cup}, push-in {k} of {rules['bench']['push_ins']}: push the probe in to its line, let go of "
+                      "it, then press Enter. ")
             src.flush()
-            print(f"  settling {rules['settle_lines']} lines, then measuring {rules['measure_lines']} (about "
+            print(f"  hands off: settling {rules['settle_lines']} lines, then measuring {rules['measure_lines']} (about "
                   f"{2 * (rules['settle_lines'] + rules['measure_lines'])} s) ...", flush=True)
             rec = record_pushin(src.lines(), a.cup, k, source, rules, log=log)
             log(rec)

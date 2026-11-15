@@ -254,7 +254,7 @@ class Context:
             c.append(f"The soil numbers come from {self.soil_distance_m:g} m away.")
         c.append("The probe reads the top few centimetres, not the whole root zone.")
         if self.cal:
-            c.append(f"Water from the bench test of {self.cal['date']}, not tested in the field.")
+            c.append(f"Water from the {self.cal.get('label') or 'bench test'} of {self.cal['date']}, not tested in the field.")
         return c
 
 
@@ -284,7 +284,8 @@ def evaluate_part(res, ctx, day):
         out["band"], out["band_limits_pct"] = b["band"], {k: b[k] for k in ("needs_water_below_pct", "too_wet_above_pct")}
     if ctx.twin and out["before"]:
         fc, wp = float(ctx.twin["theta_fc_m3m3"]), float(ctx.twin["theta_wp_m3m3"])
-        r = cal.r_twin_var(ctx.cal["r_probe_pct2"], cal.slope_at(x, ctx.cal["fit"]), fc, wp)
+        r = cal.r_twin_var(ctx.cal["r_probe_pct2"], cal.slope_at(x, ctx.cal["fit"]), fc, wp,
+                           float(ctx.cal.get("fit_var_water_pct2", 0.0)))
         z = cal.wetness_from_water(water, fc, wp)
         f = kf.fuse_session(out["before"]["wetness"], out["before"]["var"], ctx.twin["p0_var"], [z], r)
         out.update(z_wetness=z, z_limited=f["z_limited"], r_var=r, after={"wetness": f["wetness"], "var": f["var"], "sure": f["sure"]})
@@ -515,7 +516,8 @@ def main(argv=None):
     log({"kind": "session", "time": _now(), "source": source, "field": a.field, "port": a.port, "sections": walk_ids,
          "twin_state": None if not ctx.twin else {k: ctx.twin.get(k) for k in (
              "date", "crop", "wetness_pct", "prior_var", "p0_var", "q_var_per_day", "sure_prior")},
-         "calibration": None if not ctx.cal else {k: ctx.cal.get(k) for k in ("date", "fit", "mae_water_pct", "r_probe_pct2")},
+         "calibration": None if not ctx.cal else {k: ctx.cal.get(k) for k in ("date", "fit", "mae_water_pct", "r_probe_pct2",
+                                                                                 "label", "fit_var_water_pct2")},
          "soil_top": ctx.soil_top, "crop": ctx.crop, "crop_p": ctx.crop_p, "rules": "config/rules.yaml probe",
          "temp_note": TEMP_NOTE, "status": status})
 

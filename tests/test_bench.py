@@ -140,3 +140,74 @@ def test_a_made_up_bench_never_writes_the_calibration(tmp_path):
     assert json.loads(out.read_text())["made_up"] and not cal_out.exists()
     with pytest.raises(SystemExit):                               # and never into data/checks/probe/bench.json
         rpb.main(["--log", str(log), "--cups", str(cups), "--calibration-out", str(cal_out)])
+
+
+# ---------- the spoon method: a rough calibration without a scale (owner, 2026-11-15; rules.yaml probe.bench.spoon) ----------
+
+SPOONS = [{"cup_id": f"c{i + 1}", "cup_spoons": 40, "water_spoons": 4 * i, "printed_volume_ml": 250 if i == 0 else "",
+           "notes": ""} for i in range(4)]                                    # 0, 10, 20, 30 % of N = 40
+
+
+def _spoon_fixture(source, probe_at, order=(0, 1, 2, 3)):
+    recs, seed, tick = [], 100, Tick()
+    for i in order:
+        for k in (1, 2, 3):
+            seed += 1
+            recs.append(bench.record_pushin(fake_probe.lines(n=30, seed=seed, scenario="settling", target=probe_at[i]),
+                                            SPOONS[i]["cup_id"], k, source, RULES, clock=tick))
+    return recs
+
+
+def _spoon_sheet(tmp_path):
+    p = tmp_path / "cups.csv"
+    p.write_text("cup_id,cup_spoons,water_spoons,printed_volume_ml,notes\n"
+                 + "".join(f"{c['cup_id']},{c['cup_spoons']},{c['water_spoons']},{c['printed_volume_ml']},\n" for c in SPOONS))
+    return p
+
+
+def test_spoon_reference_is_spoons_over_spoons_and_needs_no_scale():
+    # 8 of 40 spoonfuls: 0.20 m3/m3, 20 water-%; printed 250 ml / 40 = 6.25 ml a spoon (a cross-check, never used)
+    c = {"cup_id": "c3", "cup_spoons": 40, "water_spoons": 8, "printed_volume_ml": 250, "notes": ""}
+    assert bench.reference_water_pct(c) == pytest.approx(20.0) and bench.spoon_ml(c) == pytest.approx(6.25)
+    assert bench.spoon_ml({**c, "printed_volume_ml": ""}) is None
+    assert bench.exclusion_reasons(c, value=30.0, steady_push_ins=3) == []           # no pore-space test without a mass
+    assert any("notes" in r for r in bench.exclusion_reasons({**c, "notes": "would not pack to the line"}, 30.0, 3))
+
+
+def test_loo_rmse_hand_worked():
+    # the leave-one-out errors of test_line_and_leave_one_cup_out_hand_worked: 2, 2.5714, 2.5714, 2 -> RMSE
+    # sqrt((4 + 6.612245 + 6.612245 + 4) / 4) = sqrt(5.306122) = 2.303502
+    errs = bench.loo_errors([10.0, 20.0, 30.0, 40.0], [0.0, 12.0, 18.0, 30.0], 1)
+    assert np.abs(errs) == pytest.approx([2.0, 2.571429, 2.571429, 2.0], abs=1e-6)
+    assert float(np.sqrt(np.mean(np.square(errs)))) == pytest.approx(2.303502, abs=1e-6)
+
+
+def test_a_spoon_bench_within_smaps_yardstick_writes_a_rough_calibration(tmp_path):
+    log = tmp_path / "readings_2026-11-15.jsonl"
+    log.write_text("".join(json.dumps(r) + "\n" for r in _spoon_fixture("serial:/dev/cu.usbserial-0001", [8, 20, 32, 44])))
+    out, cal_out = tmp_path / "bench.json", tmp_path / "probe_calibration.yaml"
+    assert rpb.main(["--log", str(log), "--cups", str(_spoon_sheet(tmp_path)), "--out", str(out),
+                     "--calibration-out", str(cal_out)]) == 0
+    b = json.loads(out.read_text())
+    s = b["spoon"]
+    assert b["label"].startswith("rough calibration (spoon measures, air-dried soil)") and b["cups_used"] == 4
+    assert [r["water_pct"] for r in b["cups"]] == pytest.approx([0, 10, 20, 30]) and b["cups"][0]["spoon_ml"] == 6.25
+    assert s["yardstick_m3m3"] == 0.04 and s["loo_rmse_m3m3"] <= 0.04 and s["passes"] is True and s["driest_first"] is True
+    assert "few percent above zero" in s["dry_point"]
+    c = yaml.safe_load(cal_out.read_text())
+    assert c["label"] == "rough calibration (spoon measures, air-dried soil)" and "bench test" in c["made_from"]
+    assert c["fit_var_water_pct2"] == pytest.approx(s["loo_rmse_m3m3"] ** 2 * 1e4, abs=1e-3) and c["cups"] == 4
+    from robot.calibrate import load_calibration
+    assert load_calibration(cal_out)["label"] == c["label"]
+
+
+def test_a_spoon_bench_outside_the_yardstick_writes_no_calibration_and_the_fog_stays(tmp_path):
+    log = tmp_path / "readings_2026-11-15.jsonl"                               # in order, but far from a line
+    log.write_text("".join(json.dumps(r) + "\n" for r in _spoon_fixture("serial:/dev/cu.usbserial-0001", [8, 40, 44, 80],
+                                                                         order=(3, 2, 1, 0))))
+    out, cal_out = tmp_path / "bench.json", tmp_path / "probe_calibration.yaml"
+    assert rpb.main(["--log", str(log), "--cups", str(_spoon_sheet(tmp_path)), "--out", str(out),
+                     "--calibration-out", str(cal_out)]) == 0
+    s = json.loads(out.read_text())["spoon"]
+    assert s["loo_rmse_m3m3"] > 0.04 and s["passes"] is False and not cal_out.exists()
+    assert s["driest_first"] is False                                          # reported, not a pass or fail

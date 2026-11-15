@@ -60,9 +60,10 @@ def wetness_from_water(water_pct, theta_fc, theta_wp):
     return 100.0 * (float(water_pct) / 100.0 - theta_wp) / (theta_fc - theta_wp)
 
 
-def r_twin_var(r_probe_pct2, slope_water_per_probe, theta_fc, theta_wp):
-    """rules.yaml probe.kalman.r: R in the twin's wetness points squared (chain rule probe % -> water % -> wetness)."""
-    return r_probe_pct2 * (slope_water_per_probe / (theta_fc - theta_wp)) ** 2
+def r_twin_var(r_probe_pct2, slope_water_per_probe, theta_fc, theta_wp, fit_var=0.0):
+    """rules.yaml probe.kalman.r: R in the twin's wetness points squared (chain rule probe % -> water % -> wetness).
+    fit_var (water-% points squared): the calibration's own error, added for the spoon method (probe.bench.spoon.use)."""
+    return (r_probe_pct2 * slope_water_per_probe ** 2 + fit_var) / (theta_fc - theta_wp) ** 2
 
 
 def relative(value, others, same_band):
