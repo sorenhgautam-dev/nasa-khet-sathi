@@ -531,6 +531,11 @@ def basemap_problems(doc, path, data_dir, index):
     return errors
 
 
+def _hidden_fields():
+    from pipeline.fetch.rules import load_rules
+    return set(load_rules().get("site_hidden_fields") or ())
+
+
 def launch_problems(data_dir, index, final=False):
     """{path: problems} for the launch files (owner's launch brief, 2026-11-14): probe_log.json and version.json when
     they exist (no probe_log until real readings exist: the site says 'not ready yet'), and every basemap/*.json;
@@ -582,8 +587,8 @@ def main(argv=None):
         doc = json.loads(path.read_text())
         errs = validate_field(doc, final=args.final)
         entry = next((f for f in (index or {}).get("fields", []) if f["id"] == path.stem), None)
-        if index is not None and entry is None:
-            errs.append("not listed in index.json")
+        if index is not None and entry is None and path.stem not in _hidden_fields():
+            errs.append("not listed in index.json")   # a hidden field keeps its file (owner, 2026-11-15 afternoon)
         elif entry and not errs and not _inside(entry["bbox"], doc["field"]["lon"], doc["field"]["lat"]):
             errs.append("field lat/lon outside its bbox in index.json")
         if errs:
