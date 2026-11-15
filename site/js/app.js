@@ -9,15 +9,12 @@
   // the UI teammate's seven steps are the app (owner, 2026-11-14 evening); the features live inside them and on "How we know"
   var STEPS = ['home', 'photo', 'parts', 'soil', 'choose', 'today', 'next'];
   // weather: "Weather ahead", the Choose screen's extra choice (owner, 2026-11-14 evening)
-  var ROUTES = STEPS.concat(['weather', 'how', 'plan', 'trial', 'world', 'story']);
-  // the farmer's flow: 'steps' (the seven screens) or 'story' (one long page told as the farmer scrolls, js/story.js; owner,
-  // 2026-11-15: built beside the steps, and the home page only once it passes every check). #/story opens it either way.
-  var FLOW = 'steps';
+  var ROUTES = STEPS.concat(['weather', 'how', 'plan', 'trial', 'world']);
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   // sun x, sun y, tint, sunset, road progress (the phone prototype P0, per step)
   var SKY = { home: [30, 300, 0, 0, 0], photo: [79, 197, 0, 0, 0.16], parts: [131, 119, 0, 0, 0.33], soil: [183, 81, 0.05, 0.1, 0.5],
     choose: [236, 96, 0.15, 0.3, 0.66], today: [288, 159, 0.4, 0.65, 0.84], next: [325, 223, 0.65, 0.95, 1], weather: [325, 223, 0.65, 0.95, 1],
-    how: [325, 223, 0.5, 0.8, 1], world: [325, 223, 0.5, 0.8, 1], story: [30, 300, 0, 0, 0] };
+    how: [325, 223, 0.5, 0.8, 1], world: [325, 223, 0.5, 0.8, 1] };
   var S = { lang: 'ne', words: null, index: null, fid: null, field: null, fieldP: null, winter: null, water: null, prio: null,
     timers: [], cur: null, arg: null, prev: null, sheetFor: null };
 
@@ -462,7 +459,7 @@
   function renderTop(r) {
     var top = $('#top'); top.textContent = '';
     var left = h('div', { class: 'left' });
-    if (r === 'home' || r === 'story') left.append(h('span', { class: 'logo', 'aria-hidden': 'true' }, svg(ic(P_.leaf, 22, 2.2))));
+    if (r === 'home') left.append(h('span', { class: 'logo', 'aria-hidden': 'true' }, svg(ic(P_.leaf, 22, 2.2))));
     else left.append(h('button', { type: 'button', class: 'round', 'aria-label': T('btn.back'), onclick: goBack }, svg(I('back', 22, 2.4))));
     left.append(h('span', { class: 'brand' }, L(scr('home').title)));
     var langs = h('div', { class: 'langs', role: 'group', 'aria-label': T('btn.language') });
@@ -499,7 +496,7 @@
   function parse() {
     var p = (location.hash || '').replace(/^#\/?/, '').split('/');
     var r = ROUTES.indexOf(p[0]) >= 0 ? p[0] : 'home';
-    return { r: r === 'home' && FLOW === 'story' ? 'story' : r, a: p[1] ? decodeURIComponent(p[1]) : null };
+    return { r: ROUTES.indexOf(p[0]) >= 0 ? p[0] : 'home', a: p[1] ? decodeURIComponent(p[1]) : null };
   }
   function setSky(r) {
     var v = SKY[r] || SKY.next, s = $('#sky');
@@ -1638,18 +1635,6 @@
   };
   SCREENS.how.scrollTo = function (id) { var el = D.getElementById('how-' + id); if (el) el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); };
 
-  // ---------------- the farmer's flow as one long page (js/story.js and css/story.css, loaded when first opened) ----------------
-  SCREENS.story = function (arg, keep) {
-    var box = h('div', { class: 'story' }, loading());
-    S.storyP = S.storyP || Promise.all([loadScript('js/story.js'),
-      new Promise(function (res) { var l = h('link', { rel: 'stylesheet', href: 'css/story.css' }); l.onload = l.onerror = res; D.head.append(l); })]);
-    Promise.all([S.storyP, fieldReady()]).then(function (r) {
-      if (!box.isConnected) return;
-      box.replaceWith(r[1] && W.KS.story ? W.KS.story(r[1], keep) : screen('story', { body: notReady() }));
-    });
-    return box;
-  };
-
   // ---------------- start ----------------
   function grass() {
     var g = $('#sky .grass'), out = '', seed = 7;
@@ -1746,12 +1731,7 @@
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
-    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink,
-    // for the long page (js/story.js): the same pieces the seven screens use, so its results are theirs
-    fieldReady: fieldReady, fieldChip: fieldChip, setLang: setLang, setSky: setSky, hull: hull, guessCard: guessCard, farmPlans: farmPlans,
-    winterCrop: winterCrop, startState: startState, addedCrop: addedCrop, farmPlanName: farmPlanName, wordLine: wordLine, tryBtn: tryBtn,
-    noteBox: noteBox, patchLine: patchLine, dotEl: dotEl, anyTested: anyTested, liveParts: liveParts, isReal: isReal, canWater: canWater, blockIcon: blockIcon,
-    cropOn: cropOn, CUM: CUM, cap: cap, ROBOT: ROBOT, fogParts: fogParts };
+    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink };
 
   // ---------------- Behind the scenes: your field, seen by NASA (owner, 2026-11-15; js/behind.js) ----------------
   // For judges: the section sits at the end of Home's scroll, below the first screen, and on How we know; nothing of it
