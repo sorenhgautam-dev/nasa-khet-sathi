@@ -11,9 +11,9 @@ say so, and say what would fix it.
 **Question.** Rice is half of every plan and the harvest the farmer depends on. Does your model ever show rice failing?
 
 **Our answer.** No. Rain-fed rice runs as a soil-water bucket with no water held behind the bunds (MN 2, 103). With its
-seepage and percolation now counted, its lowest year is 91.2 out of 100; the sourced monsoon droughts of 2009 and 2015
-give 92.9 and 96.4 [H10]. A rule that made rice wait for 150 mm of rain before transplanting caught neither drought and
-was undone (4.9). Rice's years do not follow Nepal's national rice yields (r 0.29, interval reaching 0) [J5]. So the
+seepage and percolation now counted, Kharipati's lowest rice year is 91.9 out of 100; the sourced monsoon droughts of
+2009 and 2015 give 93.3 and 97.0 [H10]. A rule that made rice wait for 150 mm of rain before transplanting caught neither drought and
+was undone (4.9). Rice's years do not follow Nepal's national rice yields (r 0.30, interval reaching 0) [J5]. So the
 winter crop alone ranks the plans (MN 36), and the farmer's own question, "without risking the harvest I depend on", is
 answered for the winter crop only.
 
@@ -24,16 +24,16 @@ rate). Until then we say: "Our model cannot show a bad rice year."
 
 ## 2. Is the gain the crop, or the way you compare?
 
-**Question.** "Fill the empty months" scores 83 against 65 for today's plan. How much of that is your set-up?
+**Question.** "Fill the empty months" scores 87 against 69 for today's plan. How much of that is your set-up?
 
 **Our answer.** Some of it. Both plans now use crop-calendar dates (the satellite dates were undone, 4.9), so that tilt
 is gone. But the suggestions may pick the best of three sowing dates, while today's plan sits mid-window. Given the
-same choice, today's crops would score 68.1 [H12]. Harvest is a share of each crop's own potential, so 83 against 65
+same choice, today's crops would score 71.1 [H12]. Harvest is a share of each crop's own potential, so 87 against 69
 compares wheat with potato as percentages, not weight or money (MN 37). The gain exists only without water: with water
 every plan scores 100 [C5, H8]. FAO's wheat window here is for irrigated wheat (3.19), and the wheat plan's own tab says
 wheat here usually needs watering.
 
-**No good answer** for the wording. The benefits tab says "Harvest: about 8 to 22 more" with no "if you can't water",
+**No good answer** for the wording. The benefits tab says "Harvest: about 9 to 23 more" with no "if you can't water",
 and the gain is measured against today's plan at a fixed date. Fix: compare like with like (today's crops at their best
 date too) and add "if you can't water" to that line.
 
@@ -41,14 +41,14 @@ date too) and add "if you can't water" to that line.
 
 ## 3. Root depth and soil decide the size of the gain
 
-**Question.** Why believe the wheat plan's lead, when it needs deep roots in soil from a map cell 859 m away?
+**Question.** Why believe the wheat plan's lead, when it needs deep roots in soil from a 250 m map cell?
 
 **Our answer.** We don't fully. Root depths are the larger end of FAO-56 Table 22, never measured here (MN 35). The site
-shows the gain as a range over Table 22's depths: about 8 to 22 for the wheat plan, 5 to 14 for the lentil plan [H2,
-H3]. The soil is the nearest SoilGrids cell with values, 859 m away; it is the driest of 56 cells within 2 km (MN 7,
-[B6]); the neighbourhood median soil added 2 to 3 points in an earlier run (4.4c). A plough pan under the paddy that
-stops winter roots at 0.6 m put the wheat plan below today's plan (71.7 against 72.3; 4.4, run before this afternoon's
-changes). The same three plans win with fewer years and with other crop sensitivities [H7]; potato and wheat
+shows the gain as a range over Table 22's depths: about 9 to 23 for the wheat plan, 5 to 14 for the lentil plan [H2,
+H3]. The soil is Kharipati's own SoilGrids cell: 156 mm for plants in the top metre, against 146 to 180 mm in the 104
+cells within 2 km [B6]. On the earlier demo square, the neighbourhood median soil added 2 to 3 points (4.4c), and a
+plough pan under the paddy that stops winter roots at 0.6 m put the wheat plan below today's plan (71.7 against 72.3;
+4.4, run before the changes of 14 November); neither was rerun for Kharipati. The same three plans win with fewer years and with other crop sensitivities [H7]; potato and wheat
 sensitivities were never varied.
 
 **No good answer** for the plough pan: the range leaves out the case where the gain vanishes. Fix: rerun the 0.6 m case
@@ -61,9 +61,11 @@ on today's model and show it as the low end; measure the field's own field capac
 
 **Question.** Has anyone checked a single number against a real field?
 
-**Our answer.** No one. The demo field is a 60 m square we picked from maps; our first pick was a construction plot
-(1.4). Its crops, dates, water source and soil are placeholders, and so are the four sample fields [B4, B5]. The
-field-visit notes are empty (`notes/FIELD_VISIT_FINDINGS.md`). Every screen says "Sample field". The scorecard lists, for
+**Our answer.** No one yet. Kharipati is a real farm in Kharipati, Bhaktapur, and its outline comes from an open drone
+map of 5 May 2026. We have not heard from its farmer, so its crops, dates and water source are placeholders [B4]. Our
+crop guess agrees with the ripe cereal in the drone photo, but that is one date, seen by eye [G3]. The earlier demo
+square (a 60 m square we picked from maps; our first pick was a construction plot, 1.4) and four sample fields are
+hidden [B5]. The field-visit notes are empty (`notes/FIELD_VISIT_FINDINGS.md`). Every screen carries a placeholder chip. The scorecard lists, for
 every output, the data that would check it [G4].
 
 **No good answer.** Fix: the farmer interview (`notes/REAL_FIELD_RECORDING.md`: the best and worst years are asked before
@@ -79,7 +81,7 @@ the farmer sees the app), the farmer test (`docs/FARMER_TEST.md`) and a co-opera
 100 are bare for more than two months (0 to 31) [A2]. Only about 37 in 100 show two crop seasons (19 to 48) [A4]. So most
 "empty months" are green with something other than a second crop: weeds, grass or fallow. Space sees green, not which
 crop. The bare line (NDVI 0.25) is not tuned, which is why the range is wide [A7] and why bare days are graded "low" on
-the report card. Our sample field, bare about 62 days, is barer than most around it [A5]: it is not typical.
+the report card. Kharipati, bare about 23 days a year, is barer than the typical square but far below the 60-day line [A5].
 
 **No good answer** for the bare line: there is no ground record of bare days. Fix: farmers' calendars for at least 10
 fields (scorecard `cover_months`), then tune the line on half and test on the rest.
@@ -90,11 +92,12 @@ fields (scorecard `cover_months`), then tune the line on half and test on the re
 
 **Question.** Isn't your rain check circular now?
 
-**Our answer.** Yes, and the scorecard says so: the rain-months row (13 of 20 within 19%) is marked in-sample, not
-independent [F11]. The out-of-sample evidence is thin. Leaving one gauge out, the tuned rain scored 40 of 83 months
-against 38 of 83 for the untuned: within the noise. On the locked 2026 months every version scored 3 of 15, and 2026 is
-IMERG Late only, so that test mostly measures Late's own errors [F9]. The level is still 1.33 times Bhaktapur's usual
-[F10]. The "0.88 times the gauges" for 2025 is the untuned rain, and its script runs outside the one-command chain
+**Our answer.** Not for Kharipati: its rain is the corrected rain, not tuned; only the earlier demo square's rain was
+tuned [F8]. Kharipati's rain scores 13 of 20 months within 19%, and the row is still marked not independent [F11]. The
+tuning test itself (demo square) was thin: leaving one gauge out, the tuned rain scored 40 of 83 months against 38 of
+83 for the untuned, within the noise. On the locked 2026 months every version scored 3 of 15, and 2026 is IMERG Late
+only, so that test mostly measures Late's own errors [F9]. The level is still 1.35 times Bhaktapur's usual [F10]. The
+"0.88 times the gauges" for 2025 is the untuned rain, and its script runs outside the one-command chain
 (TRACEABILITY "Gaps found") [F12].
 
 **No good answer:** no rain version comes within 19% in most months. Fix: IMERG Final for 2026 and more of DHM's monthly
@@ -122,20 +125,20 @@ data for 2017-2023, the only thing that could reorder the years (3.9e).
 
 **Question.** What exactly is verified, against what, decided when?
 
-**Our answer.** Three things, on a yardstick written and committed before any score: an independent reference, at least
-10 cases, at least 92% within tolerance [G1]. The rain word of each month (12 of 12) and the heat word (12 of 12) test
-the shape of the year, not any single year. The monsoon row tests our copy of DHM's own table (24 of 24), not a method
-of ours [G2]. Everything a farmer would act on, each year's square, each plan's harvest and gain, is an estimate or not
+**Our answer.** Five rows for Kharipati, all valley-wide, on a yardstick written and committed before any score: an
+independent reference, at least 10 cases, at least 92% within tolerance [G1]. The rain, heat and frost word of each
+month (12 of 12 each) test the shape of the year, not any single year. The two monsoon rows test our copy of DHM's
+own table and its trend (24 of 24 each), not a method of ours [G2]. Everything a farmer would act on, each year's square, each plan's harvest and gain, is an estimate or not
 yet checkable [G3, G4]. We report the three classes, never one percentage.
 
-**Verdict:** answered, with the warning that the three verified rows are easy passes.
+**Verdict:** answered, with the warning that the five verified rows are easy passes.
 
 ## 9. You changed the model on the last day. Did you tune it to your checks?
 
 **Question.** Satellite dates on, then off; rice rule on, then off; rain version switched. How is that not tuning?
 
 **Our answer.** Partly it is. Each rule is committed before its first run [J6]. The rice water losses had a keep rule
-fixed before the comparison, and passed: no independent check got worse [H9]. But the satellite planting dates were
+fixed before the comparison, and passed on the demo square: no independent check got worse [H9]. But the satellite planting dates were
 undone after the independent checks got weaker (`config/rules.yaml` `season_dates.apply`), and the rain version was
 chosen on gauge months [F9]. Choosing by the checks after seeing them is a mild form of tuning. Every undone run is kept
 and described (4.9), so a reader can see both. The flood rule's earlier versions were also run before it was set (4.1).
@@ -166,9 +169,9 @@ whatever the rain.
 
 **Our answer.** It is untested: the cup test waits for the team (5.1-5.3) [E3]. The sensor's 0-100 scale runs from air
 to water; it is not soil water, and such sensors respond to texture, salt, temperature and packing (`robot/README.md`).
-Its error R would be repeatability only, so "how sure" after a reading would be too high (5.4, MN 62). Each part already
-shows "how sure" 0.28 and wetness 96 from the model alone, as of 3 November [C6]; aged to 14 November the model alone
-would be at 0.05 (5.4). In Safe Trial the probe only compares parts of the same field, never gives a water number.
+Its error R would be repeatability only, so "how sure" after a reading would be too high (5.4, MN 62). Each of Kharipati's
+9 parts already shows "how sure" 0.29 and wetness 96 from the model alone, as of 3 November [C6]; on the demo square,
+aged to 14 November, the model alone would be at 0.05 (5.4). In Safe Trial the probe only compares parts of the same field, never gives a water number.
 
 **No good answer.** Fix: run the six cups (`robot/CUPS_PROTOCOL.md`, about two hours) and the soil tins
 (`notes/FIELD_CAPACITY_PROTOCOL.md`). Until then: "The probe is a prototype."
@@ -190,11 +193,11 @@ harvests, across ONI states with a permutation test, and against DHM's gauges. U
 
 **Verdict:** not answered.
 
-## 13. Safe Trial: one quarter, one probe spot, one season. What can that show?
+## 13. Safe Trial: one part, one probe reading, one season. What can that show?
 
-**Question.** Is a quarter of a 60 m field an experiment?
+**Question.** Is one part of a small farm an experiment?
 
-**Our answer.** Not a powered one. A quarter is about 900 m² [E1], with one probe spot, one season, and a probe without
+**Our answer.** Not a powered one. A part of Kharipati is 96 to 141 m² [E1], with one probe reading, one season, and a probe without
 a bench test [E3]. What it does: it lets a farmer see a plan on their own land before risking the whole field, which is
 what every plan's "check" tab already asks [E2]. It also gives us a first measured harvest to compare with the Replay's
 estimate. We will report each trial as one case, never as proof [E4].
@@ -206,7 +209,7 @@ season (`docs/NEXT_STEPS.md` 7).
 
 ## 14. Does the 2040 range include your own model's doubt?
 
-**Question.** Today's plan stays about 65 by 2040, give or take. Is that band honest?
+**Question.** Today's plan stays about 69 by 2040 (68; 60 to 75). Is that band honest?
 
 **Our answer.** It is honest about what it is: the spread of 23 climate models, two futures and our rain versions,
 changing only monthly means on the observed weather [H11] (MN 50). Dry spells, storm intensity, heat damage and CO2 stay
@@ -222,8 +225,8 @@ bias.
 
 **Question.** Every field on your site is near Bhaktapur.
 
-**Our answer.** True. The twin's inputs are global datasets, and two commands download and build a field [I3, I4]. Four
-sample fields were built by the same command, all 3 to 7 km from the demo field [B5]. A field in Madagascar ran its rain
+**Our answer.** True. The twin's inputs are global datasets, and two commands download and build a field [I3, I4].
+Kharipati, the earlier demo square and four sample fields (now hidden) were built by the same command [B5]. A field in Madagascar ran its rain
 check with no code change and found no gauge change, so it kept NASA's rain as published [F13]; its replay and plans
 are not on the site. The crop calendars are Nepal's, DHM's records are Nepal's, and the temperature correction needs a
 nearby station.
