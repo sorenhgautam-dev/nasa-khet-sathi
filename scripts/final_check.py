@@ -72,7 +72,8 @@ def git_stamp(runner, repo, today):
         raise RuntimeError(f"git rev-parse HEAD failed: {head.strip()}")
     _, cdate = runner(["git", "log", "-1", "--format=%cs", "HEAD"], repo)
     _, status = runner(["git", "status", "--porcelain"], repo)
-    others = [ln for ln in status.splitlines() if ln.strip() and ln[3:].strip() != STAMP.as_posix()]
+    own = {STAMP.as_posix(), "site/sw.js"}          # the stamp, and the offline list named from it
+    others = [ln for ln in status.splitlines() if ln.strip() and ln[3:].strip() not in own]
     head = head.strip()
     return {"commit": head, "commit_short": head[:7], "commit_date": cdate.strip(), "checked_on": today,
             "uncommitted_changes": bool(others), "made_by": "scripts/final_check.py"}

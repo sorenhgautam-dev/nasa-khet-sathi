@@ -79,6 +79,8 @@ def test_the_stamp_ignores_its_own_change_but_says_when_other_files_are_not_comm
     _site(tmp_path)
     assert fc.git_stamp(Runner(dirty=" M site/data/version.json\n"), tmp_path, "2026-11-15")["uncommitted_changes"] is False
     assert fc.git_stamp(Runner(dirty=" M site/data/version.json\n?? docs/x.md\n"), tmp_path, "2026-11-15")["uncommitted_changes"]
+    # site/sw.js is rebuilt from the stamp (offline list), so it changes with it
+    assert fc.git_stamp(Runner(dirty=" M site/data/version.json\n M site/sw.js\n"), tmp_path, "2026-11-15")["uncommitted_changes"] is False
 
 
 def test_rerunning_on_the_same_day_and_commit_leaves_the_stamp_byte_for_byte(tmp_path):
