@@ -1881,8 +1881,8 @@
    "es": "Su cuarto de prueba contra el resto."
   },
   "screens.check_soil.texts.trial_vs_replay": {
-   "en": "Your trial against the Replay's guess.",
-   "es": "Su prueba contra lo que dijo la Repetición."
+   "en": "Your trial against our past-years guess.",
+   "es": "Su prueba frente a la estimación pasada."
   },
   "screens.check_soil.texts.trial_after": {
    "en": "Results come only after the season.",
@@ -3503,6 +3503,22 @@
   "shared.farm.wx_usual_care": {
    "en": "Keep your usual care.",
    "es": "Siga con su cuidado de siempre."
+  },
+  "shared.farm.mid_span": {
+   "en": "mid-{month_from} to mid-{month_to}",
+   "es": "mediados de {month_from} a mediados de {month_to}"
+  },
+  "shared.farm.others_n": {
+   "en": "{count} other choices",
+   "es": "{count} opciones más"
+  },
+  "shared.farm.others_1": {
+   "en": "{count} other choice",
+   "es": "{count} opción más"
+  },
+  "shared.farm.back_start": {
+   "en": "Back to start",
+   "es": "Volver al inicio"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

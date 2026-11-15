@@ -157,7 +157,7 @@ def cards(inp, power):
              f"{n_models} climate models compare harvests today with {year}.",
              f"{n_models} जलवायु मोडेलले आज र {year} को उब्जनी दाँज्छन्।"),
         card("smap_gldas", "SMAP + GLDAS", "NASA SMAP", "other_checks",
-             "Two NASA soil-water records check our Field Twin.", "नासाका दुई माटो-पानी अभिलेखले हाम्रो खेतको कम्प्युटर नमुना जाँच्छन्।",
+             "Two NASA soil-water records check our copy of your field.", "नासाका दुई माटो-पानी अभिलेखले तपाईंको खेतको नक्कल जाँच्छन्।",
              only=only, also="NASA GLDAS-2.1 Noah, 0.25°, monthly (model-based)"),
     ]
     return out
@@ -188,8 +188,9 @@ def build_behind(inp):
         "made_by": "pipeline/export/build_behind.py",
         "title": T("Behind the scenes: your field, seen by NASA", "पर्दा पछाडि: नासाले देखेको तपाईंको खेत"),
         "numbers": numbers(inp),
-        "flow": [T("NASA data", "नासाको डाटा"), T("Field Twin", "खेतको कम्प्युटर नमुना"),
-                 T(f"{n}-year replay", f"{n} वर्षको दोहोर्‍याइ"), T("Your answers", "तपाईंका जवाफ")],
+        # C (owner, 2026-11-15): plain names; "Field Twin" is named once, in brackets, in How we know's explanation only
+        "flow": [T("NASA data", "नासाको डाटा"), T("A copy of your field", "तपाईंको खेतको नक्कल"),
+                 T(f"Tested in {n} past years", f"विगतका {n} वर्षमा जाँचियो"), T("Your answers", "तपाईंका जवाफ")],
         "cards": cards(inp, power), "charts": [power], "pixels": pixels(inp), "tags": TAGS,
         "units": {"m": T("m", "मि"), "km": T("km", "किमी")},
         "inputs": {"numbers": sorted({p[k] for k in ("gpm", "greenness", "field_json", "plans", "future")}),

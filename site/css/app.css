@@ -603,11 +603,19 @@ details.why { background: rgba(255,255,255,.6); }
 .labtable .lr { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 0; border-top: 1px solid var(--line-2); }
 .labtable .lid { font-size: 13px; font-weight: 700; min-width: 150px; }
 /* Weather ahead: the Choose screen's extra card, the six month blocks and their Why? sheet (owner, 2026-11-14 evening) */
-.bigcard.brownc { background: var(--brown-2); color: #fff; box-shadow: 0 18px 36px -18px rgba(122,74,32,.6); }
-.bigcard.brownc .s { color: #F3E4D0; }
-.bigcard.brownc .chip { background: rgba(251,244,234,.18); color: #F7E7CF; }
-.bigcard.brownc .go { background: var(--cream); color: var(--ink); }
-.bigcard.brownc .mlist span { background: rgba(251,244,234,.2); color: #fff; }
+/* W (owner, 2026-11-15): the Weather screen's bluish-green sky; text at least 6:1 on the darker end (WCAG AA asks 4.5:1) */
+.bigcard.skyc { background: linear-gradient(165deg, #D3EBF0, #B9DFD6); color: #12352F; box-shadow: 0 18px 36px -18px rgba(47,107,98,.55); }
+.bigcard.skyc .s { color: #1F4D45; }
+.bigcard.skyc .chip { background: rgba(255,255,255,.62); color: #1F4D45; }
+.bigcard.skyc .go { background: #2F6B62; color: #fff; }
+.skyc .wcloud { transform-box: fill-box; animation: ks-drift 9s ease-in-out infinite alternate; }   /* still under reduced motion (rule above) */
+@keyframes ks-drift { from { transform: translateX(-8px); } to { transform: translateX(10px); } }
+.wrows { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 6px; }
+.wrow { display: flex; align-items: center; gap: 8px; text-align: left; }
+.wrow > .ico { flex-shrink: 0; width: 32px; height: 32px; border-radius: 10px; background: rgba(255,255,255,.65); color: #2F6B62; display: flex; align-items: center; justify-content: center; }
+.wrt { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.wrt b { font-size: 15px; font-weight: 800; }
+.wrt > span { font-size: 14px; font-weight: 600; color: #1F4D45; }
 .bigcard .wdeco { position: absolute; right: -28px; top: -66px; pointer-events: none; }
 .wblocks { display: grid; gap: 12px; }
 .wblock { display: flex; align-items: flex-start; gap: 12px; animation: ks-reveal 700ms var(--ease) both; }
@@ -966,6 +974,19 @@ label.cta.take, label.round { cursor: pointer; }
 .minif { display: block; height: 72px; width: auto; max-width: 60%; }
 .minif path { stroke: var(--ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
 /* B7: Weather ahead in a bluish green, a bigger icon, one "check with your local expert" below the cards */
-.scr-weather .wblock { background: rgba(222,240,236,.82); border-color: rgba(110,165,155,.45); }
-.scr-weather .wbi { width: 60px; height: 60px; border-radius: 18px; background: #CDE6E0; color: #2F6B62; }
-.wexpert { margin: 0; display: flex; align-items: center; gap: 6px; font-size: 16px; font-weight: 600; color: #2F6B62; }
+.scr-weather .wblock, .scr-next .wblock { background: rgba(222,240,236,.82); border-color: rgba(110,165,155,.45); }
+.scr-weather .wbi, .scr-next .wbi { width: 60px; height: 60px; border-radius: 18px; background: #CDE6E0; color: #2F6B62; }
+/* the 15:15 list (owner, 2026-11-15): B4 the Bikram Sambat months small in brackets after the dates; B1 the other choices
+   folded into one row; B2 two buttons at the end */
+.mspan small { font-size: .8em; font-weight: 600; }
+.mlist .mspan { display: inline; height: auto; padding: 0; background: none; }
+.mlist > span:has(.mspan) { padding: 0 8px; font-size: 12.5px; letter-spacing: -0.01em; }   /* the dates fit a narrow card */
+.bigcard.skyc .wdeco { top: -66px; right: -28px; }   /* the sun and cloud stay in the top corner, clear of the rows (web too) */
+.mrow.both { flex-direction: column; gap: 4px; }
+.mrow.both .mm { flex: none; }
+.ofold > summary { list-style: none; cursor: pointer; min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 18px; border-radius: 18px; background: rgba(255,255,255,.72); border: 1px solid var(--line-2); font-size: 16px; font-weight: 800; }
+.ofold > summary::-webkit-details-marker { display: none; }
+.ofold > summary::after { content: '+'; font-size: 24px; line-height: 1; }
+.ofold[open] > summary::after { content: '\2212'; }
+.ctapair { display: flex; flex-direction: column; gap: 10px; }

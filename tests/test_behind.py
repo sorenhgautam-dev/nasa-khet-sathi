@@ -117,7 +117,8 @@ def test_every_card_has_a_ready_chart_and_one_plain_sentence(behind):
 def test_the_flow_ends_at_the_farmers_answers_with_the_replays_own_year_count(behind):
     field = json.loads((REPO / "site" / "data" / "fields" / f"{behind['field']}.json").read_text())
     n = len(field["replay"]["current"])
-    assert [f["en"] for f in behind["flow"]] == ["NASA data", "Field Twin", f"{n}-year replay", "Your answers"]
+    # C (owner, 2026-11-15): plain names, "Field Twin" only once, in brackets, in How we know's explanation
+    assert [f["en"] for f in behind["flow"]] == ["NASA data", "A copy of your field", f"Tested in {n} past years", "Your answers"]
 
 
 def test_real_published_file_is_what_the_exporter_builds_now(behind):

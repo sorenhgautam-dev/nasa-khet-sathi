@@ -1881,8 +1881,8 @@
    "bn": "পরীক্ষার ভাগ বাকি জমির সঙ্গে।"
   },
   "screens.check_soil.texts.trial_vs_replay": {
-   "en": "Your trial against the Replay's guess.",
-   "bn": "পরীক্ষা পুনরাবৃত্তির অনুমানের সঙ্গে।"
+   "en": "Your trial against our past-years guess.",
+   "bn": "আপনার পরীক্ষা, আগের বছরের অনুমানের সাথে।"
   },
   "screens.check_soil.texts.trial_after": {
    "en": "Results come only after the season.",
@@ -3503,6 +3503,22 @@
   "shared.farm.wx_usual_care": {
    "en": "Keep your usual care.",
    "bn": "সাধারণ যত্ন নিন।"
+  },
+  "shared.farm.mid_span": {
+   "en": "mid-{month_from} to mid-{month_to}",
+   "bn": "মধ্য {month_from} থেকে মধ্য {month_to}"
+  },
+  "shared.farm.others_n": {
+   "en": "{count} other choices",
+   "bn": "আরও {count}টি বিকল্প"
+  },
+  "shared.farm.others_1": {
+   "en": "{count} other choice",
+   "bn": "আরও {count}টি বিকল্প"
+  },
+  "shared.farm.back_start": {
+   "en": "Back to start",
+   "bn": "শুরুতে ফিরুন"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

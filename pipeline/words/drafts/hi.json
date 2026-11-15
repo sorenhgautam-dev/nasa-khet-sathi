@@ -1881,8 +1881,8 @@
    "hi": "परीक्षण वाला हिस्सा बाकी खेत से।"
   },
   "screens.check_soil.texts.trial_vs_replay": {
-   "en": "Your trial against the Replay's guess.",
-   "hi": "परीक्षण दोहराव के अनुमान से।"
+   "en": "Your trial against our past-years guess.",
+   "hi": "आपका परीक्षण, बीते वर्षों के अनुमान से।"
   },
   "screens.check_soil.texts.trial_after": {
    "en": "Results come only after the season.",
@@ -3503,6 +3503,22 @@
   "shared.farm.wx_usual_care": {
    "en": "Keep your usual care.",
    "hi": "हमेशा की तरह देखभाल करें।"
+  },
+  "shared.farm.mid_span": {
+   "en": "mid-{month_from} to mid-{month_to}",
+   "hi": "मध्य {month_from} से मध्य {month_to}"
+  },
+  "shared.farm.others_n": {
+   "en": "{count} other choices",
+   "hi": "{count} और विकल्प"
+  },
+  "shared.farm.others_1": {
+   "en": "{count} other choice",
+   "hi": "{count} और विकल्प"
+  },
+  "shared.farm.back_start": {
+   "en": "Back to start",
+   "hi": "शुरुआत पर लौटें"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

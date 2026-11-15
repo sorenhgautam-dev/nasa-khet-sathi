@@ -105,9 +105,12 @@
   function twinPics() {
     var n = (K.effPlans(K.S.field)[0].replay || []).length;
     var said = [['farm.twin3_1', null], ['farm.twin3_2', 'farm.twin3_2b'], ['farm.twin3_3', 'farm.twin3_3b']];
+    // C (owner, 2026-11-15): its name, "Field Twin", once, in brackets, here only: the glossary's own term (science words live there)
+    var g = (S.words.glossary || []).filter(function (x) { return x.id === 'field_twin'; })[0], name = g ? P(g.term) : '';
+    if (S.lang === 'en') name = name.replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); });
     return section('twinpics', T('twin.h1'), h('ol', { class: 'twinsteps three' }, said.map(function (x, i) {
       return h('li', { class: 'tstep', style: 'animation-delay:' + (100 + i * 140) + 'ms' }, h('span', { class: 'tn' }, num(i + 1)), svg(TWIN_PIC[i], 'tpic'),
-        h('p', { class: 'tt' }, h('b', null, T(x[0], { year_count: n })), x[1] ? [' ', h('span', null, T(x[1]))] : null));
+        h('p', { class: 'tt' }, h('b', null, T(x[0], { year_count: n })), x[1] ? [' ', h('span', null, T(x[1]))] : i === 0 && name ? [' ', h('span', null, '(' + name + ')')] : null));
     })));
   }
 
@@ -207,7 +210,7 @@
   function weatherDetails(F) {
     var wx = F.weather; if (!wx || !wx.blocks) return null;
     return h('div', { style: 'display:flex;flex-direction:column;gap:8px' }, h('p', { class: 'sub' }, T('weather.top', { year_count: wx.years }) + ' ' + T('weather.not_forecast')),
-      K.sixBlocks(wx).map(function (b) { return h('details', { class: 'why' }, h('summary', null, K.bsMonth(b.key)), K.weatherWhy(F, b)); }),
+      K.sixBlocks(wx).map(function (b) { return h('details', { class: 'why' }, h('summary', null, K.monthSpanEl(b.key)), K.weatherWhy(F, b)); }),
       h('p', { class: 'small', style: 'margin:0;font-weight:700' }, T('weather.sources')),
       K.lines((wx.sources || []).map(function (x) { return x.name + ' · ' + x.product + ' · ' + x.resolution + ' · ' + digits(x.years); }), 'small'),
       K.lines((wx.limits || []).map(function (x) { return x.name; }), 'small'));
