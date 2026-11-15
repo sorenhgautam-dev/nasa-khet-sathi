@@ -550,6 +550,10 @@
   // check-up files: the Nepal-only files are not asked for, so nothing fails to load
   function indexEntry() { return ((S.index && S.index.fields) || []).filter(function (x) { return x.id === S.fid; })[0] || {}; }
   function abroad() { return indexEntry().profile === 'default'; }
+  // the field's country (index.json; none given: Nepal). Outside Nepal: Gregorian months and English unless the visitor
+  // chose a language (rules.yaml global_use.months_language, owner 2026-11-15)
+  function inNepal(id) { var e = id ? ((S.index && S.index.fields) || []).filter(function (x) { return x.id === id; })[0] || {} : indexEntry(); return (e.country || 'Nepal') === 'Nepal'; }
+  function defaultLang(id) { return inNepal(id) ? 'ne' : 'en'; }
   function featData(kind) { return abroad() && ['pulse', 'checkup', 'labels'].indexOf(kind) < 0 ? Promise.resolve(null) : getJSON('data/' + kind + '/' + encodeURIComponent(S.fid) + '.json'); }
   function island() {
     return h('div', { class: 'island' },
@@ -624,6 +628,7 @@
   function chooseField(id) {
     if (id === S.fid) return;
     S.fid = id; S.field = null; S.fieldP = null; S.labels = null; S.winter = null; S.probe = null; store.set('fid', id); store.set('winter', null);
+    if (!store.get('lang') && langInfo(defaultLang(id))) { S.lang = defaultLang(id); D.documentElement.lang = S.lang; }   // the field's own default until the visitor picks
   }
 
   // ---------------- 2 your field from above (map; the farmer's winter crop; what space shows) ----------------
@@ -740,7 +745,7 @@
       var rest = restMonths(g), names = rest.map(function (m) { return bsMonth(MONTHS[m]); });
       box.textContent = '';
       add(box, [h('p', { class: 'rests' }, svg(I('sprout', 20)), h('span', null, rest.length ? [T('home.rests_in'), ' ', h('b', null, joinList(names))] : T('home.never_rests'))),
-        rest.length ? h('p', { class: 'small', style: 'margin:0' }, T('from_space.months_note')) : null]);
+        rest.length && inNepal() ? h('p', { class: 'small', style: 'margin:0' }, T('from_space.months_note')) : null]);
     });
   }
   var DRONE = '<svg width="64" height="44" viewBox="0 0 120 80"><path d="M30 34 L18 22 M90 34 L102 22 M30 46 L18 56 M90 46 L102 56" stroke="#9A8A6A" stroke-width="5" stroke-linecap="round"/><rect x="34" y="28" width="52" height="24" rx="11" fill="#9A8A6A"/><circle cx="60" cy="58" r="6" fill="#9A8A6A"/><ellipse cx="18" cy="20" rx="13" ry="3" fill="#CDBF9F"/><ellipse cx="102" cy="20" rx="13" ry="3" fill="#CDBF9F"/><ellipse cx="18" cy="58" rx="13" ry="3" fill="#CDBF9F"/><ellipse cx="102" cy="58" rx="13" ry="3" fill="#CDBF9F"/></svg>';
@@ -1490,7 +1495,8 @@
   // Gregorian month named by its key ('Nov' = Mangsir, 15 Nov to 14 Dec).
   function sixBlocks(wx) { return blockKeys(6).map(function (k) { return (wx.blocks || []).filter(function (x) { return x.key === k; })[0]; }).filter(Boolean); }
   // a Bikram Sambat month by its block key, in both languages (words.json shared.bs_months: 'Oct' = Kartik)
-  function bsMonth(key) { var n = S.words && S.words.shared.bs_months && S.words.shared.bs_months[key]; return n ? L(n) : monthName(key, true); }
+  // a field outside Nepal: Gregorian months (rules.yaml global_use.months_language); Nepal's fields keep Bikram Sambat
+  function bsMonth(key) { if (!inNepal()) return S.lang === 'ne' ? gregInNepali(key) : monthName(key); var n = S.words && S.words.shared.bs_months && S.words.shared.bs_months[key]; return n ? L(n) : monthName(key, true); }
   // a sentence the back end picked: {text: words key, fill: {placeholder: value}}. Month values are block keys (Bikram
   // Sambat names in both languages), crop values crop ids, a crop list is joined with "then", rain and heat words are ids.
   function say(o) {
@@ -1839,12 +1845,12 @@
                  getJSON('data/index.json').then(function (x) { step(prog + 0.18); return x; }), demoOn()]).then(function (r) {
       S.words = r[0]; S.index = r[1]; S.demo = r[2] === true;   // phone as drone (hotspot only)
       if (!S.words) { cur.append(h('button', { type: 'button', class: 'round', style: 'position:absolute;bottom:40px', 'aria-label': 'reload', onclick: function () { location.reload(); } }, svg(I('redo', 22)))); return; }
-      var want = store.get('lang') || 'ne';
-      S.lang = langInfo(want) ? want : 'ne';
-      D.documentElement.lang = S.lang;
       var ids = ((S.index && S.index.fields) || []).map(function (f) { return f.id; });
       var fid = store.get('fid');
       S.fid = ids.indexOf(fid) >= 0 ? fid : (ids[0] || 'demo');
+      var want = store.get('lang') || defaultLang(S.fid);
+      S.lang = langInfo(want) ? want : 'ne';
+      D.documentElement.lang = S.lang;
       W.addEventListener('hashchange', onRoute);
       onRoute();
       offlineLine(); offline();
@@ -1865,7 +1871,7 @@
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, droneLabel: droneLabel, droneSat: droneSat, droneCredit: droneCredit, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
-    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink };
+    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink, inNepal: inNepal };
 
   // ---------------- Behind the scenes: your field, seen by NASA (owner, 2026-11-15; js/behind.js) ----------------
   // For judges: the section sits at the end of Home's scroll, below the first screen, and on How we know; nothing of it

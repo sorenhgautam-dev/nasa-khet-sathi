@@ -3289,8 +3289,8 @@
    "sw": "Gusa shamba ili kulifungua."
   },
   "shared.farm.world_map_src": {
-   "en": "World picture: NASA Blue Marble, August 2004.",
-   "sw": "Picha ya dunia: NASA Blue Marble, Agosti 2004."
+   "en": "World outline: Natural Earth, public domain.",
+   "sw": "Mstari wa dunia: Natural Earth, umma."
   },
   "shared.farm.world_own_title": {
    "en": "Run it for your own field",
@@ -3311,6 +3311,154 @@
   "shared.farm.world_readme": {
    "en": "The full steps (README, in English)",
    "sw": "Hatua zote (README, kwa Kiingereza)"
+  },
+  "shared.farm.world_could_title": {
+   "en": "Could Khet Sathi work here?",
+   "sw": "Khet Sathi inafanya kazi hapa?"
+  },
+  "shared.farm.world_tap_any": {
+   "en": "Tap anywhere on the map.",
+   "sw": "Gusa popote kwenye ramani."
+  },
+  "shared.farm.world_sea": {
+   "en": "This is sea on our map.",
+   "sw": "Kwenye ramani yetu, hii ni bahari."
+  },
+  "shared.farm.world_covers": {
+   "en": "NASA's free records for this spot:",
+   "sw": "Rekodi za bure za NASA hapa:"
+  },
+  "shared.farm.world_yes": {
+   "en": "Yes",
+   "sw": "Ndiyo"
+  },
+  "shared.farm.world_no": {
+   "en": "Not here",
+   "sw": "Hapa hapana"
+  },
+  "shared.farm.world_caution": {
+   "en": "Less sure over snow and ice",
+   "sw": "Si hakika juu ya theluji"
+  },
+  "shared.farm.w_rain": {
+   "en": "Rain",
+   "sw": "Mvua"
+  },
+  "shared.farm.w_weather": {
+   "en": "Heat, wind and sun",
+   "sw": "Joto, upepo na jua"
+  },
+  "shared.farm.w_greenness": {
+   "en": "Green cover, seen from space",
+   "sw": "Kijani kinachoonekana kutoka angani"
+  },
+  "shared.farm.w_height": {
+   "en": "Height of the land",
+   "sw": "Urefu wa ardhi"
+  },
+  "shared.farm.w_outlook": {
+   "en": "The years ahead",
+   "sw": "Miaka ijayo"
+  },
+  "shared.farm.world_crops": {
+   "en": "Crops we know:",
+   "sw": "Mazao tunayoyajua:"
+  },
+  "shared.farm.world_crops_need": {
+   "en": "Which fit needs this field's own records.",
+   "sw": "Yanayofaa yanahitaji rekodi za shamba."
+  },
+  "shared.farm.world_cant": {
+   "en": "Things we can't do yet:",
+   "sw": "Tusichoweza kufanya bado:"
+  },
+  "shared.farm.world_nm_snow": {
+   "en": "Snowy winters",
+   "sw": "Baridi yenye theluji"
+  },
+  "shared.farm.world_nm_orchards": {
+   "en": "Orchards and vineyards",
+   "sw": "Bustani za matunda na mizabibu"
+  },
+  "shared.farm.world_nm_other": {
+   "en": "Crops we don't know, like soybean",
+   "sw": "Mazao tusiyoyajua, kama soya"
+  },
+  "shared.farm.world_nearest": {
+   "en": "Nearest ready field:",
+   "sw": "Shamba tayari lililo karibu:"
+  },
+  "shared.farm.world_km": {
+   "en": "km",
+   "sw": "km"
+  },
+  "shared.farm.world_not_ready": {
+   "en": "Not prepared yet.",
+   "sw": "Bado halijaandaliwa."
+  },
+  "shared.farm.world_one_command": {
+   "en": "One command on a laptop prepares it.",
+   "sw": "Amri moja kwenye kompyuta inaliandaa."
+  },
+  "shared.farm.world_hours": {
+   "en": "It takes a few hours of downloads.",
+   "sw": "Upakuaji huchukua saa chache."
+  },
+  "shared.farm.world_no_numbers": {
+   "en": "No harvest numbers until it is prepared.",
+   "sw": "Hakuna namba za mavuno kabla ya maandalizi."
+  },
+  "shared.farm.world_open": {
+   "en": "Open this field",
+   "sw": "Fungua shamba hili"
+  },
+  "shared.farm.world_here": {
+   "en": "This spot is a prepared field.",
+   "sw": "Mahali hapa ni shamba tayari."
+  },
+  "shared.farm.world_anywhere": {
+   "en": "What works anywhere",
+   "sw": "Kinachofanya kazi popote"
+  },
+  "shared.farm.world_any_1": {
+   "en": "NASA's free records",
+   "sw": "Rekodi za bure za NASA"
+  },
+  "shared.farm.world_any_2": {
+   "en": "Our copy of the field",
+   "sw": "Nakala yetu ya shamba"
+  },
+  "shared.farm.world_any_3": {
+   "en": "The rain-record check",
+   "sw": "Ukaguzi wa rekodi za mvua"
+  },
+  "shared.farm.world_any_4": {
+   "en": "The replay of past years",
+   "sw": "Marudio ya miaka iliyopita"
+  },
+  "shared.farm.world_any_5": {
+   "en": "How sure we are, on every answer",
+   "sw": "Uhakika wetu, kwa kila jibu"
+  },
+  "shared.farm.world_nepal_only": {
+   "en": "What is Nepal-only",
+   "sw": "Kilicho Nepal pekee"
+  },
+  "shared.farm.world_np_1": {
+   "en": "Records and checks of Nepal's weather office",
+   "sw": "Rekodi za ofisi ya hali ya hewa Nepal"
+  },
+  "shared.farm.world_np_2": {
+   "en": "Bikram Sambat months",
+   "sw": "Miezi ya Bikram Sambat"
+  },
+  "shared.farm.world_np_3": {
+   "en": "The Nepali words, checked by people",
+   "sw": "Maneno ya Kinepali, yaliyokaguliwa"
+  },
+  "shared.farm.world_np_4": {
+   "en": "Ropani, the land unit",
+   "sw": "Ropani, kipimo cha ardhi"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

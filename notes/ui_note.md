@@ -239,6 +239,15 @@ marked lines in `app.js`; delete them to undo. Your layout is unchanged (every e
 dive from Home into the photo, the map's arrival after it and the sky are as you made them. Words: Today says "Part 1",
 as the other screens do.
 
+## 6n. Landed on 15 November (Sunday), noon: global use on the world page
+
+The world page now draws Natural Earth's land outline from `data/world.json` (no picture, no outside request). A tap
+anywhere answers "Could Khet Sathi work here?" below the map: which NASA records cover the spot, the crops we know, what we
+can't do yet, the nearest ready field, and "Not prepared yet". The dots still open each field. New: "What works anywhere"
+and "What is Nepal-only". Outside Nepal (Madagascar today) the site shows Gregorian months and opens in English unless the
+visitor chose a language; Nepal's screens are unchanged (compared before and after). Styles: the world block at the end
+of `app.css`.
+
 ## 7. Still to come
 
 - `field.sections` with real numbers (build step 8) and `future` (build step 9): they leave the `mock` list when

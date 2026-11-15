@@ -154,6 +154,25 @@ service; the Nepal-only parts for other countries (below); and a NASA season out
   the site:** open it from "Fields we have looked at" on Home (its farmer steps) or on How we know (its own evidence and
   labels), where it reads "A field on another continent, run by the same pipeline." Not made for it yet: the answers
   for the coming months (Next 3 and 6 months, Weather ahead) and the Nepal-only checks; those screens say "Not ready yet".
+- **"Could Khet Sathi work here?"** On the site's "Fields around the world" page (`#/world`, from Home's field list and
+  How we know), a tap anywhere on the map answers from fixed rules (`config/rules.yaml` `global_use`, each NASA
+  dataset's coverage taken from its own documentation, page cited): which NASA records cover the spot, the crops in our
+  library (which of them fit needs the field's own data), what we cannot do yet (snowy winters, orchards and vineyards,
+  crops outside our library such as soybean), the nearest prepared field and its distance, and "Not prepared yet: one
+  command on a laptop prepares a field here". It never shows a number from a field file for a spot that is not prepared.
+  The map is Natural Earth's 1:110m land outline (public domain), fetched once at build time
+  (`pipeline/fetch/world_outline.py`, `pipeline/export/build_world.py` -> `site/data/world.json`): the site makes no
+  outside request. Outside Nepal the app uses Gregorian months and English first; Nepal keeps Bikram Sambat and Nepali.
+
+**What works anywhere, what is Nepal-only**
+
+| Works anywhere | Nepal-only |
+| --- | --- |
+| The NASA datasets (GPM IMERG rain, NASA POWER weather, HLS greenness, NASADEM height, NEX-GDDP-CMIP6 outlook; coverage limits in `rules.yaml` `global_use.coverage`) | DHM's records and checks (Nepal's Department of Hydrology and Meteorology: normals, onset dates, bulletins) |
+| The Field Twin (soil water, crops, harvest as a share of the field's best) | Bikram Sambat months |
+| The rain-record check (each field's own test for a break in NASA's rain record) | The reviewed Nepali texts (every Nepali line still needs a native speaker's review) |
+| The 24-year replay (the years differ per field: its complete years) | Ropani, Nepal's land unit |
+| The labels (VERIFIED, ESTIMATE, NOT YET VERIFIABLE on every answer) | |
 
 ## Next steps (after the deadline)
 

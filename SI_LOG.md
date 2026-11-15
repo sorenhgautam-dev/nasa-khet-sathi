@@ -1632,3 +1632,23 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   http cannot draw over the phone's own camera, so the square shows before the camera opens. The photo never leaves the
   phone. No result changed.
 - **For a person to review:** the flow on real phones; the 4 Nepali lines.
+
+## 2026-11-15 (Sunday, noon): global use on the world page (Claude Opus 5.5 via Claude Code, a helper agent)
+
+- **Asked by the owner:** the world map from an openly licensed outline fetched once at build time; "Could Khet Sathi work
+  here?" for a tap anywhere, from fixed rules committed first, each dataset's coverage read from its own documentation;
+  Gregorian months and English outside Nepal with Nepal's screens unchanged; "What works anywhere, what is Nepal-only" on the
+  page and in README.md; screenshots of a tap in Nepal, Madagascar, the US Midwest and northern Canada.
+- **What SI generated:** the rules `rules.yaml global_use` (commits before any use; the coverage limits quoted from the
+  IMERG V07 Technical Documentation p. 22, NASA POWER's methodology page, the HLS V2.0 User Guide p. 17, the NASADEM User
+  Guide p. 14 and the NEX-GDDP-CMIP6 v2 Tech Note p. 3, each downloaded and read on 2026-11-15; the 60 degree caution for
+  IMERG and "Antarctica = land south of 60 S" for HLS are Claude's readings, said so in the rules), the outline fetch and
+  build (`pipeline/fetch/world_outline.py`, `pipeline/export/build_world.py`), their tests (`tests/test_world.py`, worked
+  numbers first), the page (`site/js/world.js`), the months and language change (`site/js/app.js` `inNepal`,
+  `defaultLang`, `bsMonth`), 37 words with Nepali and five drafts, the README section. The crops answer is the honest
+  one the owner allowed: the crop library is listed and "which fit needs this field's own records"; no crop is judged for a
+  spot. No number from a field file is shown for any spot.
+- **Checked:** Nepal's demo screens before and after (text identical on every screen; boxes within 2 px, the same noise
+  as the old version against itself); the four example spots' answers (screenshots).
+- **For a person to review:** the 37 Nepali lines (marked "needs native-speaker review"), the five drafts, the two
+  readings named above.
