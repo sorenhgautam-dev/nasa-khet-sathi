@@ -346,6 +346,10 @@ label.btn2 { cursor: pointer; align-self: flex-start; }
   transition-timing-function: cubic-bezier(.45,0,.3,1); }
 .robot svg { display: block; overflow: visible; }
 .robot.small { transform: scale(.66); transform-origin: 50% 87%; margin-top: -70px; }   /* many small parts (owner, 2026-11-15): a small robot, standing just above its part's number */
+/* the fog's labels sit at the top of each part (js/app.js fogParts): the robot stands just above its part's number instead,
+   and on a narrow screen it is the small robot, so it never covers a label */
+.robot.atnum:not(.small) { margin-top: -75px; }
+@media (max-width: 1023px) { .robot.atnum:not(.small) { transform: scale(.66); transform-origin: 50% 87%; } }
 .fieldbox svg.shapes { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }   /* parts that are not a plain grid */
 .fieldbox svg.shapes path { stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; transition: fill 500ms; }
 .whs { transform-box: fill-box; transform-origin: center; }

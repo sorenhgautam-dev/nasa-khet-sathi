@@ -405,7 +405,8 @@
       } else {
         // robot: the number below the robot's spot, kept inside its own part; smaller numbers when the parts are many
         var px = G.length <= 4 ? (mode === 'robot' ? 32 : 0) : G.length <= 12 ? 28 : G.length <= 24 ? 24 : 22;
-        g.num = h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + (mode === 'robot' && !shapes ? g.cy + Math.max(0, Math.min(14, (g.b - g.t) / 2 - 11)) : g.cy) + '%;' +
+        g.ny = mode === 'robot' && !shapes ? g.cy + Math.max(0, Math.min(14, (g.b - g.t) / 2 - 11)) : g.cy;   // the number's height, % of the box
+        g.num = h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + g.ny + '%;' +
           (px ? 'width:' + px + 'px;height:' + px + 'px;margin:-' + px / 2 + 'px 0 0 -' + px / 2 + 'px;font-size:' + Math.round(px * 0.47) + 'px;' + (px < 32 ? 'border-width:2px;' : '') : '') +
           (mode === 'grow' ? 'animation-delay:' + (1300 + i * 100) + 'ms' : 'animation:none') }, digits(g.n));
         box.append(g.num);
@@ -893,11 +894,13 @@
       var route = D.createElementNS('http://www.w3.org/2000/svg', 'svg');
       route.setAttribute('class', 'route'); route.setAttribute('viewBox', '0 0 100 100'); route.setAttribute('preserveAspectRatio', 'none');
       box.append(route);
-      var pos = G.length ? [G[0].cx, G[0].cy] : [7, 50];   // the robot waits on part 1, where its path starts
-      var robot = h('div', { class: 'robot' + (G.length > 6 ? ' small' : ''), style: 'left:' + pos[0] + '%;top:' + pos[1] + '%' }); robot.innerHTML = ROBOT; box.append(robot);
+      // with the fog's labels at the top of each part, the robot stands just above its part's number, clear of the label
+      var atnum = !!box.querySelector('.sfog .flab'), spot = function (g) { return [g.cx, atnum && g.ny != null ? g.ny : g.cy]; };
+      var pos = G.length ? spot(G[0]) : [7, 50];   // the robot waits on part 1, where its path starts
+      var robot = h('div', { class: 'robot' + (G.length > 6 ? ' small' : '') + (atnum ? ' atnum' : ''), style: 'left:' + pos[0] + '%;top:' + pos[1] + '%' }); robot.innerHTML = ROBOT; box.append(robot);
       var ring = h('span', { class: 'ring', hidden: true }); box.append(ring);
       function moveTo(g, then) {
-        var b = [g.cx, g.cy], ms = RM ? 0 : Math.max(900, Math.round(Math.hypot(b[0] - pos[0], b[1] - pos[1]) * 22));
+        var b = spot(g), ms = RM ? 0 : Math.max(900, Math.round(Math.hypot(b[0] - pos[0], b[1] - pos[1]) * 22));
         if (!RM) {
           var ln = D.createElementNS('http://www.w3.org/2000/svg', 'line');
           [['x1', pos[0]], ['y1', pos[1]], ['x2', b[0]], ['y2', b[1]], ['pathLength', 1], ['stroke-dasharray', 1], ['stroke', '#9A5426'], ['stroke-width', 0.6], ['stroke-linecap', 'round'], ['stroke-opacity', .5]]
@@ -946,7 +949,7 @@
       // the recorded walk, part by part, at the pace of the design's animation (the readings are the recorded ones)
       function walk(parts) {
         clearTimers(); shown = {}; [].slice.call(route.childNodes).forEach(function (n) { n.remove(); }); drawRows(); drawCta(true); tbox.textContent = '';
-        if (G.length) { pos = [G[0].cx, G[0].cy]; robot.style.transitionDuration = '0ms'; robot.style.left = pos[0] + '%'; robot.style.top = pos[1] + '%'; }   // a replay starts again at part 1
+        if (G.length) { pos = spot(G[0]); robot.style.transitionDuration = '0ms'; robot.style.left = pos[0] + '%'; robot.style.top = pos[1] + '%'; }   // a replay starts again at part 1
         var i = 0;
         function step() {
           if (i >= parts.length) { rest(true); drawRows(); drawCta(false); add(tbox, bowlLines(pd)); return; }
