@@ -1480,8 +1480,8 @@
     },
     {
      "id": "trial_vs_replay",
-     "en": "Your trial against the Replay's guess.",
-     "ne": "परीक्षण दोहोर्‍याइको अनुमानसँग।",
+     "en": "Your trial against our past-years guess.",
+     "ne": "तपाईंको परीक्षण, विगतका वर्षको अनुमानसँग।",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -4597,6 +4597,26 @@
    "wx_usual_care": {
     "en": "Keep your usual care.",
     "ne": "सधैंजस्तै हेरचाह गर्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "mid_span": {
+    "en": "mid-{month_from} to mid-{month_to}",
+    "ne": "{month_from}को बीचदेखि {month_to}को बीचसम्म",
+    "ne_review": "needs native-speaker review"
+   },
+   "others_n": {
+    "en": "{count} other choices",
+    "ne": "अरू {count} विकल्प",
+    "ne_review": "needs native-speaker review"
+   },
+   "others_1": {
+    "en": "{count} other choice",
+    "ne": "अरू {count} विकल्प",
+    "ne_review": "needs native-speaker review"
+   },
+   "back_start": {
+    "en": "Back to start",
+    "ne": "सुरुमा फर्कनुहोस्",
     "ne_review": "needs native-speaker review"
    }
   },

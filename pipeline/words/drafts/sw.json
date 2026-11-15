@@ -1881,8 +1881,8 @@
    "sw": "Robo ya jaribio dhidi ya sehemu nyingine."
   },
   "screens.check_soil.texts.trial_vs_replay": {
-   "en": "Your trial against the Replay's guess.",
-   "sw": "Jaribio lako dhidi ya makadirio ya Marudio."
+   "en": "Your trial against our past-years guess.",
+   "sw": "Jaribio lako dhidi ya makisio ya zamani."
   },
   "screens.check_soil.texts.trial_after": {
    "en": "Results come only after the season.",
@@ -3503,6 +3503,22 @@
   "shared.farm.wx_usual_care": {
    "en": "Keep your usual care.",
    "sw": "Endelea na utunzaji wa kawaida."
+  },
+  "shared.farm.mid_span": {
+   "en": "mid-{month_from} to mid-{month_to}",
+   "sw": "katikati ya {month_from} hadi katikati ya {month_to}"
+  },
+  "shared.farm.others_n": {
+   "en": "{count} other choices",
+   "sw": "Chaguo {count} zingine"
+  },
+  "shared.farm.others_1": {
+   "en": "{count} other choice",
+   "sw": "Chaguo {count} kingine"
+  },
+  "shared.farm.back_start": {
+   "en": "Back to start",
+   "sw": "Rudi mwanzo"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

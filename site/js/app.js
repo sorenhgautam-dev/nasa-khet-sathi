@@ -751,7 +751,7 @@
     featData('simple').then(function (sd) {
       var g = sd && sd.pulse_card && sd.pulse_card.growing;
       if (!g || !g.length) return;
-      var rest = restMonths(g), names = rest.map(function (m) { return bsMonth(MONTHS[m]); });
+      var rest = restMonths(g), names = bothMonths() ? monthRuns(rest).map(function (r) { return monthSpan(MONTHS[r[0]], MONTHS[r[1]]); }) : rest.map(function (m) { return bsMonth(MONTHS[m]); });
       box.textContent = '';
       add(box, [h('p', { class: 'rests' }, svg(I('sprout', 20)), h('span', null, rest.length ? [T('home.rests_in'), ' ', h('b', null, joinList(names))] : T('home.never_rests'))),
         rest.length && inNepal() ? h('p', { class: 'small', style: 'margin:0' }, T('from_space.months_note')) : null]);
@@ -1292,7 +1292,7 @@
   // ---------------- 5 what to see (design: Choose, W5_Choose) ----------------
   // a field built with the global settings (abroad) has Gregorian months; Nepal's fields have Bikram Sambat months
   function chipKeys(n) { if (!abroad()) return blockKeys(n); var m = new Date().getMonth(), out = []; for (var i = 0; i < n; i++) out.push(MONTHS[(m + i) % 12]); return out; }
-  function chipName(k) { return abroad() ? monthShort(k) : bsMonth(k); }
+  function chipName(k) { return abroad() ? monthShort(k) : monthSpanEl(k); }
   // the keys of n Bikram Sambat months from the one holding today (a month starts on the 15th of the Gregorian month of its key)
   function blockKeys(n) { var now = new Date(), m = now.getMonth(), hold = now.getDate() >= 15 ? m : (m + 11) % 12, out = []; for (var i = 0; i < n; i++) out.push(MONTHS[(hold + i) % 12]); return out; }
   // a month name short enough for a chip: Bikram Sambat in Nepali, three letters in Latin scripts (the How we know charts)
@@ -1337,7 +1337,7 @@
         crops6.textContent = '';
         blockKeys(6).forEach(function (k) {
           var c = cropOn(x.p, (CUM[MONTHS.indexOf(k)] + 29) % 365); if (c && seen.indexOf(c) < 0) seen.push(c);
-          crops6.append(h('span', { style: c ? 'background:' + CROP_COL[seen.indexOf(c) % CROP_COL.length] + ';color:#14301E' : '' }, bsMonth(k)));
+          crops6.append(h('span', { style: c ? 'background:' + CROP_COL[seen.indexOf(c) % CROP_COL.length] + ';color:#14301E' : '' }, monthSpanEl(k)));
         });
       });
       probeData().then(function (pd) {
@@ -1483,7 +1483,7 @@
   function monthRows(steps, wlOf) {
     return h('div', { class: 'card mrows' }, steps.map(function (st) {
       var wl = st.crop && wlOf(st.crop), w = wl && wl[st.key], what = st.acts.length ? st.acts.map(say).join(' ') : st.kind === 'grow' ? T('farm.m_grows', { crop: cap(crop(st.crop)) }) : T('farm.m_rest');
-      return h('div', { class: 'mrow' }, h('span', { class: 'mm' }, bsMonth(st.key)),
+      return h('div', { class: 'mrow' + (bothMonths() ? ' both' : '') }, h('span', { class: 'mm' }, monthSpanEl(st.key)),
         h('div', { class: 'mw' }, h('p', null, what), w && w.tip ? h('p', { class: 'mwatch' }, svg(I('warn', 16, 2.6)), ' ', h('b', null, T('weather.watch')), ' ', say(w.danger)) : null));
     }));
   }
@@ -1500,17 +1500,22 @@
       h('p', null, h('b', null, cap(crop(addedCrop(x, own)))), ' · ' + farmPlanName(x)), wordLine(x));
   }
   function wxLines(F, sd, c) { var wl = sd && sd.weather_lines && sd.weather_lines[c || winterCrop(F, sd)]; return wl && wl[canWater(F) ? 'yes' : 'no']; }
+  // B1 (owner, 2026-11-15): the other choices folded into one closed row ("2 other choices"), opened by a tap
   function othersCard(list) {
-    return h('div', { class: 'olistbox' }, h('span', { class: 'oh' }, T('what_to_grow.other_choices')),
+    if (!list.length) return null;
+    return h('details', { class: 'olistbox ofold' }, h('summary', { class: 'oh' }, T(list.length === 1 ? 'farm.others_1' : 'farm.others_n', { count: list.length })),
       h('div', { class: 'card olist' }, list.map(function (x) {
         return h('div', { class: 'orow' }, h('span', { class: 'on' }, x.own ? planName({ id: 'current' }) : cap(crop(addedCrop(x, list[list.length - 1].own ? list[list.length - 1] : null))) + ' · ' + farmPlanName(x)),
           wordLine(x), h('ul', { class: 'lines os' }, x.acts.map(function (a) { return h('li', null, say(a)); })), x.own ? null : tryBtn(x.id, true));
       })));
   }
-  function noteBox() { return h('p', { class: 'note' }, T('your_plan.know_best'), ' ', T('your_plan.advisor')); }
-  function doneCta() {
-    return h('button', { type: 'button', class: 'cta', onclick: function () { go('home'); } }, svg(I('tick', 22, 2.6), 'lime'), h('span', null, T('where.done')));
+  // the closing note, one line (B1, B3): a first sentence if any, then "You know your land best. Talk to a farm advisor ..."
+  function noteBox(first) { return h('p', { class: 'note' }, first ? [first, ' '] : null, T('your_plan.know_best'), ' ', T('your_plan.advisor')); }
+  function monthsNote() { return inNepal() ? T('what_to_grow.months_note') : null; }
+  function ctaTo(label, icon, route) {
+    return h('button', { type: 'button', class: 'cta', onclick: function () { go(route); } }, svg(I(icon, 22, 2.6), 'lime'), h('span', null, label));
   }
+  function doneCta() { return ctaTo(T('where.done'), 'tick', 'home'); }
   SCREENS.next = function (arg) {
     var n = arg === '6' ? 6 : arg === '3' ? 3 : (S.nextN || 3);
     S.nextN = n;
@@ -1521,23 +1526,26 @@
         if (!sd || !sd.plan_words) { scene.append(notReady()); return; }
         var s = farmPlans(F, sd, n, startState(r[1], sd));
         if (!s.pick) { scene.append(notReady()); return; }
-        var years = (effPlans(F)[0].replay || []).length, tags = function () { return nasaTags([['rain', years], ['weather', years]]); };
-        var steps = monthSteps(s.pick.p, s.pick.acts, blockKeys(n)), note = h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note'));
-        if (n === 6) {   // B5: one line naming the suggestion, then the six months side by side
-          scene.append(pickLine(s.pick, s.own), sixRow(steps)); scene.lastChild.append(tags());
-          add(body, [note, noteBox()]);
+        var years = (effPlans(F)[0].replay || []).length, tags = nasaTags([['rain', years], ['weather', years]]);
+        var steps = monthSteps(s.pick.p, s.pick.acts, blockKeys(n)), wl = F.weather && F.weather.blocks && wxLines(F, sd);
+        if (n === 6) {   // B2: one line naming the suggestion, then each of the six months as on Weather ahead (else the plan's steps)
+          scene.append(pickLine(s.pick, s.own)); scene.lastChild.append(tags);
+          add(body, [wl ? h('div', { class: 'wblocks' }, sixBlocks(F.weather).map(function (b, i) { return wxCard(wl[b.key] || {}, b, monthSpan(b.key), i); })) : sixRow(steps),
+            noteBox(monthsNote())]);
           return;
         }
-        // B5: the suggestion, one row for each of the next three months, the other choices, then the six months
-        scene.append(bestCard(s.pick, s.own, true)); scene.lastChild.append(tags());
+        // B1: the suggestion (its NASA tags once), one row for each of the next three months, the other choices folded
+        scene.append(bestCard(s.pick, s.own, true)); scene.lastChild.append(tags);
         add(body, [monthRows(steps, function (c) { return wxLines(F, sd, c); }), othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])),
-          btn2(T('farm.see6'), function () { go('next/6'); }, 'arrow'), tags(), note, noteBox()]);
+          noteBox(monthsNote())]);
       });
       return screen('next', {
         head: [bigTitle(T('what_to_grow.next_h1'), T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')), fieldChip(F)],
         scene: scene,
         body: body,
-        cta: doneCta()
+        // B1: no "Done" here, the main button opens the six months; B2: back to the start, or on to Weather ahead
+        cta: n === 6 ? h('div', { class: 'ctapair' }, ctaTo(T('farm.back_start'), 'back', 'home'), btn2(T('weather.title'), function () { go('weather'); }, 'sun')) :
+          ctaTo(T('farm.see6'), 'arrow', 'next/6')
       });
     });
   };
@@ -1552,18 +1560,52 @@
   // a Bikram Sambat month by its block key, in both languages (words.json shared.bs_months: 'Oct' = Kartik)
   // a field outside Nepal: Gregorian months (rules.yaml global_use.months_language); Nepal's fields keep Bikram Sambat
   function bsMonth(key) { if (!inNepal()) return S.lang === 'ne' ? gregInNepali(key) : monthName(key); var n = S.words && S.words.shared.bs_months && S.words.shared.bs_months[key]; return n ? L(n) : monthName(key, true); }
-  // a sentence the back end picked: {text: words key, fill: {placeholder: value}}. Month values are block keys (Bikram
-  // Sambat names in both languages), crop values crop ids, a crop list is joined with "then", rain and heat words are ids.
+  // B4 (owner, 2026-11-15): each Bikram Sambat month's approximate Gregorian span, by block key: from about the 15th of the
+  // Gregorian month its key names to about the 14th of the next ('Nov' = Mangsir = mid-Nov to mid-Dec), as the weather blocks
+  var BS_SPAN = { Jan: ['Jan', 'Feb'], Feb: ['Feb', 'Mar'], Mar: ['Mar', 'Apr'], Apr: ['Apr', 'May'], May: ['May', 'Jun'], Jun: ['Jun', 'Jul'],
+    Jul: ['Jul', 'Aug'], Aug: ['Aug', 'Sep'], Sep: ['Sep', 'Oct'], Oct: ['Oct', 'Nov'], Nov: ['Nov', 'Dec'], Dec: ['Dec', 'Jan'] };
+  // the months from block key `from` to `to`: [the approximate dates, the Bikram Sambat names] (w: the words to use)
+  function spanText(from, to, w) {
+    var dates = w.span.replace('{month_from}', w.mon[BS_SPAN[from][0]]).replace('{month_to}', w.mon[BS_SPAN[to][1]]);
+    return [dates, from === to ? w.bs[from] : w.range.replace('{month_from}', w.bs[from]).replace('{month_to}', w.bs[to])];
+  }
+  // month numbers (0-11, in order) as runs of months next to each other, [first, last]; December runs on into January
+  function monthRuns(ms) {
+    var out = [];
+    ms.forEach(function (m) { var r = out[out.length - 1]; if (r && (r[1] + 1) % 12 === m) r[1] = m; else out.push([m, m]); });
+    if (out.length > 1 && (out[out.length - 1][1] + 1) % 12 === out[0][0]) out[0][0] = out.pop()[0];
+    return out;
+  }
+  // B4: Nepali shows Bikram Sambat months only and a field outside Nepal Gregorian only; English (and the drafts) on a Nepal
+  // field the approximate dates first, the Bikram Sambat months in brackets: "Mid-Nov to mid-Feb (Mangsir to Magh)"
+  function bothMonths() { return inNepal() && S.lang !== 'ne'; }
+  function spanWords() {
+    var mon = {}, bs = {};
+    MONTHS.forEach(function (k) { mon[k] = monthShort(k); bs[k] = bsMonth(k); });
+    return { mon: mon, bs: bs, span: T('farm.mid_span'), range: T('farm.wx_range') };
+  }
+  function monthSpan(from, to) {
+    to = to || from;
+    if (!bothMonths()) return from === to ? bsMonth(from) : T('farm.wx_range', { month_from: bsMonth(from), month_to: bsMonth(to) });
+    var p = spanText(from, to, spanWords()); return p[0] + ' (' + p[1] + ')';
+  }
+  // the same as page text: the dates, then the Bikram Sambat months small, in brackets
+  function monthSpanEl(from, to) {
+    if (!bothMonths()) return monthSpan(from, to);
+    var p = spanText(from, to || from, spanWords()); return h('span', { class: 'mspan' }, cap(p[0]), ' ', h('small', null, '(' + p[1] + ')'));
+  }
+  // a sentence the back end picked: {text: words key, fill: {placeholder: value}}. Month values are block keys (monthSpan),
+  // crop values crop ids, a crop list is joined with "then", rain and heat words are ids.
   function say(o, over) {
     if (!o || !o.text) return '';
     var v = {};
     Object.keys(o.fill || {}).forEach(function (k) {
       var x = o.fill[k];
       v[k] = k === 'guess_list' ? x.map(crop).join(', ' + T('join.then') + ' ') : k === 'rain_word' ? T('weather.rain_' + x) : k === 'temp_word' ? T('weather.temp_' + x) :
-        /month/.test(k) ? bsMonth(x) : /crop/.test(k) ? crop(x) : x;
+        /month/.test(k) ? monthSpan(x) : /crop/.test(k) ? crop(x) : x;
     });
     Object.keys(over || {}).forEach(function (k) { v[k] = over[k]; });   // e.g. a joined card's "Mangsir to Magh" (B7)
-    return T(o.text, v);
+    return cap(T(o.text, v));   // a sentence may now start with "mid-Nov"
   }
   // B7 (owner, 2026-11-15): months next to each other that say the same thing (weather, danger and tip; only the month
   // differs) share one card, "Mangsir to Magh"
@@ -1580,19 +1622,35 @@
   function canWater(F) { var ws = F.field.water_source; if (ws && ws !== 'unknown') return ws !== 'rain-only'; return /^(canal|well|other)$/.test(S.water || ''); }
   var RAIN_IC = { dry: 'sun', some_rain: 'cloud', wet: 'rain' };
   function blockIcon(u) { return u.frost !== 'none' ? 'snow' : RAIN_IC[u.rain] || 'cloud'; }
-  // the Choose screen's extra card (shown only when the field file has the weather block: Nepal fields)
+  // one Weather ahead card (B7; Next 6 months too, B2): the month's picture, then at most three short lines: "[Months]: usually
+  // [weather]." / "Watch out: [danger]" or "Usually no big danger." / "Do this: [its tip]" or "Keep your usual care."
+  function wxCard(x, b, months, i, tags) {
+    var icon = blockIcon(b.usual);
+    return h('div', { class: 'card wblock', style: 'animation-delay:' + (120 + i * 70) + 'ms' },
+      h('span', { class: 'wbi', style: icon === 'sun' ? 'color:#D27A2C' : '' }, svg(I(icon, 40))),
+      h('div', { class: 'wpara' }, h('p', null, h('b', null, say(x.usual, { month: months }))),
+        h('p', null, x.tip ? [h('b', null, T('weather.watch')), ' ', say(x.danger)] : say(x.danger)),
+        h('p', null, h('b', null, T('weather.do')), ' ', x.tip ? say(x.tip) : T('farm.wx_usual_care')), tags || null));
+  }
+  // W (owner, 2026-11-15): two or three of a month block's own words, "Dry, cold" or, on frosty months, "Cold, frost possible"
+  function wxWords(u) { return cap(u.frost !== 'none' ? T('weather.temp_' + u.temp) + ', ' + T('weather.frost_' + u.frost) : T('weather.rain_' + u.rain) + ', ' + T('weather.temp_' + u.temp)); }
+  // the Choose screen's extra card (shown only when the field file has the weather block: Nepal fields), in the Weather
+  // screen's sky colours (W): the next three months, one row each with its picture and words; a tap opens Weather ahead
   function weatherCard(onShow) {
-    var mw = monthList([]), strip = mw.list;
-    var deco = svg('<svg width="170" height="130" viewBox="0 0 170 130"><circle cx="112" cy="46" r="26" fill="#F0AE4C" fill-opacity=".5"/><path d="M58 98a22 22 0 010-44 28 28 0 0153.8 6.7A19 19 0 01112 98z" fill="#FBF4EA" fill-opacity=".22"/></svg>', 'wdeco');
-    var c = h('button', { type: 'button', class: 'bigcard brownc', hidden: true, onclick: function () { go('weather'); } }, deco,
+    var rows = h('div', { class: 'wrows' });
+    var deco = svg('<svg width="170" height="130" viewBox="0 0 170 130"><circle cx="112" cy="46" r="26" fill="#F0AE4C" fill-opacity=".55"/><path class="wcloud" d="M58 98a22 22 0 010-44 28 28 0 0153.8 6.7A19 19 0 01112 98z" fill="#FFFFFF" fill-opacity=".6"/></svg>', 'wdeco');
+    var c = h('button', { type: 'button', class: 'bigcard skyc', hidden: true, onclick: function () { go('weather'); } }, deco,
       h('div', { class: 'row', style: 'position:relative;justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('sat', 16)), T('home.card_months_tag'))),
-      mw, h('div', { class: 'grow' }),
+      rows, h('div', { class: 'grow' }),
       h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between;position:relative' },
         h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('weather.title')), h('span', { class: 's' }, T('weather.choice_sub'))),
         h('span', { class: 'go' }, svg(ic(P_.arrow, 22, 2.6)))));
     function put(F) {
       var wx = F && F.weather; if (!wx || !wx.blocks) return;
-      sixBlocks(wx).forEach(function (b) { strip.append(h('span', null, bsMonth(b.key))); });
+      sixBlocks(wx).slice(0, 3).forEach(function (b) {
+        var icon = blockIcon(b.usual);
+        rows.append(h('span', { class: 'wrow' }, svg(I(icon, 20)), h('span', { class: 'wrt' }, h('b', null, monthSpanEl(b.key)), h('span', null, wxWords(b.usual)))));
+      });
       c.hidden = false; if (onShow) onShow();
     }
     if (S.field) put(S.field); else fieldReady().then(put);
@@ -1614,20 +1672,14 @@
         var blocks = sixBlocks(wx), byKey = {};
         blocks.forEach(function (b) { byKey[b.key] = b; });
         joinBlocks(blocks.map(function (b) { return b.key; }), wl).forEach(function (g, i) {
-          var x = g.x, icon = blockIcon(byKey[g.keys[0]].usual), last = g.keys[g.keys.length - 1];
-          var months = g.keys.length > 1 ? T('farm.wx_range', { month_from: bsMonth(g.keys[0]), month_to: bsMonth(last) }) : bsMonth(g.keys[0]);
-          list.append(h('div', { class: 'card wblock', style: 'animation-delay:' + (120 + i * 70) + 'ms' },
-            h('span', { class: 'wbi', style: icon === 'sun' ? 'color:#D27A2C' : '' }, svg(I(icon, 40))),
-            h('div', { class: 'wpara' }, h('p', null, h('b', null, say(x.usual, { month: months }))),
-              h('p', null, x.tip ? [h('b', null, T('weather.watch')), ' ', say(x.danger)] : say(x.danger)),
-              h('p', null, h('b', null, T('weather.do')), ' ', x.tip ? say(x.tip) : T('farm.wx_usual_care')),
-              nasaTags([['weather', wx.years]]))));
+          list.append(wxCard(g.x, byKey[g.keys[0]], monthSpan(g.keys[0], g.keys[g.keys.length - 1]), i, nasaTags([['weather', wx.years]])));
         });
       });
       return screen('weather', {
         head: head,
         scene: h('p', { class: 'srcline' }, svg(I('sat', 16)), T('weather.choice_sub') + ' ' + T('weather.not_forecast')),
-        body: [list, h('p', { class: 'wexpert' }, svg(I('hand', 18)), ' ', T('weather.tip_end')), noteBox()],
+        // B3 (owner, 2026-11-15): "Check with your local expert." and the closing note in one line
+        body: [list, noteBox(T('weather.tip_end'))],
         cta: doneCta()
       });
     });
@@ -1952,7 +2004,7 @@
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterId: winterId, swapId: swapId, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, droneLabel: droneLabel, droneSat: droneSat, droneCredit: droneCredit, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
-    say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink, inNepal: inNepal };
+    say: say, bsMonth: bsMonth, monthSpanEl: monthSpanEl, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink, inNepal: inNepal };
 
   // ---------------- Behind the scenes: your field, seen by NASA (owner, 2026-11-15; js/behind.js) ----------------
   // For judges: the section sits at the end of Home's scroll, below the first screen, and on How we know; nothing of it

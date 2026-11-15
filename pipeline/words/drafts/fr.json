@@ -1881,8 +1881,8 @@
    "fr": "Votre quart d'essai face au reste."
   },
   "screens.check_soil.texts.trial_vs_replay": {
-   "en": "Your trial against the Replay's guess.",
-   "fr": "Votre essai face à la prévision du Rejouer."
+   "en": "Your trial against our past-years guess.",
+   "fr": "Votre essai face à notre estimation passée."
   },
   "screens.check_soil.texts.trial_after": {
    "en": "Results come only after the season.",
@@ -3503,6 +3503,22 @@
   "shared.farm.wx_usual_care": {
    "en": "Keep your usual care.",
    "fr": "Gardez vos soins habituels."
+  },
+  "shared.farm.mid_span": {
+   "en": "mid-{month_from} to mid-{month_to}",
+   "fr": "mi-{month_from} à mi-{month_to}"
+  },
+  "shared.farm.others_n": {
+   "en": "{count} other choices",
+   "fr": "{count} autres choix"
+  },
+  "shared.farm.others_1": {
+   "en": "{count} other choice",
+   "fr": "{count} autre choix"
+  },
+  "shared.farm.back_start": {
+   "en": "Back to start",
+   "fr": "Retour au début"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

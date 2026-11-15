@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 810 texts): 787 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 814 texts): 791 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -288,7 +288,7 @@ This page is made from the word files in this folder; change those, not this pag
 | Saved on this phone only. | यही फोनमा मात्र राखियो। |
 | After harvest, we compare | बाली काटेपछि हामी तुलना गर्छौं |
 | Your trial quarter against the rest. | परीक्षण भाग बाँकी खेतसँग। |
-| Your trial against the Replay's guess. | परीक्षण दोहोर्‍याइको अनुमानसँग। |
+| Your trial against our past-years guess. | तपाईंको परीक्षण, विगतका वर्षको अनुमानसँग। |
 | Results come only after the season. | नतिजा सिजन सकिएपछि मात्र आउँछ। |
 | Until then, we show no new numbers. | त्यतिन्जेल हामी नयाँ अङ्क देखाउँदैनौं। |
 | A photo each week | हरेक हप्ता एउटा फोटो |
@@ -798,7 +798,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 269 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 273 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -1034,6 +1034,10 @@ This page is made from the word files in this folder; change those, not this pag
 | Rest | आराम |
 | {month_from} to {month_to} | {month_from}देखि {month_to}सम्म |
 | Keep your usual care. | सधैंजस्तै हेरचाह गर्नुहोस्। |
+| mid-{month_from} to mid-{month_to} | {month_from}को बीचदेखि {month_to}को बीचसम्म |
+| {count} other choices | अरू {count} विकल्प |
+| {count} other choice | अरू {count} विकल्प |
+| Back to start | सुरुमा फर्कनुहोस् |
 | *The fog that clears where the soil stick tests* | |
 | How sure are we? | हामी कति पक्का छौं? |
 | {sure_pct} out of 100 | १०० मा {sure_pct} |
