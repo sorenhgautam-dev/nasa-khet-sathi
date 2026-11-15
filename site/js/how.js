@@ -63,8 +63,10 @@
     var bh = K.behindBox(); mine.unshift(bh);   // first for judges: "Behind the scenes: your field, seen by NASA" (js/behind.js)
     mine.unshift(K.limitsBox());                // before it: what this tool can and cannot tell you (owner's plan A2)
     mine.unshift(K.promiseBox());               // first of all: our promise (owner, 2026-11-15 afternoon)
+    mine.unshift(dataGuide(F));                 // before it, for judges: our data in one minute (owner, 2026-11-15 evening)
     mine.forEach(function (x) { root.append(x); });
     function addToc(id, title) { toc.append(h('a', { class: 'btn3', href: '#/how/' + id, style: 'min-height:40px;font-size:13px' }, title)); }
+    addToc('data', T('farm.data_title'));
     K.getJSON('data/story.json').then(function (st) {
       if (!storyBox.isConnected) return;
       var hasArea = false;
@@ -84,6 +86,27 @@
     K.probeData().then(function (pd) { if (!nr.isConnected) return; var t = stickTest(pd); if (t) nr.append(t); nr.append(notReady(F, pd)); });
     return root;
   };
+
+  // ---------------- our data, explained (owner, 2026-11-15 evening): how to read the numbers, every source in one list, the raw
+  // files every screen reads, the public code and every language with its review state. Words from words.json shared.farm.
+  var REPO = 'https://github.com/sorenhgautam-dev/data-test-game';
+  function dataGuide(F) {
+    var R = ['data_read_1', 'data_read_2', 'data_read_3', 'data_read_4', 'data_read_5'].map(function (k) { return T('farm.' + k); });
+    var all = (F.sources || []).slice();
+    if (F.diary && F.diary.shift_source && !all.some(function (x) { return x.name === F.diary.shift_source.name; })) all.push(F.diary.shift_source);
+    var files = [['data/fields/' + encodeURIComponent(S.fid) + '.json', 'file_field'], ['data/behind.json', 'file_behind'], ['data/story.json', 'file_story'],
+      ['data/words.json', 'file_words'], ['data/index.json', 'file_index'], ['data/version.json', 'file_version']];
+    return section('data', T('farm.data_title'), [h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('farm.data_lead')),
+      sub(T('farm.data_read_h'), K.lines(R, 'sub')),
+      sub(T('farm.data_list_h'), [h('p', { class: 'small', style: 'margin:0' }, T('farm.data_list_note')), h('div', { class: 'prepared' }, all.map(function (x) {
+        return h('button', { type: 'button', class: 'pf', onclick: function () { K.openSources(x.name); } },
+          h('span', null, h('b', null, x.name), h('br'), h('span', { class: 'small' }, T('kind.' + x.type) + ' · ' + x.resolution + ' · ' + x.years)), K.svg(K.I('arrow', 18)));
+      }))]),
+      sub(T('farm.data_files_h'), [h('p', { class: 'small', style: 'margin:0' }, T('farm.data_files_lead')), h('ul', { class: 'lines sub' }, files.map(function (f) {
+        return h('li', null, h('a', { href: f[0], target: '_blank', rel: 'noopener' }, T('farm.' + f[1])), ' ', h('code', { class: 'small', lang: 'en' }, f[0]));
+      })), h('p', { class: 'small', style: 'margin:0' }, T('farm.data_code'), ' ', h('a', { href: REPO, target: '_blank', rel: 'noopener', lang: 'en' }, 'github.com/sorenhgautam-dev/data-test-game'))]),
+      sub(T('farm.lang_title') + ' · ' + T('farm.lang_count', { count: ((S.words && S.words.languages) || []).length }), K.langList())]);
+  }
 
   // ---------------- the field twin in three pictures (owner, 2026-11-14 evening); pictures drawn here, words from words.json ----------------
   var TWIN_PIC = [

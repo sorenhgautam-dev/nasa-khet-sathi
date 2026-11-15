@@ -3871,6 +3871,106 @@
   "shared.farm.heat_same": {
    "en": "All tested parts are about the same.",
    "es": "Las partes probadas son casi iguales."
+  },
+  "shared.farm.lang_title": {
+   "en": "Languages",
+   "es": "Idiomas"
+  },
+  "shared.farm.lang_count": {
+   "en": "{count} languages",
+   "es": "{count} idiomas"
+  },
+  "shared.farm.lang_tap": {
+   "en": "Tap a language to use it.",
+   "es": "Toque un idioma para usarlo."
+  },
+  "shared.farm.lang_source": {
+   "en": "Written by our team.",
+   "es": "Escrito por nuestro equipo."
+  },
+  "shared.farm.lang_review": {
+   "en": "A local reader still needs to check it.",
+   "es": "Falta que lo revise un lector local."
+  },
+  "shared.farm.lang_draft": {
+   "en": "Computer draft. A local reader still needs to check it.",
+   "es": "Borrador por computadora. Falta que lo revise un lector local."
+  },
+  "shared.farm.data_title": {
+   "en": "Our numbers, explained",
+   "es": "Nuestros números, explicados"
+  },
+  "shared.farm.data_lead": {
+   "en": "Start here. One minute to read.",
+   "es": "Empiece aquí. Un minuto de lectura."
+  },
+  "shared.farm.data_read_h": {
+   "en": "How to read our numbers",
+   "es": "Cómo leer nuestros números"
+  },
+  "shared.farm.data_read_1": {
+   "en": "Harvest is a share of this field's best. Not a weight.",
+   "es": "Cosecha: una parte de lo mejor posible. No es un peso."
+  },
+  "shared.farm.data_read_2": {
+   "en": "A range shows how sure we are.",
+   "es": "Un rango muestra cuán seguros estamos."
+  },
+  "shared.farm.data_read_3": {
+   "en": "Fog or grey means not sure yet.",
+   "es": "Niebla o gris: todavía no es seguro."
+  },
+  "shared.farm.data_read_4": {
+   "en": "Every number names its source and years.",
+   "es": "Cada número dice su fuente y sus años."
+  },
+  "shared.farm.data_read_5": {
+   "en": "No made-up numbers. Missing ones say so.",
+   "es": "Ningún número inventado. Lo que falta, se dice."
+  },
+  "shared.farm.data_list_h": {
+   "en": "Where our numbers come from",
+   "es": "De dónde vienen nuestros números"
+  },
+  "shared.farm.data_list_note": {
+   "en": "Tap a name for its details.",
+   "es": "Toque un nombre para ver detalles."
+  },
+  "shared.farm.data_files_h": {
+   "en": "Open our raw files",
+   "es": "Abra nuestros archivos originales"
+  },
+  "shared.farm.data_files_lead": {
+   "en": "Every screen reads only these files.",
+   "es": "Cada pantalla lee solo estos archivos."
+  },
+  "shared.farm.file_field": {
+   "en": "This field: plans, past years, sources",
+   "es": "Este campo: planes, años pasados, fuentes"
+  },
+  "shared.farm.file_behind": {
+   "en": "The counted numbers, behind the scenes",
+   "es": "Los números contados, detrás de escena"
+  },
+  "shared.farm.file_story": {
+   "en": "The charts on this page",
+   "es": "Los gráficos de esta página"
+  },
+  "shared.farm.file_words": {
+   "en": "Every word, in every language",
+   "es": "Cada palabra, en cada idioma"
+  },
+  "shared.farm.file_index": {
+   "en": "The list of fields",
+   "es": "La lista de campos"
+  },
+  "shared.farm.file_version": {
+   "en": "Which version of our code made them",
+   "es": "Qué versión de nuestro código los hizo"
+  },
+  "shared.farm.data_code": {
+   "en": "All our code is public. Open it here.",
+   "es": "Todo nuestro código es público. Ábralo aquí."
   }
  }
 }

@@ -3871,6 +3871,106 @@
   "shared.farm.heat_same": {
    "en": "All tested parts are about the same.",
    "sw": "Sehemu zote zilizopimwa zinakaribia kufanana."
+  },
+  "shared.farm.lang_title": {
+   "en": "Languages",
+   "sw": "Lugha"
+  },
+  "shared.farm.lang_count": {
+   "en": "{count} languages",
+   "sw": "Lugha {count}"
+  },
+  "shared.farm.lang_tap": {
+   "en": "Tap a language to use it.",
+   "sw": "Gusa lugha ili uitumie."
+  },
+  "shared.farm.lang_source": {
+   "en": "Written by our team.",
+   "sw": "Imeandikwa na timu yetu."
+  },
+  "shared.farm.lang_review": {
+   "en": "A local reader still needs to check it.",
+   "sw": "Msomaji wa eneo bado aikague."
+  },
+  "shared.farm.lang_draft": {
+   "en": "Computer draft. A local reader still needs to check it.",
+   "sw": "Rasimu ya kompyuta. Msomaji wa eneo bado aikague."
+  },
+  "shared.farm.data_title": {
+   "en": "Our numbers, explained",
+   "sw": "Namba zetu, zimeelezwa"
+  },
+  "shared.farm.data_lead": {
+   "en": "Start here. One minute to read.",
+   "sw": "Anza hapa. Dakika moja kusoma."
+  },
+  "shared.farm.data_read_h": {
+   "en": "How to read our numbers",
+   "sw": "Jinsi ya kusoma namba zetu"
+  },
+  "shared.farm.data_read_1": {
+   "en": "Harvest is a share of this field's best. Not a weight.",
+   "sw": "Mavuno ni sehemu ya bora ya shamba hili. Si uzito."
+  },
+  "shared.farm.data_read_2": {
+   "en": "A range shows how sure we are.",
+   "sw": "Kiwango kinaonyesha jinsi tulivyo na uhakika."
+  },
+  "shared.farm.data_read_3": {
+   "en": "Fog or grey means not sure yet.",
+   "sw": "Ukungu au kijivu: bado si hakika."
+  },
+  "shared.farm.data_read_4": {
+   "en": "Every number names its source and years.",
+   "sw": "Kila namba inataja chanzo chake na miaka."
+  },
+  "shared.farm.data_read_5": {
+   "en": "No made-up numbers. Missing ones say so.",
+   "sw": "Hakuna namba za kubuni. Zinazokosekana zinasemwa."
+  },
+  "shared.farm.data_list_h": {
+   "en": "Where our numbers come from",
+   "sw": "Namba zetu zinatoka wapi"
+  },
+  "shared.farm.data_list_note": {
+   "en": "Tap a name for its details.",
+   "sw": "Gusa jina kuona maelezo."
+  },
+  "shared.farm.data_files_h": {
+   "en": "Open our raw files",
+   "sw": "Fungua faili zetu ghafi"
+  },
+  "shared.farm.data_files_lead": {
+   "en": "Every screen reads only these files.",
+   "sw": "Kila skrini inasoma faili hizi tu."
+  },
+  "shared.farm.file_field": {
+   "en": "This field: plans, past years, sources",
+   "sw": "Shamba hili: mipango, miaka iliyopita, vyanzo"
+  },
+  "shared.farm.file_behind": {
+   "en": "The counted numbers, behind the scenes",
+   "sw": "Namba zilizohesabiwa, nyuma ya pazia"
+  },
+  "shared.farm.file_story": {
+   "en": "The charts on this page",
+   "sw": "Chati za ukurasa huu"
+  },
+  "shared.farm.file_words": {
+   "en": "Every word, in every language",
+   "sw": "Kila neno, kwa kila lugha"
+  },
+  "shared.farm.file_index": {
+   "en": "The list of fields",
+   "sw": "Orodha ya mashamba"
+  },
+  "shared.farm.file_version": {
+   "en": "Which version of our code made them",
+   "sw": "Toleo gani la msimbo wetu lilizitengeneza"
+  },
+  "shared.farm.data_code": {
+   "en": "All our code is public. Open it here.",
+   "sw": "Msimbo wetu wote ni wa umma. Ufungue hapa."
   }
  }
 }

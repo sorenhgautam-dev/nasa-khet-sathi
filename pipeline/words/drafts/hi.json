@@ -3871,6 +3871,106 @@
   "shared.farm.heat_same": {
    "en": "All tested parts are about the same.",
    "hi": "जाँचे गए सभी हिस्से लगभग एक जैसे।"
+  },
+  "shared.farm.lang_title": {
+   "en": "Languages",
+   "hi": "भाषाएँ"
+  },
+  "shared.farm.lang_count": {
+   "en": "{count} languages",
+   "hi": "{count} भाषाएँ"
+  },
+  "shared.farm.lang_tap": {
+   "en": "Tap a language to use it.",
+   "hi": "इस्तेमाल के लिए भाषा दबाएँ।"
+  },
+  "shared.farm.lang_source": {
+   "en": "Written by our team.",
+   "hi": "हमारी टीम ने लिखा।"
+  },
+  "shared.farm.lang_review": {
+   "en": "A local reader still needs to check it.",
+   "hi": "स्थानीय पाठक को अभी जाँचना है।"
+  },
+  "shared.farm.lang_draft": {
+   "en": "Computer draft. A local reader still needs to check it.",
+   "hi": "कंप्यूटर का मसौदा। स्थानीय पाठक को अभी जाँचना है।"
+  },
+  "shared.farm.data_title": {
+   "en": "Our numbers, explained",
+   "hi": "हमारे अंक, आसान शब्दों में"
+  },
+  "shared.farm.data_lead": {
+   "en": "Start here. One minute to read.",
+   "hi": "यहाँ से शुरू करें। पढ़ने में एक मिनट।"
+  },
+  "shared.farm.data_read_h": {
+   "en": "How to read our numbers",
+   "hi": "हमारे अंक कैसे पढ़ें"
+  },
+  "shared.farm.data_read_1": {
+   "en": "Harvest is a share of this field's best. Not a weight.",
+   "hi": "फसल: इस खेत के सबसे अच्छे का हिस्सा। वज़न नहीं।"
+  },
+  "shared.farm.data_read_2": {
+   "en": "A range shows how sure we are.",
+   "hi": "दायरा बताती है हम कितने पक्के हैं।"
+  },
+  "shared.farm.data_read_3": {
+   "en": "Fog or grey means not sure yet.",
+   "hi": "धुंध या धूसर मतलब अभी पक्का नहीं।"
+  },
+  "shared.farm.data_read_4": {
+   "en": "Every number names its source and years.",
+   "hi": "हर अंक अपना स्रोत और वर्ष बताता है।"
+  },
+  "shared.farm.data_read_5": {
+   "en": "No made-up numbers. Missing ones say so.",
+   "hi": "कोई बनावटी अंक नहीं। जो नहीं है, वहाँ लिखा है।"
+  },
+  "shared.farm.data_list_h": {
+   "en": "Where our numbers come from",
+   "hi": "हमारे अंक कहाँ से आते हैं"
+  },
+  "shared.farm.data_list_note": {
+   "en": "Tap a name for its details.",
+   "hi": "विवरण के लिए नाम दबाएँ।"
+  },
+  "shared.farm.data_files_h": {
+   "en": "Open our raw files",
+   "hi": "हमारी मूल फ़ाइलें खोलें"
+  },
+  "shared.farm.data_files_lead": {
+   "en": "Every screen reads only these files.",
+   "hi": "हर स्क्रीन सिर्फ़ यही फ़ाइलें पढ़ती है।"
+  },
+  "shared.farm.file_field": {
+   "en": "This field: plans, past years, sources",
+   "hi": "यह खेत: योजनाएँ, पिछले वर्ष, स्रोत"
+  },
+  "shared.farm.file_behind": {
+   "en": "The counted numbers, behind the scenes",
+   "hi": "पर्दे के पीछे गिने गए अंक"
+  },
+  "shared.farm.file_story": {
+   "en": "The charts on this page",
+   "hi": "इस पेज के चार्ट"
+  },
+  "shared.farm.file_words": {
+   "en": "Every word, in every language",
+   "hi": "हर शब्द, हर भाषा में"
+  },
+  "shared.farm.file_index": {
+   "en": "The list of fields",
+   "hi": "खेतों की सूची"
+  },
+  "shared.farm.file_version": {
+   "en": "Which version of our code made them",
+   "hi": "किस संस्करण के कोड ने बनाया"
+  },
+  "shared.farm.data_code": {
+   "en": "All our code is public. Open it here.",
+   "hi": "हमारा सारा कोड सार्वजनिक है। यहाँ खोलें।"
   }
  }
 }

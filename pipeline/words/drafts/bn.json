@@ -3871,6 +3871,106 @@
   "shared.farm.heat_same": {
    "en": "All tested parts are about the same.",
    "bn": "পরীক্ষিত সব অংশ প্রায় একই।"
+  },
+  "shared.farm.lang_title": {
+   "en": "Languages",
+   "bn": "ভাষাসমূহ"
+  },
+  "shared.farm.lang_count": {
+   "en": "{count} languages",
+   "bn": "{count}টি ভাষা"
+  },
+  "shared.farm.lang_tap": {
+   "en": "Tap a language to use it.",
+   "bn": "ব্যবহার করতে একটি ভাষা চাপুন।"
+  },
+  "shared.farm.lang_source": {
+   "en": "Written by our team.",
+   "bn": "আমাদের দল লিখেছে।"
+  },
+  "shared.farm.lang_review": {
+   "en": "A local reader still needs to check it.",
+   "bn": "স্থানীয় পাঠকের এখনও যাচাই বাকি।"
+  },
+  "shared.farm.lang_draft": {
+   "en": "Computer draft. A local reader still needs to check it.",
+   "bn": "কম্পিউটারের খসড়া। স্থানীয় পাঠকের এখনও যাচাই বাকি।"
+  },
+  "shared.farm.data_title": {
+   "en": "Our numbers, explained",
+   "bn": "আমাদের সংখ্যা, সহজ কথায়"
+  },
+  "shared.farm.data_lead": {
+   "en": "Start here. One minute to read.",
+   "bn": "এখান থেকে শুরু করুন। পড়তে এক মিনিট।"
+  },
+  "shared.farm.data_read_h": {
+   "en": "How to read our numbers",
+   "bn": "আমাদের সংখ্যা কীভাবে পড়বেন"
+  },
+  "shared.farm.data_read_1": {
+   "en": "Harvest is a share of this field's best. Not a weight.",
+   "bn": "ফসল: এই জমির সেরার একটি অংশ। ওজন নয়।"
+  },
+  "shared.farm.data_read_2": {
+   "en": "A range shows how sure we are.",
+   "bn": "পরিসর দেখায় আমরা কতটা নিশ্চিত।"
+  },
+  "shared.farm.data_read_3": {
+   "en": "Fog or grey means not sure yet.",
+   "bn": "কুয়াশা বা ধূসর মানে এখনও নিশ্চিত নয়।"
+  },
+  "shared.farm.data_read_4": {
+   "en": "Every number names its source and years.",
+   "bn": "প্রতিটি সংখ্যা তার উৎস ও বছর জানায়।"
+  },
+  "shared.farm.data_read_5": {
+   "en": "No made-up numbers. Missing ones say so.",
+   "bn": "কোনো বানানো সংখ্যা নেই। যা নেই, তা লেখা আছে।"
+  },
+  "shared.farm.data_list_h": {
+   "en": "Where our numbers come from",
+   "bn": "আমাদের সংখ্যা কোথা থেকে আসে"
+  },
+  "shared.farm.data_list_note": {
+   "en": "Tap a name for its details.",
+   "bn": "বিস্তারিত দেখতে নাম চাপুন।"
+  },
+  "shared.farm.data_files_h": {
+   "en": "Open our raw files",
+   "bn": "আমাদের মূল ফাইল খুলুন"
+  },
+  "shared.farm.data_files_lead": {
+   "en": "Every screen reads only these files.",
+   "bn": "প্রতিটি স্ক্রিন শুধু এই ফাইলগুলো পড়ে।"
+  },
+  "shared.farm.file_field": {
+   "en": "This field: plans, past years, sources",
+   "bn": "এই জমি: পরিকল্পনা, আগের বছর, উৎস"
+  },
+  "shared.farm.file_behind": {
+   "en": "The counted numbers, behind the scenes",
+   "bn": "পর্দার আড়ালের গোনা সংখ্যা"
+  },
+  "shared.farm.file_story": {
+   "en": "The charts on this page",
+   "bn": "এই পাতার চার্ট"
+  },
+  "shared.farm.file_words": {
+   "en": "Every word, in every language",
+   "bn": "প্রতিটি শব্দ, প্রতিটি ভাষায়"
+  },
+  "shared.farm.file_index": {
+   "en": "The list of fields",
+   "bn": "জমির তালিকা"
+  },
+  "shared.farm.file_version": {
+   "en": "Which version of our code made them",
+   "bn": "কোন সংস্করণের কোড বানিয়েছে"
+  },
+  "shared.farm.data_code": {
+   "en": "All our code is public. Open it here.",
+   "bn": "আমাদের সব কোড উন্মুক্ত। এখানে খুলুন।"
   }
  }
 }

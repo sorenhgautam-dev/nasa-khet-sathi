@@ -496,14 +496,12 @@
     [['en', 'EN'], ['ne', 'नेपाली']].forEach(function (x) {   // the design's order; Nepali stays the first language shown
       langs.append(h('button', { type: 'button', lang: x[0], 'aria-pressed': String(S.lang === x[0]), onclick: function () { setLang(x[0]); } }, x[1]));
     });
-    var drafts = ((S.words && S.words.languages) || []).filter(function (l) { return l.draft; });
-    if (drafts.length) {
-      var isDraft = drafts.some(function (l) { return l.code === S.lang; });
-      var sel = h('select', { 'aria-label': T('btn.language'), class: isDraft ? 'on' : '', onchange: function (e) { if (e.target.value) setLang(e.target.value); } },
-        h('option', { value: '' }, isDraft ? '' : '···'),
-        drafts.map(function (l) { var o = h('option', { value: l.code, lang: l.code }, l.name + ' · ' + (l.label[l.code] || l.label.en)); if (l.code === S.lang) o.selected = true; return o; }));
-      if (isDraft) sel.firstChild.remove();
-      langs.append(sel);
+    // every language in one list (owner, 2026-11-15 evening): a globe with the count opens it; a draft language in use shows its name
+    var all = (S.words && S.words.languages) || [], li0 = langInfo(S.lang);
+    if (all.length > 2) {
+      var onDraft = !!(li0 && li0.draft);
+      langs.append(h('button', { type: 'button', class: 'globe', 'aria-pressed': String(onDraft), 'aria-haspopup': 'dialog', 'aria-label': T('farm.lang_title') + ' (' + T('farm.lang_count', { count: all.length }) + ')', onclick: openLangs },
+        svg(I('globe', 16)), onDraft ? h('span', { lang: li0.code }, li0.name) : h('span', null, digits(all.length))));
     }
     top.append(left, langs);
     var old = $('.draftnote'); if (old) old.remove();
@@ -519,6 +517,23 @@
     S.lang = l; store.set('lang', l); D.documentElement.lang = l;
     renderTop(S.cur);
     rerender();
+  }
+  // every language we have, each in its own script, with who wrote it and whether a native speaker has checked it
+  function langList(after) {
+    return h('div', { class: 'prepared' }, ((S.words && S.words.languages) || []).map(function (l) {
+      var who = l.code === 'en' ? T('farm.lang_source') : l.draft ? T('farm.lang_draft') : T('farm.lang_review');
+      return h('button', { type: 'button', class: 'pf', 'aria-pressed': String(l.code === S.lang), onclick: function () { if (after) after(); setLang(l.code); } },
+        h('span', null, h('b', { lang: l.code }, l.name), l.name !== l.name_en ? h('span', { class: 'small', lang: 'en' }, ' · ' + l.name_en) : null, h('br'), h('span', { class: 'small' }, who)),
+        l.code === S.lang ? svg(I('tick', 18, 2.6)) : null);
+    }));
+  }
+  function openLangs() {
+    function build() {
+      var panel = openSheet(build);
+      add(panel, [sheetBar(T('farm.lang_title')), h('p', { class: 'sub', style: 'margin:8px 0' }, T('farm.lang_tap')), langList(closeSheet)]);
+      panel.focus();
+    }
+    build();
   }
 
   // ---------------- routing ----------------
@@ -626,7 +641,8 @@
         // Kharipati is the only field the app shows (owner, 2026-11-15 afternoon): no field list here, only the world page
         // (Kharipati and Madagascar); How we know is for judges only (owner, 2026-11-14 evening): one small link
         ix.length > 1 ? worldLink() : null,
-        h('a', { class: 'judges', href: '#/how' }, svg(I('book', 16)), T('farm.judges_link'))],
+        h('a', { class: 'judges', href: '#/how' }, svg(I('book', 16)), T('farm.judges_link')),
+        h('a', { class: 'judges', href: '#/how/data' }, svg(I('info', 16)), T('farm.data_title'))],   // straight to the judges' data guide
       cta: cta(T(sample ? 'home.try_sample' : 'home.start'), function () { go('photo'); }, { sweep: true })
     });
     // for judges, at the end of the scroll and below the first screen: "Behind the scenes" (loaded when it is scrolled to)
@@ -2167,7 +2183,7 @@
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterId: winterId, swapId: swapId, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
     gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, moreBox: moreBox, lnk: lnk, symEl: symEl, droneLabel: droneLabel, droneSat: droneSat, droneCredit: droneCredit, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
-    say: say, bsMonth: bsMonth, monthSpanEl: monthSpanEl, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink, inNepal: inNepal };
+    say: say, langList: langList, openLangs: openLangs, openSources: openSources, bsMonth: bsMonth, monthSpanEl: monthSpanEl, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink, inNepal: inNepal };
 
   // ---------------- Behind the scenes: your field, seen by NASA (owner, 2026-11-15; js/behind.js) ----------------
   // For judges: the section sits at the end of Home's scroll, below the first screen, and on How we know; nothing of it

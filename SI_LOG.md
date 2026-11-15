@@ -1747,3 +1747,12 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   3 new screen words (tray_title, tray_line, tray_pot) in Nepali and the five draft languages; a helper agent
   recounted the six docs' numbers for Kharipati and wrote which checks are valley-wide. No result changed.
 - **For a person to review:** the 3 new Nepali lines and their five drafts; the docs' before→after numbers.
+
+## 2026-11-15 evening: every language in one list, and "Our data, explained" for judges (Claude Opus 5.5 via Claude Code)
+
+- **What SI did:** the top bar's hidden '···' language menu became a globe with the count of languages; it opens one
+  list of all seven, each in its own script with who wrote it and whether a native speaker has checked it. "Our data,
+  explained" is now first on How we know (and linked from Home): how to read our numbers, every source in one list,
+  the raw files every screen reads, the public code, the languages. Drafted 25 new screen words in Nepali and the five
+  draft languages. Test: tests/test_site_languages_data.py. No result changed.
+- **For a person to review:** the 25 new Nepali lines and their five drafts.

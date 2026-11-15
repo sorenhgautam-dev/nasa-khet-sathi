@@ -4756,6 +4756,131 @@
     "en": "All tested parts are about the same.",
     "ne": "जाँचेका सबै भाग उस्तै छन्।",
     "ne_review": "needs native-speaker review"
+   },
+   "lang_title": {
+    "en": "Languages",
+    "ne": "भाषाहरू",
+    "ne_review": "needs native-speaker review"
+   },
+   "lang_count": {
+    "en": "{count} languages",
+    "ne": "{count} भाषा",
+    "ne_review": "needs native-speaker review"
+   },
+   "lang_tap": {
+    "en": "Tap a language to use it.",
+    "ne": "प्रयोग गर्न भाषा थिच्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "lang_source": {
+    "en": "Written by our team.",
+    "ne": "हाम्रो टोलीले लेखेको।",
+    "ne_review": "needs native-speaker review"
+   },
+   "lang_review": {
+    "en": "A local reader still needs to check it.",
+    "ne": "स्थानीय पाठकले अझै जाँच्न बाँकी छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "lang_draft": {
+    "en": "Computer draft. A local reader still needs to check it.",
+    "ne": "कम्प्युटरको मस्यौदा। स्थानीय पाठकले अझै जाँच्न बाँकी छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_title": {
+    "en": "Our numbers, explained",
+    "ne": "हाम्रा अङ्क, सजिलो भाषामा",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_lead": {
+    "en": "Start here. One minute to read.",
+    "ne": "यहाँबाट सुरु गर्नुहोस्। पढ्न एक मिनेट।",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_read_h": {
+    "en": "How to read our numbers",
+    "ne": "हाम्रा अङ्क कसरी पढ्ने",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_read_1": {
+    "en": "Harvest is a share of this field's best. Not a weight.",
+    "ne": "उब्जनी: यो खेतको सबैभन्दा राम्रोको भाग। तौल होइन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_read_2": {
+    "en": "A range shows how sure we are.",
+    "ne": "दायराले हामी कति पक्का छौं देखाउँछ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_read_3": {
+    "en": "Fog or grey means not sure yet.",
+    "ne": "कुहिरो वा धूसर भनेको अझै पक्का छैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_read_4": {
+    "en": "Every number names its source and years.",
+    "ne": "हरेक अङ्कले आफ्नो स्रोत र वर्ष बताउँछ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_read_5": {
+    "en": "No made-up numbers. Missing ones say so.",
+    "ne": "कुनै बनावटी अङ्क छैन। नभएकोमा त्यही लेखिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_list_h": {
+    "en": "Where our numbers come from",
+    "ne": "हाम्रा अङ्क कहाँबाट आउँछन्",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_list_note": {
+    "en": "Tap a name for its details.",
+    "ne": "विवरणका लागि नाम थिच्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_files_h": {
+    "en": "Open our raw files",
+    "ne": "हाम्रा मूल फाइलहरू खोल्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_files_lead": {
+    "en": "Every screen reads only these files.",
+    "ne": "हरेक स्क्रिनले यिनै फाइल मात्र पढ्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "file_field": {
+    "en": "This field: plans, past years, sources",
+    "ne": "यो खेत: योजना, बितेका वर्ष, स्रोत",
+    "ne_review": "needs native-speaker review"
+   },
+   "file_behind": {
+    "en": "The counted numbers, behind the scenes",
+    "ne": "पर्दा पछाडिका गनिएका अङ्क",
+    "ne_review": "needs native-speaker review"
+   },
+   "file_story": {
+    "en": "The charts on this page",
+    "ne": "यो पानाका चार्टहरू",
+    "ne_review": "needs native-speaker review"
+   },
+   "file_words": {
+    "en": "Every word, in every language",
+    "ne": "हरेक शब्द, हरेक भाषामा",
+    "ne_review": "needs native-speaker review"
+   },
+   "file_index": {
+    "en": "The list of fields",
+    "ne": "खेतहरूको सूची",
+    "ne_review": "needs native-speaker review"
+   },
+   "file_version": {
+    "en": "Which version of our code made them",
+    "ne": "कुन संस्करणको कोडले बनायो",
+    "ne_review": "needs native-speaker review"
+   },
+   "data_code": {
+    "en": "All our code is public. Open it here.",
+    "ne": "हाम्रो सबै कोड सार्वजनिक छ। यहाँ खोल्नुहोस्।",
+    "ne_review": "needs native-speaker review"
    }
   },
   "fog": {

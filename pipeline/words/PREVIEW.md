@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 841 texts): 818 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 866 texts): 843 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -801,7 +801,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 297 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 322 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -1065,6 +1065,31 @@ This page is made from the word files in this folder; change those, not this pag
 | Wetter | बढी ओसिलो |
 | Colours compare the tested parts. | रङले जाँचेका भाग तुलना गर्छ। |
 | All tested parts are about the same. | जाँचेका सबै भाग उस्तै छन्। |
+| Languages | भाषाहरू |
+| {count} languages | {count} भाषा |
+| Tap a language to use it. | प्रयोग गर्न भाषा थिच्नुहोस्। |
+| Written by our team. | हाम्रो टोलीले लेखेको। |
+| A local reader still needs to check it. | स्थानीय पाठकले अझै जाँच्न बाँकी छ। |
+| Computer draft. A local reader still needs to check it. | कम्प्युटरको मस्यौदा। स्थानीय पाठकले अझै जाँच्न बाँकी छ। |
+| Our numbers, explained | हाम्रा अङ्क, सजिलो भाषामा |
+| Start here. One minute to read. | यहाँबाट सुरु गर्नुहोस्। पढ्न एक मिनेट। |
+| How to read our numbers | हाम्रा अङ्क कसरी पढ्ने |
+| Harvest is a share of this field's best. Not a weight. | उब्जनी: यो खेतको सबैभन्दा राम्रोको भाग। तौल होइन। |
+| A range shows how sure we are. | दायराले हामी कति पक्का छौं देखाउँछ। |
+| Fog or grey means not sure yet. | कुहिरो वा धूसर भनेको अझै पक्का छैन। |
+| Every number names its source and years. | हरेक अङ्कले आफ्नो स्रोत र वर्ष बताउँछ। |
+| No made-up numbers. Missing ones say so. | कुनै बनावटी अङ्क छैन। नभएकोमा त्यही लेखिन्छ। |
+| Where our numbers come from | हाम्रा अङ्क कहाँबाट आउँछन् |
+| Tap a name for its details. | विवरणका लागि नाम थिच्नुहोस्। |
+| Open our raw files | हाम्रा मूल फाइलहरू खोल्नुहोस् |
+| Every screen reads only these files. | हरेक स्क्रिनले यिनै फाइल मात्र पढ्छ। |
+| This field: plans, past years, sources | यो खेत: योजना, बितेका वर्ष, स्रोत |
+| The counted numbers, behind the scenes | पर्दा पछाडिका गनिएका अङ्क |
+| The charts on this page | यो पानाका चार्टहरू |
+| Every word, in every language | हरेक शब्द, हरेक भाषामा |
+| The list of fields | खेतहरूको सूची |
+| Which version of our code made them | कुन संस्करणको कोडले बनायो |
+| All our code is public. Open it here. | हाम्रो सबै कोड सार्वजनिक छ। यहाँ खोल्नुहोस्। |
 | *The fog that clears where the soil stick tests* | |
 | How sure are we? | हामी कति पक्का छौं? |
 | {sure_pct} out of 100 | १०० मा {sure_pct} |
