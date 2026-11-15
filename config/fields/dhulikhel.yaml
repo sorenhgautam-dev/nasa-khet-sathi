@@ -10,7 +10,7 @@
 # The 30 m satellite data (HLS, NASADEM) see only about two squares of this farm, so its satellite history is for the
 # area around it; the soil probe sees each 10 m patch.
 id: dhulikhel
-name: Real farm in Dhulikhel
+name: Real farm in Dhulikhel (PLACEHOLDER crops)   # the farm is real; its crops are not (the export refuses a placeholder rotation under a name without 'placeholder')
 placeholder: true                   # the crops and the water source are placeholders (no farmer's answers yet); the location is real
 real_farm: true                     # the outline is a real farm's (drone photo), not a picked square
 country: Nepal

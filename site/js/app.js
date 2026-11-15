@@ -1132,7 +1132,7 @@
         if (pd.kind === 'live') every(function () { probeData().then(function (x) { if (cards.isConnected) draw(x); }); }, 4000);
       });
       return screen('today', {
-        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), isPlaceholder(F.field.name) ? sampleChip() : null, pbox],
+        head: [bigTitle(T('each_part.today_h1'), T('each_part.today_h2')), fieldChip(F), pbox],
         scene: [cards, more],
         body: null,
         cta: cta(T('what_to_grow.see3'), function () { go('next/3'); })
@@ -1213,7 +1213,7 @@
         add(body, [othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])), h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note')), noteBox()]);
       });
       return screen('next', {
-        head: [bigTitle(T('what_to_grow.next_h1'), T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')), isPlaceholder(F.field.name) ? sampleChip() : null],
+        head: [bigTitle(T('what_to_grow.next_h1'), T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')), fieldChip(F)],
         scene: scene,
         body: body,
         cta: doneCta()
@@ -1266,7 +1266,7 @@
   }
   SCREENS.weather = function () {
     return withField('weather', function (F) {
-      var wx = F.weather, head = [bigTitle(T('weather.title')), isPlaceholder(F.field.name) ? sampleChip() : null];
+      var wx = F.weather, head = [bigTitle(T('weather.title')), fieldChip(F)];
       if (!wx || !wx.blocks) return screen('weather', { head: head, body: notReady(), cta: doneCta() });
       var list = h('div', { class: 'wblocks' }, loading());
       featData('simple').then(function (sd) {
@@ -1441,7 +1441,7 @@
         })) : null;
         add(panel, [
           sheetBar(planName(p)),
-          isPlaceholder(F.field.name) ? sampleChip() : null,
+          fieldChip(F),
           h('div', { style: 'display:flex;flex-direction:column;gap:14px;margin-top:10px' },
             p.id === 'current' && F.current_options ? h('div', { class: 'card' }, winterQuestion(F, function () { rerender(); })) : null,
             h('div', { class: 'card' }, h('h3', { class: 'h3' }, T('your_plan.what_when')), cropRows, h('p', { class: 'small', style: 'margin:0' }, T('your_plan.months_note'))),
