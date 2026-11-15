@@ -1652,3 +1652,20 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   as the old version against itself); the four example spots' answers (screenshots).
 - **For a person to review:** the 37 Nepali lines (marked "needs native-speaker review"), the five drafts, the two
   readings named above.
+
+## 2026-11-15 (Sunday, early afternoon): the owner's fixes A1-A4 and offline use (Claude Opus 5.5 via Claude Code)
+
+- **What SI did:** found and fixed four faults the owner listed. A1: NASA's 30 m map pictures were drawn over the drone
+  photo (now in a pane below it), and the photo screen draws only the outline. A2: a part whose cells do not make a
+  rectangle was drawn as its main piece only, leaving 5 % of Kharipati in no part; each part is now the union of its
+  pieces (`pipeline/sections/grid._union`, rule `sections.patches_shape`). A3: before an answer, every screen but the photo
+  used the file's default crop; now our guess, then the farmer's answer (`winterId`, `swapId`). A4: the cards' harvest
+  months came from the model's last day; now from FAO's calendar window (rule `farmer_answers.actions_calendar_months`),
+  and How we know explains the difference ('Sowing and harvest months'). Part 2's words: README 'Works offline after
+  one visit' with a real-phone test, and How we know 'Using it with no internet'.
+- **Rules first:** `abf5ccf` (shapes) and `46bc3fb` (months) were committed before their code.
+- **Checked:** `tests/test_sections_cover.py` (every field and drone file covered once), `tests/test_site_guess.py`,
+  `tests/test_simple_cards.py`, `tests/test_story.py`; only p3's and p7's shapes and wheat's harvest months changed in
+  the site files; before and after screenshots in `~/Desktop/khet_sathi_screens/fixes_a_15nov/`.
+- **For a person to review:** the new Nepali lines in `story.json` (crop months, offline section; the file is marked
+  "needs native-speaker review"); the proportional reading of the calendar window (rules.yaml says it is Claude's).
