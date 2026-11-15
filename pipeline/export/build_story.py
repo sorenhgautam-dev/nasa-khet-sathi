@@ -533,7 +533,34 @@ def unconfirmed(card, kind):
     return [f"{fa} of {fan} flagged seasons were not confirmed."], [f"{fan} सङ्केतमध्ये {fa} पुष्टि भएनन्"]
 
 
-def chart_events(replay, known, card=None):
+def disaster_note(dis):
+    """The flood chart's note from data/checks/<field>/disaster_floods.json (rules.yaml disaster_floods, owner 2026-11-15):
+    each database's two counts, or why it is not scored, then the owner's caveat. None without the file. Pure."""
+    if not dis:
+        return None
+    en, ne, names = [], [], {"bipad": "BIPAD", "desinventar": "DesInventar"}
+    for k, d in dis["databases"].items():
+        span = f"{d['span'][0]}-{d['span'][1]}"
+        if d["scored"]:
+            (a, b), (c, n) = d["db_also_flagged"], d["flagged_with_record"]
+            en += [f"Nepal's disaster records ({names[k]}, {span}): {b} flood years.", f"We flag {a} of those {b}.",
+                   f"{c} of our {n} flood years there have a record."]
+            ne += [f"नेपालका विपद् अभिलेख ({names[k]}, {span}): {b} बाढी वर्ष", f"तीमध्ये {a} वर्ष हामी पनि देखाउँछौं",
+                   f"त्यहाँ हाम्रा {n} बाढी वर्षमध्ये {c} को अभिलेख छ"]
+        else:
+            m = len(d["db_flood_years"])
+            en.append(f"{names[k]} ({span}): only {m} flood years, too few to score.")
+            ne.append(f"{names[k]} ({span}): {m} बाढी वर्ष मात्र, जाँच्न अपुग")
+    en += ["These databases record reported damage.",
+           "That depends on where people live and how well incidents were reported.",
+           "So this is a rough cross-check at district level."]
+    ne += ["यी अभिलेखले रिपोर्ट गरिएको क्षति मात्र राख्छन्",
+           "त्यो मानिस कहाँ बस्छन् र घटना कति राम्रोसँग रिपोर्ट भयो भन्नेमा भर पर्छ",
+           "त्यसैले यो जिल्ला स्तरको मोटो जाँच मात्र हो"]
+    return T(" ".join(en), "। ".join(ne) + "।")
+
+
+def chart_events(replay, known, card=None, dis=None):
     rows, summary = match_events(replay, known)
     kf, nf = summary["valley_floods"]
     kd, nd = summary["valley_droughts"]
@@ -556,7 +583,7 @@ def chart_events(replay, known, card=None):
         series=[S(T("Our model: one event a year", "हाम्रो मोडेल: वर्षमा एउटा घटना"), "main",
                   [[r["year"], r["model"]] for r in rows]),
                 S(T("Written records", "लिखित अभिलेख"), "compare", [[y, c] for y, c in records])],
-        rows=rows, summary=summary), summary
+        rows=rows, summary=summary, **({"note": note} if (note := disaster_note(dis)) else {})), summary
 
 
 def _month_names(months):
@@ -1508,7 +1535,7 @@ def input_paths(field):
         "field_json": f"site/data/fields/{field}.json", "area_site": f"site/data/area/{field}.json",
         "words": "site/data/words.json", "field_config": f"config/fields/{field}.yaml",
         "bench": "data/checks/probe/bench.json", "scorecard": f"{k}/scorecard.json",
-        "weather_ahead": f"{k}/weather.json",
+        "weather_ahead": f"{k}/weather.json", "disaster_floods": f"{k}/disaster_floods.json",
     }
 
 
@@ -1519,7 +1546,7 @@ def load_inputs(repo, field):
     out = {"field": field, "paths": paths}
     for key, rel in paths.items():
         p = repo / rel
-        if key in ("bench", "scorecard", "weather_ahead", "eco"):   # eco: not possible on a farm smaller than 70 m
+        if key in ("bench", "scorecard", "weather_ahead", "eco", "disaster_floods"):   # eco: not possible on a farm smaller than 70 m
             out[key] = json.loads(p.read_text()) if p.exists() else None
             continue
         if not p.exists():
@@ -1562,7 +1589,7 @@ def build_story(inp, generated):
     c_seasons, _ = chart_seasons(inp["greenness"], inp["diary_seasons"])
     c_sure = chart_cover_sure(fj["diary"]["months"], month_words)
     c_months = chart_crop_months(fj, inp["calendars"], inp["diary_seasons"], words["shared"]["bs_months"])
-    c_events, ev_summary = chart_events(fj["replay"]["current"], inp["known_events"], inp.get("scorecard"))
+    c_events, ev_summary = chart_events(fj["replay"]["current"], inp["known_events"], inp.get("scorecard"), inp.get("disaster_floods"))
     c_dhm = chart_dhm_2025(inp["rain_vs_dhm"], rain_is_tuned(field))
     c_other, _ = chart_other_checks(inp["smap"], inp["gldas"], inp["hls"], inp["fao"], inp["eco"])
     c_best = chart_best_worst()
