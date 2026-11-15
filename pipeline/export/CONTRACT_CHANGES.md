@@ -4,6 +4,17 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, early afternoon): the owner's fixes A2-A4 (additions only)
+
+- `simple/<id>.json` gains `action_months` (`sow`, `harvest`, `model_kept`): the actions' harvest months now come from
+  the FAO crop calendar window that holds the sowing day (rules.yaml `farmer_answers.actions_calendar_months`), not the
+  model's last day. Same structure: only wheat's harvest months change (sown Kartik: Chaitra, was Falgun; the farmer's
+  rice then wheat, sown Mangsir: Baisakh, was Chaitra). The model is unchanged.
+- `story.json` gains the chart `crop_months` in the `seasons` section (a table: each crop and sowing month, the model's
+  and the calendar's harvest month, and this field's winter season from space).
+- A part's `polygon` (field files and drone files) is the union of all its pieces when its cells do not make a rectangle
+  (rules.yaml `sections.patches_shape`); it was the main piece only. Kharipati's p3 and p7 change shape; nothing else.
+
 ## 2026-11-15 (Sunday, noon): global use: `world.json` and Gregorian months outside Nepal (additions only)
 
 - New file `site/data/world.json` (`pipeline/export/build_world.py`, from Natural Earth's land outline and `rules.yaml
