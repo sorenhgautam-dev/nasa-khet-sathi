@@ -1505,13 +1505,14 @@
     });
   }
   // self-hosted fonts (fonts/fonts.css), after the first screen so it stays small; no request leaves the site
-  function loadFonts() { D.head.append(h('link', { rel: 'stylesheet', href: 'fonts/fonts.css' })); }
-  // The welcome on the loading curtain (owner, 2026-11-15): "Welcome" in the site's 7 languages (index.html, the words of
-  // pipeline/words shared.welcome), one after another, Nepali first, once per visit, while the app loads. The curtain
-  // lifts when the data is in AND every word has shown: at most HELLO_STEP_MS x 7 + HELLO_HOLD_MS after the start, so
-  // at most about 1.9 s later than the curtain's old 900 ms. A tap or a key skips it. Reduced motion: "स्वागत छ · Welcome",
-  // still. Returns how long the welcome wants the curtain (ms from now; 0: no welcome); on any failure, 0.
-  var HELLO_STEP_MS = 360, HELLO_HOLD_MS = 260, HELLO_STILL_MS = 1500;
+  function loadFonts() { if (!D.querySelector('link[href="fonts/fonts.css"]')) D.head.append(h('link', { rel: 'stylesheet', href: 'fonts/fonts.css' })); }   // index.html links it since 2026-11-15
+  // The loading curtain (owner, 2026-11-15; index.html #curtain, css "curtain"). The welcome: "Welcome" in the site's 7
+  // languages (the words of pipeline/words shared.welcome), one after another, Nepali first, once per visit, while the app
+  // loads; the curtain slides up when the data is in AND every word has shown, all within 2 s (HELLO_FIRST_MS + 6 steps +
+  // HELLO_HOLD_MS + LIFT_MS); a tap or a key skips it. Later loads in the same visit: no words, it lifts as soon as Home
+  // is drawn. Reduced motion: the leaf and "स्वागत छ · Welcome", still, then gone without sliding. Returns how long the
+  // welcome wants the curtain (ms from now; 0: no welcome); on any failure, 0.
+  var HELLO_FIRST_MS = 80, HELLO_STEP_MS = 190, HELLO_HOLD_MS = 100, HELLO_STILL_MS = 1200, LIFT_MS = 540, REPEAT_MIN_MS = 350;
   function hello(cur) {
     try {
       var box = cur.querySelector('.hello'), ss = W.sessionStorage;
@@ -1523,30 +1524,37 @@
         box.hidden = false; box.classList.add('still');
         return HELLO_STILL_MS;
       }
-      var i = 0;
-      words[0].className = 'on'; box.hidden = false;
-      (function next() {
+      var i = -1;
+      box.hidden = false;
+      (function next(ms) {
         setTimeout(function () {
           if (!cur.isConnected || cur.classList.contains('lift')) return;
-          words[i].className = 'off'; i = (i + 1) % words.length; words[i].className = 'on';   // loops while the data loads
-          next();
-        }, HELLO_STEP_MS);
-      })();
-      return HELLO_STEP_MS * words.length + HELLO_HOLD_MS;
+          if (i >= 0) words[i].className = 'off';
+          i = (i + 1) % words.length; words[i].className = 'on';   // loops while the data loads
+          next(HELLO_STEP_MS);
+        }, ms);
+      })(HELLO_FIRST_MS);
+      return HELLO_FIRST_MS + HELLO_STEP_MS * (words.length - 1) + HELLO_HOLD_MS;
     } catch (e) { return 0; }
   }
   function init() {
     grass();
     S.winter = store.get('winter'); S.water = store.get('water');
     var t0 = Date.now(), cur = $('#curtain'), ready = false, wantMs = hello(cur);
+    var bar = cur && cur.querySelector('.cbar span'), prog = 0;
+    function step(x) { prog = Math.max(prog, Math.min(1, x)); if (bar) bar.style.transform = 'scaleX(' + prog.toFixed(3) + ')'; }   // the progress line
+    step(0.12);                                                      // the page and its script are in
     function lift() {
       if (!ready || !cur.isConnected || cur.classList.contains('lift')) return;
+      step(1);
+      if (RM) { cur.remove(); return; }
       cur.classList.add('lift');
-      setTimeout(function () { cur.remove(); }, RM ? 0 : 1000);
+      setTimeout(function () { cur.remove(); }, LIFT_MS + 60);
     }
     function skip() { wantMs = 0; lift(); }
-    if (wantMs) { cur.addEventListener('click', skip); D.addEventListener('keydown', skip, { once: true }); }
-    Promise.all([getJSON('data/words.json'), getJSON('data/index.json')]).then(function (r) {
+    cur.addEventListener('click', skip); D.addEventListener('keydown', skip, { once: true });
+    Promise.all([getJSON('data/words.json').then(function (x) { step(prog + 0.45); return x; }),
+                 getJSON('data/index.json').then(function (x) { step(prog + 0.18); return x; })]).then(function (r) {
       S.words = r[0]; S.index = r[1];
       if (!S.words) { cur.append(h('button', { type: 'button', class: 'round', style: 'position:absolute;bottom:40px', 'aria-label': 'reload', onclick: function () { location.reload(); } }, svg(I('redo', 22)))); return; }
       var want = store.get('lang') || 'ne';
@@ -1557,8 +1565,9 @@
       S.fid = ids.indexOf(fid) >= 0 ? fid : (ids[0] || 'demo');
       W.addEventListener('hashchange', onRoute);
       onRoute();
+      step(0.9);                                                     // Home is drawn
       ready = true;
-      setTimeout(lift, Math.max(0, Math.max(RM ? 0 : 900, wantMs) - (Date.now() - t0)));
+      setTimeout(lift, Math.max(0, (wantMs || (RM ? 0 : REPEAT_MIN_MS)) - (Date.now() - t0)));   // data first, then the welcome's time
       var idle = W.requestIdleCallback || function (f) { return setTimeout(f, 300); };
       idle(function () { fieldReady(); });
       if (D.readyState === 'complete') loadFonts(); else W.addEventListener('load', loadFonts);

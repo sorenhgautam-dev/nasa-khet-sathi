@@ -9,6 +9,10 @@
 <meta name="theme-color" content="#14301E">
 <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/app.css">
+<!-- our fonts arrive with the loading curtain (owner, 2026-11-15: Mukta for Nepali); font-display optional, so nothing jumps -->
+<link rel="preload" href="fonts/mukta-devanagari-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-tight-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <script src="js/app.js" defer></script>
 </head>
 <body class="r-home">
@@ -24,8 +28,15 @@
   <svg class="road" viewBox="0 0 390 130" preserveAspectRatio="none"><path d="M -10 82 C 60 38, 120 106, 200 70 S 330 12, 400 46" fill="none" stroke="#1E3A24" stroke-opacity=".16" stroke-width="12" stroke-linecap="round"/><path class="ln" d="M -10 82 C 60 38, 120 106, 200 70 S 330 12, 400 46" fill="none" stroke="#C8E05A" stroke-width="7" stroke-linecap="round" pathLength="1"/></svg>
   <svg class="grass" viewBox="0 0 390 82" preserveAspectRatio="none"></svg>
 </div>
-<div id="curtain"><p class="hello" aria-hidden="true" hidden><span lang="ne">स्वागत छ</span><span lang="en">Welcome</span><span lang="hi">स्वागत है</span><span lang="bn">স্বাগতম</span><span lang="es">Bienvenidos</span><span lang="fr">Bienvenue</span><span lang="sw">Karibu</span></p><span class="mark"><span class="dot"></span><span lang="ne">खेत साथी</span></span></div>
-<!-- the welcome (owner, 2026-11-15): the words of pipeline/words shared.welcome; the Nepali needs native-speaker review -->
+<div id="curtain">
+  <div class="cbox">
+    <span class="clogo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#C8E05A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V11"/><path d="M12 11C12 7 9 5 5 5c0 4 3 6 7 6z"/><path d="M12 13c0-4 3-6 7-6 0 4-3 6-7 6z"/></svg></span>
+    <p class="cname"><span lang="ne">खेत साथी</span><span class="sep" aria-hidden="true">·</span><span lang="en">Khet Sathi</span></p>
+    <p class="hello" aria-hidden="true" hidden><span lang="ne">स्वागत छ</span><span lang="en">Welcome</span><span lang="hi">स्वागत है</span><span lang="bn">স্বাগতম</span><span lang="es">Bienvenidos</span><span lang="fr">Bienvenue</span><span lang="sw">Karibu</span></p>
+  </div>
+  <span class="cbar" aria-hidden="true"><span></span></span>
+</div>
+<!-- the curtain (owner, 2026-11-15): the leaf, the name, the welcome words of pipeline/words shared.welcome (the Nepali needs native-speaker review), the progress line -->
 <div id="shell">
   <div class="frame">
     <header id="top"></header>

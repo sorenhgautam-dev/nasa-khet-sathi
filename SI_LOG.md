@@ -1545,3 +1545,16 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   not yet (no cup-test file). Nothing was tuned.
 - **For a person to review:** the frost test's design (order and bound, not thirds); every new Nepali line (26 texts in
   `nepali_review.xlsx`, marked "needs native-speaker review").
+
+## 2026-11-15 (Sunday, morning): the loading curtain, calmer (Claude Opus 5.5 via Claude Code)
+
+- **Asked by the owner:** the leaf logo breathing in the centre, "खेत साथी · Khet Sathi" below in our fonts, the 7 welcome
+  words crossfading, a thin progress line, a 500-600 ms slide up; only opacity and transform, under 2 s, tap to skip, once
+  per visit, still under reduced motion; the translate bar off.
+- **What SI generated:** the curtain's markup, styles and script (`site/index.html`, `site/css/app.css` "curtain",
+  `site/js/app.js` hello/init), its tests (`tests/test_site_welcome.py`), and the recordings. Found while recording: as
+  the curtain began to slide, the browser painted every soft cloud ("puff") at once and the slide's first frames stalled
+  (267 ms gap); the puffs now wait unseen while the curtain is up and fade in after (900 ms, as the sky's other layers),
+  and the gap is gone. Chrome's translate log reads "Notranslate meta: true" for this version, "false" for the
+  published one. No result, word or layout changed.
+- **For a person to review:** the look, on a real phone.
