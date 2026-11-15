@@ -1846,3 +1846,16 @@ part_heatmap:                     # owner, 2026-11-15 evening (display addition 
   fog:
     value: "a part not tested keeps its fog: on the soil test as before; on Today the small field picture draws the same fog over each untested part"
     source: "Owner: 'Untested parts keep their fog'; owner, 2026-11-15 evening: 'and also add the fog thingy' (Claude's reading: the fog on Today's new picture too)"
+food_and_sprays:                  # owner, 2026-11-15 night: the "Food and sprays" card, small version without numbers (site/js/app.js). Written and committed BEFORE the code.
+  rates:
+    value: "no fertiliser rate is shown for any crop: every crop says 'ask your agriculture office' (the right amount depends on the soil)"
+    source: "Owner asked for rice's rate exactly as printed in NARC 2022 (narc.gov.np/wp-content/uploads/2022/05/Article-03.pdf). On 2026-11-15 the link returned 404 and no copy could be opened, and CIMMYT (cgiar.org, 9 Aug 2022) says MoALD endorsed new site-specific rice recommendations in July 2022 that replace the blanket approach; so no rate is shown (docs/NEXT_STEPS.md 11). Owner, 2026-11-15 night: 'can u do the fertilizer one in 15 mins?'"
+  saver:
+    value: "the existing fertiliser_saver note (rice after lentil) shown on the card too, with its current label (estimate, not yet verifiable)"
+    source: "Owner's card spec item 4"
+  sprays:
+    value: "no product names and no doses; three lines: only products registered in Nepal; the approved amount is on the label; let the agriculture office name the problem first; a link to Nepal's plant protection office (https://npponepal.gov.np/, which lists the registered pesticides)"
+    source: "Owner's card spec item 5. The owner's link (www.npponepal.gov.np/en/pages/78/84661316) fails its certificate with 'www' and opens the centre's Introduction page without it; the site's notices list 'List of registered pesticides' files (checked 2026-11-15 by a fetch sub-agent), so the link goes to the site's home"
+  where:
+    value: "behind 'More' on Next 3 and Next 6 months, Nepal fields only"
+    source: "Owner's card spec item 6"
