@@ -1371,94 +1371,31 @@
   };
 
   // ---------------- 5 what to see (design: Choose, W5_Choose) ----------------
-  // a field built with the global settings (abroad) has Gregorian months; Nepal's fields have Bikram Sambat months
-  function chipKeys(n) { if (!abroad()) return blockKeys(n); var m = new Date().getMonth(), out = []; for (var i = 0; i < n; i++) out.push(MONTHS[(m + i) % 12]); return out; }
-  function chipName(k) { return abroad() ? monthShort(k) : monthSpanEl(k); }
   // the keys of n Bikram Sambat months from the one holding today (a month starts on the 15th of the Gregorian month of its key)
   function blockKeys(n) { var now = new Date(), m = now.getMonth(), hold = now.getDate() >= 15 ? m : (m + 11) % 12, out = []; for (var i = 0; i < n; i++) out.push(MONTHS[(hold + i) % 12]); return out; }
   // a month name short enough for a chip: Bikram Sambat in Nepali, three letters in Latin scripts (the How we know charts)
   function monthShort(key) { if (S.lang === 'ne') return monthName(key, true); var n = monthName(key); return /^(en|es|fr|sw)$/.test(S.lang) ? n.slice(0, 3) : n; }
-  var DOT_COL = { none: '#E3D6BF', now: '#E9C77A', good: '#7FB24A', care: '#9A5426', info: '#C9A86A' };
-  // the months of a Choose card, one under the other (owner, 2026-11-14 night: the chips were cramped); past three rows the
-  // list scrolls inside the card, and a fade with a bouncing arrow shows there is more below (phone and web)
-  function monthList(keys) {
-    var list = h('div', { class: 'mlist' }, keys.map(function (m) { return h('span', null, chipName(m)); }));
-    var wrap = h('div', { class: 'mwrap', 'aria-hidden': 'true' }, list, h('span', { class: 'mhint' }, svg(ic(P_.arrow, 16, 2.6))));
-    function upd() { wrap.classList.toggle('more', list.scrollHeight - list.scrollTop - list.clientHeight > 2); }
-    list.addEventListener('scroll', upd, { passive: true });
-    if (W.ResizeObserver) new ResizeObserver(upd).observe(list);
-    if (W.MutationObserver) new MutationObserver(upd).observe(list, { childList: true });
-    wrap.list = list; return wrap;
-  }
-  // B6 (owner, 2026-11-15): the small field picture on the "Your field today" card: every part at its true shape (geom: a
-  // 2 x 2 field and a drawn one alike), grey until the soil stick has tested it, then its word's colour (as the swatches)
-  function partsMini(F, pd) {
-    var G = geom(F), tested = pd && forField(pd) ? pd.parts || {} : {}, s = D.createElementNS(SVGNS, 'svg');
-    s.setAttribute('viewBox', '-1 -1 102 102'); s.setAttribute('preserveAspectRatio', 'none'); s.setAttribute('class', 'minif'); s.setAttribute('aria-hidden', 'true');
-    s.style.aspectRatio = String(Math.max(0.8, Math.min(2.4, G.aspect || 1)));
-    G.forEach(function (g) {
-      var p = D.createElementNS(SVGNS, 'path'), r = tested[g.s.id], k = r ? partWord(r).k : 'none';
-      p.setAttribute('d', 'M' + g.pts.map(function (q) { return q[0].toFixed(2) + ' ' + q[1].toFixed(2); }).join('L') + 'Z');
-      p.setAttribute('style', 'fill:' + (k === 'none' ? '#D6D3CB' : DOT_COL[k]));
-      s.append(p);
-    });
-    return s;
-  }
+  // owner, 2026-11-15 night ('make the UI simple'): each card is one picture, one title, one line and the arrow
   SCREENS.choose = function () {
     var title = h('h1', { class: 'big' }, h('span', null, T('check_soil.choose_h1')), h('span', { class: 'b' }, T('check_soil.choose_h2')));
-    var swatches = h('div', { class: 'row', style: 'gap:6px', 'aria-hidden': 'true' });
-    var m6 = monthList(chipKeys(6)), crops6 = m6.list, mini = h('div', { class: 'grow minibox' });
-    fieldReady().then(function (F) {
-      if (!F) return;
-      mini.append(partsMini(F, null));   // B6: grey parts until the soil stick's readings arrive
-      // the six month chips coloured by the suggestion's crops in the middle of each month (empty months stay plain)
-      featData('simple').then(function (sd) {
-        var x = sd && sd.plan_words && farmPlans(F, sd, 6, sd.start || 'medium').pick, seen = [];
-        if (!x) return;
-        crops6.textContent = '';
-        blockKeys(6).forEach(function (k) {
-          var c = cropOn(x.p, (CUM[MONTHS.indexOf(k)] + 29) % 365); if (c && seen.indexOf(c) < 0) seen.push(c);
-          crops6.append(h('span', { style: c ? 'background:' + CROP_COL[seen.indexOf(c) % CROP_COL.length] + ';color:#14301E' : '' }, monthSpanEl(k)));
-        });
-      });
-      probeData().then(function (pd) {
-        if (!forField(pd)) return;
-        mini.textContent = ''; mini.append(partsMini(F, pd));
-        swatches.textContent = '';
-        geom(F).forEach(function (g) { swatches.append(h('span', { class: 'sw4', style: 'background:' + DOT_COL[partWord(pd.parts[g.s.id]).k] })); });
-        if (anyTested(pd)) { title.firstChild.textContent = T('check_soil.tested_h1'); title.lastChild.textContent = T('check_soil.tested_h2'); }
-      });
-    });
-    var a = h('button', { type: 'button', class: 'bigcard light', onclick: function () { go('today'); } },
-      h('div', { class: 'row', style: 'justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('stick', 16)), T('check_soil.from_test')), swatches),
-      mini,
-      h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between' },
-        h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('each_part.today_h1') + ' ' + T('each_part.today_h2')), h('span', { class: 's' }, T('home.card_today_sub'))),
-        h('span', { class: 'go' }, svg(ic(P_.arrow, 22, 2.6), 'lime'))));
-    a.querySelector('.go .ico').style.color = '#C8E05A';
-    var orbit = svg('<svg width="230" height="230" viewBox="0 0 230 230"><circle cx="115" cy="115" r="110" fill="none" stroke="#FFF" stroke-opacity=".07" stroke-width="2"/><circle cx="115" cy="115" r="78" fill="none" stroke="#FFF" stroke-opacity=".07" stroke-width="2"/><circle cx="115" cy="115" r="46" fill="#C8E05A" fill-opacity=".08"/><g><circle cx="115" cy="37" r="6" fill="#C8E05A"/></g></svg>', 'orbit');
-    function monthsCard(n, cls, extra, sub) {
-      return h('button', { type: 'button', class: 'bigcard ' + cls, onclick: function () { go('next/' + n); } }, extra,
-        h('div', { class: 'row', style: 'position:relative;justify-content:space-between;flex-wrap:wrap;gap:8px' },
-          h('span', { class: 'chip' }, svg(I('sat', 16)), T('home.card_months_tag'))),
-        n === 6 ? m6 : monthList(chipKeys(3)),
-        h('div', { class: 'grow' }),
-        h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between;position:relative' },
-          h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('what_to_grow.next_h1') + ' ' + T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')),
-            h('span', { class: 's' }, T(sub))),
+    function card(cls, icon, t, sub, route) {
+      return h('button', { type: 'button', class: 'bigcard plain ' + cls, onclick: function () { go(route); } },
+        h('div', { class: 'row', style: 'align-items:center;justify-content:space-between;gap:12px' },
+          h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, t), h('span', { class: 's' }, svg(I(icon, 16)), ' ', sub)),
           h('span', { class: 'go' }, svg(ic(P_.arrow, 22, 2.6)))));
     }
-    var path6 = svg('<svg width="200" height="120" viewBox="0 0 200 120"><path d="M10 110 Q 60 20 100 70 T 190 30" fill="none" stroke="#FBF4EA" stroke-width="2" stroke-dasharray="4 7"/></svg>', 'path6');
-    var box = h('div', { class: 'choose' });
-    var wc = weatherCard(function () { box.classList.add('four'); });
-    add(box, [a, monthsCard(3, 'darkc', orbit, 'what_to_grow.three'), monthsCard(6, 'greenc', path6, 'what_to_grow.three'), wc]);
-    if (!wc.hidden) box.classList.add('four');
-    return screen('choose', {
-      head: title,
-      scene: box,
-      body: null,
-      cta: null
+    var a = card('light', 'stick', T('each_part.today_h1') + ' ' + T('each_part.today_h2'), T('home.card_today_sub'), 'today');
+    a.querySelector('.go .ico').style.color = '#C8E05A';
+    var wc = card('skyc', 'sun', T('weather.title'), T('weather.choice_sub'), 'weather'), box = h('div', { class: 'choose' });
+    wc.hidden = true;
+    fieldReady().then(function (F) {
+      if (!F) return;
+      if (F.weather && F.weather.blocks) { wc.hidden = false; box.classList.add('four'); }   // Nepal fields only
+      probeData().then(function (pd) { if (forField(pd) && anyTested(pd)) { title.firstChild.textContent = T('check_soil.tested_h1'); title.lastChild.textContent = T('check_soil.tested_h2'); } });
     });
+    add(box, [a, card('darkc', 'sat', T('what_to_grow.next_h1') + ' ' + T('what_to_grow.next_h2'), T('what_to_grow.three'), 'next/3'),
+      card('greenc', 'sat', T('what_to_grow.next_h1') + ' ' + T('what_to_grow.next_h2_6'), T('what_to_grow.three'), 'next/6'), wc]);
+    return screen('choose', { head: title, scene: box, body: null, cta: null });
   };
 
   // ---------------- 6 your field today, from the soil stick (design: Today, W6_Today) ----------------
@@ -1805,29 +1742,6 @@
       h('span', { class: 'wlab' }, T('your_plan.lab_estimate')));
   }
   // W (owner, 2026-11-15): two or three of a month block's own words, "Dry, cold" or, on frosty months, "Cold, frost possible"
-  function wxWords(u) { return cap(u.frost !== 'none' ? T('weather.temp_' + u.temp) + ', ' + T('weather.frost_' + u.frost) : T('weather.rain_' + u.rain) + ', ' + T('weather.temp_' + u.temp)); }
-  // the Choose screen's extra card (shown only when the field file has the weather block: Nepal fields), in the Weather
-  // screen's sky colours (W): the next three months, one row each with its picture and words; a tap opens Weather ahead
-  function weatherCard(onShow) {
-    var rows = h('div', { class: 'wrows' });
-    var deco = svg('<svg width="170" height="130" viewBox="0 0 170 130"><circle cx="112" cy="46" r="26" fill="#F0AE4C" fill-opacity=".55"/><path class="wcloud" d="M58 98a22 22 0 010-44 28 28 0 0153.8 6.7A19 19 0 01112 98z" fill="#FFFFFF" fill-opacity=".6"/></svg>', 'wdeco');
-    var c = h('button', { type: 'button', class: 'bigcard skyc', hidden: true, onclick: function () { go('weather'); } }, deco,
-      h('div', { class: 'row', style: 'position:relative;justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('sat', 16)), T('home.card_months_tag'))),
-      rows, h('div', { class: 'grow' }),
-      h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between;position:relative' },
-        h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('weather.title')), h('span', { class: 's' }, T('weather.choice_sub'))),
-        h('span', { class: 'go' }, svg(ic(P_.arrow, 22, 2.6)))));
-    function put(F) {
-      var wx = F && F.weather; if (!wx || !wx.blocks) return;
-      sixBlocks(wx).slice(0, 3).forEach(function (b) {
-        var icon = blockIcon(b.usual);
-        rows.append(h('span', { class: 'wrow' }, svg(I(icon, 20)), h('span', { class: 'wrt' }, h('b', null, monthSpanEl(b.key)), h('span', null, wxWords(b.usual)))));
-      });
-      c.hidden = false; if (onShow) onShow();
-    }
-    if (S.field) put(S.field); else fieldReady().then(put);
-    return c;
-  }
   SCREENS.weather = function () {
     return withField('weather', function (F) {
       var wx = F.weather, head = [bigTitle(T('weather.title')), fieldChip(F)];

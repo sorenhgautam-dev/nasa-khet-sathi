@@ -32,7 +32,7 @@ def test_practice_and_garden_readings_never_stand_for_the_field():
     assert "} else if (d.kind === 'log' && forField(d)) {" in APP                 # the soil screen's walk
     assert "if (!forField(pd)) pd = { kind: 'none', parts: {} };" in APP        # Today's parts
     assert "sd.today.mode === 'band' && forField(pd)" in APP                  # the soil at the start
-    assert "if (!forField(pd)) return;" in APP                                   # the Choose screen's dots
+    assert "if (forField(pd) && anyTested(pd))" in APP                           # the Choose screen's title (its dots went, 2026-11-15 night)
     assert "if (!K.forField(pd)) return null;" in FEATURES                       # the Replay's start band
     assert "TEST_LABEL = { garden_test: ['garden_on'], indoor_test: ['indoor_title', 'indoor_on'] }" in APP
     assert "test: TEST_LABEL[log.kind] ? log.kind : null" in APP
