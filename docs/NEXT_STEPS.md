@@ -1,6 +1,6 @@
 # Next steps after the deadline
 
-Written 14 November 2026. Nine steps, the rice pond first (owner's decision 7); the hosted service (8) and the season outlook (9) added the same evening (owner's item 3 and answer 3). One paragraph each: why it matters,
+Written 14 November 2026. Ten steps, the rice pond first (owner's decision 7); the hosted service (8) and the season outlook (9) added the same evening (owner's item 3 and answer 3); more winter crops (10) on 15 November. One paragraph each: why it matters,
 and what it would need. Numbers in square brackets are in `docs/PITCH_FACTS.md`.
 
 ## 1. The rice pond
@@ -91,4 +91,33 @@ skill at this field is shown first. NASA's GEOS-S2S is open but gives raw monthl
 (`notes/SOURCES_CHECK.md` 8); IRI's NMME-based forecasts need no account for downloads, but their published skill (RPSS) at
 the field's 1-degree cell is about zero for December-May (SOURCES_CHECK 9b), so "NASA's guess" would be the wrong label
 today. Dropped from the app by the owner (answer 3, 2026-11-14 evening) until its skill for Nepal is verified.
+
+## 10. More winter crops after rice: pea and cabbage (owner's yes, 2026-11-15 evening)
+
+**Why.** Farmers in the valley grow vegetables after rice, and the app compares only potato, wheat and lentil. The owner
+asked for up to three winter crops for which FAO publishes every number the twin needs, grown in Bhaktapur, each
+compared with the current plan by the same rule as the others ("usually better than"), labelled "estimate", with How we
+know saying that vegetables are usually watered, so the rain-fed result is a low guess. **Step 1 (done, nothing to add).**
+The crop library holds eight crops (rice, wheat, maize, potato, lentil, mustard, buckwheat, finger millet); the replay ran
+165 plans in 23 crop orders. Every rice plan (rice then potato, wheat or lentil) is already on the farmer screens; the
+others put maize or finger millet, upland crops in the FAO calendar, in rice's place, or potato straight after potato.
+Mustard and buckwheat are in the library but cannot run (`simulate: false`). **Step 2 (owner said yes; it did not fit
+the hour, so it stops here).** Numbers checked by opening each source on 2026-11-15 (a research sub-agent; FAO-56 at
+fao.org/4/x0490e, chapters 6 and 8; FAO-66 Table 1; FAO Crop Calendar, Nepal hill zone 002, which lists Bhaktapur;
+MoALD Statistical Information on Nepalese Agriculture 2079/80 Table 7.3 p. 135 and 2081/82 Table 7.3 pp. 120-121):
+
+| Crop | Kc ini / mid / end (FAO-56 Table 12) | Zr m, p (Table 22) | Ky (FAO-56 Table 24, from FAO-33) | FAO calendar, Nepal hills | Bhaktapur |
+|---|---|---|---|---|---|
+| Pea (dry; the calendar's only pea) | 0.4 (legume group) / 1.15 / 0.30 | 0.6-1.0, 0.40 | 1.15 | sow 15 Sep-15 Oct, harvest 15 Jan-15 Feb | 24 ha (2081/82); none listed (2079/80) |
+| Cabbage | 0.7 (vegetable group) / 1.05 / 0.95 | 0.5-0.8, 0.45 | 0.95 | transplant 15 Sep-15 Oct, harvest 15 Dec-15 Jan | 75 ha (2081/82); 218 ha (2079/80) |
+
+**What it needs.** No Table 11 stage row is for Asia: take the nearest (pea: Mediterranean 20/30/35/15 days; cabbage:
+crucifers or California 40/60/50/15) and scale it to the calendar window, as lentil already is; written into
+`config/crops.json` and `rules.yaml`, committed before the first run. Then the replay and 25-Year Replay for "rice, then
+pea" and "rice, then cabbage" as extra plans only (the three shown plans and their picks must stay byte-identical), their
+symbols and 24-year sheets in the folded "other choices" row, crop names in every language, "Ask your agriculture office"
+where no official fertiliser rate or confirmed heat and cold limit exists, and the crop count updated in How we know,
+Behind the scenes, README and the project page. **Left out.** Onion: FAO has every number, but Bhaktapur's district
+tables list none in either year. Mustard (rapeseed in FAO-56): no Table 11 stage lengths and no seasonal Ky in FAO-56
+Table 24 or FAO-66, so it cannot be compared (Bhaktapur: sarsoon 223 ha in 2079/80, 6 ha in 2081/82).
 
