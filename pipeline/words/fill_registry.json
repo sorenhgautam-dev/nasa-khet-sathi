@@ -522,6 +522,26 @@
     "en": "11 November 2025",
     "ne": "११ नोभेम्बर २०२५"
    }
+  },
+  "month_from": {
+   "from": [
+    "words:screens.shared.bs_months"
+   ],
+   "how": "the first month of Weather ahead's card when months next to each other say the same thing (site/js/app.js joinBlocks)",
+   "example": {
+    "en": "Mangsir",
+    "ne": "मंसिर"
+   }
+  },
+  "month_to": {
+   "from": [
+    "words:screens.shared.bs_months"
+   ],
+   "how": "the last month of that card",
+   "example": {
+    "en": "Magh",
+    "ne": "माघ"
+   }
   }
  },
  "conditions": {

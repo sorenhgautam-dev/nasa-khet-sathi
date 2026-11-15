@@ -8313,6 +8313,116 @@
     "es": "Ropani, la medida de tierra",
     "fr": "Ropani, l'unité de terrain",
     "sw": "Ropani, kipimo cha ardhi"
+   },
+   "m_grows": {
+    "en": "{crop} is growing.",
+    "ne": "{crop} बढ्दैछ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "{crop} बढ़ रहा है।",
+    "bn": "{crop} বাড়ছে।",
+    "es": "{crop} está creciendo.",
+    "fr": "{crop} pousse.",
+    "sw": "{crop} inakua."
+   },
+   "m_rest": {
+    "en": "The field rests.",
+    "ne": "खेत आराम गर्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "खेत आराम करता है।",
+    "bn": "খেত বিশ্রামে থাকে।",
+    "es": "El campo descansa.",
+    "fr": "Le champ se repose.",
+    "sw": "Shamba linapumzika."
+   },
+   "see6": {
+    "en": "See the next 6 months",
+    "ne": "अर्को ६ महिना हेर्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "अगले 6 महीने देखें",
+    "bn": "পরের 6 মাস দেখুন",
+    "es": "Ver los próximos 6 meses",
+    "fr": "Voir les 6 prochains mois",
+    "sw": "Tazama miezi 6 ijayo"
+   },
+   "m_row": {
+    "en": "Usually, month by month:",
+    "ne": "प्रायः, महिनैपिच्छे:",
+    "ne_review": "needs native-speaker review",
+    "hi": "आमतौर पर, महीने दर महीने:",
+    "bn": "সাধারণত, মাসে মাসে:",
+    "es": "Por lo general, mes a mes:",
+    "fr": "En général, mois par mois :",
+    "sw": "Kwa kawaida, mwezi kwa mwezi:"
+   },
+   "k_sow": {
+    "en": "Sow",
+    "ne": "छर्ने",
+    "ne_review": "needs native-speaker review",
+    "hi": "बोना",
+    "bn": "বোনা",
+    "es": "Sembrar",
+    "fr": "Semer",
+    "sw": "Panda"
+   },
+   "k_harvest": {
+    "en": "Harvest",
+    "ne": "काट्ने",
+    "ne_review": "needs native-speaker review",
+    "hi": "कटाई",
+    "bn": "কাটা",
+    "es": "Cosechar",
+    "fr": "Récolter",
+    "sw": "Vuna"
+   },
+   "k_plant": {
+    "en": "Plant",
+    "ne": "रोप्ने",
+    "ne_review": "needs native-speaker review",
+    "hi": "रोपना",
+    "bn": "রোপণ",
+    "es": "Plantar",
+    "fr": "Planter",
+    "sw": "Pandikiza"
+   },
+   "k_grow": {
+    "en": "Growing",
+    "ne": "बढ्दै",
+    "ne_review": "needs native-speaker review",
+    "hi": "बढ़ रहा",
+    "bn": "বাড়ছে",
+    "es": "Creciendo",
+    "fr": "Pousse",
+    "sw": "Inakua"
+   },
+   "k_rest": {
+    "en": "Rest",
+    "ne": "आराम",
+    "ne_review": "needs native-speaker review",
+    "hi": "आराम",
+    "bn": "বিশ্রাম",
+    "es": "Descanso",
+    "fr": "Repos",
+    "sw": "Pumziko"
+   },
+   "wx_range": {
+    "en": "{month_from} to {month_to}",
+    "ne": "{month_from}देखि {month_to}सम्म",
+    "ne_review": "needs native-speaker review",
+    "hi": "{month_from} से {month_to}",
+    "bn": "{month_from} থেকে {month_to}",
+    "es": "{month_from} a {month_to}",
+    "fr": "{month_from} à {month_to}",
+    "sw": "{month_from} hadi {month_to}"
+   },
+   "wx_usual_care": {
+    "en": "Keep your usual care.",
+    "ne": "सधैंजस्तै हेरचाह गर्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "हमेशा की तरह देखभाल करें।",
+    "bn": "সাধারণ যত্ন নিন।",
+    "es": "Siga con su cuidado de siempre.",
+    "fr": "Gardez vos soins habituels.",
+    "sw": "Endelea na utunzaji wa kawaida."
    }
   },
   "fog": {

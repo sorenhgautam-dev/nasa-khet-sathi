@@ -1309,12 +1309,27 @@
     if (W.MutationObserver) new MutationObserver(upd).observe(list, { childList: true });
     wrap.list = list; return wrap;
   }
+  // B6 (owner, 2026-11-15): the small field picture on the "Your field today" card: every part at its true shape (geom: a
+  // 2 x 2 field and a drawn one alike), grey until the soil stick has tested it, then its word's colour (as the swatches)
+  function partsMini(F, pd) {
+    var G = geom(F), tested = pd && forField(pd) ? pd.parts || {} : {}, s = D.createElementNS(SVGNS, 'svg');
+    s.setAttribute('viewBox', '-1 -1 102 102'); s.setAttribute('preserveAspectRatio', 'none'); s.setAttribute('class', 'minif'); s.setAttribute('aria-hidden', 'true');
+    s.style.aspectRatio = String(Math.max(0.8, Math.min(2.4, G.aspect || 1)));
+    G.forEach(function (g) {
+      var p = D.createElementNS(SVGNS, 'path'), r = tested[g.s.id], k = r ? partWord(r).k : 'none';
+      p.setAttribute('d', 'M' + g.pts.map(function (q) { return q[0].toFixed(2) + ' ' + q[1].toFixed(2); }).join('L') + 'Z');
+      p.setAttribute('style', 'fill:' + (k === 'none' ? '#D6D3CB' : DOT_COL[k]));
+      s.append(p);
+    });
+    return s;
+  }
   SCREENS.choose = function () {
     var title = h('h1', { class: 'big' }, h('span', null, T('check_soil.choose_h1')), h('span', { class: 'b' }, T('check_soil.choose_h2')));
     var swatches = h('div', { class: 'row', style: 'gap:6px', 'aria-hidden': 'true' });
-    var m6 = monthList(chipKeys(6)), crops6 = m6.list;
+    var m6 = monthList(chipKeys(6)), crops6 = m6.list, mini = h('div', { class: 'grow minibox' });
     fieldReady().then(function (F) {
       if (!F) return;
+      mini.append(partsMini(F, null));   // B6: grey parts until the soil stick's readings arrive
       // the six month chips coloured by the suggestion's crops in the middle of each month (empty months stay plain)
       featData('simple').then(function (sd) {
         var x = sd && sd.plan_words && farmPlans(F, sd, 6, sd.start || 'medium').pick, seen = [];
@@ -1327,6 +1342,7 @@
       });
       probeData().then(function (pd) {
         if (!forField(pd)) return;
+        mini.textContent = ''; mini.append(partsMini(F, pd));
         swatches.textContent = '';
         geom(F).forEach(function (g) { swatches.append(h('span', { class: 'sw4', style: 'background:' + DOT_COL[partWord(pd.parts[g.s.id]).k] })); });
         if (anyTested(pd)) { title.firstChild.textContent = T('check_soil.tested_h1'); title.lastChild.textContent = T('check_soil.tested_h2'); }
@@ -1334,7 +1350,7 @@
     });
     var a = h('button', { type: 'button', class: 'bigcard light', onclick: function () { go('today'); } },
       h('div', { class: 'row', style: 'justify-content:space-between' }, h('span', { class: 'chip' }, svg(I('stick', 16)), T('check_soil.from_test')), swatches),
-      h('div', { class: 'grow' }),
+      mini,
       h('div', { class: 'row', style: 'align-items:flex-end;justify-content:space-between' },
         h('div', { style: 'display:flex;flex-direction:column;gap:6px' }, h('span', { class: 't' }, T('each_part.today_h1') + ' ' + T('each_part.today_h2')), h('span', { class: 's' }, T('home.card_today_sub'))),
         h('span', { class: 'go' }, svg(ic(P_.arrow, 22, 2.6), 'lime'))));
@@ -1457,11 +1473,33 @@
   }
   function ticks(list) { return h('ul', { class: 'ticks' }, list.filter(Boolean).map(function (t) { return h('li', null, svg(I('tick', 16, 2.6)), h('span', null, t)); })); }
   function wordLine(x) { return x.word ? h('p', { class: 'pword' }, svg(I(x.v === 0 ? 'up' : x.v === 3 ? 'down' : 'eq', 18, 2.6)), T(x.word)) : null; }
-  function bestCard(x, own) {
+  function bestCard(x, own, brief) {
     return h('div', { class: 'best' }, h('span', { class: 'tag' }, T('what_to_grow.our_pick')),
       h('span', { class: 'bc' }, cap(crop(addedCrop(x, own)))), h('span', { class: 'bp' }, farmPlanName(x)),
-      wordLine(x), ticks(x.acts.map(say)), x.own ? null : tryBtn(x.id));
+      wordLine(x), brief ? null : ticks(x.acts.map(say)), x.own ? null : tryBtn(x.id));
   }
+  // Next 3 months (B5): one row per month, what to do (the plan's own sentence, else growing or resting) and the month's
+  // watch-out from Weather ahead for the crop of that row, when the file has one for that crop
+  function monthRows(steps, wlOf) {
+    return h('div', { class: 'card mrows' }, steps.map(function (st) {
+      var wl = st.crop && wlOf(st.crop), w = wl && wl[st.key], what = st.acts.length ? st.acts.map(say).join(' ') : st.kind === 'grow' ? T('farm.m_grows', { crop: cap(crop(st.crop)) }) : T('farm.m_rest');
+      return h('div', { class: 'mrow' }, h('span', { class: 'mm' }, bsMonth(st.key)),
+        h('div', { class: 'mw' }, h('p', null, what), w && w.tip ? h('p', { class: 'mwatch' }, svg(I('warn', 16, 2.6)), ' ', h('b', null, T('weather.watch')), ' ', say(w.danger)) : null));
+    }));
+  }
+  // Next 6 months (B5): the six months side by side, from sowing to harvest and what follows
+  var STEP_IC = { sow: 'soil', plant: 'sprout', harvest: 'hand', grow: 'sprout', rest: 'leaf', do: 'info' };
+  function sixRow(steps) {
+    return h('div', { class: 'card msix' }, h('p', { class: 'wh' }, T('farm.m_row')), h('div', { class: 'mstrip' }, steps.map(function (st) {
+      return h('div', { class: 'mcell k-' + st.kind }, h('span', { class: 'mm' }, bsMonth(st.key)), svg(I(STEP_IC[st.kind], 20)),
+        h('span', { class: 'mk' }, T('farm.k_' + (st.kind === 'do' ? 'grow' : st.kind))), st.crop ? h('span', { class: 'mc' }, cap(crop(st.crop))) : null);
+    })));
+  }
+  function pickLine(x, own) {
+    return h('div', { class: 'card pickline' }, h('span', { class: 'tag' }, T('what_to_grow.our_pick')),
+      h('p', null, h('b', null, cap(crop(addedCrop(x, own)))), ' · ' + farmPlanName(x)), wordLine(x));
+  }
+  function wxLines(F, sd, c) { var wl = sd && sd.weather_lines && sd.weather_lines[c || winterCrop(F, sd)]; return wl && wl[canWater(F) ? 'yes' : 'no']; }
   function othersCard(list) {
     return h('div', { class: 'olistbox' }, h('span', { class: 'oh' }, T('what_to_grow.other_choices')),
       h('div', { class: 'card olist' }, list.map(function (x) {
@@ -1484,8 +1522,16 @@
         var s = farmPlans(F, sd, n, startState(r[1], sd));
         if (!s.pick) { scene.append(notReady()); return; }
         var years = (effPlans(F)[0].replay || []).length, tags = function () { return nasaTags([['rain', years], ['weather', years]]); };
-        scene.append(bestCard(s.pick, s.own)); scene.lastChild.append(tags());
-        add(body, [othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])), tags(), h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note')), noteBox()]);
+        var steps = monthSteps(s.pick.p, s.pick.acts, blockKeys(n)), note = h('p', { class: 'small', style: 'margin:0' }, T('what_to_grow.months_note'));
+        if (n === 6) {   // B5: one line naming the suggestion, then the six months side by side
+          scene.append(pickLine(s.pick, s.own), sixRow(steps)); scene.lastChild.append(tags());
+          add(body, [note, noteBox()]);
+          return;
+        }
+        // B5: the suggestion, one row for each of the next three months, the other choices, then the six months
+        scene.append(bestCard(s.pick, s.own, true)); scene.lastChild.append(tags());
+        add(body, [monthRows(steps, function (c) { return wxLines(F, sd, c); }), othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])),
+          btn2(T('farm.see6'), function () { go('next/6'); }, 'arrow'), tags(), note, noteBox()]);
       });
       return screen('next', {
         head: [bigTitle(T('what_to_grow.next_h1'), T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')), fieldChip(F)],
@@ -1508,7 +1554,7 @@
   function bsMonth(key) { if (!inNepal()) return S.lang === 'ne' ? gregInNepali(key) : monthName(key); var n = S.words && S.words.shared.bs_months && S.words.shared.bs_months[key]; return n ? L(n) : monthName(key, true); }
   // a sentence the back end picked: {text: words key, fill: {placeholder: value}}. Month values are block keys (Bikram
   // Sambat names in both languages), crop values crop ids, a crop list is joined with "then", rain and heat words are ids.
-  function say(o) {
+  function say(o, over) {
     if (!o || !o.text) return '';
     var v = {};
     Object.keys(o.fill || {}).forEach(function (k) {
@@ -1516,7 +1562,19 @@
       v[k] = k === 'guess_list' ? x.map(crop).join(', ' + T('join.then') + ' ') : k === 'rain_word' ? T('weather.rain_' + x) : k === 'temp_word' ? T('weather.temp_' + x) :
         /month/.test(k) ? bsMonth(x) : /crop/.test(k) ? crop(x) : x;
     });
+    Object.keys(over || {}).forEach(function (k) { v[k] = over[k]; });   // e.g. a joined card's "Mangsir to Magh" (B7)
     return T(o.text, v);
+  }
+  // B7 (owner, 2026-11-15): months next to each other that say the same thing (weather, danger and tip; only the month
+  // differs) share one card, "Mangsir to Magh"
+  function sameWx(a, b) {
+    function sig(x) { var u = x.usual || {}, f = u.fill || {}; return JSON.stringify([u.text, Object.keys(f).filter(function (k) { return k !== 'month'; }).sort().map(function (k) { return f[k]; }), x.danger || null, x.tip || null]); }
+    return !!(a && b) && sig(a) === sig(b);
+  }
+  function joinBlocks(keys, wl) {
+    var out = [];
+    keys.forEach(function (k) { var last = out[out.length - 1]; if (last && sameWx(wl[last.keys[last.keys.length - 1]], wl[k])) last.keys.push(k); else out.push({ keys: [k], x: wl[k] || {} }); });
+    return out;
   }
   // "they can water": the field's own water source, else the farmer's answer in a plan's sheet
   function canWater(F) { var ws = F.field.water_source; if (ws && ws !== 'unknown') return ws !== 'rain-only'; return /^(canal|well|other)$/.test(S.water || ''); }
@@ -1550,23 +1608,26 @@
         wl = wl && wl[canWater(F) ? 'yes' : 'no'];
         list.textContent = '';
         if (!wl) { list.append(notReady()); return; }
-        // three short lines a month (owner, 2026-11-14 night): "[Month]: usually [weather]." / "Watch out: [the farmer's own
-        // crop's biggest danger]" or "Usually no big danger." / "Do this: [its tip] Check with your local expert." (no danger,
-        // no tip: the back end gives none, so a calm month has two lines)
-        sixBlocks(wx).forEach(function (b, i) {
-          var x = wl[b.key] || {}, icon = blockIcon(b.usual);
+        // B7 (owner, 2026-11-15): months next to each other that say the same thing share one card ("Mangsir to Magh"); at
+        // most three short lines: "[Months]: usually [weather]." / "Watch out: [danger]" or "Usually no big danger." / "Do
+        // this: [its tip]" or "Keep your usual care."; "Check with your local expert" once, below the cards
+        var blocks = sixBlocks(wx), byKey = {};
+        blocks.forEach(function (b) { byKey[b.key] = b; });
+        joinBlocks(blocks.map(function (b) { return b.key; }), wl).forEach(function (g, i) {
+          var x = g.x, icon = blockIcon(byKey[g.keys[0]].usual), last = g.keys[g.keys.length - 1];
+          var months = g.keys.length > 1 ? T('farm.wx_range', { month_from: bsMonth(g.keys[0]), month_to: bsMonth(last) }) : bsMonth(g.keys[0]);
           list.append(h('div', { class: 'card wblock', style: 'animation-delay:' + (120 + i * 70) + 'ms' },
-            h('span', { class: 'wbi', style: icon === 'sun' ? 'color:#D27A2C' : '' }, svg(I(icon, 28))),
-            h('div', { class: 'wpara' }, h('p', null, h('b', null, say(x.usual))),
+            h('span', { class: 'wbi', style: icon === 'sun' ? 'color:#D27A2C' : '' }, svg(I(icon, 40))),
+            h('div', { class: 'wpara' }, h('p', null, h('b', null, say(x.usual, { month: months }))),
               h('p', null, x.tip ? [h('b', null, T('weather.watch')), ' ', say(x.danger)] : say(x.danger)),
-              x.tip ? h('p', null, h('b', null, T('weather.do')), ' ', say(x.tip) + ' ' + T('weather.tip_end')) : null,
+              h('p', null, h('b', null, T('weather.do')), ' ', x.tip ? say(x.tip) : T('farm.wx_usual_care')),
               nasaTags([['weather', wx.years]]))));
         });
       });
       return screen('weather', {
         head: head,
         scene: h('p', { class: 'srcline' }, svg(I('sat', 16)), T('weather.choice_sub') + ' ' + T('weather.not_forecast')),
-        body: [list, noteBox()],
+        body: [list, h('p', { class: 'wexpert' }, svg(I('hand', 18)), ' ', T('weather.tip_end')), noteBox()],
         cta: doneCta()
       });
     });
@@ -1634,6 +1695,17 @@
   function doy(mmdd) { return CUM[+mmdd.slice(0, 2) - 1] + (+mmdd.slice(3, 5)) - 1; }
   function covers(c, d) { var a = doy(c.start), b = doy(c.end); return a <= b ? d >= a && d <= b : d >= a || d <= b; }
   function cropOn(p, d) { for (var i = 0; i < p.crops.length; i++) if (covers(p.crops[i], d)) return p.crops[i].crop; return null; }
+  // what happens on a plan in each month block (B5, owner 2026-11-15): its own actions in that month (simple/<id>.json
+  // actions: sow, harvest, then plant), else the crop growing in the middle of the month, else the field rests
+  function actMonth(a) { var f = a.fill || {}; return f.sow_month || f.harvest_month || f.month || null; }
+  function actKind(a) { return /harvest/.test(a.text) ? 'harvest' : /plant/.test(a.text) ? 'plant' : /sow/.test(a.text) ? 'sow' : 'do'; }
+  function monthSteps(p, acts, keys) {
+    return keys.map(function (k) {
+      var here = acts.filter(function (a) { return actMonth(a) === k; }), grow = cropOn(p, (CUM[MONTHS.indexOf(k)] + 29) % 365);
+      var f = here[0] ? here[0].fill || {} : {};
+      return { key: k, acts: here, kind: here[0] ? actKind(here[0]) : grow ? 'grow' : 'rest', crop: here[0] ? f.crop || f.new_crop || grow : grow };
+    });
+  }
   function cap(s) { return /^(ne|hi|bn)$/.test(S.lang) ? s : s.charAt(0).toUpperCase() + s.slice(1); }
   var CROP_COL = ['#C8E05A', '#F0AE4C', '#9CC8E3', '#E6B8DA'];
 

@@ -3460,6 +3460,50 @@
    "en": "Ropani, the land unit",
    "bn": "রোপনি, জমির একক"
   },
+  "shared.farm.m_grows": {
+   "en": "{crop} is growing.",
+   "bn": "{crop} বাড়ছে।"
+  },
+  "shared.farm.m_rest": {
+   "en": "The field rests.",
+   "bn": "খেত বিশ্রামে থাকে।"
+  },
+  "shared.farm.see6": {
+   "en": "See the next 6 months",
+   "bn": "পরের 6 মাস দেখুন"
+  },
+  "shared.farm.m_row": {
+   "en": "Usually, month by month:",
+   "bn": "সাধারণত, মাসে মাসে:"
+  },
+  "shared.farm.k_sow": {
+   "en": "Sow",
+   "bn": "বোনা"
+  },
+  "shared.farm.k_harvest": {
+   "en": "Harvest",
+   "bn": "কাটা"
+  },
+  "shared.farm.k_plant": {
+   "en": "Plant",
+   "bn": "রোপণ"
+  },
+  "shared.farm.k_grow": {
+   "en": "Growing",
+   "bn": "বাড়ছে"
+  },
+  "shared.farm.k_rest": {
+   "en": "Rest",
+   "bn": "বিশ্রাম"
+  },
+  "shared.farm.wx_range": {
+   "en": "{month_from} to {month_to}",
+   "bn": "{month_from} থেকে {month_to}"
+  },
+  "shared.farm.wx_usual_care": {
+   "en": "Keep your usual care.",
+   "bn": "সাধারণ যত্ন নিন।"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "bn": "জানুয়ারি–ফেব্রুয়ারি"
