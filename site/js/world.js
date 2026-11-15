@@ -70,7 +70,7 @@
       near ? [h('p', { class: 'wh' }, T('farm.world_nearest')), h('p', { class: 'wtxt' }, h('b', null, near[0].name), ' · ' + K.digits(Math.round(near[1]).toLocaleString('en-US')) + ' ' + T('farm.world_km'))] : null,
       here ? null : h('div', { class: 'card soft' }, K.lines([T('farm.world_not_ready'), T('farm.world_one_command'), T('farm.world_hours')]),
         h('a', { class: 'judges', href: README, target: '_blank', rel: 'noopener' }, K.svg(K.I('book', 16)), T('farm.world_readme'))),
-      h('p', { class: 'small' }, T('farm.world_no_numbers'))]);
+      here ? null : h('p', { class: 'small' }, T('farm.world_no_numbers'))]);
   }
   function mapBox(w) {
     var o = w.outline, box = h('div', { class: 'wmap', style: 'aspect-ratio:' + o.size + '/' + (o.y1 - o.y0).toFixed(1) });
