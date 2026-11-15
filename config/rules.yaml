@@ -1758,5 +1758,5 @@ global_use:                       # owner, 2026-11-15 (~11:30): "Could Khet Sath
     value: {nepal: "a field whose index.json country is Nepal: Bikram Sambat months and Nepali first, as before", elsewhere: "a field in any other country: Gregorian months, and English unless the visitor has chosen a language"}
     source: "Owner, 2026-11-15: 'Outside Nepal the app uses Gregorian months and English by default; Nepal keeps Bikram Sambat months and Nepali first. Nepal's screens must not change at all'"
   examples:
-    value: {nepal: [27.69, 85.44], madagascar: [-18.83, 47.44], us_midwest: [42.0, -93.5], northern_canada: [68.0, -110.0]}
-    source: "Owner, 2026-11-15: screenshots of a tap in Nepal, Madagascar, the US Midwest and northern Canada; the spots are Claude's choice (Bhaktapur; Ambohidratrimo; central Iowa; Nunavut)"
+    value: {nepal: [27.69, 85.44], madagascar: [-18.83, 47.44], us_midwest: [42.0, -93.5], northern_canada: [65.0, -100.0]}
+    source: "Owner, 2026-11-15: screenshots of a tap in Nepal, Madagascar, the US Midwest and northern Canada; the spots are Claude's choice (Bhaktapur; Ambohidratrimo; central Iowa; mainland Nunavut). Northern Canada moved from 68.0 N 110.0 W (at Coronation Gulf, sea) to 65.0 N 100.0 W before the first run"
