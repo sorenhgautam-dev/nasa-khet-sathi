@@ -463,6 +463,9 @@ probe:                            # build step 10 (robot/bridge.py); the probe i
     real_only:
       value: "config/probe_calibration.yaml is written only from push-ins read from a real serial port, with every proof run; a log from the fake probe, stdin or a pseudo-terminal gives a labelled rehearsal result and no calibration file"
       source: "Owner's probe brief, 2026-11-14 (fix 3: no such file until real bench data exists); golden rule: no made-up number is exported"
+    void:
+      value: "a push-in the team says was taken wrongly (for example in the wrong cup) is voided by a 'void' record in the bench log, with the team's own reason, written before the analysis (robot.bench --void); it stays in the log and is listed in bench.json with its reason, but leaves every proof and the fit. A redo of that push-in recorded after the void (robot.bench --only) takes its place"
+      source: "Owner, 2026-11-15, 10:45, after cup c1's push-in 3 read 50 % against 28 % for push-ins 1 and 2 (Claude pointed out the jump): 'I forgot to change the cup... can we redo'. Voiding only on the team's word about how the push-in was taken, never on its value: Claude's rule"
     spoon:                        # the rough calibration without a scale (owner, 2026-11-15). Committed before any cup was measured. A cups sheet with the column cup_spoons uses these rules; the weighed-cup rules above stay for a sheet with grams
       reference:
         value: "each cup is filled to the same line; its volume N = level spoonfuls of water to the line (one spoon for everything); the water added to cup k = w_k level spoonfuls of the same spoon; reference water content = w_k / N m3/m3 (water % = 100 x w_k / N), with the w_k actually added. The spoon's size cancels out. A printed cup volume (ml), when the cup has one, is recorded as a cross-check: spoon size = printed volume / N is reported, never used"
