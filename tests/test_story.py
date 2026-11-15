@@ -108,6 +108,14 @@ def test_crop_months_shows_the_models_and_the_calendars_harvest_month_and_the_fi
     assert space and space[0]["winter_end"] == "05-11" and space[0]["winter_seasons"] == 2
 
 
+def test_the_offline_section_says_the_first_visit_needs_internet_and_live_readings_need_the_laptop():
+    c = bs.chart_offline()
+    text = " ".join(r["text"]["en"] for r in c["rows"])
+    assert c["section"] == "offline" and "once with internet" in text and "no internet" in text and "laptop" in text
+    assert any(s[0] == "offline" and "offline_use" in s[2] for s in bs.SECTIONS)
+    assert all(r["text"]["ne"] and r["head"]["ne"] for r in c["rows"])
+
+
 def test_sen_line_passes_through_the_median_residual():
     t = [0.0, 1.0, 2.0, 3.0]
     y = [1.0, -1.0, -3.0, -5.0]

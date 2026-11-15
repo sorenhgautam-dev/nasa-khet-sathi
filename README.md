@@ -65,6 +65,24 @@ Fields are prepared ahead of time, and `site/data/index.json` lists them (today 
 abroad are build step 11). A field drawn outside every
 prepared area gets a friendly message instead of an error.
 
+### Works offline after one visit
+
+- **The first opening needs internet.** On that visit the phone saves the main field's screens and data (about 50 files,
+  under 3 MB; `site/sw.js`, a service worker; its list and version are written by `scripts/build_offline.py` from the
+  final files, and `scripts/check_site.py` checks they are current).
+- **After that it opens with no internet**, on that phone and browser, and says "Offline: showing your saved field."
+  When the phone is online again and we have published new data, it fetches the new files once and uses them.
+- **Live probe readings always need the laptop** (and its hotspot) nearby: `data/live.json` and the probe log are never
+  saved for offline use, and on the laptop or its hotspot the service worker is not used at all.
+- It works at any address: the worker covers only the folder it is served from (GitHub Pages' `/data-test-game/`, or the
+  root of another host), and every path is relative.
+
+Test on a real phone (about 5 minutes): (1) on mobile data, open the live address and wait until the home screen
+shows; (2) open "From the sky", "Your field in small parts" and "What should I grow"; (3) turn on aeroplane mode and
+close the browser; (4) open the address again: the home screen and those screens show, with the offline line; (5) turn
+aeroplane mode off and reload: the offline line goes. Do it once on an iPhone (Safari) and once on Android (Chrome). On an
+iPhone, "Add to Home Screen" keeps its own saved copy, so do the test from the home-screen icon too.
+
 ## How to run it for a new field
 
 You need Python 3.12 and a free NASA Earthdata login (saved in `~/.netrc`; never in this repository).

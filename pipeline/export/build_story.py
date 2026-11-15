@@ -491,6 +491,18 @@ def chart_crop_months(fj, calendars, diary_seasons, bs_names):
          "config/rules.yaml farmer_answers.actions_calendar_months"], "table", rows=rows)
 
 
+def chart_offline():
+    """Part 2 (owner, 2026-11-15): what works with no internet (site/sw.js, scripts/build_offline.py). Pure."""
+    rows = [{"head": T("First time", "पहिलो पटक"), "text": T("Open it once with internet.", "एक पटक इन्टरनेटसहित खोल्नुहोस्।")},
+            {"head": T("After that", "त्यसपछि"), "text": T("It opens with no internet, on that phone.", "त्यही फोनमा इन्टरनेट बिना खुल्छ।")},
+            {"head": T("New data", "नयाँ तथ्याङ्क"), "text": T("It comes when you are online again.", "फेरि इन्टरनेट हुँदा आउँछ।")},
+            {"head": T("Live soil readings", "प्रत्यक्ष माटो रिडिङ"),
+             "text": T("These always need our laptop nearby.", "यसका लागि सधैं हाम्रो ल्यापटप नजिकै चाहिन्छ।")}]
+    return chart("offline_use", "offline", T("What works with no internet", "इन्टरनेट बिना के चल्छ"),
+                 T("The phone keeps a copy of your field.", "फोनले तपाईंको खेतको प्रति राख्छ।"),
+                 ["site/sw.js (a service worker) and scripts/build_offline.py: the files a first visit saves"], "table", rows=rows)
+
+
 def chart_cover_sure(months, month_words):
     low = min(months, key=lambda m: m["cover_sure"])
     name_ne = month_words[low["m"]]["ne"]
@@ -1436,6 +1448,7 @@ SECTIONS = [
     ("future", T("Harvests by 2040", "२०४० सम्मको उब्जनी"), ["outlook_2040"]),
     ("computer", T("How the computer helped", "कम्प्युटरले कसरी सघायो"),
      ["season_methods", "cover_sure", "field_memory", "ai_words"]),
+    ("offline", T("Using it with no internet", "इन्टरनेट बिना चलाउने"), ["offline_use"]),
 ]
 
 
@@ -1519,7 +1532,7 @@ def build_story(inp, generated):
     c_memory = chart_field_memory(inp["memory"])
     c_words = chart_ai_words(words, fj)
     charts = [c_weight, c_stations, c_jump, c_fixed, c_seasons, c_sure, c_months, c_events, c_dhm, c_other, c_best, c_gw,
-              c_probe, c_area, c_future, c_methods, c_memory, c_words]
+              c_probe, c_area, c_future, c_methods, c_memory, c_words, chart_offline()]
 
     bench_used = [p["bench"]] if bench_is_real(inp["bench"]) else ["robot/CUPS_PROTOCOL.md", "config/rules.yaml"]
     inputs = {
@@ -1540,6 +1553,7 @@ def build_story(inp, generated):
         "season_methods": [p["field_json"]],
         "field_memory": [p["memory"]],
         "ai_words": [p["words"], p["field_json"], "SI_LOG.md"],
+        "offline_use": ["site/sw.js", "scripts/build_offline.py"],
         "compliance": [p["scorecard"], "config/rules.yaml"],
         "report_card": [p["field_json"], p["diary_seasons"], p["area_check"], p["rain_vs_dhm"], p["weather"],
                         p["normals"], p["fao"], p["known_events"], p["future"], "VALIDATION.md"] + bench_used[:1],
