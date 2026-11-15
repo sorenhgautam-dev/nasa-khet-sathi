@@ -7890,7 +7890,7 @@
     "ne_review": "needs native-speaker review",
     "hi": "दुनिया की तस्वीर: नासा ब्लू मार्बल, अगस्त 2004।",
     "bn": "বিশ্বের ছবি: নাসা ব্লু মার্বেল, আগস্ট 2004।",
-    "es": "Imagen del mundo: NASA Blue Marble, agosto de 2004.",
+    "es": "Imagen: NASA Blue Marble, agosto de 2004.",
     "fr": "Image du monde : NASA Blue Marble, août 2004.",
     "sw": "Picha ya dunia: NASA Blue Marble, Agosti 2004."
    },
@@ -7918,11 +7918,11 @@
     "en": "Download NASA's free records for that place.",
     "ne": "त्यो ठाउँको नासाको निःशुल्क रेकर्ड डाउनलोड गर्नुहोस्।",
     "ne_review": "needs native-speaker review",
-    "hi": "उस जगह के नासा के मुफ़्त रिकॉर्ड डाउनलोड करें।",
+    "hi": "उस जगह के मुफ़्त नासा रिकॉर्ड डाउनलोड करें।",
     "bn": "সেই জায়গার নাসার বিনামূল্যের রেকর্ড নামান।",
     "es": "Descargue los registros gratuitos de la NASA.",
     "fr": "Téléchargez les relevés gratuits de la NASA.",
-    "sw": "Pakua rekodi za bure za NASA za mahali hapo."
+    "sw": "Pakua rekodi za NASA za mahali hapo, bure."
    },
    "world_step_3": {
     "en": "Run one command. It builds every page.",
