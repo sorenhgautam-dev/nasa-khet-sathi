@@ -8986,6 +8986,16 @@
     "es": "Todo nuestro código es público. Ábralo aquí.",
     "fr": "Tout notre code est public. Ouvrez-le ici.",
     "sw": "Msimbo wetu wote ni wa umma. Ufungue hapa."
+   },
+   "more_crops": {
+    "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
+    "ne": "धानपछि केराउ वा बन्दा? अझै जाँचिएको छैन। आफ्नो कृषि कार्यालयमा सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "धान के बाद मटर या पत्तागोभी? अभी जाँचा नहीं। अपने कृषि कार्यालय से पूछें।",
+    "bn": "ধানের পরে মটর বা বাঁধাকপি? এখনও পরীক্ষা হয়নি। আপনার কৃষি অফিসে জিজ্ঞাসা করুন।",
+    "es": "¿Guisante o repollo después del arroz? Aún no probado. Pregunte en su oficina agrícola.",
+    "fr": "Pois ou chou après le riz ? Pas encore testé. Demandez à votre bureau agricole.",
+    "sw": "Njegere au kabichi baada ya mpunga? Bado haijajaribiwa. Uliza ofisi yako ya kilimo."
    }
   },
   "fog": {

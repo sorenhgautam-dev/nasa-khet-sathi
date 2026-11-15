@@ -3971,6 +3971,10 @@
   "shared.farm.data_code": {
    "en": "All our code is public. Open it here.",
    "hi": "हमारा सारा कोड सार्वजनिक है। यहाँ खोलें।"
+  },
+  "shared.farm.more_crops": {
+   "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
+   "hi": "धान के बाद मटर या पत्तागोभी? अभी जाँचा नहीं। अपने कृषि कार्यालय से पूछें।"
   }
  }
 }

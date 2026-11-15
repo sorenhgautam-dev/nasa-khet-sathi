@@ -3971,6 +3971,10 @@
   "shared.farm.data_code": {
    "en": "All our code is public. Open it here.",
    "fr": "Tout notre code est public. Ouvrez-le ici."
+  },
+  "shared.farm.more_crops": {
+   "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
+   "fr": "Pois ou chou après le riz ? Pas encore testé. Demandez à votre bureau agricole."
   }
  }
 }

@@ -4881,6 +4881,11 @@
     "en": "All our code is public. Open it here.",
     "ne": "हाम्रो सबै कोड सार्वजनिक छ। यहाँ खोल्नुहोस्।",
     "ne_review": "needs native-speaker review"
+   },
+   "more_crops": {
+    "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
+    "ne": "धानपछि केराउ वा बन्दा? अझै जाँचिएको छैन। आफ्नो कृषि कार्यालयमा सोध्नुहोस्।",
+    "ne_review": "needs native-speaker review"
    }
   },
   "fog": {

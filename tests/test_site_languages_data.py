@@ -14,7 +14,7 @@ WORDS = json.loads((SITE / "data" / "words.json").read_text())
 NEW = ["lang_title", "lang_count", "lang_tap", "lang_source", "lang_review", "lang_draft", "data_title", "data_lead",
        "data_read_h", "data_read_1", "data_read_2", "data_read_3", "data_read_4", "data_read_5", "data_list_h",
        "data_list_note", "data_files_h", "data_files_lead", "file_field", "file_behind", "file_story", "file_words",
-       "file_index", "file_version", "data_code"]
+       "file_index", "file_version", "data_code", "more_crops"]
 
 
 def test_every_new_word_is_in_every_language():
@@ -41,3 +41,8 @@ def test_data_guide_comes_first_and_every_linked_file_exists():
     assert len(files) == 5 and all((SITE / f).exists() for f in files), files
     for f in json.loads((SITE / "data" / "index.json").read_text())["fields"]:
         assert (SITE / "data" / "fields" / f"{f['id']}.json").exists()       # 'This field' opens the field's own file
+
+
+def test_pea_and_cabbage_are_named_on_both_next_screens_never_scored():
+    assert APP.count("moreCrops(), tags, advisorNote(monthsNote())") == 2       # Next 3 and Next 6 months, under More
+    assert "pea" not in json.loads((REPO / "config" / "crops.json").read_text())["crops"]   # not in the twin's crops

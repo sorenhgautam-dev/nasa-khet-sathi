@@ -3971,6 +3971,10 @@
   "shared.farm.data_code": {
    "en": "All our code is public. Open it here.",
    "sw": "Msimbo wetu wote ni wa umma. Ufungue hapa."
+  },
+  "shared.farm.more_crops": {
+   "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
+   "sw": "Njegere au kabichi baada ya mpunga? Bado haijajaribiwa. Uliza ofisi yako ya kilimo."
   }
  }
 }
