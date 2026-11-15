@@ -166,3 +166,115 @@ def shift_kind(years, days, alpha):
     if (low > 0 or high < 0) and p < alpha:
         return "earlier" if slope < 0 else "later"
     return "no clear change"
+
+
+# ---- job D (owner, 2026-11-15): consistency checks, not this field's truth (rules.yaml verification.outputs) ----
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def _doy(mmdd):
+    """Day of a non-leap year for 'MM-DD' (1..365)."""
+    import datetime as _dt
+    return _dt.date(2001, int(mmdd[:2]), int(mmdd[3:5])).timetuple().tm_yday
+
+
+def _inside(day, a, b):
+    """Is day-of-year `day` within a..b (both ends; b may wrap past 31 December)?"""
+    return (day - a) % 365 <= (b - a) % 365
+
+
+def _default_window(cal):
+    ws = (cal or {}).get("windows") or []
+    return ws[(cal or {}).get("default", 0)] if ws else None
+
+
+def guess_consistency(guess, calendars, district_areas, drone_seen=None, cereals=()):
+    """rotation_guess: (drone, field level, one date) the guess's last (winter) crop is a cereal when the drone saw one;
+    (area level) each guessed crop has a calendar window; (area level) each guessed crop's district area is above 0 ha
+    in every year listed (a crop not in the file is listed, not scored). -> (passes, rows)."""
+    rows = []
+    if drone_seen == "cereal":
+        rows.append({"case": f"drone: the winter crop ({guess[-1]}) is a cereal", "pass": guess[-1] in cereals})
+    for c in guess:
+        rows.append({"case": f"calendar: {c} has a sowing window", "pass": bool(((calendars or {}).get(c) or {}).get("windows"))})
+    for c in (guess if district_areas is not None else []):   # None: a field outside the district file's district
+        if c in district_areas:
+            rows.append({"case": f"district: {c} grown every year", "pass": all(a > 0 for a in district_areas[c])})
+        else:
+            rows.append({"case": f"district: {c} not in the file (listed, not scored)", "pass": None})
+    return [r["pass"] for r in rows if r["pass"] is not None], rows
+
+
+def cover_consistency(cover, guess, calendars, drone_month=None):
+    """cover_months: (drone) the drone's month is not 'bare'; (area level) each month is 'bare' exactly when its 15th lies
+    in no guessed crop's default window (first sowing day to last harvest day). -> (passes, rows)."""
+    spans = [(_doy(w["sow"]), _doy(w["harvest_end"])) for w in (_default_window(calendars.get(c)) for c in guess) if w]
+    rows = []
+    if drone_month:
+        rows.append({"case": f"drone: {drone_month} is not bare", "pass": cover.get(drone_month) != "bare"})
+    for i, m in enumerate(MONTHS):
+        cal_bare = not any(_inside(_doy(f"{i + 1:02d}-15"), a, b) for a, b in spans)
+        rows.append({"case": f"calendar: {m} {'bare' if cal_bare else 'growing'}, ours {cover.get(m)}",
+                     "pass": (cover.get(m) == "bare") == cal_bare})
+    return [r["pass"] for r in rows], rows
+
+
+def season_consistency(seasons, guess, calendars, drone_date=None, tol_days=10):
+    """season_dates: seasons [{start, peak, end}] from space (a winter season peaks December-May). (drone) the typical
+    winter season, median start to median end, holds the drone's day; (area level) each slot's median end lies in the
+    harvest window of the guessed crop for that slot (monsoon: guess[0], winter: guess[-1]), give or take tol_days.
+    Days are counted from 1 August, so a winter season does not wrap. -> (passes, rows)."""
+    from statistics import median
+    aug1 = _doy("08-01")
+
+    def off(mmdd):
+        return (_doy(mmdd) - aug1) % 365
+
+    by = {"monsoon": [], "winter": []}
+    for s in seasons:
+        by["winter" if int(s["peak"][5:7]) in (12, 1, 2, 3, 4, 5) else "monsoon"].append((off(s["start"][5:10]), off(s["end"][5:10])))
+    rows = []
+    if drone_date and by["winter"]:
+        a, b = median(x for x, _ in by["winter"]), median(y for _, y in by["winter"])
+        rows.append({"case": f"drone: the typical winter season holds {drone_date}", "pass": a <= off(drone_date) <= b})
+    for name, crop in (("monsoon", guess[0]), ("winter", guess[-1])):
+        w = _default_window(calendars.get(crop))
+        if not by[name] or not w:
+            continue
+        end = median(y for _, y in by[name])
+        lo, hi = off(w["harvest"]) - tol_days, off(w["harvest_end"]) + tol_days
+        rows.append({"case": f"{name} harvest: {crop}, typical end day {end:g} from 1 Aug, calendar {lo}-{hi}", "pass": lo <= end <= hi})
+    return [r["pass"] for r in rows], rows
+
+
+def direction_cases(ours, studies):
+    """groundwater: our direction against each published study's. -> (passes, rows)."""
+    rows = [{"case": s["cite"], "theirs": s["direction"], "ours": ours, "pass": ours == s["direction"]} for s in studies]
+    return [r["pass"] for r in rows], rows
+
+
+def sign_cases(plausibility, mofe):
+    """outlook_2040: the sign of our ensemble median change (mean temperature = mean of the Tmax and Tmin changes; annual
+    rain %) against MoFE 2019's, SSP2-4.5 with RCP4.5 and SSP5-8.5 with RCP8.5; sizes reported, not scored."""
+    rows = []
+    for ssp, rcp in (("ssp245", "rcp45"), ("ssp585", "rcp85")):
+        p = plausibility[ssp]
+        for what, ours, theirs in (("mean temperature (C)", (p["dtmax_c"]["ours"] + p["dtmin_c"]["ours"]) / 2, mofe[rcp]["temp_c"]),
+                                   ("annual rain (%)", p["rain_change_pct"]["ours"], mofe[rcp]["rain_pct"])):
+            rows.append({"case": f"{ssp} vs {rcp}: {what}", "ours": ours, "mofe": theirs, "pass": (ours > 0) == (theirs > 0) and ours != 0})
+    return [r["pass"] for r in rows], rows
+
+
+def spoon_cases(cups, tol_m3m3=0.04):
+    """probe_water on the spoon cups: each cup's water from a straight line fitted to the other cups (leave one cup out),
+    its error in m3/m3 (water-% / 100), within tol. -> (passes, rows)."""
+    import numpy as np
+    w = np.array([c["water_pct"] for c in cups], float)
+    p = np.array([c["value_pct"] for c in cups], float)
+    rows = []
+    for i in range(len(cups)):
+        m = np.arange(len(cups)) != i
+        b, a = np.polyfit(p[m], w[m], 1)
+        err = float(a + b * p[i] - w[i]) / 100
+        rows.append({"cup": cups[i].get("cup_id", i + 1), "error_m3m3": err, "pass": abs(err) <= tol_m3m3 + 1e-12})
+    return [r["pass"] for r in rows], rows

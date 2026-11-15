@@ -197,9 +197,9 @@
   }
  ],
  "labels_used": {
-  "plan_months": "NOT YET VERIFIABLE",
+  "plan_months": "ESTIMATE",
   "replay_window": "NOT YET VERIFIABLE",
-  "rotation_guess": "NOT YET VERIFIABLE",
+  "rotation_guess": "ESTIMATE",
   "probe_water": "NOT YET VERIFIABLE",
   "part_status": "NOT YET VERIFIABLE"
  },

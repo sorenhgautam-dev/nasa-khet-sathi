@@ -153,7 +153,7 @@ def district_years(fid, field, o):
     from datetime import date
     d = o["district"]
     path = ROOT / d["file"]
-    if f"/{fid}/" not in d["file"] or not path.exists():
+    if fid not in d.get("fields", [d["file"].split("/")[2]]) or not path.exists():   # Bhaktapur district's fields
         return [], {}
     rows = list(csv.DictReader(open(path)))
     rep = _json(ROOT / "data/checks" / fid / "replay.json")
@@ -180,6 +180,42 @@ def district_years(fid, field, o):
         per[dcrop] = {"our_crop": crop, "fiscal_years": [f"{y}/{(y + 1) % 100:02d}" for y in sorted(ref)], "k": sum(p), "n": len(p),
                       "watered_case": {"k": sum(pw), "n": len(pw)}, "year_to_year_direction": {"k": sum(dr), "n": len(dr)}}
     return passes, {"water_case": case, "crops": per, "not_scored": d["not_scored"]}
+
+
+def consistency(fid, field, outs):
+    """Job D (owner, 2026-11-15): the consistency checks of rotation_guess, cover_months, season_dates (the drone photo of
+    5 May 2026 on its own field; the field's FAO crop calendar; Bhaktapur's district crop statistics on Bhaktapur's
+    fields), probe_water (the spoon cups), groundwater (published valley studies) and outlook_2040 (MoFE 2019).
+    -> {output: (passes, rows)}."""
+    from pipeline.export.build_simple import calendars_of
+    guess, cal, out = field["diary"]["guess"], calendars_of(fid), {}
+    rg = outs["rotation_guess"]
+    drone = rg["drone"] if rg["drone"]["field"] == fid else None
+    areas = None
+    if fid in outs["harvest_years"]["district"].get("fields", []):
+        rows = list(csv.DictReader(open(ROOT / rg["district"]["file"])))
+        dmap = rg["district"]["crops"]
+        areas = {c: [float(r["area_ha"]) for r in rows if r["crop"] == dmap[c] and r["area_ha"]] for c in guess if c in dmap}
+    out["rotation_guess"] = v.guess_consistency(guess, cal, areas, drone and drone["seen"], rg["cereals"])
+    cover = {m["m"]: m["cover"] for m in field["diary"]["months"]}
+    out["cover_months"] = v.cover_consistency(cover, guess, cal, MONTHS[int(drone["date"][5:7]) - 1] if drone else None)
+    ds = _json(ROOT / "data/checks" / fid / "diary_seasons.json")
+    seasons = [s for y, ss in ds["chosen"]["seasons_by_year"].items() if 2014 <= int(y) <= 2025
+               for s in ss if s.get("source") != "modis"]
+    out["season_dates"] = v.season_consistency(seasons, guess, cal, drone and drone["date"][5:],
+                                                outs["season_dates"]["tolerance_days"])
+    bench = ROOT / "data/checks/probe/bench.json"
+    b = _json(bench) if bench.exists() else None
+    if b and not b.get("made_up") and b.get("cups"):
+        gone = {x if isinstance(x, str) else x.get("cup_id") for x in b.get("excluded") or []}
+        out["probe_water"] = v.spoon_cases([c for c in b["cups"] if c["cup_id"] not in gone], outs["probe_water"]["tolerance_m3m3"])
+    gw = (field["diary"].get("groundwater") or {}).get("direction")
+    if gw:
+        out["groundwater"] = v.direction_cases(gw, outs["groundwater"]["studies"])
+    fut = ROOT / "data/checks" / fid / "future.json"
+    if fut.exists() and _json(fut).get("plausibility"):
+        out["outlook_2040"] = v.sign_cases(_json(fut)["plausibility"], outs["outlook_2040"]["mofe_2019"])
+    return out
 
 
 FARMER = ROOT / "data/field_visit"           # the farmer's locked answers (notes/FARMER_SCORING.md)
@@ -279,6 +315,9 @@ def score_all(fid):
         put("harvest_years", fp + dist, {**fx, "district": dist_x})
         if years is not None:
             card["harvest_years"]["replay_window"] = replay_window(fid, years, common)
+    for key, (passes, rows) in consistency(fid, field, outs).items():   # job D: consistency, where no farmer test ran
+        if key not in card:
+            put(key, passes, {"cases": rows})
     for key in outs:                       # outputs whose test data have not arrived score as no cases yet
         if key not in card:
             put(key, [])

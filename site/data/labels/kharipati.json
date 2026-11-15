@@ -93,9 +93,9 @@
   },
   "cover_months": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 12,
+   "n": 13,
    "scale": "field",
    "rain_corrected": false,
    "sources": [
@@ -105,9 +105,9 @@
   },
   "season_dates": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 2,
+   "n": 3,
    "scale": "field",
    "rain_corrected": false,
    "sources": [
@@ -118,9 +118,9 @@
   },
   "rotation_guess": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 5,
+   "n": 5,
    "scale": "field",
    "rain_corrected": false,
    "sources": [
@@ -155,9 +155,9 @@
   },
   "harvest_years": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 6,
+   "n": 14,
    "scale": "valley",
    "rain_corrected": true,
    "sources": [
@@ -211,9 +211,9 @@
   },
   "groundwater": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 2,
+   "n": 2,
    "scale": "region",
    "rain_corrected": false,
    "sources": [
@@ -238,8 +238,8 @@
   "probe_water": {
    "sure": "estimate",
    "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "k": 4,
+   "n": 4,
    "scale": "field",
    "rain_corrected": false,
    "sources": [
@@ -250,8 +250,8 @@
   "outlook_2040": {
    "sure": "estimate",
    "status": "ESTIMATE",
-   "k": 0,
-   "n": 0,
+   "k": 4,
+   "n": 4,
    "scale": "region",
    "rain_corrected": true,
    "sources": [
@@ -280,9 +280,9 @@
   },
   "bare_days": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 12,
+   "n": 13,
    "scale": "field",
    "rain_corrected": false,
    "sources": [
@@ -304,9 +304,9 @@
   },
   "plan_harvest": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 6,
+   "n": 14,
    "scale": "valley",
    "rain_corrected": true,
    "sources": [
@@ -319,9 +319,9 @@
   },
   "plan_harvest_watered": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 6,
+   "n": 14,
    "scale": "valley",
    "rain_corrected": false,
    "sources": [
@@ -402,9 +402,9 @@
   },
   "plan_months": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 2,
+   "n": 3,
    "scale": "region",
    "rain_corrected": false,
    "sources": [
@@ -414,9 +414,9 @@
   },
   "replay_year": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 6,
+   "n": 14,
    "scale": "valley",
    "rain_corrected": true,
    "sources": [
@@ -558,9 +558,9 @@
   },
   "pulse_seasons": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 2,
+   "n": 3,
    "scale": "neighbourhood",
    "rain_corrected": false,
    "sources": [
@@ -571,9 +571,9 @@
   },
   "pulse_typical": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 2,
+   "n": 3,
    "scale": "field",
    "rain_corrected": false,
    "sources": [
