@@ -1608,6 +1608,21 @@
   function noteBox(first) { return h('p', { class: 'note' }, first ? [first, ' '] : null, T('your_plan.know_best'), ' ', T('your_plan.advisor')); }
   // pea and cabbage after rice (owner, 2026-11-15 night): named only, never scored: the twin has not run them (docs/NEXT_STEPS.md 10)
   function moreCrops() { return inNepal() ? h('p', { class: 'note' }, svg(I('sprout', 16)), ' ', T('farm.more_crops')) : null; }
+  // "Fertilizer and sprays" (owner, 2026-11-15 night; rules.yaml food_and_sprays): no rate (none could be confirmed), the
+  // fertiliser-saver note with its own label, three spray lines without product names or doses, and the office's link
+  function foodCard() {
+    if (!inNepal()) return null;
+    var saver = h('div');
+    featData('fertiliser').then(function (d) {
+      if (!d || !d.applies) return;
+      var b = d.bags_ha_whole || [];
+      add(saver, [h('p', { style: 'margin:0' }, T('what_to_grow.fs_lead', { next_crop: crop(d.next_crop), legume_crop: crop(d.legume) })),
+        b.length === 2 ? h('p', { style: 'margin:0' }, T('what_to_grow.fs_saved', { bags_low: b[0], bags_high: b[1] })) : null, labs('fertiliser_saver', (d.labels || {}).fertiliser_saver)]);
+    });
+    return h('div', { class: 'card', style: 'display:flex;flex-direction:column;gap:8px' }, h('h3', { class: 'h3' }, T('farm.fs_title')), h('p', { style: 'margin:0' }, T('farm.fs_ask')), saver,
+      h('p', { style: 'margin:0;font-weight:700' }, T('farm.sp_h')), lines([T('farm.sp_1'), T('farm.sp_2'), T('farm.sp_3')], 'sub'),
+      h('a', { href: 'https://npponepal.gov.np/', target: '_blank', rel: 'noopener' }, T('farm.sp_link')));
+  }
   function monthsNote() { return inNepal() ? T('what_to_grow.months_note') : null; }
   function ctaTo(label, icon, route) {
     return h('button', { type: 'button', class: 'cta', onclick: function () { go(route); } }, svg(I(icon, 22, 2.6), 'lime'), h('span', null, label));
@@ -1630,14 +1645,14 @@
           if (s.keep) scene.append(keepCard(s, winterCrop(F, sd)));
           else { scene.append(pickLine(s.pick, s.own)); scene.lastChild.append(pickLinks(s.pick, 'm6', years)); }
           add(body, [knowBest(), lnk(T('weather.title'), function () { go('weather'); }, 'sun'), moreBox([wl ? h('div', { class: 'wblocks' }, sixBlocks(F.weather).map(function (b, i) { return wxCard(forCrops(wl[b.key] || {}, grows), b, monthSpan(b.key), i); })) : sixRow(steps),
-            moreCrops(), tags, advisorNote(monthsNote())])]);
+            moreCrops(), foodCard(), tags, advisorNote(monthsNote())])]);
           return;
         }
         // B1: the suggestion (its NASA tags once), one row for each of the next three months, the other choices folded
         if (s.keep) scene.append(keepCard(s, winterCrop(F, sd)));   // the other plans are listed on the card itself
         else { scene.append(bestCard(s.pick, s.own, true)); scene.lastChild.append(pickLinks(s.pick, 'm3', years)); }
         add(body, [knowBest(), moreBox([monthRows(steps, function (c) { return wxLines(F, sd, c); }), s.keep ? null : othersCard(s.others.concat(s.own && s.pick !== s.own ? [s.own] : [])),
-          moreCrops(), tags, advisorNote(monthsNote())])]);
+          moreCrops(), foodCard(), tags, advisorNote(monthsNote())])]);
       });
       return screen('next', {
         head: [bigTitle(T('what_to_grow.next_h1'), T(n === 6 ? 'what_to_grow.next_h2_6' : 'what_to_grow.next_h2')), fieldChip(F)],

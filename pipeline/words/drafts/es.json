@@ -3975,6 +3975,34 @@
   "shared.farm.more_crops": {
    "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
    "es": "¿Guisante o repollo después del arroz? Aún no probado. Pregunte en su oficina agrícola."
+  },
+  "shared.farm.fs_title": {
+   "en": "Fertilizer and sprays",
+   "es": "Abono y fumigación"
+  },
+  "shared.farm.fs_ask": {
+   "en": "How much fertilizer? Ask your agriculture office. It depends on your soil.",
+   "es": "¿Cuánto abono? Pregunte en su oficina agrícola. Depende de su suelo."
+  },
+  "shared.farm.sp_h": {
+   "en": "Sprays",
+   "es": "Fumigación"
+  },
+  "shared.farm.sp_1": {
+   "en": "Use only products registered in Nepal.",
+   "es": "Use solo productos registrados en Nepal."
+  },
+  "shared.farm.sp_2": {
+   "en": "The approved amount is printed on the label.",
+   "es": "La cantidad aprobada está en la etiqueta."
+  },
+  "shared.farm.sp_3": {
+   "en": "First, let your agriculture office name the problem.",
+   "es": "Primero, que su oficina agrícola identifique el problema."
+  },
+  "shared.farm.sp_link": {
+   "en": "Nepal's plant protection office",
+   "es": "Oficina de protección vegetal de Nepal"
   }
  }
 }

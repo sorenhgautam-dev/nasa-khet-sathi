@@ -4886,6 +4886,41 @@
     "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
     "ne": "धानपछि केराउ वा बन्दा? अझै जाँचिएको छैन। आफ्नो कृषि कार्यालयमा सोध्नुहोस्।",
     "ne_review": "needs native-speaker review"
+   },
+   "fs_title": {
+    "en": "Fertilizer and sprays",
+    "ne": "मल र विषादी",
+    "ne_review": "needs native-speaker review"
+   },
+   "fs_ask": {
+    "en": "How much fertilizer? Ask your agriculture office. It depends on your soil.",
+    "ne": "कति मल हाल्ने? आफ्नो कृषि कार्यालयमा सोध्नुहोस्। यो तपाईंको माटोमा भर पर्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "sp_h": {
+    "en": "Sprays",
+    "ne": "विषादी",
+    "ne_review": "needs native-speaker review"
+   },
+   "sp_1": {
+    "en": "Use only products registered in Nepal.",
+    "ne": "नेपालमा दर्ता भएका विषादी मात्र प्रयोग गर्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "sp_2": {
+    "en": "The approved amount is printed on the label.",
+    "ne": "स्वीकृत मात्रा लेबलमा छापिएको हुन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "sp_3": {
+    "en": "First, let your agriculture office name the problem.",
+    "ne": "पहिले, कृषि कार्यालयलाई समस्या पहिचान गर्न दिनुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "sp_link": {
+    "en": "Nepal's plant protection office",
+    "ne": "नेपालको बिरुवा संरक्षण कार्यालय",
+    "ne_review": "needs native-speaker review"
    }
   },
   "fog": {

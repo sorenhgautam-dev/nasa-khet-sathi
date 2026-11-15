@@ -3975,6 +3975,34 @@
   "shared.farm.more_crops": {
    "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
    "sw": "Njegere au kabichi baada ya mpunga? Bado haijajaribiwa. Uliza ofisi yako ya kilimo."
+  },
+  "shared.farm.fs_title": {
+   "en": "Fertilizer and sprays",
+   "sw": "Mbolea na dawa"
+  },
+  "shared.farm.fs_ask": {
+   "en": "How much fertilizer? Ask your agriculture office. It depends on your soil.",
+   "sw": "Mbolea kiasi gani? Uliza ofisi yako ya kilimo. Inategemea udongo wako."
+  },
+  "shared.farm.sp_h": {
+   "en": "Sprays",
+   "sw": "Dawa za kunyunyizia"
+  },
+  "shared.farm.sp_1": {
+   "en": "Use only products registered in Nepal.",
+   "sw": "Tumia tu bidhaa zilizosajiliwa Nepal."
+  },
+  "shared.farm.sp_2": {
+   "en": "The approved amount is printed on the label.",
+   "sw": "Kiasi kilichoidhinishwa kimechapishwa kwenye lebo."
+  },
+  "shared.farm.sp_3": {
+   "en": "First, let your agriculture office name the problem.",
+   "sw": "Kwanza, ofisi ya kilimo itambue tatizo."
+  },
+  "shared.farm.sp_link": {
+   "en": "Nepal's plant protection office",
+   "sw": "Ofisi ya ulinzi wa mimea ya Nepal"
   }
  }
 }

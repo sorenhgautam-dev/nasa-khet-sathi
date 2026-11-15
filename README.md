@@ -241,9 +241,8 @@ the rain correction; (7) reaching farmers through cooperatives and women's group
 
 The full list, with what each would need, is in [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md). Among them: a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May (`docs/NEXT_STEPS.md` 9).
 Two that came up on the last evening: **pea and cabbage after rice** are named on the plan screens as "not tested yet"
-(their numbers are checked, but our model has not run them; step 10), and **a fertilizer and spray card** was left out
-because the government paper we wanted to quote could not be opened, and the government replaced the old one-size rice
-rate in 2022 (step 11).
+(their numbers are checked, but our model has not run them; step 10), and the **"Fertilizer and sprays"** card shows no amounts (ask your agriculture office), because the government paper
+we wanted to quote could not be opened, and the government replaced the old one-size rice rate in 2022 (step 11).
 First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil bucket, so water a bunded paddy holds above field capacity is not kept (METHOD_NOTES 103).
 
 ## Credits

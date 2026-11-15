@@ -127,6 +127,8 @@ service. Every use, and what a person reviewed, is in [SI_LOG.md](SI_LOG.md) and
 
 - **Pea and cabbage after rice** are named on the plan screens as "not tested yet". Their numbers are checked, but our
   model has not run them ([docs/NEXT_STEPS.md](docs/NEXT_STEPS.md), step 10).
-- **A fertilizer and spray card** was left out: the government paper we wanted to quote could not be opened, and the
+- **Fertilizer amounts.** The plan screens have a small "Fertilizer and sprays" card under "More": ask your agriculture
+  office how much (it depends on your soil), the rice-after-lentil saver note (an estimate), and three spray lines with
+  no product names or doses. No rate is shown: the government paper we wanted to quote could not be opened, and the
   government replaced the old one-size rice rate in 2022 (step 11).
 - The full list, with what each step needs: [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md).

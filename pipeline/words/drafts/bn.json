@@ -3975,6 +3975,34 @@
   "shared.farm.more_crops": {
    "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
    "bn": "ধানের পরে মটর বা বাঁধাকপি? এখনও পরীক্ষা হয়নি। আপনার কৃষি অফিসে জিজ্ঞাসা করুন।"
+  },
+  "shared.farm.fs_title": {
+   "en": "Fertilizer and sprays",
+   "bn": "সার ও কীটনাশক"
+  },
+  "shared.farm.fs_ask": {
+   "en": "How much fertilizer? Ask your agriculture office. It depends on your soil.",
+   "bn": "কত সার? আপনার কৃষি অফিসে জিজ্ঞাসা করুন। এটি আপনার মাটির ওপর নির্ভর করে।"
+  },
+  "shared.farm.sp_h": {
+   "en": "Sprays",
+   "bn": "কীটনাশক"
+  },
+  "shared.farm.sp_1": {
+   "en": "Use only products registered in Nepal.",
+   "bn": "শুধু নেপালে নিবন্ধিত পণ্য ব্যবহার করুন।"
+  },
+  "shared.farm.sp_2": {
+   "en": "The approved amount is printed on the label.",
+   "bn": "অনুমোদিত পরিমাণ লেবেলে ছাপা থাকে।"
+  },
+  "shared.farm.sp_3": {
+   "en": "First, let your agriculture office name the problem.",
+   "bn": "আগে কৃষি অফিসকে সমস্যা চিহ্নিত করতে দিন।"
+  },
+  "shared.farm.sp_link": {
+   "en": "Nepal's plant protection office",
+   "bn": "নেপালের উদ্ভিদ সুরক্ষা অফিস"
   }
  }
 }

@@ -1756,3 +1756,12 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   the raw files every screen reads, the public code, the languages. Drafted 25 new screen words in Nepali and the five
   draft languages. Test: tests/test_site_languages_data.py. No result changed.
 - **For a person to review:** the 25 new Nepali lines and their five drafts.
+
+## 2026-11-15 night: simple Choose screen, pea and cabbage named, HOW_WE_KNOW.md, the small "Fertilizer and sprays" card (Claude Opus 5.5 via Claude Code)
+
+- **What SI did:** the Choose screen as four plain cards; pea and cabbage after rice named under More as "not tested
+  yet"; HOW_WE_KNOW.md built from site/data and the README's "For judges: start here"; the "Fertilizer and sprays" card
+  without numbers (rules.yaml food_and_sprays, committed first: the NARC 2022 paper could not be opened, and CIMMYT's
+  2022 news says MoALD replaced the blanket rice rate). Sub-agents opened the web pages (NARC, CIMMYT, NPPO Nepal).
+  New words in Nepali and the five draft languages. No result changed.
+- **For a person to review:** the new Nepali lines and their drafts; the spray lines' wording.

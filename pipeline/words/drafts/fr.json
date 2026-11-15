@@ -3975,6 +3975,34 @@
   "shared.farm.more_crops": {
    "en": "Pea or cabbage after rice? Not tested yet. Ask your agriculture office.",
    "fr": "Pois ou chou après le riz ? Pas encore testé. Demandez à votre bureau agricole."
+  },
+  "shared.farm.fs_title": {
+   "en": "Fertilizer and sprays",
+   "fr": "Engrais et traitements"
+  },
+  "shared.farm.fs_ask": {
+   "en": "How much fertilizer? Ask your agriculture office. It depends on your soil.",
+   "fr": "Combien d'engrais ? Demandez à votre bureau agricole. Cela dépend de votre sol."
+  },
+  "shared.farm.sp_h": {
+   "en": "Sprays",
+   "fr": "Traitements"
+  },
+  "shared.farm.sp_1": {
+   "en": "Use only products registered in Nepal.",
+   "fr": "N'utilisez que des produits homologués au Népal."
+  },
+  "shared.farm.sp_2": {
+   "en": "The approved amount is printed on the label.",
+   "fr": "La dose autorisée est imprimée sur l'étiquette."
+  },
+  "shared.farm.sp_3": {
+   "en": "First, let your agriculture office name the problem.",
+   "fr": "D'abord, le bureau agricole identifie le problème."
+  },
+  "shared.farm.sp_link": {
+   "en": "Nepal's plant protection office",
+   "fr": "Bureau de protection des végétaux du Népal"
   }
  }
 }

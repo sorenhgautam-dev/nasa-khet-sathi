@@ -122,7 +122,7 @@ tables list none in either year. Mustard (rapeseed in FAO-56): no Table 11 stage
 Table 24 or FAO-66, so it cannot be compared (Bhaktapur: sarsoon 223 ha in 2079/80, 6 ha in 2081/82).
 
 
-## 11. "Food and sprays" card (owner's request, 2026-11-15 evening; left out by the owner's 22:00 rule)
+## 11. "Food and sprays" card (owner's request, 2026-11-15 evening): the amounts. A small card without numbers is built (owner, 2026-11-15 night; rules.yaml food_and_sprays)
 
 **Why it was left out.** The owner asked for rice's fertiliser rate and timing exactly as printed in NARC's 2022 paper
 (narc.gov.np/wp-content/uploads/2022/05/Article-03.pdf), with each source opened by us. On 2026-11-15 at 21:00 that link

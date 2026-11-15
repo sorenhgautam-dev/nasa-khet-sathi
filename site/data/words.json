@@ -8996,6 +8996,76 @@
     "es": "¿Guisante o repollo después del arroz? Aún no probado. Pregunte en su oficina agrícola.",
     "fr": "Pois ou chou après le riz ? Pas encore testé. Demandez à votre bureau agricole.",
     "sw": "Njegere au kabichi baada ya mpunga? Bado haijajaribiwa. Uliza ofisi yako ya kilimo."
+   },
+   "fs_title": {
+    "en": "Fertilizer and sprays",
+    "ne": "मल र विषादी",
+    "ne_review": "needs native-speaker review",
+    "hi": "खाद और कीटनाशक",
+    "bn": "সার ও কীটনাশক",
+    "es": "Abono y fumigación",
+    "fr": "Engrais et traitements",
+    "sw": "Mbolea na dawa"
+   },
+   "fs_ask": {
+    "en": "How much fertilizer? Ask your agriculture office. It depends on your soil.",
+    "ne": "कति मल हाल्ने? आफ्नो कृषि कार्यालयमा सोध्नुहोस्। यो तपाईंको माटोमा भर पर्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "कितनी खाद? अपने कृषि कार्यालय से पूछें। यह आपकी मिट्टी पर निर्भर है।",
+    "bn": "কত সার? আপনার কৃষি অফিসে জিজ্ঞাসা করুন। এটি আপনার মাটির ওপর নির্ভর করে।",
+    "es": "¿Cuánto abono? Pregunte en su oficina agrícola. Depende de su suelo.",
+    "fr": "Combien d'engrais ? Demandez à votre bureau agricole. Cela dépend de votre sol.",
+    "sw": "Mbolea kiasi gani? Uliza ofisi yako ya kilimo. Inategemea udongo wako."
+   },
+   "sp_h": {
+    "en": "Sprays",
+    "ne": "विषादी",
+    "ne_review": "needs native-speaker review",
+    "hi": "कीटनाशक",
+    "bn": "কীটনাশক",
+    "es": "Fumigación",
+    "fr": "Traitements",
+    "sw": "Dawa za kunyunyizia"
+   },
+   "sp_1": {
+    "en": "Use only products registered in Nepal.",
+    "ne": "नेपालमा दर्ता भएका विषादी मात्र प्रयोग गर्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "केवल नेपाल में पंजीकृत उत्पाद इस्तेमाल करें।",
+    "bn": "শুধু নেপালে নিবন্ধিত পণ্য ব্যবহার করুন।",
+    "es": "Use solo productos registrados en Nepal.",
+    "fr": "N'utilisez que des produits homologués au Népal.",
+    "sw": "Tumia tu bidhaa zilizosajiliwa Nepal."
+   },
+   "sp_2": {
+    "en": "The approved amount is printed on the label.",
+    "ne": "स्वीकृत मात्रा लेबलमा छापिएको हुन्छ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "स्वीकृत मात्रा लेबल पर छपी होती है।",
+    "bn": "অনুমোদিত পরিমাণ লেবেলে ছাপা থাকে।",
+    "es": "La cantidad aprobada está en la etiqueta.",
+    "fr": "La dose autorisée est imprimée sur l'étiquette.",
+    "sw": "Kiasi kilichoidhinishwa kimechapishwa kwenye lebo."
+   },
+   "sp_3": {
+    "en": "First, let your agriculture office name the problem.",
+    "ne": "पहिले, कृषि कार्यालयलाई समस्या पहिचान गर्न दिनुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "पहले कृषि कार्यालय से समस्या पहचान करवाएँ।",
+    "bn": "আগে কৃষি অফিসকে সমস্যা চিহ্নিত করতে দিন।",
+    "es": "Primero, que su oficina agrícola identifique el problema.",
+    "fr": "D'abord, le bureau agricole identifie le problème.",
+    "sw": "Kwanza, ofisi ya kilimo itambue tatizo."
+   },
+   "sp_link": {
+    "en": "Nepal's plant protection office",
+    "ne": "नेपालको बिरुवा संरक्षण कार्यालय",
+    "ne_review": "needs native-speaker review",
+    "hi": "नेपाल का पौध संरक्षण कार्यालय",
+    "bn": "নেপালের উদ্ভিদ সুরক্ষা অফিস",
+    "es": "Oficina de protección vegetal de Nepal",
+    "fr": "Bureau de protection des végétaux du Népal",
+    "sw": "Ofisi ya ulinzi wa mimea ya Nepal"
    }
   },
   "fog": {
