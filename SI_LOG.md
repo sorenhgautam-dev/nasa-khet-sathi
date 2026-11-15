@@ -1606,3 +1606,17 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   the package's for p2-p4); the station choice for Dhulikhel (validation only, no valley correction); the new Nepali
   lines (marked for native-speaker review) and the draft lines in the other languages.
 
+
+## 2026-11-15 (Sunday, morning): the real farm in Kharipati (Claude Opus 5.5 via Claude Code; one helper agent)
+
+- **What Claude did:** read the teammate's package (README, farm_coordinates.json); wrote `config/fields/kharipati.yaml`;
+  committed the two new rules first (f793667: the rain fix extends to a field sharing the demo's box, the owner's
+  "Same fix as demo"; the patches' `most_whole` grid and `touching` join); let a field share the demo's cached POWER
+  point when both are in the same POWER cells (`power_point_of`, refused otherwise, never downloading) and the NASADEM
+  tile already held; ran the whole pipeline from the cache with the network blocked, so any download would fail. A
+  helper agent wrote the two patch options, the Kharipati patch test, the resized drone picture and the per-field
+  label on the photo, parts and soil screens.
+- **What a person decided:** the owner chose the same 2017 rain fix as the demo's, applied only because Kharipati's
+  own break test found the break in 2017; the label words; the visual cross-check's wording (VALIDATION 3.34).
+- **For a person to review:** the new Nepali label and satellite lines (marked "needs native-speaker review"); the patch
+  comparison with the package (VALIDATION 3.35); the credit name (from the package).

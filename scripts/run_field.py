@@ -81,7 +81,7 @@ def plan(field, only=None, start=None, has_break_test=True):
         if (only and name not in only) or (sample and kind == FULL):
             continue
         cmd = cmd if kind == SITE else [*cmd, "--field", field["id"]]
-        if name == "weather" and sample and not has_break_test:
+        if name == "weather" and (sample or field.get("box_of")) and not has_break_test:
             out.append(("rain_check (break test first)", ["scripts/run_rain_check.py", "--field", field["id"]]))
         out.append((name, cmd))
     return out

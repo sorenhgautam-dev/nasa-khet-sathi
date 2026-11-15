@@ -141,6 +141,9 @@ def test_a_sample_is_corrected_only_when_its_own_test_finds_the_break_in_2017():
     assert break_corrected({"id": "ambohidratrimo"}, G, {"found": True, "year": 2017}) is False   # not a sample
     assert break_corrected(sample, {k: v for k, v in G.items() if k != "correction_for_samples"},
                            {"found": True, "year": 2017}) is False                    # no rule, no correction
+    box = {"id": "kharipati", "box_of": "demo"}                                      # f793667: a field sharing the box
+    assert break_corrected(box, G, {"found": True, "year": 2017}) is True
+    assert break_corrected(box, G, {"found": False, "year": None}) is False and break_corrected(box, G, None) is False
 
 
 def test_the_weather_table_scales_a_sample_whose_test_found_the_break():

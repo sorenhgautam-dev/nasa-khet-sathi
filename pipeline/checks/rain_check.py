@@ -162,9 +162,10 @@ def break_test(gauge_table, gpm_yearly, chirps_yearly, rule):
 
 def break_corrected(field, gpm_series, break_test):
     """Is the field's GPM rain corrected for the gauge break? Listed in gpm_series.correction_fields (the demo), or a
-    sample field (config sample_of) whose own break test found the break in correction_from's year (rules.yaml
-    gpm_series.correction_for_samples, committed 810b3c8 before any sample's run). Pure."""
+    sample field (config sample_of) or a field sharing the demo's box (box_of) whose own break test found the break in
+    correction_from's year (rules.yaml gpm_series.correction_for_samples, committed 810b3c8 before any sample's run;
+    box_of f793667, before Kharipati's). Pure."""
     if field["id"] in gpm_series["correction_fields"]:
         return True
-    return bool(gpm_series.get("correction_for_samples") and field.get("sample_of") and break_test
+    return bool(gpm_series.get("correction_for_samples") and (field.get("sample_of") or field.get("box_of")) and break_test
                 and break_test.get("found") and break_test.get("year") == int(str(gpm_series["correction_from"])[:4]))

@@ -1,0 +1,803 @@
+{
+ "field": "kharipati",
+ "placeholder": true,
+ "made_by": "pipeline/export/build_labels.py (rules.yaml labels)",
+ "scorecard_of": "kharipati",
+ "scales": {
+  "field": {
+   "en": "Your field",
+   "ne": "तपाईंको खेत",
+   "about": "30 m or finer"
+  },
+  "neighbourhood": {
+   "en": "Around your field",
+   "ne": "तपाईंको खेत वरपर",
+   "about": "250 m to 1 km"
+  },
+  "valley": {
+   "en": "Your valley",
+   "ne": "तपाईंको उपत्यका",
+   "about": "about 10 km"
+  },
+  "region": {
+   "en": "Your wider region",
+   "ne": "तपाईंको फराकिलो क्षेत्र",
+   "about": "50 km or more"
+  }
+ },
+ "outputs": {
+  "rain_months": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 13,
+   "n": 20,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "dhm_bulletins"
+   ],
+   "scorecard": "rain_months"
+  },
+  "rain_month_words": {
+   "sure": "verified",
+   "status": "VERIFIED",
+   "k": 12,
+   "n": 12,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm"
+   ],
+   "scorecard": "rain_month_words"
+  },
+  "heat_month_words": {
+   "sure": "verified",
+   "status": "VERIFIED",
+   "k": 12,
+   "n": 12,
+   "scale": "valley",
+   "rain_corrected": false,
+   "sources": [
+    "power",
+    "ghcn"
+   ],
+   "scorecard": "heat_month_words"
+  },
+  "frost_month_words": {
+   "sure": "verified",
+   "status": "VERIFIED",
+   "k": 12,
+   "n": 12,
+   "scale": "valley",
+   "rain_corrected": false,
+   "sources": [
+    "power",
+    "ghcn"
+   ],
+   "scorecard": "frost_month_words"
+  },
+  "soil_month_words": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 22,
+   "n": 24,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "soil_month_words"
+  },
+  "cover_months": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "hls"
+   ],
+   "scorecard": "cover_months"
+  },
+  "season_dates": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "hls",
+    "crop_calendar"
+   ],
+   "scorecard": "season_dates"
+  },
+  "rotation_guess": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "hls",
+    "crop_calendar"
+   ],
+   "scorecard": "rotation_guess"
+  },
+  "flood_years": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 2,
+   "n": 2,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm"
+   ],
+   "scorecard": "flood_years"
+  },
+  "drought_years": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 2,
+   "n": 4,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm"
+   ],
+   "scorecard": "drought_years"
+  },
+  "harvest_years": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "harvest_years"
+  },
+  "plan_cover_gap_beats_current": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 94,
+   "n": 94,
+   "scale": "region",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "nexgddp"
+   ],
+   "scorecard": "plan_cover_gap_beats_current"
+  },
+  "plan_safest_beats_current": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 94,
+   "n": 94,
+   "scale": "region",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "nexgddp"
+   ],
+   "scorecard": "plan_safest_beats_current"
+  },
+  "monsoon_start": {
+   "sure": "verified",
+   "status": "VERIFIED",
+   "k": 24,
+   "n": 24,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "dhm_onset"
+   ],
+   "scorecard": "monsoon_start"
+  },
+  "groundwater": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "grace"
+   ],
+   "scorecard": "groundwater"
+  },
+  "part_soil_water": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "part_soil_water"
+  },
+  "probe_water": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "probe"
+   ],
+   "scorecard": "probe_water"
+  },
+  "outlook_2040": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 0,
+   "n": 0,
+   "scale": "region",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "nexgddp"
+   ],
+   "scorecard": "outlook_2040"
+  },
+  "plan_scores": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "grace",
+    "crop_calendar"
+   ],
+   "scorecard": "plan_scores"
+  },
+  "bare_days": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "hls"
+   ],
+   "scorecard": "cover_months"
+  },
+  "monsoon_shift": {
+   "sure": "verified",
+   "status": "VERIFIED",
+   "k": 24,
+   "n": 24,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "dhm_onset"
+   ],
+   "scorecard": "monsoon_shift"
+  },
+  "plan_harvest": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "crop_calendar"
+   ],
+   "scorecard": "harvest_years"
+  },
+  "plan_harvest_watered": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": false,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "crop_calendar"
+   ],
+   "scorecard": "harvest_years"
+  },
+  "plan_water": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "plan_scores"
+  },
+  "plan_cover": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 0,
+   "n": 0,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "crop_calendar"
+   ],
+   "scorecard": "plan_scores"
+  },
+  "plan_soil_kept": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "crop_calendar"
+   ],
+   "scorecard": "plan_scores"
+  },
+  "plan_gain": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "plan_scores"
+  },
+  "plan_tips": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "hls"
+   ],
+   "scorecard": "plan_scores"
+  },
+  "plan_months": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "crop_calendar"
+   ],
+   "scorecard": "season_dates"
+  },
+  "replay_year": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "harvest_years"
+  },
+  "replay_dry_days": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 13,
+   "n": 20,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "rain_months"
+  },
+  "replay_event": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 4,
+   "n": 6,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm"
+   ],
+   "scorecard": "flood_years+drought_years"
+  },
+  "part_wetness": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "part_soil_water"
+  },
+  "part_sure": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "smap"
+   ],
+   "scorecard": "part_soil_water"
+  },
+  "part_status": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids"
+   ],
+   "scorecard": "part_soil_water"
+  },
+  "part_greener": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "hls"
+   ],
+   "scorecard": null
+  },
+  "part_low_ground": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "nasadem"
+   ],
+   "scorecard": null
+  },
+  "pulse_hls": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "hls"
+   ],
+   "scorecard": null
+  },
+  "pulse_modis": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "neighbourhood",
+   "rain_corrected": false,
+   "sources": [
+    "modis"
+   ],
+   "scorecard": null
+  },
+  "pulse_curve": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "neighbourhood",
+   "rain_corrected": false,
+   "sources": [
+    "hls",
+    "modis"
+   ],
+   "scorecard": null
+  },
+  "pulse_seasons": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "neighbourhood",
+   "rain_corrected": false,
+   "sources": [
+    "hls",
+    "modis"
+   ],
+   "scorecard": "season_dates"
+  },
+  "pulse_typical": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "field",
+   "rain_corrected": false,
+   "sources": [
+    "hls",
+    "crop_calendar"
+   ],
+   "scorecard": "season_dates"
+  },
+  "nearby_fields": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": false,
+   "sources": [
+    "area_box",
+    "hls",
+    "worldcover"
+   ],
+   "scorecard": null
+  },
+  "replay_window": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "power",
+    "soilgrids",
+    "oni"
+   ],
+   "scorecard": "harvest_years.replay_window"
+  },
+  "checkup_rain": {
+   "sure": "estimate",
+   "status": "ESTIMATE",
+   "k": 13,
+   "n": 20,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "dhm_bulletins",
+    "dhm_normals",
+    "chirps"
+   ],
+   "scorecard": "rain_months"
+  },
+  "checkup_break": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": false,
+   "sources": [
+    "gpm",
+    "chirps",
+    "gpcc"
+   ],
+   "scorecard": null
+  },
+  "rainrisk_harvest": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": true,
+   "sources": [
+    "gpm",
+    "crop_calendar"
+   ],
+   "scorecard": null
+  },
+  "fertiliser_saver": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "literature"
+   ],
+   "scorecard": null
+  },
+  "heatclock_today": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "valley",
+   "rain_corrected": false,
+   "sources": [
+    "power",
+    "ghcn",
+    "crop_calendar"
+   ],
+   "scorecard": null
+  },
+  "heatclock_2040": {
+   "sure": "estimate",
+   "status": "NOT YET VERIFIABLE",
+   "k": 0,
+   "n": 0,
+   "scale": "region",
+   "rain_corrected": false,
+   "sources": [
+    "nexgddp",
+    "crop_calendar"
+   ],
+   "scorecard": null
+  }
+ },
+ "sources": {
+  "area_box": {
+   "name": "Area map of the fetch box",
+   "resolution": "about 10 x 10 km",
+   "scale": "valley"
+  },
+  "chirps": {
+   "name": "CHIRPS v3.0",
+   "resolution": "0.05 deg (about 5 km)",
+   "scale": "valley"
+  },
+  "crop_calendar": {
+   "name": "FAO Crop Calendar, Nepal Hill zone",
+   "resolution": "a zone of Nepal",
+   "scale": "region"
+  },
+  "dhm_bulletins": {
+   "name": "DHM monthly bulletins",
+   "resolution": "valley gauges within 10 km",
+   "scale": "valley"
+  },
+  "dhm_normals": {
+   "name": "DHM 1991-2020 normals, Bhaktapur",
+   "resolution": "one gauge, 2.3 km away",
+   "scale": "valley"
+  },
+  "dhm_onset": {
+   "name": "DHM monsoon onset dates",
+   "resolution": "one date a year for eastern Nepal",
+   "scale": "region"
+  },
+  "ghcn": {
+   "name": "Kathmandu Airport station",
+   "resolution": "one point, 7 km west",
+   "scale": "valley"
+  },
+  "gpcc": {
+   "name": "GPCC Full Data Monthly V2022",
+   "resolution": "1 deg box",
+   "scale": "region"
+  },
+  "gpm": {
+   "name": "GPM IMERG",
+   "resolution": "0.1 deg (about 10 km)",
+   "scale": "valley"
+  },
+  "grace": {
+   "name": "GRACE and GRACE-FO",
+   "resolution": "about 300 km",
+   "scale": "region"
+  },
+  "hls": {
+   "name": "Harmonized Landsat Sentinel-2",
+   "resolution": "30 m",
+   "scale": "field"
+  },
+  "literature": {
+   "name": "Published studies (not measured on this field)",
+   "resolution": "studies elsewhere",
+   "scale": "region"
+  },
+  "modis": {
+   "name": "MODIS Terra",
+   "resolution": "250 m",
+   "scale": "neighbourhood"
+  },
+  "nasadem": {
+   "name": "NASADEM",
+   "resolution": "30 m",
+   "scale": "field"
+  },
+  "nexgddp": {
+   "name": "NEX-GDDP-CMIP6",
+   "resolution": "0.25 deg",
+   "scale": "region"
+  },
+  "oni": {
+   "name": "NOAA CPC Oceanic Nino Index",
+   "resolution": "Nino-3.4 region of the Pacific",
+   "scale": "region"
+  },
+  "power": {
+   "name": "NASA POWER",
+   "resolution": "0.5 x 0.625 deg (about 55 km)",
+   "scale": "valley"
+  },
+  "probe": {
+   "name": "Khet Sathi probe",
+   "resolution": "a few cm of one part",
+   "scale": "field"
+  },
+  "smap": {
+   "name": "NASA SMAP L4",
+   "resolution": "9 km",
+   "scale": "valley"
+  },
+  "soilgrids": {
+   "name": "ISRIC SoilGrids",
+   "resolution": "250 m",
+   "scale": "neighbourhood"
+  },
+  "worldcover": {
+   "name": "ESA WorldCover 2021",
+   "resolution": "10 m",
+   "scale": "field"
+  }
+ }
+}

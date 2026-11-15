@@ -177,18 +177,26 @@ def centroid_area(points):
     return (cx / (3 * a), cy / (3 * a), abs(a) / 2) if a else (0.0, 0.0, 0.0)
 
 
-def patches(polygon, centre, cell_m=10.0, min_piece_m2=50.0, prefix="p"):
-    """A drawn field's patches (the Dhulikhel package's method, owner 2026-11-15): a cell_m grid whose lines pass through
-    the field's centre ([lon, lat]), each cell clipped to the outline; a piece under min_piece_m2 is joined to the patch
-    whose centre is nearest its own; numbered from the south-west, row by row, west to east. Each patch: id, row, col
-    (of its main cell), area_m2, centre [lon, lat] (the centre of its own area), pieces ([lon, lat] rings) and polygon:
-    one ring, the outline clipped to the rectangle its cells make (exactly its pieces' union), or, when its cells do not
-    make a rectangle, its main piece only (whole: false).
-    Returns (patches, lines): lines are the [[lon, lat], [lon, lat]] edges between two different patches, for drawing
-    them over a photo with the outline (edges between the pieces of one patch are left out)."""
-    pts = [(float(q[0]), float(q[1])) for q in polygon]
-    scale, lon0, lat0 = _scale(pts), float(centre[0]), float(centre[1])
-    xy = local_metres(pts, (lon0, lat0), scale)
+def _runs(xy, ax, k):
+    """[(from, to)] along the line where coordinate ax is k that lie inside the outline (even-odd crossings)."""
+    o = 1 - ax
+    cuts = sorted(a[o] + (k - a[ax]) / (b[ax] - a[ax]) * (b[o] - a[o]) for a, b in zip(xy, xy[1:] + xy[:1]) if (a[ax] > k) != (b[ax] > k))
+    return list(zip(cuts[::2], cuts[1::2]))
+
+
+def _shared_m(xy, p, b, cell_m):
+    """Length (m) of the edge piece p shares with piece b of the cell beside it: where the outline is inside on both
+    sides of their cells' common side (not the pieces' rings, whose zero-width joins would count). 0 unless side by side."""
+    di, dj = b["i"] - p["i"], b["j"] - p["j"]
+    if abs(di) + abs(dj) != 1:
+        return 0.0
+    ax, k, lo = (0, max(p["i"], b["i"]) * cell_m, p["j"] * cell_m) if di else (1, max(p["j"], b["j"]) * cell_m, p["i"] * cell_m)
+    s0, s1 = ([(max(u, lo), min(v, lo + cell_m)) for u, v in _runs(xy, ax, k + e)] for e in (-1e-3, 1e-3))
+    return sum(max(0.0, min(v0, v1) - max(u0, u1)) for u0, v0 in s0 for u1, v1 in s1)
+
+
+def _cut(xy, cell_m, min_piece_m2, touching):
+    """The grid's pieces of the outline (local metres, grid lines at multiples of cell_m), each with its owner patch."""
     xs, ys = [p[0] for p in xy], [p[1] for p in xy]
     pieces = []
     for j in range(math.floor(min(ys) / cell_m), math.ceil(max(ys) / cell_m)):
@@ -198,8 +206,38 @@ def patches(polygon, centre, cell_m=10.0, min_piece_m2=50.0, prefix="p"):
             if a > 1e-6:
                 pieces.append({"i": i, "j": j, "ring": ring, "x": x, "y": y, "a": a})
     big = [p for p in pieces if p["a"] >= min_piece_m2] or [max(pieces, key=lambda p: p["a"])]
-    for p in pieces:
-        p["owner"] = p if p in big else min(big, key=lambda b: math.hypot(b["x"] - p["x"], b["y"] - p["y"]))
+    for p in pieces:          # join: the nearest centre; touching: the longest shared edge first (rules.yaml patches_options)
+        p["owner"] = p if p in big else min(big, key=lambda b: (-_shared_m(xy, p, b, cell_m) if touching else 0,
+                                                                math.hypot(b["x"] - p["x"], b["y"] - p["y"])))
+    return pieces, big
+
+
+def patches(polygon, centre, cell_m=10.0, min_piece_m2=50.0, prefix="p", grid=None, join=None):
+    """A drawn field's patches (the Dhulikhel package's method, owner 2026-11-15): a cell_m grid whose lines pass through
+    the field's centre ([lon, lat]), each cell clipped to the outline; a piece under min_piece_m2 is joined to the patch
+    whose centre is nearest its own; numbered from the south-west, row by row, west to east. Each patch: id, row, col
+    (of its main cell), area_m2, centre [lon, lat] (the centre of its own area), pieces ([lon, lat] rings) and polygon:
+    one ring, the outline clipped to the rectangle its cells make (exactly its pieces' union), or, when its cells do not
+    make a rectangle, its main piece only (whole: false).
+    Options (rules.yaml sections.patches_options; the Kharipati package's method): grid='most_whole' shifts the grid's
+    origin east and north in 0.5 m steps over one cell to the position with the most whole cells (ties: the largest
+    smallest patch, then the smallest shift); join='touching' joins a small piece to the patch it shares the longest
+    edge with (ties, or touching none: the nearest centre).
+    Returns (patches, lines): lines are the [[lon, lat], [lon, lat]] edges between two different patches, for drawing
+    them over a photo with the outline (edges between the pieces of one patch are left out)."""
+    pts = [(float(q[0]), float(q[1])) for q in polygon]
+    scale, lon0, lat0 = _scale(pts), float(centre[0]), float(centre[1])
+    xy, touching = local_metres(pts, (lon0, lat0), scale), join == "touching"
+    if grid == "most_whole":
+        def rank(s):
+            pieces, big = _cut([(x - s[0], y - s[1]) for x, y in xy], cell_m, min_piece_m2, touching)
+            whole = sum(abs(p["a"] - cell_m ** 2) <= 0.5 for p in pieces)
+            return -whole, -min(sum(p["a"] for p in pieces if p["owner"] is b) for b in big), math.hypot(*s)
+        steps = [k * 0.5 for k in range(round(2 * cell_m))]
+        sx, sy = min(((a, b) for b in steps for a in steps), key=rank)
+        lon0, lat0 = lon0 + sx / scale[0], lat0 + sy / scale[1]
+        xy = local_metres(pts, (lon0, lat0), scale)
+    pieces, big = _cut(xy, cell_m, min_piece_m2, touching)
     big.sort(key=lambda b: (b["j"], b["i"]))
     to_lonlat = lambda x, y: [round(lon0 + x / scale[0], 7), round(lat0 + y / scale[1], 7)]   # noqa: E731
     out = []

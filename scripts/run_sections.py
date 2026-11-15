@@ -255,7 +255,7 @@ def main(argv=None):
     S, data = rules["sections"], REPO / "data"
     pc = field.get("patches")       # a drawn field's patches (rules.yaml sections.patches), else the 30 m grid
     sections = [{"id": p["id"], "polygon": p["polygon"], "area_m2": p["area_m2"]} for p in grid.patches(
-        field["polygon"], (field["lon"], field["lat"]), pc["cell_m"], pc["min_piece_m2"], pc["ids"])[0]] if pc else \
+        field["polygon"], (field["lon"], field["lat"]), pc["cell_m"], pc["min_piece_m2"], pc["ids"], pc.get("grid"), pc.get("join"))[0]] if pc else \
         grid.grid_sections(field["polygon"], cell_m=S["cell_m"], max_sections=S["max_sections"], coarsen_factor=S["coarsen_factor"])
     g = greenness(field, sections, rules, data)
     lg, dem_px = low_ground(field, sections, rules, data)

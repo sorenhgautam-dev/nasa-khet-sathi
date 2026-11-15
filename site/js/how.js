@@ -405,8 +405,8 @@
         var v = K.droneView(d);
         v.G.forEach(function (g) { v.el.append(h('span', { class: 'n', style: 'left:' + g.cx + '%;top:' + g.cy + '%;width:22px;height:22px;margin:-11px 0 0 -11px;font-size:11px;border-width:2px;animation:none' }, K.digits(g.n))); });
         box.append(section('drone', T('your_plan.drone_title'), [h('p', { class: 'sub', style: 'font-weight:700;color:var(--ink)' }, T('your_plan.drone_lead')), v.el,
-          K.lines([T('your_plan.drone_label'), T('your_plan.drone_patches', { section_count: d.patches.length }), T('your_plan.drone_sat')], 'sub'),
-          h('p', { class: 'small', lang: 'en' }, d.credit)]));
+          K.lines([K.droneLabel(d), T('your_plan.drone_patches', { section_count: d.patches.length }), K.droneSat(d)], 'sub'),
+          K.droneCredit(d)]));
       });
     });
     return box;

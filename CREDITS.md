@@ -419,6 +419,21 @@ for each claim (copied from notes/parallel_session.md).
   code cuts the patches again (`pipeline/sections/grid.patches`; VALIDATION 3.27).
 - Data for its 5 km box: the same NASA and partner datasets as the demo field, listed above, fetched for the new box.
 
+### The real farm in Kharipati (2026-11-15; `config/fields/kharipati.yaml`, `design/kharipati_sudal_farm_package.zip`)
+
+- **Drone imagery: Rabi Shrestha, OpenAerialMap, CC-BY 4.0.** The orthomosaic "Kharipati/Sudal Imagery" (OpenAerialMap
+  id 6a4b881d6332d62593123314; 5 May 2026; DJI Mavic 2 Pro, processed in Pix4Dmapper; 1.7 cm per pixel; licence
+  "CC-BY 4.0"), as recorded in the teammate's package. The site shows `site/data/drone/kharipati.jpg`, the farm cut out
+  of the orthomosaic by our teammate (1629 x 1418 pixels in the package) and resized for the web by
+  `pipeline/export/build_drone.py`.
+- The teammate's package: the farm's outline (18 points) traced by eye along the bunds on the orthomosaic and
+  georeferenced from the GeoTIFF (WGS 84 / UTM 45N), and a 13-patch layout. Our own code cuts the patches again
+  (`pipeline/sections/grid.patches`; VALIDATION 3.35).
+- Data reused, nothing downloaded: the farm lies inside the demo's 5 km box, so every dataset is the box's cached copy
+  listed above (GPM IMERG, CHIRPS, HLS-VI, MODIS, NASADEM, SoilGrids, WorldCover, IMERG gauge weights, NEX-GDDP-CMIP6),
+  the global files already held (GRACE, FAOSTAT, ONI, GHCN-Daily) and the demo's cached NASA POWER point, in the same
+  POWER cells (`power_point_of`; VALIDATION 3.36).
+
 ### The data story, the inventories and the Sentinel-1 assessment (2026-11-14; metadata and documentation only)
 
 - *metadata* ASF Search API, Alaska Satellite Facility DAAC (https://api.daac.asf.alaska.edu/services/search/param):
@@ -654,3 +669,17 @@ Licences are read from each package's installed metadata.
 - NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation only), field `dhulikhel`, 2001-01-01 to 2025-08-24, fetched 2026-11-15
 - NEX-GDDP-CMIP6 (NASA Earth Exchange; Thrasher et al. 2022), pr, tasmax, tasmin at the 0.25 deg cell 27.625 N, 85.625 E (field `dhulikhel`), historical 1995-2014 and ssp245 / ssp585 2026-2040, fetched from 2026-11-14 via NASA NCCS THREDDS by pipeline/fetch/nexgddp.py (the 2040 outlook; the models used are listed in data/cards/dhulikhel/nexgddp.json)
 - NASA POWER daily API (near-real-time: GEOS-IT, FLASHFlux; model-based) and NASA GPM IMERG Late V07 daily (GPM_3IMERGDL, GES DISC OPeNDAP), field `dhulikhel`, 2026-01-01 to 2026-11-09, fetched 2026-11-15 by pipeline/fetch/now.py (the twin's state now, build step 10)
+- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; doi:10.15780/G2JQ0P), the cells overlapping field `kharipati`'s fetch box, 2001-2025, fetched 2026-11-15 by pipeline/fetch/chirps.py (rain check B only; never the twin's rain)
+- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the 3 x 3 cells around field `kharipati`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched 2026-11-15 by pipeline/fetch/gauge_evidence.py (rain check B evidence only; never the twin's rain)
+- NOAA CPC Oceanic Nino Index (ONI), https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (public domain), field `kharipati`, DJF 1950 to ASO 2026, fetched 2026-11-15
+- NOAA NCEI GHCN-Daily v3.35, station NP000444540 (validation; temperature correction A), field `kharipati`, 2001-01-01 to 2025-08-24, fetched 2026-11-15
+- NASA POWER Daily API v2.10.3 (model-based), field `kharipati`, 2001-01-01 to 2025-12-31, fetched 2026-11-15
+- NASA POWER daily API (near-real-time: GEOS-IT, FLASHFlux; model-based) and NASA GPM IMERG Late V07 daily (GPM_3IMERGDL, GES DISC OPeNDAP), field `kharipati`, 2026-01-01 to 2026-11-03, fetched 2026-11-15 by pipeline/fetch/now.py (the twin's state now, build step 10)
+- NASA SMAP L4 Global 3-hourly 9 km Surface and Root Zone Soil Moisture Geophysical Data (SPL4SMGP v008, model-assisted) and SMAP Enhanced L3 Radiometer Global Daily 9 km Soil Moisture (SPL3SMP_E v006), NSIDC DAAC via LP DAAC AppEEARS, the 9 km cell holding field `kharipati`, 2015-03-31 to 2025-12-31, cleaned 2026-11-15 by pipeline/fetch/smap.py (a check on the twin only; no number shown uses it)
+- NASA GLDAS-2.1 Noah monthly 0.25 deg (GLDAS_NOAH025_M v2.1, GES DISC, Earthdata Cloud OPeNDAP), soil moisture and evapotranspiration for the field's cell, 2001-2025, fetched 2026-11-15 (check on the twin only)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `demo`'s fetch box, fetched 2026-11-15 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `kharipati`'s fetch box, fetched 2026-11-15 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-1`'s fetch box, fetched 2026-11-15 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-2`'s fetch box, fetched 2026-11-15 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-3`'s fetch box, fetched 2026-11-15 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)
+- NASA GIBS WMS, HLS Landsat 8/9 OLI (HLSL30 v2.0, LP DAAC), Nadir BRDF-Adjusted Reflectance, true colour, 2025-11-11, field `sample-4`'s fetch box, fetched 2026-11-15 by pipeline/fetch/basemap.py (the site's map background; site/data/basemap/demo.jpg)

@@ -313,7 +313,7 @@ def main(argv=None):
     diary_cls = int(st.season_class(np.array([np.mean(diary_seas)]))[0])
     pix_bare = MB[ndvi_max][demo_mask]
     pix_cls = SC[demo_mask]
-    b_ok = bool(np.nanmin(pix_bare) <= diary_bare <= np.nanmax(pix_bare))
+    b_ok = bool(round(float(np.nanmin(pix_bare)), 1) <= diary_bare <= round(float(np.nanmax(pix_bare)), 1))   # at the diary's 1 decimal
     c_ok = bool((pix_cls == diary_cls).all())
     field_check = {"a_code_path": {"bare_days_by_year_identical": a_bare, "seasons_identical": a_seas,
                                    "seasons_compared": len(theirs), "first_hls_obs": str(first_hls.date())},

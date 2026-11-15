@@ -70,12 +70,16 @@ def fetch(field, data_dir=REPO / "data"):
     raw = data_dir / "raw" / "nasadem" / field["id"]
     raw.mkdir(parents=True, exist_ok=True)
     box = field["fetch_box"]
-    earthaccess.login(strategy="netrc", persist=False)
-    gr = earthaccess.search_data(short_name="NASADEM_HGT", version="001", bounding_box=tuple(box))
-    if len(gr) != 1:
-        raise ValueError(f"expected one NASADEM tile for the box, CMR returned {len(gr)}")
-    files = [Path(str(f)) for f in earthaccess.download(gr, local_path=str(raw), threads=1)]
-    z = files[0]
+    want = {f"n{int(lat // 1):02d}e{int(lon // 1):03d}" for lat in box[1::2] for lon in box[0::2]}   # N, E only
+    held = [z for z in raw.glob("NASADEM_HGT_*.zip") if {z.stem.split("_")[-1]} == want]
+    if held:   # the box's one tile is already held (a field sharing the box): no login, no download
+        z = held[0]
+    else:
+        earthaccess.login(strategy="netrc", persist=False)
+        gr = earthaccess.search_data(short_name="NASADEM_HGT", version="001", bounding_box=tuple(box))
+        if len(gr) != 1:
+            raise ValueError(f"expected one NASADEM tile for the box, CMR returned {len(gr)}")
+        z = Path(str(earthaccess.download(gr, local_path=str(raw), threads=1)[0]))
     tile = z.stem.split("_")[-1]
     with rasterio.open(f"/vsizip/{z}/{tile}.hgt") as src:
         attrs = {"driver": src.driver, "crs": str(src.crs), "res_deg": src.res, "dtype": src.dtypes[0],

@@ -118,6 +118,13 @@ def test_fetch_writes_table_and_card_and_reuses_the_cache(tmp_path, payload):
     assert card["date_range"] == ["2001-01-01", "2001-01-02"]
     power.fetch(FIELD, "2001-01-01", "2001-01-02", data_dir=tmp_path, get_json=fake_get)
     assert len(calls) == 1  # second run read the cached raw file
+    near = {"id": "kharipati", "lat": 27.686299, "lon": 85.463624}       # config power_point_of: the demo's cached point
+    out = power.fetch(near, "2001-01-01", "2001-01-02", data_dir=tmp_path, get_json=fake_get, point=FIELD)
+    assert len(calls) == 1 and "nothing downloaded" in json.loads(Path(out["card"]).read_text())["notes"]
+    with pytest.raises(DataGuardError, match="not cached"):                              # never downloads
+        power.fetch(near, "2002-01-01", "2002-01-02", data_dir=tmp_path, get_json=fake_get, point=FIELD)
+    with pytest.raises(DataGuardError, match="POWER cells"):                             # another cell: refused
+        power.fetch({**near, "lat": 27.8}, "2001-01-01", "2001-01-02", data_dir=tmp_path, get_json=fake_get, point=FIELD)
 
 
 def test_fetch_keeps_each_field_in_its_own_folder(tmp_path, payload):

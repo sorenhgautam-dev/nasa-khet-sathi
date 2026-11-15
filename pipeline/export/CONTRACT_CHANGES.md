@@ -4,6 +4,15 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, late morning): Kharipati's drone file; the spoon calibration's label (additions only)
+
+- `data/drone/<id>.json` may carry `label` and `sat`, each `{en, ne, ne_review}`: the field's own words for the chip and
+  the photo screen's satellite line (Kharipati has them; Dhulikhel's file is unchanged and keeps the shared words). The
+  site uses them through `droneLabel`, `droneSat` and `droneCredit` (`js/app.js`).
+- `probe_log.json`'s `bench` may carry `label`: "rough calibration (spoon measures, air-dried soil)" when the calibration
+  came from the spoon method (rules.yaml `probe.bench.spoon`). `live.json`'s `calibration` block may carry `label` and
+  `fit_var_water_pct2` (the calibration's own error, added in the Kalman update). Nothing is renamed or removed.
+
 ## 2026-11-15 (Sunday, morning): fields around the world; wording only (`words.json`; additions only)
 
 - `words.json` gains `shared.farm.world_title`, `world_link`, `world_tap`, `world_map_src`, `world_own_title`,

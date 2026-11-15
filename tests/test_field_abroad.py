@@ -275,6 +275,7 @@ def test_a_sample_shares_its_demos_box_downloads_and_fetches_only_its_own_point(
               "validation_station": "S"}
     assert ff.shares_box_with(sample, demo) == "demo"
     assert ff.shares_box_with({**sample, "fetch_box": [1, 2, 3, 5]}, demo) is None
+    assert ff.shares_box_with({"id": "k", "box_of": "demo", "fetch_box": [1, 2, 3, 4]}, demo) == "demo"   # Kharipati
     p = dict(ff.plan(sample, {}, shared_with="demo"))
     assert [k for k, v in p.items() if v.startswith("skip: box shared")] == ["worldcover", "hls_recent", "modis_submit", "modis",
                                                                             "gpm", "chirps", "hls"]

@@ -124,7 +124,8 @@ def build_days(field, inputs, power_new, gpm_new, rules):
     breaches = tin.fill_cap_breaches(fills["by_year"], rules["power_rain"]["max_filled_fraction_per_year"])
     if breaches:
         raise g.DataGuardError(f"POWER would fill more than the cap of a year's rain days: {breaches}")
-    rain, break_info = wx.correct_gpm_break(rain, gp, rules["gpm_series"], field["id"])
+    rain, break_info = wx.correct_gpm_break(rain, gp, rules["gpm_series"], field["id"], field=field,
+                                            break_test=inputs.get("break_test"))
     df = df.merge(rain, on="date")
     elev = field.get("elevation_m") or inputs["power_card"]["location"]["elevation_m"]
     ea, capped = tin.ea_held_from_power_kpa(pw["rh_pct"], pw["tmax_c"], pw["tmin_c"], df["tmin_c"])
@@ -164,7 +165,9 @@ def history_inputs(field, data_dir=REPO / "data"):
     clean, cards = Path(data_dir) / "clean" / fid, Path(data_dir) / "cards" / fid
     st_id = field.get("validation_station")
     st_path = clean / f"ghcn_{st_id}.parquet" if st_id else None
-    return {"power": pd.read_parquet(clean / "power.parquet"),
+    bt = Path(data_dir) / "checks" / fid / "break_test.json"        # the field's own break test, as weather.py reads it
+    return {"break_test": json.loads(bt.read_text()) if bt.exists() else None,
+            "power": pd.read_parquet(clean / "power.parquet"),
             "station": pd.read_parquet(st_path) if st_path and st_path.exists() else None,
             "gpm": pd.read_parquet(clean / "gpm.parquet"),
             "weather": pd.read_parquet(clean / "weather.parquet"),
@@ -175,6 +178,11 @@ def fetch_power(field, start, end, data_dir, from_cache=False, get_json=None):
     """POWER daily for start..end (one request), cached by fetch date; fills become NaN (power.parse prints the raw
     attributes first, rule 12a; power.check range-checks, rule 12b-c)."""
     raw = Path(data_dir) / "raw" / "power_now" / field["id"] / f"{float(field['lat']):.6f}_{float(field['lon']):.6f}"
+    if field.get("power_point_of"):   # the other field's cached request in the same POWER cells: read only, never downloaded
+        pts = sorted((Path(data_dir) / "raw" / "power_now" / field["power_point_of"]).glob("*_*"))
+        if len(pts) != 1 or not power.same_cell(field, dict(zip(("lat", "lon"), map(float, pts[0].name.split("_"))))):
+            raise g.DataGuardError(f"power_point_of {field['power_point_of']}: no single cached point in this field's POWER cells")
+        raw, from_cache = pts[0], True
     s, e = pd.Timestamp(start).strftime("%Y%m%d"), pd.Timestamp(end).strftime("%Y%m%d")
     if from_cache:
         found = sorted(raw.glob(f"{s}_*_fetched_*.json"))

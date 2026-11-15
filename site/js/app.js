@@ -315,7 +315,11 @@
   function btn3(label, onclick, icon) { return h('button', { type: 'button', class: 'btn3', onclick: onclick }, icon ? svg(I(icon, 18)) : null, label); }
   function sampleChip() { return h('span', { class: 'chip sample' }, svg(I('pin', 14)), T('btn.sample_field')); }
   // a real farm from a drone photo (owner, 2026-11-15): its own label where a sample field shows its chip
-  function fieldChip(F) { return F._drone ? h('p', { class: 'small dronelabel' }, svg(I('pin', 14)), ' ', T('your_plan.drone_label')) : isPlaceholder(F.field.name) ? sampleChip() : null; }
+  function fieldChip(F) { return F._drone ? h('p', { class: 'small dronelabel' }, svg(I('pin', 14)), ' ', droneLabel(F._drone)) : isPlaceholder(F.field.name) ? sampleChip() : null; }
+  // the drone file's own label and satellite line ({en, ne}; Kharipati), else the shared words (Dhulikhel's preview); its credit
+  function droneLabel(d) { return d.label ? P(d.label) : T('your_plan.drone_label'); }
+  function droneSat(d) { return d.sat ? P(d.sat) : T('your_plan.drone_sat'); }
+  function droneCredit(d) { return h('p', { class: 'small dronecredit', lang: 'en', style: 'margin:6px 0 0' }, d.credit); }
   function loading() { return h('div', { class: 'loading', role: 'status' }, h('span', { class: 'dots' }, h('i'), h('i'), h('i'))); }
   function notReady(extra) { return h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('btn.not_ready')), extra || null); }
   function stepsBar(n) { return h('div', { class: 'steps', 'aria-hidden': 'true' }, [1, 2, 3].map(function (i) { return h('span', { class: i <= n ? 'on' : '' }); })); }
@@ -683,15 +687,25 @@
   }
   // the crops we think the farmer grows, as a question (owner, 2026-11-14 evening): "We think you grow rice, then potato.
   // Is that right?" Yes keeps our guess; the other rotation is the second button. The answer stays on the phone.
+  // its buttons (owner, 2026-11-15: two buttons never mean the same answer): 'Yes' is the option whose crops are the guess,
+  // first; every other option is named by its crops; no option is the guess: every one is named. Pure.
+  function guessButtons(guess, co) {
+    var opts = (co && co.options) || [], g = (guess || []).join('+');
+    if (!opts.length) return [{ id: null, yes: true, crops: [] }];
+    return opts.map(function (o) {
+      var cs = o.crops.map(function (c) { return c.crop; });
+      return { id: o.id, yes: cs.join('+') === g, crops: cs };
+    }).sort(function (a, b) { return b.yes - a.yes; });
+  }
   function guessCard(F, box, after) {
     featData('simple').then(function (sd) {
       if (!sd || !sd.guess || !box.isConnected) return;
-      var co = F.current_options, opts = (co && co.options) || [], def = co ? co['default'] : null;
+      var opts = guessButtons(sd.guess.fill && sd.guess.fill.guess_list, F.current_options);
       function draw() {
         box.textContent = '';
         add(box, [h('p', { class: 'lead' }, say(sd.guess) + ' ' + T('farm.guess_ask')),
-          h('div', { class: 'row wrap', role: 'group', 'aria-label': T('farm.guess_ask') }, (opts.length ? opts : [{ id: null }]).map(function (o) {
-            var label = !o.id || o.id === def ? T('from_space.yes') : cap(o.crops.map(function (c) { return crop(c.crop); }).join(', ' + T('join.then') + ' '));
+          h('div', { class: 'row wrap', role: 'group', 'aria-label': T('farm.guess_ask') }, opts.map(function (o) {
+            var label = o.yes ? T('from_space.yes') : cap(o.crops.map(crop).join(', ' + T('join.then') + ' '));
             return h('button', { type: 'button', class: 'choice', 'aria-pressed': String(!!o.id && S.winter === o.id), onclick: function () {
               if (o.id) { S.winter = o.id; store.set('winter', o.id); } draw(); if (after) after();
             } }, label);
@@ -888,7 +902,7 @@
         head: [stepsBar(1), bigTitle(T('where.sky_h1'), T('where.sky_h2')), dr ? fieldChip(F) : null],
         scene: mbox,
         body: [msg, dr ? null : seenLine(), leadRow(h('p', { class: 'lead' }, T('where.is_this')), h('p', { class: 'sub' }, T('where.split_next'))), guess, rests,
-          dr ? lines([T('your_plan.drone_sat')], 'sub') : null, dr ? h('p', { class: 'small', lang: 'en' }, dr.credit) : null],
+          dr ? lines([droneSat(dr)], 'sub') : null, dr ? droneCredit(dr) : null],
         cta: h('div', { class: 'ctarow' }, roundBtn(T('where.draw_own'), 'pin', startDraw), cta(T('where.yes_parts'), function () { go('parts'); }))
       });
     });
@@ -902,7 +916,7 @@
       later(function () { lead.textContent = T('parts.here', { section_count: n }); }, 2000);
       return screen('parts', {
         head: [stepsBar(2), bigTitle(T('parts.h1'), T('parts.h2', { section_count: n })), S.demo ? demoLabel() : fieldChip(F)],
-        scene: fieldBox(F, 'grow', ph ? { photo: ph.url } : null),
+        scene: [fieldBox(F, 'grow', ph ? { photo: ph.url } : null), F._drone && !ph ? droneCredit(F._drone) : null],
         body: leadRow(lead, h('p', { class: 'sub' }, T('parts.middle'))),
         cta: cta(T('parts.start_test'), function () { go('soil'); })
       });
@@ -1135,7 +1149,7 @@
       return screen('soil', {
         head: [stepsBar(3), bigTitle(T('check_soil.h1'), T('check_soil.h2')), demo ? demoLabel() : fieldChip(F),
           fog.any ? h('p', { class: 'fogline' }, T('fog.fog_line')) : null],
-        scene: ph ? h('div', { class: 'photocard' }, box, pcap) : box,
+        scene: ph ? h('div', { class: 'photocard' }, box, pcap) : [box, F._drone ? droneCredit(F._drone) : null],
         body: [demo && !ph ? h('div', { class: 'card soft' }, h('p', { class: 'lead' }, T('drone.no_photo')), btn2(T('drone.take'), function () { go('photo'); }, 'camera')) : null, rows, fnote, info, tbox, honest],
         cta: ctaBox
       });
@@ -1730,7 +1744,7 @@
     btn2: btn2, cta: cta, screen: screen, labs: labs, rainMark: rainMark, closeSheet: closeSheet, bigTitle: bigTitle, store: store, fmtDate: fmtDate, geom: geom, fieldBox: fieldBox,
     cropsLine: cropsLine, monthShort: monthShort, fogTag: fogTag, features: features, featData: featData, probeData: probeData, forField: forField, partWord: partWord, recordedLine: recordedLine, bowlLines: bowlLines,
     labOf: labOf, scaleName: scaleName, faceSvg: faceSvg, monthName: monthName, curOption: curOption, winterQuestion: winterQuestion, chooseField: chooseField, rerender: rerender,
-    gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
+    gregInNepali: gregInNepali, blockKeys: blockKeys, restMonths: restMonths, joinList: joinList, BS_ORDER: BS_ORDER, openSheet: openSheet, sheetBar: sheetBar, fieldsList: fieldsList, droneView: droneView, droneLabel: droneLabel, droneSat: droneSat, droneCredit: droneCredit, indexEntry: indexEntry, abroad: abroad, every: every, uid: function () { return ++uid; },
     say: say, bsMonth: bsMonth, sixBlocks: sixBlocks, weatherWhy: weatherWhy, worldLink: worldLink };
 
   // ---------------- Behind the scenes: your field, seen by NASA (owner, 2026-11-15; js/behind.js) ----------------

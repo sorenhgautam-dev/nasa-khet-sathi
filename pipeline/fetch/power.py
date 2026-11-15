@@ -123,14 +123,27 @@ def _http_get_json(url, tries=3):
             time.sleep(5 * attempt)
 
 
+def same_cell(a, b):
+    """Do two points fall in the same POWER cells (0.5 x 0.625 deg meteorology, 1 x 1 deg solar)? Pure."""
+    return (round(a["lat"] / 0.5) == round(b["lat"] / 0.5) and round(a["lon"] / 0.625) == round(b["lon"] / 0.625)
+            and a["lat"] // 1 == b["lat"] // 1 and a["lon"] // 1 == b["lon"] // 1)
+
+
 def fetch(field, start="2001-01-01", end="2025-12-31", data_dir=REPO / "data", get_json=_http_get_json,
-          credits_path=None):
+          credits_path=None, point=None):
+    """`point`: another field whose cached POWER point this field reads (config power_point_of): the same cells, never
+    downloaded."""
     fid, data_dir = field["id"], Path(data_dir)
-    raw_dir = data_dir / "raw" / "power" / fid
+    if point is not None and not same_cell(field, point):
+        raise g.DataGuardError(f"power_point_of {point['id']}: its point is not in this field's POWER cells")
+    pt = point or field
+    raw_dir = data_dir / "raw" / "power" / pt["id"]
     raw_dir.mkdir(parents=True, exist_ok=True)
     frames, infos = [], []
     for s, e in year_chunks(start, end):
-        cache = raw_dir / f"{float(field['lat']):.6f}_{float(field['lon']):.6f}" / f"{s}_{e}.json"   # per point
+        cache = raw_dir / f"{float(pt['lat']):.6f}_{float(pt['lon']):.6f}" / f"{s}_{e}.json"   # per point
+        if point is not None and not cache.exists():
+            raise g.DataGuardError(f"power_point_of {point['id']}: {cache} is not cached (this field never downloads)")
         payload = json.loads(cache.read_text()) if cache.exists() else get_json(build_url(field["lat"], field["lon"], s, e))
         df, info = parse(payload)
         want = pd.date_range(pd.Timestamp(s), pd.Timestamp(e), freq="D")
@@ -176,7 +189,10 @@ def fetch(field, start="2001-01-01", end="2025-12-31", data_dir=REPO / "data", g
         range_warnings=warned,
         location={"lat": field["lat"], "lon": field["lon"], "elevation_m": info["cell_elevation_m"],
                   "elevation_source": "POWER grid cell (API geometry)"},
-        notes=(f"Point request at {field['lat']}, {field['lon']}; one grid cell, so pixel_count is 1. POWER cell "
+        notes=((f"The cached point request of field {pt['id']} ({pt['lat']}, {pt['lon']}; config power_point_of): the same "
+                f"POWER cells as this field's {field['lat']}, {field['lon']}, so the same values; nothing downloaded. "
+                if point is not None else "") +
+               f"Point request at {pt['lat']}, {pt['lon']}; one grid cell, so pixel_count is 1. POWER cell "
                f"elevation {info['cell_elevation_m']} m (not the field's). Every day kept; fill values became "
                "missing values. D6: rain for the twin comes from GPM IMERG; PRECTOTCORR is for cross-checks only."),
     )
@@ -193,7 +209,10 @@ def main(argv=None):
     ap.add_argument("--start", default="2001-01-01")
     ap.add_argument("--end", default="2025-12-31")
     a = ap.parse_args(argv)
-    out = fetch(load_field(a.field), a.start, a.end, credits_path=REPO / "CREDITS.md")
+    field = load_field(a.field)
+    src = field.get("power_point_of")   # the point the other field's own POWER table used (its card), not its centre
+    point = {"id": src, **json.loads((REPO / "data" / "cards" / src / "power.json").read_text())["location"]} if src else None
+    out = fetch(field, a.start, a.end, credits_path=REPO / "CREDITS.md", point=point)
     c = out["card_data"]
     print(f"\n{out['rows']} daily rows -> {out['table']}\ncard -> {out['card']}")
     print(f"date range {c['date_range']}, fill removed {c['fill_values_removed']['count_by_column']}, "

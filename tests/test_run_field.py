@@ -29,6 +29,8 @@ def test_a_sample_runs_the_core_steps_and_its_break_test_before_the_weather_when
                               "replay_window", "pulse", "checkup", "rainrisk", "fertiliser", "heatclock", "labels", "simple",
                               "story", "behind", "validate", "site_check"]
     assert _names(sample, has_break_test=False)[:3] == ["rain_check (break test first)", "weather", "rain_check"]
+    box = {"id": "k", "box_of": "demo"}                     # a field sharing the box runs every step, break test first
+    assert _names(box, has_break_test=False) == ["rain_check (break test first)", *_names({"id": "demo"})]
 
 
 def test_from_and_only_pick_the_steps_and_only_field_steps_get_the_field():

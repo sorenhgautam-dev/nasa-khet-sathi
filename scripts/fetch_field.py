@@ -60,7 +60,8 @@ STEPS = [
 
 
 SHARED = ("gpm", "chirps", "hls_l30", "hls_s30", "nasadem", "worldcover", "soilgrids", "gauge_evidence",
-          "appeears")   # data/raw/<x>/ (appeears: the box's MODIS, read by the diary)
+          "appeears", "gpm_now", "eco_lste", "eco_esi", "gldas")   # data/raw/<x>/ (appeears: the box's MODIS and SMAP;
+# gpm_now: IMERG Late box subsets; eco_*: ECOSTRESS box windows; gldas: one 0.25 deg cell, its build refuses another cell)
 BOX_FETCH = ("worldcover", "hls_recent", "gpm", "chirps", "hls", "modis_submit", "modis")
 # a record shorter than 2001-2025 (config record_years, make_site.py --short-record): each step's own date options
 RECORD_ARGS = {"gpm": lambda y0, y1: ["--start", f"{y0}-01-01", "--end", f"{y1}-12-31"],
@@ -89,8 +90,9 @@ def present_steps(field, raw_root=REPO / "data" / "raw"):
 
 
 def shares_box_with(field, other=None):
-    """The field whose box downloads this one reuses: `sample_of`, when its fetch_box is the same. None otherwise."""
-    src = field.get("sample_of")
+    """The field whose box downloads this one reuses: `sample_of` or `box_of`, when its fetch_box is the same. None
+    otherwise."""
+    src = field.get("sample_of") or field.get("box_of")
     if not src:
         return None
     if other is None:

@@ -78,6 +78,20 @@ def test_a_validation_only_station_is_not_used_to_correct_as_in_weather_py():
     assert rep["identical"], rep
 
 
+@pytest.mark.skipif(not (REPO / "data" / "checks" / "kharipati" / "break_test.json").exists(), reason="needs Kharipati's run")
+def test_a_field_sharing_the_box_is_rebuilt_with_its_own_break_test():
+    """Kharipati (box_of demo) is rain-corrected because its own break test found 2017, as weather.py did it (2026-11-15:
+    now.py ignored the test and refused its own rebuild)."""
+    from pipeline.fetch.fields import load_field
+    from pipeline.fetch.rules import load_rules
+    field = load_field("kharipati")
+    inputs = now.history_inputs(field, REPO / "data")
+    assert inputs["break_test"]["found"] and inputs["break_test"]["year"] == 2017
+    out = now.build_days(field, inputs, power_new=None, gpm_new=None, rules=load_rules())
+    rep = now.reproduction(out["table"], pd.read_parquet(REPO / "data" / "clean" / "kharipati" / "weather.parquet"))
+    assert rep["identical"], rep
+
+
 @pytest.mark.skipif(not (CLEAN / "twin_state.json").exists(), reason="run scripts/run_twin_now.py first")
 def test_the_twin_state_has_the_keys_the_sections_code_reads():
     s = json.loads((CLEAN / "twin_state.json").read_text())

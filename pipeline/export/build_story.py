@@ -1182,9 +1182,12 @@ def report_card(ctx):
         proofs = bench.get("proofs", {})
         passed = all(proofs.get(k) is True for k in ("steady", "order", "temperature"))
         mae = (bench.get("accurate") or {}).get("loo_mae_water_pct")
-        en = [f"In cups it was off by about {fmt(mae, 1)} points."] if mae is not None else []
+        en = [f"In cups, off by about {fmt(mae, 1)} points."] if mae is not None else []
         ne = [f"कपमा करिब {fmt(mae, 1)} अङ्क फरक पर्‍यो"] if mae is not None else []
-        if not passed:
+        if bench.get("hand_copied"):     # rules.yaml probe.bench.spoon.hand_copied: some proofs were not possible, not failed
+            en += ["A rough test, copied by hand.", "Some cup checks were not possible."]
+            ne += ["हातले सारिएको मोटामोटी जाँच", "कप जाँचका केही भाग गर्न सकिएन"]
+        elif not passed:
             en.append("It failed part of the cup test.")
             ne.append("कप जाँचको केही भागमा असफल भयो")
         en.append("It reads only the top few centimetres.")

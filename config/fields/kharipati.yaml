@@ -1,0 +1,71 @@
+# A REAL farm (owner, 2026-11-15, 10:06 Nepal time): the teammate's package design/kharipati_sudal_farm_package.zip.
+# Anything unknown is null with a TODO. Do not guess it.
+#
+# Kharipati / Sudal, north-east of Bhaktapur, Bhaktapur District, Nepal. The outline was traced by the teammate along the
+# field's bunds on an OpenAerialMap drone orthomosaic ('Kharipati/Sudal Imagery' by Rabi Shrestha, 5 May 2026, DJI Mavic 2
+# Pro, Pix4Dmapper, 1.7 cm per pixel, CC-BY 4.0), georeferenced from the GeoTIFF itself (WGS 84 / UTM 45N). Traced by eye:
+# area about +/-5-10 % (package README). The FARM is real; its CROPS are not known: there are no farmer's answers yet, so
+# the rotation below is the demo's placeholder and the app asks the farmer (current_options), as on the demo field.
+# Visual cross-check only (owner, 2026-11-15; a team observation, not a measurement): on 5 May 2026 the drone photo shows
+# a ripe, golden crop that looks like a winter cereal such as wheat (VALIDATION 3.34). It does not change any result.
+# Inside the demo's fetch box, about 2.2 km from the demo's placeholder field, in the same GPM, POWER and NEX-GDDP cells:
+# every dataset comes from the box's cached downloads (owner: "use only cached data: no new downloads"; box_of,
+# power_point_of). The 30 m satellite data (HLS, NASADEM) see about one square of this farm.
+id: kharipati
+name: Real farm in Kharipati, Bhaktapur (PLACEHOLDER crops)   # the farm is real; its crops are not (the export refuses a placeholder rotation under a name without 'placeholder')
+placeholder: true                   # the crops and the water source are placeholders (no farmer's answers yet); the location is real
+real_farm: true                     # the outline is a real farm's (drone photo), not a picked square
+box_of: demo                        # shares the demo's box downloads (scripts/fetch_field.py), as a sample field does, but runs the full pipeline
+power_point_of: demo                # NASA POWER: the cached point the demo's own POWER table used (its card: 27.6785, 85.427417), same 0.5 x 0.625 deg and 1 deg cells (pipeline/fetch/power.py; sample-1's own download in this cell is identical, 25 of 25 years)
+country: Nepal
+origin_point: {lat: 27.686299, lon: 85.463624}   # the package's field centre (farm_coordinates.json field_centre)
+lat: 27.686299
+lon: 85.463624
+polygon:                            # the package's field_outline_lonlat: 18 points, [lon, lat], along the bunds (ring not closed)
+- [85.463502, 27.686452]
+- [85.463559, 27.686437]
+- [85.463611, 27.686428]
+- [85.463674, 27.686435]
+- [85.463736, 27.686448]
+- [85.46379, 27.686458]
+- [85.463797, 27.686386]
+- [85.463805, 27.686303]
+- [85.463812, 27.686229]
+- [85.463815, 27.686169]
+- [85.463709, 27.686161]
+- [85.463605, 27.686162]
+- [85.463501, 27.686175]
+- [85.463409, 27.686195]
+- [85.463417, 27.686253]
+- [85.463437, 27.686317]
+- [85.463459, 27.686382]
+- [85.463482, 27.686429]
+fetch_box: [85.379227, 27.625034, 85.480773, 27.714966]   # the demo's box (the package: the whole drone map is inside it)
+bbox: [85.379227, 27.625034, 85.480773, 27.714966]       # index.json prepared area = the fetch box
+elevation_m: 1333.0                 # NASADEM_HGT v001 over the outline (1 pixel; slope 2.2 deg; data/clean/kharipati/nasadem_field.json, 2026-11-15). POWER cell: 1269.39 m
+water_source: null                  # TODO(farmer): unknown, so both cases are run (rain-fed and irrigated)
+current_rotation: [rice, potato]    # PLACEHOLDER: no farmer's answers yet; the demo's placeholder (FAO Crop Calendar Nepal Hill-zone windows)
+current_rotation_options: [[rice, potato], [rice, wheat]]  # PLACEHOLDER: as on the demo field, the farmer answers on screen
+current_rotation_source: "PLACEHOLDER (Claude's choice, 2026-11-15, as the demo's): rice in the monsoon, then potato or wheat in winter, sown on the FAO Crop Calendar Nepal Hill-zone default windows; the real rotation comes from the farmer. The 5 May 2026 drone photo looks like a ripe winter cereal (visual cross-check only, VALIDATION 3.34)"
+validation_station: NP000444540     # NOAA GHCN-Daily KATHMANDU AIRPORT (27.700 N, 85.367 E), about 9.6 km west (great-circle), the demo's station
+correction_label: Kathmandu-valley correction   # decision A, as on the demo and the sample fields: the farm is on the same valley floor
+rain_check: {normals: [Bhaktapur, Kathmandu Airport], station_key: airport, station_name: Kathmandu Airport}  # DHM 1991-2020 normals, as for the demo and the sample fields
+drone_photo:                        # the 'from the sky' picture of this field (owner, 2026-11-15)
+  package: design/kharipati_sudal_farm_package.zip
+  file: one_farm_clean.jpg          # resized for the web into site/data/drone/kharipati.jpg (pipeline/export/build_drone.py)
+  bounds: [[27.686092, 85.463323], [27.686525, 85.463898]]   # [[south, west], [north, east]] (package; north-up well within 1 m)
+  size_px: [1629, 1418]             # the package's picture (3.44 cm per pixel)
+  date: "2026-05-05"
+  source: "OpenAerialMap 'Kharipati/Sudal Imagery' by Rabi Shrestha, 5 May 2026, DJI Mavic 2 Pro, Pix4Dmapper, 1.7 cm per pixel, image id 6a4b881d6332d62593123314, CC-BY 4.0"
+  resolution: "1.7 cm per pixel (drone); the picture here is the farm cut out and resized for the web"
+  oam_id: 6a4b881d6332d62593123314
+  credit: "Drone imagery: Rabi Shrestha, OpenAerialMap, CC-BY 4.0."
+  label:                            # the owner's words (2026-11-15); the Nepali needs native-speaker review
+    en: "A real farm in Kharipati, Bhaktapur. Drone photo from 5 May 2026. No farmer's answers yet."
+    ne: "भक्तपुरको खरिपाटीमा एउटा साँचो खेत। सन् २०२६ मे ५ को ड्रोन तस्बिर। किसानका जवाफ अझै छैनन्।"
+    ne_review: needs native-speaker review
+  sat:                              # what the 30 m squares see (package README: about 1 square); the Nepali needs native-speaker review
+    en: "From space, we see 30 m squares. About 1 square covers this farm. So that history is for the whole area. The soil stick tests each 10 m patch."
+    ne: "अन्तरिक्षबाट हामी ३० मिटरका वर्ग देख्छौं। यो खेतमा करिब १ वर्ग पर्छ। त्यसैले अन्तरिक्षबाट देखिएको इतिहास वरपरको क्षेत्रको हो। माटो जाँच्ने यन्त्रले हरेक १० मिटरको टुक्रा जाँच्छ।"
+    ne_review: needs native-speaker review
+patches: {cell_m: 10, min_piece_m2: 50, ids: p, grid: most_whole, join: touching}   # the package README's method: a 10 m grid shifted to the position with the most whole patches, pieces under 50 m2 joined to a touching patch, numbered from the south-west (pipeline/sections/grid.patches)
