@@ -111,9 +111,9 @@ changes with it.
 2. Prepare a whole valley in advance, so a farmer taps their location and gets the nearest prepared plan at once.
 3. A one-page printable view for agriculture advisers that works offline.
 4. Fewer but stronger outputs.
-5. Seed, labour and selling prices, entered by the farmer if they wish.
-6. A "what really happened" checker for the season's results.
-7. The 2040 outlook rebuilt after the rain fix.
+5. A "what really happened" checker for the season's results.
+6. The 2040 outlook rebuilt after the rain correction.
+7. Reach farmers through cooperatives and women's groups, since many farms are run by women.
 
 ## What is a placeholder
 
@@ -131,8 +131,9 @@ not built.
 
 ## Short answers
 
-- **"Is the 2017 rain jump climate change?"** Our check says no. NASA's own gauge share falls from 96-98% to 56-72% a
-  year, and CHIRPS shows no step [F1, F4].
+- **"Is the 2017 step up in rain climate change?"** Our check says no. NASA's rain combines satellites with ground
+  gauges; from 2017 far fewer gauges near our valley fed into it. Their share falls from 96-98% to 56-72% a year, and
+  CHIRPS shows no step [F1, F4]. We corrected for it.
 - **"Do the suggestions help a farmer who can water?"** Not in harvest: with water every plan scores 100 [H8].
 - **"Whose field is this?"** Nobody's yet. It is a labelled sample [B4].
 - **"Does El Niño matter here?"** We have not tested it. The Replay only highlights similar years [C8].

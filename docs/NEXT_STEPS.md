@@ -24,13 +24,14 @@ farmers' own harvests to check them against (none yet); an open implementation i
 needs the owner's approval (CLAUDE.md rule 9); and a side-by-side run with the current twin, with a rule fixed in advance
 for which one the site shows.
 
-## 3. Market prices and labour
+## 3. Through cooperatives and women's groups
 
-**Why.** Our harvest score is "out of 100 of what the field could grow", never money [H1]. But a farmer chooses a
-winter crop by what it sells for, what seed costs, and how many days of work it takes. Every plan's "unknown" tab says
-so today: "Prices and markets are not included." **What it needs.** A public Nepali market-price series with a licence
-that allows reuse; labour days per crop from extension sources; and a careful way to show them as a range beside the
-harvest, never as a promise of income. Until then the site makes no money claim at all.
+**Why.** Many farms are run by women, and advice travels best through people a farmer already trusts. Khet Sathi is
+best used with a helper beside the farmer (`docs/PROJECT_PAGE.md`, "How Khet Sathi reaches farmers"). **What it
+needs.** A cooperative or women's group willing to try it for one season; a group member who learns to be the helper
+(the field from the sky, the crop question, the soil stick, the four answers); the screens tested with that group
+first (`docs/FARMER_TEST.md`); and one soil stick, cheap enough for a cooperative to share. It stays free for every
+farmer, and the farmer's answers stay on the phone.
 
 ## 4. Nepal Bhasa and voice
 

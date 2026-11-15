@@ -12,6 +12,16 @@ Made for NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA 
 > list, so the site says "not ready yet". We would rather say that than show a made-up number. The website screens are not
 > in this repository yet. An independent review of the whole project is in [REVIEW_2.md](REVIEW_2.md).
 
+## Our promise (हाम्रो वाचा)
+
+Nepali first; the Nepali awaits a native speaker's review.
+
+- **हरेक किसानका लागि सधैं निःशुल्क।** Free for every farmer, always.
+- **कुनै विज्ञापन छैन, कुनै खाता छैन।** No ads and no accounts.
+- **खेतको जानकारी र फोटो फोनमै रहन्छन्।** The field's data and photos stay on the phone: the site never sends them
+  anywhere.
+- **खुला कोड र खुला डाटा।** Open code and open data, so anyone can check our work or bring it to their own valley.
+
 ## What it does
 
 1. It reads more than 20 years of free satellite and weather data for one field.
@@ -30,7 +40,7 @@ Every plan is marked for local review: the farmer knows their land best.
 | Data | What it is used for today |
 | --- | --- |
 | NASA POWER (daily, model-based) | Temperature, humidity, wind, sunshine for the twin |
-| GPM IMERG (daily, 0.1°) | The twin's rain. Its rain here jumps in 2017, when the rain gauges behind it stop reporting, so we scale the later years back and show both versions |
+| GPM IMERG (daily, 0.1°) | The twin's rain. NASA's rain combines satellites with ground gauges. From 2017 far fewer gauges near our valley fed into it, so the record stepped up; we corrected for it and show both versions |
 | HLS (Landsat and Sentinel-2, 30 m) | Greenness: when the field is green or bare, its seasons, a guess at the crops |
 | MODIS (250 m) | Compared with HLS only. No number shown uses it: the field is a small part of one MODIS pixel |
 | NASADEM (30 m) | The field's height (for evaporation) |
@@ -167,7 +177,7 @@ service; the Nepal-only parts for other countries (below); and a NASA season out
   steps (the DHM-scaled and gauge-tuned rain, rain at harvest, the fertiliser saver, the heat clock, the Replay window
   and the farmer answers for the coming months), so those say "not ready yet"; and `--short-record` is not ready.
 - **A field on another continent.** `config/fields/ambohidratrimo.yaml`, a PLACEHOLDER square in Madagascar's central
-  highlands, was built with the kit on the global defaults: its own rain check (no gauge break, so NASA's rain is used as
+  highlands, was built with the kit on the global defaults: its own rain check (no step in its rain record, so NASA's rain is used as
   published), its own FAO crop calendar, and labels that say NOT YET VERIFIABLE where no local check exists. **It is on
   the site:** open it from "Fields we have looked at" on Home (its farmer steps) or on How we know (its own evidence and
   labels), where it reads "A field on another continent, run by the same pipeline." Not made for it yet: the answers
@@ -188,7 +198,7 @@ service; the Nepal-only parts for other countries (below); and a NASA season out
 | --- | --- |
 | The NASA datasets (GPM IMERG rain, NASA POWER weather, HLS greenness, NASADEM height, NEX-GDDP-CMIP6 outlook; coverage limits in `rules.yaml` `global_use.coverage`) | DHM's records and checks (Nepal's Department of Hydrology and Meteorology: normals, onset dates, bulletins) |
 | The Field Twin (soil water, crops, harvest as a share of the field's best) | Bikram Sambat months |
-| The rain-record check (each field's own test for a break in NASA's rain record) | The reviewed Nepali texts (every Nepali line still needs a native speaker's review) |
+| The rain-record check (each field's own test for a step in NASA's rain record when fewer gauges feed it) | The reviewed Nepali texts (every Nepali line still needs a native speaker's review) |
 | The 24-year replay (the years differ per field: its complete years) | Ropani, Nepal's land unit |
 | The labels (VERIFIED, ESTIMATE, NOT YET VERIFIABLE on every answer) | |
 
@@ -198,8 +208,8 @@ service; the Nepal-only parts for other countries (below); and a NASA season out
 a cooperative for one season, in [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md)): (1) a field's own local rain readings,
 a measured soil value and the farmer's real crop calendar; (2) a whole valley prepared in advance, so a tap gives the
 nearest prepared plan at once; (3) a one-page printable view for agriculture advisers that works offline; (4) fewer but
-stronger outputs; (5) seed, labour and selling prices, entered by the farmer if they wish; (6) a "what really happened"
-checker for the season's results; (7) the 2040 outlook rebuilt after the rain fix.
+stronger outputs; (5) a "what really happened" checker for the season's results; (6) the 2040 outlook rebuilt after
+the rain correction; (7) reaching farmers through cooperatives and women's groups, since many farms are run by women.
 
 The full list, with what each would need, is in [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md). Among them: a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May (`docs/NEXT_STEPS.md` 9).
 First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil bucket, so water a bunded paddy holds above field capacity is not kept (METHOD_NOTES 103).

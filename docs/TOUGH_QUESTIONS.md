@@ -113,7 +113,7 @@ only the years after 2016 are split, one synoptic station scores it, and the sam
 yearly factor scores the same (3.9b). It restores the level, not the order of wet and dry years: both negative controls
 fail (4.1).
 
-**Limitation** we state: "The fix restores the average after 2016, not which years were wet or dry." Fix: DHM's gauge
+**Limitation** we state: "The correction restores the average after 2016, not which years were wet or dry." Fix: DHM's gauge
 data for 2017-2023, the only thing that could reorder the years (3.9e).
 
 **Verdict:** partly answered (the change itself: answered).

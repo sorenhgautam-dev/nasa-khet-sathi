@@ -4,8 +4,8 @@ This folder holds a hand-held prototype probe that reads soil moisture and tempe
 common parts and one short Arduino sketch. Today a person carries it to each part of the field. A robot that carries it
 (our mascot, Krishi Scout) is the planned next step, not something we have built.
 
-Everything here is open: the sketch, the laptop code that reads it, and the bench test that checks it. We make no cost
-claims. Prices vary by shop and by country.
+Everything here is open: the sketch, the laptop code that reads it, and the bench test that checks it. It is cheap
+enough for a cooperative to share.
 
 ## What it measures, and what it does not
 

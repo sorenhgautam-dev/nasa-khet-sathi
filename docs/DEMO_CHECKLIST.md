@@ -12,6 +12,9 @@ record is in `docs/PROBE_RECORDING.md`.
 - [ ] Charge the laptop and the phone. Pack the probe, its USB cable, a spare cable and the four pots or trays of soil
       if you will not be in the field.
 - [ ] iPhone hotspot: Settings, Personal Hotspot, turn on "Maximize Compatibility".
+- [ ] We do not use the phone-as-drone demo mode. Leave it off (`site/data/demo.json` must not exist). "From the
+      sky" shows Kharipati's open drone map, standing in for our future drone. The probe in the four pots stays
+      the live soil test.
 
 ## At the venue (5 minutes)
 

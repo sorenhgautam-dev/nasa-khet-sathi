@@ -30,7 +30,8 @@ Facts column: check them there before recording. Screens come from the live site
 - No El Niño number, no probe accuracy, no "worked / struggled / failed" counts, no money (PITCH_FACTS section K). The
   animation shows its own tally under each field: keep it on screen only, never in the voice.
 - No robot or drone does anything on screen or in the voice. The soil stick is a prototype carried by hand; the robot
-  (Krishi Scout) is only drawn; the field's picture is NASA's map. The public site has no soil-stick readings yet ("Not
+  (Krishi Scout) is only drawn. The field's picture is an open drone map (Kharipati, OpenAerialMap, 5 May 2026),
+  standing in for our future drone: never say our drone took it. We do not use the phone-as-drone demo mode. The public site has no soil-stick readings yet ("Not
   tested yet"); show readings only if real and dated, with their label (a garden or indoor test says so). Never film
   the "Practice: made-up numbers" screens as if they were real.
 - The rain check is a check, not a fault: "far fewer gauges fed NASA's rain here", never "NASA's data is wrong".

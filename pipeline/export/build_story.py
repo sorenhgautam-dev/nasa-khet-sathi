@@ -299,7 +299,7 @@ def chart_gauge_weight(gauge):
                   [[y, v["mean"]] for y, v in sorted(w.items())]),
                 S(T("Lowest to highest month", "सबैभन्दा कम देखि बढी महिना"), "range",
                   [[y, [v["low"], v["high"]]] for y, v in sorted(w.items())])],
-        markers=[{"x": by, "label": T("Gauge reports stop", "मापकका खबर रोकिए")}],
+        markers=[{"x": by, "label": T("Far fewer gauges from here", "यहाँका मापक धेरै घटे")}],
         rows=[{"year": y, **v} for y, v in sorted(w.items())],
         note=T("2025 counts January to September only.", "२०२५ मा जनवरी देखि सेप्टेम्बर मात्र।")), by
 
@@ -317,7 +317,7 @@ def chart_gauge_stations(gauge, by):
         y=axis_y(T("Gauges reporting, each month", "हरेक महिना खबर पठाउने मापक"), "gauges"),
         series=[S(T("Gauges in the 1° box (about 100 km)", "१° कोठामा (करिब १०० किमी) मापक"), "main",
                   [[y, v] for y, v in sorted(c.items())])],
-        markers=[{"x": by, "label": T("Gauge reports stop", "मापकका खबर रोकिए")}],
+        markers=[{"x": by, "label": T("Far fewer gauges from here", "यहाँका मापक धेरै घटे")}],
         note=T("This gauge archive ends in 2020.", "मापकको यो अभिलेख २०२० मा सकिन्छ।"))
 
 
@@ -339,8 +339,8 @@ def chart_rain_jump(gpm, chirps, gauge, normals, by):
     step_chirps = mean_of(c, [y for y in c if y >= by]) / mean_of(c, [y for y in c if y < by])
     jump = round((step_gpm - 1) * 100)
     level = SAME_LEVEL[0] <= step_chirps <= SAME_LEVEL[1]
-    cap_en = f"From {by}, NASA's rain map jumped {jump}%."
-    cap_ne = f"{by} देखि नासाको वर्षा नक्सा {jump}% ले उफ्रियो।"
+    cap_en = f"From {by}, NASA's rain map stepped up {jump}%."
+    cap_ne = f"{by} देखि नासाको वर्षा नक्सा {jump}% बढ्यो।"
     if level:
         cap_en += " CHIRPS stayed level."
         cap_ne += " चिर्प्स उस्तै रह्यो।"
@@ -360,7 +360,7 @@ def chart_rain_jump(gpm, chirps, gauge, normals, by):
                   [[y, round(gp[y])] for y in sorted(gp)]),
                 S(T("Bhaktapur gauge, usual year (DHM)", "भक्तपुर मापक, सामान्य वर्ष (DHM)"), "compare",
                   [[years[0], round(normal)], [years[-1], round(normal)]])],
-        markers=[{"x": by, "label": T("Gauge reports stop", "मापकका खबर रोकिए")}],
+        markers=[{"x": by, "label": T("Far fewer gauges from here", "यहाँका मापक धेरै घटे")}],
         rows=[{"step_after_break": {"gpm": round(step_gpm, 2), "chirps": round(step_chirps, 2)},
                "means_mm": {"gpm_before": round(mean_of(g, [y for y in g if y < by])),
                             "gpm_after": round(mean_of(g, [y for y in g if y >= by])),
@@ -384,16 +384,16 @@ def chart_rain_fixed(weather, normal, by):
         en.append(f"Still {fmt(ratio, 2)} times the town gauge's usual rain.")
         ne.append(f"तर सहरको मापकको सामान्यको {fmt(ratio, 2)} गुणा छ")
     return chart(
-        "rain_fixed", "rain", T(f"The rain our model uses, fixed from {by}", f"हाम्रो मोडेलको वर्षा, {by} देखि सच्याइएको"),
+        "rain_fixed", "rain", T(f"The rain our model uses, corrected from {by}", f"हाम्रो मोडेलको वर्षा, {by} देखि सच्याइएको"),
         T(" ".join(en), "। ".join(ne) + "।"), [SRC_TWIN_RAIN, SRC_IMERG_D, SRC_DHM_NORMAL], "line",
         x=axis_x(T("Year", "वर्ष"), "year"),
         y=axis_y(T("Rain in a year", "वर्षभरिको वर्षा"), "mm"),
-        series=[S(T("Rain the model uses (fixed)", "मोडेलले प्रयोग गर्ने वर्षा (सच्याइएको)"), "main",
+        series=[S(T("Rain the model uses (corrected)", "मोडेलले प्रयोग गर्ने वर्षा (सच्याइएको)"), "main",
                   [[y, round(fixed[y])] for y in years]),
                 S(T("As published", "जस्ताको तस्तै"), "compare", [[y, round(raw[y])] for y in sorted(raw)]),
                 S(T("Bhaktapur gauge, usual year (DHM)", "भक्तपुर मापक, सामान्य वर्ष (DHM)"), "compare",
                   [[years[0], round(normal)], [years[-1], round(normal)]])],
-        markers=[{"x": by, "label": T("Our fix starts", "हाम्रो सुधार सुरु")}],
+        markers=[{"x": by, "label": T("Our correction starts", "हाम्रो समायोजन सुरु")}],
         rows=[{"mean_mm": {"fixed": round(mean_of(fixed, years)), "as_published": round(mean_of(raw, years)),
                            "bhaktapur_normal": round(normal)},
                "times_normal": round(ratio, 2), "step_after_break": round(step, 2)}]), ratio
@@ -548,7 +548,7 @@ def chart_events(replay, known, card=None):
     return chart(
         "events", "checks", T("Floods and dry years: our model against records", "बाढी र सुक्खा वर्ष: मोडेल र अभिलेख"),
         T(" ".join(en), "। ".join(ne) + "।"),
-        [SRC_TWIN + ": one weather event a year from the field's rain (GPM IMERG, fixed from 2017)",
+        [SRC_TWIN + ": one weather event a year from the field's rain (GPM IMERG, corrected from 2017)",
          "Written records of floods and droughts: config/known_events.yaml (DHM, Ministry of Home Affairs, FAO/WFP, "
          "FAO GIEWS, Dahal et al. 2016 and others; each with its source)"], "timeline",
         x=axis_x(T("Year", "वर्ष"), "year"),
@@ -1102,6 +1102,22 @@ def limits_block(rows):
     }
 
 
+def promise_block():
+    """'Our promise' (owner, 2026-11-15, afternoon), for Home (below the first screen) and How we know: free for every
+    farmer, always; no ads and no accounts; the field's data and photos stay on the phone (the site sends nothing
+    anywhere: scripts/check_site.py, no outside requests); open code and open data. Nepali first, marked for review. Pure."""
+    return {
+        "title": T("Our promise", "हाम्रो वाचा"),
+        "lines": [T("Free for every farmer, always.", "हरेक किसानका लागि सधैं निःशुल्क।"),
+                  T("No ads. No accounts.", "कुनै विज्ञापन छैन। कुनै खाता छैन।"),
+                  T("Field data and photos stay on your phone.", "खेतको जानकारी र फोटो तपाईंकै फोनमा रहन्छन्।"),
+                  T("Open code and open data.", "खुला कोड र खुला डाटा।"),
+                  T("Anyone can check our work.", "जो कोहीले हाम्रो काम जाँच्न सक्छ।"),
+                  T("Or bring it to your own valley.", "वा आफ्नै उपत्यकामा लैजान सक्छ।")],
+        "ne_review": NE_REVIEW,
+    }
+
+
 def compliance(card, ys=None):
     """The compliance table (owner's item 4): one line per shown output from data/checks/<field>/scorecard.json."""
     out, ys = [], ys or yardsticks()
@@ -1147,9 +1163,9 @@ def report_card(ctx):
     rf, rl, lvl, by = ctx["rain_final_ratio"], ctx["rain_late_ratio"], ctx["rain_level_ratio"], ctx["break_year"]
     conf = "medium" if 0.8 <= rf <= 1.25 else "low"
     nf, nl = ctx["n_final_months"], ctx["n_late_months"]
-    en = [f"NASA's rain lost its gauges in {by}.", "We found the break and fixed it.",
+    en = [f"From {by}, fewer gauges fed NASA's rain here.", "So the record stepped up.", "We corrected for it.",
           f"We checked {nf + nl} months of 2025 against gauges.", f"{nf} months read {fmt(rf, 2)} times the gauges."]
-    ne = [f"सन् {by} मा नासाको वर्षाले मापक गुमायो", "हामीले त्यो त्रुटि भेटेर सच्यायौं",
+    ne = [f"{by} देखि नासाको वर्षामा यहाँका मापक घटे", "त्यसैले अभिलेख माथि गयो", "हामीले त्यसलाई मिलायौं",
           f"हामीले २०२५ का {nf + nl} महिना मापकसँग जाँच्यौं", f"{nf} महिना मापकको {fmt(rf, 2)} गुणा थिए"]
     if rl > SAME_LEVEL[1]:
         en.append(f"The last {nl} still read too wet.")
@@ -1376,7 +1392,7 @@ SATELLITES = [
      "instrument": "geostationary thermal infrared (cold-cloud time) blended with rain gauges; days split with ERA5",
      "dataset": "CHIRPS v3.0 daily, rnl (0.05°)", "kind": "satellites and gauges",
      "job": T("Checks NASA's rain. Never the model's rain.", "नासाको वर्षा जाँच्छ। मोडेलको वर्षा होइन।"),
-     "checked": T("It shows no 2017 jump.", "यसमा २०१७ को उफ्राइ छैन।"),
+     "checked": T("It shows no 2017 step up.", "यसमा २०१७ मा अचानक बढोत्तरी छैन।"),
      "refs": ["3.9b", "3.22b"]},
     {"id": "gldas", "mission": "GLDAS-2.1 (NASA GSFC)",
      "instrument": "Noah land model driven by GDAS weather, AGRMET satellite radiation and GPCP v1.3 rain "
@@ -1464,7 +1480,7 @@ RESOURCES = [
 # --- assembling the page ---------------------------------------------------------------------------------------------
 
 SECTIONS = [
-    ("rain", T("The rain gauges that vanished", "हराएका वर्षा मापक"),
+    ("rain", T("When fewer gauges fed NASA's rain", "नासाको वर्षामा मापक घट्दा"),
      ["gauge_weight", "gauge_stations", "rain_jump", "rain_fixed"]),
     ("seasons", T("Your field's seasons from space", "अन्तरिक्षबाट खेतका बाली याम"), ["seasons_from_space", "cover_sure", "crop_months"]),
     ("checks", T("Our model against real records", "हाम्रो मोडेल र साँचो अभिलेख"),
@@ -1623,6 +1639,7 @@ def build_story(inp, generated):
         "inputs": inputs, "charts": charts, "report_card": report_card(ctx),
         "compliance": (rows := compliance(inp.get("scorecard"), ys)),
         "limits": limits_block(rows),
+        "promise": promise_block(),
         "verify_how": verify_how(rows, ys),
         "compliance_note": T(f"Verified means right at least {ys['pct']} times in 100, on {ys['nmin']} or more checks. "
                              "The range shows how sure that number is.",

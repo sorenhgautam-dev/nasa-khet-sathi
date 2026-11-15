@@ -19,6 +19,16 @@ first. Farmer screens show no numbers or charts. A "How we know" page, for judge
 greenness history, the replay, and how we checked the field's rain record. Every number there carries two labels: how
 sure we are, and how close the data is to the field. It is plain files, Nepali first, with no account and no server.
 
+## Our promise (हाम्रो वाचा)
+
+Nepali first; the Nepali awaits a native speaker's review.
+
+- **हरेक किसानका लागि सधैं निःशुल्क।** Free for every farmer, always.
+- **कुनै विज्ञापन छैन, कुनै खाता छैन।** No ads and no accounts.
+- **खेतको जानकारी र फोटो फोनमै रहन्छन्।** The field's data and photos stay on the phone: the site never sends them
+  anywhere.
+- **खुला कोड र खुला डाटा।** Open code and open data, so anyone can check our work or bring it to their own valley.
+
 ## Project details
 
 **The question.** A farmer near Bhaktapur grows rice in the monsoon. The months between crops are often empty. A new
@@ -28,7 +38,9 @@ field, one plan at a time, and leaves the choice to the farmer.
 **What the farmer sees: seven steps** (`site/js/app.js` `STEPS`). Short answers only: no numbers, years, counts or
 charts on these screens. Nepali first, with Bikram Sambat months.
 1. **Home.** "Know your land. Plan your season." and "Try our sample field".
-2. **Your farm from the sky.** NASA's map picture of the field (HLS, via NASA GIBS), not a drone photo. Then a question:
+2. **Your farm from the sky.** On the field the site opens first, an open drone map of the farm (Kharipati,
+   OpenAerialMap, 5 May 2026), labelled as standing in for our future drone; on the other fields, NASA's map picture
+   (HLS, via NASA GIBS). Then a question:
    "We think you grow rice, then potato. Is that right?" The answer stays on the phone. Then the months the field
    usually rests.
 3. **Your farm, in 4 parts.**
@@ -105,7 +117,8 @@ cell 859 m away [B6]) are placeholders, as are the four nearby sample fields [B5
 
 **Prototype, plan, not built:** the soil stick is a prototype, carried by hand, with no real readings yet; the public
 site says "Not tested yet". The robot that would carry it ("Krishi Scout") is a plan: it is only drawn on the soil-test
-screen. The field's picture is NASA's map (HLS), not a drone photo; a real photo comes when we visit. How we know lists
+screen. The field's picture is an open drone map (OpenAerialMap) standing in for our future drone, or NASA's map
+(HLS) where there is none; our own drone is a plan. How we know lists
 these under "What is not ready yet".
 
 ## Use of AI (SI)
@@ -219,6 +232,26 @@ shows only at the in-person demo, on our laptop's hotspot, under a big "Practice
 public site. The robot that would carry the stick (Krishi Scout) is a plan, drawn only. Safe Trial uses the stick's four
 spots only to compare parts of the same field.
 
+## Impact, in human terms
+
+Every number below is an ESTIMATE from the model or the maps, with its ID; none has been checked on a real farm yet.
+
+- **Food.** Around Bhaktapur, about 15 in every 100 farm squares sit empty for more than two months a year (could be 0 to
+  31): months that could grow food [A2]. Only about 4 in 10 grow two crops a year [A4]. On the sample field, "Fill the
+  empty months" (rice, then wheat) scores a harvest of about 83 out of 100, against 65 for today's plan (81-85 and 65-68
+  over our rain versions) [H1, H2]; in the bad years, one in ten, about 74 against 60 [H4].
+- **Soil.** The same plan keeps the ground covered about 25 more days a year [H6]. "Feed your soil" grows lentil, which
+  leaves nitrogen in the soil: the rice after it may need about 1 to 2 fewer 50 kg bags of urea per hectare, a wide
+  published range, and one field study measured far less [N6].
+- **Safety.** Weather ahead warns, month by month, before the usual dangers to the farmer's own crop, from this field's
+  past 24 years, never a forecast [O1]: cold nights reached potato in Poush in 15 of 24 years [O2] (our night
+  temperatures likely count too many [N4]); frost around wheat flowering in 5 of 24 years for wheat sown in mid-October,
+  none for mid-November sowing [N8]; after sowing, the winter crops' longest dry spell is usually about 6 weeks [N7];
+  heavy rain fell in the rice harvest weeks in 8 of 24 years [N1].
+- **The rain record, shared openly.** NASA's rain combines satellites with ground gauges. From 2017 far fewer gauges near
+  our valley fed into it, so the record stepped up, and we corrected for it [F1-F3, F7]. The check and its code are
+  open, so anyone using NASA's rain in Nepal can run it for their own place [F2, F13].
+
 ## The awards we aim at
 
 **Best Use of Data (top priority).** *For:* ten NASA data sources, each with a job and a check [J7]; the 2017 rain change
@@ -241,8 +274,9 @@ yet:* the bench test; real soil-stick readings; the robot (a plan, drawn only); 
 (`docs/FARMER_TEST.md`).
 
 **Local Impact.** *For:* Nepali first, Bikram Sambat months, Nepal's own data, valley floods and droughts checked by
-name; the area map shows how much of the valley floor's cropland sits empty [A2, A4]. The 2017 gauge change may affect
-anyone using NASA's rain in Nepal after 2016: GPCC's neighbouring boxes lost their stations too [F2]. *Not yet:* no farmer
+name; the area map shows how much of the valley floor's cropland sits empty, months that could grow food [A2, A4].
+The 2017 gauge change may affect anyone using NASA's rain in Nepal after 2016: GPCC's neighbouring boxes had far fewer
+gauges too [F2]. We share the check and its code openly. *Not yet:* no farmer
 has used it; the field is a placeholder; most of the Nepali awaits a native speaker [I5].
 
 **Galactic Impact.** *For:* the model's inputs are global datasets, and one command builds a field [I3, I4]. The rain
@@ -281,7 +315,7 @@ the same pipeline. Not checked against local rain gauges yet." (`site/data/index
 are not made yet: Next 3 and Next 6 months say "Not ready yet.", and Weather ahead is for Nepal's fields only. Its
 plans, rain check and greenness are on How we know.
 
-## How farmers would get this
+## How Khet Sathi reaches farmers
 
 A phone link, Nepali first: no app, no account [I2], best used with a helper, an extension worker or co-operative
 member.
@@ -295,6 +329,9 @@ member.
    "Ask someone who knows" tab. The answers become our first ground truth.
 4. **A Safe Trial on one quarter** ("Try it in one part first"), if the farmer wants one. The result comes after
    harvest.
+5. **Our plan: cooperatives and women's groups.** Many farms are run by women, so we plan to work through women's
+   groups as well as cooperatives: a group member can be the helper who sits with the farmer. One soil stick, cheap
+   enough for a cooperative to share, can visit many fields. A plan, not yet tried (`docs/NEXT_STEPS.md` 3).
 
 Every plan says "try it on one small part first" [E2]. The tool supports the farmer's judgment; it never replaces it.
 

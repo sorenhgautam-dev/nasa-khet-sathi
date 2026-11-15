@@ -134,6 +134,31 @@ def test_the_limits_block_groups_the_compliance_table_into_checked_and_estimates
         assert x["en"] and x["ne"] and len(x["en"].split()) <= 8, x       # farmer screens: 8 words or fewer, both languages
 
 
+def test_our_promise_says_free_no_ads_no_accounts_data_on_the_phone_and_open():
+    """Owner, 2026-11-15 (afternoon): 'Our promise' on Home and How we know: free for every farmer, always; no ads and no
+    accounts; the field's data and photos stay on the phone; open code and open data, so anyone can check our work or
+    bring it to their own valley. Nepali first, marked for review; 8 words or fewer per line."""
+    P = bs.promise_block()
+    text = " ".join(x["en"] for x in P["lines"])
+    for w in ("Free for every farmer, always", "No ads", "No accounts", "photos stay on your phone", "Open code",
+              "open data", "check our work", "your own valley"):
+        assert w in text, w
+    for x in [P["title"], *P["lines"]]:
+        assert x["en"] and x["ne"] and len(x["en"].split()) <= 8, x
+    assert P["ne_review"] == bs.NE_REVIEW
+    money = re.compile(r"\b(customers?|markets?|moneti[sz]\w*|revenue|business|price\w*|sell\w*)\b", re.I)
+    assert not money.search(text)
+
+
+def test_the_rain_chapter_calls_the_2017_change_fewer_gauges_never_a_fault():
+    """Owner, 2026-11-15: NASA's rain combines satellites with ground gauges; from 2017 far fewer gauges near our valley
+    fed into it, so the record stepped up, and we corrected for it. Never a flaw, an error or a bug in NASA's data."""
+    src = open("pipeline/export/build_story.py", encoding="utf-8").read()
+    for bad in ("vanished", "lost its gauges", "found the break", "jumped", "त्यो त्रुटि भेटेर", "Gauge reports stop", "Our fix"):
+        assert bad not in src, bad
+    assert "fewer gauges fed NASA's rain here" in src and "We corrected for it." in src
+
+
 def test_home_and_how_we_know_show_the_limits_block_and_its_lists_only_on_their_own_field():
     app = (REPO / "site" / "js" / "app.js").read_text()
     how = (REPO / "site" / "js" / "how.js").read_text()

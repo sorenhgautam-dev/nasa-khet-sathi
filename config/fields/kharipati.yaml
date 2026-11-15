@@ -60,9 +60,9 @@ drone_photo:                        # the 'from the sky' picture of this field (
   resolution: "1.7 cm per pixel (drone); the picture here is the farm cut out and resized for the web"
   oam_id: 6a4b881d6332d62593123314
   credit: "Drone imagery: Rabi Shrestha, OpenAerialMap, CC-BY 4.0."
-  label:                            # the owner's words (2026-11-15); the Nepali needs native-speaker review
-    en: "A real farm in Kharipati, Bhaktapur. Drone photo from 5 May 2026. No farmer's answers yet."
-    ne: "भक्तपुरको खरिपाटीमा एउटा साँचो खेत। सन् २०२६ मे ५ को ड्रोन तस्बिर। किसानका जवाफ अझै छैनन्।"
+  label:                            # the owner's words (2026-11-15; afternoon: an open drone map standing in for our future drone, no phone-as-drone); the Nepali needs native-speaker review
+    en: "An open drone map. It stands in for our future drone. Kharipati, Bhaktapur, 5 May 2026. No farmer's answers yet."
+    ne: "खुला ड्रोन नक्सा। यसले हाम्रो भावी ड्रोनको ठाउँ लिन्छ। खरिपाटी, भक्तपुर, सन् २०२६ मे ५। किसानका जवाफ अझै छैनन्।"
     ne_review: needs native-speaker review
   sat:                              # what the 30 m squares see (package README: about 1 square); the Nepali needs native-speaker review
     en: "From space, we see 30 m squares. About 1 square covers this farm. So that history is for the whole area. The soil stick tests each 10 m patch."
