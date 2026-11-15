@@ -2869,7 +2869,7 @@
    "sw": "Fanya hivi:"
   },
   "shared.weather.tip_cold": {
-   "en": "Cover young plants on clear, cold nights.",
+   "en": "Cover young plants on frosty nights.",
    "sw": "Funika mimea michanga usiku wa baridi."
   },
   "shared.weather.tip_heat": {
@@ -3173,7 +3173,7 @@
    "sw": "Kwa kawaida hakuna hatari kubwa."
   },
   "shared.farm.today_drier": {
-   "en": "Patch {section} is drier than the others.",
+   "en": "Part {section} is drier than the others.",
    "sw": "Sehemu {section} ni kavu kuliko nyingine."
   },
   "shared.farm.today_water_first": {
@@ -3181,7 +3181,7 @@
    "sw": "Imwagilie kwanza."
   },
   "shared.farm.today_wetter": {
-   "en": "Patch {section} is wetter than the others.",
+   "en": "Part {section} is wetter than the others.",
    "sw": "Sehemu {section} ina unyevu kuliko nyingine."
   },
   "shared.farm.today_water_last": {
@@ -3189,11 +3189,11 @@
    "sw": "Imwagilie mwisho."
   },
   "shared.farm.today_same": {
-   "en": "Patch {section} is like the others.",
+   "en": "Part {section} is like the others.",
    "sw": "Sehemu {section} ni kama nyingine."
   },
   "shared.farm.today_dry": {
-   "en": "Patch {section} is dry.",
+   "en": "Part {section} is dry.",
    "sw": "Sehemu {section} ni kavu."
   },
   "shared.farm.today_water_today": {
@@ -3201,7 +3201,7 @@
    "sw": "Imwagilie leo."
   },
   "shared.farm.today_fine": {
-   "en": "Patch {section} is fine.",
+   "en": "Part {section} is fine.",
    "sw": "Sehemu {section} iko sawa."
   },
   "shared.farm.today_no_water": {
@@ -3209,7 +3209,7 @@
    "sw": "Haihitaji maji."
   },
   "shared.farm.today_too_wet": {
-   "en": "Patch {section} is too wet.",
+   "en": "Part {section} is too wet.",
    "sw": "Sehemu {section} ina maji mengi mno."
   },
   "shared.farm.today_dont_water": {
@@ -3217,7 +3217,7 @@
    "sw": "Usiimwagilie."
   },
   "shared.farm.today_untested": {
-   "en": "Patch {section} is not tested yet.",
+   "en": "Part {section} is not tested yet.",
    "sw": "Sehemu {section} bado haijapimwa."
   },
   "shared.farm.twin3_1": {
@@ -3301,8 +3301,8 @@
    "sw": "Andika pembe na mazao ya shamba lako."
   },
   "shared.farm.world_step_2": {
-   "en": "Download NASA's free data for that place.",
-   "sw": "Pakua data ya bure ya NASA ya mahali hapo."
+   "en": "Download NASA's free records for that place.",
+   "sw": "Pakua rekodi za bure za NASA za mahali hapo."
   },
   "shared.farm.world_step_3": {
    "en": "Run one command. It builds every page.",

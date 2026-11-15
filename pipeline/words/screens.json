@@ -200,7 +200,7 @@
     {
      "id": "rests_in",
      "en": "Your field usually rests in:",
-     "ne": "तपाईंको खेत प्रायः यी महिना खाली रहन्छ:",
+     "ne": "खेत प्रायः खाली रहने महिना:",
      "ne_review": "needs native-speaker review"
     },
     {
@@ -3765,7 +3765,7 @@
     "ne_review": "needs native-speaker review"
    },
    "tip_cold": {
-    "en": "Cover young plants on clear, cold nights.",
+    "en": "Cover young plants on frosty nights.",
     "ne": "सफा, चिसो रातमा साना बिरुवा छोप्नुहोस्।",
     "ne_review": "needs native-speaker review"
    },
@@ -4149,7 +4149,7 @@
     "ne_review": "needs native-speaker review"
    },
    "today_drier": {
-    "en": "Patch {section} is drier than the others.",
+    "en": "Part {section} is drier than the others.",
     "ne": "भाग {section} अरूभन्दा सुक्खा छ।",
     "ne_review": "needs native-speaker review"
    },
@@ -4159,7 +4159,7 @@
     "ne_review": "needs native-speaker review"
    },
    "today_wetter": {
-    "en": "Patch {section} is wetter than the others.",
+    "en": "Part {section} is wetter than the others.",
     "ne": "भाग {section} अरूभन्दा ओसिलो छ।",
     "ne_review": "needs native-speaker review"
    },
@@ -4169,12 +4169,12 @@
     "ne_review": "needs native-speaker review"
    },
    "today_same": {
-    "en": "Patch {section} is like the others.",
+    "en": "Part {section} is like the others.",
     "ne": "भाग {section} अरूजस्तै छ।",
     "ne_review": "needs native-speaker review"
    },
    "today_dry": {
-    "en": "Patch {section} is dry.",
+    "en": "Part {section} is dry.",
     "ne": "भाग {section} सुक्खा छ।",
     "ne_review": "needs native-speaker review"
    },
@@ -4184,7 +4184,7 @@
     "ne_review": "needs native-speaker review"
    },
    "today_fine": {
-    "en": "Patch {section} is fine.",
+    "en": "Part {section} is fine.",
     "ne": "भाग {section} ठीक छ।",
     "ne_review": "needs native-speaker review"
    },
@@ -4194,7 +4194,7 @@
     "ne_review": "needs native-speaker review"
    },
    "today_too_wet": {
-    "en": "Patch {section} is too wet.",
+    "en": "Part {section} is too wet.",
     "ne": "भाग {section} धेरै भिजेको छ।",
     "ne_review": "needs native-speaker review"
    },
@@ -4204,7 +4204,7 @@
     "ne_review": "needs native-speaker review"
    },
    "today_untested": {
-    "en": "Patch {section} is not tested yet.",
+    "en": "Part {section} is not tested yet.",
     "ne": "भाग {section} अझै जाँचिएको छैन।",
     "ne_review": "needs native-speaker review"
    },
@@ -4309,8 +4309,8 @@
     "ne_review": "needs native-speaker review"
    },
    "world_step_2": {
-    "en": "Download NASA's free data for that place.",
-    "ne": "त्यो ठाउँको नासाको निःशुल्क डेटा डाउनलोड गर्नुहोस्।",
+    "en": "Download NASA's free records for that place.",
+    "ne": "त्यो ठाउँको नासाको निःशुल्क रेकर्ड डाउनलोड गर्नुहोस्।",
     "ne_review": "needs native-speaker review"
    },
    "world_step_3": {
