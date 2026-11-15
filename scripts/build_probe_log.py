@@ -76,9 +76,12 @@ def part_doc(rec, lines=()):
             "relative": None, "before": estimate(ev.get("before")), "after": estimate(ev.get("after")), "lines": list(lines)}
 
 
-def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None, only=None, settle_n=20, test=None,
+def build(paths, field, bench=None, allowed=("serial",), same_band=3, place=None, only=None, settle_n=None, test=None,
           watered=None, times=2.0):
     from robot.calibrate import relative
+    if settle_n is None:   # the rules' own number (5 since the owner's change of 2026-11-15; was 20)
+        from pipeline.fetch.rules import load_rules
+        settle_n = int(load_rules()["probe"]["settle_lines"])
     sessions, sources, twin_dates, buffers = {}, {}, [], {}
     for p in paths:
         for line in Path(p).read_text(encoding="utf-8").splitlines():

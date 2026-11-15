@@ -14,23 +14,24 @@ def _l(m, t=18.0):
 
 
 def test_the_rules_hold_the_owners_numbers():
-    assert (RULES["settle_lines"], RULES["measure_lines"], RULES["repeat_spread_max_pct"]) == (20, 10, 3)
+    # owner, 2026-11-15 afternoon: 20 s a part (was 20 and 10 lines, 60 s); the steady test unchanged
+    assert (RULES["settle_lines"], RULES["measure_lines"], RULES["repeat_spread_max_pct"]) == (5, 5, 3)
     assert RULES["temp_spread_max_c"] == 0.5 and RULES["off_scale_pct"] == [0, 100]
 
 
 def test_a_part_settles_then_measures_hand_worked():
-    # 20 lines discarded (they never count), then 44 45 45 46 47 45 44 45 46 45: median 45, spread 47 - 44 = 3 -> steady
+    # owner, 2026-11-15 afternoon: 5 lines discarded (they never count), then 44 45 45 46 47: median 45, spread 3 -> steady
     p = settle.Part.from_rules(RULES)
-    states = [p.add(_l(m)) for m in range(0, 100, 5)]                   # a wild settling ramp: 0, 5, ... 95
-    assert states[:19] == ["settling"] * 19 and states[19] == "measuring"
-    temps = [18.0, 18.1, 18.2, 18.1, 18.3, 18.2, 18.2, 18.1, 18.0, 18.2]
-    for m, t in zip([44, 45, 45, 46, 47, 45, 44, 45, 46, 45], temps):
+    states = [p.add(_l(m)) for m in (0, 25, 50, 75, 95)]                # a wild settling ramp
+    assert states[:4] == ["settling"] * 4 and states[4] == "measuring"
+    temps = [18.0, 18.1, 18.2, 18.1, 18.3]
+    for m, t in zip([44, 45, 45, 46, 47], temps):
         state = p.add(_l(m, t))
     r = p.result()
-    assert state == "done" and r["state"] == "done" and r["n"] == 10
+    assert state == "done" and r["state"] == "done" and r["n"] == 5
     assert r["median_pct"] == 45.0 and r["spread_pct"] == 3.0 and r["steady"] and r["probe_pct"] == 45.0
-    # temperatures: median of the ten = 18.15, spread 0.3 <= 0.5 -> steady
-    assert r["temp_c"] == pytest.approx(18.15) and r["temp_spread_c"] == pytest.approx(0.3) and r["temp_steady"]
+    # temperatures: median of the five = 18.1, spread 0.3 <= 0.5 -> steady
+    assert r["temp_c"] == pytest.approx(18.1) and r["temp_spread_c"] == pytest.approx(0.3) and r["temp_steady"]
     assert not r["off_scale"]
 
 
@@ -68,8 +69,8 @@ def _run(scenario, **kw):
 
 def test_fake_settling_ramp_settles_within_the_discarded_lines():
     lines = list(fake_probe.lines(n=30, seed=3, scenario="settling", target=45))
-    first = [probe.parse_line(l)["moisture_pct"] for l in lines[:10]]
-    assert max(first) - min(first) > 20                                  # the first 20 s are far from steady
+    first = [probe.parse_line(l)["moisture_pct"] for l in lines[:5]]
+    assert max(first) - min(first) > 15                                  # the first 10 s are far from steady
     r = _run("settling", target=45)
     assert r["state"] == "done" and r["steady"] and abs(r["probe_pct"] - 45) <= 1 and r["temp_steady"]
 

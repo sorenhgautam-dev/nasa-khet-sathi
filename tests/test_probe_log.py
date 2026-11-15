@@ -32,7 +32,7 @@ class Clock:
 
 def _session(log_path, source, session, calib=CAL):
     ctx = bridge.Context(source, RULES, TWIN, calib, soil_top=(0.332, 0.150), crop_p=0.35, crop="potato", soil_distance_m=859)
-    lines = [(l + "\r\n").encode() for t in (45, 30) for l in fake_probe.lines(n=30, seed=int(t), scenario="settling", target=t)]
+    lines = [(l + "\r\n").encode() for t in (45, 30) for l in fake_probe.lines(n=RULES["settle_lines"] + RULES["measure_lines"], seed=int(t), scenario="settling", target=t)]
     log = bridge.Log(log_path, session)
     log({"kind": "session", "time": "2026-11-16T10:00:00+05:45", "source": source, "sections": ["s1", "s2"]})
     bridge.walk(bridge.IterSource(lines), ["s1", "s2"], log_path.parent / "live.json", log, ctx, lambda *a: "", clock=Clock())
@@ -47,7 +47,7 @@ def test_a_real_session_becomes_a_valid_replay(tmp_path):
     s = doc["sessions"][0]
     assert s["source"].startswith("serial:") and [p["section"] for p in s["parts"]] == ["s1", "s2"]
     p1 = s["parts"][0]
-    assert p1["state"] == "done" and p1["steady"] and abs(p1["wetness"] - 45) <= 1 and p1["n"] == 10
+    assert p1["state"] == "done" and p1["steady"] and abs(p1["wetness"] - 45) <= 1 and p1["n"] == RULES["measure_lines"]
     assert p1["water_pct"] == pytest.approx(-5 + 0.6 * p1["wetness"], abs=0.5) and p1["band"] in ("needs water", "good", "too wet")
     # read 16 Nov, twin as of 14 Nov: P = 100 + 2 x 5 = 110, sure = 1 - sqrt(110) / 20 = 0.4756 -> 0.48
     assert p1["before"] == {"wetness": 60, "sure": 0.48} and p1["after"]["sure"] > 0.48
@@ -130,12 +130,12 @@ def test_every_reading_keeps_its_date_and_time_settling_lines_included(tmp_path)
     Draft202012Validator(SCHEMA).validate(doc)
     for p in doc["sessions"][0]["parts"]:
         lines = p["lines"]
-        assert len(lines) == RULES["settle_lines"] + RULES["measure_lines"]          # 20 settle, then 10 measured
-        assert [x["phase"] for x in lines] == ["settle"] * 20 + ["measure"] * 10
+        assert len(lines) == RULES["settle_lines"] + RULES["measure_lines"]          # 5 settle, then 5 measured
+        assert [x["phase"] for x in lines] == ["settle"] * RULES["settle_lines"] + ["measure"] * RULES["measure_lines"]
         assert all(x["time"].startswith("2026-11-16T") and x["time"].endswith("+05:45") for x in lines)
         assert [x["time"] for x in lines] == sorted(x["time"] for x in lines) and lines[-1]["time"] <= p["time"]
         measured = sorted(x["moisture"] for x in lines if x["phase"] == "measure")
-        assert p["wetness"] == int(round((measured[4] + measured[5]) / 2))          # the median of the 10 measured
+        assert p["wetness"] == int(round(measured[len(measured) // 2]))             # the median of the 5 measured
 
 
 def test_a_part_measured_again_keeps_only_the_lines_of_its_own_attempt(tmp_path):
@@ -145,14 +145,15 @@ def test_a_part_measured_again_keeps_only_the_lines_of_its_own_attempt(tmp_path)
     log = bridge.Log(log_path, "r")
     log({"kind": "session", "time": "2026-11-16T10:00:00+05:45", "source": "serial:COM3", "sections": ["s1"]})
     clock = Clock()
-    for i, l in enumerate(fake_probe.lines(n=7, scenario="settling", target=60)):     # 7 lines, then the cable is pulled
+    for i, l in enumerate(fake_probe.lines(n=3, scenario="settling", target=60)):     # 3 lines, then the cable is pulled
         log({"kind": "line", "time": clock(), "section": "s1", "source": "serial:COM3", "line": l, "ok": True,
              "parsed": {"moisture_pct": 99.0, "temp_c": 20.0, "temp_status": "ok"}, "state": "settling"})
     log({"kind": "stale", "time": clock(), "section": "s1", "reason": "the probe's USB cable was pulled"})
-    lines = [(l + "\r\n").encode() for l in fake_probe.lines(n=30, seed=1, scenario="settling", target=40)]
+    per = RULES["settle_lines"] + RULES["measure_lines"]
+    lines = [(l + "\r\n").encode() for l in fake_probe.lines(n=per, seed=1, scenario="settling", target=40)]
     bridge.walk(bridge.IterSource(lines), ["s1"], tmp_path / "live.json", log, ctx, lambda *a: "", clock=clock)
     p = bpl.build([log_path], field="demo")["sessions"][0]["parts"][0]
-    assert len(p["lines"]) == 30 and 99.0 not in [x["moisture"] for x in p["lines"]]
+    assert len(p["lines"]) == per and 99.0 not in [x["moisture"] for x in p["lines"]]
 
 
 def test_only_the_chosen_sessions_are_published(tmp_path):

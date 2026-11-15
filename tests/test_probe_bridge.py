@@ -171,7 +171,10 @@ def _ctx(twin=None, calib=None):
                           soil_distance_m=859)
 
 
-def _fake(scenario, target=45.0, n=30, seed=4):
+PER_PART = RULES["settle_lines"] + RULES["measure_lines"]   # 10 lines, 20 s (owner, 2026-11-15 afternoon; was 30)
+
+
+def _fake(scenario, target=45.0, n=PER_PART, seed=4):
     return [(l + "\r\n").encode() for l in fake_probe.lines(n=n, seed=seed, scenario=scenario, target=target)]
 
 
@@ -201,12 +204,12 @@ def test_live_json_is_written_only_at_state_changes_never_while_settling(tmp_pat
         if d["state"] in ("settling", "measuring"):
             assert d["wetness"] is None and d["temp"] is None and d["water_pct"] is None
     last = docs[-1]
-    assert abs(last["wetness"] - 30) <= 1 and last["steady"] and last["off_scale"] is False and last["n"] == 10
+    assert abs(last["wetness"] - 30) <= 1 and last["steady"] and last["off_scale"] is False and last["n"] == RULES["measure_lines"]
     assert [p["section"] for p in last["parts"]] == ["s1", "s2"]
     assert last["relative"] == "drier" and last["parts"][0]["relative"] == "wetter"       # 30 against 45
     assert last["water_pct"] is None and last["band"] is None and last["sure"] is None    # no bench calibration yet
     lines = [r for r in recs if r["kind"] == "line"]
-    assert len(lines) == 60 and {r["section"] for r in lines} == {"s1", "s2"}               # every raw line logged
+    assert len(lines) == 2 * PER_PART and {r["section"] for r in lines} == {"s1", "s2"}     # every raw line logged
     assert [r["kind"] for r in recs].count("part") == 2
 
 
@@ -290,8 +293,8 @@ class Pulled(bridge.IterSource):
 
 def test_a_pulled_cable_gives_a_plain_message_and_a_stale_live_json(tmp_path, capsys):
     out, logf = tmp_path / "live.json", tmp_path / "r.jsonl"
-    code = bridge.walk(Pulled(_fake("settling", 45, n=12)), ["s1"], out, bridge.Log(logf, "t"), _ctx(),
-                       lambda *a: "", clock=Clock())
+    code = bridge.walk(Pulled(_fake("settling", 45, n=3)), ["s1"], out, bridge.Log(logf, "t"), _ctx(),
+                       lambda *a: "", clock=Clock())   # pulled while settling
     err = capsys.readouterr().err
     assert code == 3 and "Traceback" not in err and "cable" in err
     live = json.loads(out.read_text())
@@ -307,7 +310,7 @@ def test_after_a_pulled_cable_the_part_starts_again(tmp_path):
             raise bridge.PortClosed("could not open port")          # still unplugged
         return bridge.IterSource(_fake("settling", 45))
     docs = []
-    code = bridge.walk(Pulled(_fake("settling", 45, n=12)), ["s1"], out, bridge.Log(logf, "t"), _ctx(),
+    code = bridge.walk(Pulled(_fake("settling", 45, n=3)), ["s1"], out, bridge.Log(logf, "t"), _ctx(),
                        lambda *a: "", clock=Clock(), write=lambda d: (docs.append(d), bridge.write_atomic(out, d)),
                        reopen=reopen, reconnect=True, reconnect_every_s=0, sleep=lambda s: None)
     assert code == 0 and len(opened) == 2 and docs[-1]["state"] == "done" and docs[-1]["stale"] is False

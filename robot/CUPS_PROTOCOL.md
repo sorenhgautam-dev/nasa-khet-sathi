@@ -44,8 +44,8 @@ Plug the probe in and find its port (macOS `ls /dev/cu.*`, Windows: Device Manag
 .venv/bin/python -m robot.bench --port /dev/cu.usbserial-0001 --cup c1
 ```
 
-It asks for **3 push-ins**: push the probe in to its line, press Enter, keep still for about **60 s** (the first 20
-lines, 40 s, settle and are not used; the next 10, 20 s, are measured), then take it out and wipe it. It prints each
+It asks for **3 push-ins**: push the probe in to its line, press Enter, keep still for about **20 s** (the first 5
+lines, 10 s, settle and are not used; the next 5, 10 s, are measured), then take it out and wipe it. It prints each
 push-in's median, spread and temperature, and logs every line to `data/probe/bench/readings_<date>.jsonl`. Then
 `--cup c2` ... `--cup c6`, and last `--cup ice` with the probe and its temperature sensor in the ice water.
 

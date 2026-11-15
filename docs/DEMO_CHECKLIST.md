@@ -28,7 +28,7 @@ record is in `docs/PROBE_RECORDING.md`.
        soil".
 5. [ ] Walk s1, s2, s3, s4.
    - At each part, push the probe in, then press Enter.
-   - Hands off for 60 seconds.
+   - Hands off for 20 seconds.
    - "Not steady" means press Enter and test that part again.
 6. [ ] When you are done, press Ctrl-C. The phone then says the probe is not connected.
 

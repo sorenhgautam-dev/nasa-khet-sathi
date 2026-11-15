@@ -32,7 +32,9 @@ _KEEP_OPEN = {}                     # master fd -> slave fd, so the pseudo-termi
 
 
 SCENARIOS = ("wander", "settling", "jumpy", "stuck100", "wiring_lost")
-SETTLE_TAU_LINES, TEMP_TAU_LINES, WIRING_AFTER = 4.0, 6.0, 5
+# made-up rehearsal ramps (owner, 2026-11-15 afternoon: 20 s a part, rules.yaml probe.settle_lines 5): they settle within the
+# 5 discarded lines (were 4.0 and 6.0 lines, for the old 20)
+SETTLE_TAU_LINES, TEMP_TAU_LINES, WIRING_AFTER = 1.2, 1.5, 5
 
 
 def lines(n=None, seed=0, wiring_every=0, start_moist=45.0, start_temp=22.0, scenario="wander", target=45.0,

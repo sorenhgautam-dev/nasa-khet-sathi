@@ -63,7 +63,7 @@ Follow `robot/CUPS_PROTOCOL.md`. In short:
 
    For each push-in:
    - Push the probe in to its line, then press Enter.
-   - **Keep it still for 60 seconds.** The first 40 s let it settle and are not used. The next 20 s are measured.
+   - **Keep it still for 20 seconds.** The first 10 s let it settle and are not used. The next 10 s are measured.
    - Take it out and wipe it.
 
    Then do `--cup c2`, and so on up to `--cup c6`.
@@ -128,7 +128,7 @@ notes; the public replay will say where it was recorded.
    1. Push the probe in to its line, at the centre of that part.
    2. Push the temperature sensor into the soil beside it.
    3. **Then** press Enter.
-   4. **Do not touch it for 60 seconds.** The phone shows "settling", then "measuring", then "done".
+   4. **Do not touch it for 20 seconds.** The phone shows "settling", then "measuring", then "done".
    5. If it says **"not steady, test again"**, press Enter to measure that part again. Do not move to a new spot.
 3. Walk all four parts. Stop with Ctrl-C at the end.
 
@@ -163,7 +163,7 @@ recorded on <date>". It is not the demo field, so the twin is never updated with
 3. **Start the recording.** Plug the probe into the laptop with this repository and run
    `.venv/bin/python scripts/demo_probe.py` (the real probe; **never** `--fake`). Write down the **time you start**.
 4. **Walk the four patches or bowls** in the order s1, s2, s3, s4, exactly as in step 4 above: probe in at the centre,
-   temperature sensor beside it, then Enter, then **60 seconds without touching**. If it says "not steady, test again",
+   temperature sensor beside it, then Enter, then **20 seconds without touching**. If it says "not steady, test again",
    press Enter and measure the same spot again.
 5. **Stop** with Ctrl-C after s4.
 6. **Notes.** Make the notes file of step 5 and add three lines:

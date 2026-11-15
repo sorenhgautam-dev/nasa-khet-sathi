@@ -1,7 +1,8 @@
 """Settle, then measure (owner's probe brief, 2026-11-14, fix 1). Pure: no I/O.
 
-Per part (or per bench push-in) the probe's good lines arrive every 2 s. The first `settle_lines` (20, 40 s) are
-discarded while the probe and its temperature sensor settle; the next `measure_lines` (10, 20 s) are measured:
+Per part (or per bench push-in) the probe's good lines arrive every 2 s. The first `settle_lines` (5, 10 s; 20 until the
+owner's change of 2026-11-15) are discarded while the probe and its temperature sensor settle; the next `measure_lines`
+(5, 10 s; was 10) are measured:
 
 - moisture: their median, spread (max - min) and n; steady when the spread is at most repeat_spread_max_pct (3 points).
   Not steady: state 'test_again' and no number. A median of 0 or 100 is 'off the scale' (the sketch limits moisture to

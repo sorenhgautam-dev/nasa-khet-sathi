@@ -44,8 +44,8 @@ enough for a cooperative to share.
 The laptop code in this folder never changes the sketch. It reads the USB lines and decides when a reading can be
 trusted (owner's probe brief; rules in `config/rules.yaml` `probe`):
 
-- **Settle, then measure.** Per part, the first 20 good lines (40 s) are thrown away while the sensor settles. The next
-  10 lines (20 s) are measured. The reading is their median (`robot/settle.py`).
+- **Settle, then measure.** Per part, the first 5 good lines (10 s; 20 lines, 40 s, until 15 November) are thrown away while the sensor settles. The next
+  5 lines (10 s) are measured. The reading is their median (`robot/settle.py`): 20 s a part.
 - **Steady or test again.** If the 10 moisture values spread more than 3 points, the state is `test_again` and no
   number is shown. Temperature has its own steadiness rule (spread at most 0.5 °C).
 - **Off the scale.** The sketch clips moisture to 0-100. A median of exactly 0 or 100 is shown as "off the scale",
