@@ -844,7 +844,7 @@ svg.pix circle.pf { stroke: #14301E; }
 .demolabel .ico { flex-shrink: 0; margin-top: 1px; }
 label.cta.take, label.round { cursor: pointer; }
 .fieldbox.photo { background: #2B2B26; }
-.fieldbox.photo > img.ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fieldbox.photo > img.ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; }   /* the straightened square: its corners are the box's */
 .fieldbox.photo .vl, .fieldbox.photo .hl { background: #fff; box-shadow: 0 0 0 1px rgba(20,48,30,.5); }
 .fieldbox .pchip { position: absolute; z-index: 3; transform: translateY(-100%); display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px;
   border-radius: 999px; background: rgba(255,255,255,.94); color: var(--ink); font-size: 12px; font-weight: 800; white-space: nowrap;
@@ -860,6 +860,25 @@ label.cta.take, label.round { cursor: pointer; }
 /* a narrow phone: a small word with no icon, clear of the part's number in the middle */
 @media (max-width: 1023px) { .fieldbox .pchip { font-size: 11px; padding: 2px 7px; } .fieldbox .pchip .ico { display: none !important; } }
 @media (min-width: 1024px) { .fieldbox .pchip { font-size: 14px; padding: 4px 11px; } }
+/* the square on the camera step, and the corners after it (owner, 2026-11-15) */
+.mapbox.guide { display: grid; place-items: center; background: #2B2B26; }
+.mapbox.guide > .ico { width: 64%; max-width: 250px; margin-bottom: 34px; }
+.mapbox.guide > .ico svg { display: block; width: 100%; height: auto; }
+.mapbox.guide .gtext { position: absolute; left: 12px; right: 12px; bottom: 14px; margin: 0; text-align: center; color: #FBF4EA; font-weight: 800; font-size: 17px; line-height: 1.3; }
+.fitbox { position: relative; width: fit-content; max-width: 100%; margin: 0 auto; border-radius: 22px; overflow: hidden; background: #2B2B26;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.fitbox .fitimg { display: block; max-width: 100%; max-height: 62vh; width: auto; height: auto; pointer-events: none; }
+.fitbox svg.fitlines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.fitbox svg.fitlines polygon { fill: rgba(200,224,90,.16); stroke: #C8E05A; stroke-width: 3; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.fitbox svg.fitlines line { stroke: #FFFFFF; stroke-width: 2; stroke-dasharray: 6 5; vector-effect: non-scaling-stroke; }
+.fitbox .fn { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 99px; display: grid; place-items: center;
+  background: var(--ink); color: var(--lime); font-weight: 800; font-size: 15px; pointer-events: none; }
+.fitbox .fithandle { position: absolute; width: 52px; height: 52px; margin: -26px 0 0 -26px; display: grid; place-items: center; border-radius: 99px;
+  touch-action: none; cursor: grab; }
+.fitbox .fithandle::after { content: ''; width: 24px; height: 24px; border-radius: 99px; background: var(--lime); border: 3px solid var(--ink);
+  box-shadow: 0 2px 8px rgba(0,0,0,.45); transition: transform 120ms ease-out; }
+.fitbox .fithandle.on::after, .fitbox .fithandle:focus-visible::after { transform: scale(1.3); }
+.fitbox .fithandle:focus-visible { outline: none; }
 
 /* Fields around the world (js/world.js; owner, 2026-11-15): NASA's Blue Marble picture, cropped to 75 N - 60 S, a dot per place */
 .wmap { position: relative; overflow: hidden; border-radius: 18px; background: #0B1E33; }

@@ -3535,6 +3535,22 @@
   "screens.your_plan.texts.drone_sat": {
    "en": "From space, we see 30 m squares. About 2 squares cover this farm. So that history is for the whole area. The soil stick tests each 10 m patch.",
    "es": "Desde el espacio vemos cuadros de 30 m. Unos 2 cuadros cubren esta finca. Esa historia es de la zona. La varilla mide cada parcela de 10 m."
+  },
+  "shared.drone.fit_guide": {
+   "en": "Fit the 4 pots inside the square.",
+   "es": "Ponga las 4 macetas dentro del cuadrado."
+  },
+  "shared.drone.fit_drag": {
+   "en": "Drag the corners to fit the 4 pots.",
+   "es": "Arrastre las esquinas hasta las 4 macetas."
+  },
+  "shared.drone.fit_done": {
+   "en": "Done",
+   "es": "Listo"
+  },
+  "shared.drone.fit_again": {
+   "en": "Fit again",
+   "es": "Ajustar de nuevo"
   }
  }
 }

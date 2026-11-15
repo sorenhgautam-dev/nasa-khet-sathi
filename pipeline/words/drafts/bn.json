@@ -3535,6 +3535,22 @@
   "screens.your_plan.texts.drone_sat": {
    "en": "From space, we see 30 m squares. About 2 squares cover this farm. So that history is for the whole area. The soil stick tests each 10 m patch.",
    "bn": "মহাকাশ থেকে আমরা 30 মি-এর বর্গ দেখি। প্রায় 2টি বর্গ এই খামারে পড়ে। তাই মহাকাশের ইতিহাস আশেপাশের এলাকার। যন্ত্রটি প্রতিটি 10 মি টুকরো পরীক্ষা করে।"
+  },
+  "shared.drone.fit_guide": {
+   "en": "Fit the 4 pots inside the square.",
+   "bn": "4টি টব বর্গের ভেতরে রাখুন।"
+  },
+  "shared.drone.fit_drag": {
+   "en": "Drag the corners to fit the 4 pots.",
+   "bn": "4টি টবে মেলাতে কোণগুলো টানুন।"
+  },
+  "shared.drone.fit_done": {
+   "en": "Done",
+   "bn": "হয়ে গেছে"
+  },
+  "shared.drone.fit_again": {
+   "en": "Fit again",
+   "bn": "আবার মেলান"
   }
  }
 }

@@ -8360,6 +8360,46 @@
     "es": "Igual",
     "fr": "Pareil",
     "sw": "Sawa"
+   },
+   "fit_guide": {
+    "en": "Fit the 4 pots inside the square.",
+    "ne": "४ वटै गमला वर्गभित्र पार्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "4 गमलों को वर्ग के अंदर रखें।",
+    "bn": "4টি টব বর্গের ভেতরে রাখুন।",
+    "es": "Ponga las 4 macetas dentro del cuadrado.",
+    "fr": "Placez les 4 pots dans le carré.",
+    "sw": "Weka vyungu 4 ndani ya mraba."
+   },
+   "fit_drag": {
+    "en": "Drag the corners to fit the 4 pots.",
+    "ne": "४ वटै गमला मिलाउन कुनाहरू तान्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "4 गमलों पर बैठाने के लिए कोने खींचें।",
+    "bn": "4টি টবে মেলাতে কোণগুলো টানুন।",
+    "es": "Arrastre las esquinas hasta las 4 macetas.",
+    "fr": "Faites glisser les coins sur les 4 pots.",
+    "sw": "Buruta pembe zitoshe vyungu 4."
+   },
+   "fit_done": {
+    "en": "Done",
+    "ne": "भयो",
+    "ne_review": "needs native-speaker review",
+    "hi": "हो गया",
+    "bn": "হয়ে গেছে",
+    "es": "Listo",
+    "fr": "Terminé",
+    "sw": "Tayari"
+   },
+   "fit_again": {
+    "en": "Fit again",
+    "ne": "फेरि मिलाउनुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "फिर से मिलाएँ",
+    "bn": "আবার মেলান",
+    "es": "Ajustar de nuevo",
+    "fr": "Ajuster à nouveau",
+    "sw": "Rekebisha tena"
    }
   }
  },

@@ -3535,6 +3535,22 @@
   "screens.your_plan.texts.drone_sat": {
    "en": "From space, we see 30 m squares. About 2 squares cover this farm. So that history is for the whole area. The soil stick tests each 10 m patch.",
    "sw": "Kutoka angani tunaona miraba ya m 30. Takriban miraba 2 hufunika shamba hili. Historia hiyo ni ya eneo. Kifaa hupima kila kipande cha m 10."
+  },
+  "shared.drone.fit_guide": {
+   "en": "Fit the 4 pots inside the square.",
+   "sw": "Weka vyungu 4 ndani ya mraba."
+  },
+  "shared.drone.fit_drag": {
+   "en": "Drag the corners to fit the 4 pots.",
+   "sw": "Buruta pembe zitoshe vyungu 4."
+  },
+  "shared.drone.fit_done": {
+   "en": "Done",
+   "sw": "Tayari"
+  },
+  "shared.drone.fit_again": {
+   "en": "Fit again",
+   "sw": "Rekebisha tena"
   }
  }
 }

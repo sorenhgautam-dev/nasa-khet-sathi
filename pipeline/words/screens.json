@@ -4570,6 +4570,26 @@
     "en": "Same",
     "ne": "उस्तै",
     "ne_review": "needs native-speaker review"
+   },
+   "fit_guide": {
+    "en": "Fit the 4 pots inside the square.",
+    "ne": "४ वटै गमला वर्गभित्र पार्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "fit_drag": {
+    "en": "Drag the corners to fit the 4 pots.",
+    "ne": "४ वटै गमला मिलाउन कुनाहरू तान्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "fit_done": {
+    "en": "Done",
+    "ne": "भयो",
+    "ne_review": "needs native-speaker review"
+   },
+   "fit_again": {
+    "en": "Fit again",
+    "ne": "फेरि मिलाउनुहोस्",
+    "ne_review": "needs native-speaker review"
    }
   }
  }

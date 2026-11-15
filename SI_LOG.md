@@ -1620,3 +1620,15 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   own break test found the break in 2017; the label words; the visual cross-check's wording (VALIDATION 3.34).
 - **For a person to review:** the new Nepali label and satellite lines (marked "needs native-speaker review"); the patch
   comparison with the package (VALIDATION 3.35); the credit name (from the package).
+
+## 2026-11-15 (Sunday, morning): the drone demo's square and corners (Claude Opus 5.5 via Claude Code)
+
+- **Asked by the owner:** a square framing guide on the camera step ("Fit the 4 pots inside the square"), then drag the
+  square's corners onto the pots before the 4 parts are drawn; demo mode on the hotspot only; keep it simple.
+- **What SI generated:** the guide picture, the four draggable corners (pointer events, so touch on iPhone and Android, and
+  arrow keys), the straightening of the photo inside them into a square on the phone (canvas; the square-to-quad mapping
+  of Heckbert 1989), its tests (`tests/test_site_drone_demo.py`), 4 new words in 7 languages (Nepali for native review),
+  and emulated iPhone and Android runs by touch (`~/Desktop/khet_sathi_screens/drone_demo/framing/`). A page on plain
+  http cannot draw over the phone's own camera, so the square shows before the camera opens. The photo never leaves the
+  phone. No result changed.
+- **For a person to review:** the flow on real phones; the 4 Nepali lines.
