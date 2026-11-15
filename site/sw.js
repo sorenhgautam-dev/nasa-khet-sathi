@@ -5,7 +5,7 @@
    network. The copy is named VERSION; a new version replaces the old one. If the list cannot be saved, the worker
    removes itself and the app works as it did before. scripts/build_offline.py writes the block below. */
 // BEGIN LIST (scripts/build_offline.py writes this block)
-const VERSION = 'ks-cbe6ee2-eaa67e23af';
+const VERSION = 'ks-f69a424-33b701f779';
 const FIRST_VISIT = [
  "css/app.css",
  "data/area/kharipati.json",
