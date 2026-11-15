@@ -4277,6 +4277,51 @@
     "en": "NASA pictures, {year_count} years",
     "ne": "नासाका तस्बिर, {year_count} वर्ष",
     "ne_review": "needs native-speaker review"
+   },
+   "world_title": {
+    "en": "Fields around the world",
+    "ne": "संसारभरका खेतहरू",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_link": {
+    "en": "See every field on a world map",
+    "ne": "विश्व नक्सामा सबै खेत हेर्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_tap": {
+    "en": "Tap a field to open it.",
+    "ne": "खोल्न खेतमा थिच्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_map_src": {
+    "en": "World picture: NASA Blue Marble, August 2004.",
+    "ne": "विश्वको तस्बिर: नासा ब्लु मार्बल, अगस्ट २००४।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_own_title": {
+    "en": "Run it for your own field",
+    "ne": "आफ्नै खेतका लागि चलाउनुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_step_1": {
+    "en": "Write down your field's corners and crops.",
+    "ne": "आफ्नो खेतका कुना र बाली लेख्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_step_2": {
+    "en": "Download NASA's free data for that place.",
+    "ne": "त्यो ठाउँको नासाको निःशुल्क डेटा डाउनलोड गर्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_step_3": {
+    "en": "Run one command. It builds every page.",
+    "ne": "एउटा आदेश चलाउनुहोस्। यसले सबै पाना बनाउँछ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_readme": {
+    "en": "The full steps (README, in English)",
+    "ne": "पूरा चरणहरू (README, अंग्रेजीमा)",
+    "ne_review": "needs native-speaker review"
    }
   },
   "fog": {

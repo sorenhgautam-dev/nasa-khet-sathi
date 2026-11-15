@@ -7787,6 +7787,96 @@
     "es": "Imágenes de la NASA, {year_count} años",
     "fr": "Images de la NASA, {year_count} ans",
     "sw": "Picha za NASA, miaka {year_count}"
+   },
+   "world_title": {
+    "en": "Fields around the world",
+    "ne": "संसारभरका खेतहरू",
+    "ne_review": "needs native-speaker review",
+    "hi": "दुनिया भर के खेत",
+    "bn": "বিশ্বজুড়ে খেত",
+    "es": "Campos de todo el mundo",
+    "fr": "Des champs partout dans le monde",
+    "sw": "Mashamba duniani kote"
+   },
+   "world_link": {
+    "en": "See every field on a world map",
+    "ne": "विश्व नक्सामा सबै खेत हेर्नुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "विश्व मानचित्र पर सभी खेत देखें",
+    "bn": "বিশ্ব মানচিত্রে সব খেত দেখুন",
+    "es": "Ver todos los campos en un mapa",
+    "fr": "Voir tous les champs sur une carte",
+    "sw": "Tazama mashamba yote kwenye ramani"
+   },
+   "world_tap": {
+    "en": "Tap a field to open it.",
+    "ne": "खोल्न खेतमा थिच्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "खोलने के लिए खेत पर टैप करें।",
+    "bn": "খুলতে একটি খেতে ট্যাপ করুন।",
+    "es": "Toque un campo para abrirlo.",
+    "fr": "Touchez un champ pour l'ouvrir.",
+    "sw": "Gusa shamba ili kulifungua."
+   },
+   "world_map_src": {
+    "en": "World picture: NASA Blue Marble, August 2004.",
+    "ne": "विश्वको तस्बिर: नासा ब्लु मार्बल, अगस्ट २००४।",
+    "ne_review": "needs native-speaker review",
+    "hi": "दुनिया की तस्वीर: नासा ब्लू मार्बल, अगस्त 2004।",
+    "bn": "বিশ্বের ছবি: নাসা ব্লু মার্বেল, আগস্ট 2004।",
+    "es": "Imagen del mundo: NASA Blue Marble, agosto de 2004.",
+    "fr": "Image du monde : NASA Blue Marble, août 2004.",
+    "sw": "Picha ya dunia: NASA Blue Marble, Agosti 2004."
+   },
+   "world_own_title": {
+    "en": "Run it for your own field",
+    "ne": "आफ्नै खेतका लागि चलाउनुहोस्",
+    "ne_review": "needs native-speaker review",
+    "hi": "अपने खेत के लिए चलाएँ",
+    "bn": "নিজের খেতের জন্য চালান",
+    "es": "Úselo para su propio campo",
+    "fr": "Lancez-le pour votre champ",
+    "sw": "Iendeshe kwa shamba lako"
+   },
+   "world_step_1": {
+    "en": "Write down your field's corners and crops.",
+    "ne": "आफ्नो खेतका कुना र बाली लेख्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "अपने खेत के कोने और फ़सलें लिखें।",
+    "bn": "আপনার খেতের কোণ আর ফসল লিখুন।",
+    "es": "Anote las esquinas y cultivos del campo.",
+    "fr": "Notez les coins et les cultures du champ.",
+    "sw": "Andika pembe na mazao ya shamba lako."
+   },
+   "world_step_2": {
+    "en": "Download NASA's free data for that place.",
+    "ne": "त्यो ठाउँको नासाको निःशुल्क डेटा डाउनलोड गर्नुहोस्।",
+    "ne_review": "needs native-speaker review",
+    "hi": "उस जगह का नासा का मुफ़्त डेटा डाउनलोड करें।",
+    "bn": "সেই জায়গার নাসার বিনামূল্যের ডেটা নামান।",
+    "es": "Descargue los datos gratuitos de la NASA.",
+    "fr": "Téléchargez les données gratuites de la NASA.",
+    "sw": "Pakua data ya bure ya NASA ya mahali hapo."
+   },
+   "world_step_3": {
+    "en": "Run one command. It builds every page.",
+    "ne": "एउटा आदेश चलाउनुहोस्। यसले सबै पाना बनाउँछ।",
+    "ne_review": "needs native-speaker review",
+    "hi": "एक कमांड चलाएँ। यह हर पेज बनाता है।",
+    "bn": "একটি কমান্ড চালান। এটি সব পাতা বানায়।",
+    "es": "Ejecute un comando. Crea todas las páginas.",
+    "fr": "Lancez une commande. Elle crée chaque page.",
+    "sw": "Endesha amri moja. Inatengeneza kila ukurasa."
+   },
+   "world_readme": {
+    "en": "The full steps (README, in English)",
+    "ne": "पूरा चरणहरू (README, अंग्रेजीमा)",
+    "ne_review": "needs native-speaker review",
+    "hi": "पूरे चरण (README, अंग्रेज़ी में)",
+    "bn": "পুরো ধাপগুলি (README, ইংরেজিতে)",
+    "es": "Todos los pasos (README, en inglés)",
+    "fr": "Toutes les étapes (README, en anglais)",
+    "sw": "Hatua zote (README, kwa Kiingereza)"
    }
   },
   "fog": {

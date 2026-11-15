@@ -3276,6 +3276,42 @@
    "en": "NASA pictures, {year_count} years",
    "bn": "নাসার ছবি, {year_count} বছর"
   },
+  "shared.farm.world_title": {
+   "en": "Fields around the world",
+   "bn": "বিশ্বজুড়ে খেত"
+  },
+  "shared.farm.world_link": {
+   "en": "See every field on a world map",
+   "bn": "বিশ্ব মানচিত্রে সব খেত দেখুন"
+  },
+  "shared.farm.world_tap": {
+   "en": "Tap a field to open it.",
+   "bn": "খুলতে একটি খেতে ট্যাপ করুন।"
+  },
+  "shared.farm.world_map_src": {
+   "en": "World picture: NASA Blue Marble, August 2004.",
+   "bn": "বিশ্বের ছবি: নাসা ব্লু মার্বেল, আগস্ট 2004।"
+  },
+  "shared.farm.world_own_title": {
+   "en": "Run it for your own field",
+   "bn": "নিজের খেতের জন্য চালান"
+  },
+  "shared.farm.world_step_1": {
+   "en": "Write down your field's corners and crops.",
+   "bn": "আপনার খেতের কোণ আর ফসল লিখুন।"
+  },
+  "shared.farm.world_step_2": {
+   "en": "Download NASA's free data for that place.",
+   "bn": "সেই জায়গার নাসার বিনামূল্যের ডেটা নামান।"
+  },
+  "shared.farm.world_step_3": {
+   "en": "Run one command. It builds every page.",
+   "bn": "একটি কমান্ড চালান। এটি সব পাতা বানায়।"
+  },
+  "shared.farm.world_readme": {
+   "en": "The full steps (README, in English)",
+   "bn": "পুরো ধাপগুলি (README, ইংরেজিতে)"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "bn": "জানুয়ারি–ফেব্রুয়ারি"

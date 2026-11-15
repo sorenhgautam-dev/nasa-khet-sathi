@@ -3276,6 +3276,42 @@
    "en": "NASA pictures, {year_count} years",
    "sw": "Picha za NASA, miaka {year_count}"
   },
+  "shared.farm.world_title": {
+   "en": "Fields around the world",
+   "sw": "Mashamba duniani kote"
+  },
+  "shared.farm.world_link": {
+   "en": "See every field on a world map",
+   "sw": "Tazama mashamba yote kwenye ramani"
+  },
+  "shared.farm.world_tap": {
+   "en": "Tap a field to open it.",
+   "sw": "Gusa shamba ili kulifungua."
+  },
+  "shared.farm.world_map_src": {
+   "en": "World picture: NASA Blue Marble, August 2004.",
+   "sw": "Picha ya dunia: NASA Blue Marble, Agosti 2004."
+  },
+  "shared.farm.world_own_title": {
+   "en": "Run it for your own field",
+   "sw": "Iendeshe kwa shamba lako"
+  },
+  "shared.farm.world_step_1": {
+   "en": "Write down your field's corners and crops.",
+   "sw": "Andika pembe na mazao ya shamba lako."
+  },
+  "shared.farm.world_step_2": {
+   "en": "Download NASA's free data for that place.",
+   "sw": "Pakua data ya bure ya NASA ya mahali hapo."
+  },
+  "shared.farm.world_step_3": {
+   "en": "Run one command. It builds every page.",
+   "sw": "Endesha amri moja. Inatengeneza kila ukurasa."
+  },
+  "shared.farm.world_readme": {
+   "en": "The full steps (README, in English)",
+   "sw": "Hatua zote (README, kwa Kiingereza)"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "sw": "Januari–Februari"

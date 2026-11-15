@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 727 texts): 704 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 736 texts): 713 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -792,7 +792,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 192 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 201 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -971,6 +971,15 @@ This page is made from the word files in this folder; change those, not this pag
 | NASA rain, {year_count} years | नासाको वर्षा, {year_count} वर्ष |
 | NASA weather, {year_count} years | नासाको मौसम, {year_count} वर्ष |
 | NASA pictures, {year_count} years | नासाका तस्बिर, {year_count} वर्ष |
+| Fields around the world | संसारभरका खेतहरू |
+| See every field on a world map | विश्व नक्सामा सबै खेत हेर्नुहोस् |
+| Tap a field to open it. | खोल्न खेतमा थिच्नुहोस्। |
+| World picture: NASA Blue Marble, August 2004. | विश्वको तस्बिर: नासा ब्लु मार्बल, अगस्ट २००४। |
+| Run it for your own field | आफ्नै खेतका लागि चलाउनुहोस् |
+| Write down your field's corners and crops. | आफ्नो खेतका कुना र बाली लेख्नुहोस्। |
+| Download NASA's free data for that place. | त्यो ठाउँको नासाको निःशुल्क डेटा डाउनलोड गर्नुहोस्। |
+| Run one command. It builds every page. | एउटा आदेश चलाउनुहोस्। यसले सबै पाना बनाउँछ। |
+| The full steps (README, in English) | पूरा चरणहरू (README, अंग्रेजीमा) |
 | *The fog that clears where the soil stick tests* | |
 | How sure are we? | हामी कति पक्का छौं? |
 | {sure_pct} out of 100 | १०० मा {sure_pct} |

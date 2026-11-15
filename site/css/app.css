@@ -803,3 +803,17 @@ svg.pix circle.pf { stroke: #14301E; }
   .fieldbox .flab .fb { font-size: 13px; }
   .fogline { font-size: 26px; }
 }
+
+/* Fields around the world (js/world.js; owner, 2026-11-15): NASA's Blue Marble picture, cropped to 75 N - 60 S, a dot per place */
+.wmap { position: relative; overflow: hidden; border-radius: 18px; background: #0B1E33; }
+.wmap img { display: block; width: 100%; height: auto; }
+.wdot { position: absolute; transform: translate(-7px, -50%); display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 6px 0 0;
+  background: none; border: 0; cursor: pointer; color: #fff; font: 700 13px/1.1 var(--f-body); }
+.wdot.w { flex-direction: row-reverse; transform: translate(calc(-100% + 7px), -50%); padding: 0 0 0 6px; }
+.wdot i { flex: none; width: 14px; height: 14px; border-radius: 50%; background: #C8E05A; border: 2px solid #14301E; box-shadow: 0 0 0 4px rgba(200,224,90,.35); }
+.wdot span { background: rgba(20,48,30,.85); padding: 4px 8px; border-radius: 10px; white-space: nowrap; }
+.wdot:focus-visible span { outline: 2px solid #C8E05A; outline-offset: 1px; }
+.wcountry { margin: 0 0 6px; display: flex; align-items: center; gap: 6px; font-weight: 800; }
+.wplace + .wplace { margin-top: 14px; }
+.wsteps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+.world p.small { margin: 0; }

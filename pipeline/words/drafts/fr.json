@@ -3276,6 +3276,42 @@
    "en": "NASA pictures, {year_count} years",
    "fr": "Images de la NASA, {year_count} ans"
   },
+  "shared.farm.world_title": {
+   "en": "Fields around the world",
+   "fr": "Des champs partout dans le monde"
+  },
+  "shared.farm.world_link": {
+   "en": "See every field on a world map",
+   "fr": "Voir tous les champs sur une carte"
+  },
+  "shared.farm.world_tap": {
+   "en": "Tap a field to open it.",
+   "fr": "Touchez un champ pour l'ouvrir."
+  },
+  "shared.farm.world_map_src": {
+   "en": "World picture: NASA Blue Marble, August 2004.",
+   "fr": "Image du monde : NASA Blue Marble, août 2004."
+  },
+  "shared.farm.world_own_title": {
+   "en": "Run it for your own field",
+   "fr": "Lancez-le pour votre champ"
+  },
+  "shared.farm.world_step_1": {
+   "en": "Write down your field's corners and crops.",
+   "fr": "Notez les coins et les cultures du champ."
+  },
+  "shared.farm.world_step_2": {
+   "en": "Download NASA's free data for that place.",
+   "fr": "Téléchargez les données gratuites de la NASA."
+  },
+  "shared.farm.world_step_3": {
+   "en": "Run one command. It builds every page.",
+   "fr": "Lancez une commande. Elle crée chaque page."
+  },
+  "shared.farm.world_readme": {
+   "en": "The full steps (README, in English)",
+   "fr": "Toutes les étapes (README, en anglais)"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "fr": "janvier–février"

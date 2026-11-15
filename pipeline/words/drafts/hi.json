@@ -3276,6 +3276,42 @@
    "en": "NASA pictures, {year_count} years",
    "hi": "नासा की तस्वीरें, {year_count} साल"
   },
+  "shared.farm.world_title": {
+   "en": "Fields around the world",
+   "hi": "दुनिया भर के खेत"
+  },
+  "shared.farm.world_link": {
+   "en": "See every field on a world map",
+   "hi": "विश्व मानचित्र पर सभी खेत देखें"
+  },
+  "shared.farm.world_tap": {
+   "en": "Tap a field to open it.",
+   "hi": "खोलने के लिए खेत पर टैप करें।"
+  },
+  "shared.farm.world_map_src": {
+   "en": "World picture: NASA Blue Marble, August 2004.",
+   "hi": "दुनिया की तस्वीर: नासा ब्लू मार्बल, अगस्त 2004।"
+  },
+  "shared.farm.world_own_title": {
+   "en": "Run it for your own field",
+   "hi": "अपने खेत के लिए चलाएँ"
+  },
+  "shared.farm.world_step_1": {
+   "en": "Write down your field's corners and crops.",
+   "hi": "अपने खेत के कोने और फ़सलें लिखें।"
+  },
+  "shared.farm.world_step_2": {
+   "en": "Download NASA's free data for that place.",
+   "hi": "उस जगह का नासा का मुफ़्त डेटा डाउनलोड करें।"
+  },
+  "shared.farm.world_step_3": {
+   "en": "Run one command. It builds every page.",
+   "hi": "एक कमांड चलाएँ। यह हर पेज बनाता है।"
+  },
+  "shared.farm.world_readme": {
+   "en": "The full steps (README, in English)",
+   "hi": "पूरे चरण (README, अंग्रेज़ी में)"
+  },
   "shared.bs_months.Jan": {
    "en": "Magh",
    "hi": "जनवरी–फ़रवरी"

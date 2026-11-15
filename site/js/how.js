@@ -46,7 +46,7 @@
         var sec = section(j[0], j[1], loadingEl()); judges.append(sec);
         var body = sec.lastChild;
         function put(el) { body.replaceWith(el || K.notReady()); }
-        if (j[0] === 'fields') { put(K.fieldsList('how')); return; }
+        if (j[0] === 'fields') { put(h('div', { style: 'display:flex;flex-direction:column;gap:8px' }, K.worldLink(), K.fieldsList('how'))); return; }
         if (j[0] === 'twin') { put(K.feat.twinParts(F)); return; }
         if (j[0] === 'labels') { put(K.feat.labelsList()); return; }
         if (j[0] === 'plans') { put(plansList(F)); return; }
