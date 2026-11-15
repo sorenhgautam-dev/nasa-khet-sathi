@@ -1692,3 +1692,31 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
 - **Checked:** tests first (`tests/test_story.py`); screenshots in `~/Desktop/khet_sathi_screens/farmers_a_15nov/`.
 - **For a person to review:** the 7 new Nepali lines of the block (story.json is marked "needs native-speaker
   review"); the five questions and the proposed yardsticks before the season.
+
+## 2026-11-15 (Sunday, afternoon, 14:00-17:00): the A-D list and farmer-first wording (Claude Opus 5.5 via Claude Code, with helper agents)
+
+- **A (crop answer):** a node test runs app.js's crop helpers on the Kharipati and demo files, with and without the
+  farmer's answer, and a static check that no screen reads the default crop except through them
+  (`tests/test_site_crop.py`). The code was already right; screenshots in `~/Desktop/khet_sathi_screens/fixes_15_15/A_crop/`.
+- **B1-B4, W, C (a helper agent):** Next 3 and Next 6 months, Weather ahead, one Bikram Sambat month table, the Choose
+  screen's weather card, plain names ("A copy of your field", "Tested in 24 past years"); 4 new words and 2 reworded
+  lines in 7 languages. `behind.json` was later rebuilt from data (the hand patch had Latin digits in one Nepali line).
+- **D (verification):** new yardsticks written into `rules.yaml verification.outputs` and committed before any score
+  (`224effd`, `cb506be`, `ef09c79`); consistency checks in `pipeline/checks/verify.py` with worked-number tests
+  (`tests/test_verify_consistency.py`); results in VALIDATION 3.40. Nothing became VERIFIED; nothing was tuned.
+- **A research agent** searched BIPAD and DesInventar for valley floods and droughts (VALIDATION 3.41): no drought record
+  for the valley; flood records kept in `data/raw/disaster_db/valley/` but not scored until a rule is committed first.
+- **Farmer-first and the rain wording (owner's two messages):** 'Our promise' (`build_story.promise_block`, story.json
+  `promise`, `promiseBox` on Home below the first screen and first on How we know; README; project page); the 2017
+  rain finding said as "far fewer gauges near our valley fed NASA's rain, so the record stepped up, and we corrected for
+  it" in story.json, the Check-up words, Behind the scenes, README, HOW_IT_WORKS and TOUGH_QUESTIONS; the money words
+  removed (roadmap without seed, labour and price inputs; NEXT_STEPS 3 is now cooperatives and women's groups; every
+  plan's unknown tab says "Your work and spending are not counted."); impact in human terms on the project page with
+  every ID kept; no phone-as-drone in the video and demo docs or on the photo step (its code stays, unlinked);
+  Kharipati's label says an open drone map standing in for our future drone. Every changed sentence is listed for the
+  owner, before and after.
+- **Checked:** tests first (`tests/test_story.py`: the promise, the rain words); story.json's chart numbers identical;
+  each field file differs from before only in that one sentence; the drone picture and patches byte-identical.
+- **The farmer screens made simpler (a helper agent, owner's six rules):** see its own entry below when merged.
+- **For a person to review:** all new Nepali (the promise's 7 lines, the rain chapter, the screen words, the drone
+  label) and the 12 lines rewritten in the five draft languages; the flood records before any rule is written.
