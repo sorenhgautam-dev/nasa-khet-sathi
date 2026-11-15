@@ -65,10 +65,10 @@
    "scorecard": "heat_month_words"
   },
   "frost_month_words": {
-   "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "sure": "verified",
+   "status": "VERIFIED",
+   "k": 12,
+   "n": 12,
    "scale": "valley",
    "rain_corrected": false,
    "sources": [
@@ -80,8 +80,8 @@
   "soil_month_words": {
    "sure": "estimate",
    "status": "ESTIMATE",
-   "k": 0,
-   "n": 0,
+   "k": 22,
+   "n": 24,
    "scale": "valley",
    "rain_corrected": true,
    "sources": [
@@ -155,9 +155,9 @@
   },
   "harvest_years": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 6,
+   "n": 14,
    "scale": "valley",
    "rain_corrected": true,
    "sources": [
@@ -291,24 +291,22 @@
    "scorecard": "cover_months"
   },
   "monsoon_shift": {
-   "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "sure": "verified",
+   "status": "VERIFIED",
+   "k": 24,
+   "n": 24,
    "scale": "region",
    "rain_corrected": false,
    "sources": [
-    "dhm_onset",
-    "chirps",
-    "gpm"
+    "dhm_onset"
    ],
-   "scorecard": null
+   "scorecard": "monsoon_shift"
   },
   "plan_harvest": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 6,
+   "n": 14,
    "scale": "valley",
    "rain_corrected": true,
    "sources": [
@@ -321,9 +319,9 @@
   },
   "plan_harvest_watered": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 6,
+   "n": 14,
    "scale": "valley",
    "rain_corrected": false,
    "sources": [
@@ -416,9 +414,9 @@
   },
   "replay_year": {
    "sure": "estimate",
-   "status": "NOT YET VERIFIABLE",
-   "k": 0,
-   "n": 0,
+   "status": "ESTIMATE",
+   "k": 6,
+   "n": 14,
    "scale": "valley",
    "rain_corrected": true,
    "sources": [

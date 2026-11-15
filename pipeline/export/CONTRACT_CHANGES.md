@@ -4,6 +4,18 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, morning): what would verify each answer (`story.json`, `labels`; additions only)
+
+- `story.json` `compliance[].verify_by` (optional, `{en, ne}`): on a row that is not VERIFIED, one plain line saying what
+  would verify it ("What would verify it: The farmer's records: ..."); absent on VERIFIED rows. The English is
+  `rules.yaml verification.outputs.<id>.verify_by`.
+- `story.json` `verify_how` (`{title, lines[]}`, each `{en, ne}`): "How each answer becomes verified" on How we know (the
+  three words, today's count, the four ways the rest can be checked). Drawn after the compliance rows (`js/how.js`).
+- `compliance` gains the row `monsoon_shift` (the sentence "No clear change since 2001, ..." checked against DHM's own
+  onset dates); `labels.outputs.monsoon_shift` now lists `dhm_onset` alone as its source and carries that row's status,
+  k and n (was: `dhm_onset`, `chirps`, `gpm`, no scorecard). New statuses: frost words and the monsoon shift VERIFIED;
+  soil words and harvest years ESTIMATE with k / n (VALIDATION, compliance table). No key renamed or removed.
+
 ## 2026-11-15 (Sunday, after midnight): 4 parts on every Bhaktapur field; `words.json` shared.welcome (addition only)
 
 - The four Bhaktapur sample fields and Ambohidratrimo now have 4 parts (`s1`..`s4`, 2 x 2, each about one 30 m NASA

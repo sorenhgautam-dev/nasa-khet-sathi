@@ -876,12 +876,14 @@ COMPLIANCE = {
     "heat_month_words": (("Warm and cool months", "तातो र चिसो महिना"),
                          ["They match Nepal's weather office.", "{k} of {n} months match."],
                          ["नेपालको मौसम कार्यालयसँग मिल्छन्", "{n} मध्ये {k} महिना मिल्छन्"]),
-    "frost_month_words": (("Frost months", "तुषारो पर्ने महिना"),
-                          ["Not checked yet.", "We need night temperatures from Bhaktapur."],
-                          ["अझै जाँचिएको छैन", "भक्तपुरको रातको तापक्रम चाहिन्छ"]),
-    "soil_month_words": (("Dry and wet soil months", "सुक्खा र ओसिलो माटोका महिना"),
-                         ["Checked only against computer models.", "No measured soil yet."],
-                         ["कम्प्युटर मोडेलसँग मात्र जाँचिएको", "माटो अझै नापिएको छैन"]),
+    "frost_month_words": (("Frost months", "तुषारो पर्ने महिना"),   # owner, 2026-11-15 (item 1)
+                          ["We checked the cold months against Nepal's weather office.", "{k} of {n} months fit its night temperatures.",
+                           "It cannot check the coldest nights yet."],
+                          ["चिसो महिना नेपालको मौसम कार्यालयसँग जाँच्यौं", "{n} मध्ये {k} महिना रातको तापक्रमसँग मिल्छन्",
+                           "सबैभन्दा चिसो रात अझै जाँच्न सकिँदैन"]),
+    "soil_month_words": (("Dry and wet soil months", "सुक्खा र ओसिलो माटोका महिना"),   # owner, 2026-11-15 (item 2)
+                         ["Checked against two NASA computer models.", "{k} of {n} months match.", "Models are not measured soil."],
+                         ["नासाका दुई कम्प्युटर मोडेलसँग जाँचिएको", "{n} मध्ये {k} महिना मिल्छन्", "मोडेल भनेको नापिएको माटो होइन"]),
     "cover_months": (("Bare and growing months", "खाली र बाली भएका महिना"),
                      ["Waiting for the farmer's calendar."], ["किसानको बाली पात्रो पर्खिरहेका छौं"]),
     "season_dates": (("Planting and harvest dates", "रोप्ने र काट्ने मिति"),
@@ -898,8 +900,11 @@ COMPLIANCE = {
                        "The rule was chosen after seeing some of them."],
                       ["उपत्यकाका {n} मध्ये {k} सुक्खा याम भेटियो", "{fan} सङ्केतमध्ये {fa} पुष्टि भएनन्",
                        "केही देखिसकेपछि नियम छानिएको हो"]),
-    "harvest_years": (("Good and bad harvest years", "राम्रो र नराम्रो उब्जनीका वर्ष"),
-                      ["Waiting for the farmer's best and worst years."], ["किसानका राम्रा र नराम्रा वर्ष पर्खिरहेका छौं"]),
+    "harvest_years": (("Good and bad harvest years", "राम्रो र नराम्रो उब्जनीका वर्ष"),   # owner, 2026-11-15 (item 4)
+                      ["{k} of {n} good or bad years match Bhaktapur's district harvests.",
+                       "Still waiting for the farmer's best and worst years."],
+                      ["{n} मध्ये {k} राम्रा वा नराम्रा वर्ष भक्तपुर जिल्लाको उब्जनीसँग मिल्छन्",
+                       "किसानका राम्रा र नराम्रा वर्ष अझै पर्खिरहेका छौं"]),
     "plan_cover_gap_beats_current": (("'Fill the empty months' grows more", "'खाली महिनामा पनि बाली' ले बढी उब्जाउँछ"),
                                      ["It beats today's plan in {k} of {n} computer runs.", "All runs use our one crop model.",
                                       "No field has tried it yet."],
@@ -913,6 +918,9 @@ COMPLIANCE = {
     "monsoon_start": (("When the monsoon starts", "मनसुन कहिले सुरु हुन्छ"),
                       ["These are Nepal's weather office's own dates.", "We checked our copy twice: {k} of {n} match."],
                       ["यी नेपालको मौसम कार्यालयकै मिति हुन्", "हाम्रो प्रतिलिपि दुई पटक जाँच्यौं: {n} मध्ये {k} मिल्छन्"]),
+    "monsoon_shift": (("Has the monsoon start shifted?", "मनसुन सुरु हुने समय सरेको छ?"),   # owner, 2026-11-15 (item 3)
+                      ["The answer comes from Nepal's weather office dates.", "We checked it a second way: {k} of {n} years match."],
+                      ["उत्तर नेपालको मौसम कार्यालयका मितिबाट आउँछ", "दोस्रो तरिकाले जाँच्यौं: {n} मध्ये {k} वर्ष मिल्छन्"]),
     "groundwater": (("Water under the ground", "जमिनमुनिको पानी"),
                     ["Needs well records from the valley."], ["उपत्यकाका इनारको अभिलेख चाहिन्छ"]),
     "part_soil_water": (("How wet each part is", "हरेक भाग कति ओसिलो छ"),
@@ -925,6 +933,64 @@ COMPLIANCE = {
     "plan_scores": (("Water, cover and soil scores", "पानी, ढाकिएको जमिन र माटोका अङ्क"),
                     ["Worked out by computer.", "Nothing measured yet."], ["कम्प्युटरले निकालेको", "अझै केही नापिएको छैन"]),
 }
+
+
+# owner, 2026-11-15 (item 6): one plain line per row that is not VERIFIED, saying what would verify it. The English is
+# rules.yaml verification.outputs.<id>.verify_by (carried in the scorecard); the Nepali drafts are here (native review)
+VERIFY_BY_NE = {
+    "rain_months": "नेपालको मौसम कार्यालयका २०२६ का वर्षा नाप, जुन मिलाउन कहिल्यै प्रयोग गरिएन।",
+    "frost_month_words": "तुषारो परेका रातको किसानको अभिलेख, वा एक जाडो खेतमा थर्मामिटर।",
+    "soil_month_words": "वास्तविक खेतमा माटो जाँच्ने यन्त्र, एक वर्ष हरेक महिना।",
+    "cover_months": "किसानको अभिलेख: खेत कुन महिना खाली रहन्छ।",
+    "season_dates": "किसानको अभिलेख: ३ वर्ष कहिले रोपे र कहिले काटे।",
+    "rotation_guess": "कम्तीमा १० खेतका किसानले के लगाए भन्ने अभिलेख।",
+    "flood_years": "बाढी आएका वर्षको किसानको अभिलेख, र उपत्यकाका थप लिखित अभिलेख।",
+    "drought_years": "सुक्खा वर्षको किसानको अभिलेख, र उपत्यकाका थप लिखित अभिलेख।",
+    "harvest_years": "किसानको अभिलेख: उनका सबैभन्दा राम्रा र नराम्रा उब्जनीका वर्ष।",
+    "plan_cover_gap_beats_current": "सुरक्षित परीक्षणको एक याम: खेतको एउटा भागमा प्रयोग।",
+    "plan_safest_beats_current": "सुरक्षित परीक्षणको एक याम: खेतको एउटा भागमा प्रयोग।",
+    "monsoon_start": "नेपालको मौसम कार्यालयकै मनसुन सुरु मिति, अर्को तरिकाले पढिएको।",
+    "monsoon_shift": "नेपालको मौसम कार्यालयकै मनसुन सुरु मिति, अर्को तरिकाले पढिएको।",
+    "groundwater": "नेपालको भूमिगत जल कार्यालयले उपत्यकामा नापेको इनारको पानीको सतह।",
+    "part_soil_water": "वास्तविक खेतका भाग-भागमा माटो जाँच्ने यन्त्रको जाँच।",
+    "probe_water": "कप परीक्षण: तौलिएको पानी भएका ६ कपमा माटो जाँच्ने यन्त्र।",
+    "outlook_2040": "भविष्यको अनुमान: प्रकाशित दायरासँग मात्र जाँचिएको।",
+    "plan_scores": "सुरक्षित परीक्षणको एक याम, प्रयोग भएको पानी र बगेको माटो नापेर।",
+}
+
+
+def verify_by(cid, c):
+    """'What would verify it' for a row that is not VERIFIED (None for a VERIFIED row, or one with no line)."""
+    en = c.get("verify_by") or "-"
+    if c["status"] == "VERIFIED" or en == "-":
+        return None
+    return T("What would verify it: " + en, "यसलाई प्रमाणित गर्न: " + VERIFY_BY_NE[cid])
+
+
+def verify_how(rows, ys):
+    """owner, 2026-11-15: 'How each answer becomes verified' (How we know): the three words, today's count and the four
+    ways the rest can be checked."""
+    n = {s: sum(r["status"] == s for r in rows) for s in ("VERIFIED", "ESTIMATE", "NOT YET VERIFIABLE")}
+    return {"title": T("How each answer becomes verified", "हरेक उत्तर कसरी प्रमाणित हुन्छ"),
+            "lines": [T(f"Verified: checked against a record we did not use to make it. Right at least {ys['pct']} times "
+                        f"in 100, on {ys['nmin']} or more checks.",
+                        f"प्रमाणित: बनाउँदा प्रयोग नगरिएको अभिलेखसँग जाँचिएको। कम्तीमा {ys['nmin']} जाँचमा १०० मा {ys['pct']} पटक सही।"),
+                      T("Estimate: checked only against models or our own runs, or right fewer times. Shown with its range, "
+                        "never as a promise.",
+                        "अनुमान: मोडेल वा हाम्रै गणनासँग मात्र जाँचिएको, वा कम पटक सही। दायरासहित देखाइन्छ, वाचा होइन।"),
+                      T("Not yet checkable: the record that would check it does not exist yet.",
+                        "अझै जाँच्न मिल्दैन: जाँच्ने अभिलेख अझै छैन।"),
+                      T(f"Today: {n['VERIFIED']} verified, {n['ESTIMATE']} estimates, {n['NOT YET VERIFIABLE']} not yet checkable.",
+                        f"आज: {n['VERIFIED']} प्रमाणित, {n['ESTIMATE']} अनुमान, {n['NOT YET VERIFIABLE']} अझै जाँच्न नमिल्ने।"),
+                      T("Four things will check the rest:", "बाँकी यी चार कुराले जाँच्छन्:"),
+                      T("The farmer's records: sowing and harvest dates, best and worst years, bare months.",
+                        "किसानको अभिलेख: रोप्ने र काट्ने मिति, राम्रा र नराम्रा वर्ष, खाली महिना।"),
+                      T("A probe walk on the real field: each part's soil water, measured.",
+                        "वास्तविक खेतमा माटो जाँच्ने यन्त्र: हरेक भागको माटोको पानी नापेर।"),
+                      T("A season of Safe Trial: one part of the field tries a plan.",
+                        "सुरक्षित परीक्षणको एक याम: खेतको एउटा भागमा योजना प्रयोग।"),
+                      T("Projections, like 2040: checked against published ranges only.",
+                        "२०४० जस्ता भविष्यका अनुमान: प्रकाशित दायरासँग मात्र जाँचिन्छन्।")]}
 
 
 def yardsticks():
@@ -955,7 +1021,8 @@ def compliance(card, ys=None):
                      if c["n"] else {})
         out.append({"id": cid, "thing": T(thing_en, thing_ne), "status": c["status"], "status_words": STATUS_WORDS[c["status"]],
                     "k": c["k"], "n": c["n"], "share": c["share"], "ci95": c["ci95"], "independent": c["independent"],
-                    "said": T(" ".join(_fill(en, vals)), "। ".join(_fill(ne, vals)) + "।")})
+                    "said": T(" ".join(_fill(en, vals)), "। ".join(_fill(ne, vals)) + "।"),
+                    **({"verify_by": vb} if (vb := verify_by(cid, c)) else {})})
     order = {"VERIFIED": 0, "ESTIMATE": 1, "NOT YET VERIFIABLE": 2}
     return sorted(out, key=lambda r: order[r["status"]])
 
@@ -1455,7 +1522,8 @@ def build_story(inp, generated):
         "generated": generated, "field": field, "placeholder": ctx["placeholder"], "ne_review": NE_REVIEW,
         "sections": [{"id": sid, "title": title, "charts": ids} for sid, title, ids in SECTIONS],
         "inputs": inputs, "charts": charts, "report_card": report_card(ctx),
-        "compliance": compliance(inp.get("scorecard"), ys),
+        "compliance": (rows := compliance(inp.get("scorecard"), ys)),
+        "verify_how": verify_how(rows, ys),
         "compliance_note": T(f"Verified means right at least {ys['pct']} times in 100, on {ys['nmin']} or more checks. "
                              "The range shows how sure that number is.",
                              f"प्रमाणित भनेको कम्तीमा {ys['nmin']} जाँचमा १०० मा {ys['pct']} पटक सही। दायराले त्यो अङ्क कति पक्का छ देखाउँछ।"),

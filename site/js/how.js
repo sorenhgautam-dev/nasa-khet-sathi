@@ -424,8 +424,13 @@
         var ic = { VERIFIED: 'tick', ESTIMATE: 'warn' }[r.status] || 'fog';
         return h('div', { class: 'fact' }, h('span', { class: 'ic', style: 'background:#F7F1E4' }, svg(I(ic, 20))),
           h('div', { class: 'grow' }, h('b', null, P(r.thing)), ' ', h('span', { class: 'chip', style: 'margin-left:4px' }, P(r.status_words)),
-            said(P(r.said)), r.n ? h('p', { class: 'small', style: 'margin:2px 0 0' }, pct(r.share) + ' (' + pct(r.ci95[0]) + '–' + pct(r.ci95[1]) + ')') : null));
+            said(P(r.said)), r.n ? h('p', { class: 'small', style: 'margin:2px 0 0' }, pct(r.share) + ' (' + pct(r.ci95[0]) + '–' + pct(r.ci95[1]) + ')') : null,
+            r.verify_by ? h('p', { class: 'small', style: 'margin:2px 0 0;font-weight:700' }, P(r.verify_by)) : null));   // owner, 2026-11-15 (item 6)
       }))) });
+      if (st.verify_how) {   // owner, 2026-11-15: "How each answer becomes verified"
+        var t3 = P(st.verify_how.title);
+        out.push({ id: 'verify-how', title: t3, el: section('verify-how', t3, K.lines(st.verify_how.lines.map(P), 'sub')) });
+      }
     } else if ((st.report_card || []).length) {
       var t1 = T('your_plan.report_card');
       out.push({ id: 'report', title: t1, el: section('report', t1, st.report_card.map(function (r) {

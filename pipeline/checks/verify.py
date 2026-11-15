@@ -112,3 +112,57 @@ def season_date_passes(farmer, seasons, ini_days, tol_days):
                                                date.fromisoformat(s["end"]))
         out += [o is not None and abs((o - t).days) <= tol_days for o, t in zip(ours, (planted, harvested))]
     return out
+
+
+FROST_RANK = {"none": 0, "risk": 1, "high": 2}
+
+
+def frost_order_passes(words, normals, frost_c, risk_c):
+    """rules.yaml verification.outputs.frost_month_words: one bool per month. A month fails when a month with a colder
+    normal night temperature has a milder frost word, or a warmer one a frostier word (equal normals are not ordered),
+    or when its normal is below risk_c and its word is 'none', or below frost_c and its word is not 'high' (a month's
+    coldest night is at most about its mean night)."""
+    r = [FROST_RANK[w] for w in words]
+    out = []
+    for i, (ni, ri) in enumerate(zip(normals, r)):
+        order = all(not ((nj < ni and rj < ri) or (nj > ni and rj > ri)) for j, (nj, rj) in enumerate(zip(normals, r)) if j != i)
+        bound = not (ni < risk_c and ri == 0) and not (ni < frost_c and ri != 2)
+        out.append(order and bound)
+    return out
+
+
+def residual_sign_matches(ours, ref):
+    """rules.yaml verification.outputs.harvest_years.district: over the years both hold, each series' residual from its
+    own least-squares straight line on the year; one bool per year where neither residual is zero: the same sign."""
+    import numpy as np
+    ys = sorted(set(ours) & set(ref))
+    if len(ys) < 3:
+        return []
+    x = np.asarray(ys, float)
+
+    def resid(d):
+        y = np.asarray([d[k] for k in ys], float)
+        r = y - np.polyval(np.polyfit(x, y, 1), x)
+        r[np.abs(r) < 1e-9 * (1 + np.abs(y).max())] = 0.0
+        return np.sign(r)
+    a, b = resid(ours), resid(ref)
+    return [bool(p == q) for p, q in zip(a, b) if p and q]
+
+
+def fiscal_year(day, start_mmdd):
+    """Nepal's fiscal year holding a date ('2015/16' runs from start_mmdd 2015 to the day before it in 2016)."""
+    m, d = map(int, start_mmdd.split("-"))
+    a = day.year if (day.month, day.day) >= (m, d) else day.year - 1
+    return f"{a}/{(a + 1) % 100:02d}"
+
+
+def shift_kind(years, days, alpha):
+    """rules.yaml verification.outputs.monsoon_shift, a second implementation: the Mann-Kendall p as Kendall's tau of day
+    on year (scipy), the 95% range by Theil-Sen (scipy, at 1 - alpha). 'no clear change' when the range holds 0 or
+    p >= alpha, else 'earlier' or 'later'."""
+    from scipy.stats import kendalltau, theilslopes
+    p = kendalltau(years, days).pvalue
+    slope, _, low, high = theilslopes(days, years, alpha=1 - alpha)
+    if (low > 0 or high < 0) and p < alpha:
+        return "earlier" if slope < 0 else "later"
+    return "no clear change"

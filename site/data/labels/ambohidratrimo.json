@@ -294,11 +294,8 @@
    "n": 0,
    "scale": "region",
    "rain_corrected": false,
-   "sources": [
-    "chirps",
-    "gpm"
-   ],
-   "scorecard": null
+   "sources": [],
+   "scorecard": "monsoon_shift"
   },
   "plan_harvest": {
    "sure": "estimate",

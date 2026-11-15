@@ -1530,3 +1530,18 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   history of branch `dhulikhel`, where another session had committed part of it). The 20 new Nepali lines were added to
   `pipeline/words/nepali_farmer_screens.xlsx` and the full review sheet was rebuilt.
 - **For a person to review:** every new Nepali line (marked "needs native-speaker review"), including स्वागत छ.
+
+## 2026-11-15 (Sunday, morning): raising what we honestly can to VERIFIED (Claude Opus 5.5 via Claude Code)
+
+- **Asked by the owner:** check the frost words against DHM's night-temperature normals, the soil words against SMAP L4 and
+  GLDAS, the monsoon-shift sentence against DHM's own onset dates, the harvest years against Bhaktapur's district yields,
+  the probe against the cup test; one plain line per unverified row; a "How each answer becomes verified" section.
+- **What SI generated:** the four yardsticks in `rules.yaml verification` (committed `b07277c` before any score; the frost
+  test is the order of the months, not thirds, because the frost words are bands: Claude's choice, stated in the rule),
+  the checking functions and their tests (`pipeline/checks/verify.py`, `tests/test_verify.py`, `tests/test_verify_lines.py`),
+  the runner changes, the plain lines in English and their Nepali drafts (`build_story.py` COMPLIANCE, VERIFY_BY_NE,
+  verify_how), the How we know drawing, and the VALIDATION note. Results, whatever they were: frost 12/12 VERIFIED (weak
+  test, said so), monsoon shift 24/24 VERIFIED, soil 22/24 ESTIMATE (models), district harvest years 6/14 ESTIMATE, probe
+  not yet (no cup-test file). Nothing was tuned.
+- **For a person to review:** the frost test's design (order and bound, not thirds); every new Nepali line (26 texts in
+  `nepali_review.xlsx`, marked "needs native-speaker review").

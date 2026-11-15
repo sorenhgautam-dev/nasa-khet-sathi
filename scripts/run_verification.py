@@ -35,6 +35,27 @@ def month_words(field, word, station, variable, words):
     return [m[word] == r for m, r in zip(field["diary"]["months"], ref)], dict(zip(MONTHS, ref))
 
 
+def frost_words(field, o, months_rules):
+    """verification.outputs.frost_month_words: the frost words in the order of DHM's normal night temperatures."""
+    normals = _normals(o["station"], o["variable"])
+    passes = v.frost_order_passes([m["frost"] for m in field["diary"]["months"]], normals,
+                                  months_rules["frost_c"], months_rules["frost_risk_c"])
+    return passes, {"normals_c": dict(zip(MONTHS, normals)), "months_out_of_order": [MONTHS[i] for i, p in enumerate(passes) if not p]}
+
+
+def soil_words(fid, field, o):
+    """verification.outputs.soil_month_words: the soil words against each model's monthly terciles (models, not soil)."""
+    ours, passes, extra = [m["soil"] for m in field["diary"]["months"]], [], {}
+    for name, m in o["models"].items():
+        x = pd.read_parquet(ROOT / "data/clean" / fid / m["file"])
+        means = x[m["column"]].groupby(pd.to_datetime(x[m["date"]]).dt.month).mean().reindex(range(1, 13))
+        ref = tercile_words(means.to_numpy(), ("dry", "medium", "wet"))
+        p = [a == b for a, b in zip(ours, ref)]
+        passes += p
+        extra[name] = {"k": sum(p), "n": len(p), "words": dict(zip(MONTHS, ref))}
+    return passes, extra
+
+
 def rain_months(fid, y):
     path = ROOT / "data/clean" / fid / "dhm_bulletin_months.csv"
     if not path.exists():
@@ -93,6 +114,7 @@ def second_read_onset(fid):
     span = [y for y in ours if 2001 <= y <= 2024]
     rec = {"what": "second reading of DHM's onset table by pdftotext and a regular expression, against config/dhm_onset_dates.csv",
            "document": ONSET_PDF.name, "years_compared": len(ours), "all_equal": not mism, "mismatches": mism,
+           "pdf_onsets": {str(y): pdf[y][0] for y in sorted(pdf)},
            "onset_compared_2001_2024": len(span), "onset_equal_2001_2024": sum(pdf.get(y, ("",))[0] == ours[y][0] for y in span)}
     (ROOT / "data/checks" / fid / "onset_dhm_second_read.json").write_text(json.dumps(rec, indent=1) + "\n")
 
@@ -103,6 +125,61 @@ def onset_copy(fid):
         return [], {}
     k, n = r["onset_equal_2001_2024"], r["onset_compared_2001_2024"]
     return [True] * k + [False] * (n - k), {"years": "2001-2024", "all_57_years_equal": r["all_equal"]}
+
+
+def shift_check(fid, field, o, alpha):
+    """verification.outputs.monsoon_shift: the sentence shown, recomputed from the second reading by a second
+    implementation; each year passes when its date is copied right and the sentence is the same."""
+    from datetime import date
+    r = _json(ROOT / "data/checks" / fid / "onset_dhm_second_read.json")
+    if not r or "pdf_onsets" not in r:
+        return [], {}
+    a, b = o["years"]
+    ours = {int(x["year"]): x["onset"] for x in csv.DictReader(open(ROOT / "config/dhm_onset_dates.csv"))}
+    pdf = {int(k): d for k, d in r["pdf_onsets"].items()}
+    yrs = [y for y in range(a, b + 1) if y in pdf]
+    day = lambda s: date(2001, int(s[5:7]), int(s[8:10])).timetuple().tm_yday  # noqa: E731  (calendar day, non-leap)
+    kind = v.shift_kind(yrs, [day(pdf[y]) for y in yrs], alpha)
+    shown = field["diary"]["shift_note"]["en"][0]
+    said = ("no clear change" if shown.startswith("No clear change") else
+            "earlier" if "earlier" in shown else "later" if "later" in shown else None)
+    same = kind == said
+    return ([pdf.get(y) == ours.get(y) and same for y in range(a, b + 1)],
+            {"recomputed": kind, "sentence_shown": shown, "sentence_matches": same, "years": f"{a}-{b}"})
+
+
+def district_years(fid, field, o):
+    """verification.outputs.harvest_years.district: good and bad years against Bhaktapur's district yields."""
+    from datetime import date
+    d = o["district"]
+    path = ROOT / d["file"]
+    if f"/{fid}/" not in d["file"] or not path.exists():
+        return [], {}
+    rows = list(csv.DictReader(open(path)))
+    rep = _json(ROOT / "data/checks" / fid / "replay.json")
+    from pipeline.plans.simulate import export_case
+    case = export_case(field["field"]["water_source"])
+
+    def ours(c, crop):
+        out = {}
+        for s in rep[c]["seasons"]:
+            if s["crop"] == crop and s.get("harvest_pct") is not None:
+                y = int(v.fiscal_year(date.fromisoformat(s["end"]), d["fiscal_year_starts"])[:4])
+                if y in out:
+                    raise SystemExit(f"two {crop} seasons in fiscal year {y}: the district check cannot match them")
+                out[y] = s["harvest_pct"]
+        return out
+    passes, per = [], {}
+    for dcrop, crop in d["crops"].items():
+        ref = {int(r["fiscal_year_ad"][:4]): float(r["yield_kg_ha"]) for r in rows if r["crop"] == dcrop and r["yield_kg_ha"]}
+        mine, wet = ours(case, crop), ours("irrigated", crop)
+        p = v.residual_sign_matches({y: mine[y] for y in ref if y in mine}, ref)
+        pw = v.residual_sign_matches({y: wet[y] for y in ref if y in wet}, ref)
+        dr = v.same_direction({y: mine[y] for y in ref if y in mine}, ref)
+        passes += p
+        per[dcrop] = {"our_crop": crop, "fiscal_years": [f"{y}/{(y + 1) % 100:02d}" for y in sorted(ref)], "k": sum(p), "n": len(p),
+                      "watered_case": {"k": sum(pw), "n": len(pw)}, "year_to_year_direction": {"k": sum(dr), "n": len(dr)}}
+    return passes, {"water_case": case, "crops": per, "not_scored": d["not_scored"]}
 
 
 FARMER = ROOT / "data/field_visit"           # the farmer's locked answers (notes/FARMER_SCORING.md)
@@ -176,26 +253,32 @@ def score_all(fid):
     def put(key, passes, extra=None):
         o = outs[key]
         card[key] = {"shown": o["shown"], "measure": o["measure"], "reference": o["reference"],
-                     "independent": o["independent"], "needs": o["needs"],
+                     "independent": o["independent"], "needs": o["needs"], "verify_by": o["verify_by"],
                      **v.score(passes, o["independent"], common), **(extra or {})}
 
     put("rain_months", *rain_months(fid, outs["rain_months"]))
     put("rain_month_words", *month_words(field, "rain", "Bhaktapur", "precip_mm", ("low", "medium", "high")))
     put("heat_month_words", *month_words(field, "heat", "Bhaktapur", "tmax_c", ("none", "some", "high")))
+    put("frost_month_words", *frost_words(field, outs["frost_month_words"], load_rules()["months"]))
+    put("soil_month_words", *soil_words(fid, field, outs["soil_month_words"]))
     put("flood_years", *events(field, "flood"))
     put("drought_years", *events(field, "drought"))
     if ONSET_PDF.exists():
         second_read_onset(fid)
     put("monsoon_start", *onset_copy(fid))
+    put("monsoon_shift", *shift_check(fid, field, outs["monsoon_shift"], load_rules()["trends"]["alpha"]))
     for p in ("cover_gap", "safest"):
         put(f"plan_{p}_beats_current", *plans_robust(fid, p, outs[f"plan_{p}_beats_current"]["rain_versions"]))
     dates = _locked_csv(fid, "farmer_dates.csv", ["crop", "year", "planted", "harvested"])
     if dates is not None:                  # the farmer's dates: the Field Pulse's seasons (rules.yaml pulse.farmer_scoring)
         put("season_dates", *pulse_dates(fid, dates, outs["season_dates"]["tolerance_days"]))
     years = _locked_csv(fid, "farmer_years.csv", ["kind", "year", "crop"])
-    if years is not None:                  # the farmer's worst and best years: the replay and the 25-Year Replay
-        put("harvest_years", *harvest_years(field, years))
-        card["harvest_years"]["replay_window"] = replay_window(fid, years, common)
+    dist, dist_x = district_years(fid, field, outs["harvest_years"])   # Bhaktapur's district yields (owner, 2026-11-15)
+    if years is not None or dist:          # the farmer's worst and best years: the replay and the 25-Year Replay
+        fp, fx = harvest_years(field, years) if years is not None else ([], {})
+        put("harvest_years", fp + dist, {**fx, "district": dist_x})
+        if years is not None:
+            card["harvest_years"]["replay_window"] = replay_window(fid, years, common)
     for key in outs:                       # outputs whose test data have not arrived score as no cases yet
         if key not in card:
             put(key, [])
@@ -208,8 +291,9 @@ def markdown(card):
     for k, c in card.items():
         share = "-" if c["share"] is None else f"{c['share']:.0%} [{c['ci95'][0]:.0%}, {c['ci95'][1]:.0%}]"
         ind = "yes" if c["independent"] else "no"
+        by = "-" if c["status"] == "VERIFIED" else c["verify_by"]   # owner, 2026-11-15 (item 6): one plain line
         lines.append(f"| {c['shown']} | {c['measure']} | {c['n']} | {share} | **{c['status']}** | {c['reference']} "
-                     f"({ind}) | {c['needs']} |")
+                     f"({ind}) | {by} |")
     return "\n".join(lines)
 
 
