@@ -121,3 +121,22 @@ Behind the scenes, README and the project page. **Left out.** Onion: FAO has eve
 tables list none in either year. Mustard (rapeseed in FAO-56): no Table 11 stage lengths and no seasonal Ky in FAO-56
 Table 24 or FAO-66, so it cannot be compared (Bhaktapur: sarsoon 223 ha in 2079/80, 6 ha in 2081/82).
 
+
+## 11. "Food and sprays" card (owner's request, 2026-11-15 evening; left out by the owner's 22:00 rule)
+
+**Why it was left out.** The owner asked for rice's fertiliser rate and timing exactly as printed in NARC's 2022 paper
+(narc.gov.np/wp-content/uploads/2022/05/Article-03.pdf), with each source opened by us. On 2026-11-15 at 21:00 that link
+returned 404, the Wayback Machine could not be reached from our tools, and journal.narc.gov.np refused the connection,
+so the numbers (said to be 100:30:30 kg N:P2O5:K2O per hectare irrigated, 60:20:20 rain-fed) could not be confirmed.
+CIMMYT's news page of 9 August 2022 (cgiar.org, "Nepal government endorses new site-specific fertilizer recommendations
+for rice") says MoALD endorsed new rice recommendations in July 2022 and that "the new regime replaces the existing
+blanket approach" (the old rates date from 1976); the 2023 page says they entered the DoA's extension guidelines in 2023.
+So a blanket rate may no longer be the government's rate. The spray link (npponepal.gov.np/en/pages/78/84661316) opens
+the centre's Introduction page, not the registered list; the site lists "List of registered pesticides and their
+consumption record 2024" and a 2081 BS registered list (not opened).
+
+**What it needs.** The official 2022/2023 rice recommendation (MoALD/NARC NSSRC, or the DoA extension guideline), opened
+and quoted with page; then the card as the owner specified (rule first, tests first): nutrients as printed, urea, DAP and
+potash as our arithmetic, sized per hectare, per field and per part; wheat, lentil, potato "Ask your agriculture office";
+the fertiliser-saver note; the three spray lines with the registered-list link; How we know: source, what the card is not,
+and next steps (NARC's soil map, a soil-test entry per part, a nutrient sensor on the soil stick).
