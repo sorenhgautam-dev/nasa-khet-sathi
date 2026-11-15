@@ -76,6 +76,38 @@ def test_monthly_mean_ndvi_uses_hls_clear_observations_only():
     assert bs.monthly_mean_ndvi(df, 2014, 2014) == [["2014-01-15", 0.5]]
 
 
+BS = {k: {"en": e, "ne": n} for k, e, n in (("Jun", "Asar", "असार"), ("Sep", "Asoj", "असोज"), ("Oct", "Kartik", "कात्तिक"),
+                                             ("Nov", "Mangsir", "मंसिर"), ("Dec", "Poush", "पुस"), ("Feb", "Falgun", "फागुन"),
+                                             ("Mar", "Chaitra", "चैत"), ("Apr", "Baisakh", "वैशाख"))}
+
+
+def test_crop_months_shows_the_models_and_the_calendars_harvest_month_and_the_field_from_space():
+    """Fix A4 (rules.yaml farmer_answers.actions_calendar_months): wheat sown 15 Oct ends 3 Mar in the model (Falgun) and
+    is harvested 15 Mar on FAO's calendar (Chaitra); sown 15 Nov, 4 Apr (Chaitra) against 15 Apr (Baisakh); potato sown
+    30 Oct, 21 Feb against 28 Feb (both Falgun). From space: two winter seasons ending 1 May and 21 May, median 11 May."""
+    fj = {"plans": [{"id": "current", "crops": [{"crop": "rice", "start": "06-23", "end": "10-10"}, {"crop": "potato", "start": "10-30", "end": "02-21"}]},
+                    {"id": "cover_gap", "crops": [{"crop": "rice", "start": "06-23", "end": "10-10"}, {"crop": "wheat", "start": "10-15", "end": "03-03"}]}],
+          "current_options": {"options": [{"id": "rice_wheat", "crops": [{"crop": "rice", "start": "06-23", "end": "10-10"},
+                                                                         {"crop": "wheat", "start": "11-15", "end": "04-03"}]}]}}
+    cal = {"wheat": {"windows": [{"sow": "10-15", "sow_end": "11-15", "harvest": "03-15", "harvest_end": "04-15"}]},
+           "potato": {"windows": [{"sow": "10-15", "sow_end": "11-15", "harvest": "02-15", "harvest_end": "03-15"}]},
+           "rice": {"windows": [{"sow": "06-01", "sow_end": "07-15", "harvest": "10-15", "harvest_end": "11-15"}]}}
+    seasons = {"chosen": {"seasons_by_year": {
+        "2015": [{"start": "2014-12-27", "peak": "2015-03-24", "end": "2015-05-01", "source": "hls", "peak_ndvi": 0.7},
+                 {"start": "2015-06-20", "peak": "2015-08-20", "end": "2015-10-20", "source": "hls", "peak_ndvi": 0.8}],
+        "2016": [{"start": "2016-01-16", "peak": "2016-03-16", "end": "2016-05-21", "source": "hls", "peak_ndvi": 0.7}]}}}
+    c = bs.chart_crop_months(fj, cal, seasons, BS)
+    assert c["id"] == "crop_months" and c["section"] == "seasons" and c["kind"] == "table"
+    rows = {(r["crop"], r["sown"]): r for r in c["rows"] if "crop" in r}
+    assert (rows[("wheat", "Oct")]["model"], rows[("wheat", "Oct")]["calendar"]) == ("Feb", "Mar")
+    assert (rows[("wheat", "Nov")]["model"], rows[("wheat", "Nov")]["calendar"]) == ("Mar", "Apr")
+    assert (rows[("potato", "Oct")]["model"], rows[("potato", "Oct")]["calendar"]) == ("Feb", "Feb")
+    assert (rows[("rice", "Jun")]["model"], rows[("rice", "Jun")]["calendar"]) == ("Sep", "Oct")
+    assert "Falgun" in rows[("wheat", "Oct")]["text"]["en"] and "Chaitra" in rows[("wheat", "Oct")]["text"]["en"]
+    space = [r for r in c["rows"] if r.get("from_space")]
+    assert space and space[0]["winter_end"] == "05-11" and space[0]["winter_seasons"] == 2
+
+
 def test_sen_line_passes_through_the_median_residual():
     t = [0.0, 1.0, 2.0, 3.0]
     y = [1.0, -1.0, -3.0, -5.0]

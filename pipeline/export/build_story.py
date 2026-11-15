@@ -20,7 +20,7 @@ import math
 import re
 import sys
 from collections import defaultdict
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -438,6 +438,57 @@ def chart_seasons(greenness, diary_seasons, first_year=2014, last_year=2025):
                   monthly_mean_ndvi(greenness, first_year, last_year))],
         bands=[{"from": s["start"], "to": s["end"], "label": label[s["slot"]]} for s in seasons],
         rows=seasons), seasons
+
+
+def chart_crop_months(fj, calendars, diary_seasons, bs_names):
+    """Fix A4 (owner, 2026-11-15; rules.yaml farmer_answers.actions_calendar_months): each crop's harvest month in our model
+    (the plan's last day) against the FAO crop calendar's (the month the farmer cards now show), one row per crop and
+    sowing month among the plans and the farmer's options, and the field's own seasons from space (HLS, median end).
+    bs_names: words.json shared.bs_months ({key: {en, ne}}). Pure."""
+    from statistics import median
+    from pipeline.export.build_simple import bs_key, calendar_end
+    name = lambda k: bs_names[k]                                       # noqa: E731
+    crop_ne = {"rice": "धान", "wheat": "गहुँ", "potato": "आलु", "lentil": "मसुरो", "maize": "मकै", "mustard": "तोरी",
+               "buckwheat": "फापर", "finger_millet": "कोदो"}
+    seen, rows = set(), []
+    plans = list(fj.get("plans") or []) + list((fj.get("current_options") or {}).get("options") or [])
+    for p in plans:
+        for c in p["crops"]:
+            key = (c["crop"], bs_key(c["start"]))
+            if key in seen:
+                continue
+            seen.add(key)
+            day = calendar_end(c["crop"], c["start"], calendars)
+            model, cal = bs_key(c["end"]), bs_key(day) if day else None
+            sown, m, k = name(key[1]), name(model), name(cal) if cal else None
+            verb_en, verb_ne = ("planted", "रोपेको") if c["crop"] == "rice" else ("sown", "छरेको")
+            head = T(f"{c['crop'].replace('_', ' ').capitalize()}, {verb_en} in {sown['en']}",
+                     f"{sown['ne']}मा {verb_ne} {crop_ne.get(c['crop'], c['crop'])}")
+            if cal is None:
+                text = T(f"Our model ends it in {m['en']}. The calendar has no window for this sowing.",
+                         f"हाम्रो मोडेलमा {m['ne']}मा सकिन्छ। पात्रोमा यो छराइको समय छैन।")
+            elif cal == model:
+                text = T(f"Harvested in {m['en']}: our model and FAO's calendar agree.",
+                         f"{m['ne']}मा काटिन्छ: हाम्रो मोडेल र FAO को पात्रो मिल्छन्।")
+            else:
+                text = T(f"Our model ends it in {m['en']}. FAO's calendar says {k['en']}. The cards show {k['en']}.",
+                         f"हाम्रो मोडेलमा {m['ne']}मा सकिन्छ। FAO को पात्रोमा {k['ne']}। कार्डमा {k['ne']} देखाइन्छ।")
+            rows.append({"crop": c["crop"], "sown": key[1], "model": model, "calendar": cal, "head": head, "text": text})
+    win = [s for s in hls_seasons(diary_seasons, 2014, 2025) if s["slot"] == "winter"]   # chart_seasons' HLS years
+    if win:
+        doy = lambda d: date.fromisoformat(d).timetuple().tm_yday         # noqa: E731
+        end = date(2001, 1, 1) + timedelta(days=int(median(doy(s["end"]) for s in win)) - 1)
+        e = name(bs_key(end.strftime("%m-%d")))
+        rows.append({"from_space": True, "winter_seasons": len(win), "winter_end": end.strftime("%m-%d"),
+                     "head": T("This field from space", "अन्तरिक्षबाट यो खेत"),
+                     "text": T(f"Its winter crop usually ends in {e['en']} ({len(win)} winters).",
+                               f"यसको हिउँदे बाली प्रायः {e['ne']}मा सकिन्छ ({len(win)} हिउँद)।")})
+    return chart(
+        "crop_months", "seasons", T("Sowing and harvest months", "छर्ने र काट्ने महिना"),
+        T("The cards show FAO's calendar months. Our model's wheat ends too early. The model is unchanged for now.",
+          "कार्डले FAO को पात्रोका महिना देखाउँछन्। हाम्रो मोडेलको गहुँ चाँडै सकिन्छ। मोडेल अहिलेलाई उस्तै छ।"),
+        ["FAO Crop Calendar, Nepal, B. Hill Agro-ecological Zone (crops.json calendar windows)", SRC_TWIN, SRC_HLS,
+         "config/rules.yaml farmer_answers.actions_calendar_months"], "table", rows=rows)
 
 
 def chart_cover_sure(months, month_words):
@@ -1376,7 +1427,7 @@ RESOURCES = [
 SECTIONS = [
     ("rain", T("The rain gauges that vanished", "हराएका वर्षा मापक"),
      ["gauge_weight", "gauge_stations", "rain_jump", "rain_fixed"]),
-    ("seasons", T("Your field's seasons from space", "अन्तरिक्षबाट खेतका बाली याम"), ["seasons_from_space", "cover_sure"]),
+    ("seasons", T("Your field's seasons from space", "अन्तरिक्षबाट खेतका बाली याम"), ["seasons_from_space", "cover_sure", "crop_months"]),
     ("checks", T("Our model against real records", "हाम्रो मोडेल र साँचो अभिलेख"),
      ["events", "dhm_2025", "other_checks", "best_worst_years"]),
     ("groundwater", T("Water under the whole region", "पूरै क्षेत्रको जमिनमुनिको पानी"), ["groundwater"]),
@@ -1425,6 +1476,8 @@ def load_inputs(repo, field):
             out[key] = yaml.safe_load(p.read_text())
         else:
             out[key] = json.loads(p.read_text())
+    from pipeline.export.build_simple import calendars_of
+    out["calendars"] = calendars_of(field)          # the field's crop calendars (fix A4: crop_months)
     return out
 
 
@@ -1452,6 +1505,7 @@ def build_story(inp, generated):
     c_fixed, level_ratio = chart_rain_fixed(inp["weather"], normal, by)
     c_seasons, _ = chart_seasons(inp["greenness"], inp["diary_seasons"])
     c_sure = chart_cover_sure(fj["diary"]["months"], month_words)
+    c_months = chart_crop_months(fj, inp["calendars"], inp["diary_seasons"], words["shared"]["bs_months"])
     c_events, ev_summary = chart_events(fj["replay"]["current"], inp["known_events"], inp.get("scorecard"))
     c_dhm = chart_dhm_2025(inp["rain_vs_dhm"], rain_is_tuned(field))
     c_other, _ = chart_other_checks(inp["smap"], inp["gldas"], inp["hls"], inp["fao"], inp["eco"])
@@ -1464,7 +1518,7 @@ def build_story(inp, generated):
     c_methods = chart_season_methods(fj["method"])
     c_memory = chart_field_memory(inp["memory"])
     c_words = chart_ai_words(words, fj)
-    charts = [c_weight, c_stations, c_jump, c_fixed, c_seasons, c_sure, c_events, c_dhm, c_other, c_best, c_gw,
+    charts = [c_weight, c_stations, c_jump, c_fixed, c_seasons, c_sure, c_months, c_events, c_dhm, c_other, c_best, c_gw,
               c_probe, c_area, c_future, c_methods, c_memory, c_words]
 
     bench_used = [p["bench"]] if bench_is_real(inp["bench"]) else ["robot/CUPS_PROTOCOL.md", "config/rules.yaml"]
@@ -1474,6 +1528,7 @@ def build_story(inp, generated):
         "rain_fixed": [p["weather"], p["normals"]],
         "seasons_from_space": [p["greenness"], p["diary_seasons"]],
         "cover_sure": [p["field_json"], p["words"]],
+        "crop_months": [p["field_json"], p["diary_seasons"], "config/crops.json", "config/rules.yaml"],
         "events": [p["field_json"], p["known_events"]],
         "dhm_2025": [p["rain_vs_dhm"]],
         "other_checks": [p["smap"], p["gldas"], p["hls"], p["fao"], p["eco"]],

@@ -78,6 +78,44 @@ def test_actions_are_the_plans_calendar_with_the_last_harvest_joined_to_the_next
                     {"do": "harvest_then", "crop": "wheat", "month": "Mar", "new_do": "plant", "new_crop": "rice", "new_month": "Jun"}]
 
 
+WHEAT = {"windows": [{"sow": "10-15", "sow_end": "11-15", "harvest": "03-15", "harvest_end": "04-15"},
+                     {"sow": "08-15", "sow_end": "09-15", "harvest": "02-15", "harvest_end": "03-15"}]}
+CALENDARS = {"wheat": WHEAT,
+             "rice": {"windows": [{"sow": "06-01", "sow_end": "07-15", "harvest": "10-15", "harvest_end": "11-15"}]},
+             "potato": {"windows": [{"sow": "10-15", "sow_end": "11-15", "harvest": "02-15", "harvest_end": "03-15"}]}}
+
+
+def test_the_harvest_day_holds_the_sowing_days_place_in_the_calendar_window():
+    """rules.yaml farmer_answers.actions_calendar_months (fix A4): FAO's Hill-zone wheat, sown 15 Oct-15 Nov, harvested
+    15 Mar-15 Apr. Sown at the start: 15 Mar (Chaitra); at the end: 15 Apr (Baisakh); sown 30 Oct, 15 of 31 days in:
+    15 Mar + 15/31 x 31 days = 30 Mar (Chaitra). Rice sown 23 Jun, 22 of 44 days into 1 Jun-15 Jul: 15 Oct + 15.5 days
+    = 30 Oct, rounded down (Kartik). Potato sown 30 Oct: 15 Feb + 15/31 x 28 days = 28 Feb (Falgun)."""
+    assert bs.calendar_end("wheat", "10-15", CALENDARS) == "03-15"
+    assert bs.calendar_end("wheat", "11-15", CALENDARS) == "04-15"
+    assert bs.calendar_end("wheat", "10-30", CALENDARS) == "03-30"
+    assert bs.calendar_end("wheat", "09-01", CALENDARS) == "03-02"      # the second window: 17 of 31 days, 15 Feb + 15.4
+    assert bs.calendar_end("rice", "06-23", CALENDARS) == "10-30"
+    assert bs.calendar_end("potato", "10-30", CALENDARS) == "02-28"
+    assert [bs.bs_key(bs.calendar_end(c, d, CALENDARS)) for c, d in (("wheat", "10-15"), ("wheat", "11-15"), ("rice", "06-23"),
+                                                                      ("potato", "10-30"))] == ["Mar", "Apr", "Oct", "Feb"]
+    assert bs.calendar_end("wheat", "12-20", CALENDARS) is None          # in no window: the model's day is kept
+    assert bs.calendar_end("lentil", "10-15", CALENDARS) is None         # no calendar for the crop
+
+
+def test_actions_take_the_calendars_harvest_month_and_say_where_each_month_came_from():
+    rotation = [{"crop": "rice", "start": "06-23", "end": "10-10"}, {"crop": "wheat", "start": "11-15", "end": "04-03"}]
+    acts = bs.actions(rotation, [{"crop": "wheat", "start": "11-15", "end": "04-03"}], CALENDARS)
+    assert acts == [{"do": "sow", "crop": "wheat", "month": "Nov"},
+                    {"do": "harvest_then", "crop": "wheat", "month": "Apr", "month_from": "calendar", "new_do": "plant",
+                     "new_crop": "rice", "new_month": "Jun"}]
+    rot2 = [{"crop": "rice", "start": "06-23", "end": "10-10"}, {"crop": "potato", "start": "10-30", "end": "02-21"}]
+    acts2 = bs.actions(rot2, rot2, CALENDARS)
+    assert [(a["do"], a["month"], a.get("month_from")) for a in acts2] == [("plant", "Jun", None), ("harvest", "Oct", "calendar"),
+                                                                           ("sow", "Oct", None), ("harvest_then", "Feb", "calendar")]
+    odd = bs.actions([{"crop": "wheat", "start": "12-20", "end": "05-01"}], [{"crop": "wheat", "start": "12-20", "end": "05-01"}], CALENDARS)
+    assert odd[-1]["month"] == "Apr" and odd[-1]["month_from"] == "model"
+
+
 def test_action_words_follow_the_label_plain_only_when_verified():
     acts = [{"do": "sow", "crop": "wheat", "month": "Oct"},
             {"do": "harvest_then", "crop": "wheat", "month": "Feb", "new_do": "plant", "new_crop": "rice", "new_month": "Jun"}]

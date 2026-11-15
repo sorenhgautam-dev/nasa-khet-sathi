@@ -13,6 +13,7 @@ import argparse
 import json
 import math
 import sys
+from datetime import date, timedelta
 from statistics import median
 from pathlib import Path
 
@@ -134,21 +135,48 @@ def _verb(crop):
     return "plant" if crop == "rice" else "sow"
 
 
-def actions(rotation, in_window):
+def _doy(mmdd):
+    """Day of a non-leap year (2001) for 'MM-DD'."""
+    return date(2001, *(int(x) for x in mmdd.split("-"))).timetuple().tm_yday
+
+
+def calendar_end(crop, start, calendars):
+    """The calendar's harvest day ('MM-DD') for a crop sown on `start`: the first calendar window of the crop whose sowing
+    period holds the day, and the day holding the same place in its harvest period (farmer_answers.actions_calendar_months;
+    days counted in a non-leap year, the place rounded down). None when no window holds the day. Pure."""
+    s = _doy(start)
+    for w in ((calendars or {}).get(crop) or {}).get("windows") or []:
+        a, b = _doy(w["sow"]), _doy(w["sow_end"])
+        span = (b - a) % 365
+        k = (s - a) % 365
+        if k <= span:
+            h0, h1 = _doy(w["harvest"]), _doy(w["harvest_end"])
+            day = (h0 - 1 + math.floor(k / span * ((h1 - h0) % 365)) if span else h0 - 1) % 365
+            return (date(2001, 1, 1) + timedelta(days=day)).strftime("%m-%d")
+    return None
+
+
+def actions(rotation, in_window, calendars=None):
     """The plan's calendar for the crops touching the window: sow (rice: plant) and harvest each; the last harvest joined
-    with the rotation's next crop (farmer_answers.actions)."""
+    with the rotation's next crop (farmer_answers.actions). With the field's crop calendars ({crop: {windows}}), each
+    harvest month is the calendar's (actions_calendar_months) and says where it came from ('month_from')."""
+    def end(c):
+        if calendars is None:
+            return {"month": bs_key(c["end"])}
+        day = calendar_end(c["crop"], c["start"], calendars)
+        return {"month": bs_key(day or c["end"]), "month_from": "calendar" if day else "model"}
     out = []
     for i, c in enumerate(in_window):
         out.append({"do": _verb(c["crop"]), "crop": c["crop"], "month": bs_key(c["start"])})
         if i < len(in_window) - 1:
-            out.append({"do": "harvest", "crop": c["crop"], "month": bs_key(c["end"])})
+            out.append({"do": "harvest", "crop": c["crop"], **end(c)})
             continue
         k = next((j for j, r in enumerate(rotation) if (r["crop"], r["start"]) == (c["crop"], c["start"])), None)
         nxt = rotation[(k + 1) % len(rotation)] if k is not None and len(rotation) > 1 else None
         if nxt is None:
-            out.append({"do": "harvest", "crop": c["crop"], "month": bs_key(c["end"])})
+            out.append({"do": "harvest", "crop": c["crop"], **end(c)})
         else:
-            out.append({"do": "harvest_then", "crop": c["crop"], "month": bs_key(c["end"]), "new_do": _verb(nxt["crop"]),
+            out.append({"do": "harvest_then", "crop": c["crop"], **end(c), "new_do": _verb(nxt["crop"]),
                         "new_crop": nxt["crop"], "new_month": bs_key(nxt["start"])})
     return out
 
@@ -220,9 +248,10 @@ def _bench_passed(path):
     return real and all((b.get("proofs") or {}).get(k) is True for k in ("steady", "order", "temperature"))
 
 
-def farmer_answers(field_doc, replay, answers, rules, labels=None, bench_path=None):
+def farmer_answers(field_doc, replay, answers, rules, labels=None, bench_path=None, calendars=None):
     """The farmer screens' final answers (rules.yaml farmer_answers): text keys and fills only, worded by each output's
-    label. answers: {winter crop: its Replay plan}."""
+    label. answers: {winter crop: its Replay plan}. calendars: the field's crop calendars ({crop: {windows}}), for the
+    harvest months (actions_calendar_months); without them, the model's last days."""
     failed_below = load_rules()["window_replay"]["classes"]["failed_below"]
     by, wb = rules["compare"]["better_by"], rules["compare"]["worse_by"]
     lp = REPO / "site" / "data" / "labels" / f"{replay['field']}.json"
@@ -256,8 +285,11 @@ def farmer_answers(field_doc, replay, answers, rules, labels=None, bench_path=No
                     c = compare([sc[y] for y in yrs], [own_sc[y] for y in yrs], by, wb)
                     row[pid] = {"counts": c, **plan_word(c, len(yrs), st["replay_window"])}
                 words[crop][w][s0] = row
-    acts = {pid: {w: action_lines(actions(rotation[pid], rplans[pid]["crops_in_window"][w]), st["plan_months"])
-                  for w in windows} for pid in rplans if pid in rotation}
+    raw = {pid: {w: actions(rotation[pid], rplans[pid]["crops_in_window"][w], calendars) for w in windows}
+           for pid in rplans if pid in rotation}
+    acts = {pid: {w: action_lines(a, st["plan_months"]) for w, a in ws.items()} for pid, ws in raw.items()}
+    model_kept = sorted({f"{pid}: {a['crop']}" for pid, ws in raw.items() for al in ws.values() for a in al
+                         if a.get("month_from") == "model"})
     s0 = replay["start_default"]
     anim = animation({pid: [q["score"] for q in rplans[pid]["results"]["m6"][s0]] for pid in shown}, shown, failed_below)
     anim.update({"window": "m6", "start": s0, "seasons": replay["seasons"], "failed_below": failed_below})
@@ -274,6 +306,9 @@ def farmer_answers(field_doc, replay, answers, rules, labels=None, bench_path=No
         "today": {"mode": "band" if _bench_passed(bench) else "compare"},
         "guess": {"text": "farm.guess", "fill": {"guess_list": (field_doc.get("diary") or {}).get("guess") or []}},
         "plan_words": words, "actions": acts, "animation": anim, "weather_lines": wx,
+        "action_months": {"sow": "the plan's sowing day",
+                          "harvest": "the crop calendar's (rules.yaml farmer_answers.actions_calendar_months)" if calendars is not None
+                          else "the model's last day", "model_kept": model_kept},
     }
 
 
@@ -304,8 +339,16 @@ def build(field_id, rules=None):
                        "source": "the satellite's typical crop months (site/data/pulse/<field>.json typical; HLS 30 m)"},
         "label": {"sure": "estimate", "scale": (replay.get("label") or {}).get("scale", "valley")},
         "sources": replay.get("sources", []),
-        **farmer_answers(field_doc, replay, answers, rules),
+        **farmer_answers(field_doc, replay, answers, rules, calendars=calendars_of(field_id)),
     }
+
+
+def calendars_of(field_id):
+    """The field's crop calendars, {crop: {windows: [...]}}, from its crop library (its country profile: Nepal's Hill zone
+    in crops.json, or the field's FAO zone abroad)."""
+    from pipeline.fetch.cropslib import load_crops
+    from pipeline.fetch.fields import load_field
+    return {k: v["calendar"] for k, v in load_crops(field=load_field(field_id)).items() if v.get("calendar")}
 
 
 def main(argv=None):

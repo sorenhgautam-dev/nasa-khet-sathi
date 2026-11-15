@@ -567,7 +567,7 @@
      "text": "farm.act_harvest_usual",
      "fill": {
       "crop": "wheat",
-      "harvest_month": "Feb"
+      "harvest_month": "Mar"
      }
     },
     {
@@ -590,7 +590,7 @@
      "text": "farm.act_harvest_usual",
      "fill": {
       "crop": "wheat",
-      "harvest_month": "Feb"
+      "harvest_month": "Mar"
      }
     },
     {
@@ -711,7 +711,7 @@
      "text": "farm.act_harvest_usual",
      "fill": {
       "crop": "wheat",
-      "harvest_month": "Mar"
+      "harvest_month": "Apr"
      }
     },
     {
@@ -734,7 +734,7 @@
      "text": "farm.act_harvest_usual",
      "fill": {
       "crop": "wheat",
-      "harvest_month": "Mar"
+      "harvest_month": "Apr"
      }
     },
     {
@@ -1664,5 +1664,10 @@
     }
    }
   }
+ },
+ "action_months": {
+  "sow": "the plan's sowing day",
+  "harvest": "the crop calendar's (rules.yaml farmer_answers.actions_calendar_months)",
+  "model_kept": []
  }
 }
