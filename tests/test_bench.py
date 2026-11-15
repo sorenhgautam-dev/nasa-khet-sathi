@@ -142,6 +142,19 @@ def test_a_made_up_bench_never_writes_the_calibration(tmp_path):
         rpb.main(["--log", str(log), "--cups", str(cups), "--calibration-out", str(cal_out)])
 
 
+def test_a_voided_push_in_leaves_the_proofs_and_its_redo_takes_its_place():
+    recs = _fixture("serial:/dev/cu.usbserial-0001")
+    bad = next(r for r in recs if r.get("cup") == "c2" and r["push_in"] == 3)
+    wrong = {**bad, "result": {**bad["result"], "median_pct": 90.0}}                  # taken in the wrong cup
+    recs[recs.index(bad)] = wrong
+    void = {"kind": "void", "cup": "c2", "push_in": 3, "why": "wrong cup", "time": "2026-11-15T10:00:00+05:45"}
+    redo = {**bad, "time": "2026-11-15T10:01:00+05:45"}                               # recorded after the void
+    b = bench.analyse([*recs, void, redo], CUPS, RULES)
+    assert b["voided"] == [{"cup": "c2", "push_in": 3, "median_pct": 90.0, "why": "wrong cup"}]
+    c2 = next(r for r in b["cups"] if r["cup_id"] == "c2")
+    assert c2["push_ins"] == 3 and 90.0 not in c2["push_in_medians_pct"] and b["order"]["passes"]
+
+
 # ---------- the spoon method: a rough calibration without a scale (owner, 2026-11-15; rules.yaml probe.bench.spoon) ----------
 
 SPOONS = [{"cup_id": f"c{i + 1}", "cup_spoons": 40, "water_spoons": 4 * i, "printed_volume_ml": 250 if i == 0 else "",

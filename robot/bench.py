@@ -145,7 +145,11 @@ def _seconds(times):
 def analyse(records, cups, rules):
     """Push-in records (record_pushin) and the cups sheet (cups.csv rows) -> bench.json's content. Pure."""
     b = rules["bench"]
-    pis = [r for r in records if r.get("kind") == "pushin"]
+    voids = [r for r in records if r.get("kind") == "void"]          # rules.yaml probe.bench.void: the team's word only
+    gone = [r for r in records if r.get("kind") == "pushin" and any(
+        v["cup"] == r["cup"] and v["push_in"] == r["push_in"] and pd.Timestamp(r["time"]) < pd.Timestamp(v["time"])
+        for v in voids)]
+    pis = [r for r in records if r.get("kind") == "pushin" and r not in gone]
     if not pis:
         raise ValueError("no push-in in the bench log")
     sources = sorted({str(r["source"]) for r in pis})
@@ -206,6 +210,9 @@ def analyse(records, cups, rules):
     return {"made_up": made_up, "label": ("REHEARSAL: made-up readings (fake probe, stdin or a pseudo-terminal), never a "
                                           "calibration: " + label) if made_up else label, **({"spoon": sp} if spoon else {}),
             "date": date, "sources": sources, "cups": rows, "cups_used": len(used),
+            "voided": [{"cup": r["cup"], "push_in": r["push_in"], "median_pct": r["result"]["median_pct"],
+                        "why": next(v["why"] for v in voids if v["cup"] == r["cup"] and v["push_in"] == r["push_in"])}
+                       for r in gone],
             "excluded": [{"cup_id": r["cup_id"], "why": r["excluded"]} for r in excluded],
             "steady": steady, "order": order, "accurate": accurate, "temperature": temperature, "settling": settling,
             "proofs": {"steady": steady["passes"], "order": order["passes"],
@@ -293,7 +300,21 @@ def main(argv=None):
     ap.add_argument("--cup", required=True, help="cup id from cups.csv (c1 ... c6), or 'ice'")
     ap.add_argument("--log-dir", default=str(BENCH_DIR))
     ap.add_argument("--no-wait", action="store_true", help="do not wait for Enter between push-ins (rehearsal)")
+    ap.add_argument("--void", type=int, help="this push-in of --cup was taken wrongly: log it as void with --why "
+                                             "(rules.yaml probe.bench.void); no probe needed")
+    ap.add_argument("--why", help="the team's reason for --void")
+    ap.add_argument("--only", type=int, help="record only this push-in (a redo after --void)")
     a = ap.parse_args(argv)
+    log_path = Path(a.log_dir) / f"readings_{datetime.now():%Y-%m-%d}.jsonl"
+    if a.void:
+        if not a.why:
+            ap.error("--void needs --why (the team's reason)")
+        from robot.bridge import _now
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        with log_path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps({"kind": "void", "cup": a.cup, "push_in": a.void, "why": a.why, "time": _now()}) + "\n")
+        print(f"cup {a.cup} push-in {a.void} voided ({a.why}); it stays in {log_path}. Redo it: --cup {a.cup} --only {a.void}")
+        return 0
     if not a.port and not a.fake:
         ap.error("give --port, or --fake for a rehearsal")
     rules = load_rules()["probe"]
@@ -301,7 +322,6 @@ def main(argv=None):
     if not bridge.is_real(source) and Path(a.log_dir).resolve() == BENCH_DIR.resolve():
         print(f"refused: readings from {source} are made up: pass --log-dir to a folder outside data/probe/bench/", file=sys.stderr)
         return 2
-    log_path = Path(a.log_dir) / f"readings_{datetime.now():%Y-%m-%d}.jsonl"
     log_path.parent.mkdir(parents=True, exist_ok=True)
 
     def log(rec):
@@ -310,7 +330,7 @@ def main(argv=None):
     src = (bridge.IterSource(bridge.fake_lines(0.05, None, start_moist=0.0, scenario="settling", target=a.target))
            if a.fake else bridge.SerialSource(a.port))
     try:
-        for k in range(1, rules["bench"]["push_ins"] + 1):
+        for k in ([a.only] if a.only else range(1, rules["bench"]["push_ins"] + 1)):
             if not a.no_wait:
                 input(f"Cup {a.cup}, push-in {k} of {rules['bench']['push_ins']}: push the probe in to its line, let go of "
                       "it, then press Enter. ")
