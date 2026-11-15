@@ -4,6 +4,16 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, noon): global use: `world.json` and Gregorian months outside Nepal (additions only)
+
+- New file `site/data/world.json` (`pipeline/export/build_world.py`, from Natural Earth's land outline and `rules.yaml
+  global_use`): `outline` (`size`, `y0`, `y1`, `rings`: flat Web Mercator rings on a 1000-wide square), `coverage` (one entry
+  per NASA dataset: `id`, `name`, `what`, `lat` band, `land_only`, optional `caution_abs_lat`), `crops` (the ids of
+  `config/crops.json`) and `not_modelled`. Read only by the world page (`js/world.js`).
+- `words.json` gains 37 `shared.farm.world_*` and `w_*` words; `world_map_src` now credits Natural Earth.
+- Months and language: a field whose `index.json` `country` is not Nepal shows Gregorian months wherever the site showed
+  Bikram Sambat months, and opens in English unless the visitor chose a language. Nepal's fields are unchanged.
+
 ## 2026-11-15 (Sunday, late morning): Kharipati's drone file; the spoon calibration's label (additions only)
 
 - `data/drone/<id>.json` may carry `label` and `sat`, each `{en, ne, ne_review}`: the field's own words for the chip and

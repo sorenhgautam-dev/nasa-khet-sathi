@@ -880,9 +880,24 @@ label.cta.take, label.round { cursor: pointer; }
 .fitbox .fithandle.on::after, .fitbox .fithandle:focus-visible::after { transform: scale(1.3); }
 .fitbox .fithandle:focus-visible { outline: none; }
 
-/* Fields around the world (js/world.js; owner, 2026-11-15): NASA's Blue Marble picture, cropped to 75 N - 60 S, a dot per place */
-.wmap { position: relative; overflow: hidden; border-radius: 18px; background: #0B1E33; }
-.wmap img { display: block; width: 100%; height: auto; }
+/* Fields around the world (js/world.js; owner, 2026-11-15): Natural Earth's land outline (data/world.json), 80 N - 60 S, a dot per place, a tap anywhere */
+.wmap { position: relative; overflow: hidden; border-radius: 18px; background: #E3EEF0; border: 1px solid var(--glass-line); }
+.wsvg { display: block; width: 100%; height: 100%; cursor: crosshair; }
+.wsvg .sea { fill: #E3EEF0; }
+.wsvg .land { fill: #CFE0B6; stroke: #6E9A55; stroke-width: 0.8; stroke-linejoin: round; }
+.wsvg .tap { fill: #9A5426; stroke: #FBF4EA; stroke-width: 2.5; }
+.wsvg .tapring { fill: none; stroke: #9A5426; stroke-width: 2; opacity: .55; }
+.wanswer { display: flex; flex-direction: column; gap: 6px; scroll-margin-top: 12px; }
+.wanswer p { margin: 0; }
+.wanswer .wspot { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 17px; }
+.world .wh { margin: 8px 0 0; font-weight: 800; font-size: 16px; }
+.world .wtxt { margin: 0; font-size: 16px; }
+.wcov { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.wcov li { display: flex; align-items: flex-start; gap: 8px; font-size: 15px; line-height: 1.3; }
+.wcov li .ico { margin-top: 1px; }
+.wcov li.yes .ico { color: #3F7A2E; }
+.wcov li.no .ico { color: #B8432A; }
+.wcov li.caution .ico { color: #C98A1B; }
 .wdot { position: absolute; transform: translate(-7px, -50%); display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 6px 0 0;
   background: none; border: 0; cursor: pointer; color: #fff; font: 700 13px/1.1 var(--f-body); }
 .wdot.w { flex-direction: row-reverse; transform: translate(calc(-100% + 7px), -50%); padding: 0 0 0 6px; }

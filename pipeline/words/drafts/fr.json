@@ -3289,8 +3289,8 @@
    "fr": "Touchez un champ pour l'ouvrir."
   },
   "shared.farm.world_map_src": {
-   "en": "World picture: NASA Blue Marble, August 2004.",
-   "fr": "Image du monde : NASA Blue Marble, août 2004."
+   "en": "World outline: Natural Earth, public domain.",
+   "fr": "Contour : Natural Earth, domaine public."
   },
   "shared.farm.world_own_title": {
    "en": "Run it for your own field",
@@ -3311,6 +3311,154 @@
   "shared.farm.world_readme": {
    "en": "The full steps (README, in English)",
    "fr": "Toutes les étapes (README, en anglais)"
+  },
+  "shared.farm.world_could_title": {
+   "en": "Could Khet Sathi work here?",
+   "fr": "Khet Sathi marche-t-il ici ?"
+  },
+  "shared.farm.world_tap_any": {
+   "en": "Tap anywhere on the map.",
+   "fr": "Touchez n'importe où sur la carte."
+  },
+  "shared.farm.world_sea": {
+   "en": "This is sea on our map.",
+   "fr": "Sur notre carte, c'est la mer."
+  },
+  "shared.farm.world_covers": {
+   "en": "NASA's free records for this spot:",
+   "fr": "Relevés gratuits de la NASA ici :"
+  },
+  "shared.farm.world_yes": {
+   "en": "Yes",
+   "fr": "Oui"
+  },
+  "shared.farm.world_no": {
+   "en": "Not here",
+   "fr": "Pas ici"
+  },
+  "shared.farm.world_caution": {
+   "en": "Less sure over snow and ice",
+   "fr": "Moins sûr sur neige et glace"
+  },
+  "shared.farm.w_rain": {
+   "en": "Rain",
+   "fr": "Pluie"
+  },
+  "shared.farm.w_weather": {
+   "en": "Heat, wind and sun",
+   "fr": "Chaleur, vent et soleil"
+  },
+  "shared.farm.w_greenness": {
+   "en": "Green cover, seen from space",
+   "fr": "Verdure vue de l'espace"
+  },
+  "shared.farm.w_height": {
+   "en": "Height of the land",
+   "fr": "Hauteur du terrain"
+  },
+  "shared.farm.w_outlook": {
+   "en": "The years ahead",
+   "fr": "Les années à venir"
+  },
+  "shared.farm.world_crops": {
+   "en": "Crops we know:",
+   "fr": "Cultures que nous connaissons :"
+  },
+  "shared.farm.world_crops_need": {
+   "en": "Which fit needs this field's own records.",
+   "fr": "Savoir lesquelles conviennent demande ses relevés."
+  },
+  "shared.farm.world_cant": {
+   "en": "Things we can't do yet:",
+   "fr": "Ce que nous ne faisons pas encore :"
+  },
+  "shared.farm.world_nm_snow": {
+   "en": "Snowy winters",
+   "fr": "Hivers enneigés"
+  },
+  "shared.farm.world_nm_orchards": {
+   "en": "Orchards and vineyards",
+   "fr": "Vergers et vignes"
+  },
+  "shared.farm.world_nm_other": {
+   "en": "Crops we don't know, like soybean",
+   "fr": "Cultures inconnues, comme le soja"
+  },
+  "shared.farm.world_nearest": {
+   "en": "Nearest ready field:",
+   "fr": "Champ prêt le plus proche :"
+  },
+  "shared.farm.world_km": {
+   "en": "km",
+   "fr": "km"
+  },
+  "shared.farm.world_not_ready": {
+   "en": "Not prepared yet.",
+   "fr": "Pas encore préparé."
+  },
+  "shared.farm.world_one_command": {
+   "en": "One command on a laptop prepares it.",
+   "fr": "Une commande sur un portable le prépare."
+  },
+  "shared.farm.world_hours": {
+   "en": "It takes a few hours of downloads.",
+   "fr": "Les téléchargements prennent quelques heures."
+  },
+  "shared.farm.world_no_numbers": {
+   "en": "No harvest numbers until it is prepared.",
+   "fr": "Pas de chiffres de récolte avant."
+  },
+  "shared.farm.world_open": {
+   "en": "Open this field",
+   "fr": "Ouvrir ce champ"
+  },
+  "shared.farm.world_here": {
+   "en": "This spot is a prepared field.",
+   "fr": "Cet endroit est un champ prêt."
+  },
+  "shared.farm.world_anywhere": {
+   "en": "What works anywhere",
+   "fr": "Ce qui marche partout"
+  },
+  "shared.farm.world_any_1": {
+   "en": "NASA's free records",
+   "fr": "Les relevés gratuits de la NASA"
+  },
+  "shared.farm.world_any_2": {
+   "en": "Our copy of the field",
+   "fr": "Notre copie du champ"
+  },
+  "shared.farm.world_any_3": {
+   "en": "The rain-record check",
+   "fr": "La vérification de la pluie"
+  },
+  "shared.farm.world_any_4": {
+   "en": "The replay of past years",
+   "fr": "Le retour sur les années passées"
+  },
+  "shared.farm.world_any_5": {
+   "en": "How sure we are, on every answer",
+   "fr": "Notre certitude, sur chaque réponse"
+  },
+  "shared.farm.world_nepal_only": {
+   "en": "What is Nepal-only",
+   "fr": "Ce qui est seulement népalais"
+  },
+  "shared.farm.world_np_1": {
+   "en": "Records and checks of Nepal's weather office",
+   "fr": "Relevés du service météo du Népal"
+  },
+  "shared.farm.world_np_2": {
+   "en": "Bikram Sambat months",
+   "fr": "Les mois Bikram Sambat"
+  },
+  "shared.farm.world_np_3": {
+   "en": "The Nepali words, checked by people",
+   "fr": "Les mots népalais, relus"
+  },
+  "shared.farm.world_np_4": {
+   "en": "Ropani, the land unit",
+   "fr": "Ropani, l'unité de terrain"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

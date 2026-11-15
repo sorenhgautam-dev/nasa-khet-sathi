@@ -4330,8 +4330,8 @@
     "ne_review": "needs native-speaker review"
    },
    "world_map_src": {
-    "en": "World picture: NASA Blue Marble, August 2004.",
-    "ne": "विश्वको तस्बिर: नासा ब्लु मार्बल, अगस्ट २००४।",
+    "en": "World outline: Natural Earth, public domain.",
+    "ne": "विश्वको रेखा: नेचुरल अर्थ, सार्वजनिक।",
     "ne_review": "needs native-speaker review"
    },
    "world_own_title": {
@@ -4357,6 +4357,191 @@
    "world_readme": {
     "en": "The full steps (README, in English)",
     "ne": "पूरा चरणहरू (README, अंग्रेजीमा)",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_could_title": {
+    "en": "Could Khet Sathi work here?",
+    "ne": "खेत साथी यहाँ काम गर्छ?",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_tap_any": {
+    "en": "Tap anywhere on the map.",
+    "ne": "नक्सामा जहाँ पनि थिच्नुहोस्।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_sea": {
+    "en": "This is sea on our map.",
+    "ne": "हाम्रो नक्सामा यो समुद्र हो।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_covers": {
+    "en": "NASA's free records for this spot:",
+    "ne": "यो ठाउँका लागि नासाका निःशुल्क रेकर्ड:",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_yes": {
+    "en": "Yes",
+    "ne": "छ",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_no": {
+    "en": "Not here",
+    "ne": "यहाँ छैन",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_caution": {
+    "en": "Less sure over snow and ice",
+    "ne": "हिउँ र बरफमा कम भरोसा",
+    "ne_review": "needs native-speaker review"
+   },
+   "w_rain": {
+    "en": "Rain",
+    "ne": "वर्षा",
+    "ne_review": "needs native-speaker review"
+   },
+   "w_weather": {
+    "en": "Heat, wind and sun",
+    "ne": "गर्मी, हावा र घाम",
+    "ne_review": "needs native-speaker review"
+   },
+   "w_greenness": {
+    "en": "Green cover, seen from space",
+    "ne": "अन्तरिक्षबाट देखिएको हरियाली",
+    "ne_review": "needs native-speaker review"
+   },
+   "w_height": {
+    "en": "Height of the land",
+    "ne": "जमिनको उचाइ",
+    "ne_review": "needs native-speaker review"
+   },
+   "w_outlook": {
+    "en": "The years ahead",
+    "ne": "आउने वर्षहरू",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_crops": {
+    "en": "Crops we know:",
+    "ne": "हामीले चिनेका बाली:",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_crops_need": {
+    "en": "Which fit needs this field's own records.",
+    "ne": "कुन मिल्छ, खेतकै रेकर्ड चाहिन्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_cant": {
+    "en": "Things we can't do yet:",
+    "ne": "हामीले अझै गर्न नसक्ने कुरा:",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_nm_snow": {
+    "en": "Snowy winters",
+    "ne": "हिउँ पर्ने जाडो",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_nm_orchards": {
+    "en": "Orchards and vineyards",
+    "ne": "फलफूल बगैंचा र अंगुर बारी",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_nm_other": {
+    "en": "Crops we don't know, like soybean",
+    "ne": "हामीले नचिनेका बाली, जस्तै भटमास",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_nearest": {
+    "en": "Nearest ready field:",
+    "ne": "सबैभन्दा नजिकको तयार खेत:",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_km": {
+    "en": "km",
+    "ne": "किलोमिटर",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_not_ready": {
+    "en": "Not prepared yet.",
+    "ne": "अझै तयार छैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_one_command": {
+    "en": "One command on a laptop prepares it.",
+    "ne": "ल्यापटपमा एउटा आदेशले तयार गर्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_hours": {
+    "en": "It takes a few hours of downloads.",
+    "ne": "डाउनलोड गर्न केही घण्टा लाग्छ।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_no_numbers": {
+    "en": "No harvest numbers until it is prepared.",
+    "ne": "तयार नभएसम्म उब्जनीको अंक छैन।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_open": {
+    "en": "Open this field",
+    "ne": "यो खेत खोल्नुहोस्",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_here": {
+    "en": "This spot is a prepared field.",
+    "ne": "यो ठाउँ तयार खेत हो।",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_anywhere": {
+    "en": "What works anywhere",
+    "ne": "जहाँ पनि चल्ने कुरा",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_any_1": {
+    "en": "NASA's free records",
+    "ne": "नासाका निःशुल्क रेकर्ड",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_any_2": {
+    "en": "Our copy of the field",
+    "ne": "खेतको हाम्रो नक्कल",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_any_3": {
+    "en": "The rain-record check",
+    "ne": "वर्षा रेकर्डको जाँच",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_any_4": {
+    "en": "The replay of past years",
+    "ne": "बितेका वर्षहरूको दोहोर्याइ",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_any_5": {
+    "en": "How sure we are, on every answer",
+    "ne": "हरेक उत्तरमा हामी कति पक्का छौं",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_nepal_only": {
+    "en": "What is Nepal-only",
+    "ne": "नेपालमा मात्र हुने कुरा",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_np_1": {
+    "en": "Records and checks of Nepal's weather office",
+    "ne": "नेपालको मौसम कार्यालयका रेकर्ड र जाँच",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_np_2": {
+    "en": "Bikram Sambat months",
+    "ne": "विक्रम संवत्का महिना",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_np_3": {
+    "en": "The Nepali words, checked by people",
+    "ne": "मानिसले जाँचेका नेपाली शब्द",
+    "ne_review": "needs native-speaker review"
+   },
+   "world_np_4": {
+    "en": "Ropani, the land unit",
+    "ne": "रोपनी, जग्गा नाप्ने एकाइ",
     "ne_review": "needs native-speaker review"
    }
   },

@@ -3289,8 +3289,8 @@
    "bn": "খুলতে একটি খেতে ট্যাপ করুন।"
   },
   "shared.farm.world_map_src": {
-   "en": "World picture: NASA Blue Marble, August 2004.",
-   "bn": "বিশ্বের ছবি: নাসা ব্লু মার্বেল, আগস্ট 2004।"
+   "en": "World outline: Natural Earth, public domain.",
+   "bn": "বিশ্বের রেখা: ন্যাচারাল আর্থ, সর্বজনীন।"
   },
   "shared.farm.world_own_title": {
    "en": "Run it for your own field",
@@ -3311,6 +3311,154 @@
   "shared.farm.world_readme": {
    "en": "The full steps (README, in English)",
    "bn": "পুরো ধাপগুলি (README, ইংরেজিতে)"
+  },
+  "shared.farm.world_could_title": {
+   "en": "Could Khet Sathi work here?",
+   "bn": "খেত সাথী কি এখানে কাজ করবে?"
+  },
+  "shared.farm.world_tap_any": {
+   "en": "Tap anywhere on the map.",
+   "bn": "মানচিত্রে যেকোনো জায়গায় ট্যাপ করুন।"
+  },
+  "shared.farm.world_sea": {
+   "en": "This is sea on our map.",
+   "bn": "আমাদের মানচিত্রে এটি সমুদ্র।"
+  },
+  "shared.farm.world_covers": {
+   "en": "NASA's free records for this spot:",
+   "bn": "এই জায়গার জন্য নাসার বিনামূল্যের রেকর্ড:"
+  },
+  "shared.farm.world_yes": {
+   "en": "Yes",
+   "bn": "হ্যাঁ"
+  },
+  "shared.farm.world_no": {
+   "en": "Not here",
+   "bn": "এখানে নেই"
+  },
+  "shared.farm.world_caution": {
+   "en": "Less sure over snow and ice",
+   "bn": "বরফের ওপর কম নিশ্চিত"
+  },
+  "shared.farm.w_rain": {
+   "en": "Rain",
+   "bn": "বৃষ্টি"
+  },
+  "shared.farm.w_weather": {
+   "en": "Heat, wind and sun",
+   "bn": "গরম, বাতাস আর রোদ"
+  },
+  "shared.farm.w_greenness": {
+   "en": "Green cover, seen from space",
+   "bn": "মহাকাশ থেকে দেখা সবুজ"
+  },
+  "shared.farm.w_height": {
+   "en": "Height of the land",
+   "bn": "জমির উচ্চতা"
+  },
+  "shared.farm.w_outlook": {
+   "en": "The years ahead",
+   "bn": "আগামী বছরগুলো"
+  },
+  "shared.farm.world_crops": {
+   "en": "Crops we know:",
+   "bn": "যে ফসল আমরা চিনি:"
+  },
+  "shared.farm.world_crops_need": {
+   "en": "Which fit needs this field's own records.",
+   "bn": "কোনটা মানাবে, খেতের নিজের রেকর্ড লাগে।"
+  },
+  "shared.farm.world_cant": {
+   "en": "Things we can't do yet:",
+   "bn": "যা আমরা এখনও পারি না:"
+  },
+  "shared.farm.world_nm_snow": {
+   "en": "Snowy winters",
+   "bn": "তুষারের শীত"
+  },
+  "shared.farm.world_nm_orchards": {
+   "en": "Orchards and vineyards",
+   "bn": "ফলের বাগান ও আঙুরখেত"
+  },
+  "shared.farm.world_nm_other": {
+   "en": "Crops we don't know, like soybean",
+   "bn": "অচেনা ফসল, যেমন সয়াবিন"
+  },
+  "shared.farm.world_nearest": {
+   "en": "Nearest ready field:",
+   "bn": "সবচেয়ে কাছের তৈরি খেত:"
+  },
+  "shared.farm.world_km": {
+   "en": "km",
+   "bn": "কিলোমিটার"
+  },
+  "shared.farm.world_not_ready": {
+   "en": "Not prepared yet.",
+   "bn": "এখনও তৈরি নয়।"
+  },
+  "shared.farm.world_one_command": {
+   "en": "One command on a laptop prepares it.",
+   "bn": "ল্যাপটপে একটি কমান্ড এটি তৈরি করে।"
+  },
+  "shared.farm.world_hours": {
+   "en": "It takes a few hours of downloads.",
+   "bn": "ডাউনলোডে কয়েক ঘণ্টা লাগে।"
+  },
+  "shared.farm.world_no_numbers": {
+   "en": "No harvest numbers until it is prepared.",
+   "bn": "তৈরি না হওয়া পর্যন্ত ফসলের সংখ্যা নেই।"
+  },
+  "shared.farm.world_open": {
+   "en": "Open this field",
+   "bn": "এই খেত খুলুন"
+  },
+  "shared.farm.world_here": {
+   "en": "This spot is a prepared field.",
+   "bn": "এই জায়গাটি তৈরি খেত।"
+  },
+  "shared.farm.world_anywhere": {
+   "en": "What works anywhere",
+   "bn": "যা সব জায়গায় চলে"
+  },
+  "shared.farm.world_any_1": {
+   "en": "NASA's free records",
+   "bn": "নাসার বিনামূল্যের রেকর্ড"
+  },
+  "shared.farm.world_any_2": {
+   "en": "Our copy of the field",
+   "bn": "খেতের আমাদের নকল"
+  },
+  "shared.farm.world_any_3": {
+   "en": "The rain-record check",
+   "bn": "বৃষ্টির রেকর্ডের পরীক্ষা"
+  },
+  "shared.farm.world_any_4": {
+   "en": "The replay of past years",
+   "bn": "আগের বছরগুলোর পুনরাবৃত্তি"
+  },
+  "shared.farm.world_any_5": {
+   "en": "How sure we are, on every answer",
+   "bn": "প্রতিটি উত্তরে আমরা কতটা নিশ্চিত"
+  },
+  "shared.farm.world_nepal_only": {
+   "en": "What is Nepal-only",
+   "bn": "যা শুধু নেপালে"
+  },
+  "shared.farm.world_np_1": {
+   "en": "Records and checks of Nepal's weather office",
+   "bn": "নেপালের আবহাওয়া দপ্তরের রেকর্ড"
+  },
+  "shared.farm.world_np_2": {
+   "en": "Bikram Sambat months",
+   "bn": "বিক্রম সংবতের মাস"
+  },
+  "shared.farm.world_np_3": {
+   "en": "The Nepali words, checked by people",
+   "bn": "মানুষের দেখা নেপালি শব্দ"
+  },
+  "shared.farm.world_np_4": {
+   "en": "Ropani, the land unit",
+   "bn": "রোপনি, জমির একক"
   },
   "shared.bs_months.Jan": {
    "en": "Magh",

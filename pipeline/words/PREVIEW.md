@@ -2,7 +2,7 @@
 
 All Nepali text was drafted by SI (Claude) on 2026-11-12. Review status of the Nepali:
 
-- Screens, and the words shared by many screens (screens.json, 761 texts): 738 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
+- Screens, and the words shared by many screens (screens.json, 798 texts): 775 needs native-speaker review; 23 reviewed by Pratik and Vision, 2026-11-14.
 - The five tabs and the tips (screen 8), and the method page's notes (tabs.json, 99 texts): 91 needs native-speaker review; 8 reviewed by Pratik and Vision, 2026-11-14.
 - Glossary (glossary.json, 66 texts): 62 needs native-speaker review; 4 reviewed by Pratik and Vision, 2026-11-14.
 - Crop explainers (crop_explainers.json, 25 texts): 20 needs native-speaker review; 5 reviewed by Pratik and Vision, 2026-11-14.
@@ -798,7 +798,7 @@ This page is made from the word files in this folder; change those, not this pag
 
 ### Words used on many screens
 
-*Nepali: 220 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
+*Nepali: 257 needs native-speaker review; 1 reviewed by Pratik and Vision, 2026-11-14.*
 
 | English | नेपाली |
 | --- | --- |
@@ -980,12 +980,49 @@ This page is made from the word files in this folder; change those, not this pag
 | Fields around the world | संसारभरका खेतहरू |
 | See every field on a world map | विश्व नक्सामा सबै खेत हेर्नुहोस् |
 | Tap a field to open it. | खोल्न खेतमा थिच्नुहोस्। |
-| World picture: NASA Blue Marble, August 2004. | विश्वको तस्बिर: नासा ब्लु मार्बल, अगस्ट २००४। |
+| World outline: Natural Earth, public domain. | विश्वको रेखा: नेचुरल अर्थ, सार्वजनिक। |
 | Run it for your own field | आफ्नै खेतका लागि चलाउनुहोस् |
 | Write down your field's corners and crops. | आफ्नो खेतका कुना र बाली लेख्नुहोस्। |
 | Download NASA's free records for that place. | त्यो ठाउँको नासाको निःशुल्क रेकर्ड डाउनलोड गर्नुहोस्। |
 | Run one command. It builds every page. | एउटा आदेश चलाउनुहोस्। यसले सबै पाना बनाउँछ। |
 | The full steps (README, in English) | पूरा चरणहरू (README, अंग्रेजीमा) |
+| Could Khet Sathi work here? | खेत साथी यहाँ काम गर्छ? |
+| Tap anywhere on the map. | नक्सामा जहाँ पनि थिच्नुहोस्। |
+| This is sea on our map. | हाम्रो नक्सामा यो समुद्र हो। |
+| NASA's free records for this spot: | यो ठाउँका लागि नासाका निःशुल्क रेकर्ड: |
+| Yes | छ |
+| Not here | यहाँ छैन |
+| Less sure over snow and ice | हिउँ र बरफमा कम भरोसा |
+| Rain | वर्षा |
+| Heat, wind and sun | गर्मी, हावा र घाम |
+| Green cover, seen from space | अन्तरिक्षबाट देखिएको हरियाली |
+| Height of the land | जमिनको उचाइ |
+| The years ahead | आउने वर्षहरू |
+| Crops we know: | हामीले चिनेका बाली: |
+| Which fit needs this field's own records. | कुन मिल्छ, खेतकै रेकर्ड चाहिन्छ। |
+| Things we can't do yet: | हामीले अझै गर्न नसक्ने कुरा: |
+| Snowy winters | हिउँ पर्ने जाडो |
+| Orchards and vineyards | फलफूल बगैंचा र अंगुर बारी |
+| Crops we don't know, like soybean | हामीले नचिनेका बाली, जस्तै भटमास |
+| Nearest ready field: | सबैभन्दा नजिकको तयार खेत: |
+| km | किलोमिटर |
+| Not prepared yet. | अझै तयार छैन। |
+| One command on a laptop prepares it. | ल्यापटपमा एउटा आदेशले तयार गर्छ। |
+| It takes a few hours of downloads. | डाउनलोड गर्न केही घण्टा लाग्छ। |
+| No harvest numbers until it is prepared. | तयार नभएसम्म उब्जनीको अंक छैन। |
+| Open this field | यो खेत खोल्नुहोस् |
+| This spot is a prepared field. | यो ठाउँ तयार खेत हो। |
+| What works anywhere | जहाँ पनि चल्ने कुरा |
+| NASA's free records | नासाका निःशुल्क रेकर्ड |
+| Our copy of the field | खेतको हाम्रो नक्कल |
+| The rain-record check | वर्षा रेकर्डको जाँच |
+| The replay of past years | बितेका वर्षहरूको दोहोर्याइ |
+| How sure we are, on every answer | हरेक उत्तरमा हामी कति पक्का छौं |
+| What is Nepal-only | नेपालमा मात्र हुने कुरा |
+| Records and checks of Nepal's weather office | नेपालको मौसम कार्यालयका रेकर्ड र जाँच |
+| Bikram Sambat months | विक्रम संवत्का महिना |
+| The Nepali words, checked by people | मानिसले जाँचेका नेपाली शब्द |
+| Ropani, the land unit | रोपनी, जग्गा नाप्ने एकाइ |
 | *The fog that clears where the soil stick tests* | |
 | How sure are we? | हामी कति पक्का छौं? |
 | {sure_pct} out of 100 | १०० मा {sure_pct} |
