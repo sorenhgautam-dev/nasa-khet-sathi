@@ -1725,5 +1725,16 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   watch-outs for crops the suggestion does not grow. 8 new words (Nepali and five drafts unreviewed). Tests first
   (`tests/test_site_simple_screens.py`); the five-second check, the removed words and before/after screenshots in
   `~/Desktop/khet_sathi_screens/simple_17_00/`. No pipeline output, rule or data file changed except `words.json`.
+- **The owner's answers 3 and 4 and "the entire webapp offline" (Claude, after 15:00):** (3) the rule
+  `simple_cards.suggest_change_only_if_better` committed first, then `farmPlans`/`keepCard` in `site/js/app.js`: a change
+  is suggested only when another plan is usually better; otherwise "Keep growing [crop]." with "None of our other plans
+  usually did better.", no trial button and the other plans below with their symbols (Kharipati with our guess, wheat:
+  keep wheat; the farmer's answer potato: wheat is suggested); node tests on the real files (`tests/test_site_keep.py`),
+  two words in 7 languages; screenshots in `~/Desktop/khet_sathi_screens/keep_rule/`. Offline: a first visit now saves
+  the whole site (111 files, about 7 MB), never the live reading, the demo switch or the test readings
+  (`scripts/build_offline.py`, `tests/test_offline.py`). (4) the rule `disaster_floods` committed first, then
+  `pipeline/checks/disaster_floods.py` and `scripts/run_disaster_floods.py` (tests first): BIPAD 2012-2025, we also flag 1
+  of its 9 flood years and 1 of our 1 flagged years there has a record; DesInventar not scored (2 flood years); shown
+  under How we know's flood chart with the owner's caveat (VALIDATION 3.41). No result changed.
 - **For a person to review:** all new Nepali (the promise's 7 lines, the rain chapter, the screen words, the drone
   label) and the 12 lines rewritten in the five draft languages; the flood records before any rule is written.
