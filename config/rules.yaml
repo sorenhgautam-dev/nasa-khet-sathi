@@ -463,6 +463,34 @@ probe:                            # build step 10 (robot/bridge.py); the probe i
     real_only:
       value: "config/probe_calibration.yaml is written only from push-ins read from a real serial port, with every proof run; a log from the fake probe, stdin or a pseudo-terminal gives a labelled rehearsal result and no calibration file"
       source: "Owner's probe brief, 2026-11-14 (fix 3: no such file until real bench data exists); golden rule: no made-up number is exported"
+    spoon:                        # the rough calibration without a scale (owner, 2026-11-15). Committed before any cup was measured. A cups sheet with the column cup_spoons uses these rules; the weighed-cup rules above stay for a sheet with grams
+      reference:
+        value: "each cup is filled to the same line; its volume N = level spoonfuls of water to the line (one spoon for everything); the water added to cup k = w_k level spoonfuls of the same spoon; reference water content = w_k / N m3/m3 (water % = 100 x w_k / N), with the w_k actually added. The spoon's size cancels out. A printed cup volume (ml), when the cup has one, is recorded as a cross-check: spoon size = printed volume / N is reported, never used"
+        source: "Owner, 2026-11-15 ('4 cups but no scale: a rough volumetric calibration with the spoon method')"
+      levels:
+        value: "4 cups: w_k = 0, 10, 20 and 30 % of N (to the nearest level spoonful; the reference uses the spoonfuls written down), each mixed in a bowl until even and packed back to the line; a cup that will not go back to the line has 'pack' in its notes and is left out (exclude_cups)"
+        source: "Owner, 2026-11-15. Nearest whole spoonful: Claude's choice (a level spoon is the most repeatable measure)"
+      dry_soil:
+        value: "the soil is air-dried as far as possible; its starting moisture is not known and the reference counts only the water added, so every cup's true water content may be a few percent above its reference: the dry point may be a few percent above zero. Stated with every result; not inside the error"
+        source: "Owner, 2026-11-15"
+      pore_space:
+        value: "not tested: without a scale the dry soil's mass is not known (exclude_cups's pore-space test needs it). The notes words ('pool', 'pack') and the steady and off-scale tests still leave cups out"
+        source: "Claude's reading, 2026-11-15"
+      push_ins:
+        value: "3 per cup (push_ins), driest cup first; the probe is let go of while it settles and measures. Whether the cups were logged driest first is reported (driest_first), not a pass or fail"
+        source: "Owner, 2026-11-15"
+      error:
+        value: "the bench's straight line (fit; with 4 cups a quadratic is never used), scored leave one cup out (error): the mean absolute error ('give or take') and the root mean square error, both in m3/m3"
+        source: "Owner, 2026-11-15 ('fit the probe reading to the reference, give the leave-one-out error')"
+      passes:
+        value: "the cups used rise strictly (order), at least min_cups are used, and the leave-one-cup-out root mean square error is at most 0.04 m3/m3 (4 water-% points)"
+        source: "Owner, 2026-11-15: compare it with SMAP's 0.04 m3/m3 yardstick (NASA SMAP's accuracy requirement, Entekhabi et al. 2010, Proc. IEEE 98:704, Table 1, as in verification.outputs). SMAP's is a root-mean-square-type requirement, so the RMSE is compared; it is never smaller than the MAE, so this is the stricter reading (Claude's choice)"
+      label:
+        value: "rough calibration (spoon measures, air-dried soil)"
+        source: "Owner, 2026-11-15: on bench.json, on the calibration file and with every reading calibrated by it"
+      use:
+        value: "config/probe_calibration.yaml is written only if it passes (and real_only holds): only then does the fog clear with it. In the Kalman update its own error is added to the probe's: R (water-% points squared) = R_probe x b^2 + the leave-one-cup-out mean squared error, then converted to wetness points as in probe.kalman.r. If it fails: no calibration file, the site keeps 'drier / wetter than the other parts' and the fog stays"
+        source: "Owner, 2026-11-15 ('use it for the fog only if it passes, with its own error in the Kalman update'). Adding the two variances (a reading's repeat noise and the line's own error) is Claude's reading"
   live:
     stale_after_s:
       value: 10
