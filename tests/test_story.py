@@ -116,6 +116,33 @@ def test_the_offline_section_says_the_first_visit_needs_internet_and_live_readin
     assert all(r["text"]["ne"] and r["head"]["ne"] for r in c["rows"])
 
 
+def test_the_limits_block_groups_the_compliance_table_into_checked_and_estimates():
+    """Owner's plan, part A2 (2026-11-15): 'What this tool can and cannot tell you': a real farm and sample fields, no
+    farmer's answers yet; a starting point; check with your local agriculture office; which parts are checked (VERIFIED in
+    the compliance table) and which are estimates (ESTIMATE, and NOT YET VERIFIABLE, which the wording rule treats as an
+    estimate: rules.yaml farmer_answers.wording)."""
+    rows = [{"id": "a", "thing": {"en": "Rainy and dry months", "ne": "क"}, "status": "VERIFIED"},
+            {"id": "b", "thing": {"en": "Flood years", "ne": "ख"}, "status": "ESTIMATE"},
+            {"id": "c", "thing": {"en": "Groundwater", "ne": "ग"}, "status": "NOT YET VERIFIABLE"}]
+    L = bs.limits_block(rows)
+    assert [x["en"] for x in L["checked"]["items"]] == ["Rainy and dry months"]
+    assert [x["en"] for x in L["estimates"]["items"]] == ["Flood years", "Groundwater"]
+    text = " ".join(x["en"] for x in L["lines"])
+    assert "real farm" in text and "sample fields" in text and "No farmer" in text and "starting point" in text
+    assert "agriculture office" in text
+    for x in [L["title"], L["checked"]["title"], L["estimates"]["title"], *L["lines"]]:
+        assert x["en"] and x["ne"] and len(x["en"].split()) <= 8, x       # farmer screens: 8 words or fewer, both languages
+
+
+def test_home_and_how_we_know_show_the_limits_block_and_its_lists_only_on_their_own_field():
+    app = (REPO / "site" / "js" / "app.js").read_text()
+    how = (REPO / "site" / "js" / "how.js").read_text()
+    body = re.search(r"function limitsBox\(lazy\) \{.*?\n  \}", app, re.S).group(0)
+    assert "st.limits" in body and "st.field === S.fid" in body            # the lists belong to story.json's field
+    assert "both.append(scr, limitsBox(true), behindBox(true))" in app       # Home: below the first screen, lazily
+    assert "K.limitsBox()" in how                                            # How we know: first
+
+
 def test_sen_line_passes_through_the_median_residual():
     t = [0.0, 1.0, 2.0, 3.0]
     y = [1.0, -1.0, -3.0, -5.0]

@@ -617,7 +617,7 @@
       foot: strip
     });
     // for judges, at the end of the scroll and below the first screen: "Behind the scenes" (loaded when it is scrolled to)
-    var both = D.createDocumentFragment(); both.append(scr, behindBox(true));
+    var both = D.createDocumentFragment(); both.append(scr, limitsBox(true), behindBox(true));
     return both;
   };
   // the prepared fields (index.json); a field built with the global settings carries its note (owner, 2026-11-14 evening)
@@ -1976,6 +1976,30 @@
     } else fill();
     return box;
   }
+  // "What this tool can and cannot tell you" (owner's plan, part A2, 2026-11-15; story.json limits): on Home below the
+  // first screen (loaded when scrolled to) and first on How we know. The checked and estimate lists come from the
+  // compliance table of the field story.json was built for, so they show only on that field.
+  function limitsBox(lazy) {
+    var box = h('section', { class: 'card limitsbox', id: 'how-limits' }, loading());
+    function fill() {
+      if (box._done) return; box._done = true;
+      getJSON('data/story.json').then(function (st) {
+        var Lm = st && st.limits; box.textContent = '';
+        if (!Lm) { box.remove(); return; }
+        var mine = st.field === S.fid;
+        add(box, [h('h2', { class: 'h2' }, P(Lm.title)), lines(Lm.lines.map(P)),
+          mine ? h('p', { class: 'small', style: 'font-weight:700;margin:4px 0 0' }, P(Lm.checked.title)) : null,
+          mine ? ticks(Lm.checked.items.map(P)) : null,
+          mine ? h('details', null, h('summary', { class: 'small', style: 'font-weight:700;cursor:pointer' }, P(Lm.estimates.title) + ' ' + num(Lm.estimates.items.length)),
+            h('ul', { class: 'lines os' }, Lm.estimates.items.map(function (x) { return h('li', null, P(x)); }))) : null]);
+      });
+    }
+    if (lazy && W.IntersectionObserver) {
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); fill(); } });
+      io.observe(box);
+    } else fill();
+    return box;
+  }
   function yearSpan(s) { var m = s && String(s.years).match(/^(\d{4})-(\d{4})$/); return m ? m[2] - m[1] + 1 : 0; }
   // the tags of one farmer answer, [[kind, years], ...]: kind is rain, weather or space (behind.json `tags`), years the
   // number of years the answer stands on. Shown only on the field behind.json was built for.
@@ -1992,6 +2016,6 @@
     });
     return row;
   }
-  W.KS.behindBox = behindBox;
+  W.KS.behindBox = behindBox; W.KS.limitsBox = limitsBox;
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 })();

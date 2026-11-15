@@ -71,6 +71,50 @@ two model changes were tried, then undone and recorded [J6]. The equations repro
 examples (3.88 mm a day in Example 18) [J2]. The repository has 1,494 tests [J1]. An independent AI review (`REVIEW_2.md`)
 recomputed the numbers of 13 November with its own code.
 
+## Testing with farmers: our plan for next season
+
+**A plan, not a result.** No farmer has used the tool for a season yet. The plan: **10 to 20 farmers, through a
+cooperative, for one season**. It tests the advice against what really happens; the website test with five farmers is
+separate (`docs/FARMER_TEST.md`).
+
+**(a) The short questions we ask, at the start** (in Nepali, by someone the cooperative knows; the answers go into the
+farmer's files, `data/field_visit/<field>/`):
+1. What do you grow, in which season, and in which part of the field?
+2. When did you really sow and harvest each crop, this year and the last three?
+3. Do you water? From where (canal, well, rain only), and how often?
+4. What soil problems do you see (dry patches, standing water, hard ground)?
+5. What would you change on your field if you could?
+
+**(b) What we record during the season:** daily rain, from a simple rain gauge at the cooperative or the farm; each
+crop's real sowing and harvest dates; the days the farmer waters; the soil stick's readings, part by part, when the team
+visits; and the harvest, in the farmer's own measure (we do not convert it to tonnes; the tool never shows tonnes).
+
+**(c) How we compare our predictions with what happened.** The comparison rule is fixed **before the season starts**:
+written into `config/rules.yaml` (only with the owner's go) and committed before the first visit, and the farmers'
+files are locked by their SHA-256 in `config/locked_test.yaml` before any score uses them (rules.yaml `verification`).
+Nothing is tuned after the data arrive. The yardsticks proposed are the ones the compliance table already uses
+(`VALIDATION.md`, "Compliance table"):
+- sowing and harvest: the satellite's season start and end within 10 days of the farmer's dates, per crop and year;
+- our guess of the crops: equal to the farmer's rotation, per field;
+- good and bad years: the farmer's 3 worst years in our lowest third and the 3 best in our highest third;
+- rain: the twin's monthly rain within 19 % of the farm's gauge;
+- soil water: the twin's soil water before a reading within 0.04 m3/m3 of the calibrated stick.
+
+An answer becomes "Verified" only with at least 10 independent checks and at least 92 % of them right, its 95 % range
+shown beside it (rules.yaml `verification`). Whatever the result, it is published as it is, and each screen's label
+changes with it.
+
+## Our roadmap
+
+**Plans, not results**, in this order:
+1. Let a field use its own local rain readings, a measured soil value and the farmer's real crop calendar.
+2. Prepare a whole valley in advance, so a farmer taps their location and gets the nearest prepared plan at once.
+3. A one-page printable view for agriculture advisers that works offline.
+4. Fewer but stronger outputs.
+5. Seed, labour and selling prices, entered by the farmer if they wish.
+6. A "what really happened" checker for the season's results.
+7. The 2040 outlook rebuilt after the rain fix.
+
 ## What is a placeholder
 
 The field: a 60 m square of mapped cropland near Bhaktapur, chosen by us, not a farmer's [B4]. Its crops, dates, water

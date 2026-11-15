@@ -61,6 +61,7 @@
     // the labels and the evidence that left the farmer's screens first, then the chapters of story.json
     mine.splice(1, 0, storyBox);
     var bh = K.behindBox(); mine.unshift(bh);   // first for judges: "Behind the scenes: your field, seen by NASA" (js/behind.js)
+    mine.unshift(K.limitsBox());                // before it: what this tool can and cannot tell you (owner's plan A2)
     mine.forEach(function (x) { root.append(x); });
     function addToc(id, title) { toc.append(h('a', { class: 'btn3', href: '#/how/' + id, style: 'min-height:40px;font-size:13px' }, title)); }
     K.getJSON('data/story.json').then(function (st) {

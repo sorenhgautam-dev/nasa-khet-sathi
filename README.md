@@ -194,6 +194,13 @@ service; the Nepal-only parts for other countries (below); and a NASA season out
 
 ## Next steps (after the deadline)
 
+**Our roadmap, plans and not results, in order** (details, and our plan to test the advice with 10 to 20 farmers through
+a cooperative for one season, in [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md)): (1) a field's own local rain readings,
+a measured soil value and the farmer's real crop calendar; (2) a whole valley prepared in advance, so a tap gives the
+nearest prepared plan at once; (3) a one-page printable view for agriculture advisers that works offline; (4) fewer but
+stronger outputs; (5) seed, labour and selling prices, entered by the farmer if they wish; (6) a "what really happened"
+checker for the season's results; (7) the 2040 outlook rebuilt after the rain fix.
+
 The full list, with what each would need, is in [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md). Among them: a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May (`docs/NEXT_STEPS.md` 9).
 First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil bucket, so water a bunded paddy holds above field capacity is not kept (METHOD_NOTES 103).
 

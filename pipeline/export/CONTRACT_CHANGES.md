@@ -4,6 +4,12 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, afternoon): 'What this tool can and cannot tell you' (additions only)
+
+- `story.json` gains `limits` (`title`, `lines`, `checked`, `estimates`, `source`): four plain lines and the compliance
+  table's things split into checked (VERIFIED) and estimates (the rest), words only. Home shows it below the first
+  screen and How we know first; the two lists only on the field `story.json` was built for.
+
 ## 2026-11-15 (Sunday, after noon): the owner's fixes B5-B7 (wording only)
 
 - `words.json` gains `shared.farm` keys `m_grows`, `m_rest`, `see6`, `m_row`, `k_sow`, `k_harvest`, `k_plant`, `k_grow`,

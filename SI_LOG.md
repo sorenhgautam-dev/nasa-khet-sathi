@@ -1680,3 +1680,15 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   `~/Desktop/khet_sathi_screens/fixes_b_15nov/`. No result changed: every sentence comes from `simple/<id>.json` or
   `weather_lines`.
 - **For a person to review:** the 11 Nepali lines (marked "needs native-speaker review").
+
+## 2026-11-15 (Sunday, afternoon): the team's plan for real farmers, part A (Claude Opus 5.5 via Claude Code)
+
+- **What SI did:** A2, the block 'What this tool can and cannot tell you' (`build_story.limits_block`, `story.json`
+  `limits`; `limitsBox` in `site/js/app.js`, on Home below the first screen and first on How we know): a real farm and
+  sample fields, no farmer's answers yet, a starting point, the local agriculture office, and the compliance table's
+  5 checked things and 15 estimates. A3, 'Testing with farmers: our plan for next season' and the roadmap (plans, not
+  results) in `docs/HOW_IT_WORKS.md` (HOW_WE_KNOW.md does not exist; no new file was made), the roadmap also in the
+  README. The plan's yardsticks are the compliance table's own; the rule goes into rules.yaml only with the owner's go.
+- **Checked:** tests first (`tests/test_story.py`); screenshots in `~/Desktop/khet_sathi_screens/farmers_a_15nov/`.
+- **For a person to review:** the 7 new Nepali lines of the block (story.json is marked "needs native-speaker
+  review"); the five questions and the proposed yardsticks before the season.

@@ -1075,6 +1075,24 @@ def _fill(xs, vals):
     return out
 
 
+def limits_block(rows):
+    """'What this tool can and cannot tell you' (owner's plan, part A2, 2026-11-15), for Home and How we know: four plain
+    lines, then the compliance table's things split into checked (VERIFIED) and estimates (ESTIMATE and NOT YET
+    VERIFIABLE, which rules.yaml farmer_answers.wording treats as estimates). Words only, no number. Pure."""
+    return {
+        "title": T("What this tool can and cannot tell you", "यो साधनले के भन्न सक्छ, के सक्दैन"),
+        "lines": [T("It shows a real farm and sample fields.", "यसले एउटा साँचो खेत र नमुना खेत देखाउँछ।"),
+                  T("No farmer has answered our questions yet.", "कुनै किसानले अझै हाम्रा प्रश्नको जवाफ दिनुभएको छैन।"),
+                  T("Our advice is only a starting point.", "हाम्रो सल्लाह सुरुआत मात्र हो।"),
+                  T("Check with your local agriculture office.", "आफ्नो स्थानीय कृषि कार्यालयसँग सोध्नुहोस्।")],
+        "checked": {"title": T("Checked against real records:", "साँचो अभिलेखसँग जाँचिएको:"),
+                    "items": [r["thing"] for r in rows if r["status"] == "VERIFIED"]},
+        "estimates": {"title": T("Estimates, not checked yet:", "अनुमान, अझै नजाँचिएको:"),
+                      "items": [r["thing"] for r in rows if r["status"] != "VERIFIED"]},
+        "source": "the compliance table (story.json compliance; VALIDATION.md 'Compliance table')",
+    }
+
+
 def compliance(card, ys=None):
     """The compliance table (owner's item 4): one line per shown output from data/checks/<field>/scorecard.json."""
     out, ys = [], ys or yardsticks()
@@ -1595,6 +1613,7 @@ def build_story(inp, generated):
         "sections": [{"id": sid, "title": title, "charts": ids} for sid, title, ids in SECTIONS],
         "inputs": inputs, "charts": charts, "report_card": report_card(ctx),
         "compliance": (rows := compliance(inp.get("scorecard"), ys)),
+        "limits": limits_block(rows),
         "verify_how": verify_how(rows, ys),
         "compliance_note": T(f"Verified means right at least {ys['pct']} times in 100, on {ys['nmin']} or more checks. "
                              "The range shows how sure that number is.",
