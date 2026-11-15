@@ -1,7 +1,8 @@
 # How Khet Sathi works
 
-For answering judges' questions. Numbers as of 14 November 2026 (afternoon). Each number has an ID in square brackets:
-its source is in `docs/PITCH_FACTS.md`. Refresh numbers there first.
+For answering judges' questions. Numbers as of 15 November 2026 (afternoon), recounted for **Kharipati**, the only field
+the app shows: a real farm in Kharipati, Bhaktapur, its crops still placeholders, no farmer's answers yet. Each number
+has an ID in square brackets: its source is in `docs/PITCH_FACTS.md`. Refresh numbers there first.
 
 **In one breath.** We download public data around one field, run a small model of it (the "twin") through every day
 from 2001 to 2025, try 165 crop plans in it [B2], and export small files that a phone website reads. The site answers
@@ -10,13 +11,16 @@ one question: "What can I grow in my field's empty months without risking the ha
 ## The data
 
 - **Rain:** NASA GPM IMERG V07, daily, about 10 km. Our rain check found that its gauge input around this field changed
-  in January 2017 [F1, F2]. So each month from 2017 is scaled back to its own 2001-2016 level [F7], then matched to four
-  of Nepal's rain gauges [F8]. Two other versions are kept beside it as a range [F14].
+  in January 2017 [F1, F2]. So each month from 2017 is scaled back to its own 2001-2016 level [F7]. Kharipati's model
+  uses that corrected rain: 1,853 mm a year, 1.35 times Bhaktapur's usual [F10]. A second version, scaled to DHM's
+  gauges, is kept beside it as a range [F14].
 - **Temperature, humidity, wind, sunshine:** NASA POWER (about 55 km, model-based), temperatures corrected to Kathmandu
   Airport; on held-out years the night error fell from 2.31 to 1.22 °C [J3].
-- **Greenness:** HLS (Landsat and Sentinel-2, 30 m): Field Pulse, seasons, bare days, the area map, the field's four
-  parts [D1, A6].
-- **Also:** soil from ISRIC SoilGrids (a cell 859 m away) [B6], height from NASADEM, regional stored water from
+- **Greenness:** HLS (Landsat and Sentinel-2, 30 m): Field Pulse, seasons, bare days, the area map [D1, A6].
+  Kharipati is about one 30 m square.
+- **The field's outline and 9 parts:** an open drone map (OpenAerialMap, 5 May 2026), standing in for our future
+  drone [E1].
+- **Also:** soil from ISRIC SoilGrids (Kharipati's 250 m cell: 156 mm for plants in the top metre) [B6], height from NASADEM, regional stored water from
   GRACE/GRACE-FO (about 300 km, context only), climate to 2040 from NEX-GDDP-CMIP6 (23 models, two futures) [H11].
 - **Checks only:** SMAP, GLDAS, ECOSTRESS, MODIS, CHIRPS, IMERG Late, GPCC, DHM's gauges, FAOSTAT.
 
@@ -37,22 +41,23 @@ bucket, not a pond, so it never fails in the model [H10].
 2. **Field Pulse (खेतको नाडी).** The field's greenness from space as a heartbeat line, in Bikram Sambat months. HLS 30 m
    is field scale, MODIS 250 m neighbourhood scale [D1]. The farmer confirms or corrects planting and harvest dates,
    saved only on the phone [D6]. Nearby fields appear as totals from the area map [A2-A4].
-3. **Safe Trial.** A plan tried on one quarter of the field [E1]. The probe's four spots become the experiment, one in
-   the trial quarter and three in the rest, with a weekly photo diary kept on the phone. Compared after harvest with the
+3. **Safe Trial.** A plan tried on one of the field's 9 parts [E1]. The soil stick's readings, part by part, become the
+   experiment: the trial part against the rest, with a weekly photo diary kept on the phone. Compared after harvest with the
    rest of the field and with the Replay's estimate [E4].
 4. **Data Check-up.** How we checked the rain record, in plain words: the gauges' share in NASA's rain fell from 96-98%
    to 56-72% a year from 2017 [F1]; CHIRPS shows no step [F4]; our correction scales the rain back [F7]; every field
-   runs its own check [F13]. Numbers that depend on the corrected rain are flagged [F14].
+   runs its own check, and Kharipati's found the same change [F13]. Numbers that depend on the corrected rain are flagged [F14].
 
 ## The two labels
 
 - **How sure.** Each output's row in a scorecard fixed before any score: VERIFIED = an independent reference, at least
-  10 cases, at least 92% within tolerance [G1]. Verified today: the rain word of each month (12 of 12), the heat word
-  (12 of 12), and our copy of DHM's monsoon dates (24 of 24) [G2]. These test the shape of the year and our copy of
-  DHM's record, not a method of ours. ESTIMATE: rain months (13 of 20, in-sample since the tuning) [F11], floods (2 of
-  2, not blind), dry seasons (2 of 4), both suggestions beating today's plan (94 of 94 runs of one crop model), the soil
-  words, the scores, 2040 [G3]. NOT YET CHECKABLE: frost, bare months, sowing dates, the crop guess, each year's harvest,
-  groundwater, each part's wetness, the probe; each row names the data that would check it [G4].
+  10 cases, at least 92% within tolerance [G1]. Verified today for Kharipati: the rain, heat and frost word of each
+  month (12 of 12 each), and our copy of DHM's monsoon dates and trend (24 of 24 each) [G2]. These test the shape of
+  the year and our copy of DHM's record, not a method of ours, and all are valley-wide. ESTIMATE: rain months (13 of 20)
+  [F11], soil words (22 of 24), floods (2 of 2, not blind), dry seasons (2 of 4), both suggestions beating today's plan
+  (94 of 94 runs of one crop model), good and bad years (6 of 14), the crop guess (5 of 5), bare months (12 of 13),
+  sowing dates (2 of 3), groundwater, the scores, 2040 [G3]. NOT YET VERIFIABLE: the probe's water number and each
+  part's wetness; each row names the data that would check it [G4].
 - **How close.** Your field (HLS 30 m), neighbourhood (250 m cells, the area map), valley (GPM about 10 km, SMAP 9 km),
   region (POWER about 55 km, GRACE about 300 km) [G5].
 
@@ -60,8 +65,8 @@ bucket, not a pond, so it never fails in the model [H10].
 
 165 rotations from six crops, each replayed over 24 complete years and scored 0-100 on harvest, water, ground cover
 and soil kept [B2]. Every suggestion keeps rice in the monsoon. Shown, rain-fed: today's plan (rice, then potato:
-harvest 65) [H1]; "Fill the empty months" (rice, then wheat: 83, about 8 to 22 more) [H2]; "Feed your soil" (rice, then
-lentil: 74, about 5 to 14 more) [H3]. The same three win with fewer years and other crop sensitivities [H7]. The size of
+harvest 69) [H1]; "Fill the empty months" (rice, then wheat: 87, about 9 to 23 more) [H2]; "Feed your soil" (rice, then
+lentil: 78, about 5 to 14 more) [H3]. The same three win with fewer years and other crop sensitivities [H7]. The size of
 the gain rests on root depth and soil [H2, B6]. With water, every plan scores 100 [H8].
 
 ## The checks
@@ -115,11 +120,28 @@ changes with it.
 6. The 2040 outlook rebuilt after the rain correction.
 7. Reach farmers through cooperatives and women's groups, since many farms are run by women.
 
+## Which checks are about Kharipati itself, and which are for the valley
+
+Kharipati sits in the same NASA rain square as the earlier Bhaktapur demo square: one IMERG 0.1° cell (27.6-27.7 N,
+85.4-85.5 E) and one POWER weather cell. We checked the daily inputs: NASA's rain as published and POWER's temperatures
+are the same for both, day for day, 2001-2025.
+
+- **For the valley, so they apply to Kharipati:** the rain-record check and its correction [F1-F7, F12, F13]; the checks
+  against DHM's gauges [F11, F12]; the monsoon onset [C7]; the month words for rain, heat and frost [G2]; Weather ahead
+  [O1-O3]; the flood and dry years [C2]; the 2040 outlook's climate cell [H11]; groundwater (GRACE, regional, about
+  300 km). The area map's numbers come from the same 5 km box [A1-A4].
+- **About Kharipati itself:** its outline and 9 parts from the drone photo [E1]; the drone photo's ripe crop on 5 May
+  2026 (checks our crop guess and bare months) [G3]; its HLS greenness and seasons, about one 30 m square [D2, D4, A5];
+  its soil cell [B6]; the replay and the plans, run on its own seasons and soil [B2, C3, H1-H5]; and the soil stick's
+  parts [E3].
+- **One difference:** the demo square's rain was also tuned to four of Nepal's gauges; Kharipati's is not [F8].
+
 ## What is a placeholder
 
-The field: a 60 m square of mapped cropland near Bhaktapur, chosen by us, not a farmer's [B4]. Its crops, dates, water
-source (unknown) and soil; the four nearby sample fields too [B5]. No farmer has checked any number. The probe has had no
-bench test, so the site gives no water number from it [E3].
+Kharipati is a real farm in Kharipati, Bhaktapur [B4]. Its outline is real, from an open drone map. Its crops (rice,
+then potato; our guess from space is rice, then wheat), dates and water source (unknown) are placeholders until the
+farmer answers. No farmer has checked any number. The earlier demo square and four sample fields are hidden from the
+app; their files are kept [B5]. The probe has had no bench test, so the site gives no water number from it [E3].
 
 ## Why no backend
 
@@ -135,7 +157,8 @@ not built.
   gauges; from 2017 far fewer gauges near our valley fed into it. Their share falls from 96-98% to 56-72% a year, and
   CHIRPS shows no step [F1, F4]. We corrected for it.
 - **"Do the suggestions help a farmer who can water?"** Not in harvest: with water every plan scores 100 [H8].
-- **"Whose field is this?"** Nobody's yet. It is a labelled sample [B4].
+- **"Whose field is this?"** A real farm in Kharipati, Bhaktapur. We have not heard from its farmer yet, so its crops
+  are placeholders [B4].
 - **"Does El Niño matter here?"** We have not tested it. The Replay only highlights similar years [C8].
 - **"Can it run anywhere?"** Its inputs are global and one command builds a field; the rain check ran unchanged in
   Madagascar. No field outside Nepal is on the site yet [I4].

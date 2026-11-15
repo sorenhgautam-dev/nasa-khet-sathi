@@ -5,12 +5,13 @@ what to grow, and when, in each part of their field. It starts in Nepal and is b
 
 Made for NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA Data".
 
-> **Work in progress (13 November 2026).** The demo field is a labelled **placeholder** near Bhaktapur, Nepal,
-> until we know the real field and what is grown on it. In `site/data/fields/demo.json` the replay, the three
-> plans, the diary and the method page are real. Two parts are **not ready yet**: the field's small parts
-> (`field.sections`) and the 2040 outlook (`future`). They hold no numbers and are named in the file's `mock`
-> list, so the site says "not ready yet". We would rather say that than show a made-up number. The website screens are not
-> in this repository yet. An independent review of the whole project is in [REVIEW_2.md](REVIEW_2.md).
+> **Work in progress (15 November 2026).** The app shows one field: **Kharipati**, a real farm in Kharipati,
+> Bhaktapur, Nepal. Its outline and 9 parts come from an open drone map (OpenAerialMap, 5 May 2026). Its crops
+> (rice, then potato; our guess from space: rice, then wheat), dates and water source are placeholders until its
+> farmer answers; no farmer has checked any number yet. In `site/data/fields/kharipati.json` the replay, the three
+> plans, the diary, the parts, the 2040 outlook and the method page are real (its `mock` list is empty). The earlier
+> Bhaktapur demo square and four sample fields are hidden from the app; their files are kept. Its numbers are in
+> [docs/PITCH_FACTS.md](docs/PITCH_FACTS.md). An independent review of the whole project is in [REVIEW_2.md](REVIEW_2.md).
 
 ## Our promise (हाम्रो वाचा)
 
@@ -47,13 +48,29 @@ Every plan is marked for local review: the farmer knows their land best.
 | GRACE / GRACE-FO | Whether stored water in the wider region is falling (not the field's own well) |
 | SMAP L4 (soil moisture, model-assisted) | A check on the twin's soil water. SMAP's direct readings (L3) are not good enough over this valley |
 | ECOSTRESS | Downloaded, not used yet (build step 8) |
-| NEX-GDDP-CMIP6 | Not downloaded yet (build step 9: climate change to 2040) |
+| NEX-GDDP-CMIP6 | Climate change to 2040: 23 climate models, two futures, at the field's 0.25° cell (shared with the valley) |
 
-It also uses data from outside NASA: ISRIC SoilGrids (how much water the soil holds; the nearest mapped cell
-is 859 m from the placeholder field), ESA WorldCover (to find cropland for the placeholder), NOAA GHCN-Daily
+It also uses data from outside NASA: ISRIC SoilGrids (how much water the soil holds; Kharipati's 250 m cell holds
+156 mm for plants in the top metre), ESA WorldCover (cropland for the area map), NOAA GHCN-Daily
 (the Kathmandu Airport weather station: it corrects the temperatures and checks the rain), and, for checking
 only, CHIRPS rain, GPCC rain-gauge counts, Nepal's DHM climate normals and monthly bulletins, and FAOSTAT
 national harvests. The full list, with versions and citations, is in [CREDITS.md](CREDITS.md).
+
+## Which checks are about Kharipati itself, and which are for the valley
+
+Kharipati sits in the same NASA rain square as the earlier Bhaktapur demo square: one IMERG 0.1° cell (27.6-27.7 N,
+85.4-85.5 E) and one NASA POWER cell. We checked: NASA's rain as published and POWER's temperatures are the same for
+both, day for day, 2001-2025.
+
+- **For the valley, so they apply to Kharipati:** the rain-record check and its 2017 correction; the checks against
+  DHM's rain gauges; the monsoon onset (DHM's record); the month words for rain, heat and frost; Weather ahead; the
+  flood and dry years; the 2040 outlook's climate cell; groundwater (GRACE, regional, about 300 km). The area map's
+  numbers come from the same 5 km box.
+- **About Kharipati itself:** its outline and 9 parts from the drone photo; the drone photo's ripe crop on 5 May 2026
+  (a check on our crop guess and bare months); its HLS greenness and seasons (about one 30 m square); its soil cell;
+  the replay and the plans, run on its own seasons and soil; and the soil stick's parts.
+- **One difference:** the demo square's rain was also tuned to four of Nepal's gauges; Kharipati's is not
+  (`config/rules.yaml` `gpm_series.gauge_calibration.fields`).
 
 ## Why there is no backend
 
@@ -71,8 +88,9 @@ everything heavy runs here, on our laptops, before we publish:
 
 Live site: **https://sorenhgautam-dev.github.io/data-test-game/**
 
-Fields are prepared ahead of time, and `site/data/index.json` lists them (today one: the demo field; fields
-abroad are build step 11). A field drawn outside every
+Fields are prepared ahead of time, and `site/data/index.json` lists them: Kharipati for farmers, and the field in
+Madagascar on the world page. The earlier demo square and four sample fields are hidden (`config/rules.yaml`
+`site_hidden_fields`); their files are kept. A field drawn outside every
 prepared area gets a friendly message instead of an error.
 
 ### Works offline after one visit
@@ -138,16 +156,16 @@ python3.12 -m venv .venv
 Every download writes a "data card" in `data/cards/<id>/`: the product, version, units, fill values removed
 and pixels over the field. Every export must match `pipeline/export/schema.json`.
 
-*Today the export fills in the replay, the diary, the plans, the sources and the method page for the demo field.
-The field's small parts and the 2040 outlook come in build steps 8 and 9. A brand-new field now builds from its config
+*Today the export fills in everything for Kharipati: the replay, the diary, the plans, its 9 parts, the 2040 outlook,
+the sources and the method page. A brand-new field now builds from its config
 alone (REVIEW_2 H6), and `scripts/make_site.py` runs every step for it (see "Global, usable everywhere" below).*
 
 Optional checks, each with its own data card: `pipeline.fetch.chirps` and `pipeline.fetch.gpm_late` (a second and
 third look at the rain), `pipeline.fetch.gauge_evidence` (how many rain gauges stand behind GPM's rain),
 `pipeline.fetch.smap` (soil moisture, compared by the runner's `smap_check` step), `scripts/run_dhm_bulletin_check.py`
 (Nepal's own gauges, if you have their monthly bulletins; run alone), and the runner's `memory` step,
-`scripts/run_memory.py` (does a small learned correction beat the physics twin on years it has not seen? On the demo
-field it does not, and we say so).
+`scripts/run_memory.py` (does a small learned correction beat the physics twin on years it has not seen? On Kharipati
+it does not, and we say so).
 
 ## Global, usable everywhere
 
