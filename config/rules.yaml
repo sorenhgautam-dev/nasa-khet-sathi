@@ -409,10 +409,10 @@ probe:                            # build step 10 (robot/bridge.py); the probe i
   measure_lines:                  # owner, 2026-11-15 afternoon: 10 -> 5 lines (20 s -> 10 s); the median of 5 lines, the same steady test
     value: 5
     was: {value: 10, until: "2026-11-15"}
+    source: "Owner's probe brief, 2026-11-14 (fix 1): then take the next 10 good lines (20 s); a part's reading is their median moisture and median temperature, with their spread (max - min) and n. Steady when the moisture spread is at most repeat_spread_max_pct; otherwise 'test_again' and no number"
   rolling_window:                 # owner, 2026-11-15 afternoon (the same change); committed before the code uses it
     value: {max_lines: 30, how: "after at least settle_lines lines, a part is done as soon as its last measure_lines lines are steady (the steady test above), and those lines are its reading; if no window is steady by max_lines lines (60 s, the old fixed time) the part says 'test again' with its last window"}
     source: "Claude's choice for the owner's 'reduce time': a fixed 5 + 5 lines would say 'test again' for any probe that settles more slowly (the fake probe's settling ramp did, in the tests), so the part ends as soon as the readings agree: about 20 s when the probe settles fast, never longer than the old 60 s"
-    source: "Owner's probe brief, 2026-11-14 (fix 1): then take the next 10 good lines (20 s); a part's reading is their median moisture and median temperature, with their spread (max - min) and n. Steady when the moisture spread is at most repeat_spread_max_pct; otherwise 'test_again' and no number"
   temp_spread_max_c:
     value: 0.5
     source: "Owner's probe brief, 2026-11-14 (fix 1: 'for example a spread of at most 0.5 C over the 10 lines'); the DS18B20's stated accuracy is +/-0.5 C from -10 to +85 C (Maxim / Analog Devices DS18B20 datasheet; cited from memory, not opened tonight). A part whose temperatures spread wider gets temp null ('not steady'); its moisture still counts. 'Check wiring' lines give no temperature and still give moisture"
