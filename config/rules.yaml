@@ -402,11 +402,13 @@ probe:                            # build step 10 (robot/bridge.py); the probe i
     z_outside_bucket:
       value: "a converted reading below 0 (drier than wilting point) or above 100 (wetter than field capacity) is set to 0 or 100 for the update; the log keeps the value before and a flag z_limited"
       source: "Claude's choice, 2026-11-14: the bucket holds no water above field capacity (FAO-56 eq. 88 drains it the same day) and none below wilting point (eq. 86), so the twin cannot take a value outside 0-100"
-  settle_lines:
-    value: 20
+  settle_lines:                   # owner, 2026-11-15 afternoon: 'reduce time to read the field' part by part: 20 -> 5 lines (40 s -> 10 s); committed before the code uses it
+    value: 5
+    was: {value: 20, until: "2026-11-15", why_changed: "Owner: reduce the time per part (60 s -> 20 s; nine parts about 3 minutes instead of 9). Not from a measured settling time: the bench log of 15 November was unreadable (serial speed) and the indoor test's parts were mostly not steady. The steady test (repeat_spread_max_pct, temp_spread_max_c) is unchanged, so a part that has not settled says 'test again' instead of giving a number"}
     source: "Owner's probe brief, 2026-11-14 (fix 1): per part, discard the first 20 good lines (40 s at the sketch's 2-second lines) while the probe settles. The bench log reports how long settling really takes (probe.bench.settling)"
-  measure_lines:
-    value: 10
+  measure_lines:                  # owner, 2026-11-15 afternoon: 10 -> 5 lines (20 s -> 10 s); the median of 5 lines, the same steady test
+    value: 5
+    was: {value: 10, until: "2026-11-15"}
     source: "Owner's probe brief, 2026-11-14 (fix 1): then take the next 10 good lines (20 s); a part's reading is their median moisture and median temperature, with their spread (max - min) and n. Steady when the moisture spread is at most repeat_spread_max_pct; otherwise 'test_again' and no number"
   temp_spread_max_c:
     value: 0.5
