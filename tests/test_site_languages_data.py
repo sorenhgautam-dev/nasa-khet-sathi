@@ -1,7 +1,7 @@
 """Two judge-facing additions (owner, 2026-11-15 evening): every language in one list (a globe with the count in the top bar
 opens it; each language in its own script, with who wrote it and whether a native speaker has checked it), and "Our data,
 explained" first on How we know (how to read the numbers, every source, the raw files every screen reads, the public code,
-the languages). Every word is in every language; every linked file exists."""
+the languages), reached from Home's one judges' link. Every word is in every language; every linked file exists."""
 import json
 import re
 from pathlib import Path
@@ -36,7 +36,7 @@ def test_the_top_bar_opens_one_list_of_every_language():
 
 def test_data_guide_comes_first_and_every_linked_file_exists():
     assert "mine.unshift(dataGuide(F));" in HOW and "addToc('data'" in HOW
-    assert "href: '#/how/data'" in APP                                       # a straight link from Home
+    assert APP.count("class: 'judges', href: '#/how'") == 1                    # Home keeps one small judges' link
     files = re.findall(r"\['(data/[a-z]+\.json)'", HOW)
     assert len(files) == 5 and all((SITE / f).exists() for f in files), files
     for f in json.loads((SITE / "data" / "index.json").read_text())["fields"]:

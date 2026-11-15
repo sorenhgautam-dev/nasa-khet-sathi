@@ -641,8 +641,7 @@
         // Kharipati is the only field the app shows (owner, 2026-11-15 afternoon): no field list here, only the world page
         // (Kharipati and Madagascar); How we know is for judges only (owner, 2026-11-14 evening): one small link
         ix.length > 1 ? worldLink() : null,
-        h('a', { class: 'judges', href: '#/how' }, svg(I('book', 16)), T('farm.judges_link')),
-        h('a', { class: 'judges', href: '#/how/data' }, svg(I('info', 16)), T('farm.data_title'))],   // straight to the judges' data guide
+        h('a', { class: 'judges', href: '#/how' }, svg(I('book', 16)), T('farm.judges_link'))],   // one small link; "Our numbers, explained" is in its contents
       cta: cta(T(sample ? 'home.try_sample' : 'home.start'), function () { go('photo'); }, { sweep: true })
     });
     // for judges, at the end of the scroll and below the first screen: "Behind the scenes" (loaded when it is scrolled to)
