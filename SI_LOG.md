@@ -1669,3 +1669,14 @@ Ran from 2026-11-13 evening to 2026-11-14 about 01:30, paused by an account usag
   the site files; before and after screenshots in `~/Desktop/khet_sathi_screens/fixes_a_15nov/`.
 - **For a person to review:** the new Nepali lines in `story.json` (crop months, offline section; the file is marked
   "needs native-speaker review"); the proportional reading of the calendar window (rules.yaml says it is Claude's).
+
+## 2026-11-15 (Sunday, after noon): B5-B7 (Claude Opus 5.5 via Claude Code, a helper agent)
+
+- **What SI did:** wrote monthSteps, joinBlocks and partsMini in `site/js/app.js` (Next 3 months: the suggestion, one
+  row per month with its watch-out, the other choices and 'See the next 6 months'; Next 6 months: six months side by
+  side; Choose: the field's parts at their true shapes, grey until tested; Weather ahead: joined months, three short
+  lines, 'Check with your local expert' once), their tests first (`tests/test_site_months.py`), the CSS and 11 words.
+- **Checked:** the tests failed first, then passed; screenshots before and after in
+  `~/Desktop/khet_sathi_screens/fixes_b_15nov/`. No result changed: every sentence comes from `simple/<id>.json` or
+  `weather_lines`.
+- **For a person to review:** the 11 Nepali lines (marked "needs native-speaker review").

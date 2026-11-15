@@ -4,6 +4,12 @@
 no made-up number: what is not computed yet (`field.sections`, step 8; `future`, step 9) is named in its `mock` list and
 holds no numbers.
 
+## 2026-11-15 (Sunday, after noon): the owner's fixes B5-B7 (wording only)
+
+- `words.json` gains `shared.farm` keys `m_grows`, `m_rest`, `see6`, `m_row`, `k_sow`, `k_harvest`, `k_plant`, `k_grow`,
+  `k_rest`, `wx_range` (`{month_from} to {month_to}`) and `wx_usual_care`; `fill_registry.json` gains `month_from` and
+  `month_to`. No file or key renamed; the screens read the same data files.
+
 ## 2026-11-15 (Sunday, early afternoon): the owner's fixes A2-A4 (additions only)
 
 - `simple/<id>.json` gains `action_months` (`sow`, `harvest`, `model_kept`): the actions' harvest months now come from
