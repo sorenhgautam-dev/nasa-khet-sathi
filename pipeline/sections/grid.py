@@ -195,6 +195,58 @@ def _shared_m(xy, p, b, cell_m):
     return sum(max(0.0, min(v0, v1) - max(u0, u1)) for u0, v0 in s0 for u1, v1 in s1)
 
 
+def _union(rings, tol=1e-7):
+    """One ring that is exactly the union of pieces of one outline cut by a grid (rules.yaml sections.patches_shape): each
+    ring turned anticlockwise, every straight edge split at the corners lying on it, the edges two pieces share (one each
+    way) cancelled, the rest chained into rings, and any further ring (a piece touching none, or a hole) spliced into the
+    largest by a zero-width bridge between their nearest corners."""
+    pts = []
+    def key(p):                     # corners within tol metres are one corner
+        for k, q in enumerate(pts):
+            if abs(p[0] - q[0]) <= tol and abs(p[1] - q[1]) <= tol:
+                return k
+        pts.append(p)
+        return len(pts) - 1
+    def signed(r):
+        return sum(r[i][0] * r[(i + 1) % len(r)][1] - r[(i + 1) % len(r)][0] * r[i][1] for i in range(len(r))) / 2
+    rings = [[key(p) for p in (r if signed(r) > 0 else r[::-1])] for r in rings if len(r) >= 3]
+    count = {}
+    for r in rings:
+        for a, b in zip(r, r[1:] + r[:1]):
+            if a == b:
+                continue
+            (ax, ay), (bx, by) = pts[a], pts[b]
+            on = sorted((c for c in range(len(pts)) if c not in (a, b) and abs((bx - ax) * (pts[c][1] - ay) - (by - ay) * (pts[c][0] - ax)) <= tol * math.hypot(bx - ax, by - ay)
+                         and 0 < (pts[c][0] - ax) * (bx - ax) + (pts[c][1] - ay) * (by - ay) < (bx - ax) ** 2 + (by - ay) ** 2),
+                        key=lambda c: (pts[c][0] - ax) * (bx - ax) + (pts[c][1] - ay) * (by - ay))
+            for u, v in zip([a, *on], [*on, b]):
+                count[(u, v)] = count.get((u, v), 0) + 1
+    nxt = {}
+    for (u, v), n in count.items():
+        for _ in range(n - min(n, count.get((v, u), 0))):
+            nxt.setdefault(u, []).append(v)
+    loops = []
+    while nxt:
+        start = min(nxt)
+        loop, u = [start], nxt[start].pop()
+        while u != start:
+            loop.append(u)
+            u = nxt[u].pop() if nxt.get(u) else start
+        nxt = {k: v for k, v in nxt.items() if v}
+        out = [pts[k] for k in loop]
+        out = [p for i, p in enumerate(out) if abs((p[0] - out[i - 1][0]) * (out[(i + 1) % len(out)][1] - p[1]) -
+                                                   (p[1] - out[i - 1][1]) * (out[(i + 1) % len(out)][0] - p[0])) > 1e-12]
+        if len(out) >= 3:
+            loops.append(out)
+    loops.sort(key=lambda r: -abs(signed(r)))
+    ring = loops[0]
+    for r in loops[1:]:             # a zero-width bridge: ring[i] -> r[j] ... r[j] -> ring[i]
+        i, j = min(((i, j) for i in range(len(ring)) for j in range(len(r))),
+                   key=lambda ij: math.hypot(ring[ij[0]][0] - r[ij[1]][0], ring[ij[0]][1] - r[ij[1]][1]))
+        ring = ring[:i + 1] + r[j:] + r[:j + 1] + ring[i:]
+    return ring
+
+
 def _cut(xy, cell_m, min_piece_m2, touching):
     """The grid's pieces of the outline (local metres, grid lines at multiples of cell_m), each with its owner patch."""
     xs, ys = [p[0] for p in xy], [p[1] for p in xy]
@@ -218,7 +270,8 @@ def patches(polygon, centre, cell_m=10.0, min_piece_m2=50.0, prefix="p", grid=No
     whose centre is nearest its own; numbered from the south-west, row by row, west to east. Each patch: id, row, col
     (of its main cell), area_m2, centre [lon, lat] (the centre of its own area), pieces ([lon, lat] rings) and polygon:
     one ring, the outline clipped to the rectangle its cells make (exactly its pieces' union), or, when its cells do not
-    make a rectangle, its main piece only (whole: false).
+    make a rectangle (whole: false), the union of its pieces as one ring (rules.yaml sections.patches_shape; it was the
+    main piece only until 2026-11-15, which left the joined pieces in no part).
     Options (rules.yaml sections.patches_options; the Kharipati package's method): grid='most_whole' shifts the grid's
     origin east and north in 0.5 m steps over one cell to the position with the most whole cells (ties: the largest
     smallest patch, then the smallest shift); join='touching' joins a small piece to the patch it shares the longest
@@ -247,7 +300,10 @@ def patches(polygon, centre, cell_m=10.0, min_piece_m2=50.0, prefix="p", grid=No
         area = sum(p["a"] for p in mine)
         ii, jj = {p["i"] for p in mine}, {p["j"] for p in mine}
         whole = len(mine) == (max(ii) - min(ii) + 1) * (max(jj) - min(jj) + 1)
-        ring = clip_to_rect(xy, min(ii) * cell_m, min(jj) * cell_m, (max(ii) + 1) * cell_m, (max(jj) + 1) * cell_m) if whole else b["ring"]
+        ring = clip_to_rect(xy, min(ii) * cell_m, min(jj) * cell_m, (max(ii) + 1) * cell_m, (max(jj) + 1) * cell_m) if whole else \
+            _union([p["ring"] for p in mine])           # rules.yaml sections.patches_shape: every piece, one ring
+        if not whole and abs(shoelace(ring) - area) > 0.01:
+            raise ValueError(f"patch {b['id']}: its shape ({shoelace(ring):.3f} m2) is not the union of its pieces ({area:.3f} m2)")
         out.append({"id": b["id"], "row": b["j"], "col": b["i"], "area_m2": round(area, 1),
                     "polygon": [to_lonlat(x, y) for x, y in ring], "whole": whole,
                     "centre": to_lonlat(sum(p["a"] * p["x"] for p in mine) / area, sum(p["a"] * p["y"] for p in mine) / area),

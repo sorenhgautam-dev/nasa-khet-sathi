@@ -375,7 +375,8 @@ def not_ready_blocks(doc, field, sections=None, twin_state=None):
     mock = list(NOT_READY)
     pc = field.get("patches")       # a drawn field's patches (rules.yaml sections.patches)
     parts = sections["sections"] if sections else grid_patches(field["polygon"], (field["lon"], field["lat"]), pc["cell_m"],
-                                                               pc["min_piece_m2"], pc["ids"])[0] if pc else grid_sections(field["polygon"])
+                                                               pc["min_piece_m2"], pc["ids"], pc.get("grid"), pc.get("join"))[0] \
+        if pc else grid_sections(field["polygon"])
     if sections and twin_state:
         out["field"]["sections"] = [{
             "id": s["id"], "polygon": s["polygon"], "status": s["status"], "wetness": int(round(s["wetness_pct"])),
