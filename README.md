@@ -10,18 +10,18 @@ Made for NASA Space Apps 2026, challenge "Field Shift: Adapting Farms with NASA 
 > (rice, then potato; our guess from space: rice, then wheat), dates and water source are placeholders until its
 > farmer answers; no farmer has checked any number yet. In `site/data/fields/kharipati.json` the replay, the three
 > plans, the diary, the parts, the 2040 outlook and the method page are real (its `mock` list is empty). The earlier
-> Bhaktapur demo square and four sample fields are hidden from the app; their files are kept. Its numbers are in
-> [docs/PITCH_FACTS.md](docs/PITCH_FACTS.md). An independent review of the whole project is in [REVIEW_2.md](REVIEW_2.md).
+> Bhaktapur demo square and four sample fields are hidden from the app; their files are kept. How we know each
+> number: [HOW_WE_KNOW.md](HOW_WE_KNOW.md).
 
 ## For judges: start here
 
-- **Live site:** https://sorenhgautam-dev.github.io/data-test-game/ (a phone works best). Nepali first; tap **EN** for
+- **Live site:** LIVE_ADDRESS_PENDING (a phone works best). Nepali first; tap **EN** for
   English, or the globe for all seven languages (Nepali, English, and computer drafts in Hindi, Bengali, Spanish,
   French and Swahili, each marked with whether a local reader has checked it).
 - **Our data, explained:** at the bottom of Home, tap **"For judges: how we know"**, then **"Our numbers, explained"**:
   how to read our numbers, every source, and links to the raw files every screen reads. The same page as a file:
   [HOW_WE_KNOW.md](HOW_WE_KNOW.md).
-- **How we checked it:** [VALIDATION.md](VALIDATION.md).
+- **How we checked it:** [records/checks.txt](records/checks.txt).
 
 ## Our promise (हाम्रो वाचा)
 
@@ -64,7 +64,7 @@ It also uses data from outside NASA: ISRIC SoilGrids (how much water the soil ho
 156 mm for plants in the top metre), ESA WorldCover (cropland for the area map), NOAA GHCN-Daily
 (the Kathmandu Airport weather station: it corrects the temperatures and checks the rain), and, for checking
 only, CHIRPS rain, GPCC rain-gauge counts, Nepal's DHM climate normals and monthly bulletins, and FAOSTAT
-national harvests. The full list, with versions and citations, is in [CREDITS.md](CREDITS.md).
+national harvests. The full list, with versions and citations, is in [records/credits.txt](records/credits.txt).
 
 ## Which checks are about Kharipati itself, and which are for the valley
 
@@ -91,12 +91,11 @@ everything heavy runs here, on our laptops, before we publish:
 - the website (`site/`) is plain files: HTML, CSS, JavaScript (the screens, built from our teammate's design) and the
   JSON this pipeline writes;
 - the site needs no server, no login and no key, and it never calls an AI service;
-- it is hosted on GitHub Pages from this repository as plain files: on every push to `main`,
-  `.github/workflows/pages.yml` publishes the `site/` folder as it is, with no build step, no server functions and no
-  environment variables. Every path in the site is relative, so it works in the site's folder. `scripts/check_site.py`
-  checks this.
+- it is hosted on Vercel as plain files: the project's root directory is `site/`, served as it is, with no build step,
+  no server functions and no environment variables. Every path in the site is relative, so it works at any address.
+  `scripts/check_site.py` checks this.
 
-Live site: **https://sorenhgautam-dev.github.io/data-test-game/**
+Live site: **LIVE_ADDRESS_PENDING**
 
 Fields are prepared ahead of time, and `site/data/index.json` lists them: Kharipati for farmers, and the field in
 Madagascar on the world page. The earlier demo square and four sample fields are hidden (`config/rules.yaml`
@@ -112,8 +111,8 @@ prepared area gets a friendly message instead of an error.
   When the phone is online again and we have published new data, it fetches the new files once and uses them.
 - **Live probe readings always need the laptop** (and its hotspot) nearby: `data/live.json` and the probe log are never
   saved for offline use, and on the laptop or its hotspot the service worker is not used at all.
-- It works at any address: the worker covers only the folder it is served from (GitHub Pages' `/data-test-game/`, or the
-  root of another host), and every path is relative.
+- It works at any address: the worker covers only the folder it is served from (the root of the host, or a
+  sub-folder), and every path is relative.
 
 Test on a real phone (about 5 minutes): (1) on mobile data, open the live address and wait until the home screen
 shows; (2) open "From the sky", "Your field in small parts" and "What should I grow"; (3) turn on aeroplane mode and
@@ -183,7 +182,7 @@ it does not, and we say so).
 a country adds its profile. Next step: a hosted service for instant check-ups.**
 
 **Works today: the same pipeline already runs a field in Madagascar**, and it is on the site. **Next steps:** the hosted
-service; the Nepal-only parts for other countries (below); and a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May (`docs/NEXT_STEPS.md` 9).
+service; the Nepal-only parts for other countries (below); and a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May.
 
 - **Global core, local plug-ins.** The twin, the plans and the site are the same everywhere. What is country-specific
   (rain classes, dry day and dry spell, drought seasons, rain gauges, crop-calendar zone, calendar, language, area units,
@@ -191,7 +190,7 @@ service; the Nepal-only parts for other countries (below); and a NASA season out
   `config/countries/NP.yaml` for Nepal. A field in a country with no profile takes the sourced global defaults,
   `config/countries/default.yaml`: ETCCDI's dry day (under 1 mm) and rain indices, NOAA GHCN-Daily and GPCC rain gauges,
   the FAO Crop Calendar for the field's country and zone, Gregorian months and hectares.
-- **One command** (`scripts/make_site.py`; how to, logins and hosting in [docs/DEPLOY_ANYWHERE.md](docs/DEPLOY_ANYWHERE.md)):
+- **One command** (`scripts/make_site.py`):
 
   ```sh
   .venv/bin/python scripts/make_site.py --lat -18.834 --lon 47.437 --size-m 60 --name "A field" \
@@ -232,33 +231,32 @@ service; the Nepal-only parts for other countries (below); and a NASA season out
 
 ## Next steps (after the deadline)
 
-**Our roadmap, plans and not results, in order** (details, and our plan to test the advice with 10 to 20 farmers through
-a cooperative for one season, in [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md)): (1) a field's own local rain readings,
+**Our roadmap, plans and not results, in order** (and a plan to test the advice with 10 to 20 farmers through a
+cooperative for one season): (1) a field's own local rain readings,
 a measured soil value and the farmer's real crop calendar; (2) a whole valley prepared in advance, so a tap gives the
 nearest prepared plan at once; (3) a one-page printable view for agriculture advisers that works offline; (4) fewer but
 stronger outputs; (5) a "what really happened" checker for the season's results; (6) the 2040 outlook rebuilt after
 the rain correction; (7) reaching farmers through cooperatives and women's groups, since many farms are run by women.
 
-The full list, with what each would need, is in [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md). Among them: a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May (`docs/NEXT_STEPS.md` 9).
+Also: a NASA season outlook, once its skill here is shown: NASA's GEOS-S2S gives only raw monthly numbers, with no ready probabilities, and the published skill of seasonal forecasts at the field (IRI's NMME-based ones) is about zero for December-May.
 Two that came up on the last evening: **pea and cabbage after rice** are named on the plan screens as "not tested yet"
-(their numbers are checked, but our model has not run them; step 10), and the **"Fertilizer and sprays"** card shows no amounts (ask your agriculture office), because the government paper
-we wanted to quote could not be opened, and the government replaced the old one-size rice rate in 2022 (step 11).
-First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil bucket, so water a bunded paddy holds above field capacity is not kept (METHOD_NOTES 103).
+(their numbers are checked, but our model has not run them), and the **"Fertilizer and sprays"** card shows no amounts (ask your agriculture office), because the government paper
+we wanted to quote could not be opened, and the government replaced the old one-size rice rate in 2022.
+First on it: **the rice pond**. Today rain-fed rice runs as a free-draining soil bucket, so water a bunded paddy holds above field capacity is not kept.
 
 ## Credits
 
 - **Data and methods:** NASA (POWER, GPM, HLS, MODIS, SMAP, NASADEM, ECOSTRESS, GRACE-FO, NEX-GDDP-CMIP6),
-  ISRIC, ESA, NOAA NCEI and FAO. Exact products, versions and citations are in [CREDITS.md](CREDITS.md).
-- **Libraries:** listed in [CREDITS.md](CREDITS.md) and pinned in `requirements.txt`.
-- **AI (SI) use:** every use is logged in [CREDITS.md](CREDITS.md) and, with what a person reviewed, in
-  [SI_LOG.md](SI_LOG.md). AI runs only at build time, never from the public site.
-- **How we checked our work:** [VALIDATION.md](VALIDATION.md), [DATA_AUDIT.md](DATA_AUDIT.md) and
-  [METHOD_NOTES.md](METHOD_NOTES.md).
+  ISRIC, ESA, NOAA NCEI and FAO. Exact products, versions and citations are in [records/credits.txt](records/credits.txt).
+- **Libraries:** listed in [records/credits.txt](records/credits.txt) and pinned in `requirements.txt`.
+- **AI (SI) use:** every use is logged in [records/credits.txt](records/credits.txt) and, with what a person reviewed, in
+  [records/ai_log.txt](records/ai_log.txt). AI runs only at build time, never from the public site.
+- **How we checked our work:** [records/checks.txt](records/checks.txt) and [HOW_WE_KNOW.md](HOW_WE_KNOW.md).
 
 ## Licence
 
 The code is under the MIT licence ([LICENSE](LICENSE)). The data and texts we use keep their own licences
 and terms, for example CC BY 4.0 for ESA WorldCover and SoilGrids. Some are for non-commercial use or have no
 open licence (the airport station's values, quotes from FAO publications, DHM's tables): they are not covered
-by the MIT licence. See [CREDITS.md](CREDITS.md) for each
+by the MIT licence. See [records/credits.txt](records/credits.txt) for each
 source and how to cite it.

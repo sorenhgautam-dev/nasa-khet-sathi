@@ -290,7 +290,7 @@ BOOK_CONDITIONS = {   # heat_clock.wheat_floret_*, wheat_flower_*: the condition
     "flowering": ["Frost harms from flag leaf emergence to ten days after anthesis; flag leaf emergence is not in Table 3.1, "
                   "so the window starts at heading (day 90) and may start a little late; it ends on day 110.",
                   "Our nights (tmin_frost_c) count too many cold nights against Kathmandu Airport, while Bhaktapur's own "
-                  "winter nights are 1.0-1.5 C colder than the twin's (VALIDATION.md 3.11b)."],
+                  "winter nights are 1.0-1.5 C colder than the twin's (records/checks.txt 3.11b)."],
     "both": ["Table 3.1 counts days from emergence; we count from the sowing day (day 0; FAO-66 Table 1, India: emergence "
              "about 4 days after sowing). Its 140-day spring wheat is used as it is: our wheat is 140 days too.",
              "The dates are counted in a 365-day year, the same every year."],

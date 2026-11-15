@@ -1,16 +1,13 @@
-"""Write pipeline/words/PREVIEW.md: every text as English | Nepali tables, for reviewers.
+"""Print every text as English | Nepali tables, for reviewers (owner, 2026-11-15 night: no PREVIEW.md file is kept).
 
 Grouped by screen (the five tabs and the tips sit under screen 8), then the words shared by many
 screens, then the glossary, then the crop explainers. Run: .venv/bin/python -m pipeline.words.preview
-tests/test_words.py fails if PREVIEW.md is out of date. The top of the page gives each word file's
-review status (the "ne_review" marks); each table repeats it for its own lines.
+The top gives each word file's review status (the "ne_review" marks); each table repeats it for its own lines.
 """
 from collections import Counter
-from pathlib import Path
 
 from pipeline.words.texts import WORD_FILES, iter_text_nodes, load
 
-OUT = Path(__file__).resolve().parent / "PREVIEW.md"
 TAB_ORDER = ["why", "evidence", "benefits", "unknown", "check"]
 FILE_LABELS = {"screens": "Screens, and the words shared by many screens",
                "tabs": "The five tabs and the tips (screen 8), and the method page's notes",
@@ -146,8 +143,7 @@ def render():
 
 
 def main():
-    OUT.write_text(render(), encoding="utf-8")
-    print(f"wrote {OUT}")
+    print(render())
 
 
 if __name__ == "__main__":

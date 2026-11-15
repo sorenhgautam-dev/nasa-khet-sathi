@@ -307,7 +307,7 @@ def test_report_card_covers_every_thing_and_cites_real_validation_rows(story):
     ids = [r["id"] for r in story["report_card"]]
     assert ids == ["seasons", "bare_days", "rain", "harvest", "plan_ranking", "floods", "dry_years", "frost",
                    "weather_ahead", "groundwater", "onset", "probe", "outlook_2040"]
-    validation = (REPO / "VALIDATION.md").read_text()
+    validation = (REPO / "records" / "checks.txt").read_text()
     for r in story["report_card"]:
         assert r["confidence"] in ("high", "medium", "low")
         for ref in r["refs"]:

@@ -27,7 +27,7 @@ What this licence does not cover
 The MIT licence above covers the code written by the Khet Sathi team in this
 repository. It does not cover third-party data, values and texts that the
 repository contains or that its exports are derived from. Those keep their own
-terms; CREDITS.md lists each source and how to cite it. In particular:
+terms; records/credits.txt lists each source and how to cite it. In particular:
 
 - config/dhm_normals_1991_2020.csv: climate normals (c) Department of Hydrology
   and Meteorology (DHM), Government of Nepal, reproduced with attribution for
@@ -48,4 +48,4 @@ terms; CREDITS.md lists each source and how to cite it. In particular:
   CC BY-NC-SA 3.0 IGO.
 - The files in site/data/ are derived from NASA data, ISRIC SoilGrids
   (CC BY 4.0), ESA WorldCover (CC BY 4.0) and the sources above. Use them with
-  the attributions in CREDITS.md.
+  the attributions in records/credits.txt.

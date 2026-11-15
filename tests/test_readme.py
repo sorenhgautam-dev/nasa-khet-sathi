@@ -33,5 +33,5 @@ def test_code_is_mit_and_the_readme_says_data_keep_their_own_licences():
     assert lic.startswith("MIT License")
     assert "Permission is hereby granted, free of charge" in lic
     text = _readme()
-    assert "LICENSE" in text and "CREDITS.md" in text
+    assert "LICENSE" in text and "records/credits.txt" in text
     assert re.search(r"data[^.]*own licen[cs]e", text, flags=re.I), "say that data and text keep their own licences"

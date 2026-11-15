@@ -2,7 +2,7 @@
 
 This is the app's **"How we know"** page as a file, for judges and for anyone who wants to check our work. It is built
 from the same files the website reads (`site/data/`), so its numbers match the site. In the app: open
-**https://sorenhgautam-dev.github.io/data-test-game/**, tap **"For judges: how we know"** at the bottom of Home, and
+**LIVE_ADDRESS_PENDING**, tap **"For judges: how we know"** at the bottom of Home, and
 start with **"Our numbers, explained"**.
 
 The field shown is **Kharipati**, a real farm in Bhaktapur, Nepal. Its crops, dates and water source are
@@ -43,7 +43,7 @@ Verified means right at least 92 times in 100, on 10 or more checks. The range s
 
 ## Our report card
 
-Each answer the app gives, how sure we are, and why. The numbers in brackets are sections of [VALIDATION.md](VALIDATION.md).
+Each answer the app gives, how sure we are, and why. The numbers in brackets are sections of [records/checks.txt](records/checks.txt).
 
 | Answer | How sure | Why |
 | --- | --- | --- |
@@ -87,8 +87,7 @@ Each answer the app gives, how sure we are, and why. The numbers in brackets are
 | DHM (Department of Hydrology and Meteorology, Government of Nepal) | measured on the ground | one date a year for Nepal (eastern Nepal; Kathmandu a few days later) | 2001-2024 | Monsoon onset dates, entry into eastern Nepal (Monsoon Onset and Withdrawal date information, Table 1) |
 | NEX-GDDP-CMIP6 | worked out by computer | 0.25 deg | 1995-2014 and 2026-2040 | daily, bias-corrected and downscaled (BCSD), v2.0 |
 
-Exact products, versions and citations: [CREDITS.md](CREDITS.md). Units, fill values and quality flags for each
-download: [DATA_AUDIT.md](DATA_AUDIT.md). The model's stated assumptions: [METHOD_NOTES.md](METHOD_NOTES.md).
+Exact products, versions and citations: [records/credits.txt](records/credits.txt). Every check, with its numbers: [records/checks.txt](records/checks.txt).
 
 ## Open our raw files
 
@@ -103,8 +102,7 @@ Every screen reads only these files. There is no server and no database behind t
 | [`site/data/index.json`](site/data/index.json) | The list of fields |
 | [`site/data/version.json`](site/data/version.json) | Which version of our code made them |
 
-The field file must match [`pipeline/export/schema.json`](pipeline/export/schema.json); every change to it is listed
-in [`pipeline/export/CONTRACT_CHANGES.md`](pipeline/export/CONTRACT_CHANGES.md).
+The field file must match [`pipeline/export/schema.json`](pipeline/export/schema.json).
 
 ## Languages
 
@@ -121,14 +119,13 @@ In the app, the globe button in the top bar opens this list.
 ## Where AI was used
 
 AI drafted texts and translations and helped write code, at build time only. The public site never calls an AI
-service. Every use, and what a person reviewed, is in [SI_LOG.md](SI_LOG.md) and [CREDITS.md](CREDITS.md).
+service. Every use, and what a person reviewed, is in [records/ai_log.txt](records/ai_log.txt) and [records/credits.txt](records/credits.txt).
 
 ## Not done yet
 
 - **Pea and cabbage after rice** are named on the plan screens as "not tested yet". Their numbers are checked, but our
-  model has not run them ([docs/NEXT_STEPS.md](docs/NEXT_STEPS.md), step 10).
+  model has not run them.
 - **Fertilizer amounts.** The plan screens have a small "Fertilizer and sprays" card under "More": ask your agriculture
   office how much (it depends on your soil), the rice-after-lentil saver note (an estimate), and three spray lines with
   no product names or doses. No rate is shown: the government paper we wanted to quote could not be opened, and the
-  government replaced the old one-size rice rate in 2022 (step 11).
-- The full list, with what each step needs: [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md).
+  government replaced the old one-size rice rate in 2022.

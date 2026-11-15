@@ -506,7 +506,7 @@ def main(argv=None):
     if not a.build_only:
         run_fetch(cell, cache_root, rules, a.workers, a.models.split(",") if a.models else None, a.max_models)
     r = build(field, REPO / "data", cache_root)
-    ensure_credit(REPO / "CREDITS.md",
+    ensure_credit(REPO / "records" / "credits.txt",
                   f"- NEX-GDDP-CMIP6 (NASA Earth Exchange; Thrasher et al. 2022), pr, tasmax, tasmin at the 0.25 deg cell "
                   f"{cell[0]} N, {cell[1]} E (field `{field['id']}`), historical 1995-2014 and ssp245 / ssp585 2026-2040, "
                   "fetched from 2026-11-14 via NASA NCCS THREDDS by pipeline/fetch/nexgddp.py (the 2040 outlook; the "

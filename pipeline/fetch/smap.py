@@ -178,7 +178,7 @@ def main(argv=None):
     ap.add_argument("--field", default="demo")
     field = load_field(ap.parse_args(argv).field)
     r = build(field)
-    ensure_credit(REPO / "CREDITS.md",
+    ensure_credit(REPO / "records" / "credits.txt",
                   "- NASA SMAP L4 Global 3-hourly 9 km Surface and Root Zone Soil Moisture Geophysical Data (SPL4SMGP v008, "
                   "model-assisted) and SMAP Enhanced L3 Radiometer Global Daily 9 km Soil Moisture (SPL3SMP_E v006), NSIDC "
                   f"DAAC via LP DAAC AppEEARS, the 9 km cell holding field `{field['id']}`, 2015-03-31 to 2025-12-31, cleaned "

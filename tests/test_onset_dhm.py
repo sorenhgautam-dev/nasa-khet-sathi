@@ -33,7 +33,8 @@ def test_the_dhm_table_is_in_config_with_its_notice():
     assert d.loc["1996", "onset"] == "1996-05-31" and d.loc["1982", "onset"] == "1982-06-27"  # DHM p. 1 extremes
     assert d.loc["2009", "onset"] == "2009-06-23"
     assert d["document"].str.contains("Table 1").all() and (d["page"] == "3").all()
-    notice = (RULES_PATH.parent / "dhm_onset_dates.NOTICE.md").read_text()
+    credits = (RULES_PATH.parent.parent / "records" / "credits.txt").read_text()                # the notice lives in records/credits.txt (2026-11-15 night)
+    notice = credits[credits.index("### Notice for `dhm_onset_dates.csv`"):]
     assert "not covered by this repository's MIT licence" in notice and "eastern Nepal" in notice
     first_copy = load_rules()["onset_accumulation"]["dhm_onset_dates"]          # committed with the first rule
     assert all(d.loc[str(y), "onset"][5:] == md for y, md in first_copy.items())

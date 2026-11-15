@@ -171,7 +171,7 @@ def fetch(field, data_dir=REPO / "data", get_json=_http_get_json, rules=None, cr
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--field", default="demo")
-    out = fetch(load_field(ap.parse_args(argv).field), credits_path=REPO / "CREDITS.md")
+    out = fetch(load_field(ap.parse_args(argv).field), credits_path=REPO / "records" / "credits.txt")
     print(pd.read_parquet(out["table"]).round(3).to_string(index=False))
     print(f"location {out['card_data']['location']}\n-> {out['card']}")
     return 0

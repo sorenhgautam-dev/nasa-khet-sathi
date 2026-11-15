@@ -266,7 +266,7 @@ def _card(field_id, doc, info, rule, rows_seen, skipped, data_dir, req, png_path
 
 
 def build(site_data=REPO / "site" / "data", data_dir=REPO / "data", session=None, when=None, sensor=None, world=True,
-          credits=REPO / "CREDITS.md"):
+          credits=REPO / "records" / "credits.txt"):
     import requests
     import yaml
 

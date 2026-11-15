@@ -298,7 +298,7 @@ def main(argv=None):
     a = ap.parse_args(argv)
     field = load_field(a.field)
     r = build(field) if a.from_cache else fetch(field, workers=a.workers)
-    ensure_credit(REPO / "CREDITS.md", f"- NASA GLDAS-2.1 Noah monthly 0.25 deg ({SHORT_NAME} v{VERSION}, GES DISC, "
+    ensure_credit(REPO / "records" / "credits.txt", f"- NASA GLDAS-2.1 Noah monthly 0.25 deg ({SHORT_NAME} v{VERSION}, GES DISC, "
                                        f"Earthdata Cloud OPeNDAP), soil moisture and evapotranspiration for the field's cell, "
                                        f"2001-2025, fetched {dt.date.today()} (check on the twin only)")
     print(f"{r['rows']} months -> {r['table']}; card {r['card']}; missing {r['missing']}")

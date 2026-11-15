@@ -117,7 +117,7 @@ def main(argv=None):
         r = build(field, REPO / "data", a.start, a.end)
     else:
         r = fetch(field, REPO / "data", a.start, a.end, a.workers)
-        ensure_credit(REPO / "CREDITS.md",
+        ensure_credit(REPO / "records" / "credits.txt",
                       f"- NASA GPM IMERG V07 Late daily (GPM_3IMERGDL, GES DISC OPeNDAP), the 0.1 deg cells of field "
                       f"`{field['id']}`'s fetch box, {a.start[:4]}-{a.end[:4]}, fetched {pd.Timestamp.now().date()} by "
                       "pipeline/fetch/gpm_late.py (rain check B confirmation only; never the twin's rain)")

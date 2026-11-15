@@ -238,7 +238,7 @@ def main(argv=None):
     stopped = None if a.from_cache else fetch(field, REPO / "data", years, deadline)
     r = build(field, REPO / "data", years, stopped)
     if r["years"]:
-        ensure_credit(REPO / "CREDITS.md",
+        ensure_credit(REPO / "records" / "credits.txt",
                       f"- CHIRPS v3.0 daily final `rnl` (Climate Hazards Center, UC Santa Barbara; public domain; "
                       f"doi:10.15780/G2JQ0P), the cells overlapping field `{field['id']}`'s fetch box, "
                       f"{min(r['years'])}-{max(r['years'])}"

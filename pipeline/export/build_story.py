@@ -946,7 +946,7 @@ def chart_ai_words(words, field_json):
         T(f"A computer drafted these words. {reviewed} of {pairs} Nepali texts checked so far.",
           f"यी शब्द कम्प्युटरले लेखेका हुन्। अहिलेसम्म {pairs} मध्ये {reviewed} नेपाली पाठ जाँचिएका छन्।"),
         ["Khet Sathi texts drafted by SI (Claude) in pipeline/words/, with the review mark of every Nepali text in "
-         "site/data/words.json; SI_LOG.md records what a person reviewed"], "table", rows=rows)
+         "site/data/words.json; records/ai_log.txt records what a person reviewed"], "table", rows=rows)
 
 
 # --- report card -----------------------------------------------------------------------------------------------------
@@ -1125,7 +1125,7 @@ def limits_block(rows):
                     "items": [r["thing"] for r in rows if r["status"] == "VERIFIED"]},
         "estimates": {"title": T("Estimates, not checked yet:", "अनुमान, अझै नजाँचिएको:"),
                       "items": [r["thing"] for r in rows if r["status"] != "VERIFIED"]},
-        "source": "the compliance table (story.json compliance; VALIDATION.md 'Compliance table')",
+        "source": "the compliance table (story.json compliance; records/checks.txt 'Compliance table')",
     }
 
 
@@ -1622,13 +1622,13 @@ def build_story(inp, generated):
         "outlook_2040": [p["field_json"], p["words"]],
         "season_methods": [p["field_json"]],
         "field_memory": [p["memory"]],
-        "ai_words": [p["words"], p["field_json"], "SI_LOG.md"],
+        "ai_words": [p["words"], p["field_json"], "records/ai_log.txt"],
         "offline_use": ["site/sw.js", "scripts/build_offline.py"],
         "compliance": [p["scorecard"], "config/rules.yaml"],
         "report_card": [p["field_json"], p["diary_seasons"], p["area_check"], p["rain_vs_dhm"], p["weather"],
-                        p["normals"], p["fao"], p["known_events"], p["future"], "VALIDATION.md"] + bench_used[:1],
-        "satellites": ["DATA_AUDIT.md", "CREDITS.md", "VALIDATION.md"],
-        "resources": ["DATA_AUDIT.md", "CREDITS.md"],
+                        p["normals"], p["fao"], p["known_events"], p["future"], "records/checks.txt"] + bench_used[:1],
+        "satellites": ["records/credits.txt", "records/checks.txt"],
+        "resources": ["records/credits.txt"],
     }
 
     sd = inp["diary_seasons"]["season_date_differences_days"]

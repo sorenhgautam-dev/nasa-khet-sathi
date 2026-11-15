@@ -7,7 +7,7 @@
 (function () {
   'use strict';
   var K = window.KS, h = K.h, T = K.T, P = K.P, NS = 'http://www.w3.org/2000/svg';
-  var README = 'https://github.com/sorenhgautam-dev/data-test-game#how-to-run-it-for-a-new-field';
+  var README = 'https://github.com/sorenhgautam-dev/nasa-khet-sathi#how-to-run-it-for-a-new-field';
   var W = null, answer = null, marker = null, ring = null;
   function proj(lon, lat) { var r = lat * Math.PI / 180; return [(lon + 180) / 360 * 1000, (1 - Math.log(Math.tan(Math.PI / 4 + r / 2)) / Math.PI) / 2 * 1000]; }
   function unproj(x, y) { return [Math.atan(Math.sinh(Math.PI * (1 - 2 * y / 1000))) * 180 / Math.PI, x / 1000 * 360 - 180]; }

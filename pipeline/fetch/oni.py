@@ -100,7 +100,7 @@ def main(argv=None):
     ap.add_argument("--field", default="demo")
     ap.add_argument("--refresh", action="store_true", help="download again even if data/raw/oni/oni.ascii.txt exists")
     a = ap.parse_args(argv)
-    out = fetch(load_field(a.field), credits_path=REPO / "CREDITS.md", refresh=a.refresh)
+    out = fetch(load_field(a.field), credits_path=REPO / "records" / "credits.txt", refresh=a.refresh)
     print(f"-> {out['table']}\n-> {out['card']}\n{out['card_data']['date_range']}")
     return 0
 

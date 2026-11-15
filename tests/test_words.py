@@ -338,13 +338,6 @@ def test_a_rendered_tab_is_never_empty_for_any_plan_kind():
 
 # ---------- preview ----------
 
-def test_preview_md_is_up_to_date():
-    from pipeline.words import preview
-    path = REPO / "pipeline" / "words" / "PREVIEW.md"
-    assert path.exists(), "run: .venv/bin/python -m pipeline.words.preview"
-    assert path.read_text() == preview.render(), "PREVIEW.md is stale: run .venv/bin/python -m pipeline.words.preview"
-
-
 def test_preview_status_line_counts_each_review_mark():
     from pipeline.words import preview
     todo = {"ne_review": NE_REVIEW}

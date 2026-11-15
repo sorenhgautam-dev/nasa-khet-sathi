@@ -89,7 +89,7 @@
 
   // ---------------- our data, explained (owner, 2026-11-15 evening): how to read the numbers, every source in one list, the raw
   // files every screen reads, the public code and every language with its review state. Words from words.json shared.farm.
-  var REPO = 'https://github.com/sorenhgautam-dev/data-test-game';
+  var REPO = 'https://github.com/sorenhgautam-dev/nasa-khet-sathi';
   function dataGuide(F) {
     var R = ['data_read_1', 'data_read_2', 'data_read_3', 'data_read_4', 'data_read_5'].map(function (k) { return T('farm.' + k); });
     var all = (F.sources || []).slice();
@@ -104,7 +104,7 @@
       }))]),
       sub(T('farm.data_files_h'), [h('p', { class: 'small', style: 'margin:0' }, T('farm.data_files_lead')), h('ul', { class: 'lines sub' }, files.map(function (f) {
         return h('li', null, h('a', { href: f[0], target: '_blank', rel: 'noopener' }, T('farm.' + f[1])), ' ', h('code', { class: 'small', lang: 'en' }, f[0]));
-      })), h('p', { class: 'small', style: 'margin:0' }, T('farm.data_code'), ' ', h('a', { href: REPO, target: '_blank', rel: 'noopener', lang: 'en' }, 'github.com/sorenhgautam-dev/data-test-game'))]),
+      })), h('p', { class: 'small', style: 'margin:0' }, T('farm.data_code'), ' ', h('a', { href: REPO, target: '_blank', rel: 'noopener', lang: 'en' }, 'github.com/sorenhgautam-dev/nasa-khet-sathi'))]),
       sub(T('farm.lang_title') + ' · ' + T('farm.lang_count', { count: ((S.words && S.words.languages) || []).length }), K.langList())]);
   }
 

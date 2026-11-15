@@ -126,7 +126,7 @@ def fetch(field, data_dir=REPO / "data", get_bytes=_http_get_bytes, credits_path
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--field", default="demo")
-    out = fetch(load_field(ap.parse_args(argv).field), credits_path=REPO / "CREDITS.md")
+    out = fetch(load_field(ap.parse_args(argv).field), credits_path=REPO / "records" / "credits.txt")
     c = out["card_data"]
     print(f"{out['rows']} rows -> {out['table']}\nunits {c['units_in']}, years {c['date_range']}, flags {c['quality_flags_used']}")
     return 0

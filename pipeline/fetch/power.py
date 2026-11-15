@@ -212,7 +212,7 @@ def main(argv=None):
     field = load_field(a.field)
     src = field.get("power_point_of")   # the point the other field's own POWER table used (its card), not its centre
     point = {"id": src, **json.loads((REPO / "data" / "cards" / src / "power.json").read_text())["location"]} if src else None
-    out = fetch(field, a.start, a.end, credits_path=REPO / "CREDITS.md", point=point)
+    out = fetch(field, a.start, a.end, credits_path=REPO / "records" / "credits.txt", point=point)
     c = out["card_data"]
     print(f"\n{out['rows']} daily rows -> {out['table']}\ncard -> {out['card']}")
     print(f"date range {c['date_range']}, fill removed {c['fill_values_removed']['count_by_column']}, "

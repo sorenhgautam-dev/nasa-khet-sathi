@@ -82,8 +82,7 @@ def test_the_final_check_wants_index_html_at_the_root_of_site(tmp_path):
     assert any(p["kind"] == "missing" for p in cs.site_problems(_site(tmp_path, files), final=True))
 
 
-def test_the_real_site_folder_is_static_and_pages_publishes_only_site():
+def test_the_real_site_folder_is_static_and_there_is_no_pages_workflow():
     assert cs.site_problems(REPO / "site") == []
-    wf = (REPO / ".github" / "workflows" / "pages.yml").read_text()               # hosting: GitHub Pages (2026-11-14 night)
-    assert "branches: [main]" in wf and "upload-pages-artifact" in wf and "path: site\n" in wf
-    assert "run:" not in wf                                                          # no build step, nothing but site/
+    # hosting: Vercel, its root directory site/, no build step (owner, 2026-11-15 night): no GitHub Pages runs
+    assert not (REPO / ".github" / "workflows" / "pages.yml").exists()

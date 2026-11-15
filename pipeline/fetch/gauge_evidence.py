@@ -239,7 +239,7 @@ def main(argv=None):
         failed = fetch_imerg(field, months, raw)
         fetch_gpcc(raw)
     r = build(field, rules, failed=failed)
-    ensure_credit(REPO / "CREDITS.md",
+    ensure_credit(REPO / "records" / "credits.txt",
                   "- NASA GPM IMERG V07 Final monthly (GPM_3IMERGM, GES DISC OPeNDAP), `gaugeRelativeWeighting` and `precipitation` for the "
                   f"3 x 3 cells around field `{field['id']}`, and GPCC Full Data Monthly Product V2022 1.0 deg (Schneider et al. 2022, "
                   "doi:10.5676/DWD_GPCC/FD_M_V2022_100; DWD open data), station counts and totals for the field's box, fetched "

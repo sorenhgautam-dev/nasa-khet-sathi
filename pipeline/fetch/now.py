@@ -345,7 +345,7 @@ def main(argv=None):
     ap.add_argument("--from-cache", action="store_true", help="rebuild from the cached raw files only (no network)")
     ap.add_argument("--end", default=None, help="last day to request (default: yesterday)")
     a = ap.parse_args(argv)
-    r = build(load_field(a.field), workers=a.workers, from_cache=a.from_cache, end=a.end, credits_path=REPO / "CREDITS.md")
+    r = build(load_field(a.field), workers=a.workers, from_cache=a.from_cache, end=a.end, credits_path=REPO / "records" / "credits.txt")
     s = r["card_data"]["summary"]
     print(f"as of {s['as_of']} (limited by {s['limited_by']}); {s['days']} days; last day by POWER input "
           f"{s['last_day_by_power_input']}; IMERG Late to {s['imerg_late_last_day']} ({s['imerg_late_versions']}); "

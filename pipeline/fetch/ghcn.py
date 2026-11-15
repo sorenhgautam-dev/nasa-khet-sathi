@@ -163,7 +163,7 @@ def main(argv=None):
     station = field.get("validation_station")
     if not station:
         sys.exit(f"config/fields/{field['id']}.yaml has no validation_station")
-    out = fetch(field, station, credits_path=REPO / "CREDITS.md")
+    out = fetch(field, station, credits_path=REPO / "records" / "credits.txt")
     c = out["card_data"]
     print(f"-> {out['table']}\n-> {out['card']}\nqc dropped {c['records_dropped']}, missing {c['fill_values_removed']}")
     return 0
